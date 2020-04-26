@@ -81,12 +81,16 @@ class Generator::Definition
     case kind
     when "definitions"
       definitions[name]
+    else
+      # Do nothing
     end
   end
 
   private def open_class
     # Class Description
     generate_description definition.description
+
+    generate_annotations
 
     # Open the class
     file.puts "class #{class_name.lchop("::")}"
@@ -107,7 +111,7 @@ class Generator::Definition
 
   private def define_alias
     file.puts "module #{resource_alias}"
-    file.puts "alias #{kind} = ::Pyrite::#{class_name.lchop("::")}"
+    file.puts "alias #{kind} = ::#{base_class.lchop("::")}::#{class_name.lchop("::")}"
     _end
   end
 
@@ -116,9 +120,11 @@ class Generator::Definition
     _, kind, name = ref.split("/")
     case kind
     when "definitions"
-      @schema.definitions[name]
+      schema.definitions[name]
     when "path"
-      @schema.paths[name]
+      schema.paths[name]
+    else
+      # Do nothing
     end
   end
 
@@ -189,18 +195,6 @@ class Generator::Definition
       %w(apiVersion kind metadata).all? { |p| definition.properties[p]? }
   end
 
-  private def define_actions
-    paths = @schema.paths.select do |path_name, path|
-      next true if path.parameters.any? { |val| definition_ref(val.schema.try(&._ref)) == class_name }
-      next true if path.actions.any?(&.parameters.any? { |val| definition_ref(val.schema.try(&._ref)) == class_name })
-      next true if path.actions.any?(&.responses.values.any? { |val| definition_ref(val.schema.try(&._ref)) == class_name })
-    end
-
-    paths.each do |path_name, path|
-      define_operations(path_name, path)
-    end unless name.starts_with?("io.k8s.apimachinery")
-  end
-
   private def params_to_refs(params = Array(Swagger::Path::Parameter))
     ([] of Swagger::Definition).tap do |refs|
       params.each do |param|
@@ -224,43 +218,6 @@ class Generator::Definition
     yield
     file.puts "end"
     file.puts
-  end
-
-  private def define_operations(path_name : String, path : Swagger::Path)
-    path.action_map.each do |verb, action|
-      next unless action
-      generate_description(action.description)
-
-      function_name = action.operationId
-        .sub("Namespaced", "")
-        .sub("List", "")
-        .sub("Collection", "")
-        .sub("Core" + @class_name.chomp("List").split("::").last(2).join, "")
-        .sub(@class_name.chomp("List").split("::").last(3).join, "")
-        .underscore
-
-      params = (path.parameters + action.parameters).select(&.in.== "query")
-      body = (path.parameters + action.parameters).select { |param| param.required && param.in == "body" }
-      path_params = path_name.scan(/{([a-z]+)}/).map(&.[1]).map { |str| Swagger::Path::Parameter.new(str) }
-      toplevel = params.map(&.name).includes?("labelSelector")
-      toplevel ||= path_params.map(&.name).includes?("name") && verb == :get
-      params += path_params if toplevel
-
-      args = {} of String => FunctionArgument
-      params_to_refs(body).reject(&.== @definition).each do |ref|
-        ref.properties.reject { |name, _| is_resource?(ref) && resource_property?(name) }.each do |name, prop|
-          args[name] = FunctionArgument.new(name, prop, ref)
-        end
-      end
-      args["context"] = FunctionArgument.new("context", "string")
-      params.each { |param| args[param.name] = FunctionArgument.new(param) }
-      args["namespace"].default = "default" if args["namespace"]?
-      args.delete("pretty")
-      define_function(name: function_name, args: args, toplevel: toplevel) do
-        puts "body = nil"
-        puts "Pyrite.client.#{verb}(#{path_name}, Pyrite.headers, body)"
-      end
-    end
   end
 
   private def load_requires
@@ -299,6 +256,33 @@ class Generator::Definition
 
       file.puts "property #{crystal_name} : #{convert_type(property, required.includes?(name))}"
       file.puts ""
+    end
+  end
+
+  private def generate_annotations
+    # Define group annotations
+    group_versions = definition.x_kubernetes_group_version_kind
+    unless group_versions.nil?
+      group_versions.each do |ver|
+        next if ver.group.nil? || ver.kind.nil? || ver.version.nil?
+        file.puts(%<@[::#{base_class.lchop("::")}::GroupVersionKind(group: "#{ver.group}", kind: "#{ver.kind}", version: "#{ver.version}")]>)
+      end
+    end
+
+    # Define action/operation annotations
+    each_actions do |path_name, path|
+      path.action_map.each do |verb, action|
+        next if action.nil?
+        action_name = action.x_kubernetes_action
+
+        next if action_name.nil?
+        parse_action_operation(path_name, path, verb, action) do |function_name, args, toplevel|
+          file.puts(%<@[::#{base_class.lchop("::")}::Action(name: "#{action_name}", verb: "#{verb}",>)
+          file.puts(%< path: "#{path_name}",toplevel: #{toplevel.to_s}, >)
+          file.puts(%< args: [#{parse_operation_args_string(args).join(",\n")}]>)
+          file.puts(")]")
+        end
+      end
     end
   end
 
@@ -356,5 +340,59 @@ class Generator::Definition
       file.puts "", "}, true)"
       file.puts
     end unless properties.empty?
+  end
+
+  private def each_actions
+    paths = schema.paths.select do |path_name, path|
+      next true if path.parameters.any? { |val| definition_ref(val.schema.try(&._ref)) == class_name }
+      next true if path.actions.any?(&.parameters.any? { |val| definition_ref(val.schema.try(&._ref)) == class_name })
+      next true if path.actions.any?(&.responses.values.any? { |val| definition_ref(val.schema.try(&._ref)) == class_name })
+    end
+
+    paths.each do |path_name, path|
+      yield path_name, path
+      # define_operations(path_name, path)
+    end unless name.starts_with?("io.k8s.apimachinery")
+  end
+
+  private def parse_action_operation(path_name : String, path : Swagger::Path, verb, action)
+    function_name = action.operationId
+      .sub("Namespaced", "")
+      .sub("List", "")
+      .sub("Collection", "")
+      .sub("Core" + @class_name.chomp("List").split("::").last(2).join, "")
+      .sub(@class_name.chomp("List").split("::").last(3).join, "")
+      .underscore
+
+    params = (path.parameters + action.parameters).select(&.in.== "query")
+    body = (path.parameters + action.parameters).select { |param| param.required && param.in == "body" }
+
+    path_params = path_name.scan(/{([a-z]+)}/).map(&.[1]).map { |str| Swagger::Path::Parameter.new(str) }
+    toplevel = params.map(&.name).includes?("labelSelector")
+    toplevel ||= path_params.map(&.name).includes?("name") && verb == :get
+    params += path_params if toplevel
+
+    args = {} of String => FunctionArgument
+    params_to_refs(body).reject(&.== @definition).each do |ref|
+      ref.properties.reject { |name, _| is_resource?(ref) && resource_property?(name) }.each do |name, prop|
+        args[name] = FunctionArgument.new(name, prop, ref)
+      end
+    end
+
+    args["context"] = FunctionArgument.new("context", "string")
+    params.each { |param| args[param.name] = FunctionArgument.new(param) }
+    args["namespace"].default = "default" if args["namespace"]?
+    args.delete("pretty")
+
+    yield function_name, args, toplevel
+  end
+
+  private def parse_operation_args_string(args : Hash(String, FunctionArgument))
+    arg_list = (args.values.select(&.first_value?) + args.values.reject(&.first_value?)).map do |a|
+      ars = [%<name: "#{a.name}">, %<type: #{convert_type(a)}>]
+      ars << %<default: #{a.default.inspect}> if !a.required? || a.default
+      %<{#{ars.join(',')}}>
+    end
+    arg_list
   end
 end

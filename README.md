@@ -1,6 +1,7 @@
 # Pyrite
 
-A Kubernetes Client for Crystal-lang
+A Kubernetes Client for Crystal-lang forked from [psykube/pyrite](https://github.com/psykube/pyrite).
+Forked due to possibly destructive changes to change namespaces and adapt for use with `Kube::Client` 
 
 ## Installation
 
@@ -14,17 +15,17 @@ dependencies:
 
 ## Usage
 
-Pyrite should support Kubernetes API from 1.6.0 and beyond. In order to use 
-pyrite, you will want to include the VERSION that best maps to your k8s api version.
+K8S.cr should support Kubernetes API from 1.6.0 and beyond. In order to use
+the bindings, you will want to include the VERSION that best maps to your k8s api version.
 Requiring more than one version at this time will result in an error.
 
 ```crystal
-require "pyrite/versions/v1.7"
+require "k8s/versions/v1.7"
 ```
 
 ## Contributing
 
-1. Fork it ( https://github.com/jwaldrip/pyrite/fork )
+1. Fork it ( https://github.com/spoved/k8s.cr/fork )
 2. Create your feature branch (git checkout -b my-new-feature)
 3. Commit your changes (git commit -am 'Add some feature')
 4. Push to the branch (git push origin my-new-feature)
@@ -32,4 +33,5 @@ require "pyrite/versions/v1.7"
 
 ## Contributors
 
-- [[jwaldrip]](https://github.com/jwaldrip) Jason Waldrip - creator, maintainer
+- [[jwaldrip]](https://github.com/jwaldrip) Jason Waldrip - original creator
+- [[kalinon]](https://github.com/kalinon) Holden Omans - maintainer

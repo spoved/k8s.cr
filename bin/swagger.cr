@@ -1,4 +1,5 @@
 require "json"
+
 class Swagger
   JSON.mapping({
     info:        Info,
@@ -6,4 +7,5 @@ class Swagger
     definitions: Hash(String, Definition),
   })
 end
+
 require "./swagger/*"
