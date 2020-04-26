@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # DeploymentStatus is the most recently observed status of the Deployment.
   class Kubernetes::Apis::Apps::V1beta1::DeploymentStatus
     # Total number of available pods (ready for at least minReadySeconds) targeted by this deployment.

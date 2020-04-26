@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   class Api::Certificates::V1beta1::CertificateSigningRequestCondition
     # timestamp for the last update to this condition
     property last_update_time : Time | Nil

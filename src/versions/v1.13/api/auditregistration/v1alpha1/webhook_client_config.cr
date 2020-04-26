@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # WebhookClientConfig contains the information to make a connection with the webhook
   class Api::Auditregistration::V1alpha1::WebhookClientConfig
     # `caBundle` is a PEM encoded CA bundle which will be used to validate the webhook's server certificate. If unspecified, system trust roots on the apiserver are used.

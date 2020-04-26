@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # APIGroup contains the name, the supported versions, and the preferred version of a group.
   class Apimachinery::Apis::Meta::V1::APIGroup
     # APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#resources](http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#resources)

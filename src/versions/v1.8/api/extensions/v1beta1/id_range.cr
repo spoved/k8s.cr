@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # ID Range provides a [min/max of an allowed range of IDs.](min/max of an allowed range of IDs.)
   class Api::Extensions::V1beta1::IDRange
     # Max is the end of the range, inclusive.

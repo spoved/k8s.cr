@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # GroupVersion contains the ["group/version" and "version" string of a version. It is made a struct to keep extensibility.]("group/version" and "version" string of a version. It is made a struct to keep extensibility.)
   class Apimachinery::Apis::Meta::V1::GroupVersionForDiscovery
     # groupVersion specifies the API group and version in the form ["group/version"]("group/version")

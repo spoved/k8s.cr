@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # Represents a host path mapped into a pod. Host path volumes do not support ownership management or SELinux relabeling.
   class Kubernetes::Api::V1::HostPathVolumeSource
     # Path of the directory on the host. More info: [http://kubernetes.io/docs/user-guide/volumes#hostpath](http://kubernetes.io/docs/user-guide/volumes#hostpath)

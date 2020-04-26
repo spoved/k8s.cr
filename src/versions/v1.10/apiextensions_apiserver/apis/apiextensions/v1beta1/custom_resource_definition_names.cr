@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # CustomResourceDefinitionNames indicates the names to serve this CustomResourceDefinition
   class ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceDefinitionNames
     # Categories is a list of grouped resources custom resources belong to (e.g. 'all')

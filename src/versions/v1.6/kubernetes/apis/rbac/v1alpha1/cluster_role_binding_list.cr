@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # ClusterRoleBindingList is a collection of ClusterRoleBindings
   class Kubernetes::Apis::Rbac::V1alpha1::ClusterRoleBindingList
     getter api_version : String = "v1"

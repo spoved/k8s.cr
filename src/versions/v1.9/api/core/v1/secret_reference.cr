@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # SecretReference represents a Secret Reference. It has enough information to retrieve secret in any namespace
   class Api::Core::V1::SecretReference
     # Name is unique within a namespace to reference a secret resource.

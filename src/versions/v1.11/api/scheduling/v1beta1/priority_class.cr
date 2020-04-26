@@ -3,8 +3,62 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # PriorityClass defines mapping from a priority class name to the priority integer value. The value can be any valid integer.
+  @[::K8S::GroupVersionKind(group: "scheduling.k8s.io", kind: "PriorityClass", version: "v1beta1")]
+  @[::K8S::Action(name: "post", verb: "post",
+    path: "/apis/scheduling.k8s.io/v1beta1/priorityclasses", toplevel: false,
+    args: [{name: "context", type: String | Nil, default: nil}]
+  )]
+  @[::K8S::Action(name: "list", verb: "get",
+    path: "/apis/scheduling.k8s.io/v1beta1/priorityclasses", toplevel: true,
+    args: [{name: "context", type: String | Nil, default: nil},
+           {name: "continue", type: String | Nil, default: nil},
+           {name: "field_selector", type: String | Nil, default: nil},
+           {name: "include_uninitialized", type: Bool | Nil, default: nil},
+           {name: "label_selector", type: String | Nil, default: nil},
+           {name: "limit", type: Int32 | Nil, default: nil},
+           {name: "resource_version", type: String | Nil, default: nil},
+           {name: "timeout_seconds", type: Int32 | Nil, default: nil},
+           {name: "watch", type: Bool | Nil, default: nil}]
+  )]
+  @[::K8S::Action(name: "deletecollection", verb: "delete",
+    path: "/apis/scheduling.k8s.io/v1beta1/priorityclasses", toplevel: true,
+    args: [{name: "context", type: String | Nil, default: nil},
+           {name: "continue", type: String | Nil, default: nil},
+           {name: "field_selector", type: String | Nil, default: nil},
+           {name: "include_uninitialized", type: Bool | Nil, default: nil},
+           {name: "label_selector", type: String | Nil, default: nil},
+           {name: "limit", type: Int32 | Nil, default: nil},
+           {name: "resource_version", type: String | Nil, default: nil},
+           {name: "timeout_seconds", type: Int32 | Nil, default: nil},
+           {name: "watch", type: Bool | Nil, default: nil}]
+  )]
+  @[::K8S::Action(name: "get", verb: "get",
+    path: "/apis/scheduling.k8s.io/v1beta1/priorityclasses/{name}", toplevel: true,
+    args: [{name: "name", type: String},
+           {name: "context", type: String | Nil, default: nil},
+           {name: "exact", type: Bool | Nil, default: nil},
+           {name: "export", type: Bool | Nil, default: nil}]
+  )]
+  @[::K8S::Action(name: "put", verb: "put",
+    path: "/apis/scheduling.k8s.io/v1beta1/priorityclasses/{name}", toplevel: false,
+    args: [{name: "context", type: String | Nil, default: nil}]
+  )]
+  @[::K8S::Action(name: "patch", verb: "path",
+    path: "/apis/scheduling.k8s.io/v1beta1/priorityclasses/{name}", toplevel: false,
+    args: [{name: "context", type: String | Nil, default: nil}]
+  )]
+  @[::K8S::Action(name: "delete", verb: "delete",
+    path: "/apis/scheduling.k8s.io/v1beta1/priorityclasses/{name}", toplevel: false,
+    args: [{name: "api_version", type: String | Nil, default: nil},
+           {name: "grace_period_seconds", type: Int32 | Nil, default: nil},
+           {name: "kind", type: String | Nil, default: nil},
+           {name: "orphan_dependents", type: Bool | Nil, default: nil},
+           {name: "preconditions", type: Apimachinery::Apis::Meta::V1::Preconditions | Nil, default: nil},
+           {name: "propagation_policy", type: String | Nil, default: nil},
+           {name: "context", type: String | Nil, default: nil}]
+  )]
   class Api::Scheduling::V1beta1::PriorityClass
     getter api_version : String = "scheduling/v1beta1"
     getter kind : String = "PriorityClass"
@@ -43,6 +97,6 @@ module Pyrite
   end
 
   module Resources::Scheduling::V1beta1
-    alias PriorityClass = ::Pyrite::Api::Scheduling::V1beta1::PriorityClass
+    alias PriorityClass = ::K8S::Api::Scheduling::V1beta1::PriorityClass
   end
 end

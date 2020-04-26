@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # ServiceStatus represents the current status of a service.
   class Kubernetes::Api::V1::ServiceStatus
     # LoadBalancer contains the current status of the load-balancer, if one is present.

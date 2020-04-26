@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # LocalSubjectAccessReview checks whether or not a user or group can perform an action in a given namespace. Having a namespace scoped resource makes it much easier to grant namespace scoped policy that includes permissions checking.
   class Kubernetes::Apis::Authorization::V1beta1::LocalSubjectAccessReview
     getter api_version : String = "authorization/v1beta1"
@@ -37,6 +37,6 @@ module Pyrite
   end
 
   module Resources::Authorization::V1beta1
-    alias LocalSubjectAccessReview = ::Pyrite::Kubernetes::Apis::Authorization::V1beta1::LocalSubjectAccessReview
+    alias LocalSubjectAccessReview = ::K8S::Kubernetes::Apis::Authorization::V1beta1::LocalSubjectAccessReview
   end
 end

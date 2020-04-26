@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # NonResourceAttributes includes the authorization attributes available for non-resource requests to the Authorizer interface
   class Kubernetes::Apis::Authorization::V1::NonResourceAttributes
     # Path is the URL path of the request

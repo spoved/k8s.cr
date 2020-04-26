@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # PodDNSConfig defines the DNS parameters of a pod in addition to those generated from DNSPolicy.
   class Api::Core::V1::PodDNSConfig
     # A list of DNS name server IP addresses. This will be appended to the base nameservers generated from DNSPolicy. Duplicated nameservers will be removed.

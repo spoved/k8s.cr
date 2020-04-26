@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # NetworkPolicyPeer describes a peer to allow traffic from. Only certain combinations of fields are allowed
   class Api::Networking::V1::NetworkPolicyPeer
     # IPBlock defines policy on a particular IPBlock. If this field is set then neither of the other fields can be.

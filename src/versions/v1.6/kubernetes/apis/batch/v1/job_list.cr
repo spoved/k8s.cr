@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # JobList is a collection of jobs.
   class Kubernetes::Apis::Batch::V1::JobList
     getter api_version : String = "v1"

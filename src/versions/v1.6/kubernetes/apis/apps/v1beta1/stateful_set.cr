@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # StatefulSet represents a set of pods with consistent identities. Identities are defined as:
   #  - Network: A single stable DNS and hostname.
   #  - Storage: As many VolumeClaims as requested.
@@ -40,6 +40,6 @@ module Pyrite
   end
 
   module Resources::Apps::V1beta1
-    alias StatefulSet = ::Pyrite::Kubernetes::Apis::Apps::V1beta1::StatefulSet
+    alias StatefulSet = ::K8S::Kubernetes::Apis::Apps::V1beta1::StatefulSet
   end
 end

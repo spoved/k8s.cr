@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # AggregationRule describes how to locate ClusterRoles to aggregate into the ClusterRole
   class Api::Rbac::V1::AggregationRule
     # ClusterRoleSelectors holds a list of selectors which will be used to find ClusterRoles and create the rules. If any of the selectors match, then the ClusterRole's permissions will be added

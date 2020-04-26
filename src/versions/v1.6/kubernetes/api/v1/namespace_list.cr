@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # NamespaceList is a list of Namespaces.
   class Kubernetes::Api::V1::NamespaceList
     getter api_version : String = "v1"

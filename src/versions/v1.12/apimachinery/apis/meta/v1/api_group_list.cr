@@ -3,8 +3,9 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # APIGroupList is a list of APIGroup, to allow clients to discover the API at /apis.
+  @[::K8S::GroupVersionKind(group: "", kind: "APIGroupList", version: "v1")]
   class Apimachinery::Apis::Meta::V1::APIGroupList
     # APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [https://git.k8s.io/community/contributors/devel/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/api-conventions.md#resources)
     property api_version : String | Nil

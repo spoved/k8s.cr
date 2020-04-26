@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # DaemonEndpoint contains information about a single Daemon endpoint.
   class Kubernetes::Api::V1::DaemonEndpoint
     # Port number of the given endpoint.

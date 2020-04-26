@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # list of horizontal pod autoscaler objects.
   class Kubernetes::Apis::Autoscaling::V1::HorizontalPodAutoscalerList
     getter api_version : String = "v1"

@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # ReplicaSetStatus represents the current status of a ReplicaSet.
   class Api::Apps::V1::ReplicaSetStatus
     # The number of available replicas (ready for at least minReadySeconds) for this replica set.

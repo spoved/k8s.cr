@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # HorizontalPodAutoscalerStatus describes the current status of a horizontal pod autoscaler.
   class Kubernetes::Apis::Autoscaling::V2alpha1::HorizontalPodAutoscalerStatus
     # conditions is the set of conditions required for this autoscaler to scale its target, and indicates whether or not those conditions are met.

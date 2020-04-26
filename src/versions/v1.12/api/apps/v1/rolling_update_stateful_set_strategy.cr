@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # RollingUpdateStatefulSetStrategy is used to communicate parameter for RollingUpdateStatefulSetStrategyType.
   class Api::Apps::V1::RollingUpdateStatefulSetStrategy
     # Partition indicates the ordinal at which the StatefulSet should be partitioned. Default value is 0.

@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # ServiceReference holds a reference to Service.legacy.k8s.io
   class Api::Admissionregistration::V1beta1::ServiceReference
     # `name` is the name of the service. Required

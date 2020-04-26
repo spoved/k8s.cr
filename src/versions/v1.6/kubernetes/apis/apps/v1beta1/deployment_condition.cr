@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # DeploymentCondition describes the state of a deployment at a certain point.
   class Kubernetes::Apis::Apps::V1beta1::DeploymentCondition
     # Last time the condition transitioned from one status to another.

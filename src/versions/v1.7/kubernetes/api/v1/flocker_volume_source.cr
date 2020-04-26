@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # Represents a Flocker volume mounted by the Flocker agent. One and only one of datasetName and datasetUUID should be set. Flocker volumes do not support ownership management or SELinux relabeling.
   class Kubernetes::Api::V1::FlockerVolumeSource
     # Name of the dataset stored as metadata -> name on the dataset for Flocker should be considered as deprecated

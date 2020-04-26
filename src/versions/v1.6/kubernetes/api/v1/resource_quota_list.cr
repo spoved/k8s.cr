@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # ResourceQuotaList is a list of ResourceQuota items.
   class Kubernetes::Api::V1::ResourceQuotaList
     getter api_version : String = "v1"

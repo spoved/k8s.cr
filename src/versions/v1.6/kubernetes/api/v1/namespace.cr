@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # Namespace provides a scope for Names. Use of multiple namespaces is optional.
   class Kubernetes::Api::V1::Namespace
     getter api_version : String = "v1"
@@ -38,6 +38,6 @@ module Pyrite
   end
 
   module Resources::V1
-    alias Namespace = ::Pyrite::Kubernetes::Api::V1::Namespace
+    alias Namespace = ::K8S::Kubernetes::Api::V1::Namespace
   end
 end

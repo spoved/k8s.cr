@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # CustomResourceColumnDefinition specifies a column for server side printing.
   class ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceColumnDefinition
     # JSONPath is a simple JSON path, i.e. with array notation.

@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # Projection that may be projected along with other supported volume types
   class Kubernetes::Api::V1::VolumeProjection
     # information about the configMap data to project

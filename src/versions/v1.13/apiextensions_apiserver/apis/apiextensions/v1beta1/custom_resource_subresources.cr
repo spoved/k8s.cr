@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # CustomResourceSubresources defines the status and scale subresources for CustomResources.
   class ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresources
     # Scale denotes the scale subresource for CustomResources

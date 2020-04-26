@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # Node is a worker node in Kubernetes. Each node will have a unique identifier in the cache (i.e. in etcd).
   class Kubernetes::Api::V1::Node
     getter api_version : String = "v1"
@@ -38,6 +38,6 @@ module Pyrite
   end
 
   module Resources::V1
-    alias Node = ::Pyrite::Kubernetes::Api::V1::Node
+    alias Node = ::K8S::Kubernetes::Api::V1::Node
   end
 end

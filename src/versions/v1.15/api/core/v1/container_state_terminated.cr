@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # ContainerStateTerminated is a terminated state of a container.
   class Api::Core::V1::ContainerStateTerminated
     # Container's ID in the format 'docker://<container_id>'

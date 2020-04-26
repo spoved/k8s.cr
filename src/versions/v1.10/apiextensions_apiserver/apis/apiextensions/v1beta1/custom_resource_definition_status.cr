@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # CustomResourceDefinitionStatus indicates the state of the CustomResourceDefinition
   class ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceDefinitionStatus
     # AcceptedNames are the names that are actually being used to serve discovery They may be different than the names in spec.

@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # Binding ties one object to another. For example, a pod is bound to a node by a scheduler.
   class Kubernetes::Api::V1::Binding
     getter api_version : String = "v1"
@@ -33,6 +33,6 @@ module Pyrite
   end
 
   module Resources::V1
-    alias Binding = ::Pyrite::Kubernetes::Api::V1::Binding
+    alias Binding = ::K8S::Kubernetes::Api::V1::Binding
   end
 end

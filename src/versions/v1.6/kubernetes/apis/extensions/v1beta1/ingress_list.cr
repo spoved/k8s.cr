@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # IngressList is a collection of Ingress.
   class Kubernetes::Apis::Extensions::V1beta1::IngressList
     getter api_version : String = "v1"

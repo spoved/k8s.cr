@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # A scoped-resource selector requirement is a selector that contains values, a scope name, and an operator that relates the scope name and values.
   class Api::Core::V1::ScopedResourceSelectorRequirement
     # Represents a scope's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist.

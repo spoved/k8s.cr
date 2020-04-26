@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # ConfigMapList is a resource containing a list of ConfigMap objects.
   class Kubernetes::Api::V1::ConfigMapList
     getter api_version : String = "v1"

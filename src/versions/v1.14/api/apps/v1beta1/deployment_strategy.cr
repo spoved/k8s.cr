@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # DeploymentStrategy describes how to replace existing pods with new ones.
   class Api::Apps::V1beta1::DeploymentStrategy
     # Rolling update config params. Present only if DeploymentStrategyType = RollingUpdate.

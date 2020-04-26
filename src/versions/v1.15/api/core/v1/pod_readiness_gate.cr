@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # PodReadinessGate contains the reference to a pod condition
   class Api::Core::V1::PodReadinessGate
     # ConditionType refers to a condition in the pod's condition list with matching type.

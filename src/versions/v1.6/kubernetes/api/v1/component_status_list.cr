@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # Status of all the conditions for the component as a list of ComponentStatus objects.
   class Kubernetes::Api::V1::ComponentStatusList
     getter api_version : String = "v1"

@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # HTTPHeader describes a custom header to be used in HTTP probes
   class Kubernetes::Api::V1::HTTPHeader
     # The header field name

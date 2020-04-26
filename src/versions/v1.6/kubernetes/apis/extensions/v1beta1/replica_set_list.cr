@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # ReplicaSetList is a collection of ReplicaSets.
   class Kubernetes::Apis::Extensions::V1beta1::ReplicaSetList
     getter api_version : String = "v1"

@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # DownwardAPIVolumeFile represents information to create the file containing the pod field
   class Api::Core::V1::DownwardAPIVolumeFile
     # Required: Selects a field of the pod: only annotations, labels, name and namespace are supported.

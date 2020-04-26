@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # PodDisruptionBudgetList is a collection of PodDisruptionBudgets.
   class Kubernetes::Apis::Policy::V1beta1::PodDisruptionBudgetList
     getter api_version : String = "v1"

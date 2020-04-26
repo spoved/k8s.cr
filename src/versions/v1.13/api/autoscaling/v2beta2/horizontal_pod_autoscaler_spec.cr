@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # HorizontalPodAutoscalerSpec describes the desired functionality of the HorizontalPodAutoscaler.
   class Api::Autoscaling::V2beta2::HorizontalPodAutoscalerSpec
     # maxReplicas is the upper limit for the number of replicas to which the autoscaler can scale up. It cannot be less that minReplicas.

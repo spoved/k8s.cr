@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # Represents storage that is managed by an external CSI volume driver
   class Api::Core::V1::CSIPersistentVolumeSource
     # Driver is the name of the driver to use for this volume. Required.

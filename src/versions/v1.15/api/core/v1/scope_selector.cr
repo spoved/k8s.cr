@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # A scope selector represents the AND of the selectors represented by the scoped-resource selector requirements.
   class Api::Core::V1::ScopeSelector
     # A list of scope selector requirements by scope of the resources.

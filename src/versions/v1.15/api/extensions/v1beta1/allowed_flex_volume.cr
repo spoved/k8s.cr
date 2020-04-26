@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # AllowedFlexVolume represents a single Flexvolume that is allowed to be used. Deprecated: use AllowedFlexVolume from policy API Group instead.
   class Api::Extensions::V1beta1::AllowedFlexVolume
     # driver is the name of the Flexvolume driver.

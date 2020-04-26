@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # TCPSocketAction describes an action based on opening a socket
   class Kubernetes::Api::V1::TCPSocketAction
     # Optional: Host name to connect to, defaults to the pod IP.

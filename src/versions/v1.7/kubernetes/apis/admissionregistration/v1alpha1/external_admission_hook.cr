@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # ExternalAdmissionHook describes an external admission webhook and the resources and operations it applies to.
   class Kubernetes::Apis::Admissionregistration::V1alpha1::ExternalAdmissionHook
     # ClientConfig defines how to communicate with the hook. Required

@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # PodPreset is a policy resource that defines additional runtime requirements for a Pod.
   class Kubernetes::Apis::Settings::V1alpha1::PodPreset
     getter api_version : String = "settings/v1alpha1"
@@ -31,6 +31,6 @@ module Pyrite
   end
 
   module Resources::Settings::V1alpha1
-    alias PodPreset = ::Pyrite::Kubernetes::Apis::Settings::V1alpha1::PodPreset
+    alias PodPreset = ::K8S::Kubernetes::Apis::Settings::V1alpha1::PodPreset
   end
 end

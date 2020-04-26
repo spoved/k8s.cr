@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # VolumeAttachmentSpec is the specification of a VolumeAttachment request.
   class Api::Storage::V1alpha1::VolumeAttachmentSpec
     # Attacher indicates the name of the volume driver that MUST handle this request. This is the name returned by GetPluginName().

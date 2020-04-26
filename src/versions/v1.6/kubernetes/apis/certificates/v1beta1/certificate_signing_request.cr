@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # Describes a certificate signing request
   class Kubernetes::Apis::Certificates::V1beta1::CertificateSigningRequest
     getter api_version : String = "certificates/v1beta1"
@@ -37,6 +37,6 @@ module Pyrite
   end
 
   module Resources::Certificates::V1beta1
-    alias CertificateSigningRequest = ::Pyrite::Kubernetes::Apis::Certificates::V1beta1::CertificateSigningRequest
+    alias CertificateSigningRequest = ::K8S::Kubernetes::Apis::Certificates::V1beta1::CertificateSigningRequest
   end
 end

@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # StatefulSetList is a collection of StatefulSets.
   class Kubernetes::Apis::Apps::V1beta1::StatefulSetList
     getter api_version : String = "v1"

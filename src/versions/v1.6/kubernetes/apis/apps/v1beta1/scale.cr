@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # Scale represents a scaling request for a resource.
   class Kubernetes::Apis::Apps::V1beta1::Scale
     getter api_version : String = "apps/v1beta1"
@@ -38,6 +38,6 @@ module Pyrite
   end
 
   module Resources::Apps::V1beta1
-    alias Scale = ::Pyrite::Kubernetes::Apis::Apps::V1beta1::Scale
+    alias Scale = ::K8S::Kubernetes::Apis::Apps::V1beta1::Scale
   end
 end

@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # ReplicaSetSpec is the specification of a ReplicaSet.
   class Api::Extensions::V1beta1::ReplicaSetSpec
     # Minimum number of seconds for which a newly created pod should be ready without any of its container crashing, for it to be considered available. Defaults to 0 (pod will be considered available as soon as it is ready)

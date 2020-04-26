@@ -1,5 +1,8 @@
 # THIS FILE WAS AUTO GENERATED FROM THE K8S SWAGGER SPEC
 
+annotation ::K8S::GroupVersionKind; end
+annotation ::K8S::Action; end
+
 require "./v1.8/api/admissionregistration/v1alpha1/admission_hook_client_config.cr"
 require "./v1.8/api/admissionregistration/v1alpha1/external_admission_hook.cr"
 require "./v1.8/api/admissionregistration/v1alpha1/external_admission_hook_configuration.cr"

@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # ReplicationControllerStatus represents the current status of a replication controller.
   class Api::Core::V1::ReplicationControllerStatus
     # The number of available replicas (ready for at least minReadySeconds) for this replication controller.

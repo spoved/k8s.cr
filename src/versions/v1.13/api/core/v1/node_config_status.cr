@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # NodeConfigStatus describes the status of the config assigned by Node.Spec.ConfigSource.
   class Api::Core::V1::NodeConfigStatus
     # Active reports the checkpointed config the node is actively using. Active will represent either the current version of the Assigned config, or the current LastKnownGood config, depending on whether attempting to use the Assigned config results in an error.

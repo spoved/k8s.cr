@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # EventSource contains information for an event.
   class Kubernetes::Api::V1::EventSource
     # Component from which the event is generated.

@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # ScaleStatus represents the current status of a scale subresource.
   class Kubernetes::Apis::Apps::V1beta1::ScaleStatus
     # actual number of observed instances of the scaled object.

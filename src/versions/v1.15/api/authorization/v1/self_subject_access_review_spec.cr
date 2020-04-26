@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # SelfSubjectAccessReviewSpec is a description of the access request.  Exactly one of ResourceAuthorizationAttributes and NonResourceAuthorizationAttributes must be set
   class Api::Authorization::V1::SelfSubjectAccessReviewSpec
     # NonResourceAttributes describes information for a non-resource access request

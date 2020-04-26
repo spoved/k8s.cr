@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # EnvVar represents an environment variable present in a Container.
   class Api::Core::V1::EnvVar
     # Name of the environment variable. Must be a C_IDENTIFIER.

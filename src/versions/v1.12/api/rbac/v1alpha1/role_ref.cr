@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # RoleRef contains information that points to the role being used
   class Api::Rbac::V1alpha1::RoleRef
     # APIGroup is the group for the resource being referenced

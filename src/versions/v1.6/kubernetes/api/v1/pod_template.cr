@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # PodTemplate describes a template for creating copies of a predefined pod.
   class Kubernetes::Api::V1::PodTemplate
     getter api_version : String = "v1"
@@ -33,6 +33,6 @@ module Pyrite
   end
 
   module Resources::V1
-    alias PodTemplate = ::Pyrite::Kubernetes::Api::V1::PodTemplate
+    alias PodTemplate = ::K8S::Kubernetes::Api::V1::PodTemplate
   end
 end

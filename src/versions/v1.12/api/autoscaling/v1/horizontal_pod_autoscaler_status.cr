@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # current status of a horizontal pod autoscaler
   class Api::Autoscaling::V1::HorizontalPodAutoscalerStatus
     # current average CPU utilization over all pods, represented as a percentage of requested CPU, e.g. 70 means that an average pod is using now 70% of its requested CPU.

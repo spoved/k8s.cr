@@ -3,8 +3,65 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # ClusterRole is a cluster level, logical grouping of PolicyRules that can be referenced as a unit by a RoleBinding or ClusterRoleBinding.
+  @[::K8S::GroupVersionKind(group: "rbac.authorization.k8s.io", kind: "ClusterRole", version: "v1alpha1")]
+  @[::K8S::Action(name: "post", verb: "post",
+    path: "/apis/rbac.authorization.k8s.io/v1alpha1/clusterroles", toplevel: false,
+    args: [{name: "context", type: String | Nil, default: nil},
+           {name: "include_uninitialized", type: Bool | Nil, default: nil},
+           {name: "dry_run", type: String | Nil, default: nil}]
+  )]
+  @[::K8S::Action(name: "list", verb: "get",
+    path: "/apis/rbac.authorization.k8s.io/v1alpha1/clusterroles", toplevel: true,
+    args: [{name: "context", type: String | Nil, default: nil},
+           {name: "include_uninitialized", type: Bool | Nil, default: nil},
+           {name: "continue", type: String | Nil, default: nil},
+           {name: "field_selector", type: String | Nil, default: nil},
+           {name: "label_selector", type: String | Nil, default: nil},
+           {name: "limit", type: Int32 | Nil, default: nil},
+           {name: "resource_version", type: String | Nil, default: nil},
+           {name: "timeout_seconds", type: Int32 | Nil, default: nil},
+           {name: "watch", type: Bool | Nil, default: nil}]
+  )]
+  @[::K8S::Action(name: "deletecollection", verb: "delete",
+    path: "/apis/rbac.authorization.k8s.io/v1alpha1/clusterroles", toplevel: true,
+    args: [{name: "context", type: String | Nil, default: nil},
+           {name: "include_uninitialized", type: Bool | Nil, default: nil},
+           {name: "continue", type: String | Nil, default: nil},
+           {name: "field_selector", type: String | Nil, default: nil},
+           {name: "label_selector", type: String | Nil, default: nil},
+           {name: "limit", type: Int32 | Nil, default: nil},
+           {name: "resource_version", type: String | Nil, default: nil},
+           {name: "timeout_seconds", type: Int32 | Nil, default: nil},
+           {name: "watch", type: Bool | Nil, default: nil}]
+  )]
+  @[::K8S::Action(name: "get", verb: "get",
+    path: "/apis/rbac.authorization.k8s.io/v1alpha1/clusterroles/{name}", toplevel: true,
+    args: [{name: "name", type: String},
+           {name: "context", type: String | Nil, default: nil}]
+  )]
+  @[::K8S::Action(name: "put", verb: "put",
+    path: "/apis/rbac.authorization.k8s.io/v1alpha1/clusterroles/{name}", toplevel: false,
+    args: [{name: "context", type: String | Nil, default: nil},
+           {name: "dry_run", type: String | Nil, default: nil}]
+  )]
+  @[::K8S::Action(name: "patch", verb: "path",
+    path: "/apis/rbac.authorization.k8s.io/v1alpha1/clusterroles/{name}", toplevel: false,
+    args: [{name: "context", type: String | Nil, default: nil},
+           {name: "dry_run", type: String | Nil, default: nil}]
+  )]
+  @[::K8S::Action(name: "delete", verb: "delete",
+    path: "/apis/rbac.authorization.k8s.io/v1alpha1/clusterroles/{name}", toplevel: false,
+    args: [{name: "api_version", type: String | Nil, default: nil},
+           {name: "dry_run", type: String | Nil, default: nil},
+           {name: "grace_period_seconds", type: Int32 | Nil, default: nil},
+           {name: "kind", type: String | Nil, default: nil},
+           {name: "orphan_dependents", type: Bool | Nil, default: nil},
+           {name: "preconditions", type: Apimachinery::Apis::Meta::V1::Preconditions | Nil, default: nil},
+           {name: "propagation_policy", type: String | Nil, default: nil},
+           {name: "context", type: String | Nil, default: nil}]
+  )]
   class Api::Rbac::V1alpha1::ClusterRole
     getter api_version : String = "rbac.authorization.k8s.io/v1alpha1"
     getter kind : String = "ClusterRole"
@@ -38,6 +95,6 @@ module Pyrite
   end
 
   module Resources::Rbac::V1alpha1
-    alias ClusterRole = ::Pyrite::Api::Rbac::V1alpha1::ClusterRole
+    alias ClusterRole = ::K8S::Api::Rbac::V1alpha1::ClusterRole
   end
 end

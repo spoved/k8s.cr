@@ -3,8 +3,9 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # NodeConfigSource specifies a source of node configuration. Exactly one subfield (excluding metadata) must be non-nil.
+  @[::K8S::GroupVersionKind(group: "", kind: "NodeConfigSource", version: "v1")]
   class Api::Core::V1::NodeConfigSource
     # APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [https://git.k8s.io/community/contributors/devel/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/api-conventions.md#resources)
     property api_version : String | Nil

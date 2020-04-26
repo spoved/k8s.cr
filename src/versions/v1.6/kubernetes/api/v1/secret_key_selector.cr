@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # SecretKeySelector selects a key of a Secret.
   class Kubernetes::Api::V1::SecretKeySelector
     # The key of the secret to select from.  Must be a valid secret key.

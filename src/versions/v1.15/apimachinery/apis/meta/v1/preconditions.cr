@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # Preconditions must be fulfilled before an operation (update, delete, etc.) is carried out.
   class Apimachinery::Apis::Meta::V1::Preconditions
     # Specifies the target ResourceVersion

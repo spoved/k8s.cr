@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # NodeList is the whole list of all Nodes which have been registered with master.
   class Kubernetes::Api::V1::NodeList
     getter api_version : String = "v1"

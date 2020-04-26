@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # ContainerStateWaiting is a waiting state of a container.
   class Api::Core::V1::ContainerStateWaiting
     # Message regarding why the container is not yet running.

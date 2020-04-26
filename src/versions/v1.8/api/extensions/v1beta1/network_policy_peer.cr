@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   class Api::Extensions::V1beta1::NetworkPolicyPeer
     # IPBlock defines policy on a particular IPBlock
     property ip_block : Api::Extensions::V1beta1::IPBlock | Nil

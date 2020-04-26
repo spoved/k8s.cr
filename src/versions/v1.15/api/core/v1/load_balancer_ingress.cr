@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # LoadBalancerIngress represents the status of a load-balancer ingress point: traffic intended for the service should be sent to an ingress point.
   class Api::Core::V1::LoadBalancerIngress
     # Hostname is set for load-balancer ingress points that are DNS based (typically AWS load-balancers)

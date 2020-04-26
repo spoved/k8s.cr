@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # APIServiceStatus contains derived information about an API server
   class KubeAggregator::Apis::Apiregistration::V1::APIServiceStatus
     # Current service state of apiService.

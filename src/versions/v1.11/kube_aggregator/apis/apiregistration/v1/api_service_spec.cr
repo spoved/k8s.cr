@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # APIServiceSpec contains information for locating and communicating with a server. Only https is supported, though you are able to disable certificate verification.
   class KubeAggregator::Apis::Apiregistration::V1::APIServiceSpec
     # CABundle is a PEM encoded CA bundle which will be used to validate an API server's serving certificate.

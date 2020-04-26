@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # A null or empty node selector term matches no objects.
   class Api::Core::V1::NodeSelectorTerm
     # Required. A list of node selector requirements. The requirements are ANDed.

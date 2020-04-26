@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # ResourceAttributes includes the authorization attributes available for resource requests to the Authorizer interface
   class Api::Authorization::V1beta1::ResourceAttributes
     # Group is the API Group of the Resource.  "*" means all.

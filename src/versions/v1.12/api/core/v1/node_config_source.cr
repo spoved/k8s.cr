@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # NodeConfigSource specifies a source of node configuration. Exactly one subfield (excluding metadata) must be non-nil.
   class Api::Core::V1::NodeConfigSource
     # ConfigMap is a reference to a Node's ConfigMap

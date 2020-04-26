@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # ScaleSpec describes the attributes of a scale subresource
   class Kubernetes::Apis::Apps::V1beta1::ScaleSpec
     # desired number of instances for the scaled object.

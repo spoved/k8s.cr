@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # Secret holds secret data of a certain type. The total bytes of the values in the Data field must be less than MaxSecretSize bytes.
   class Kubernetes::Api::V1::Secret
     getter api_version : String = "v1"
@@ -43,6 +43,6 @@ module Pyrite
   end
 
   module Resources::V1
-    alias Secret = ::Pyrite::Kubernetes::Api::V1::Secret
+    alias Secret = ::K8S::Kubernetes::Api::V1::Secret
   end
 end

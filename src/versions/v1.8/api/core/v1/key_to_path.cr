@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # Maps a string key to a path within a volume.
   class Api::Core::V1::KeyToPath
     # The key to project.

@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # LimitRangeList is a list of LimitRange items.
   class Kubernetes::Api::V1::LimitRangeList
     getter api_version : String = "v1"

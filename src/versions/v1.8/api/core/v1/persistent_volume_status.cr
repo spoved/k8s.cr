@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # PersistentVolumeStatus is the current status of a persistent volume.
   class Api::Core::V1::PersistentVolumeStatus
     # A human-readable message indicating details about why the volume is in this state.

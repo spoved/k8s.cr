@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # ReplicaSetCondition describes the state of a replica set at a certain point.
   class Kubernetes::Apis::Extensions::V1beta1::ReplicaSetCondition
     # The last time the condition transitioned from one status to another.

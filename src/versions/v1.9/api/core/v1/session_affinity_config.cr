@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # SessionAffinityConfig represents the configurations of session affinity.
   class Api::Core::V1::SessionAffinityConfig
     # clientIP contains the configurations of Client IP based session affinity.

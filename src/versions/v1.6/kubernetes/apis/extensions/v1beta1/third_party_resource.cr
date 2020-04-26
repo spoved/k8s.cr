@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # A ThirdPartyResource is a generic representation of a resource, it is used by add-ons and plugins to add new resource types to the API.  It consists of one or more Versions of the api.
   class Kubernetes::Apis::Extensions::V1beta1::ThirdPartyResource
     getter api_version : String = "extensions/v1beta1"
@@ -38,6 +38,6 @@ module Pyrite
   end
 
   module Resources::Extensions::V1beta1
-    alias ThirdPartyResource = ::Pyrite::Kubernetes::Apis::Extensions::V1beta1::ThirdPartyResource
+    alias ThirdPartyResource = ::K8S::Kubernetes::Apis::Extensions::V1beta1::ThirdPartyResource
   end
 end

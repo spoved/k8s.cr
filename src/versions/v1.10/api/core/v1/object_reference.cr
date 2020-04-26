@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # ObjectReference contains enough information to let you inspect or modify the referred object.
   class Api::Core::V1::ObjectReference
     # API version of the referent.

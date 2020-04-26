@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # UserInfo holds the information about the user needed to implement the user.Info interface.
   class Kubernetes::Apis::Authentication::V1beta1::UserInfo
     # Any additional information provided by the authenticator.

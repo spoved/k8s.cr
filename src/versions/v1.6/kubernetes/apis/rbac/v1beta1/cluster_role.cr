@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # ClusterRole is a cluster level, logical grouping of PolicyRules that can be referenced as a unit by a RoleBinding or ClusterRoleBinding.
   class Kubernetes::Apis::Rbac::V1beta1::ClusterRole
     getter api_version : String = "rbac.authorization.k8s.io/v1beta1"
@@ -33,6 +33,6 @@ module Pyrite
   end
 
   module Resources::Rbac::V1beta1
-    alias ClusterRole = ::Pyrite::Kubernetes::Apis::Rbac::V1beta1::ClusterRole
+    alias ClusterRole = ::K8S::Kubernetes::Apis::Rbac::V1beta1::ClusterRole
   end
 end

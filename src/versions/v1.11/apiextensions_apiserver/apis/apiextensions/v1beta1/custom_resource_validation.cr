@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # CustomResourceValidation is a list of validation methods for CustomResources.
   class ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceValidation
     # OpenAPIV3Schema is the OpenAPI v3 schema to be validated against.

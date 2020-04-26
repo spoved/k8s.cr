@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # Event is a report of an event somewhere in the cluster.
   class Kubernetes::Api::V1::Event
     getter api_version : String = "v1"
@@ -68,6 +68,6 @@ module Pyrite
   end
 
   module Resources::V1
-    alias Event = ::Pyrite::Kubernetes::Api::V1::Event
+    alias Event = ::K8S::Kubernetes::Api::V1::Event
   end
 end

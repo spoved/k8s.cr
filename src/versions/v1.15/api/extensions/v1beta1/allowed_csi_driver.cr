@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # AllowedCSIDriver represents a single inline CSI Driver that is allowed to be used.
   class Api::Extensions::V1beta1::AllowedCSIDriver
     # Name is the registered name of the CSI driver

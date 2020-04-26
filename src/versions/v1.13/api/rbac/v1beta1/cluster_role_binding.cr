@@ -3,8 +3,62 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # ClusterRoleBinding references a ClusterRole, but not contain it.  It can reference a ClusterRole in the global namespace, and adds who information via Subject.
+  @[::K8S::GroupVersionKind(group: "rbac.authorization.k8s.io", kind: "ClusterRoleBinding", version: "v1beta1")]
+  @[::K8S::Action(name: "post", verb: "post",
+    path: "/apis/rbac.authorization.k8s.io/v1beta1/clusterrolebindings", toplevel: false,
+    args: [{name: "context", type: String | Nil, default: nil},
+           {name: "include_uninitialized", type: Bool | Nil, default: nil},
+           {name: "dry_run", type: String | Nil, default: nil}]
+  )]
+  @[::K8S::Action(name: "list", verb: "get",
+    path: "/apis/rbac.authorization.k8s.io/v1beta1/clusterrolebindings", toplevel: true,
+    args: [{name: "context", type: String | Nil, default: nil},
+           {name: "include_uninitialized", type: Bool | Nil, default: nil},
+           {name: "continue", type: String | Nil, default: nil},
+           {name: "field_selector", type: String | Nil, default: nil},
+           {name: "label_selector", type: String | Nil, default: nil},
+           {name: "limit", type: Int32 | Nil, default: nil},
+           {name: "resource_version", type: String | Nil, default: nil},
+           {name: "timeout_seconds", type: Int32 | Nil, default: nil},
+           {name: "watch", type: Bool | Nil, default: nil}]
+  )]
+  @[::K8S::Action(name: "deletecollection", verb: "delete",
+    path: "/apis/rbac.authorization.k8s.io/v1beta1/clusterrolebindings", toplevel: true,
+    args: [{name: "context", type: String | Nil, default: nil},
+           {name: "include_uninitialized", type: Bool | Nil, default: nil},
+           {name: "continue", type: String | Nil, default: nil},
+           {name: "field_selector", type: String | Nil, default: nil},
+           {name: "label_selector", type: String | Nil, default: nil},
+           {name: "limit", type: Int32 | Nil, default: nil},
+           {name: "resource_version", type: String | Nil, default: nil},
+           {name: "timeout_seconds", type: Int32 | Nil, default: nil},
+           {name: "watch", type: Bool | Nil, default: nil}]
+  )]
+  @[::K8S::Action(name: "get", verb: "get",
+    path: "/apis/rbac.authorization.k8s.io/v1beta1/clusterrolebindings/{name}", toplevel: true,
+    args: [{name: "name", type: String},
+           {name: "context", type: String | Nil, default: nil}]
+  )]
+  @[::K8S::Action(name: "put", verb: "put",
+    path: "/apis/rbac.authorization.k8s.io/v1beta1/clusterrolebindings/{name}", toplevel: false,
+    args: [{name: "context", type: String | Nil, default: nil},
+           {name: "dry_run", type: String | Nil, default: nil}]
+  )]
+  @[::K8S::Action(name: "patch", verb: "path",
+    path: "/apis/rbac.authorization.k8s.io/v1beta1/clusterrolebindings/{name}", toplevel: false,
+    args: [{name: "context", type: String | Nil, default: nil},
+           {name: "dry_run", type: String | Nil, default: nil}]
+  )]
+  @[::K8S::Action(name: "delete", verb: "delete",
+    path: "/apis/rbac.authorization.k8s.io/v1beta1/clusterrolebindings/{name}", toplevel: false,
+    args: [{name: "context", type: String | Nil, default: nil},
+           {name: "dry_run", type: String | Nil, default: nil},
+           {name: "grace_period_seconds", type: Int32 | Nil, default: nil},
+           {name: "orphan_dependents", type: Bool | Nil, default: nil},
+           {name: "propagation_policy", type: String | Nil, default: nil}]
+  )]
   class Api::Rbac::V1beta1::ClusterRoleBinding
     getter api_version : String = "rbac.authorization.k8s.io/v1beta1"
     getter kind : String = "ClusterRoleBinding"
@@ -38,6 +92,6 @@ module Pyrite
   end
 
   module Resources::Rbac::V1beta1
-    alias ClusterRoleBinding = ::Pyrite::Api::Rbac::V1beta1::ClusterRoleBinding
+    alias ClusterRoleBinding = ::K8S::Api::Rbac::V1beta1::ClusterRoleBinding
   end
 end

@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # Service is a named abstraction of software service (for example, mysql) consisting of local port (for example 3306) that the proxy listens on, and the selector that determines which pods will answer requests sent through the proxy.
   class Kubernetes::Api::V1::Service
     getter api_version : String = "v1"
@@ -38,6 +38,6 @@ module Pyrite
   end
 
   module Resources::V1
-    alias Service = ::Pyrite::Kubernetes::Api::V1::Service
+    alias Service = ::K8S::Kubernetes::Api::V1::Service
   end
 end

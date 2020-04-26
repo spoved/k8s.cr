@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # Handler defines a specific action that should be taken
   class Kubernetes::Api::V1::Handler
     # One and only one of the following should be specified. Exec specifies the action to take.

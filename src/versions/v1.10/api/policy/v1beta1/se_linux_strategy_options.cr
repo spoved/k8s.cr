@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # SELinux  Strategy Options defines the strategy type and any options used to create the strategy.
   class Api::Policy::V1beta1::SELinuxStrategyOptions
     # type is the strategy that will dictate the allowable labels that may be set.

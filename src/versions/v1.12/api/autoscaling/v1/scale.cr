@@ -3,8 +3,73 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # Scale represents a scaling request for a resource.
+  @[::K8S::GroupVersionKind(group: "autoscaling", kind: "Scale", version: "v1")]
+  @[::K8S::Action(name: "get", verb: "get",
+    path: "/api/v1/namespaces/{namespace}/replicationcontrollers/{name}/scale", toplevel: true,
+    args: [{name: "name", type: String},
+           {name: "context", type: String | Nil, default: nil},
+           {name: "namespace", type: String, default: "default"}]
+  )]
+  @[::K8S::Action(name: "put", verb: "put",
+    path: "/api/v1/namespaces/{namespace}/replicationcontrollers/{name}/scale", toplevel: false,
+    args: [{name: "context", type: String | Nil, default: nil},
+           {name: "dry_run", type: String | Nil, default: nil}]
+  )]
+  @[::K8S::Action(name: "patch", verb: "path",
+    path: "/api/v1/namespaces/{namespace}/replicationcontrollers/{name}/scale", toplevel: false,
+    args: [{name: "context", type: String | Nil, default: nil},
+           {name: "dry_run", type: String | Nil, default: nil}]
+  )]
+  @[::K8S::Action(name: "get", verb: "get",
+    path: "/apis/apps/v1/namespaces/{namespace}/deployments/{name}/scale", toplevel: true,
+    args: [{name: "name", type: String},
+           {name: "context", type: String | Nil, default: nil},
+           {name: "namespace", type: String, default: "default"}]
+  )]
+  @[::K8S::Action(name: "put", verb: "put",
+    path: "/apis/apps/v1/namespaces/{namespace}/deployments/{name}/scale", toplevel: false,
+    args: [{name: "context", type: String | Nil, default: nil},
+           {name: "dry_run", type: String | Nil, default: nil}]
+  )]
+  @[::K8S::Action(name: "patch", verb: "path",
+    path: "/apis/apps/v1/namespaces/{namespace}/deployments/{name}/scale", toplevel: false,
+    args: [{name: "context", type: String | Nil, default: nil},
+           {name: "dry_run", type: String | Nil, default: nil}]
+  )]
+  @[::K8S::Action(name: "get", verb: "get",
+    path: "/apis/apps/v1/namespaces/{namespace}/replicasets/{name}/scale", toplevel: true,
+    args: [{name: "name", type: String},
+           {name: "context", type: String | Nil, default: nil},
+           {name: "namespace", type: String, default: "default"}]
+  )]
+  @[::K8S::Action(name: "put", verb: "put",
+    path: "/apis/apps/v1/namespaces/{namespace}/replicasets/{name}/scale", toplevel: false,
+    args: [{name: "context", type: String | Nil, default: nil},
+           {name: "dry_run", type: String | Nil, default: nil}]
+  )]
+  @[::K8S::Action(name: "patch", verb: "path",
+    path: "/apis/apps/v1/namespaces/{namespace}/replicasets/{name}/scale", toplevel: false,
+    args: [{name: "context", type: String | Nil, default: nil},
+           {name: "dry_run", type: String | Nil, default: nil}]
+  )]
+  @[::K8S::Action(name: "get", verb: "get",
+    path: "/apis/apps/v1/namespaces/{namespace}/statefulsets/{name}/scale", toplevel: true,
+    args: [{name: "name", type: String},
+           {name: "context", type: String | Nil, default: nil},
+           {name: "namespace", type: String, default: "default"}]
+  )]
+  @[::K8S::Action(name: "put", verb: "put",
+    path: "/apis/apps/v1/namespaces/{namespace}/statefulsets/{name}/scale", toplevel: false,
+    args: [{name: "context", type: String | Nil, default: nil},
+           {name: "dry_run", type: String | Nil, default: nil}]
+  )]
+  @[::K8S::Action(name: "patch", verb: "path",
+    path: "/apis/apps/v1/namespaces/{namespace}/statefulsets/{name}/scale", toplevel: false,
+    args: [{name: "context", type: String | Nil, default: nil},
+           {name: "dry_run", type: String | Nil, default: nil}]
+  )]
   class Api::Autoscaling::V1::Scale
     getter api_version : String = "autoscaling/v1"
     getter kind : String = "Scale"
@@ -38,6 +103,6 @@ module Pyrite
   end
 
   module Resources::Autoscaling::V1
-    alias Scale = ::Pyrite::Api::Autoscaling::V1::Scale
+    alias Scale = ::K8S::Api::Autoscaling::V1::Scale
   end
 end

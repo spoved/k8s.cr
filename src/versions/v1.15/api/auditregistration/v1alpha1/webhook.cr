@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # Webhook holds the configuration of the webhook
   class Api::Auditregistration::V1alpha1::Webhook
     # ClientConfig holds the connection parameters for the webhook required

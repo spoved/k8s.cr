@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # PodDisruptionBudgetSpec is a description of a PodDisruptionBudget.
   class Kubernetes::Apis::Policy::V1beta1::PodDisruptionBudgetSpec
     # An eviction is allowed if at least "minAvailable" pods selected by "selector" will still be available after the eviction, i.e. even in the absence of the evicted pod.  So for example you can prevent all voluntary evictions by specifying "100%".

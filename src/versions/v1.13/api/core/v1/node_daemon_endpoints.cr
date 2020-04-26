@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # NodeDaemonEndpoints lists ports opened by daemons running on the Node.
   class Api::Core::V1::NodeDaemonEndpoints
     # Endpoint on which Kubelet is listening.

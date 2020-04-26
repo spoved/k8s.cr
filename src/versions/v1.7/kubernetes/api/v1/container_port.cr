@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # ContainerPort represents a network port in a single container.
   class Kubernetes::Api::V1::ContainerPort
     # Number of port to expose on the pod's IP address. This must be a valid port number, 0 < x < 65536.

@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # VolumeNodeAffinity defines constraints that limit what nodes this volume can be accessed from.
   class Api::Core::V1::VolumeNodeAffinity
     # Required specifies hard node constraints that must be met.

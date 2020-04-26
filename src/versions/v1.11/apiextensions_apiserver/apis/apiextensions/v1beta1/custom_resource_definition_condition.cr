@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # CustomResourceDefinitionCondition contains details for the current condition of this pod.
   class ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceDefinitionCondition
     # Last time the condition transitioned from one status to another.

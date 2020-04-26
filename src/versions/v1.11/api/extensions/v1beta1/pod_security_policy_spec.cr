@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # PodSecurityPolicySpec defines the policy enforced. Deprecated: use PodSecurityPolicySpec from policy API Group instead.
   class Api::Extensions::V1beta1::PodSecurityPolicySpec
     # allowPrivilegeEscalation determines if a pod can request to allow privilege escalation. If unspecified, defaults to true.

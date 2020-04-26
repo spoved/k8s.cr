@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # A node selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
   class Kubernetes::Api::V1::NodeSelectorRequirement
     # The label key that the selector applies to.

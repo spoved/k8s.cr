@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # CronJob represents the configuration of a single cron job.
   class Kubernetes::Apis::Batch::V2alpha1::CronJob
     getter api_version : String = "batch/v2alpha1"
@@ -38,6 +38,6 @@ module Pyrite
   end
 
   module Resources::Batch::V2alpha1
-    alias CronJob = ::Pyrite::Kubernetes::Apis::Batch::V2alpha1::CronJob
+    alias CronJob = ::K8S::Kubernetes::Apis::Batch::V2alpha1::CronJob
   end
 end

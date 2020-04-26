@@ -3,8 +3,14 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # ComponentStatus (and ComponentStatusList) holds the cluster validation info.
+  @[::K8S::GroupVersionKind(group: "", kind: "ComponentStatus", version: "v1")]
+  @[::K8S::Action(name: "get", verb: "get",
+    path: "/api/v1/componentstatuses/{name}", toplevel: true,
+    args: [{name: "name", type: String},
+           {name: "context", type: String | Nil, default: nil}]
+  )]
   class Api::Core::V1::ComponentStatus
     getter api_version : String = "v1"
     getter kind : String = "ComponentStatus"
@@ -33,6 +39,6 @@ module Pyrite
   end
 
   module Resources::V1
-    alias ComponentStatus = ::Pyrite::Api::Core::V1::ComponentStatus
+    alias ComponentStatus = ::K8S::Api::Core::V1::ComponentStatus
   end
 end

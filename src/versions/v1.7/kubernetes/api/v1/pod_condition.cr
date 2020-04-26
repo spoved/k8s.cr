@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # PodCondition contains details for the current condition of this pod.
   class Kubernetes::Api::V1::PodCondition
     # Last time we probed the condition.

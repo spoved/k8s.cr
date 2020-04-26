@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # ExternalMetricStatus indicates the current value of a global metric not associated with any Kubernetes object.
   class Api::Autoscaling::V2beta2::ExternalMetricStatus
     # current contains the current value for the given metric

@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # Job represents the configuration of a single job.
   class Kubernetes::Apis::Batch::V1::Job
     getter api_version : String = "batch/v1"
@@ -38,6 +38,6 @@ module Pyrite
   end
 
   module Resources::Batch::V1
-    alias Job = ::Pyrite::Kubernetes::Apis::Batch::V1::Job
+    alias Job = ::K8S::Kubernetes::Apis::Batch::V1::Job
   end
 end

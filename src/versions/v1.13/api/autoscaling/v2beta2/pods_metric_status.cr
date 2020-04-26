@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # PodsMetricStatus indicates the current value of a metric describing each pod in the current scale target (for example, transactions-processed-per-second).
   class Api::Autoscaling::V2beta2::PodsMetricStatus
     # current contains the current value for the given metric

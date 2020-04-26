@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # NodeCondition contains condition information for a node.
   class Kubernetes::Api::V1::NodeCondition
     # Last time we got an update on a given condition.

@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # CronJobSpec describes how the job execution will look like and when it will actually run.
   class Api::Batch::V1beta1::CronJobSpec
     # Specifies how to treat concurrent executions of a Job. Defaults to Allow.

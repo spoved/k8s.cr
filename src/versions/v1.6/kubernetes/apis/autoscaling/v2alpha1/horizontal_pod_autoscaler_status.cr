@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # HorizontalPodAutoscalerStatus describes the current status of a horizontal pod autoscaler.
   class Kubernetes::Apis::Autoscaling::V2alpha1::HorizontalPodAutoscalerStatus
     # currentMetrics is the last read state of the metrics used by this autoscaler.

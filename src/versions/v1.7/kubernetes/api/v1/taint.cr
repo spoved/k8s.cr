@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # The node this Taint is attached to has the effect "effect" on any pod that that does not tolerate the Taint.
   class Kubernetes::Api::V1::Taint
     # Required. The effect of the taint on pods that do not tolerate the taint. Valid effects are NoSchedule, PreferNoSchedule and NoExecute.

@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # Policy defines the configuration of how audit events are logged
   class Api::Auditregistration::V1alpha1::Policy
     # The Level that all requests are recorded at. available options: None, Metadata, Request, RequestResponse required

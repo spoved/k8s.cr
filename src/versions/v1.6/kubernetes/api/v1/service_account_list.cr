@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # ServiceAccountList is a list of ServiceAccount objects
   class Kubernetes::Api::V1::ServiceAccountList
     getter api_version : String = "v1"

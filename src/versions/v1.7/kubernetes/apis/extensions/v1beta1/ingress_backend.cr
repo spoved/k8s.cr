@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # IngressBackend describes all endpoints for a given service and port.
   class Kubernetes::Apis::Extensions::V1beta1::IngressBackend
     # Specifies the name of the referenced service.

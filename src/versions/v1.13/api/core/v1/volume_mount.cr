@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # VolumeMount describes a mounting of a Volume within a container.
   class Api::Core::V1::VolumeMount
     # Path within the container at which the volume should be mounted.  Must not contain ':'.

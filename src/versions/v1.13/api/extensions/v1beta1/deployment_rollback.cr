@@ -3,8 +3,15 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # DEPRECATED. DeploymentRollback stores the information required to rollback a deployment.
+  @[::K8S::GroupVersionKind(group: "extensions", kind: "DeploymentRollback", version: "v1beta1")]
+  @[::K8S::Action(name: "post", verb: "post",
+    path: "/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}/rollback", toplevel: false,
+    args: [{name: "context", type: String | Nil, default: nil},
+           {name: "dry_run", type: String | Nil, default: nil},
+           {name: "include_uninitialized", type: Bool | Nil, default: nil}]
+  )]
   class Api::Extensions::V1beta1::DeploymentRollback
     # APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [https://git.k8s.io/community/contributors/devel/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/api-conventions.md#resources)
     property api_version : String | Nil

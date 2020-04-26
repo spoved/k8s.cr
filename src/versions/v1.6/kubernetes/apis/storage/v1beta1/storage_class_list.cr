@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # StorageClassList is a collection of storage classes.
   class Kubernetes::Apis::Storage::V1beta1::StorageClassList
     getter api_version : String = "v1"

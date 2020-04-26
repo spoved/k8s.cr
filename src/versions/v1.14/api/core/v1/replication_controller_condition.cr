@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # ReplicationControllerCondition describes the state of a replication controller at a certain point.
   class Api::Core::V1::ReplicationControllerCondition
     # The last time the condition transitioned from one status to another.

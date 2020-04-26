@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # AzureDisk represents an Azure Data Disk mount on the host and bind mount to the pod.
   class Api::Core::V1::AzureDiskVolumeSource
     # Host Caching mode: None, Read Only, Read Write.

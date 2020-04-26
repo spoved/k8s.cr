@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # Pod Security Policy governs the ability to make requests that affect the Security Context that will be applied to a pod and container.
   class Kubernetes::Apis::Extensions::V1beta1::PodSecurityPolicy
     getter api_version : String = "extensions/v1beta1"
@@ -33,6 +33,6 @@ module Pyrite
   end
 
   module Resources::Extensions::V1beta1
-    alias PodSecurityPolicy = ::Pyrite::Kubernetes::Apis::Extensions::V1beta1::PodSecurityPolicy
+    alias PodSecurityPolicy = ::K8S::Kubernetes::Apis::Extensions::V1beta1::PodSecurityPolicy
   end
 end

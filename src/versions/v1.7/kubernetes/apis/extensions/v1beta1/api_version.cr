@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # An APIVersion represents a single concrete version of an object model.
   class Kubernetes::Apis::Extensions::V1beta1::APIVersion
     # Name of this version (e.g. 'v1').

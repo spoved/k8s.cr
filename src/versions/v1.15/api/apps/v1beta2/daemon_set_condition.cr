@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # DaemonSetCondition describes the state of a DaemonSet at a certain point.
   class Api::Apps::V1beta2::DaemonSetCondition
     # Last time the condition transitioned from one status to another.

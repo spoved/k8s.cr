@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # ConfigMapNodeConfigSource contains the information to reference a ConfigMap as a config source for the Node.
   class Api::Core::V1::ConfigMapNodeConfigSource
     # KubeletConfigKey declares which key of the referenced ConfigMap corresponds to the KubeletConfiguration structure This field is required in all cases.

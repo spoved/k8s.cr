@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # JobCondition describes current state of a job.
   class Api::Batch::V1::JobCondition
     # Last time the condition was checked.

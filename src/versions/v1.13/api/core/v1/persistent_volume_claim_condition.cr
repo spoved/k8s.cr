@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # PersistentVolumeClaimCondition contails details about state of pvc
   class Api::Core::V1::PersistentVolumeClaimCondition
     # Last time we probed the condition.

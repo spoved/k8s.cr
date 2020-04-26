@@ -3,8 +3,13 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # SelfSubjectAccessReview checks whether or the current user can perform an action.  Not filling in a spec.namespace means "in all namespaces".  Self is a special case, because users should always be able to check whether they can perform an action
+  @[::K8S::GroupVersionKind(group: "authorization.k8s.io", kind: "SelfSubjectAccessReview", version: "v1")]
+  @[::K8S::Action(name: "post", verb: "post",
+    path: "/apis/authorization.k8s.io/v1/selfsubjectaccessreviews", toplevel: false,
+    args: [{name: "context", type: String | Nil, default: nil}]
+  )]
   class Api::Authorization::V1::SelfSubjectAccessReview
     getter api_version : String = "authorization/v1"
     getter kind : String = "SelfSubjectAccessReview"
@@ -37,6 +42,6 @@ module Pyrite
   end
 
   module Resources::Authorization::V1
-    alias SelfSubjectAccessReview = ::Pyrite::Api::Authorization::V1::SelfSubjectAccessReview
+    alias SelfSubjectAccessReview = ::K8S::Api::Authorization::V1::SelfSubjectAccessReview
   end
 end

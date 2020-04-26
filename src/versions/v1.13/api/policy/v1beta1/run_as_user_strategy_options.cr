@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # RunAsUserStrategyOptions defines the strategy type and any options used to create the strategy.
   class Api::Policy::V1beta1::RunAsUserStrategyOptions
     # ranges are the allowed ranges of uids that may be used. If you would like to force a single uid then supply a single range with the same start and end. Required for MustRunAs.

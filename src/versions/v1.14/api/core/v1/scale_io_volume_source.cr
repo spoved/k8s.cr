@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # ScaleIOVolumeSource represents a persistent ScaleIO volume
   class Api::Core::V1::ScaleIOVolumeSource
     # Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". Default is "xfs".

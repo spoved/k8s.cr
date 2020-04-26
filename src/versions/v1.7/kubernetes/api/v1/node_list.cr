@@ -3,8 +3,36 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # NodeList is the whole list of all Nodes which have been registered with master.
+  @[::K8S::GroupVersionKind(group: "", kind: "NodeList", version: "v1")]
+  @[::K8S::Action(name: "post", verb: "post",
+    path: "/api/v1/nodes", toplevel: false,
+    args: [{name: "metadata", type: Apimachinery::Apis::Meta::V1::ObjectMeta | Nil, default: nil},
+           {name: "spec", type: Kubernetes::Api::V1::NodeSpec | Nil, default: nil},
+           {name: "status", type: Kubernetes::Api::V1::NodeStatus | Nil, default: nil},
+           {name: "context", type: String | Nil, default: nil}]
+  )]
+  @[::K8S::Action(name: "list", verb: "get",
+    path: "/api/v1/nodes", toplevel: true,
+    args: [{name: "context", type: String | Nil, default: nil},
+           {name: "field_selector", type: String | Nil, default: nil},
+           {name: "include_uninitialized", type: Bool | Nil, default: nil},
+           {name: "label_selector", type: String | Nil, default: nil},
+           {name: "resource_version", type: String | Nil, default: nil},
+           {name: "timeout_seconds", type: Int32 | Nil, default: nil},
+           {name: "watch", type: Bool | Nil, default: nil}]
+  )]
+  @[::K8S::Action(name: "deletecollection", verb: "delete",
+    path: "/api/v1/nodes", toplevel: true,
+    args: [{name: "context", type: String | Nil, default: nil},
+           {name: "field_selector", type: String | Nil, default: nil},
+           {name: "include_uninitialized", type: Bool | Nil, default: nil},
+           {name: "label_selector", type: String | Nil, default: nil},
+           {name: "resource_version", type: String | Nil, default: nil},
+           {name: "timeout_seconds", type: Int32 | Nil, default: nil},
+           {name: "watch", type: Bool | Nil, default: nil}]
+  )]
   class Kubernetes::Api::V1::NodeList
     getter api_version : String = "v1"
     getter kind : String = "List"

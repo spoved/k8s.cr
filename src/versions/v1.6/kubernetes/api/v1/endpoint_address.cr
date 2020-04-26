@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # EndpointAddress is a tuple that describes single IP address.
   class Kubernetes::Api::V1::EndpointAddress
     # The Hostname of this endpoint

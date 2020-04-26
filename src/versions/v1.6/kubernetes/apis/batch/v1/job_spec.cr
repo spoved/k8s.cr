@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # JobSpec describes how the job execution will look like.
   class Kubernetes::Apis::Batch::V1::JobSpec
     # Optional duration in seconds relative to the startTime that the job may be active before the system tries to terminate it; value must be positive integer

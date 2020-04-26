@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # ServiceAccount binds together: * a name, understood by users, and perhaps by peripheral systems, for an identity * a principal that can be authenticated and authorized * a set of secrets
   class Kubernetes::Api::V1::ServiceAccount
     getter api_version : String = "v1"
@@ -43,6 +43,6 @@ module Pyrite
   end
 
   module Resources::V1
-    alias ServiceAccount = ::Pyrite::Kubernetes::Api::V1::ServiceAccount
+    alias ServiceAccount = ::K8S::Kubernetes::Api::V1::ServiceAccount
   end
 end

@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # Information about the condition of a component.
   class Kubernetes::Api::V1::ComponentCondition
     # Condition error code for a component. For example, a health check error code.

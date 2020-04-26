@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # ContainerStatus contains details for the current status of this container.
   class Kubernetes::Api::V1::ContainerStatus
     # Container's ID in the format 'docker://<container_id>'. More info: [http://kubernetes.io/docs/user-guide/container-environment#container-information](http://kubernetes.io/docs/user-guide/container-environment#container-information)

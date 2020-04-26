@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # EventList is a list of events.
   class Kubernetes::Api::V1::EventList
     getter api_version : String = "v1"

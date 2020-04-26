@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # LimitRange sets resource usage limits for each kind of resource in a Namespace.
   class Kubernetes::Api::V1::LimitRange
     getter api_version : String = "v1"
@@ -33,6 +33,6 @@ module Pyrite
   end
 
   module Resources::V1
-    alias LimitRange = ::Pyrite::Kubernetes::Api::V1::LimitRange
+    alias LimitRange = ::K8S::Kubernetes::Api::V1::LimitRange
   end
 end

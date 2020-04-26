@@ -1,4 +1,4 @@
-module Pyrite::Kubernetes
+module ::K8S::Kubernetes
   VERSION = "1.15"
   alias Resource = Resources::Admissionregistration::V1beta1::MutatingWebhookConfiguration |
                    Resources::Admissionregistration::V1beta1::ValidatingWebhookConfiguration |

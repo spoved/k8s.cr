@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # DaemonSetList is a collection of daemon sets.
   class Kubernetes::Apis::Extensions::V1beta1::DaemonSetList
     getter api_version : String = "v1"

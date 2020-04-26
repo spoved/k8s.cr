@@ -1,4 +1,4 @@
-module Pyrite::Kubernetes
+module ::K8S::Kubernetes
   VERSION = "1.6"
   alias Resource = Resources::V1::Binding |
                    Resources::V1::ComponentStatus |

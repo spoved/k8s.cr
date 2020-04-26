@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # Role is a namespaced, logical grouping of PolicyRules that can be referenced as a unit by a RoleBinding.
   class Kubernetes::Apis::Rbac::V1beta1::Role
     getter api_version : String = "rbac.authorization.k8s.io/v1beta1"
@@ -33,6 +33,6 @@ module Pyrite
   end
 
   module Resources::Rbac::V1beta1
-    alias Role = ::Pyrite::Kubernetes::Apis::Rbac::V1beta1::Role
+    alias Role = ::K8S::Kubernetes::Apis::Rbac::V1beta1::Role
   end
 end

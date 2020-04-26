@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # SecretList is a list of Secret.
   class Kubernetes::Api::V1::SecretList
     getter api_version : String = "v1"

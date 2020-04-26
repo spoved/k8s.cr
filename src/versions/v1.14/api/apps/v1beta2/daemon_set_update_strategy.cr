@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # DaemonSetUpdateStrategy is a struct used to control the update strategy for a DaemonSet.
   class Api::Apps::V1beta2::DaemonSetUpdateStrategy
     # Rolling update config params. Present only if type = "RollingUpdate".

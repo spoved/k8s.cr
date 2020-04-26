@@ -3,8 +3,40 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # ClusterRoleList is a collection of ClusterRoles
+  @[::K8S::GroupVersionKind(group: "rbac.authorization.k8s.io", kind: "ClusterRoleList", version: "v1beta1")]
+  @[::K8S::Action(name: "post", verb: "post",
+    path: "/apis/rbac.authorization.k8s.io/v1beta1/clusterroles", toplevel: false,
+    args: [{name: "aggregation_rule", type: Api::Rbac::V1beta1::AggregationRule | Nil, default: nil},
+           {name: "metadata", type: Apimachinery::Apis::Meta::V1::ObjectMeta | Nil, default: nil},
+           {name: "rules", type: Array | Nil, default: nil},
+           {name: "context", type: String | Nil, default: nil},
+           {name: "dry_run", type: String | Nil, default: nil},
+           {name: "field_manager", type: String | Nil, default: nil}]
+  )]
+  @[::K8S::Action(name: "list", verb: "get",
+    path: "/apis/rbac.authorization.k8s.io/v1beta1/clusterroles", toplevel: true,
+    args: [{name: "context", type: String | Nil, default: nil},
+           {name: "continue", type: String | Nil, default: nil},
+           {name: "field_selector", type: String | Nil, default: nil},
+           {name: "label_selector", type: String | Nil, default: nil},
+           {name: "limit", type: Int32 | Nil, default: nil},
+           {name: "resource_version", type: String | Nil, default: nil},
+           {name: "timeout_seconds", type: Int32 | Nil, default: nil},
+           {name: "watch", type: Bool | Nil, default: nil}]
+  )]
+  @[::K8S::Action(name: "deletecollection", verb: "delete",
+    path: "/apis/rbac.authorization.k8s.io/v1beta1/clusterroles", toplevel: true,
+    args: [{name: "context", type: String | Nil, default: nil},
+           {name: "continue", type: String | Nil, default: nil},
+           {name: "field_selector", type: String | Nil, default: nil},
+           {name: "label_selector", type: String | Nil, default: nil},
+           {name: "limit", type: Int32 | Nil, default: nil},
+           {name: "resource_version", type: String | Nil, default: nil},
+           {name: "timeout_seconds", type: Int32 | Nil, default: nil},
+           {name: "watch", type: Bool | Nil, default: nil}]
+  )]
   class Api::Rbac::V1beta1::ClusterRoleList
     getter api_version : String = "v1"
     getter kind : String = "List"

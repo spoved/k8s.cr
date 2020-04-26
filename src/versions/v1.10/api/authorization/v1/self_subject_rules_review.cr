@@ -3,8 +3,13 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # SelfSubjectRulesReview enumerates the set of actions the current user can perform within a namespace. The returned list of actions may be incomplete depending on the server's authorization mode, and any errors experienced during the evaluation. SelfSubjectRulesReview should be used by UIs to [show/hide actions, or to quickly let an end user reason about their permissions. It should NOT Be used by external systems to drive authorization decisions as this raises confused deputy, cache lifetime/revocation, and correctness concerns. SubjectAccessReview, and LocalAccessReview are the correct way to defer authorization decisions to the API server.](show/hide actions, or to quickly let an end user reason about their permissions. It should NOT Be used by external systems to drive authorization decisions as this raises confused deputy, cache lifetime/revocation, and correctness concerns. SubjectAccessReview, and LocalAccessReview are the correct way to defer authorization decisions to the API server.)
+  @[::K8S::GroupVersionKind(group: "authorization.k8s.io", kind: "SelfSubjectRulesReview", version: "v1")]
+  @[::K8S::Action(name: "post", verb: "post",
+    path: "/apis/authorization.k8s.io/v1/selfsubjectrulesreviews", toplevel: false,
+    args: [{name: "context", type: String | Nil, default: nil}]
+  )]
   class Api::Authorization::V1::SelfSubjectRulesReview
     getter api_version : String = "authorization/v1"
     getter kind : String = "SelfSubjectRulesReview"
@@ -37,6 +42,6 @@ module Pyrite
   end
 
   module Resources::Authorization::V1
-    alias SelfSubjectRulesReview = ::Pyrite::Api::Authorization::V1::SelfSubjectRulesReview
+    alias SelfSubjectRulesReview = ::K8S::Api::Authorization::V1::SelfSubjectRulesReview
   end
 end

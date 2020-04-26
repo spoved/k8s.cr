@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # Ingress is a collection of rules that allow inbound connections to reach the endpoints defined by a backend. An Ingress can be configured to give services externally-reachable urls, load balance traffic, terminate SSL, offer name based virtual hosting etc.
   class Kubernetes::Apis::Extensions::V1beta1::Ingress
     getter api_version : String = "extensions/v1beta1"
@@ -38,6 +38,6 @@ module Pyrite
   end
 
   module Resources::Extensions::V1beta1
-    alias Ingress = ::Pyrite::Kubernetes::Apis::Extensions::V1beta1::Ingress
+    alias Ingress = ::K8S::Kubernetes::Apis::Extensions::V1beta1::Ingress
   end
 end

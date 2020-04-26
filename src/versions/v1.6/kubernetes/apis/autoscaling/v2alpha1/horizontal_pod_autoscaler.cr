@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # HorizontalPodAutoscaler is the configuration for a horizontal pod autoscaler, which automatically manages the replica count of any resource implementing the scale subresource based on the metrics specified.
   class Kubernetes::Apis::Autoscaling::V2alpha1::HorizontalPodAutoscaler
     getter api_version : String = "autoscaling/v2alpha1"
@@ -38,6 +38,6 @@ module Pyrite
   end
 
   module Resources::Autoscaling::V2alpha1
-    alias HorizontalPodAutoscaler = ::Pyrite::Kubernetes::Apis::Autoscaling::V2alpha1::HorizontalPodAutoscaler
+    alias HorizontalPodAutoscaler = ::K8S::Kubernetes::Apis::Autoscaling::V2alpha1::HorizontalPodAutoscaler
   end
 end

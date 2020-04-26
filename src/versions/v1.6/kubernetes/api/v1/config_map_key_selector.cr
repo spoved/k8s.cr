@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # Selects a key from a ConfigMap.
   class Kubernetes::Api::V1::ConfigMapKeySelector
     # The key to select.

@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # ExternalDocumentation allows referencing an external resource for extended documentation.
   class ApiextensionsApiserver::Apis::Apiextensions::V1beta1::ExternalDocumentation
     property description : String | Nil

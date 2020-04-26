@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # APIResource specifies the name of a resource and whether it is namespaced.
   class Apimachinery::Apis::Meta::V1::APIResource
     # categories is a list of the grouped resources this resource belongs to (e.g. 'all')

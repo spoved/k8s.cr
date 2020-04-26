@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # EndpointsList is a list of endpoints.
   class Kubernetes::Api::V1::EndpointsList
     getter api_version : String = "v1"

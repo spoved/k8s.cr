@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # IngressSpec describes the Ingress the user wishes to exist.
   class Kubernetes::Apis::Extensions::V1beta1::IngressSpec
     # A default backend capable of servicing requests that don't match any rule. At least one of 'backend' or 'rules' must be specified. This field is optional to allow the loadbalancer controller or defaulting logic to specify a global default.

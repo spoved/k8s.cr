@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # JSONSchemaProps is a JSON-Schema following Specification Draft 4 (http://json-schema.org/).
   class ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSONSchemaProps
     property ref : String | Nil

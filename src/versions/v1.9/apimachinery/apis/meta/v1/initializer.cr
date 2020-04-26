@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # Initializer is information about an initializer that has not yet completed.
   class Apimachinery::Apis::Meta::V1::Initializer
     # name of the process that is responsible for initializing this object.

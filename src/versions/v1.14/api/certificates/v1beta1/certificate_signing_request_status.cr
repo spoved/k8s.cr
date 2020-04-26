@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   class Api::Certificates::V1beta1::CertificateSigningRequestStatus
     # If request was approved, the controller will place the issued certificate here.
     property certificate : String | Nil

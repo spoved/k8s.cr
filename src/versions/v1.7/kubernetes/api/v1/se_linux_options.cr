@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # SELinuxOptions are the labels to be applied to the container
   class Kubernetes::Api::V1::SELinuxOptions
     # Level is SELinux level label that applies to the container.

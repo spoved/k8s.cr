@@ -3,8 +3,40 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # VolumeAttachmentList is a collection of VolumeAttachment objects.
+  @[::K8S::GroupVersionKind(group: "storage.k8s.io", kind: "VolumeAttachmentList", version: "v1")]
+  @[::K8S::Action(name: "post", verb: "post",
+    path: "/apis/storage.k8s.io/v1/volumeattachments", toplevel: false,
+    args: [{name: "spec", type: Api::Storage::V1::VolumeAttachmentSpec},
+           {name: "metadata", type: Apimachinery::Apis::Meta::V1::ObjectMeta | Nil, default: nil},
+           {name: "status", type: Api::Storage::V1::VolumeAttachmentStatus | Nil, default: nil},
+           {name: "context", type: String | Nil, default: nil},
+           {name: "dry_run", type: String | Nil, default: nil},
+           {name: "field_manager", type: String | Nil, default: nil}]
+  )]
+  @[::K8S::Action(name: "list", verb: "get",
+    path: "/apis/storage.k8s.io/v1/volumeattachments", toplevel: true,
+    args: [{name: "context", type: String | Nil, default: nil},
+           {name: "continue", type: String | Nil, default: nil},
+           {name: "field_selector", type: String | Nil, default: nil},
+           {name: "label_selector", type: String | Nil, default: nil},
+           {name: "limit", type: Int32 | Nil, default: nil},
+           {name: "resource_version", type: String | Nil, default: nil},
+           {name: "timeout_seconds", type: Int32 | Nil, default: nil},
+           {name: "watch", type: Bool | Nil, default: nil}]
+  )]
+  @[::K8S::Action(name: "deletecollection", verb: "delete",
+    path: "/apis/storage.k8s.io/v1/volumeattachments", toplevel: true,
+    args: [{name: "context", type: String | Nil, default: nil},
+           {name: "continue", type: String | Nil, default: nil},
+           {name: "field_selector", type: String | Nil, default: nil},
+           {name: "label_selector", type: String | Nil, default: nil},
+           {name: "limit", type: Int32 | Nil, default: nil},
+           {name: "resource_version", type: String | Nil, default: nil},
+           {name: "timeout_seconds", type: Int32 | Nil, default: nil},
+           {name: "watch", type: Bool | Nil, default: nil}]
+  )]
   class Api::Storage::V1::VolumeAttachmentList
     getter api_version : String = "v1"
     getter kind : String = "List"

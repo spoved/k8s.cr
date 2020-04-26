@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # LimitRangeItem defines a [min/max usage limit for any resource that matches on kind.](min/max usage limit for any resource that matches on kind.)
   class Api::Core::V1::LimitRangeItem
     # Default resource requirement limit value by resource name if resource limit is omitted.

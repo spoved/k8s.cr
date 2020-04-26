@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
   class Api::Core::V1::HostAlias
     # Hostnames for the above IP address.

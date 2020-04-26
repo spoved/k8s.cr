@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # PodsMetricSource indicates how to scale on a metric describing each pod in the current scale target (for example, transactions-processed-per-second). The values will be averaged together before being compared to the target value.
   class Kubernetes::Apis::Autoscaling::V2alpha1::PodsMetricSource
     # metricName is the name of the metric in question

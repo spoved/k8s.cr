@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # AuditSinkSpec holds the spec for the audit sink
   class Api::Auditregistration::V1alpha1::AuditSinkSpec
     # Policy defines the policy for selecting which events should be sent to the webhook required

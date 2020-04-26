@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # AttachedVolume describes a volume attached to a node
   class Api::Core::V1::AttachedVolume
     # DevicePath represents the device path where the volume should be available

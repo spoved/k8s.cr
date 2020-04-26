@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   class Kubernetes::Apis::Certificates::V1beta1::CertificateSigningRequestList
     getter api_version : String = "v1"
     getter kind : String = "List"

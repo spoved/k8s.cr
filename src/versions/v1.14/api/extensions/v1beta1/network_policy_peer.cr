@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # DEPRECATED 1.9 - This group version of NetworkPolicyPeer is deprecated by [networking/v1/NetworkPolicyPeer.](networking/v1/NetworkPolicyPeer.)
   class Api::Extensions::V1beta1::NetworkPolicyPeer
     # IPBlock defines policy on a particular IPBlock. If this field is set then neither of the other fields can be.

@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # DeploymentList is a list of Deployments.
   class Kubernetes::Apis::Apps::V1beta1::DeploymentList
     getter api_version : String = "v1"

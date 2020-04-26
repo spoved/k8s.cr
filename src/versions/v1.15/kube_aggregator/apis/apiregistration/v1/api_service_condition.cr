@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # APIServiceCondition describes the state of an APIService at a particular point
   class KubeAggregator::Apis::Apiregistration::V1::APIServiceCondition
     # Last time the condition transitioned from one status to another.

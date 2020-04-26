@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # specification of a horizontal pod autoscaler.
   class Api::Autoscaling::V1::HorizontalPodAutoscalerSpec
     # upper limit for the number of pods that can be set by the autoscaler; cannot be smaller than MinReplicas.

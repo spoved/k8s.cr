@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # IngressStatus describe the current state of the Ingress.
   class Api::Networking::V1beta1::IngressStatus
     # LoadBalancer contains the current status of the load-balancer.

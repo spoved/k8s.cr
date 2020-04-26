@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # ReplicationControllerList is a collection of replication controllers.
   class Kubernetes::Api::V1::ReplicationControllerList
     getter api_version : String = "v1"

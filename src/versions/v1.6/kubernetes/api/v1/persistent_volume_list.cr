@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # PersistentVolumeList is a list of PersistentVolume items.
   class Kubernetes::Api::V1::PersistentVolumeList
     getter api_version : String = "v1"

@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # LoadBalancerStatus represents the status of a load-balancer.
   class Api::Core::V1::LoadBalancerStatus
     # Ingress is a list containing ingress points for the load-balancer. Traffic intended for the service should be sent to these ingress points.

@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # Run A sUser Strategy Options defines the strategy type and any options used to create the strategy.
   class Kubernetes::Apis::Extensions::V1beta1::RunAsUserStrategyOptions
     # Ranges are the allowed ranges of uids that may be used.

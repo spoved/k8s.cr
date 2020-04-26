@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # CustomResourceDefinitionNames indicates the names to serve this CustomResourceDefinition
   class ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceDefinitionNames
     # Kind is the serialized kind of the resource.  It is normally CamelCase and singular.

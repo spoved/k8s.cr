@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # PersistentVolumeClaimStatus is the current status of a persistent volume claim.
   class Kubernetes::Api::V1::PersistentVolumeClaimStatus
     # AccessModes contains the actual access modes the volume backing the PVC has. More info: [http://kubernetes.io/docs/user-guide/persistent-volumes#access-modes-1](http://kubernetes.io/docs/user-guide/persistent-volumes#access-modes-1)

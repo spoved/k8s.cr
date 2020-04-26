@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # EnvVarSource represents a source for the value of an EnvVar.
   class Kubernetes::Api::V1::EnvVarSource
     # Selects a key of a ConfigMap.

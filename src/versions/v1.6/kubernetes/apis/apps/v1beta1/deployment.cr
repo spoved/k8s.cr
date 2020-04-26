@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # Deployment enables declarative updates for Pods and ReplicaSets.
   class Kubernetes::Apis::Apps::V1beta1::Deployment
     getter api_version : String = "apps/v1beta1"
@@ -38,6 +38,6 @@ module Pyrite
   end
 
   module Resources::Apps::V1beta1
-    alias Deployment = ::Pyrite::Kubernetes::Apis::Apps::V1beta1::Deployment
+    alias Deployment = ::K8S::Kubernetes::Apis::Apps::V1beta1::Deployment
   end
 end

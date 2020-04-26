@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # PodPresetSpec is a description of a pod preset.
   class Api::Settings::V1alpha1::PodPresetSpec
     # Env defines the collection of EnvVar to inject into containers.

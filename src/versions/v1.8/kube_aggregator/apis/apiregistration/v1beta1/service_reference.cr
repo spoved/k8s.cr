@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # ServiceReference holds a reference to Service.legacy.k8s.io
   class KubeAggregator::Apis::Apiregistration::V1beta1::ServiceReference
     # Name is the name of the service

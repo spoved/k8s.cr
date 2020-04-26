@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # Represents a source location of a volume to mount, managed by an external CSI driver
   class Api::Core::V1::CSIVolumeSource
     # Driver is the name of the CSI driver that handles this volume. Consult with your admin for the correct name as registered in the cluster.

@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # ScaleSpec describes the attributes of a scale subresource.
   class Api::Autoscaling::V1::ScaleSpec
     # desired number of instances for the scaled object.

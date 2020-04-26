@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # ResourceFieldSelector represents container resources (cpu, memory) and their output format
   class Kubernetes::Api::V1::ResourceFieldSelector
     # Container name: required for volumes, optional for env vars

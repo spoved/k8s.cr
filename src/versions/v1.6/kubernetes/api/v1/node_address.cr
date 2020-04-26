@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # NodeAddress contains information for the node's address.
   class Kubernetes::Api::V1::NodeAddress
     # The node address.

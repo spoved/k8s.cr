@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # NodeSpec describes the attributes that a node is created with.
   class Kubernetes::Api::V1::NodeSpec
     # External ID of the node assigned by some machine database (e.g. a cloud provider). Deprecated.

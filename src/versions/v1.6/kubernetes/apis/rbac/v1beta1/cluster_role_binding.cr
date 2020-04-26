@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # ClusterRoleBinding references a ClusterRole, but not contain it.  It can reference a ClusterRole in the global namespace, and adds who information via Subject.
   class Kubernetes::Apis::Rbac::V1beta1::ClusterRoleBinding
     getter api_version : String = "rbac.authorization.k8s.io/v1beta1"
@@ -38,6 +38,6 @@ module Pyrite
   end
 
   module Resources::Rbac::V1beta1
-    alias ClusterRoleBinding = ::Pyrite::Kubernetes::Apis::Rbac::V1beta1::ClusterRoleBinding
+    alias ClusterRoleBinding = ::K8S::Kubernetes::Apis::Rbac::V1beta1::ClusterRoleBinding
   end
 end

@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   class KubeAggregator::Apis::Apiregistration::V1::APIServiceCondition
     # Last time the condition transitioned from one status to another.
     property last_transition_time : Time | Nil

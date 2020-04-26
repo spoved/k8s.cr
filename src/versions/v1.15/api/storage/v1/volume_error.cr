@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # VolumeError captures an error encountered during a volume operation.
   class Api::Storage::V1::VolumeError
     # String detailing the error encountered during Attach or Detach operation. This string may be logged, so it should not contain sensitive information.

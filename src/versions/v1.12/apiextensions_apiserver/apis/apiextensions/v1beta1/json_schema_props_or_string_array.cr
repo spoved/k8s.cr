@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # JSONSchemaPropsOrStringArray represents a JSONSchemaProps or a string array.
   class ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSONSchemaPropsOrStringArray
     include ::JSON::Serializable

@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # Adds and removes POSIX capabilities from running containers.
   class Kubernetes::Api::V1::Capabilities
     # Added capabilities

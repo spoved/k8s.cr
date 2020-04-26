@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # PodDNSConfigOption defines DNS resolver options of a pod.
   class Api::Core::V1::PodDNSConfigOption
     # Required.

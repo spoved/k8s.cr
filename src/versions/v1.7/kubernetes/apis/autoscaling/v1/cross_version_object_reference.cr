@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # CrossVersionObjectReference contains enough information to let you identify the referred resource.
   class Kubernetes::Apis::Autoscaling::V1::CrossVersionObjectReference
     # API version of the referent

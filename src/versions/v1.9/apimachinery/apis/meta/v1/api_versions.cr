@@ -3,8 +3,9 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # APIVersions lists the versions that are available, to allow clients to discover the API at /api, which is the root path of the legacy v1 API.
+  @[::K8S::GroupVersionKind(group: "", kind: "APIVersions", version: "v1")]
   class Apimachinery::Apis::Meta::V1::APIVersions
     # APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [https://git.k8s.io/community/contributors/devel/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/api-conventions.md#resources)
     property api_version : String | Nil

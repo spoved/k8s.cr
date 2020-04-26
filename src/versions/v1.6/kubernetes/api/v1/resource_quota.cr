@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # ResourceQuota sets aggregate quota restrictions enforced per namespace
   class Kubernetes::Api::V1::ResourceQuota
     getter api_version : String = "v1"
@@ -38,6 +38,6 @@ module Pyrite
   end
 
   module Resources::V1
-    alias ResourceQuota = ::Pyrite::Kubernetes::Api::V1::ResourceQuota
+    alias ResourceQuota = ::K8S::Kubernetes::Api::V1::ResourceQuota
   end
 end

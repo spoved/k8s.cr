@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # PersistentVolume (PV) is a storage resource provisioned by an administrator. It is analogous to a node. More info: [http://kubernetes.io/docs/user-guide/persistent-volumes](http://kubernetes.io/docs/user-guide/persistent-volumes)
   class Kubernetes::Api::V1::PersistentVolume
     getter api_version : String = "v1"
@@ -38,6 +38,6 @@ module Pyrite
   end
 
   module Resources::V1
-    alias PersistentVolume = ::Pyrite::Kubernetes::Api::V1::PersistentVolume
+    alias PersistentVolume = ::K8S::Kubernetes::Api::V1::PersistentVolume
   end
 end

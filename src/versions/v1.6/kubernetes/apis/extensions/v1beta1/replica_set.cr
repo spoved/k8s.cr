@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # ReplicaSet represents the configuration of a ReplicaSet.
   class Kubernetes::Apis::Extensions::V1beta1::ReplicaSet
     getter api_version : String = "extensions/v1beta1"
@@ -38,6 +38,6 @@ module Pyrite
   end
 
   module Resources::Extensions::V1beta1
-    alias ReplicaSet = ::Pyrite::Kubernetes::Apis::Extensions::V1beta1::ReplicaSet
+    alias ReplicaSet = ::K8S::Kubernetes::Apis::Extensions::V1beta1::ReplicaSet
   end
 end

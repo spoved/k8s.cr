@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   class Api::Authorization::V1::SelfSubjectRulesReviewSpec
     # Namespace to evaluate rules for. Required.
     property namespace : String | Nil

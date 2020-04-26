@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # SupplementalGroupsStrategyOptions defines the strategy type and options used to create the strategy.
   class Api::Policy::V1beta1::SupplementalGroupsStrategyOptions
     # Ranges are the allowed ranges of supplemental groups.  If you would like to force a single supplemental group then supply a single range with the same start and end.

@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # Local represents directly-attached storage with node affinity
   class Kubernetes::Api::V1::LocalVolumeSource
     # The full path to the volume on the node For alpha, this path must be a directory Once block as a source is supported, then this path can point to a block device

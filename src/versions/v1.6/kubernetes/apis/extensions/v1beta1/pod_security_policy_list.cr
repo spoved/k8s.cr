@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # Pod Security Policy List is a list of PodSecurityPolicy objects.
   class Kubernetes::Apis::Extensions::V1beta1::PodSecurityPolicyList
     getter api_version : String = "v1"

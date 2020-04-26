@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # AzureFile represents an Azure File Service mount on the host and bind mount to the pod.
   class Kubernetes::Api::V1::AzureFileVolumeSource
     # Defaults to false [(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.)

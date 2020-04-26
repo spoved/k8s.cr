@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # PersistentVolumeClaim is a user's request for and claim to a persistent volume
   class Kubernetes::Api::V1::PersistentVolumeClaim
     getter api_version : String = "v1"
@@ -38,6 +38,6 @@ module Pyrite
   end
 
   module Resources::V1
-    alias PersistentVolumeClaim = ::Pyrite::Kubernetes::Api::V1::PersistentVolumeClaim
+    alias PersistentVolumeClaim = ::K8S::Kubernetes::Api::V1::PersistentVolumeClaim
   end
 end

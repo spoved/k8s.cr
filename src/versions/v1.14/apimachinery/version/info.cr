@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # Info contains versioning information. how we'll want to distribute that information.
   class Apimachinery::Version::Info
     property build_date : String

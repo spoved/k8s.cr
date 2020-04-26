@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # configuration of a horizontal pod autoscaler.
   class Kubernetes::Apis::Autoscaling::V1::HorizontalPodAutoscaler
     getter api_version : String = "autoscaling/v1"
@@ -38,6 +38,6 @@ module Pyrite
   end
 
   module Resources::Autoscaling::V1
-    alias HorizontalPodAutoscaler = ::Pyrite::Kubernetes::Apis::Autoscaling::V1::HorizontalPodAutoscaler
+    alias HorizontalPodAutoscaler = ::K8S::Kubernetes::Apis::Autoscaling::V1::HorizontalPodAutoscaler
   end
 end

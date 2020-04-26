@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # Pod is a collection of containers that can run on a host. This resource is created by clients and scheduled onto hosts.
   class Kubernetes::Api::V1::Pod
     getter api_version : String = "v1"
@@ -38,6 +38,6 @@ module Pyrite
   end
 
   module Resources::V1
-    alias Pod = ::Pyrite::Kubernetes::Api::V1::Pod
+    alias Pod = ::K8S::Kubernetes::Api::V1::Pod
   end
 end

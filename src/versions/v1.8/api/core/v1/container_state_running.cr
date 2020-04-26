@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # ContainerStateRunning is a running state of a container.
   class Api::Core::V1::ContainerStateRunning
     # Time at which the container was last (re-)started

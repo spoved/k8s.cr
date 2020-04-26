@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # MetricIdentifier defines the name and optionally selector for a metric
   class Api::Autoscaling::V2beta2::MetricIdentifier
     # name is the name of the given metric

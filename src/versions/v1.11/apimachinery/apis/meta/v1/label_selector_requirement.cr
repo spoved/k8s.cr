@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
   class Apimachinery::Apis::Meta::V1::LabelSelectorRequirement
     # key is the label key that the selector applies to.

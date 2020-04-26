@@ -3,8 +3,51 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # represents a scaling request for a resource.
+  @[::K8S::GroupVersionKind(group: "extensions", kind: "Scale", version: "v1beta1")]
+  @[::K8S::Action(name: "get", verb: "get",
+    path: "/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}/scale", toplevel: true,
+    args: [{name: "name", type: String},
+           {name: "context", type: String | Nil, default: nil},
+           {name: "namespace", type: String, default: "default"}]
+  )]
+  @[::K8S::Action(name: "put", verb: "put",
+    path: "/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}/scale", toplevel: false,
+    args: [{name: "context", type: String | Nil, default: nil}]
+  )]
+  @[::K8S::Action(name: "patch", verb: "path",
+    path: "/apis/extensions/v1beta1/namespaces/{namespace}/deployments/{name}/scale", toplevel: false,
+    args: [{name: "context", type: String | Nil, default: nil}]
+  )]
+  @[::K8S::Action(name: "get", verb: "get",
+    path: "/apis/extensions/v1beta1/namespaces/{namespace}/replicasets/{name}/scale", toplevel: true,
+    args: [{name: "name", type: String},
+           {name: "context", type: String | Nil, default: nil},
+           {name: "namespace", type: String, default: "default"}]
+  )]
+  @[::K8S::Action(name: "put", verb: "put",
+    path: "/apis/extensions/v1beta1/namespaces/{namespace}/replicasets/{name}/scale", toplevel: false,
+    args: [{name: "context", type: String | Nil, default: nil}]
+  )]
+  @[::K8S::Action(name: "patch", verb: "path",
+    path: "/apis/extensions/v1beta1/namespaces/{namespace}/replicasets/{name}/scale", toplevel: false,
+    args: [{name: "context", type: String | Nil, default: nil}]
+  )]
+  @[::K8S::Action(name: "get", verb: "get",
+    path: "/apis/extensions/v1beta1/namespaces/{namespace}/replicationcontrollers/{name}/scale", toplevel: true,
+    args: [{name: "name", type: String},
+           {name: "context", type: String | Nil, default: nil},
+           {name: "namespace", type: String, default: "default"}]
+  )]
+  @[::K8S::Action(name: "put", verb: "put",
+    path: "/apis/extensions/v1beta1/namespaces/{namespace}/replicationcontrollers/{name}/scale", toplevel: false,
+    args: [{name: "context", type: String | Nil, default: nil}]
+  )]
+  @[::K8S::Action(name: "patch", verb: "path",
+    path: "/apis/extensions/v1beta1/namespaces/{namespace}/replicationcontrollers/{name}/scale", toplevel: false,
+    args: [{name: "context", type: String | Nil, default: nil}]
+  )]
   class Api::Extensions::V1beta1::Scale
     getter api_version : String = "extensions/v1beta1"
     getter kind : String = "Scale"
@@ -38,6 +81,6 @@ module Pyrite
   end
 
   module Resources::Extensions::V1beta1
-    alias Scale = ::Pyrite::Api::Extensions::V1beta1::Scale
+    alias Scale = ::K8S::Api::Extensions::V1beta1::Scale
   end
 end

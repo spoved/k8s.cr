@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # LeaseSpec is a specification of a Lease.
   class Api::Coordination::V1::LeaseSpec
     # acquireTime is a time when the current lease was acquired.

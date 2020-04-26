@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # Affinity is a group of affinity scheduling rules.
   class Api::Core::V1::Affinity
     # Describes node affinity scheduling rules for the pod.

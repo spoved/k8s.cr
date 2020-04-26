@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # A StatefulSetSpec is the specification of a StatefulSet.
   class Kubernetes::Apis::Apps::V1beta1::StatefulSetSpec
     # Replicas is the desired number of replicas of the given Template. These are replicas in the sense that they are instantiations of the same Template, but individual replicas also have a consistent identity. If unspecified, defaults to 1.

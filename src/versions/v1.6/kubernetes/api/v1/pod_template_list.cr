@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # PodTemplateList is a list of PodTemplates.
   class Kubernetes::Api::V1::PodTemplateList
     getter api_version : String = "v1"

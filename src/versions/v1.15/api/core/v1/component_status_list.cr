@@ -3,8 +3,21 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # Status of all the conditions for the component as a list of ComponentStatus objects.
+  @[::K8S::GroupVersionKind(group: "", kind: "ComponentStatusList", version: "v1")]
+  @[::K8S::Action(name: "list", verb: "get",
+    path: "/api/v1/componentstatuses", toplevel: true,
+    args: [{name: "context", type: String | Nil, default: nil},
+           {name: "allow_watch_bookmarks", type: Bool | Nil, default: nil},
+           {name: "continue", type: String | Nil, default: nil},
+           {name: "field_selector", type: String | Nil, default: nil},
+           {name: "label_selector", type: String | Nil, default: nil},
+           {name: "limit", type: Int32 | Nil, default: nil},
+           {name: "resource_version", type: String | Nil, default: nil},
+           {name: "timeout_seconds", type: Int32 | Nil, default: nil},
+           {name: "watch", type: Bool | Nil, default: nil}]
+  )]
   class Api::Core::V1::ComponentStatusList
     getter api_version : String = "v1"
     getter kind : String = "List"

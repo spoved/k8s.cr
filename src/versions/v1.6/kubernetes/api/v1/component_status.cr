@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # ComponentStatus (and ComponentStatusList) holds the cluster validation info.
   class Kubernetes::Api::V1::ComponentStatus
     getter api_version : String = "v1"
@@ -33,6 +33,6 @@ module Pyrite
   end
 
   module Resources::V1
-    alias ComponentStatus = ::Pyrite::Kubernetes::Api::V1::ComponentStatus
+    alias ComponentStatus = ::K8S::Kubernetes::Api::V1::ComponentStatus
   end
 end

@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # LimitRangeSpec defines a [min/max usage limit for resources that match on kind.](min/max usage limit for resources that match on kind.)
   class Api::Core::V1::LimitRangeSpec
     # Limits is the list of LimitRangeItem objects that are enforced.

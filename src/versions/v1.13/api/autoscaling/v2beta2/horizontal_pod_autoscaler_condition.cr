@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # HorizontalPodAutoscalerCondition describes the state of a HorizontalPodAutoscaler at a certain point.
   class Api::Autoscaling::V2beta2::HorizontalPodAutoscalerCondition
     # lastTransitionTime is the last time the condition transitioned from one status to another

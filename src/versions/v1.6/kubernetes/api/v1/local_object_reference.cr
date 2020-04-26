@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # LocalObjectReference contains enough information to let you locate the referenced object inside the same namespace.
   class Kubernetes::Api::V1::LocalObjectReference
     # Name of the referent. More info: [http://kubernetes.io/docs/user-guide/identifiers#names](http://kubernetes.io/docs/user-guide/identifiers#names)

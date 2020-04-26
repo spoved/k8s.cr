@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # TokenReviewSpec is a description of the token authentication request.
   class Api::Authentication::V1beta1::TokenReviewSpec
     # Token is the opaque bearer token.

@@ -3,8 +3,40 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # APIServiceList is a list of APIService objects.
+  @[::K8S::GroupVersionKind(group: "apiregistration.k8s.io", kind: "APIServiceList", version: "v1beta1")]
+  @[::K8S::Action(name: "post", verb: "post",
+    path: "/apis/apiregistration.k8s.io/v1beta1/apiservices", toplevel: false,
+    args: [{name: "metadata", type: Apimachinery::Apis::Meta::V1::ObjectMeta | Nil, default: nil},
+           {name: "spec", type: KubeAggregator::Apis::Apiregistration::V1beta1::APIServiceSpec | Nil, default: nil},
+           {name: "status", type: KubeAggregator::Apis::Apiregistration::V1beta1::APIServiceStatus | Nil, default: nil},
+           {name: "context", type: String | Nil, default: nil},
+           {name: "dry_run", type: String | Nil, default: nil},
+           {name: "field_manager", type: String | Nil, default: nil}]
+  )]
+  @[::K8S::Action(name: "list", verb: "get",
+    path: "/apis/apiregistration.k8s.io/v1beta1/apiservices", toplevel: true,
+    args: [{name: "context", type: String | Nil, default: nil},
+           {name: "continue", type: String | Nil, default: nil},
+           {name: "field_selector", type: String | Nil, default: nil},
+           {name: "label_selector", type: String | Nil, default: nil},
+           {name: "limit", type: Int32 | Nil, default: nil},
+           {name: "resource_version", type: String | Nil, default: nil},
+           {name: "timeout_seconds", type: Int32 | Nil, default: nil},
+           {name: "watch", type: Bool | Nil, default: nil}]
+  )]
+  @[::K8S::Action(name: "deletecollection", verb: "delete",
+    path: "/apis/apiregistration.k8s.io/v1beta1/apiservices", toplevel: true,
+    args: [{name: "context", type: String | Nil, default: nil},
+           {name: "continue", type: String | Nil, default: nil},
+           {name: "field_selector", type: String | Nil, default: nil},
+           {name: "label_selector", type: String | Nil, default: nil},
+           {name: "limit", type: Int32 | Nil, default: nil},
+           {name: "resource_version", type: String | Nil, default: nil},
+           {name: "timeout_seconds", type: Int32 | Nil, default: nil},
+           {name: "watch", type: Bool | Nil, default: nil}]
+  )]
   class KubeAggregator::Apis::Apiregistration::V1beta1::APIServiceList
     getter api_version : String = "v1"
     getter kind : String = "List"

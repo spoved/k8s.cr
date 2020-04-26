@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # StatefulSetStatus represents the current state of a StatefulSet.
   class Kubernetes::Apis::Apps::V1beta1::StatefulSetStatus
     # currentReplicas is the number of Pods created by the StatefulSet controller from the StatefulSet version indicated by currentRevision.

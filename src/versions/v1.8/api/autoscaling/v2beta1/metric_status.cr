@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # MetricStatus describes the last-read state of a single metric.
   class Api::Autoscaling::V2beta1::MetricStatus
     # object refers to a metric describing a single kubernetes object (for example, hits-per-second on an Ingress object).

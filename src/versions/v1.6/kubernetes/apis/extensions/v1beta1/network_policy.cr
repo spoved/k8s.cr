@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   class Kubernetes::Apis::Extensions::V1beta1::NetworkPolicy
     getter api_version : String = "extensions/v1beta1"
     getter kind : String = "NetworkPolicy"
@@ -32,6 +32,6 @@ module Pyrite
   end
 
   module Resources::Extensions::V1beta1
-    alias NetworkPolicy = ::Pyrite::Kubernetes::Apis::Extensions::V1beta1::NetworkPolicy
+    alias NetworkPolicy = ::K8S::Kubernetes::Apis::Extensions::V1beta1::NetworkPolicy
   end
 end

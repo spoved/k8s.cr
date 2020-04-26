@@ -3,8 +3,13 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # TokenReview attempts to authenticate a token to a known user. Note: TokenReview requests may be cached by the webhook token authenticator plugin in the kube-apiserver.
+  @[::K8S::GroupVersionKind(group: "authentication.k8s.io", kind: "TokenReview", version: "v1beta1")]
+  @[::K8S::Action(name: "post", verb: "post",
+    path: "/apis/authentication.k8s.io/v1beta1/tokenreviews", toplevel: false,
+    args: [{name: "context", type: String | Nil, default: nil}]
+  )]
   class Api::Authentication::V1beta1::TokenReview
     getter api_version : String = "authentication/v1beta1"
     getter kind : String = "TokenReview"
@@ -37,6 +42,6 @@ module Pyrite
   end
 
   module Resources::Authentication::V1beta1
-    alias TokenReview = ::Pyrite::Api::Authentication::V1beta1::TokenReview
+    alias TokenReview = ::K8S::Api::Authentication::V1beta1::TokenReview
   end
 end

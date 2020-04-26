@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # Endpoints is a collection of endpoints that implement the actual service. Example:
   #   Name: "mysvc",
   #   Subsets: [
@@ -44,6 +44,6 @@ module Pyrite
   end
 
   module Resources::V1
-    alias Endpoints = ::Pyrite::Kubernetes::Api::V1::Endpoints
+    alias Endpoints = ::K8S::Kubernetes::Api::V1::Endpoints
   end
 end

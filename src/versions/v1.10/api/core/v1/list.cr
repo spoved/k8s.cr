@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # List is a generic list of resources
   class Api::Core::V1::List
     getter api_version : String = "v1"

@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # Event represents a single event to a watched resource.
   class Apimachinery::Apis::Meta::V1::WatchEvent
     # Object is:

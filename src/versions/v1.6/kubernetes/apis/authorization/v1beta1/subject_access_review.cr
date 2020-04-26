@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # SubjectAccessReview checks whether or not a user or group can perform an action.
   class Kubernetes::Apis::Authorization::V1beta1::SubjectAccessReview
     getter api_version : String = "authorization/v1beta1"
@@ -37,6 +37,6 @@ module Pyrite
   end
 
   module Resources::Authorization::V1beta1
-    alias SubjectAccessReview = ::Pyrite::Kubernetes::Apis::Authorization::V1beta1::SubjectAccessReview
+    alias SubjectAccessReview = ::K8S::Kubernetes::Apis::Authorization::V1beta1::SubjectAccessReview
   end
 end

@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # WebhookThrottleConfig holds the configuration for throttling events
   class Api::Auditregistration::V1alpha1::WebhookThrottleConfig
     # ThrottleBurst is the maximum number of events sent at the same moment default 15 QPS

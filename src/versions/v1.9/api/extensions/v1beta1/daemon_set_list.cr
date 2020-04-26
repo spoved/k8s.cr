@@ -3,8 +3,54 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # DaemonSetList is a collection of daemon sets.
+  @[::K8S::GroupVersionKind(group: "extensions", kind: "DaemonSetList", version: "v1beta1")]
+  @[::K8S::Action(name: "list", verb: "get",
+    path: "/apis/extensions/v1beta1/daemonsets", toplevel: true,
+    args: [{name: "context", type: String | Nil, default: nil},
+           {name: "continue", type: String | Nil, default: nil},
+           {name: "field_selector", type: String | Nil, default: nil},
+           {name: "include_uninitialized", type: Bool | Nil, default: nil},
+           {name: "label_selector", type: String | Nil, default: nil},
+           {name: "limit", type: Int32 | Nil, default: nil},
+           {name: "resource_version", type: String | Nil, default: nil},
+           {name: "timeout_seconds", type: Int32 | Nil, default: nil},
+           {name: "watch", type: Bool | Nil, default: nil}]
+  )]
+  @[::K8S::Action(name: "post", verb: "post",
+    path: "/apis/extensions/v1beta1/namespaces/{namespace}/daemonsets", toplevel: false,
+    args: [{name: "metadata", type: Apimachinery::Apis::Meta::V1::ObjectMeta | Nil, default: nil},
+           {name: "spec", type: Api::Extensions::V1beta1::DaemonSetSpec | Nil, default: nil},
+           {name: "status", type: Api::Extensions::V1beta1::DaemonSetStatus | Nil, default: nil},
+           {name: "context", type: String | Nil, default: nil}]
+  )]
+  @[::K8S::Action(name: "list", verb: "get",
+    path: "/apis/extensions/v1beta1/namespaces/{namespace}/daemonsets", toplevel: true,
+    args: [{name: "context", type: String | Nil, default: nil},
+           {name: "continue", type: String | Nil, default: nil},
+           {name: "field_selector", type: String | Nil, default: nil},
+           {name: "include_uninitialized", type: Bool | Nil, default: nil},
+           {name: "label_selector", type: String | Nil, default: nil},
+           {name: "limit", type: Int32 | Nil, default: nil},
+           {name: "resource_version", type: String | Nil, default: nil},
+           {name: "timeout_seconds", type: Int32 | Nil, default: nil},
+           {name: "watch", type: Bool | Nil, default: nil},
+           {name: "namespace", type: String, default: "default"}]
+  )]
+  @[::K8S::Action(name: "deletecollection", verb: "delete",
+    path: "/apis/extensions/v1beta1/namespaces/{namespace}/daemonsets", toplevel: true,
+    args: [{name: "context", type: String | Nil, default: nil},
+           {name: "continue", type: String | Nil, default: nil},
+           {name: "field_selector", type: String | Nil, default: nil},
+           {name: "include_uninitialized", type: Bool | Nil, default: nil},
+           {name: "label_selector", type: String | Nil, default: nil},
+           {name: "limit", type: Int32 | Nil, default: nil},
+           {name: "resource_version", type: String | Nil, default: nil},
+           {name: "timeout_seconds", type: Int32 | Nil, default: nil},
+           {name: "watch", type: Bool | Nil, default: nil},
+           {name: "namespace", type: String, default: "default"}]
+  )]
   class Api::Extensions::V1beta1::DaemonSetList
     getter api_version : String = "v1"
     getter kind : String = "List"

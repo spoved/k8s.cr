@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # RoleList is a collection of Roles
   class Kubernetes::Apis::Rbac::V1beta1::RoleList
     getter api_version : String = "v1"

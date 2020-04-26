@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # HTTPGetAction describes an action based on HTTP Get requests.
   class Api::Core::V1::HTTPGetAction
     # Host name to connect to, defaults to the pod IP. You probably want to set "Host" in httpHeaders instead.

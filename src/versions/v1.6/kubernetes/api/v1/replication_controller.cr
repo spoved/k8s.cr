@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # ReplicationController represents the configuration of a replication controller.
   class Kubernetes::Api::V1::ReplicationController
     getter api_version : String = "v1"
@@ -38,6 +38,6 @@ module Pyrite
   end
 
   module Resources::V1
-    alias ReplicationController = ::Pyrite::Kubernetes::Api::V1::ReplicationController
+    alias ReplicationController = ::K8S::Kubernetes::Api::V1::ReplicationController
   end
 end

@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # ClusterRoleList is a collection of ClusterRoles
   class Kubernetes::Apis::Rbac::V1alpha1::ClusterRoleList
     getter api_version : String = "v1"

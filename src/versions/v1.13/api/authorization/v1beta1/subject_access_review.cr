@@ -3,8 +3,15 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # SubjectAccessReview checks whether or not a user or group can perform an action.
+  @[::K8S::GroupVersionKind(group: "authorization.k8s.io", kind: "SubjectAccessReview", version: "v1beta1")]
+  @[::K8S::Action(name: "post", verb: "post",
+    path: "/apis/authorization.k8s.io/v1beta1/subjectaccessreviews", toplevel: false,
+    args: [{name: "context", type: String | Nil, default: nil},
+           {name: "dry_run", type: String | Nil, default: nil},
+           {name: "include_uninitialized", type: Bool | Nil, default: nil}]
+  )]
   class Api::Authorization::V1beta1::SubjectAccessReview
     getter api_version : String = "authorization/v1beta1"
     getter kind : String = "SubjectAccessReview"
@@ -37,6 +44,6 @@ module Pyrite
   end
 
   module Resources::Authorization::V1beta1
-    alias SubjectAccessReview = ::Pyrite::Api::Authorization::V1beta1::SubjectAccessReview
+    alias SubjectAccessReview = ::K8S::Api::Authorization::V1beta1::SubjectAccessReview
   end
 end

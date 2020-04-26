@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # DaemonSet represents the configuration of a daemon set.
   class Kubernetes::Apis::Extensions::V1beta1::DaemonSet
     getter api_version : String = "extensions/v1beta1"
@@ -38,6 +38,6 @@ module Pyrite
   end
 
   module Resources::Extensions::V1beta1
-    alias DaemonSet = ::Pyrite::Kubernetes::Apis::Extensions::V1beta1::DaemonSet
+    alias DaemonSet = ::K8S::Kubernetes::Apis::Extensions::V1beta1::DaemonSet
   end
 end

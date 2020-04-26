@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # SubjectAccessReviewStatus
   class Kubernetes::Apis::Authorization::V1beta1::SubjectAccessReviewStatus
     # Allowed is required.  True if the action would be allowed, false otherwise.

@@ -3,8 +3,49 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # DeleteOptions may be provided when deleting an API object.
+  @[::K8S::GroupVersionKind(group: "", kind: "DeleteOptions", version: "v1")]
+  @[::K8S::GroupVersionKind(group: "admission.k8s.io", kind: "DeleteOptions", version: "v1beta1")]
+  @[::K8S::GroupVersionKind(group: "admissionregistration.k8s.io", kind: "DeleteOptions", version: "v1beta1")]
+  @[::K8S::GroupVersionKind(group: "apiextensions.k8s.io", kind: "DeleteOptions", version: "v1beta1")]
+  @[::K8S::GroupVersionKind(group: "apiregistration.k8s.io", kind: "DeleteOptions", version: "v1")]
+  @[::K8S::GroupVersionKind(group: "apiregistration.k8s.io", kind: "DeleteOptions", version: "v1beta1")]
+  @[::K8S::GroupVersionKind(group: "apps", kind: "DeleteOptions", version: "v1")]
+  @[::K8S::GroupVersionKind(group: "apps", kind: "DeleteOptions", version: "v1beta1")]
+  @[::K8S::GroupVersionKind(group: "apps", kind: "DeleteOptions", version: "v1beta2")]
+  @[::K8S::GroupVersionKind(group: "auditregistration.k8s.io", kind: "DeleteOptions", version: "v1alpha1")]
+  @[::K8S::GroupVersionKind(group: "authentication.k8s.io", kind: "DeleteOptions", version: "v1")]
+  @[::K8S::GroupVersionKind(group: "authentication.k8s.io", kind: "DeleteOptions", version: "v1beta1")]
+  @[::K8S::GroupVersionKind(group: "authorization.k8s.io", kind: "DeleteOptions", version: "v1")]
+  @[::K8S::GroupVersionKind(group: "authorization.k8s.io", kind: "DeleteOptions", version: "v1beta1")]
+  @[::K8S::GroupVersionKind(group: "autoscaling", kind: "DeleteOptions", version: "v1")]
+  @[::K8S::GroupVersionKind(group: "autoscaling", kind: "DeleteOptions", version: "v2beta1")]
+  @[::K8S::GroupVersionKind(group: "autoscaling", kind: "DeleteOptions", version: "v2beta2")]
+  @[::K8S::GroupVersionKind(group: "batch", kind: "DeleteOptions", version: "v1")]
+  @[::K8S::GroupVersionKind(group: "batch", kind: "DeleteOptions", version: "v1beta1")]
+  @[::K8S::GroupVersionKind(group: "batch", kind: "DeleteOptions", version: "v2alpha1")]
+  @[::K8S::GroupVersionKind(group: "certificates.k8s.io", kind: "DeleteOptions", version: "v1beta1")]
+  @[::K8S::GroupVersionKind(group: "coordination.k8s.io", kind: "DeleteOptions", version: "v1")]
+  @[::K8S::GroupVersionKind(group: "coordination.k8s.io", kind: "DeleteOptions", version: "v1beta1")]
+  @[::K8S::GroupVersionKind(group: "events.k8s.io", kind: "DeleteOptions", version: "v1beta1")]
+  @[::K8S::GroupVersionKind(group: "extensions", kind: "DeleteOptions", version: "v1beta1")]
+  @[::K8S::GroupVersionKind(group: "imagepolicy.k8s.io", kind: "DeleteOptions", version: "v1alpha1")]
+  @[::K8S::GroupVersionKind(group: "networking.k8s.io", kind: "DeleteOptions", version: "v1")]
+  @[::K8S::GroupVersionKind(group: "networking.k8s.io", kind: "DeleteOptions", version: "v1beta1")]
+  @[::K8S::GroupVersionKind(group: "node.k8s.io", kind: "DeleteOptions", version: "v1alpha1")]
+  @[::K8S::GroupVersionKind(group: "node.k8s.io", kind: "DeleteOptions", version: "v1beta1")]
+  @[::K8S::GroupVersionKind(group: "policy", kind: "DeleteOptions", version: "v1beta1")]
+  @[::K8S::GroupVersionKind(group: "rbac.authorization.k8s.io", kind: "DeleteOptions", version: "v1")]
+  @[::K8S::GroupVersionKind(group: "rbac.authorization.k8s.io", kind: "DeleteOptions", version: "v1alpha1")]
+  @[::K8S::GroupVersionKind(group: "rbac.authorization.k8s.io", kind: "DeleteOptions", version: "v1beta1")]
+  @[::K8S::GroupVersionKind(group: "scheduling.k8s.io", kind: "DeleteOptions", version: "v1")]
+  @[::K8S::GroupVersionKind(group: "scheduling.k8s.io", kind: "DeleteOptions", version: "v1alpha1")]
+  @[::K8S::GroupVersionKind(group: "scheduling.k8s.io", kind: "DeleteOptions", version: "v1beta1")]
+  @[::K8S::GroupVersionKind(group: "settings.k8s.io", kind: "DeleteOptions", version: "v1alpha1")]
+  @[::K8S::GroupVersionKind(group: "storage.k8s.io", kind: "DeleteOptions", version: "v1")]
+  @[::K8S::GroupVersionKind(group: "storage.k8s.io", kind: "DeleteOptions", version: "v1alpha1")]
+  @[::K8S::GroupVersionKind(group: "storage.k8s.io", kind: "DeleteOptions", version: "v1beta1")]
   class Apimachinery::Apis::Meta::V1::DeleteOptions
     # APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [https://git.k8s.io/community/contributors/devel/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/api-conventions.md#resources)
     property api_version : String | Nil

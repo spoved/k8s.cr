@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # CronJobStatus represents the current state of a cron job.
   class Api::Batch::V1beta1::CronJobStatus
     # A list of pointers to currently running jobs.

@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # VolumeAttachmentStatus is the status of a VolumeAttachment request.
   class Api::Storage::V1::VolumeAttachmentStatus
     # The last error encountered during attach operation, if any. This field must only be set by the entity completing the attach operation, i.e. the external-attacher.

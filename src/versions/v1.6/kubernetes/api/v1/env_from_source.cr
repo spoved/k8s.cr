@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # EnvFromSource represents the source of a set of ConfigMaps
   class Kubernetes::Api::V1::EnvFromSource
     # The ConfigMap to select from

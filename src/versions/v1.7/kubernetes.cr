@@ -1,4 +1,4 @@
-module Pyrite::Kubernetes
+module ::K8S::Kubernetes
   VERSION = "1.7"
   alias Resource = Resources::Apiregistration::V1beta1::APIService |
                    Resources::V1::Binding |

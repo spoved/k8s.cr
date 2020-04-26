@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # JobStatus represents the current state of a Job.
   class Api::Batch::V1::JobStatus
     # The number of actively running pods.

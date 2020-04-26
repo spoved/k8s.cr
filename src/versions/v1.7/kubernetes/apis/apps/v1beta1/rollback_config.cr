@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   class Kubernetes::Apis::Apps::V1beta1::RollbackConfig
     # The revision to rollback to. If set to 0, rollback to the last revision.
     property revision : Int32 | Nil

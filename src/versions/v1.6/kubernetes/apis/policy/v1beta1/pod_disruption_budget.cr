@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # PodDisruptionBudget is an object to define the max disruption that can be caused to a collection of pods
   class Kubernetes::Apis::Policy::V1beta1::PodDisruptionBudget
     getter api_version : String = "policy/v1beta1"
@@ -37,6 +37,6 @@ module Pyrite
   end
 
   module Resources::Policy::V1beta1
-    alias PodDisruptionBudget = ::Pyrite::Kubernetes::Apis::Policy::V1beta1::PodDisruptionBudget
+    alias PodDisruptionBudget = ::K8S::Kubernetes::Apis::Policy::V1beta1::PodDisruptionBudget
   end
 end

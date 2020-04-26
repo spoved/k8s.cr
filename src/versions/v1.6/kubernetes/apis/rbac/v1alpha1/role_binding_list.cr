@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # RoleBindingList is a collection of RoleBindings
   class Kubernetes::Apis::Rbac::V1alpha1::RoleBindingList
     getter api_version : String = "v1"

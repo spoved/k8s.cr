@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # ConfigMap holds configuration data for pods to consume.
   class Kubernetes::Api::V1::ConfigMap
     getter api_version : String = "v1"
@@ -33,6 +33,6 @@ module Pyrite
   end
 
   module Resources::V1
-    alias ConfigMap = ::Pyrite::Kubernetes::Api::V1::ConfigMap
+    alias ConfigMap = ::K8S::Kubernetes::Api::V1::ConfigMap
   end
 end

@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # StatefulSetCondition describes the state of a statefulset at a certain point.
   class Api::Apps::V1beta1::StatefulSetCondition
     # Last time the condition transitioned from one status to another.

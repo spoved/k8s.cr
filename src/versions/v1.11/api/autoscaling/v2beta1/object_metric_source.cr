@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # ObjectMetricSource indicates how to scale on a metric describing a kubernetes object (for example, hits-per-second on an Ingress object).
   class Api::Autoscaling::V2beta1::ObjectMetricSource
     # metricName is the name of the metric in question.

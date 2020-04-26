@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # Network Policy List is a list of NetworkPolicy objects.
   class Kubernetes::Apis::Extensions::V1beta1::NetworkPolicyList
     getter api_version : String = "v1"

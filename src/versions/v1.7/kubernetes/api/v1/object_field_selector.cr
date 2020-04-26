@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # ObjectFieldSelector selects an APIVersioned field of an object.
   class Kubernetes::Api::V1::ObjectFieldSelector
     # Version of the schema the FieldPath is written in terms of, defaults to "v1".

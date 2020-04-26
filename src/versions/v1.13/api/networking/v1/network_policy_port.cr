@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # NetworkPolicyPort describes a port to allow traffic on
   class Api::Networking::V1::NetworkPolicyPort
     # The port on the given protocol. This can either be a numerical or named port on a pod. If this field is not provided, this matches all port names and numbers.

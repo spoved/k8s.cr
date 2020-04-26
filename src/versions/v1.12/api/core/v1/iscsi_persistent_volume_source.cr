@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # ISCSIPersistentVolumeSource represents an ISCSI disk. ISCSI volumes can only be mounted as [read/write once. ISCSI volumes support ownership management and SELinux relabeling.](read/write once. ISCSI volumes support ownership management and SELinux relabeling.)
   class Api::Core::V1::ISCSIPersistentVolumeSource
     # whether support iSCSI Discovery CHAP authentication

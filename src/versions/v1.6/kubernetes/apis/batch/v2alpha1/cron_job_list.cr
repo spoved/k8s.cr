@@ -3,7 +3,7 @@
 require "yaml"
 require "json"
 
-module Pyrite
+module K8S
   # CronJobList is a collection of cron jobs.
   class Kubernetes::Apis::Batch::V2alpha1::CronJobList
     getter api_version : String = "v1"
