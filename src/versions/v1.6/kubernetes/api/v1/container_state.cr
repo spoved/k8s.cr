@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # ContainerState holds a possible state of container. Only one of its members may be specified. If none of them is specified, the default one is ContainerStateWaiting.

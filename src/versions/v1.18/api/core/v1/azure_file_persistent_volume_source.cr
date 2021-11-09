@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # AzureFile represents an Azure File Service mount on the host and bind mount to the pod.

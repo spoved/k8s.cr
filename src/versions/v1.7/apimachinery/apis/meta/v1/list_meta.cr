@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # ListMeta describes metadata that synthetic resources must have, including lists and various status objects. A resource may have only one of {ObjectMeta, ListMeta}.

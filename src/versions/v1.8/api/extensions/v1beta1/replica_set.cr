@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # DEPRECATED - This group version of ReplicaSet is deprecated by [apps/v1beta2/ReplicaSet. See the release notes for more information. ReplicaSet represents the configuration of a ReplicaSet.](apps/v1beta2/ReplicaSet. See the release notes for more information. ReplicaSet represents the configuration of a ReplicaSet.)

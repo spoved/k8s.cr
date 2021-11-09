@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # Represents a Rados Block Device mount that lasts the lifetime of a pod. RBD volumes support ownership management and SELinux relabeling.

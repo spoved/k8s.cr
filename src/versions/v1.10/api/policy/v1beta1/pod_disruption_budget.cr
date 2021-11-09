@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # PodDisruptionBudget is an object to define the max disruption that can be caused to a collection of pods

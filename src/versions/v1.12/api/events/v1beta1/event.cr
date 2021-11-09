@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # Event is a report of an event somewhere in the cluster. It generally denotes some state change in the system.

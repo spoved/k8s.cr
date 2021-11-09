@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # NodeConfigSource specifies a source of node configuration. Exactly one subfield (excluding metadata) must be non-nil.

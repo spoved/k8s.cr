@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # Namespace provides a scope for Names. Use of multiple namespaces is optional.

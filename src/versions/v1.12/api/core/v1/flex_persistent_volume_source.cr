@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # FlexPersistentVolumeSource represents a generic persistent volume resource that is [provisioned/attached using an exec based plugin.](provisioned/attached using an exec based plugin.)

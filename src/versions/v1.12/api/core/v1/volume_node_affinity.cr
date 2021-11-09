@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # VolumeNodeAffinity defines constraints that limit what nodes this volume can be accessed from.

@@ -221,7 +221,7 @@ class Generator::Definition
   end
 
   private def load_requires
-    %w(yaml json).each do |req|
+    %w(yaml json json_mapping yaml_mapping).each do |req|
       file.puts "require #{req.inspect}"
     end
     file.puts

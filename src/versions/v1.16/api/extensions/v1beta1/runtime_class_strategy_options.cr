@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # RuntimeClassStrategyOptions define the strategy that will dictate the allowable RuntimeClasses for a pod.

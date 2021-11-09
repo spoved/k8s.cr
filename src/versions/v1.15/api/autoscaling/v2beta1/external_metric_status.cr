@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # ExternalMetricStatus indicates the current value of a global metric not associated with any Kubernetes object.

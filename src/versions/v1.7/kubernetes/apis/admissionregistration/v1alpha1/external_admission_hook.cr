@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # ExternalAdmissionHook describes an external admission webhook and the resources and operations it applies to.

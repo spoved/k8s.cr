@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   class Api::Extensions::V1beta1::DaemonSetUpdateStrategy

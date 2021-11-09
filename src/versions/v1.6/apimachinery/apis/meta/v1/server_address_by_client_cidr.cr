@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # ServerAddressByClientCIDR helps the client to determine the server address that they should use, depending on the clientCIDR that they match.

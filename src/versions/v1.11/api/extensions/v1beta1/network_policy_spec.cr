@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # DEPRECATED 1.9 - This group version of NetworkPolicySpec is deprecated by [networking/v1/NetworkPolicySpec.](networking/v1/NetworkPolicySpec.)

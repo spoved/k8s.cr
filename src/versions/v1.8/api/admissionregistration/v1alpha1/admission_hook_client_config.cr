@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # AdmissionHookClientConfig contains the information to make a TLS connection with the webhook

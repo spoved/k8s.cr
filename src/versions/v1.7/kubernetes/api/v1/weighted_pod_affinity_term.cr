@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)

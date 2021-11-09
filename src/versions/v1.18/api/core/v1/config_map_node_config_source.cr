@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # ConfigMapNodeConfigSource contains the information to reference a ConfigMap as a config source for the Node.

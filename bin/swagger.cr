@@ -1,4 +1,5 @@
 require "json"
+require "json_mapping"
 
 class Swagger
   JSON.mapping({

@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.

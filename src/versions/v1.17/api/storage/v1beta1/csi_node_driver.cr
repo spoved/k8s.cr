@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # CSINodeDriver holds information about the specification of one CSI driver installed on a node

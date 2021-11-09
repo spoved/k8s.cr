@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # A topology selector requirement is a selector that matches given label. This is an alpha feature and may change in the future.

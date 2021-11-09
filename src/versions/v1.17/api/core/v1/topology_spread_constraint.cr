@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # TopologySpreadConstraint specifies how to spread matching pods among the given topology.

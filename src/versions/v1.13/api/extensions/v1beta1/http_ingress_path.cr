@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # HTTPIngressPath associates a path regex with a backend. Incoming urls matching the path are forwarded to the backend.

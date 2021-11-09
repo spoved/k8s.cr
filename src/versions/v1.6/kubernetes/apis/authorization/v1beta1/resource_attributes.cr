@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # ResourceAttributes includes the authorization attributes available for resource requests to the Authorizer interface

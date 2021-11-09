@@ -2,3 +2,9 @@ name: k8s
 description: Kubernetes Object Mappings for Crystal
 version: 0.1.1
 crystal: ">= 0.36.1, < 2.0.0"
+
+dependencies:
+  json_mapping:
+    github: crystal-lang/json_mapping.cr
+  yaml_mapping:
+    github: crystal-lang/yaml_mapping.cr

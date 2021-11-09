@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # Preconditions must be fulfilled before an operation (update, delete, etc.) is carried out.

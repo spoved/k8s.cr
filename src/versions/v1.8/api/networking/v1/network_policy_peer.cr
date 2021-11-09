@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # NetworkPolicyPeer describes a peer to allow traffic from. Exactly one of its fields must be specified.

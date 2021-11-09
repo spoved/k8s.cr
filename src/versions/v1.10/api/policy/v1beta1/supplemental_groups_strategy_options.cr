@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # SupplementalGroupsStrategyOptions defines the strategy type and options used to create the strategy.

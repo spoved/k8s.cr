@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # ValidatingWebhookConfiguration describes the configuration of and admission webhook that accept or reject and object without changing it.

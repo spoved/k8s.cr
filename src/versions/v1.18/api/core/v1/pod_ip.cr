@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # IP address information for entries in the (plural) PodIPs field. Each entry includes:

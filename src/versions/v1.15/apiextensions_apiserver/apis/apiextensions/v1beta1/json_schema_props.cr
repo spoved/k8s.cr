@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # JSONSchemaProps is a JSON-Schema following Specification Draft 4 (http://json-schema.org/).

@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # DEPRECATED 1.9 - This group version of NetworkPolicyList is deprecated by [networking/v1/NetworkPolicyList. Network Policy List is a list of NetworkPolicy objects.](networking/v1/NetworkPolicyList. Network Policy List is a list of NetworkPolicy objects.)

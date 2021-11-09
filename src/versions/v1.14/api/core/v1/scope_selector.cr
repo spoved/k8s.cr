@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # A scope selector represents the AND of the selectors represented by the scoped-resource selector requirements.

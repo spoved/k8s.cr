@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # PersistentVolumeClaimSpec describes the common attributes of storage devices and allows a Source for provider-specific attributes

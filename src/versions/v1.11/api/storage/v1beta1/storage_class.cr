@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # StorageClass describes the parameters for a class of storage for which PersistentVolumes can be dynamically provisioned.

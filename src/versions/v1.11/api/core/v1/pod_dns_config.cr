@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # PodDNSConfig defines the DNS parameters of a pod in addition to those generated from DNSPolicy.

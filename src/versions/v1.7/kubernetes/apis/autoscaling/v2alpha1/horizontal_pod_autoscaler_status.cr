@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # HorizontalPodAutoscalerStatus describes the current status of a horizontal pod autoscaler.

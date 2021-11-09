@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # ClusterRole is a cluster level, logical grouping of PolicyRules that can be referenced as a unit by a RoleBinding or ClusterRoleBinding. Deprecated in v1.17 in favor of [rbac.authorization.k8s.io/v1 ClusterRole, and will no longer be served in v1.20.](rbac.authorization.k8s.io/v1 ClusterRole, and will no longer be served in v1.20.)

@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # FieldsV1 stores a set of fields in a data structure like a Trie, in JSON format.

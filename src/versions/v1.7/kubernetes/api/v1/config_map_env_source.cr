@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # ConfigMapEnvSource selects a ConfigMap to populate the environment variables with.

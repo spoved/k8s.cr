@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # LocalObjectReference contains enough information to let you locate the referenced object inside the same namespace.

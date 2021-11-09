@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # Probe describes a health check to be performed against a container to determine whether it is alive or ready to receive traffic.

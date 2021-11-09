@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # Role is a namespaced, logical grouping of PolicyRules that can be referenced as a unit by a RoleBinding.

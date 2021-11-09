@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # HorizontalPodAutoscaler is a list of horizontal pod autoscaler objects.

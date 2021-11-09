@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # defines the host volume conditions that will be enabled by a policy for pods to use. It requires the path prefix to be defined.

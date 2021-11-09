@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create.

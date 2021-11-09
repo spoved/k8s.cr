@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # LimitedPriorityLevelConfiguration specifies how to handle requests that are subject to limits. It addresses two issues:

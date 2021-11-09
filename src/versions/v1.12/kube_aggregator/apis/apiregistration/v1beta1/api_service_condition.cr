@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   class KubeAggregator::Apis::Apiregistration::V1beta1::APIServiceCondition

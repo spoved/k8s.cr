@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # StatefulSet represents a set of pods with consistent identities. Identities are defined as:

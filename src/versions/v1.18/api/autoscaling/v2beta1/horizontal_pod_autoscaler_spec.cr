@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # HorizontalPodAutoscalerSpec describes the desired functionality of the HorizontalPodAutoscaler.

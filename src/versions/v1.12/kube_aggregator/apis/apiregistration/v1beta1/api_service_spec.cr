@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # APIServiceSpec contains information for locating and communicating with a server. Only https is supported, though you are able to disable certificate verification.

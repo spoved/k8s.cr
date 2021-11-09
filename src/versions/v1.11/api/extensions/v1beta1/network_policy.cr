@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # DEPRECATED 1.9 - This group version of NetworkPolicy is deprecated by [networking/v1/NetworkPolicy. NetworkPolicy describes what network traffic is allowed for a set of Pods](networking/v1/NetworkPolicy. NetworkPolicy describes what network traffic is allowed for a set of Pods)

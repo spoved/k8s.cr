@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # AllowedCSIDriver represents a single inline CSI Driver that is allowed to be used.

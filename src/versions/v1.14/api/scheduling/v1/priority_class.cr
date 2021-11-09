@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # PriorityClass defines mapping from a priority class name to the priority integer value. The value can be any valid integer.

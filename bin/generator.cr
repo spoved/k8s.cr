@@ -1,3 +1,5 @@
+require "open-api"
+
 class Generator
   ROOT_NAME    = "K8S"
   VERSIONS_DIR = "src/versions"

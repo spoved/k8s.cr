@@ -10,7 +10,7 @@ struct Range
   end
 end
 
-def latest_patch_for(prefix, patch_range = 0..20, last_res = nil)
+def latest_patch_for(prefix, patch_range = 0..22, last_res = nil)
   last_patch = patch_range.bsearch do |patch|
     version = "#{prefix}.#{patch}"
     url = "https://raw.githubusercontent.com/kubernetes/kubernetes/#{version}/api/openapi-spec/swagger.json"

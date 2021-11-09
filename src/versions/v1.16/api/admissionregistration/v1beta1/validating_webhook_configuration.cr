@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # ValidatingWebhookConfiguration describes the configuration of and admission webhook that accept or reject and object without changing it. Deprecated in v1.16, planned for removal in v1.19. Use [admissionregistration.k8s.io/v1 ValidatingWebhookConfiguration instead.](admissionregistration.k8s.io/v1 ValidatingWebhookConfiguration instead.)

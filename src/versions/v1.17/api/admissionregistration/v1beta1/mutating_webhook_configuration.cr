@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # MutatingWebhookConfiguration describes the configuration of and admission webhook that accept or reject and may change the object. Deprecated in v1.16, planned for removal in v1.19. Use [admissionregistration.k8s.io/v1 MutatingWebhookConfiguration instead.](admissionregistration.k8s.io/v1 MutatingWebhookConfiguration instead.)

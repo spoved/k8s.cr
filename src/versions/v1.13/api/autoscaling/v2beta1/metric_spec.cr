@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # MetricSpec specifies how to scale based on a single metric (only `type` and one other matching field should be set at once).

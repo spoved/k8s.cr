@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # Pod is a collection of containers that can run on a host. This resource is created by clients and scheduled onto hosts.

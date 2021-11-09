@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # HorizontalPodAutoscalerCondition describes the state of a HorizontalPodAutoscaler at a certain point.

@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   @[::K8S::GroupVersionKind(group: "certificates.k8s.io", kind: "CertificateSigningRequestList", version: "v1beta1")]

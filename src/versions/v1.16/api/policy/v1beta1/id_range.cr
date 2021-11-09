@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # IDRange provides a [min/max of an allowed range of IDs.](min/max of an allowed range of IDs.)

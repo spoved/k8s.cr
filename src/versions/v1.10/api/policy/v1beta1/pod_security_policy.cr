@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # Pod Security Policy governs the ability to make requests that affect the Security Context that will be applied to a pod and container.

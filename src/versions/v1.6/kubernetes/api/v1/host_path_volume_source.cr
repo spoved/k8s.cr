@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # Represents a host path mapped into a pod. Host path volumes do not support ownership management or SELinux relabeling.

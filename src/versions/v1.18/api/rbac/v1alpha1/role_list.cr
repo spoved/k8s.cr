@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # RoleList is a collection of Roles. Deprecated in v1.17 in favor of [rbac.authorization.k8s.io/v1 RoleList, and will no longer be served in v1.20.](rbac.authorization.k8s.io/v1 RoleList, and will no longer be served in v1.20.)

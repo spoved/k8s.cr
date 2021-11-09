@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # Represents an empty directory for a pod. Empty directory volumes support ownership management and SELinux relabeling.

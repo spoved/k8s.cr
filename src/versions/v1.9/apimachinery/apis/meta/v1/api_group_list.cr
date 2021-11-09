@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # APIGroupList is a list of APIGroup, to allow clients to discover the API at /apis.

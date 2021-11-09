@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # This NetworkPolicyIngressRule matches traffic if and only if the traffic matches both ports AND from.

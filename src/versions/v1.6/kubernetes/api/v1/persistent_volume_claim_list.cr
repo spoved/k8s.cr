@@ -2,6 +2,8 @@
 
 require "yaml"
 require "json"
+require "json_mapping"
+require "yaml_mapping"
 
 module K8S
   # PersistentVolumeClaimList is a list of PersistentVolumeClaim items.
