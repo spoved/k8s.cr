@@ -2,7 +2,6 @@ require "json"
 
 macro k8s_json_discriminator(mappings)
   def self.new(pull : ::JSON::PullParser)
-    puts "k8s_json_discriminator"
     location = pull.location
 
     api_value = nil
