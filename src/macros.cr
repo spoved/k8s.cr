@@ -2,6 +2,7 @@ require "json"
 
 macro k8s_json_discriminator(mappings)
   def self.new(pull : ::JSON::PullParser)
+    puts "k8s_json_discriminator"
     location = pull.location
 
     api_value = nil
@@ -24,9 +25,7 @@ macro k8s_json_discriminator(mappings)
             end
             builder.field(key, api_value)
             pull.read_next
-          end
-
-          if key == "kind"
+          elsif key == "kind"
             value_kind = pull.kind
             case value_kind
             when .string?
@@ -53,12 +52,47 @@ macro k8s_json_discriminator(mappings)
     end
 
     case {api_value, discriminator_value}
-    {% for value in mappings %}
+    {% for value in mappings.resolve %}
     when { {{ value[0] }}, {{value[1]}} }
       {{value[2].id}}.from_json(json)
     {% end %}
     else
       raise ::JSON::SerializableError.new("Unknown 'apiVersion', 'kind' discriminator values: #{api_value.inspect} #{discriminator_value.inspect}", to_s, nil, *location, nil)
+    end
+  end
+end
+
+macro k8s_yaml_discriminator(mappings)
+  def self.new(ctx : YAML::ParseContext, node : YAML::Nodes::Node)
+    api_value = nil
+    discriminator_value = nil
+
+    ctx.read_alias(node, \{{@type}}) do |obj|
+      return obj
+    end
+
+    unless node.is_a?(YAML::Nodes::Mapping)
+      node.raise "expected YAML mapping, not #{node.class}"
+    end
+
+    node.each do |key, value|
+      next unless key.is_a?(YAML::Nodes::Scalar) && value.is_a?(YAML::Nodes::Scalar)
+      next unless key.value == "kind" || key.value == "apiVersion"
+
+      discriminator_value = value.value if key.value == "kind"
+      api_value = value.value if key.value == "apiVersion"
+    end
+
+    node.raise "Missing YAML discriminator field 'kind'" unless discriminator_value
+    node.raise "Missing YAML discriminator field 'apiVersion'" unless api_value
+
+    case {api_value, discriminator_value}
+    {% for value in mappings.resolve %}
+    when { {{ value[0] }}, {{value[1]}} }
+      return {{value[2].id}}.new(ctx, node)
+    {% end %}
+    else
+      node.raise "Unknown 'apiVersion', 'kind' discriminator values: #{api_value.inspect} #{discriminator_value.inspect}"
     end
   end
 end

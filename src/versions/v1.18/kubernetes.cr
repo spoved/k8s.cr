@@ -4,7 +4,7 @@ module ::K8S::Kubernetes
   abstract class Resource
     include JSON::Serializable
 
-    k8s_json_discriminator([
+    MAPPINGS = [
       {"admissionregistration/v1", "MutatingWebhookConfiguration", Resources::Admissionregistration::V1::MutatingWebhookConfiguration},
       {"admissionregistration/v1", "ValidatingWebhookConfiguration", Resources::Admissionregistration::V1::ValidatingWebhookConfiguration},
       {"admissionregistration/v1beta1", "MutatingWebhookConfiguration", Resources::Admissionregistration::V1beta1::MutatingWebhookConfiguration},
@@ -95,6 +95,9 @@ module ::K8S::Kubernetes
       {"apiextensions/v1beta1", "CustomResourceDefinition", Resources::Apiextensions::V1beta1::CustomResourceDefinition},
       {"apiregistration/v1", "APIService", Resources::Apiregistration::V1::APIService},
       {"apiregistration/v1beta1", "APIService", Resources::Apiregistration::V1beta1::APIService},
-    ])
+    ]
+
+    k8s_json_discriminator(MAPPINGS)
+    k8s_yaml_discriminator(MAPPINGS)
   end
 end

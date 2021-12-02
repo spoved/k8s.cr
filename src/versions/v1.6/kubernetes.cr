@@ -4,7 +4,7 @@ module ::K8S::Kubernetes
   abstract class Resource
     include JSON::Serializable
 
-    k8s_json_discriminator([
+    MAPPINGS = [
       {"v1", "Binding", Resources::V1::Binding},
       {"v1", "ComponentStatus", Resources::V1::ComponentStatus},
       {"v1", "ConfigMap", Resources::V1::ConfigMap},
@@ -60,6 +60,9 @@ module ::K8S::Kubernetes
       {"settings/v1alpha1", "PodPreset", Resources::Settings::V1alpha1::PodPreset},
       {"storage/v1", "StorageClass", Resources::Storage::V1::StorageClass},
       {"storage/v1beta1", "StorageClass", Resources::Storage::V1beta1::StorageClass},
-    ])
+    ]
+
+    k8s_json_discriminator(MAPPINGS)
+    k8s_yaml_discriminator(MAPPINGS)
   end
 end

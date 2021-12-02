@@ -74,11 +74,12 @@ class Generator
 
         file.puts "abstract class Resource"
         file.puts "  include JSON::Serializable", ""
-        file.puts %<  k8s_json_discriminator([>
+        file.puts %<  MAPPINGS = [>
         definitions.select(&.is_resource?).reject(&.is_list?).each do |r|
           file.puts %<    {"#{r.api_version}", "#{r.kind}", #{r.resource_alias}::#{r.kind}},>
         end
-        file.puts %< ])>
+        file.puts %< ]>, ""
+        file.puts "k8s_json_discriminator(MAPPINGS)", "k8s_yaml_discriminator(MAPPINGS)"
         file.puts "", "end", "", "end"
       end
       system "crystal tool format #{version}"
