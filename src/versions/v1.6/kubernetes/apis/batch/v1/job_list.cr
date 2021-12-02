@@ -7,7 +7,7 @@ require "yaml_mapping"
 
 module K8S
   # JobList is a collection of jobs.
-  class Kubernetes::Apis::Batch::V1::JobList
+  class Kubernetes::Apis::Batch::V1::JobList < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "List"
     # Items is the list of Job.

@@ -7,7 +7,7 @@ require "yaml_mapping"
 
 module K8S
   # IngressList is a collection of Ingress.
-  class Kubernetes::Apis::Extensions::V1beta1::IngressList
+  class Kubernetes::Apis::Extensions::V1beta1::IngressList < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "List"
     # Items is the list of Ingress.

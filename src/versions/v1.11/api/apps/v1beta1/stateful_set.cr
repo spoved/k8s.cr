@@ -81,7 +81,7 @@ module K8S
     path: "/apis/apps/v1beta1/namespaces/{namespace}/statefulsets/{name}/status", toplevel: false,
     args: [{name: "context", type: String | Nil, default: nil}]
   )]
-  class Api::Apps::V1beta1::StatefulSet
+  class Api::Apps::V1beta1::StatefulSet < ::K8S::Kubernetes::Resource
     getter api_version : String = "apps/v1beta1"
     getter kind : String = "StatefulSet"
     property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil

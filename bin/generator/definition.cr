@@ -93,7 +93,11 @@ class Generator::Definition
     generate_annotations
 
     # Open the class
-    file.puts "class #{class_name.lchop("::")}"
+    if is_resource?
+      file.puts "class #{class_name.lchop("::")} < ::K8S::Kubernetes::Resource"
+    else
+      file.puts "class #{class_name.lchop("::")}"
+    end
   end
 
   private def define_class
@@ -278,7 +282,7 @@ class Generator::Definition
         next if action_name.nil?
         parse_action_operation(path_name, path, verb, action) do |function_name, args, toplevel|
           file.puts(%<@[::#{base_class.lchop("::")}::Action(name: "#{action_name}", verb: "#{verb}",>)
-          file.puts(%< path: "#{path_name}",toplevel: #{toplevel.to_s}, >)
+          file.puts(%< path: "#{path_name}",toplevel: #{toplevel}, >)
           file.puts(%< args: [#{parse_operation_args_string(args).join(",\n")}]>)
           file.puts(")]")
         end

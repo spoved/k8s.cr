@@ -7,7 +7,7 @@ require "yaml_mapping"
 
 module K8S
   # ClusterRoleBindingList is a collection of ClusterRoleBindings
-  class Kubernetes::Apis::Rbac::V1beta1::ClusterRoleBindingList
+  class Kubernetes::Apis::Rbac::V1beta1::ClusterRoleBindingList < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "List"
     # Items is a list of ClusterRoleBindings

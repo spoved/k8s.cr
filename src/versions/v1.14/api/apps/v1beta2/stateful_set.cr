@@ -89,7 +89,7 @@ module K8S
            {name: "field_manager", type: String | Nil, default: nil},
            {name: "force", type: Bool | Nil, default: nil}]
   )]
-  class Api::Apps::V1beta2::StatefulSet
+  class Api::Apps::V1beta2::StatefulSet < ::K8S::Kubernetes::Resource
     getter api_version : String = "apps/v1beta2"
     getter kind : String = "StatefulSet"
     property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil

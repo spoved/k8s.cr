@@ -68,7 +68,7 @@ module K8S
            {name: "propagation_policy", type: String | Nil, default: nil},
            {name: "context", type: String | Nil, default: nil}]
   )]
-  class Api::Storage::V1alpha1::VolumeAttachment
+  class Api::Storage::V1alpha1::VolumeAttachment < ::K8S::Kubernetes::Resource
     getter api_version : String = "storage/v1alpha1"
     getter kind : String = "VolumeAttachment"
     # Standard object metadata. More info: [https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata)

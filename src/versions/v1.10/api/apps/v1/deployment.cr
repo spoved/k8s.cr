@@ -78,7 +78,7 @@ module K8S
     path: "/apis/apps/v1/namespaces/{namespace}/deployments/{name}/status", toplevel: false,
     args: [{name: "context", type: String | Nil, default: nil}]
   )]
-  class Api::Apps::V1::Deployment
+  class Api::Apps::V1::Deployment < ::K8S::Kubernetes::Resource
     getter api_version : String = "apps/v1"
     getter kind : String = "Deployment"
     # Standard object metadata.

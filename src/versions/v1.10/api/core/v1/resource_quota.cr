@@ -78,7 +78,7 @@ module K8S
     path: "/api/v1/namespaces/{namespace}/resourcequotas/{name}/status", toplevel: false,
     args: [{name: "context", type: String | Nil, default: nil}]
   )]
-  class Api::Core::V1::ResourceQuota
+  class Api::Core::V1::ResourceQuota < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "ResourceQuota"
     # Standard object's metadata. More info: [https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata)

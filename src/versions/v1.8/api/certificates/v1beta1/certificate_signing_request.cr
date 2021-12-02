@@ -69,7 +69,7 @@ module K8S
     path: "/apis/certificates.k8s.io/v1beta1/certificatesigningrequests/{name}/status", toplevel: false,
     args: [{name: "context", type: String | Nil, default: nil}]
   )]
-  class Api::Certificates::V1beta1::CertificateSigningRequest
+  class Api::Certificates::V1beta1::CertificateSigningRequest < ::K8S::Kubernetes::Resource
     getter api_version : String = "certificates/v1beta1"
     getter kind : String = "CertificateSigningRequest"
     property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil

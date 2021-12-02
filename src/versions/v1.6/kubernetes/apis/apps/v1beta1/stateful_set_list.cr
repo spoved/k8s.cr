@@ -7,7 +7,7 @@ require "yaml_mapping"
 
 module K8S
   # StatefulSetList is a collection of StatefulSets.
-  class Kubernetes::Apis::Apps::V1beta1::StatefulSetList
+  class Kubernetes::Apis::Apps::V1beta1::StatefulSetList < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "List"
     property items : Array(Kubernetes::Apis::Apps::V1beta1::StatefulSet)

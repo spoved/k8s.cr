@@ -7,7 +7,7 @@ require "yaml_mapping"
 
 module K8S
   # StorageClassList is a collection of storage classes.
-  class Kubernetes::Apis::Storage::V1::StorageClassList
+  class Kubernetes::Apis::Storage::V1::StorageClassList < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "List"
     # Items is the list of StorageClasses

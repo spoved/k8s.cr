@@ -7,7 +7,7 @@ require "yaml_mapping"
 
 module K8S
   # ServiceAccountList is a list of ServiceAccount objects
-  class Kubernetes::Api::V1::ServiceAccountList
+  class Kubernetes::Api::V1::ServiceAccountList < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "List"
     # List of ServiceAccounts. More info: [http://releases.k8s.io/HEAD/docs/design/service_accounts.md#service-accounts](http://releases.k8s.io/HEAD/docs/design/service_accounts.md#service-accounts)

@@ -60,7 +60,7 @@ module K8S
            {name: "propagation_policy", type: String | Nil, default: nil},
            {name: "context", type: String | Nil, default: nil}]
   )]
-  class Kubernetes::Api::V1::Event
+  class Kubernetes::Api::V1::Event < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "Event"
     # The number of times this event has occurred.

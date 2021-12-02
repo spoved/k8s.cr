@@ -18,7 +18,7 @@ module K8S
   #       Ports: [{"name": "a", "port": 93}, {"name": "b", "port": 76}]
   #     },
   #  ]
-  class Kubernetes::Api::V1::Endpoints
+  class Kubernetes::Api::V1::Endpoints < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "Endpoints"
     # Standard object's metadata. More info: [http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#metadata](http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#metadata)

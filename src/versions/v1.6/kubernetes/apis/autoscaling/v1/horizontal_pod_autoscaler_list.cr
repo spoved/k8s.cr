@@ -7,7 +7,7 @@ require "yaml_mapping"
 
 module K8S
   # list of horizontal pod autoscaler objects.
-  class Kubernetes::Apis::Autoscaling::V1::HorizontalPodAutoscalerList
+  class Kubernetes::Apis::Autoscaling::V1::HorizontalPodAutoscalerList < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "List"
     # list of horizontal pod autoscaler objects.

@@ -7,7 +7,7 @@ require "yaml_mapping"
 
 module K8S
   # Event is a report of an event somewhere in the cluster.
-  class Kubernetes::Api::V1::Event
+  class Kubernetes::Api::V1::Event < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "Event"
     # The number of times this event has occurred.

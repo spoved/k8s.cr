@@ -64,7 +64,7 @@ module K8S
            {name: "orphan_dependents", type: Bool | Nil, default: nil},
            {name: "propagation_policy", type: String | Nil, default: nil}]
   )]
-  class Api::Auditregistration::V1alpha1::AuditSink
+  class Api::Auditregistration::V1alpha1::AuditSink < ::K8S::Kubernetes::Resource
     getter api_version : String = "auditregistration/v1alpha1"
     getter kind : String = "AuditSink"
     property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil

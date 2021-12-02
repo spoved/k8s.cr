@@ -72,7 +72,7 @@ module K8S
     args: [{name: "context", type: String | Nil, default: nil},
            {name: "dry_run", type: String | Nil, default: nil}]
   )]
-  class Api::Autoscaling::V1::Scale
+  class Api::Autoscaling::V1::Scale < ::K8S::Kubernetes::Resource
     getter api_version : String = "autoscaling/v1"
     getter kind : String = "Scale"
     # Standard object metadata; More info: [https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata.](https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata.)

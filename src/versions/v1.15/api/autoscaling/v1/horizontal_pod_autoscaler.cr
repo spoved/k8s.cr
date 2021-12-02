@@ -92,7 +92,7 @@ module K8S
            {name: "field_manager", type: String | Nil, default: nil},
            {name: "force", type: Bool | Nil, default: nil}]
   )]
-  class Api::Autoscaling::V1::HorizontalPodAutoscaler
+  class Api::Autoscaling::V1::HorizontalPodAutoscaler < ::K8S::Kubernetes::Resource
     getter api_version : String = "autoscaling/v1"
     getter kind : String = "HorizontalPodAutoscaler"
     # Standard object metadata. More info: [https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata)

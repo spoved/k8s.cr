@@ -7,7 +7,7 @@ require "yaml_mapping"
 
 module K8S
   # ConfigMap holds configuration data for pods to consume.
-  class Kubernetes::Api::V1::ConfigMap
+  class Kubernetes::Api::V1::ConfigMap < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "ConfigMap"
     # Data contains the configuration data. Each key must be a valid DNS_SUBDOMAIN with an optional leading dot.

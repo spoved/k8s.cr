@@ -7,7 +7,7 @@ require "yaml_mapping"
 
 module K8S
   # Scale represents a scaling request for a resource.
-  class Kubernetes::Apis::Apps::V1beta1::Scale
+  class Kubernetes::Apis::Apps::V1beta1::Scale < ::K8S::Kubernetes::Resource
     getter api_version : String = "apps/v1beta1"
     getter kind : String = "Scale"
     # Standard object metadata; More info: [http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#metadata.](http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#metadata.)

@@ -50,7 +50,7 @@ module K8S
     path: "/apis/extensions/v1beta1/namespaces/{namespace}/replicationcontrollers/{name}/scale", toplevel: false,
     args: [{name: "context", type: String | Nil, default: nil}]
   )]
-  class Api::Extensions::V1beta1::Scale
+  class Api::Extensions::V1beta1::Scale < ::K8S::Kubernetes::Resource
     getter api_version : String = "extensions/v1beta1"
     getter kind : String = "Scale"
     # Standard object metadata; More info: [https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata.](https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata.)

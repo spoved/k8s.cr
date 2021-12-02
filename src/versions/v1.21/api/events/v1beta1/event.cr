@@ -71,7 +71,7 @@ module K8S
            {name: "orphan_dependents", type: Bool | Nil, default: nil},
            {name: "propagation_policy", type: String | Nil, default: nil}]
   )]
-  class Api::Events::V1beta1::Event
+  class Api::Events::V1beta1::Event < ::K8S::Kubernetes::Resource
     getter api_version : String = "events/v1beta1"
     getter kind : String = "Event"
     # action is what action was [taken/failed regarding to the regarding object. It is machine-readable. This field can have at most 128 characters.](taken/failed regarding to the regarding object. It is machine-readable. This field can have at most 128 characters.)

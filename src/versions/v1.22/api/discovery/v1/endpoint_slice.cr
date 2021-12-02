@@ -71,7 +71,7 @@ module K8S
            {name: "orphan_dependents", type: Bool | Nil, default: nil},
            {name: "propagation_policy", type: String | Nil, default: nil}]
   )]
-  class Api::Discovery::V1::EndpointSlice
+  class Api::Discovery::V1::EndpointSlice < ::K8S::Kubernetes::Resource
     getter api_version : String = "discovery/v1"
     getter kind : String = "EndpointSlice"
     # addressType specifies the type of address carried by this EndpointSlice. All addresses in this slice must be the same type. This field is immutable after creation. The following address types are currently supported: * IPv4: Represents an IPv4 Address. * IPv6: Represents an IPv6 Address. * FQDN: Represents a Fully Qualified Domain Name.

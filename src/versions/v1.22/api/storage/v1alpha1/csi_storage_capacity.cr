@@ -79,7 +79,7 @@ module K8S
            {name: "orphan_dependents", type: Bool | Nil, default: nil},
            {name: "propagation_policy", type: String | Nil, default: nil}]
   )]
-  class Api::Storage::V1alpha1::CSIStorageCapacity
+  class Api::Storage::V1alpha1::CSIStorageCapacity < ::K8S::Kubernetes::Resource
     getter api_version : String = "storage/v1alpha1"
     getter kind : String = "CSIStorageCapacity"
     # Capacity is the value reported by the CSI driver in its GetCapacityResponse for a GetCapacityRequest with topology and parameters that match the previous fields.

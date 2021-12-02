@@ -46,7 +46,7 @@ module K8S
            {name: "watch", type: Bool | Nil, default: nil},
            {name: "namespace", type: String, default: "default"}]
   )]
-  class Kubernetes::Api::V1::LimitRangeList
+  class Kubernetes::Api::V1::LimitRangeList < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "List"
     # Items is a list of LimitRange objects. More info: [https://git.k8s.io/community/contributors/design-proposals/admission_control_limit_range.md](https://git.k8s.io/community/contributors/design-proposals/admission_control_limit_range.md)

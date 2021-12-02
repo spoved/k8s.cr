@@ -12,7 +12,7 @@ module K8S
     path: "/apis/authentication.k8s.io/v1/tokenreviews", toplevel: false,
     args: [{name: "context", type: String | Nil, default: nil}]
   )]
-  class Api::Authentication::V1::TokenReview
+  class Api::Authentication::V1::TokenReview < ::K8S::Kubernetes::Resource
     getter api_version : String = "authentication/v1"
     getter kind : String = "TokenReview"
     property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil

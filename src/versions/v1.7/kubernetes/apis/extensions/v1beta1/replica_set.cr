@@ -74,7 +74,7 @@ module K8S
     path: "/apis/extensions/v1beta1/namespaces/{namespace}/replicasets/{name}/status", toplevel: false,
     args: [{name: "context", type: String | Nil, default: nil}]
   )]
-  class Kubernetes::Apis::Extensions::V1beta1::ReplicaSet
+  class Kubernetes::Apis::Extensions::V1beta1::ReplicaSet < ::K8S::Kubernetes::Resource
     getter api_version : String = "extensions/v1beta1"
     getter kind : String = "ReplicaSet"
     # If the Labels of a ReplicaSet are empty, they are defaulted to be the same as the Pod(s) that the ReplicaSet manages. Standard object's metadata. More info: [https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata)

@@ -7,7 +7,7 @@ require "yaml_mapping"
 
 module K8S
   # PodPresetList is a list of PodPreset objects.
-  class Kubernetes::Apis::Settings::V1alpha1::PodPresetList
+  class Kubernetes::Apis::Settings::V1alpha1::PodPresetList < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "List"
     # Items is a list of schema objects.

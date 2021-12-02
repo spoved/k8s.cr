@@ -7,7 +7,7 @@ require "yaml_mapping"
 
 module K8S
   # Role is a namespaced, logical grouping of PolicyRules that can be referenced as a unit by a RoleBinding.
-  class Kubernetes::Apis::Rbac::V1alpha1::Role
+  class Kubernetes::Apis::Rbac::V1alpha1::Role < ::K8S::Kubernetes::Resource
     getter api_version : String = "rbac.authorization.k8s.io/v1alpha1"
     getter kind : String = "Role"
     # Standard object's metadata.

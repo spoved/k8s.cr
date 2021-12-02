@@ -7,7 +7,7 @@ require "yaml_mapping"
 
 module K8S
   # Deployment enables declarative updates for Pods and ReplicaSets.
-  class Kubernetes::Apis::Apps::V1beta1::Deployment
+  class Kubernetes::Apis::Apps::V1beta1::Deployment < ::K8S::Kubernetes::Resource
     getter api_version : String = "apps/v1beta1"
     getter kind : String = "Deployment"
     # Standard object metadata.

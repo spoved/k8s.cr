@@ -83,7 +83,7 @@ module K8S
     args: [{name: "context", type: String | Nil, default: nil},
            {name: "dry_run", type: String | Nil, default: nil}]
   )]
-  class Api::Certificates::V1beta1::CertificateSigningRequest
+  class Api::Certificates::V1beta1::CertificateSigningRequest < ::K8S::Kubernetes::Resource
     getter api_version : String = "certificates/v1beta1"
     getter kind : String = "CertificateSigningRequest"
     property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil

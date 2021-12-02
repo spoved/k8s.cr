@@ -7,7 +7,7 @@ require "yaml_mapping"
 
 module K8S
   # ConfigMapList is a resource containing a list of ConfigMap objects.
-  class Kubernetes::Api::V1::ConfigMapList
+  class Kubernetes::Api::V1::ConfigMapList < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "List"
     # Items is the list of ConfigMaps.

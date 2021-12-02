@@ -14,7 +14,7 @@ module K8S
            {name: "dry_run", type: String | Nil, default: nil},
            {name: "field_manager", type: String | Nil, default: nil}]
   )]
-  class Api::Authorization::V1beta1::LocalSubjectAccessReview
+  class Api::Authorization::V1beta1::LocalSubjectAccessReview < ::K8S::Kubernetes::Resource
     getter api_version : String = "authorization/v1beta1"
     getter kind : String = "LocalSubjectAccessReview"
     property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil

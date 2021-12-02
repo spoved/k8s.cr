@@ -69,7 +69,7 @@ module K8S
            {name: "propagation_policy", type: String | Nil, default: nil},
            {name: "context", type: String | Nil, default: nil}]
   )]
-  class Api::Core::V1::Event
+  class Api::Core::V1::Event < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "Event"
     # What action was [taken/failed regarding to the Regarding object.](taken/failed regarding to the Regarding object.)

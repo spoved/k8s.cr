@@ -86,7 +86,7 @@ module K8S
            {name: "field_manager", type: String | Nil, default: nil},
            {name: "force", type: Bool | Nil, default: nil}]
   )]
-  class Api::Policy::V1beta1::PodDisruptionBudget
+  class Api::Policy::V1beta1::PodDisruptionBudget < ::K8S::Kubernetes::Resource
     getter api_version : String = "policy/v1beta1"
     getter kind : String = "PodDisruptionBudget"
     property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil

@@ -60,7 +60,7 @@ module K8S
            {name: "timeout_seconds", type: Int32 | Nil, default: nil},
            {name: "namespace", type: String, default: "default"}]
   )]
-  class Api::Apps::V1::DaemonSetList
+  class Api::Apps::V1::DaemonSetList < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "List"
     # A list of daemon sets.

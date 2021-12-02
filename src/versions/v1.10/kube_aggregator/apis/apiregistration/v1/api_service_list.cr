@@ -38,7 +38,7 @@ module K8S
            {name: "timeout_seconds", type: Int32 | Nil, default: nil},
            {name: "watch", type: Bool | Nil, default: nil}]
   )]
-  class KubeAggregator::Apis::Apiregistration::V1::APIServiceList
+  class KubeAggregator::Apis::Apiregistration::V1::APIServiceList < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "List"
     property items : Array(KubeAggregator::Apis::Apiregistration::V1::APIService)

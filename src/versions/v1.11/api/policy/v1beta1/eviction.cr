@@ -12,7 +12,7 @@ module K8S
     path: "/api/v1/namespaces/{namespace}/pods/{name}/eviction", toplevel: false,
     args: [{name: "context", type: String | Nil, default: nil}]
   )]
-  class Api::Policy::V1beta1::Eviction
+  class Api::Policy::V1beta1::Eviction < ::K8S::Kubernetes::Resource
     getter api_version : String = "policy/v1beta1"
     getter kind : String = "Eviction"
     # DeleteOptions may be provided

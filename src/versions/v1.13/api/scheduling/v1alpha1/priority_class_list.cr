@@ -42,7 +42,7 @@ module K8S
            {name: "timeout_seconds", type: Int32 | Nil, default: nil},
            {name: "watch", type: Bool | Nil, default: nil}]
   )]
-  class Api::Scheduling::V1alpha1::PriorityClassList
+  class Api::Scheduling::V1alpha1::PriorityClassList < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "List"
     # items is the list of PriorityClasses

@@ -60,7 +60,7 @@ module K8S
            {name: "timeout_seconds", type: Int32 | Nil, default: nil},
            {name: "namespace", type: String, default: "default"}]
   )]
-  class Api::Batch::V1::CronJobList
+  class Api::Batch::V1::CronJobList < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "List"
     # items is the list of CronJobs.

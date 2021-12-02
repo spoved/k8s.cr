@@ -14,7 +14,7 @@ module K8S
            {name: "dry_run", type: String | Nil, default: nil},
            {name: "field_manager", type: String | Nil, default: nil}]
   )]
-  class Api::Authentication::V1::TokenRequest
+  class Api::Authentication::V1::TokenRequest < ::K8S::Kubernetes::Resource
     getter api_version : String = "authentication/v1"
     getter kind : String = "TokenRequest"
     # Standard object's metadata. More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)

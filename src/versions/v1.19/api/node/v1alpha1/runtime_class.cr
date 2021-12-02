@@ -70,7 +70,7 @@ module K8S
            {name: "orphan_dependents", type: Bool | Nil, default: nil},
            {name: "propagation_policy", type: String | Nil, default: nil}]
   )]
-  class Api::Node::V1alpha1::RuntimeClass
+  class Api::Node::V1alpha1::RuntimeClass < ::K8S::Kubernetes::Resource
     getter api_version : String = "node/v1alpha1"
     getter kind : String = "RuntimeClass"
     # More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)

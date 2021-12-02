@@ -14,7 +14,7 @@ module K8S
            {name: "dry_run", type: String | Nil, default: nil},
            {name: "field_manager", type: String | Nil, default: nil}]
   )]
-  class Api::Authorization::V1::SelfSubjectAccessReview
+  class Api::Authorization::V1::SelfSubjectAccessReview < ::K8S::Kubernetes::Resource
     getter api_version : String = "authorization/v1"
     getter kind : String = "SelfSubjectAccessReview"
     # Standard list metadata. More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)

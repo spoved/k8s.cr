@@ -53,7 +53,7 @@ module K8S
            {name: "watch", type: Bool | Nil, default: nil},
            {name: "namespace", type: String, default: "default"}]
   )]
-  class Kubernetes::Api::V1::EventList
+  class Kubernetes::Api::V1::EventList < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "List"
     # List of events

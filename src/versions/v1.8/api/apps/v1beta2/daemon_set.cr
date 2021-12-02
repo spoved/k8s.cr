@@ -78,7 +78,7 @@ module K8S
     path: "/apis/apps/v1beta2/namespaces/{namespace}/daemonsets/{name}/status", toplevel: false,
     args: [{name: "context", type: String | Nil, default: nil}]
   )]
-  class Api::Apps::V1beta2::DaemonSet
+  class Api::Apps::V1beta2::DaemonSet < ::K8S::Kubernetes::Resource
     getter api_version : String = "apps/v1beta2"
     getter kind : String = "DaemonSet"
     # Standard object's metadata. More info: [https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata)

@@ -53,7 +53,7 @@ module K8S
            {name: "timeout_seconds", type: Int32 | Nil, default: nil},
            {name: "watch", type: Bool | Nil, default: nil}]
   )]
-  class Api::Apps::V1beta1::StatefulSetList
+  class Api::Apps::V1beta1::StatefulSetList < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "List"
     property items : Array(Api::Apps::V1beta1::StatefulSet)

@@ -57,7 +57,7 @@ module K8S
            {name: "propagation_policy", type: String | Nil, default: nil},
            {name: "context", type: String | Nil, default: nil}]
   )]
-  class Kubernetes::Apis::Extensions::V1beta1::ThirdPartyResource
+  class Kubernetes::Apis::Extensions::V1beta1::ThirdPartyResource < ::K8S::Kubernetes::Resource
     getter api_version : String = "extensions/v1beta1"
     getter kind : String = "ThirdPartyResource"
     # Description is the description of this object.

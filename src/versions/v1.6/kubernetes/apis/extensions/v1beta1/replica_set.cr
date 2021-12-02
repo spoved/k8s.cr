@@ -7,7 +7,7 @@ require "yaml_mapping"
 
 module K8S
   # ReplicaSet represents the configuration of a ReplicaSet.
-  class Kubernetes::Apis::Extensions::V1beta1::ReplicaSet
+  class Kubernetes::Apis::Extensions::V1beta1::ReplicaSet < ::K8S::Kubernetes::Resource
     getter api_version : String = "extensions/v1beta1"
     getter kind : String = "ReplicaSet"
     # If the Labels of a ReplicaSet are empty, they are defaulted to be the same as the Pod(s) that the ReplicaSet manages. Standard object's metadata. More info: [http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#metadata](http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#metadata)

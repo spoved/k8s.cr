@@ -14,7 +14,7 @@ module K8S
            {name: "dry_run", type: String | Nil, default: nil},
            {name: "field_manager", type: String | Nil, default: nil}]
   )]
-  class Api::Policy::V1beta1::Eviction
+  class Api::Policy::V1beta1::Eviction < ::K8S::Kubernetes::Resource
     getter api_version : String = "policy/v1beta1"
     getter kind : String = "Eviction"
     # DeleteOptions may be provided

@@ -72,7 +72,7 @@ module K8S
            {name: "orphan_dependents", type: Bool | Nil, default: nil},
            {name: "propagation_policy", type: String | Nil, default: nil}]
   )]
-  class Api::Storage::V1::StorageClass
+  class Api::Storage::V1::StorageClass < ::K8S::Kubernetes::Resource
     getter api_version : String = "storage/v1"
     getter kind : String = "StorageClass"
     # AllowVolumeExpansion shows whether the storage class allow volume expand

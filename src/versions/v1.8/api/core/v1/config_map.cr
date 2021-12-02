@@ -64,7 +64,7 @@ module K8S
            {name: "propagation_policy", type: String | Nil, default: nil},
            {name: "context", type: String | Nil, default: nil}]
   )]
-  class Api::Core::V1::ConfigMap
+  class Api::Core::V1::ConfigMap < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "ConfigMap"
     # Data contains the configuration data. Each key must consist of alphanumeric characters, '-', '_' or '.'.

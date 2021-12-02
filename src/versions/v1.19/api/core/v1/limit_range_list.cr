@@ -59,7 +59,7 @@ module K8S
            {name: "timeout_seconds", type: Int32 | Nil, default: nil},
            {name: "namespace", type: String, default: "default"}]
   )]
-  class Api::Core::V1::LimitRangeList
+  class Api::Core::V1::LimitRangeList < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "List"
     # Items is a list of LimitRange objects. More info: [https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/)

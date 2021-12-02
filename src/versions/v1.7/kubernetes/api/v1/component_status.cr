@@ -13,7 +13,7 @@ module K8S
     args: [{name: "name", type: String},
            {name: "context", type: String | Nil, default: nil}]
   )]
-  class Kubernetes::Api::V1::ComponentStatus
+  class Kubernetes::Api::V1::ComponentStatus < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "ComponentStatus"
     # List of component conditions observed

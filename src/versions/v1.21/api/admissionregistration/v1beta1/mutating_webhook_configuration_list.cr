@@ -44,7 +44,7 @@ module K8S
            {name: "resource_version_match", type: String | Nil, default: nil},
            {name: "timeout_seconds", type: Int32 | Nil, default: nil}]
   )]
-  class Api::Admissionregistration::V1beta1::MutatingWebhookConfigurationList
+  class Api::Admissionregistration::V1beta1::MutatingWebhookConfigurationList < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "List"
     # List of MutatingWebhookConfiguration.

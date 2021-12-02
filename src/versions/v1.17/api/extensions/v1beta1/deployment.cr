@@ -92,7 +92,7 @@ module K8S
            {name: "field_manager", type: String | Nil, default: nil},
            {name: "force", type: Bool | Nil, default: nil}]
   )]
-  class Api::Extensions::V1beta1::Deployment
+  class Api::Extensions::V1beta1::Deployment < ::K8S::Kubernetes::Resource
     getter api_version : String = "extensions/v1beta1"
     getter kind : String = "Deployment"
     # Standard object metadata.

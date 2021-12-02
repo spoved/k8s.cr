@@ -92,7 +92,7 @@ module K8S
            {name: "field_manager", type: String | Nil, default: nil},
            {name: "force", type: Bool | Nil, default: nil}]
   )]
-  class Api::Core::V1::PersistentVolumeClaim
+  class Api::Core::V1::PersistentVolumeClaim < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "PersistentVolumeClaim"
     # Standard object's metadata. More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)

@@ -1,7 +1,7 @@
-# Pyrite
+# K8S
 
 A Kubernetes Client for Crystal-lang forked from [psykube/pyrite](https://github.com/psykube/pyrite).
-Forked due to possibly destructive changes to change namespaces and adapt for use with `Kube::Client` 
+Forked due to possibly destructive changes to change namespaces and adapt for use with `Kube::Client`
 
 ## Installation
 

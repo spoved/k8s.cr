@@ -58,7 +58,7 @@ module K8S
            {name: "propagation_policy", type: String | Nil, default: nil},
            {name: "context", type: String | Nil, default: nil}]
   )]
-  class Kubernetes::Apis::Rbac::V1alpha1::Role
+  class Kubernetes::Apis::Rbac::V1alpha1::Role < ::K8S::Kubernetes::Resource
     getter api_version : String = "rbac.authorization.k8s.io/v1alpha1"
     getter kind : String = "Role"
     # Standard object's metadata.

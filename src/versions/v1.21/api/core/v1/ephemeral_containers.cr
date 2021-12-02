@@ -27,7 +27,7 @@ module K8S
            {name: "field_manager", type: String | Nil, default: nil},
            {name: "force", type: Bool | Nil, default: nil}]
   )]
-  class Api::Core::V1::EphemeralContainers
+  class Api::Core::V1::EphemeralContainers < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "EphemeralContainers"
     # A list of ephemeral containers associated with this pod. New ephemeral containers may be appended to this list, but existing ephemeral containers may not be removed or modified.

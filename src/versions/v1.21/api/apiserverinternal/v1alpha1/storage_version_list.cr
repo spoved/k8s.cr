@@ -45,7 +45,7 @@ module K8S
            {name: "resource_version_match", type: String | Nil, default: nil},
            {name: "timeout_seconds", type: Int32 | Nil, default: nil}]
   )]
-  class Api::Apiserverinternal::V1alpha1::StorageVersionList
+  class Api::Apiserverinternal::V1alpha1::StorageVersionList < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "List"
     property items : Array(Api::Apiserverinternal::V1alpha1::StorageVersion)

@@ -12,7 +12,7 @@ module K8S
     path: "/apis/authorization.k8s.io/v1/selfsubjectaccessreviews", toplevel: false,
     args: [{name: "context", type: String | Nil, default: nil}]
   )]
-  class Kubernetes::Apis::Authorization::V1::SelfSubjectAccessReview
+  class Kubernetes::Apis::Authorization::V1::SelfSubjectAccessReview < ::K8S::Kubernetes::Resource
     getter api_version : String = "authorization/v1"
     getter kind : String = "SelfSubjectAccessReview"
     property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil

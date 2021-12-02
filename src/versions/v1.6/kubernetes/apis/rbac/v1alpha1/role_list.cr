@@ -7,7 +7,7 @@ require "yaml_mapping"
 
 module K8S
   # RoleList is a collection of Roles
-  class Kubernetes::Apis::Rbac::V1alpha1::RoleList
+  class Kubernetes::Apis::Rbac::V1alpha1::RoleList < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "List"
     # Items is a list of Roles

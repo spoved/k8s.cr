@@ -7,7 +7,7 @@ require "yaml_mapping"
 
 module K8S
   # Network Policy List is a list of NetworkPolicy objects.
-  class Kubernetes::Apis::Extensions::V1beta1::NetworkPolicyList
+  class Kubernetes::Apis::Extensions::V1beta1::NetworkPolicyList < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "List"
     # Items is a list of schema objects.

@@ -38,7 +38,7 @@ module K8S
            {name: "timeout_seconds", type: Int32 | Nil, default: nil},
            {name: "watch", type: Bool | Nil, default: nil}]
   )]
-  class Api::Certificates::V1beta1::CertificateSigningRequestList
+  class Api::Certificates::V1beta1::CertificateSigningRequestList < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "List"
     property items : Array(Api::Certificates::V1beta1::CertificateSigningRequest)

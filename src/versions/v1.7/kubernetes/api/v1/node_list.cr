@@ -35,7 +35,7 @@ module K8S
            {name: "timeout_seconds", type: Int32 | Nil, default: nil},
            {name: "watch", type: Bool | Nil, default: nil}]
   )]
-  class Kubernetes::Api::V1::NodeList
+  class Kubernetes::Api::V1::NodeList < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "List"
     # List of nodes

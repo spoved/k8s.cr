@@ -51,7 +51,7 @@ module K8S
            {name: "watch", type: Bool | Nil, default: nil},
            {name: "namespace", type: String, default: "default"}]
   )]
-  class Api::Coordination::V1beta1::LeaseList
+  class Api::Coordination::V1beta1::LeaseList < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "List"
     # Items is a list of schema objects.

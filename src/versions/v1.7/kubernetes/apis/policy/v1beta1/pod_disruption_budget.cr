@@ -74,7 +74,7 @@ module K8S
     path: "/apis/policy/v1beta1/namespaces/{namespace}/poddisruptionbudgets/{name}/status", toplevel: false,
     args: [{name: "context", type: String | Nil, default: nil}]
   )]
-  class Kubernetes::Apis::Policy::V1beta1::PodDisruptionBudget
+  class Kubernetes::Apis::Policy::V1beta1::PodDisruptionBudget < ::K8S::Kubernetes::Resource
     getter api_version : String = "policy/v1beta1"
     getter kind : String = "PodDisruptionBudget"
     property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil

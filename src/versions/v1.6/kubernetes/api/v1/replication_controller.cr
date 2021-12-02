@@ -7,7 +7,7 @@ require "yaml_mapping"
 
 module K8S
   # ReplicationController represents the configuration of a replication controller.
-  class Kubernetes::Api::V1::ReplicationController
+  class Kubernetes::Api::V1::ReplicationController < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "ReplicationController"
     # If the Labels of a ReplicationController are empty, they are defaulted to be the same as the Pod(s) that the replication controller manages. Standard object's metadata. More info: [http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#metadata](http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#metadata)

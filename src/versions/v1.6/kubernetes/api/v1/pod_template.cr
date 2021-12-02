@@ -7,7 +7,7 @@ require "yaml_mapping"
 
 module K8S
   # PodTemplate describes a template for creating copies of a predefined pod.
-  class Kubernetes::Api::V1::PodTemplate
+  class Kubernetes::Api::V1::PodTemplate < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "PodTemplate"
     # Standard object's metadata. More info: [http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#metadata](http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#metadata)

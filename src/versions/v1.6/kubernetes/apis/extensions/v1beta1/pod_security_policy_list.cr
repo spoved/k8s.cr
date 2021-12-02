@@ -7,7 +7,7 @@ require "yaml_mapping"
 
 module K8S
   # Pod Security Policy List is a list of PodSecurityPolicy objects.
-  class Kubernetes::Apis::Extensions::V1beta1::PodSecurityPolicyList
+  class Kubernetes::Apis::Extensions::V1beta1::PodSecurityPolicyList < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "List"
     # Items is a list of schema objects.

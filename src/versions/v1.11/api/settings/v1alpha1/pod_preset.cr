@@ -64,7 +64,7 @@ module K8S
            {name: "propagation_policy", type: String | Nil, default: nil},
            {name: "context", type: String | Nil, default: nil}]
   )]
-  class Api::Settings::V1alpha1::PodPreset
+  class Api::Settings::V1alpha1::PodPreset < ::K8S::Kubernetes::Resource
     getter api_version : String = "settings/v1alpha1"
     getter kind : String = "PodPreset"
     property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil

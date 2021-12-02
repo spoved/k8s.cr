@@ -53,7 +53,7 @@ module K8S
            {name: "timeout_seconds", type: Int32 | Nil, default: nil},
            {name: "watch", type: Bool | Nil, default: nil}]
   )]
-  class Api::Rbac::V1alpha1::RoleBindingList
+  class Api::Rbac::V1alpha1::RoleBindingList < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "List"
     # Items is a list of RoleBindings

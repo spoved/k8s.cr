@@ -74,7 +74,7 @@ module K8S
     path: "/api/v1/namespaces/{namespace}/pods/{name}/status", toplevel: false,
     args: [{name: "context", type: String | Nil, default: nil}]
   )]
-  class Kubernetes::Api::V1::Pod
+  class Kubernetes::Api::V1::Pod < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "Pod"
     # Standard object's metadata. More info: [https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata)

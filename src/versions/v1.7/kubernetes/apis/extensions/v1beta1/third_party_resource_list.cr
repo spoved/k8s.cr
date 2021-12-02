@@ -35,7 +35,7 @@ module K8S
            {name: "timeout_seconds", type: Int32 | Nil, default: nil},
            {name: "watch", type: Bool | Nil, default: nil}]
   )]
-  class Kubernetes::Apis::Extensions::V1beta1::ThirdPartyResourceList
+  class Kubernetes::Apis::Extensions::V1beta1::ThirdPartyResourceList < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "List"
     # Items is the list of ThirdPartyResources.

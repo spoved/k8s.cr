@@ -47,7 +47,7 @@ module K8S
            {name: "timeout_seconds", type: Int32 | Nil, default: nil},
            {name: "watch", type: Bool | Nil, default: nil}]
   )]
-  class Kubernetes::Apis::Policy::V1beta1::PodDisruptionBudgetList
+  class Kubernetes::Apis::Policy::V1beta1::PodDisruptionBudgetList < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "List"
     property items : Array(Kubernetes::Apis::Policy::V1beta1::PodDisruptionBudget)

@@ -60,7 +60,7 @@ module K8S
            {name: "propagation_policy", type: String | Nil, default: nil},
            {name: "context", type: String | Nil, default: nil}]
   )]
-  class Kubernetes::Api::V1::Secret
+  class Kubernetes::Api::V1::Secret < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "Secret"
     # Data contains the secret data. Each key must consist of alphanumeric characters, '-', '_' or '.'. The serialized form of the secret data is a base64 encoded string, representing the arbitrary (possibly non-string) data value here. Described in [https://tools.ietf.org/html/rfc4648#section-4](https://tools.ietf.org/html/rfc4648#section-4)

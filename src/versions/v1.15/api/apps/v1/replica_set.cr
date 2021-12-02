@@ -92,7 +92,7 @@ module K8S
            {name: "field_manager", type: String | Nil, default: nil},
            {name: "force", type: Bool | Nil, default: nil}]
   )]
-  class Api::Apps::V1::ReplicaSet
+  class Api::Apps::V1::ReplicaSet < ::K8S::Kubernetes::Resource
     getter api_version : String = "apps/v1"
     getter kind : String = "ReplicaSet"
     # If the Labels of a ReplicaSet are empty, they are defaulted to be the same as the Pod(s) that the ReplicaSet manages. Standard object's metadata. More info: [https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata)

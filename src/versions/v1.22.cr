@@ -1,8 +1,11 @@
 # THIS FILE WAS AUTO GENERATED FROM THE K8S SWAGGER SPEC
 
+require "../macros.cr"
+
 annotation ::K8S::GroupVersionKind; end
 annotation ::K8S::Action; end
 
+require "./v1.22/kubernetes"
 require "./v1.22/api/admissionregistration/v1/mutating_webhook.cr"
 require "./v1.22/api/admissionregistration/v1/mutating_webhook_configuration.cr"
 require "./v1.22/api/admissionregistration/v1/mutating_webhook_configuration_list.cr"
@@ -538,4 +541,3 @@ require "./v1.22/kube_aggregator/apis/apiregistration/v1/api_service_spec.cr"
 require "./v1.22/kube_aggregator/apis/apiregistration/v1/api_service_status.cr"
 require "./v1.22/kube_aggregator/apis/apiregistration/v1/service_reference.cr"
 require "./v1.22/api/core/v1/list.cr"
-require "./v1.22/kubernetes"

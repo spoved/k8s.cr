@@ -7,7 +7,7 @@ require "yaml_mapping"
 
 module K8S
   # HorizontalPodAutoscaler is the configuration for a horizontal pod autoscaler, which automatically manages the replica count of any resource implementing the scale subresource based on the metrics specified.
-  class Kubernetes::Apis::Autoscaling::V2alpha1::HorizontalPodAutoscaler
+  class Kubernetes::Apis::Autoscaling::V2alpha1::HorizontalPodAutoscaler < ::K8S::Kubernetes::Resource
     getter api_version : String = "autoscaling/v2alpha1"
     getter kind : String = "HorizontalPodAutoscaler"
     # metadata is the standard object metadata. More info: [http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#metadata](http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#metadata)

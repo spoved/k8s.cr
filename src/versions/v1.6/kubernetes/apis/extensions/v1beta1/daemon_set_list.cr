@@ -7,7 +7,7 @@ require "yaml_mapping"
 
 module K8S
   # DaemonSetList is a collection of daemon sets.
-  class Kubernetes::Apis::Extensions::V1beta1::DaemonSetList
+  class Kubernetes::Apis::Extensions::V1beta1::DaemonSetList < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "List"
     # A list of daemon sets.

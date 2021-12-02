@@ -47,7 +47,7 @@ module K8S
            {name: "timeout_seconds", type: Int32 | Nil, default: nil},
            {name: "watch", type: Bool | Nil, default: nil}]
   )]
-  class Kubernetes::Api::V1::PodList
+  class Kubernetes::Api::V1::PodList < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "List"
     # List of pods. More info: [https://git.k8s.io/community/contributors/devel/api-conventions.md](https://git.k8s.io/community/contributors/devel/api-conventions.md)

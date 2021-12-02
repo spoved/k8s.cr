@@ -60,7 +60,7 @@ module K8S
            {name: "watch", type: Bool | Nil, default: nil},
            {name: "namespace", type: String, default: "default"}]
   )]
-  class Api::Discovery::V1beta1::EndpointSliceList
+  class Api::Discovery::V1beta1::EndpointSliceList < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "List"
     # List of endpoint slices

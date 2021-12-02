@@ -64,7 +64,7 @@ module K8S
            {name: "propagation_policy", type: String | Nil, default: nil},
            {name: "context", type: String | Nil, default: nil}]
   )]
-  class Api::Rbac::V1alpha1::ClusterRole
+  class Api::Rbac::V1alpha1::ClusterRole < ::K8S::Kubernetes::Resource
     getter api_version : String = "rbac.authorization.k8s.io/v1alpha1"
     getter kind : String = "ClusterRole"
     # AggregationRule is an optional field that describes how to build the Rules for this ClusterRole. If AggregationRule is set, then the Rules are controller managed and direct changes to Rules will be stomped by the controller.

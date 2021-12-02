@@ -14,7 +14,7 @@ module K8S
            {name: "dry_run", type: String | Nil, default: nil},
            {name: "field_manager", type: String | Nil, default: nil}]
   )]
-  class Api::Authentication::V1beta1::TokenReview
+  class Api::Authentication::V1beta1::TokenReview < ::K8S::Kubernetes::Resource
     getter api_version : String = "authentication/v1beta1"
     getter kind : String = "TokenReview"
     property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil

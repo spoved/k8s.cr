@@ -80,7 +80,7 @@ module K8S
     args: [{name: "context", type: String | Nil, default: nil},
            {name: "dry_run", type: String | Nil, default: nil}]
   )]
-  class Api::Storage::V1::VolumeAttachment
+  class Api::Storage::V1::VolumeAttachment < ::K8S::Kubernetes::Resource
     getter api_version : String = "storage/v1"
     getter kind : String = "VolumeAttachment"
     # Standard object metadata. More info: [https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata)

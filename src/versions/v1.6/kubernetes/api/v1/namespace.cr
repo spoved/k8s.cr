@@ -7,7 +7,7 @@ require "yaml_mapping"
 
 module K8S
   # Namespace provides a scope for Names. Use of multiple namespaces is optional.
-  class Kubernetes::Api::V1::Namespace
+  class Kubernetes::Api::V1::Namespace < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "Namespace"
     # Standard object's metadata. More info: [http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#metadata](http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#metadata)

@@ -62,7 +62,7 @@ module K8S
            {name: "timeout_seconds", type: Int32 | Nil, default: nil},
            {name: "namespace", type: String, default: "default"}]
   )]
-  class Api::Storage::V1alpha1::CSIStorageCapacityList
+  class Api::Storage::V1alpha1::CSIStorageCapacityList < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "List"
     # Items is the list of CSIStorageCapacity objects.

@@ -47,7 +47,7 @@ module K8S
            {name: "watch", type: Bool | Nil, default: nil},
            {name: "namespace", type: String, default: "default"}]
   )]
-  class Kubernetes::Apis::Batch::V1::JobList
+  class Kubernetes::Apis::Batch::V1::JobList < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "List"
     # items is the list of Jobs.

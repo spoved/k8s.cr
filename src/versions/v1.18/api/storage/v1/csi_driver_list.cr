@@ -44,7 +44,7 @@ module K8S
            {name: "timeout_seconds", type: Int32 | Nil, default: nil},
            {name: "watch", type: Bool | Nil, default: nil}]
   )]
-  class Api::Storage::V1::CSIDriverList
+  class Api::Storage::V1::CSIDriverList < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "List"
     # items is the list of CSIDriver

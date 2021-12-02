@@ -7,7 +7,7 @@ require "yaml_mapping"
 
 module K8S
   # SubjectAccessReview checks whether or not a user or group can perform an action.
-  class Kubernetes::Apis::Authorization::V1beta1::SubjectAccessReview
+  class Kubernetes::Apis::Authorization::V1beta1::SubjectAccessReview < ::K8S::Kubernetes::Resource
     getter api_version : String = "authorization/v1beta1"
     getter kind : String = "SubjectAccessReview"
     property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil

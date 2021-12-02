@@ -7,7 +7,7 @@ require "yaml_mapping"
 
 module K8S
   # CronJobList is a collection of cron jobs.
-  class Kubernetes::Apis::Batch::V2alpha1::CronJobList
+  class Kubernetes::Apis::Batch::V2alpha1::CronJobList < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "List"
     # Items is the list of CronJob.

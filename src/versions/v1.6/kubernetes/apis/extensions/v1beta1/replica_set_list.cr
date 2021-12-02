@@ -7,7 +7,7 @@ require "yaml_mapping"
 
 module K8S
   # ReplicaSetList is a collection of ReplicaSets.
-  class Kubernetes::Apis::Extensions::V1beta1::ReplicaSetList
+  class Kubernetes::Apis::Extensions::V1beta1::ReplicaSetList < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "List"
     # List of ReplicaSets. More info: [http://kubernetes.io/docs/user-guide/replication-controller](http://kubernetes.io/docs/user-guide/replication-controller)

@@ -64,7 +64,7 @@ module K8S
     path: "/apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions/{name}/status", toplevel: false,
     args: [{name: "context", type: String | Nil, default: nil}]
   )]
-  class ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceDefinition
+  class ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceDefinition < ::K8S::Kubernetes::Resource
     getter api_version : String = "apiextensions/v1beta1"
     getter kind : String = "CustomResourceDefinition"
     property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil

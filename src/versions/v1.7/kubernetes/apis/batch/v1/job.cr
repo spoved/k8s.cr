@@ -74,7 +74,7 @@ module K8S
     path: "/apis/batch/v1/namespaces/{namespace}/jobs/{name}/status", toplevel: false,
     args: [{name: "context", type: String | Nil, default: nil}]
   )]
-  class Kubernetes::Apis::Batch::V1::Job
+  class Kubernetes::Apis::Batch::V1::Job < ::K8S::Kubernetes::Resource
     getter api_version : String = "batch/v1"
     getter kind : String = "Job"
     # Standard object's metadata. More info: [https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata)

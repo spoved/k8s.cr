@@ -7,7 +7,7 @@ require "yaml_mapping"
 
 module K8S
   # Service is a named abstraction of software service (for example, mysql) consisting of local port (for example 3306) that the proxy listens on, and the selector that determines which pods will answer requests sent through the proxy.
-  class Kubernetes::Api::V1::Service
+  class Kubernetes::Api::V1::Service < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "Service"
     # Standard object's metadata. More info: [http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#metadata](http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#metadata)

@@ -44,7 +44,7 @@ module K8S
            {name: "timeout_seconds", type: Int32 | Nil, default: nil},
            {name: "watch", type: Bool | Nil, default: nil}]
   )]
-  class Api::Networking::V1beta1::IngressClassList
+  class Api::Networking::V1beta1::IngressClassList < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "List"
     # Items is the list of IngressClasses.

@@ -90,7 +90,7 @@ module K8S
            {name: "field_manager", type: String | Nil, default: nil},
            {name: "force", type: Bool | Nil, default: nil}]
   )]
-  class Api::Batch::V1beta1::CronJob
+  class Api::Batch::V1beta1::CronJob < ::K8S::Kubernetes::Resource
     getter api_version : String = "batch/v1beta1"
     getter kind : String = "CronJob"
     # Standard object's metadata. More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)

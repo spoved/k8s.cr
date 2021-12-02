@@ -7,7 +7,7 @@ require "yaml_mapping"
 
 module K8S
   # RoleBindingList is a collection of RoleBindings
-  class Kubernetes::Apis::Rbac::V1beta1::RoleBindingList
+  class Kubernetes::Apis::Rbac::V1beta1::RoleBindingList < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "List"
     # Items is a list of RoleBindings

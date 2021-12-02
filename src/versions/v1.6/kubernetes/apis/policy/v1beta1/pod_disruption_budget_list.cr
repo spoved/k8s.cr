@@ -7,7 +7,7 @@ require "yaml_mapping"
 
 module K8S
   # PodDisruptionBudgetList is a collection of PodDisruptionBudgets.
-  class Kubernetes::Apis::Policy::V1beta1::PodDisruptionBudgetList
+  class Kubernetes::Apis::Policy::V1beta1::PodDisruptionBudgetList < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "List"
     property items : Array(Kubernetes::Apis::Policy::V1beta1::PodDisruptionBudget)

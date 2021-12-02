@@ -63,7 +63,7 @@ module K8S
            {name: "orphan_dependents", type: Bool | Nil, default: nil},
            {name: "propagation_policy", type: String | Nil, default: nil}]
   )]
-  class Api::Policy::V1beta1::PodSecurityPolicy
+  class Api::Policy::V1beta1::PodSecurityPolicy < ::K8S::Kubernetes::Resource
     getter api_version : String = "policy/v1beta1"
     getter kind : String = "PodSecurityPolicy"
     # Standard object's metadata. More info: [https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata)

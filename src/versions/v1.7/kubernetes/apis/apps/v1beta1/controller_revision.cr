@@ -60,7 +60,7 @@ module K8S
            {name: "propagation_policy", type: String | Nil, default: nil},
            {name: "context", type: String | Nil, default: nil}]
   )]
-  class Kubernetes::Apis::Apps::V1beta1::ControllerRevision
+  class Kubernetes::Apis::Apps::V1beta1::ControllerRevision < ::K8S::Kubernetes::Resource
     getter api_version : String = "apps/v1beta1"
     getter kind : String = "ControllerRevision"
     # Data is the serialized representation of the state.

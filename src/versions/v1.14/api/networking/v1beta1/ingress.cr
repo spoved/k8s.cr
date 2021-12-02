@@ -86,7 +86,7 @@ module K8S
            {name: "field_manager", type: String | Nil, default: nil},
            {name: "force", type: Bool | Nil, default: nil}]
   )]
-  class Api::Networking::V1beta1::Ingress
+  class Api::Networking::V1beta1::Ingress < ::K8S::Kubernetes::Resource
     getter api_version : String = "networking/v1beta1"
     getter kind : String = "Ingress"
     # Standard object's metadata. More info: [https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata)

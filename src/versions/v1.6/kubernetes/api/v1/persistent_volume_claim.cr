@@ -7,7 +7,7 @@ require "yaml_mapping"
 
 module K8S
   # PersistentVolumeClaim is a user's request for and claim to a persistent volume
-  class Kubernetes::Api::V1::PersistentVolumeClaim
+  class Kubernetes::Api::V1::PersistentVolumeClaim < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "PersistentVolumeClaim"
     # Standard object's metadata. More info: [http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#metadata](http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#metadata)

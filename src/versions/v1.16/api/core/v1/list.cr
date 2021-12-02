@@ -7,7 +7,7 @@ require "yaml_mapping"
 
 module K8S
   # List is a generic list of resources
-  class Api::Core::V1::List
+  class Api::Core::V1::List < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "List"
     # list of resources

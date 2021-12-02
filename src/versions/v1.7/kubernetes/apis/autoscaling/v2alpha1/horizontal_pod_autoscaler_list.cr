@@ -47,7 +47,7 @@ module K8S
            {name: "watch", type: Bool | Nil, default: nil},
            {name: "namespace", type: String, default: "default"}]
   )]
-  class Kubernetes::Apis::Autoscaling::V2alpha1::HorizontalPodAutoscalerList
+  class Kubernetes::Apis::Autoscaling::V2alpha1::HorizontalPodAutoscalerList < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "List"
     # items is the list of horizontal pod autoscaler objects.

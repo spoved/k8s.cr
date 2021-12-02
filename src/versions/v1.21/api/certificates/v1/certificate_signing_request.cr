@@ -110,7 +110,7 @@ module K8S
            {name: "field_manager", type: String | Nil, default: nil},
            {name: "force", type: Bool | Nil, default: nil}]
   )]
-  class Api::Certificates::V1::CertificateSigningRequest
+  class Api::Certificates::V1::CertificateSigningRequest < ::K8S::Kubernetes::Resource
     getter api_version : String = "certificates/v1"
     getter kind : String = "CertificateSigningRequest"
     property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil

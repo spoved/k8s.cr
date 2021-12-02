@@ -7,7 +7,7 @@ require "yaml_mapping"
 
 module K8S
   # PodTemplateList is a list of PodTemplates.
-  class Kubernetes::Api::V1::PodTemplateList
+  class Kubernetes::Api::V1::PodTemplateList < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "List"
     # List of pod templates

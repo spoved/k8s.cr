@@ -59,7 +59,7 @@ module K8S
     path: "/api/v1/namespaces/{namespace}/services/{name}/status", toplevel: false,
     args: [{name: "context", type: String | Nil, default: nil}]
   )]
-  class Api::Core::V1::Service
+  class Api::Core::V1::Service < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "Service"
     # Standard object's metadata. More info: [https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata)

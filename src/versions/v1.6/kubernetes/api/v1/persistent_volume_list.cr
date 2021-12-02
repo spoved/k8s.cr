@@ -7,7 +7,7 @@ require "yaml_mapping"
 
 module K8S
   # PersistentVolumeList is a list of PersistentVolume items.
-  class Kubernetes::Api::V1::PersistentVolumeList
+  class Kubernetes::Api::V1::PersistentVolumeList < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "List"
     # List of persistent volumes. More info: [http://kubernetes.io/docs/user-guide/persistent-volumes](http://kubernetes.io/docs/user-guide/persistent-volumes)

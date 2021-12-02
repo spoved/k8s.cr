@@ -72,7 +72,7 @@ module K8S
            {name: "orphan_dependents", type: Bool | Nil, default: nil},
            {name: "propagation_policy", type: String | Nil, default: nil}]
   )]
-  class Api::Storage::V1beta1::VolumeAttachment
+  class Api::Storage::V1beta1::VolumeAttachment < ::K8S::Kubernetes::Resource
     getter api_version : String = "storage/v1beta1"
     getter kind : String = "VolumeAttachment"
     # Standard object metadata. More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)

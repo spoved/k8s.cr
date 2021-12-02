@@ -40,7 +40,7 @@ module K8S
            {name: "timeout_seconds", type: Int32 | Nil, default: nil},
            {name: "watch", type: Bool | Nil, default: nil}]
   )]
-  class Api::Admissionregistration::V1alpha1::InitializerConfigurationList
+  class Api::Admissionregistration::V1alpha1::InitializerConfigurationList < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "List"
     # List of InitializerConfiguration.

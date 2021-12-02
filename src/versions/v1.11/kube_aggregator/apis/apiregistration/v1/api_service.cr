@@ -74,7 +74,7 @@ module K8S
     path: "/apis/apiregistration.k8s.io/v1/apiservices/{name}/status", toplevel: false,
     args: [{name: "context", type: String | Nil, default: nil}]
   )]
-  class KubeAggregator::Apis::Apiregistration::V1::APIService
+  class KubeAggregator::Apis::Apiregistration::V1::APIService < ::K8S::Kubernetes::Resource
     getter api_version : String = "apiregistration/v1"
     getter kind : String = "APIService"
     property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil

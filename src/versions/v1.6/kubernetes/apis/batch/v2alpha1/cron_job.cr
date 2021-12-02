@@ -7,7 +7,7 @@ require "yaml_mapping"
 
 module K8S
   # CronJob represents the configuration of a single cron job.
-  class Kubernetes::Apis::Batch::V2alpha1::CronJob
+  class Kubernetes::Apis::Batch::V2alpha1::CronJob < ::K8S::Kubernetes::Resource
     getter api_version : String = "batch/v2alpha1"
     getter kind : String = "CronJob"
     # Standard object's metadata. More info: [http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#metadata](http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#metadata)

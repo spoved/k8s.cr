@@ -7,7 +7,7 @@ require "yaml_mapping"
 
 module K8S
   # Pod Security Policy governs the ability to make requests that affect the Security Context that will be applied to a pod and container.
-  class Kubernetes::Apis::Extensions::V1beta1::PodSecurityPolicy
+  class Kubernetes::Apis::Extensions::V1beta1::PodSecurityPolicy < ::K8S::Kubernetes::Resource
     getter api_version : String = "extensions/v1beta1"
     getter kind : String = "PodSecurityPolicy"
     # Standard object's metadata. More info: [http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#metadata](http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#metadata)

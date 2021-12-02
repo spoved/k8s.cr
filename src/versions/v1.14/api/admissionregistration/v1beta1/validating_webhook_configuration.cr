@@ -64,7 +64,7 @@ module K8S
            {name: "orphan_dependents", type: Bool | Nil, default: nil},
            {name: "propagation_policy", type: String | Nil, default: nil}]
   )]
-  class Api::Admissionregistration::V1beta1::ValidatingWebhookConfiguration
+  class Api::Admissionregistration::V1beta1::ValidatingWebhookConfiguration < ::K8S::Kubernetes::Resource
     getter api_version : String = "admissionregistration/v1beta1"
     getter kind : String = "ValidatingWebhookConfiguration"
     # Standard object metadata; More info: [https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata.](https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata.)

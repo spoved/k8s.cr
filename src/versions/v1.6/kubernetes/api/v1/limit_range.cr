@@ -7,7 +7,7 @@ require "yaml_mapping"
 
 module K8S
   # LimitRange sets resource usage limits for each kind of resource in a Namespace.
-  class Kubernetes::Api::V1::LimitRange
+  class Kubernetes::Api::V1::LimitRange < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "LimitRange"
     # Standard object's metadata. More info: [http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#metadata](http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#metadata)

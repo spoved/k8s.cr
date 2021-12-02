@@ -40,7 +40,7 @@ module K8S
            {name: "timeout_seconds", type: Int32 | Nil, default: nil},
            {name: "watch", type: Bool | Nil, default: nil}]
   )]
-  class Api::Auditregistration::V1alpha1::AuditSinkList
+  class Api::Auditregistration::V1alpha1::AuditSinkList < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "List"
     # List of audit configurations.

@@ -7,7 +7,7 @@ require "yaml_mapping"
 
 module K8S
   # PodList is a list of Pods.
-  class Kubernetes::Api::V1::PodList
+  class Kubernetes::Api::V1::PodList < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "List"
     # List of pods. More info: [http://kubernetes.io/docs/user-guide/pods](http://kubernetes.io/docs/user-guide/pods)

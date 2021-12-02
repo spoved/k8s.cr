@@ -45,7 +45,7 @@ module K8S
            {name: "timeout_seconds", type: Int32 | Nil, default: nil},
            {name: "watch", type: Bool | Nil, default: nil}]
   )]
-  class Api::Flowcontrol::V1alpha1::FlowSchemaList
+  class Api::Flowcontrol::V1alpha1::FlowSchemaList < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "List"
     # `items` is a list of FlowSchemas.

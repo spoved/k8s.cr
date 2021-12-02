@@ -7,7 +7,7 @@ require "yaml_mapping"
 
 module K8S
   # SecretList is a list of Secret.
-  class Kubernetes::Api::V1::SecretList
+  class Kubernetes::Api::V1::SecretList < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "List"
     # Items is a list of secret objects. More info: [http://kubernetes.io/docs/user-guide/secrets](http://kubernetes.io/docs/user-guide/secrets)

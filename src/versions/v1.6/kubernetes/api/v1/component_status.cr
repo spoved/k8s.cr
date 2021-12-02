@@ -7,7 +7,7 @@ require "yaml_mapping"
 
 module K8S
   # ComponentStatus (and ComponentStatusList) holds the cluster validation info.
-  class Kubernetes::Api::V1::ComponentStatus
+  class Kubernetes::Api::V1::ComponentStatus < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "ComponentStatus"
     # List of component conditions observed

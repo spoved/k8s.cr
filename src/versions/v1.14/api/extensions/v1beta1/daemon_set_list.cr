@@ -52,7 +52,7 @@ module K8S
            {name: "watch", type: Bool | Nil, default: nil},
            {name: "namespace", type: String, default: "default"}]
   )]
-  class Api::Extensions::V1beta1::DaemonSetList
+  class Api::Extensions::V1beta1::DaemonSetList < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "List"
     # A list of daemon sets.

@@ -7,7 +7,7 @@ require "yaml_mapping"
 
 module K8S
   # DeploymentList is a list of Deployments.
-  class Kubernetes::Apis::Apps::V1beta1::DeploymentList
+  class Kubernetes::Apis::Apps::V1beta1::DeploymentList < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "List"
     # Items is the list of Deployments.

@@ -1,0 +1,64 @@
+require "json"
+
+macro k8s_json_discriminator(mappings)
+  def self.new(pull : ::JSON::PullParser)
+    location = pull.location
+
+    api_value = nil
+    discriminator_value = nil
+
+    # Try to find the discriminator while also getting the raw
+    # string value of the parsed JSON, so then we can pass it
+    # to the final type.
+    json = String.build do |io|
+      JSON.build(io) do |builder|
+        builder.start_object
+        pull.read_object do |key|
+          if key == "apiVersion"
+            value_kind = pull.kind
+            case value_kind
+            when .string?
+              api_value = pull.string_value
+            else
+              raise ::JSON::SerializableError.new("JSON discriminator field 'apiVersion' has an invalid value type of #{value_kind.to_s}", to_s, nil, *location, nil)
+            end
+            builder.field(key, api_value)
+            pull.read_next
+          end
+
+          if key == "kind"
+            value_kind = pull.kind
+            case value_kind
+            when .string?
+              discriminator_value = pull.string_value
+            else
+              raise ::JSON::SerializableError.new("JSON discriminator field 'kind' has an invalid value type of #{value_kind.to_s}", to_s, nil, *location, nil)
+            end
+            builder.field(key, discriminator_value)
+            pull.read_next
+          else
+            builder.field(key) { pull.read_raw(builder) }
+          end
+        end
+        builder.end_object
+      end
+    end
+
+    unless api_value
+      raise ::JSON::SerializableError.new("Missing JSON discriminator field 'apiVersion'", to_s, nil, *location, nil)
+    end
+
+    unless discriminator_value
+      raise ::JSON::SerializableError.new("Missing JSON discriminator field 'kind'", to_s, nil, *location, nil)
+    end
+
+    case {api_value, discriminator_value}
+    {% for value in mappings %}
+    when { {{ value[0] }}, {{value[1]}} }
+      {{value[2].id}}.from_json(json)
+    {% end %}
+    else
+      raise ::JSON::SerializableError.new("Unknown 'apiVersion', 'kind' discriminator values: #{api_value.inspect} #{discriminator_value.inspect}", to_s, nil, *location, nil)
+    end
+  end
+end

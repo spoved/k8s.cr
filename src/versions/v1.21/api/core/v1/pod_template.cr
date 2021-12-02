@@ -71,7 +71,7 @@ module K8S
            {name: "orphan_dependents", type: Bool | Nil, default: nil},
            {name: "propagation_policy", type: String | Nil, default: nil}]
   )]
-  class Api::Core::V1::PodTemplate
+  class Api::Core::V1::PodTemplate < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "PodTemplate"
     # Standard object's metadata. More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)

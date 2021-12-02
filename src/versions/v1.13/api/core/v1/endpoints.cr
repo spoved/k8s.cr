@@ -77,7 +77,7 @@ module K8S
            {name: "orphan_dependents", type: Bool | Nil, default: nil},
            {name: "propagation_policy", type: String | Nil, default: nil}]
   )]
-  class Api::Core::V1::Endpoints
+  class Api::Core::V1::Endpoints < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "Endpoints"
     # Standard object's metadata. More info: [https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata)

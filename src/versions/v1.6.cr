@@ -1,8 +1,11 @@
 # THIS FILE WAS AUTO GENERATED FROM THE K8S SWAGGER SPEC
 
+require "../macros.cr"
+
 annotation ::K8S::GroupVersionKind; end
 annotation ::K8S::Action; end
 
+require "./v1.6/kubernetes"
 require "./v1.6/apimachinery/apis/meta/v1/api_group.cr"
 require "./v1.6/apimachinery/apis/meta/v1/api_group_list.cr"
 require "./v1.6/apimachinery/apis/meta/v1/api_resource.cr"
@@ -330,4 +333,3 @@ require "./v1.6/kubernetes/apis/storage/v1/storage_class_list.cr"
 require "./v1.6/kubernetes/apis/storage/v1beta1/storage_class.cr"
 require "./v1.6/kubernetes/apis/storage/v1beta1/storage_class_list.cr"
 require "./v1.6/kubernetes/api/v1/list.cr"
-require "./v1.6/kubernetes"

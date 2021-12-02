@@ -66,7 +66,7 @@ module K8S
            {name: "propagation_policy", type: String | Nil, default: nil},
            {name: "context", type: String | Nil, default: nil}]
   )]
-  class Api::Admissionregistration::V1alpha1::InitializerConfiguration
+  class Api::Admissionregistration::V1alpha1::InitializerConfiguration < ::K8S::Kubernetes::Resource
     getter api_version : String = "admissionregistration/v1alpha1"
     getter kind : String = "InitializerConfiguration"
     # Initializers is a list of resources and their default initializers Order-sensitive. When merging multiple InitializerConfigurations, we sort the initializers from different InitializerConfigurations by the name of the InitializerConfigurations; the order of the initializers from the same InitializerConfiguration is preserved.

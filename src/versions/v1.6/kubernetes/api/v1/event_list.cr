@@ -7,7 +7,7 @@ require "yaml_mapping"
 
 module K8S
   # EventList is a list of events.
-  class Kubernetes::Api::V1::EventList
+  class Kubernetes::Api::V1::EventList < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "List"
     # List of events

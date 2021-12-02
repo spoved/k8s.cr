@@ -60,27 +60,26 @@ class Generator
     Dir.cd(File.join(File.join(".", VERSIONS_DIR))) do
       File.open(filename, "w+") do |file|
         file.puts "# THIS FILE WAS AUTO GENERATED FROM THE K8S SWAGGER SPEC", "",
+          %<require "../macros.cr">, "",
           "annotation ::#{base_class.lchop("::")}::GroupVersionKind; end",
           "annotation ::#{base_class.lchop("::")}::Action; end", ""
 
-        definitions.map(&.filename).each { |r| file.puts "require \"#{r.sub(base_dir, "./#{version}")}\"" }
         file.puts "require \"./#{version}/kubernetes\""
+        definitions.map(&.filename).each { |r| file.puts "require \"#{r.sub(base_dir, "./#{version}")}\"" }
       end
       File.open(File.join(version, "kubernetes.cr"), "w+") do |file|
         file.puts "",
           "module ::#{base_class.lchop("::")}::Kubernetes",
-          "VERSION = #{version.lchop("v").inspect}",
-          "alias Resource =",
-          definitions.select(&.is_resource?).reject(&.is_list?).map { |r| "#{r.resource_alias}::#{r.kind}" }.join(" |\n"),
-          "",
-          "  def self.from_yaml(*args, **params)",
-          "    Resource.from_yaml(*args, **params)",
-          "  end",
-          "",
-          "  def self.from_json(*args, **params)",
-          "    Resource.from_json(*args, **params)",
-          "  end",
-          "end"
+          " VERSION = SemanticVersion.parse(\"#{version.lchop("v")}.0\")", ""
+
+        file.puts "abstract class Resource"
+        file.puts "  include JSON::Serializable", ""
+        file.puts %<  k8s_json_discriminator([>
+        definitions.select(&.is_resource?).reject(&.is_list?).each do |r|
+          file.puts %<    {"#{r.api_version}", "#{r.kind}", #{r.resource_alias}::#{r.kind}},>
+        end
+        file.puts %< ])>
+        file.puts "", "end", "", "end"
       end
       system "crystal tool format #{version}"
     end

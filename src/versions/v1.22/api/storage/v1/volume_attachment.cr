@@ -88,7 +88,7 @@ module K8S
            {name: "field_manager", type: String | Nil, default: nil},
            {name: "force", type: Bool | Nil, default: nil}]
   )]
-  class Api::Storage::V1::VolumeAttachment
+  class Api::Storage::V1::VolumeAttachment < ::K8S::Kubernetes::Resource
     getter api_version : String = "storage/v1"
     getter kind : String = "VolumeAttachment"
     # Standard object metadata. More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)

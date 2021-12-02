@@ -74,7 +74,7 @@ module K8S
     path: "/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers/{name}/status", toplevel: false,
     args: [{name: "context", type: String | Nil, default: nil}]
   )]
-  class Kubernetes::Apis::Autoscaling::V1::HorizontalPodAutoscaler
+  class Kubernetes::Apis::Autoscaling::V1::HorizontalPodAutoscaler < ::K8S::Kubernetes::Resource
     getter api_version : String = "autoscaling/v1"
     getter kind : String = "HorizontalPodAutoscaler"
     # Standard object metadata. More info: [https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata)

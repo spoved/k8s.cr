@@ -7,7 +7,7 @@ require "yaml_mapping"
 
 module K8S
   # PersistentVolume (PV) is a storage resource provisioned by an administrator. It is analogous to a node. More info: [http://kubernetes.io/docs/user-guide/persistent-volumes](http://kubernetes.io/docs/user-guide/persistent-volumes)
-  class Kubernetes::Api::V1::PersistentVolume
+  class Kubernetes::Api::V1::PersistentVolume < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "PersistentVolume"
     # Standard object's metadata. More info: [http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#metadata](http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#metadata)

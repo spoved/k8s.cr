@@ -92,7 +92,7 @@ module K8S
            {name: "field_manager", type: String | Nil, default: nil},
            {name: "force", type: Bool | Nil, default: nil}]
   )]
-  class Api::Batch::V1::Job
+  class Api::Batch::V1::Job < ::K8S::Kubernetes::Resource
     getter api_version : String = "batch/v1"
     getter kind : String = "Job"
     # Standard object's metadata. More info: [https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata)

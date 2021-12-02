@@ -89,7 +89,7 @@ module K8S
            {name: "field_manager", type: String | Nil, default: nil},
            {name: "force", type: Bool | Nil, default: nil}]
   )]
-  class Api::Apiserverinternal::V1alpha1::StorageVersion
+  class Api::Apiserverinternal::V1alpha1::StorageVersion < ::K8S::Kubernetes::Resource
     getter api_version : String = "apiserverinternal/v1alpha1"
     getter kind : String = "StorageVersion"
     # The name is <group>.<resource>.

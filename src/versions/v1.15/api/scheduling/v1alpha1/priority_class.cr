@@ -70,7 +70,7 @@ module K8S
            {name: "orphan_dependents", type: Bool | Nil, default: nil},
            {name: "propagation_policy", type: String | Nil, default: nil}]
   )]
-  class Api::Scheduling::V1alpha1::PriorityClass
+  class Api::Scheduling::V1alpha1::PriorityClass < ::K8S::Kubernetes::Resource
     getter api_version : String = "scheduling/v1alpha1"
     getter kind : String = "PriorityClass"
     # description is an arbitrary string that usually provides guidelines on when this priority class should be used.

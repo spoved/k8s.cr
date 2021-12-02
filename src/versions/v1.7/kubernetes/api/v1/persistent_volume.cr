@@ -70,7 +70,7 @@ module K8S
     path: "/api/v1/persistentvolumes/{name}/status", toplevel: false,
     args: [{name: "context", type: String | Nil, default: nil}]
   )]
-  class Kubernetes::Api::V1::PersistentVolume
+  class Kubernetes::Api::V1::PersistentVolume < ::K8S::Kubernetes::Resource
     getter api_version : String = "v1"
     getter kind : String = "PersistentVolume"
     # Standard object's metadata. More info: [https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata)
