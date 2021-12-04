@@ -58,6 +58,10 @@ module K8S
            {name: "context", type: String | Nil, default: nil}]
   )]
   class Kubernetes::Apis::Extensions::V1beta1::ThirdPartyResource < ::K8S::Kubernetes::Resource
+    include ::K8S::Kubernetes::Resource::Object
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     getter api_version : String = "extensions/v1beta1"
     getter kind : String = "ThirdPartyResource"
     # Description is the description of this object.

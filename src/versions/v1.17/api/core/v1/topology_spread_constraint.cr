@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # TopologySpreadConstraint specifies how to spread matching pods among the given topology.
   class Api::Core::V1::TopologySpreadConstraint
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # LabelSelector is used to find matching pods. Pods that match this label selector are counted to determine the number of pods in their corresponding topology domain.
     property label_selector : Apimachinery::Apis::Meta::V1::LabelSelector | Nil
 

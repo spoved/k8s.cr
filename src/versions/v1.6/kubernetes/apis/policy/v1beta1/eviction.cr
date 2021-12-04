@@ -8,6 +8,10 @@ require "yaml_mapping"
 module K8S
   # Eviction evicts a pod from its node subject to certain policies and safety constraints. This is a subresource of Pod.  A request to cause such an eviction is created by POSTing to [.../pods/<pod name>/evictions.](.../pods/<pod name>/evictions.)
   class Kubernetes::Apis::Policy::V1beta1::Eviction < ::K8S::Kubernetes::Resource
+    include ::K8S::Kubernetes::Resource::Object
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     getter api_version : String = "policy/v1beta1"
     getter kind : String = "Eviction"
     # DeleteOptions may be provided

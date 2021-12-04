@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # ResourceQuotaSpec defines the desired hard limits to enforce for Quota.
   class Kubernetes::Api::V1::ResourceQuotaSpec
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Hard is the set of desired hard limits for each named resource. More info: [https://git.k8s.io/community/contributors/design-proposals/admission_control_resource_quota.md](https://git.k8s.io/community/contributors/design-proposals/admission_control_resource_quota.md)
     property hard : Hash(String, String) | Nil
 

@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # StatefulSetStatus represents the current state of a StatefulSet.
   class Api::Apps::V1beta2::StatefulSetStatus
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # collisionCount is the count of hash collisions for the StatefulSet. The StatefulSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision.
     property collision_count : Int32 | Nil
 

@@ -7,7 +7,11 @@ require "yaml_mapping"
 
 module K8S
   # ReplicationControllerList is a collection of replication controllers.
-  class Kubernetes::Api::V1::ReplicationControllerList < ::K8S::Kubernetes::Resource
+  class Kubernetes::Api::V1::ReplicationControllerList < ::K8S::Kubernetes::ResourceList(Kubernetes::Api::V1::ReplicationController)
+    include ::K8S::Kubernetes::Resource::List
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     getter api_version : String = "v1"
     getter kind : String = "List"
     # List of replication controllers. More info: [http://kubernetes.io/docs/user-guide/replication-controller](http://kubernetes.io/docs/user-guide/replication-controller)

@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
   class Api::Core::V1::HostAlias
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Hostnames for the above IP address.
     property hostnames : Array(String) | Nil
 

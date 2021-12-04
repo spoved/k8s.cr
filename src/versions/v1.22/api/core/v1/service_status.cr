@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # ServiceStatus represents the current status of a service.
   class Api::Core::V1::ServiceStatus
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Current service state
     property conditions : Array(Apimachinery::Apis::Meta::V1::Condition) | Nil
 

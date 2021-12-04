@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # SubjectAccessReviewSpec is a description of the access request.  Exactly one of ResourceAuthorizationAttributes and NonResourceAuthorizationAttributes must be set
   class Api::Authorization::V1::SubjectAccessReviewSpec
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Extra corresponds to the user.Info.GetExtra() method from the authenticator.  Since that is input to the authorizer it needs a reflection here.
     property extra : Hash(String, String) | Nil
 

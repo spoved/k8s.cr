@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # CertificateSigningRequestCondition describes a condition of a CertificateSigningRequest object
   class Api::Certificates::V1::CertificateSigningRequestCondition
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # lastTransitionTime is the time the condition last transitioned from one status to another. If unset, when a new condition type is added or an existing condition's status is changed, the server defaults this to the current time.
     property last_transition_time : Time | Nil
 

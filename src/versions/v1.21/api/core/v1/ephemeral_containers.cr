@@ -28,6 +28,10 @@ module K8S
            {name: "force", type: Bool | Nil, default: nil}]
   )]
   class Api::Core::V1::EphemeralContainers < ::K8S::Kubernetes::Resource
+    include ::K8S::Kubernetes::Resource::Object
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     getter api_version : String = "v1"
     getter kind : String = "EphemeralContainers"
     # A list of ephemeral containers associated with this pod. New ephemeral containers may be appended to this list, but existing ephemeral containers may not be removed or modified.

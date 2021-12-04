@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # LimitRangeItem defines a [min/max usage limit for any resource that matches on kind.](min/max usage limit for any resource that matches on kind.)
   class Kubernetes::Api::V1::LimitRangeItem
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Default resource requirement limit value by resource name if resource limit is omitted.
     property default : Hash(String, String) | Nil
 

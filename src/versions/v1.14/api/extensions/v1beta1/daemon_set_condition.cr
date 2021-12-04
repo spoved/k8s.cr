@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # DaemonSetCondition describes the state of a DaemonSet at a certain point.
   class Api::Extensions::V1beta1::DaemonSetCondition
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Last time the condition transitioned from one status to another.
     property last_transition_time : Time | Nil
 

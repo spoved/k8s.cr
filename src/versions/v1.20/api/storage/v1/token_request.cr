@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # TokenRequest contains parameters of a service account token.
   class Api::Storage::V1::TokenRequest
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Audience is the intended audience of the token in "TokenRequestSpec". It will default to the audiences of kube apiserver.
     property audience : String
 

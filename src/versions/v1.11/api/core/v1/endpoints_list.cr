@@ -52,7 +52,11 @@ module K8S
            {name: "watch", type: Bool | Nil, default: nil},
            {name: "namespace", type: String, default: "default"}]
   )]
-  class Api::Core::V1::EndpointsList < ::K8S::Kubernetes::Resource
+  class Api::Core::V1::EndpointsList < ::K8S::Kubernetes::ResourceList(Api::Core::V1::Endpoints)
+    include ::K8S::Kubernetes::Resource::List
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     getter api_version : String = "v1"
     getter kind : String = "List"
     # List of endpoints.

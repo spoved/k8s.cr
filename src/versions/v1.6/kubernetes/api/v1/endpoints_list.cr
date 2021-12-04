@@ -7,7 +7,11 @@ require "yaml_mapping"
 
 module K8S
   # EndpointsList is a list of endpoints.
-  class Kubernetes::Api::V1::EndpointsList < ::K8S::Kubernetes::Resource
+  class Kubernetes::Api::V1::EndpointsList < ::K8S::Kubernetes::ResourceList(Kubernetes::Api::V1::Endpoints)
+    include ::K8S::Kubernetes::Resource::List
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     getter api_version : String = "v1"
     getter kind : String = "List"
     # List of endpoints.

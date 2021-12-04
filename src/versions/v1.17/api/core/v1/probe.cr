@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # Probe describes a health check to be performed against a container to determine whether it is alive or ready to receive traffic.
   class Api::Core::V1::Probe
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # One and only one of the following should be specified. Exec specifies the action to take.
     property exec : Api::Core::V1::ExecAction | Nil
 

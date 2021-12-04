@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # An API server instance reports the version it can decode and the version it encodes objects to when persisting objects in the backend.
   class Api::Apiserverinternal::V1alpha1::ServerStorageVersion
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # The ID of the reporting API server.
     property api_server_id : String | Nil
 

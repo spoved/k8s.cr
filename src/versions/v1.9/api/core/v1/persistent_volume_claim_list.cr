@@ -53,7 +53,11 @@ module K8S
            {name: "timeout_seconds", type: Int32 | Nil, default: nil},
            {name: "watch", type: Bool | Nil, default: nil}]
   )]
-  class Api::Core::V1::PersistentVolumeClaimList < ::K8S::Kubernetes::Resource
+  class Api::Core::V1::PersistentVolumeClaimList < ::K8S::Kubernetes::ResourceList(Api::Core::V1::PersistentVolumeClaim)
+    include ::K8S::Kubernetes::Resource::List
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     getter api_version : String = "v1"
     getter kind : String = "List"
     # A list of persistent volume claims. More info: [https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims](https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims)

@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # CustomResourceDefinitionSpec describes how a user wants their resource to appear
   class ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceDefinitionSpec
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # AdditionalPrinterColumns are additional columns shown e.g. in kubectl next to the name. Defaults to a created-at column. Optional, the global columns for all versions. Top-level and per-version columns are mutually exclusive.
     property additional_printer_columns : Array(ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceColumnDefinition) | Nil
 

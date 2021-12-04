@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # CertificateSigningRequestStatus contains conditions used to indicate [approved/denied/failed status of the request, and the issued certificate.](approved/denied/failed status of the request, and the issued certificate.)
   class Api::Certificates::V1::CertificateSigningRequestStatus
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # certificate is populated with an issued certificate by the signer after an Approved condition is present. This field is set via the /status subresource. Once populated, this field is immutable.
     #
     # If the certificate signing request is denied, a condition of type "Denied" is added and this field remains empty. If the signer cannot issue the certificate, a condition of type "Failed" is added and this field remains empty.

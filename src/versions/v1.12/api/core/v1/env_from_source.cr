@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # EnvFromSource represents the source of a set of ConfigMaps
   class Api::Core::V1::EnvFromSource
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # The ConfigMap to select from
     property config_map_ref : Api::Core::V1::ConfigMapEnvSource | Nil
 

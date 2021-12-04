@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # HTTPIngressPath associates a path regex with a backend. Incoming urls matching the path are forwarded to the backend.
   class Api::Extensions::V1beta1::HTTPIngressPath
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Backend defines the referenced service endpoint to which the traffic will be forwarded to.
     property backend : Api::Extensions::V1beta1::IngressBackend
 

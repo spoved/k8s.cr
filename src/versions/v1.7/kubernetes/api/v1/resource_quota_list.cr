@@ -47,7 +47,11 @@ module K8S
            {name: "timeout_seconds", type: Int32 | Nil, default: nil},
            {name: "watch", type: Bool | Nil, default: nil}]
   )]
-  class Kubernetes::Api::V1::ResourceQuotaList < ::K8S::Kubernetes::Resource
+  class Kubernetes::Api::V1::ResourceQuotaList < ::K8S::Kubernetes::ResourceList(Kubernetes::Api::V1::ResourceQuota)
+    include ::K8S::Kubernetes::Resource::List
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     getter api_version : String = "v1"
     getter kind : String = "List"
     # Items is a list of ResourceQuota objects. More info: [https://git.k8s.io/community/contributors/design-proposals/admission_control_resource_quota.md](https://git.k8s.io/community/contributors/design-proposals/admission_control_resource_quota.md)

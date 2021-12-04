@@ -65,6 +65,10 @@ module K8S
            {name: "propagation_policy", type: String | Nil, default: nil}]
   )]
   class Api::Scheduling::V1beta1::PriorityClass < ::K8S::Kubernetes::Resource
+    include ::K8S::Kubernetes::Resource::Object
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     getter api_version : String = "scheduling/v1beta1"
     getter kind : String = "PriorityClass"
     # description is an arbitrary string that usually provides guidelines on when this priority class should be used.

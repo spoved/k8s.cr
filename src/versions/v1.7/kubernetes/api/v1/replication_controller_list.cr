@@ -47,7 +47,11 @@ module K8S
            {name: "timeout_seconds", type: Int32 | Nil, default: nil},
            {name: "watch", type: Bool | Nil, default: nil}]
   )]
-  class Kubernetes::Api::V1::ReplicationControllerList < ::K8S::Kubernetes::Resource
+  class Kubernetes::Api::V1::ReplicationControllerList < ::K8S::Kubernetes::ResourceList(Kubernetes::Api::V1::ReplicationController)
+    include ::K8S::Kubernetes::Resource::List
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     getter api_version : String = "v1"
     getter kind : String = "List"
     # List of replication controllers. More info: [https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller](https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller)

@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # DownwardAPIVolumeFile represents information to create the file containing the pod field
   class Api::Core::V1::DownwardAPIVolumeFile
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Required: Selects a field of the pod: only annotations, labels, name and namespace are supported.
     property field_ref : Api::Core::V1::ObjectFieldSelector | Nil
 

@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # AuditSinkSpec holds the spec for the audit sink
   class Api::Auditregistration::V1alpha1::AuditSinkSpec
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Policy defines the policy for selecting which events should be sent to the webhook required
     property policy : Api::Auditregistration::V1alpha1::Policy
 

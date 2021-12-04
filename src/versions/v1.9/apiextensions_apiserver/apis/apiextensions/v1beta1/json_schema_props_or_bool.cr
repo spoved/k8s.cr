@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # JSONSchemaPropsOrBool represents JSONSchemaProps or a boolean value. Defaults to true for the boolean property.
   class ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSONSchemaPropsOrBool
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     property allows : Bool
 
     property schema : ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSONSchemaProps

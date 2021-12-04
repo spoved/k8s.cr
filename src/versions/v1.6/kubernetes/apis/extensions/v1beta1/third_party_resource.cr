@@ -8,6 +8,10 @@ require "yaml_mapping"
 module K8S
   # A ThirdPartyResource is a generic representation of a resource, it is used by add-ons and plugins to add new resource types to the API.  It consists of one or more Versions of the api.
   class Kubernetes::Apis::Extensions::V1beta1::ThirdPartyResource < ::K8S::Kubernetes::Resource
+    include ::K8S::Kubernetes::Resource::Object
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     getter api_version : String = "extensions/v1beta1"
     getter kind : String = "ThirdPartyResource"
     # Description is the description of this object.

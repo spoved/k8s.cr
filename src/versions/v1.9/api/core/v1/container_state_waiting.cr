@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # ContainerStateWaiting is a waiting state of a container.
   class Api::Core::V1::ContainerStateWaiting
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Message regarding why the container is not yet running.
     property message : String | Nil
 

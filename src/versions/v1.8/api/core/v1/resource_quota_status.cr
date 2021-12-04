@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # ResourceQuotaStatus defines the enforced hard limits and observed use.
   class Api::Core::V1::ResourceQuotaStatus
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Hard is the set of enforced hard limits for each named resource. More info: [https://git.k8s.io/community/contributors/design-proposals/admission_control_resource_quota.md](https://git.k8s.io/community/contributors/design-proposals/admission_control_resource_quota.md)
     property hard : Hash(String, String) | Nil
 

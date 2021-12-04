@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # SELinuxOptions are the labels to be applied to the container
   class Api::Core::V1::SELinuxOptions
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Level is SELinux level label that applies to the container.
     property level : String | Nil
 

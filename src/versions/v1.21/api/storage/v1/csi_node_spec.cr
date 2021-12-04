@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # CSINodeSpec holds information about the specification of all CSI drivers installed on a node
   class Api::Storage::V1::CSINodeSpec
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # drivers is a list of information of all CSI Drivers existing on a node. If all drivers in the list are uninstalled, this can become empty.
     property drivers : Array(Api::Storage::V1::CSINodeDriver)
 

@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # CustomResourceDefinitionSpec describes how a user wants their resource to appear
   class ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionSpec
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # conversion defines conversion settings for the CRD.
     property conversion : ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceConversion | Nil
 

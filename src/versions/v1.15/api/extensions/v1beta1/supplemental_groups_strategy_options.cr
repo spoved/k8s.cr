@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # SupplementalGroupsStrategyOptions defines the strategy type and options used to create the strategy. Deprecated: use SupplementalGroupsStrategyOptions from policy API Group instead.
   class Api::Extensions::V1beta1::SupplementalGroupsStrategyOptions
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # ranges are the allowed ranges of supplemental groups.  If you would like to force a single supplemental group then supply a single range with the same start and end. Required for MustRunAs.
     property ranges : Array(Api::Extensions::V1beta1::IDRange) | Nil
 

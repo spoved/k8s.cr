@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # EnvVar represents an environment variable present in a Container.
   class Api::Core::V1::EnvVar
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Name of the environment variable. Must be a C_IDENTIFIER.
     property name : String
 

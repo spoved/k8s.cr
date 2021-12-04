@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # ResourceRule is the list of actions the subject is allowed to perform on resources. The list ordering isn't significant, may contain duplicates, and possibly be incomplete.
   class Api::Authorization::V1::ResourceRule
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # APIGroups is the name of the APIGroup that contains the resources.  If multiple API groups are specified, any action requested against one of the enumerated resources in any API group will be allowed.  "*" means all.
     property api_groups : Array(String) | Nil
 

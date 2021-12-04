@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # JobStatus represents the current state of a Job.
   class Api::Batch::V1::JobStatus
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # The number of actively running pods.
     property active : Int32 | Nil
 

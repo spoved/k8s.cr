@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # DaemonSetSpec is the specification of a daemon set.
   class Api::Extensions::V1beta1::DaemonSetSpec
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # The minimum number of seconds for which a newly created DaemonSet pod should be ready without any of its container crashing, for it to be considered available. Defaults to 0 (pod will be considered available as soon as it is ready).
     property min_ready_seconds : Int32 | Nil
 

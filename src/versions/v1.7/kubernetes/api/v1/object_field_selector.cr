@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # ObjectFieldSelector selects an APIVersioned field of an object.
   class Kubernetes::Api::V1::ObjectFieldSelector
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Version of the schema the FieldPath is written in terms of, defaults to "v1".
     property api_version : String | Nil
 

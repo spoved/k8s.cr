@@ -83,6 +83,10 @@ module K8S
            {name: "dry_run", type: String | Nil, default: nil}]
   )]
   class Api::Batch::V1beta1::CronJob < ::K8S::Kubernetes::Resource
+    include ::K8S::Kubernetes::Resource::Object
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     getter api_version : String = "batch/v1beta1"
     getter kind : String = "CronJob"
     # Standard object's metadata. More info: [https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata)

@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # CustomResourceDefinitionStatus indicates the state of the CustomResourceDefinition
   class ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionStatus
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # acceptedNames are the names that are actually being used to serve discovery. They may be different than the names in spec.
     property accepted_names : ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionNames | Nil
 

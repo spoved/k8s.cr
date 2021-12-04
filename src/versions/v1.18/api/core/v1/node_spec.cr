@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # NodeSpec describes the attributes that a node is created with.
   class Api::Core::V1::NodeSpec
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # If specified, the source to get node configuration from The DynamicKubeletConfig feature gate must be enabled for the Kubelet to use this field
     property config_source : Api::Core::V1::NodeConfigSource | Nil
 

@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # Sysctl defines a kernel parameter to be set
   class Api::Core::V1::Sysctl
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Name of a property to set
     property name : String
 

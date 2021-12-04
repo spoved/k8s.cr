@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # APIServiceCondition describes the state of an APIService at a particular point
   class KubeAggregator::Apis::Apiregistration::V1beta1::APIServiceCondition
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Last time the condition transitioned from one status to another.
     property last_transition_time : Time | Nil
 

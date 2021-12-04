@@ -72,6 +72,10 @@ module K8S
            {name: "propagation_policy", type: String | Nil, default: nil}]
   )]
   class Api::Core::V1::ServiceAccount < ::K8S::Kubernetes::Resource
+    include ::K8S::Kubernetes::Resource::Object
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     getter api_version : String = "v1"
     getter kind : String = "ServiceAccount"
     # AutomountServiceAccountToken indicates whether pods running as this service account should have an API token automatically mounted. Can be overridden at the pod level.

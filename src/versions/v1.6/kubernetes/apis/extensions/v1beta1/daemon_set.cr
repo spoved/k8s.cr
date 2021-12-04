@@ -8,6 +8,10 @@ require "yaml_mapping"
 module K8S
   # DaemonSet represents the configuration of a daemon set.
   class Kubernetes::Apis::Extensions::V1beta1::DaemonSet < ::K8S::Kubernetes::Resource
+    include ::K8S::Kubernetes::Resource::Object
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     getter api_version : String = "extensions/v1beta1"
     getter kind : String = "DaemonSet"
     # Standard object's metadata. More info: [http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#metadata](http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#metadata)

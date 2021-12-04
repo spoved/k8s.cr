@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # Pod Security Policy Spec defines the policy enforced.
   class Kubernetes::Apis::Extensions::V1beta1::PodSecurityPolicySpec
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # AllowedCapabilities is a list of capabilities that can be requested to add to the container. Capabilities in this field may be added at the pod author's discretion. You must not list a capability in both AllowedCapabilities and RequiredDropCapabilities.
     property allowed_capabilities : Array(String) | Nil
 

@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # Represents a Ceph Filesystem mount that lasts the lifetime of a pod Cephfs volumes do not support ownership management or SELinux relabeling.
   class Kubernetes::Api::V1::CephFSVolumeSource
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Required: Monitors is a collection of Ceph monitors More info: [http://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it](http://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it)
     property monitors : Array(String)
 

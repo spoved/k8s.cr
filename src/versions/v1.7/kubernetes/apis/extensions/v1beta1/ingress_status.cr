@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # IngressStatus describe the current state of the Ingress.
   class Kubernetes::Apis::Extensions::V1beta1::IngressStatus
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # LoadBalancer contains the current status of the load-balancer.
     property load_balancer : Kubernetes::Api::V1::LoadBalancerStatus | Nil
 

@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # MetricValueStatus holds the current value for a metric
   class Api::Autoscaling::V2beta2::MetricValueStatus
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # currentAverageUtilization is the current value of the average of the resource metric across all relevant pods, represented as a percentage of the requested value of the resource for the pods.
     property average_utilization : Int32 | Nil
 

@@ -107,6 +107,10 @@ module K8S
            {name: "force", type: Bool | Nil, default: nil}]
   )]
   class Api::Certificates::V1beta1::CertificateSigningRequest < ::K8S::Kubernetes::Resource
+    include ::K8S::Kubernetes::Resource::Object
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     getter api_version : String = "certificates/v1beta1"
     getter kind : String = "CertificateSigningRequest"
     property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil

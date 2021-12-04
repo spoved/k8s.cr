@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # MetricSpec specifies how to scale based on a single metric (only `type` and one other matching field should be set at once).
   class Api::Autoscaling::V2beta1::MetricSpec
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # container resource refers to a resource metric (such as those specified in requests and limits) known to Kubernetes describing a single container in each pod of the current scale target (e.g. CPU or memory). Such metrics are built in to Kubernetes, and have special scaling options on top of those available to normal per-pod metrics using the "pods" source. This is an alpha feature and can be enabled by the HPAContainerMetrics feature flag.
     property container_resource : Api::Autoscaling::V2beta1::ContainerResourceMetricSource | Nil
 

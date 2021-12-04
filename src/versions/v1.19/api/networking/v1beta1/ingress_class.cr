@@ -71,6 +71,10 @@ module K8S
            {name: "propagation_policy", type: String | Nil, default: nil}]
   )]
   class Api::Networking::V1beta1::IngressClass < ::K8S::Kubernetes::Resource
+    include ::K8S::Kubernetes::Resource::Object
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     getter api_version : String = "networking/v1beta1"
     getter kind : String = "IngressClass"
     # Standard object's metadata. More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)

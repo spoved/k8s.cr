@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # FlowSchemaSpec describes how the FlowSchema's specification looks like.
   class Api::Flowcontrol::V1alpha1::FlowSchemaSpec
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # `distinguisherMethod` defines how to compute the flow distinguisher for requests that match this schema. `nil` specifies that the distinguisher is disabled and thus will always be the empty string.
     property distinguisher_method : Api::Flowcontrol::V1alpha1::FlowDistinguisherMethod | Nil
 

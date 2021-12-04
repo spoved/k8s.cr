@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # ObjectMetricSource indicates how to scale on a metric describing a kubernetes object (for example, hits-per-second on an Ingress object).
   class Api::Autoscaling::V2beta1::ObjectMetricSource
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # averageValue is the target value of the average of the metric across all relevant pods (as a quantity)
     property average_value : Int32 | Nil
 

@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # NetworkPolicyPeer describes a peer to allow traffic [to/from. Only certain combinations of fields are allowed](to/from. Only certain combinations of fields are allowed)
   class Api::Networking::V1::NetworkPolicyPeer
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # IPBlock defines policy on a particular IPBlock. If this field is set then neither of the other fields can be.
     property ip_block : Api::Networking::V1::IPBlock | Nil
 

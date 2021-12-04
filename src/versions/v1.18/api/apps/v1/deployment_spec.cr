@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # DeploymentSpec is the specification of the desired behavior of the Deployment.
   class Api::Apps::V1::DeploymentSpec
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Minimum number of seconds for which a newly created pod should be ready without any of its container crashing, for it to be considered available. Defaults to 0 (pod will be considered available as soon as it is ready)
     property min_ready_seconds : Int32 | Nil
 

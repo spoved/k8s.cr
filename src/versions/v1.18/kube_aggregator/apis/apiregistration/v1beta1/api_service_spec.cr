@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # APIServiceSpec contains information for locating and communicating with a server. Only https is supported, though you are able to disable certificate verification.
   class KubeAggregator::Apis::Apiregistration::V1beta1::APIServiceSpec
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # CABundle is a PEM encoded CA bundle which will be used to validate an API server's serving certificate. If unspecified, system trust roots on the apiserver are used.
     property ca_bundle : String | Nil
 

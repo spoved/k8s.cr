@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # Describe a container image
   class Api::Core::V1::ContainerImage
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Names by which this image is known. e.g. [["k8s.gcr.io/hyperkube:v1.0.7", "dockerhub.io/google_containers/hyperkube:v1.0.7"]](["k8s.gcr.io/hyperkube:v1.0.7", "dockerhub.io/google_containers/hyperkube:v1.0.7"])
     property names : Array(String) | Nil
 

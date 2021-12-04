@@ -6,31 +6,38 @@ require "json_mapping"
 require "yaml_mapping"
 
 module K8S
-  # List is a generic list of resources
-  class Kubernetes::Api::V1::List < ::K8S::Kubernetes::Resource
-    getter api_version : String = "v1"
-    getter kind : String = "List"
-    # list of resources
-    property items : Array(Kubernetes::Resource) | Nil
+# List is a generic list of resources
+class Kubernetes::Api::V1::List < ::K8S::Kubernetes::ResourceList(Kubernetes::Api::V1::)
+  include ::K8S::Kubernetes::Resource::List
+include ::JSON::Serializable
+include ::YAML::Serializable
 
-    # Standard list metadata. More info: [http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#types-kinds](http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#types-kinds)
-    property metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil
+getter api_version : String = "v1"
+getter kind : String = "List"
+# list of resources
+property items : Array(Kubernetes::Resource) | Nil
 
-    ::YAML.mapping({
-      api_version: {type: String, default: "v1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "List", key: "kind", setter: false},
-      items:       {type: Array(Kubernetes::Resource), nilable: true, key: "items", getter: false, setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ListMeta, nilable: true, key: "metadata", getter: false, setter: false},
-    }, true)
+# Standard list metadata. More info: [http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#types-kinds](http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#types-kinds)
+property metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil
 
-    ::JSON.mapping({
-      api_version: {type: String, default: "v1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "List", key: "kind", setter: false},
-      items:       {type: Array(Kubernetes::Resource), nilable: true, key: "items", getter: false, setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ListMeta, nilable: true, key: "metadata", getter: false, setter: false},
-    }, true)
+::YAML.mapping({ 
+api_version: { type: String, default: "v1", key: "apiVersion", setter: false },
+kind: { type: String, default: "List", key: "kind", setter: false },
+items: { type: Array(Kubernetes::Resource), nilable: true, key: "items", getter: false, setter: false },
+metadata: { type: Apimachinery::Apis::Meta::V1::ListMeta, nilable: true, key: "metadata", getter: false, setter: false }
+}, true)
 
-    def initialize(*, @items : Array | Nil = nil, @metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil = nil)
-    end
-  end
+::JSON.mapping({ 
+api_version: { type: String, default: "v1", key: "apiVersion", setter: false },
+kind: { type: String, default: "List", key: "kind", setter: false },
+items: { type: Array(Kubernetes::Resource), nilable: true, key: "items", getter: false, setter: false },
+metadata: { type: Apimachinery::Apis::Meta::V1::ListMeta, nilable: true, key: "metadata", getter: false, setter: false }
+}, true)
+
+def initialize(*, @items : Array | Nil = nil, @metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil = nil)
 end
+
+end
+
+end
+

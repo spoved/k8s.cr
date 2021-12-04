@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # EnvVarSource represents a source for the value of an EnvVar.
   class Kubernetes::Api::V1::EnvVarSource
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Selects a key of a ConfigMap.
     property config_map_key_ref : Kubernetes::Api::V1::ConfigMapKeySelector | Nil
 

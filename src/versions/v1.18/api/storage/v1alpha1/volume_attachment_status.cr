@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # VolumeAttachmentStatus is the status of a VolumeAttachment request.
   class Api::Storage::V1alpha1::VolumeAttachmentStatus
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # The last error encountered during attach operation, if any. This field must only be set by the entity completing the attach operation, i.e. the external-attacher.
     property attach_error : Api::Storage::V1alpha1::VolumeError | Nil
 

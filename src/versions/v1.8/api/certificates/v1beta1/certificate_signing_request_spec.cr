@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # This information is immutable after the request is created. Only the Request and Usages fields can be set on creation, other fields are derived by Kubernetes and cannot be modified by users.
   class Api::Certificates::V1beta1::CertificateSigningRequestSpec
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Extra information about the requesting user. See user.Info interface for details.
     property extra : Hash(String, String) | Nil
 

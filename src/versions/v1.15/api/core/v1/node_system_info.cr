@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # NodeSystemInfo is a set of [ids/uuids to uniquely identify the node.](ids/uuids to uniquely identify the node.)
   class Api::Core::V1::NodeSystemInfo
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # The Architecture reported by the node
     property architecture : String
 

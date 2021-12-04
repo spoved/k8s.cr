@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # ExternalAdmissionHook describes an external admission webhook and the resources and operations it applies to.
   class Kubernetes::Apis::Admissionregistration::V1alpha1::ExternalAdmissionHook
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # ClientConfig defines how to communicate with the hook. Required
     property client_config : Kubernetes::Apis::Admissionregistration::V1alpha1::AdmissionHookClientConfig
 

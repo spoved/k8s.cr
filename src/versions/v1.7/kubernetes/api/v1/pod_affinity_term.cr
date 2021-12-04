@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # Defines a set of pods (namely those matching the labelSelector relative to the given namespace(s)) that this pod should be co-located (affinity) or not co-located (anti-affinity) with, where co-located is defined as running on a node whose value of the label with key <topologyKey> tches that of any node on which a pod of the set of pods is running
   class Kubernetes::Api::V1::PodAffinityTerm
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # A label query over a set of resources, in this case pods.
     property label_selector : Apimachinery::Apis::Meta::V1::LabelSelector | Nil
 

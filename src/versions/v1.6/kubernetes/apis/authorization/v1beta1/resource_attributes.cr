@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # ResourceAttributes includes the authorization attributes available for resource requests to the Authorizer interface
   class Kubernetes::Apis::Authorization::V1beta1::ResourceAttributes
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Group is the API Group of the Resource.  "*" means all.
     property group : String | Nil
 

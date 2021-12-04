@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # PodDisruptionBudgetSpec is a description of a PodDisruptionBudget.
   class Kubernetes::Apis::Policy::V1beta1::PodDisruptionBudgetSpec
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # An eviction is allowed if at least "minAvailable" pods selected by "selector" will still be available after the eviction, i.e. even in the absence of the evicted pod.  So for example you can prevent all voluntary evictions by specifying "100%".
     property min_available : Int32 | String | Nil
 

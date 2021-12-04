@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # PriorityLevelConfigurationSpec specifies the configuration of a priority level.
   class Api::Flowcontrol::V1alpha1::PriorityLevelConfigurationSpec
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # `limited` specifies how requests are handled for a Limited priority level. This field must be non-empty if and only if `type` is `"Limited"`.
     property limited : Api::Flowcontrol::V1alpha1::LimitedPriorityLevelConfiguration | Nil
 

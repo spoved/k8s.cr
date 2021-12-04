@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # PodCondition contains details for the current condition of this pod.
   class Kubernetes::Api::V1::PodCondition
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Last time we probed the condition.
     property last_probe_time : Time | Nil
 

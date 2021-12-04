@@ -7,6 +7,9 @@ require "yaml_mapping"
 
 module K8S
   class KubeAggregator::Apis::Apiregistration::V1::APIServiceCondition
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Last time the condition transitioned from one status to another.
     property last_transition_time : Time | Nil
 

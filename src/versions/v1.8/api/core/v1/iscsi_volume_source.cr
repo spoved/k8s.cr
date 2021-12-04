@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # Represents an ISCSI disk. ISCSI volumes can only be mounted as [read/write once. ISCSI volumes support ownership management and SELinux relabeling.](read/write once. ISCSI volumes support ownership management and SELinux relabeling.)
   class Api::Core::V1::ISCSIVolumeSource
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # whether support iSCSI Discovery CHAP authentication
     property chap_auth_discovery : Bool | Nil
 

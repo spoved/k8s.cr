@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # PodSecurityPolicySpec defines the policy enforced.
   class Api::Policy::V1beta1::PodSecurityPolicySpec
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # allowPrivilegeEscalation determines if a pod can request to allow privilege escalation. If unspecified, defaults to true.
     property allow_privilege_escalation : Bool | Nil
 

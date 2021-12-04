@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # MetricSpec specifies how to scale based on a single metric (only `type` and one other matching field should be set at once).
   class Kubernetes::Apis::Autoscaling::V2alpha1::MetricSpec
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # object refers to a metric describing a single kubernetes object (for example, hits-per-second on an Ingress object).
     property object : Kubernetes::Apis::Autoscaling::V2alpha1::ObjectMetricSource | Nil
 

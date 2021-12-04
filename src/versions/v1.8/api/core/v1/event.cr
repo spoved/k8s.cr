@@ -65,6 +65,10 @@ module K8S
            {name: "context", type: String | Nil, default: nil}]
   )]
   class Api::Core::V1::Event < ::K8S::Kubernetes::Resource
+    include ::K8S::Kubernetes::Resource::Object
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     getter api_version : String = "v1"
     getter kind : String = "Event"
     # The number of times this event has occurred.

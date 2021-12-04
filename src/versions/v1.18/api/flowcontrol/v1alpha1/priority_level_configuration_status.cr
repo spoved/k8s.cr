@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # PriorityLevelConfigurationStatus represents the current state of a "request-priority".
   class Api::Flowcontrol::V1alpha1::PriorityLevelConfigurationStatus
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # `conditions` is the current state of "request-priority".
     property conditions : Array(Api::Flowcontrol::V1alpha1::PriorityLevelConfigurationCondition) | Nil
 

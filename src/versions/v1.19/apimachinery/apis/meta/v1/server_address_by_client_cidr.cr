@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # ServerAddressByClientCIDR helps the client to determine the server address that they should use, depending on the clientCIDR that they match.
   class Apimachinery::Apis::Meta::V1::ServerAddressByClientCIDR
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # The CIDR with which clients can match their IP to figure out the server address that they should use.
     property client_cidr : String
 

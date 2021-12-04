@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # A null or empty node selector term matches no objects.
   class Kubernetes::Api::V1::NodeSelectorTerm
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Required. A list of node selector requirements. The requirements are ANDed.
     property match_expressions : Array(Kubernetes::Api::V1::NodeSelectorRequirement)
 

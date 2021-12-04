@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # Volume represents a named volume in a pod that may be accessed by any container in the pod.
   class Kubernetes::Api::V1::Volume
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # AWSElasticBlockStore represents an AWS Disk resource that is attached to a kubelet's host machine and then exposed to the pod. More info: [https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore](https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore)
     property aws_elastic_block_store : Kubernetes::Api::V1::AWSElasticBlockStoreVolumeSource | Nil
 

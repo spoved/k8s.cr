@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # NodeAddress contains information for the node's address.
   class Kubernetes::Api::V1::NodeAddress
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # The node address.
     property address : String
 

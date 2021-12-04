@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # NetworkPolicyPeer describes a peer to allow traffic from. Exactly one of its fields must be specified.
   class Kubernetes::Apis::Networking::V1::NetworkPolicyPeer
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Selects Namespaces using cluster scoped-labels. This matches all pods in all namespaces selected by this label selector. This field follows standard label selector semantics. If present but empty, this selector selects all namespaces.
     property namespace_selector : Apimachinery::Apis::Meta::V1::LabelSelector | Nil
 

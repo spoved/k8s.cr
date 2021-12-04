@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # ObjectMetricStatus indicates the current value of a metric describing a kubernetes object (for example, hits-per-second on an Ingress object).
   class Kubernetes::Apis::Autoscaling::V2alpha1::ObjectMetricStatus
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # currentValue is the current value of the metric (as a quantity).
     property current_value : Int32
 

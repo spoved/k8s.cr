@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # SecretKeySelector selects a key of a Secret.
   class Api::Core::V1::SecretKeySelector
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # The key of the secret to select from.  Must be a valid secret key.
     property key : String
 

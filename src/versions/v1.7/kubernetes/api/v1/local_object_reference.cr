@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # LocalObjectReference contains enough information to let you locate the referenced object inside the same namespace.
   class Kubernetes::Api::V1::LocalObjectReference
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Name of the referent. More info: [https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names)
     property name : String | Nil
 

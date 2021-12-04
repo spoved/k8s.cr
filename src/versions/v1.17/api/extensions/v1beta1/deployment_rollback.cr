@@ -15,6 +15,9 @@ module K8S
            {name: "field_manager", type: String | Nil, default: nil}]
   )]
   class Api::Extensions::V1beta1::DeploymentRollback
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)
     property api_version : String | Nil
 

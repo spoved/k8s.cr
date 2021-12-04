@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # AzureDisk represents an Azure Data Disk mount on the host and bind mount to the pod.
   class Kubernetes::Api::V1::AzureDiskVolumeSource
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Host Caching mode: None, Read Only, Read Write.
     property caching_mode : String | Nil
 

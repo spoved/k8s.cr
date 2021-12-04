@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # current status of a horizontal pod autoscaler
   class Kubernetes::Apis::Autoscaling::V1::HorizontalPodAutoscalerStatus
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # current average CPU utilization over all pods, represented as a percentage of requested CPU, e.g. 70 means that an average pod is using now 70% of its requested CPU.
     property current_cpu_utilization_percentage : Int32 | Nil
 

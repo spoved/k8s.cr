@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # JSONSchemaProps is a JSON-Schema following Specification Draft 4 (http://json-schema.org/).
   class ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSONSchemaProps
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     property ref : String | Nil
 
     property schema : String | Nil

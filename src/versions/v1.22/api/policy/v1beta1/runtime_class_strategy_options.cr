@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # RuntimeClassStrategyOptions define the strategy that will dictate the allowable RuntimeClasses for a pod.
   class Api::Policy::V1beta1::RuntimeClassStrategyOptions
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # allowedRuntimeClassNames is an allowlist of RuntimeClass names that may be specified on a pod. A value of "*" means that any RuntimeClass name is allowed, and must be the only item in the list. An empty list requires the RuntimeClassName field to be unset.
     property allowed_runtime_class_names : Array(String)
 

@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # AttachedVolume describes a volume attached to a node
   class Api::Core::V1::AttachedVolume
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # DevicePath represents the device path where the volume should be available
     property device_path : String
 

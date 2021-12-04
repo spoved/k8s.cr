@@ -11,6 +11,9 @@ module K8S
     include ::JSON::Serializable
     include ::YAML::Serializable
 
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     def initialize
     end
   end

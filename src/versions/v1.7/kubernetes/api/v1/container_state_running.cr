@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # ContainerStateRunning is a running state of a container.
   class Kubernetes::Api::V1::ContainerStateRunning
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Time at which the container was last (re-)started
     property started_at : Time | Nil
 

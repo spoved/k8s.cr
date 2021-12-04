@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # CustomResourceDefinitionSpec describes how a user wants their resource to appear
   class ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceDefinitionSpec
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Group is the group this resource belongs in
     property group : String
 

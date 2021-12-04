@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # DEPRECATED.
   class Api::Apps::V1beta1::RollbackConfig
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # The revision to rollback to. If set to 0, rollback to the last revision.
     property revision : Int32 | Nil
 

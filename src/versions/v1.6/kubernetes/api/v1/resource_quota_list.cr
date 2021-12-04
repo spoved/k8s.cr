@@ -7,7 +7,11 @@ require "yaml_mapping"
 
 module K8S
   # ResourceQuotaList is a list of ResourceQuota items.
-  class Kubernetes::Api::V1::ResourceQuotaList < ::K8S::Kubernetes::Resource
+  class Kubernetes::Api::V1::ResourceQuotaList < ::K8S::Kubernetes::ResourceList(Kubernetes::Api::V1::ResourceQuota)
+    include ::K8S::Kubernetes::Resource::List
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     getter api_version : String = "v1"
     getter kind : String = "List"
     # Items is a list of ResourceQuota objects. More info: [http://releases.k8s.io/HEAD/docs/design/admission_control_resource_quota.md#admissioncontrol-plugin-resourcequota](http://releases.k8s.io/HEAD/docs/design/admission_control_resource_quota.md#admissioncontrol-plugin-resourcequota)

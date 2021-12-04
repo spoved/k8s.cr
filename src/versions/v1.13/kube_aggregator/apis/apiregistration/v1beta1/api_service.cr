@@ -79,6 +79,10 @@ module K8S
            {name: "dry_run", type: String | Nil, default: nil}]
   )]
   class KubeAggregator::Apis::Apiregistration::V1beta1::APIService < ::K8S::Kubernetes::Resource
+    include ::K8S::Kubernetes::Resource::Object
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     getter api_version : String = "apiregistration/v1beta1"
     getter kind : String = "APIService"
     property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil

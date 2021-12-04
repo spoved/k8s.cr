@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # PortworxVolumeSource represents a Portworx volume resource.
   class Api::Core::V1::PortworxVolumeSource
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # FSType represents the filesystem type to mount Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs". Implicitly inferred to be "ext4" if unspecified.
     property fs_type : String | Nil
 

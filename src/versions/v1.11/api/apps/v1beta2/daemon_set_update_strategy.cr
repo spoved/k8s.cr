@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # DaemonSetUpdateStrategy is a struct used to control the update strategy for a DaemonSet.
   class Api::Apps::V1beta2::DaemonSetUpdateStrategy
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Rolling update config params. Present only if type = "RollingUpdate".
     property rolling_update : Api::Apps::V1beta2::RollingUpdateDaemonSet | Nil
 

@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # ForZone provides information about which zones should consume this endpoint.
   class Api::Discovery::V1::ForZone
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # name represents the name of the zone.
     property name : String
 

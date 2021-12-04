@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # ServiceAccountSubject holds detailed information for service-account-kind subject.
   class Api::Flowcontrol::V1beta1::ServiceAccountSubject
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # `name` is the name of matching ServiceAccount objects, or "*" to match regardless of name. Required.
     property name : String
 

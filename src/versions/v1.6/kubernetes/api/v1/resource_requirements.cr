@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # ResourceRequirements describes the compute resource requirements.
   class Kubernetes::Api::V1::ResourceRequirements
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Limits describes the maximum amount of compute resources allowed. More info: [http://kubernetes.io/docs/user-guide/compute-resources/](http://kubernetes.io/docs/user-guide/compute-resources/)
     property limits : Hash(String, String) | Nil
 

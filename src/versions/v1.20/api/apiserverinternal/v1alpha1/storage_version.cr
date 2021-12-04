@@ -90,6 +90,10 @@ module K8S
            {name: "force", type: Bool | Nil, default: nil}]
   )]
   class Api::Apiserverinternal::V1alpha1::StorageVersion < ::K8S::Kubernetes::Resource
+    include ::K8S::Kubernetes::Resource::Object
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     getter api_version : String = "apiserverinternal/v1alpha1"
     getter kind : String = "StorageVersion"
     # The name is <group>.<resource>.

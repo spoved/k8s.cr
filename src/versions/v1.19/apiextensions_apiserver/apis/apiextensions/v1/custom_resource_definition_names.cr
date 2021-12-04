@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # CustomResourceDefinitionNames indicates the names to serve this CustomResourceDefinition
   class ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionNames
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # categories is a list of grouped resources this custom resource belongs to (e.g. 'all'). This is published in API discovery documents, and used by clients to support invocations like `kubectl get all`.
     property categories : Array(String) | Nil
 

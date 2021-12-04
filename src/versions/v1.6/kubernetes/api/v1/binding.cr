@@ -8,6 +8,10 @@ require "yaml_mapping"
 module K8S
   # Binding ties one object to another. For example, a pod is bound to a node by a scheduler.
   class Kubernetes::Api::V1::Binding < ::K8S::Kubernetes::Resource
+    include ::K8S::Kubernetes::Resource::Object
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     getter api_version : String = "v1"
     getter kind : String = "Binding"
     # Standard object's metadata. More info: [http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#metadata](http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#metadata)

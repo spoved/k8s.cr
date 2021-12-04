@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # ContainerStateTerminated is a terminated state of a container.
   class Api::Core::V1::ContainerStateTerminated
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Container's ID in the format 'docker://<container_id>'
     property container_id : String | Nil
 

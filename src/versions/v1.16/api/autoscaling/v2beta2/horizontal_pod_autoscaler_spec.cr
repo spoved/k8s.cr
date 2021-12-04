@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # HorizontalPodAutoscalerSpec describes the desired functionality of the HorizontalPodAutoscaler.
   class Api::Autoscaling::V2beta2::HorizontalPodAutoscalerSpec
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # maxReplicas is the upper limit for the number of replicas to which the autoscaler can scale up. It cannot be less that minReplicas.
     property max_replicas : Int32
 

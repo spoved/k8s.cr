@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # Represents a Quobyte mount that lasts the lifetime of a pod. Quobyte volumes do not support ownership management or SELinux relabeling.
   class Kubernetes::Api::V1::QuobyteVolumeSource
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Group to map volume access to Default is no group
     property group : String | Nil
 

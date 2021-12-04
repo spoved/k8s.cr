@@ -1,4 +1,5 @@
 require "json"
+require "yaml"
 
 macro k8s_json_discriminator(mappings)
   def self.new(pull : ::JSON::PullParser)
@@ -14,7 +15,7 @@ macro k8s_json_discriminator(mappings)
       JSON.build(io) do |builder|
         builder.start_object
         pull.read_object do |key|
-          if key == "apiVersion"
+          if key == "apiVersion" || key == "groupVersion"
             value_kind = pull.kind
             case value_kind
             when .string?
@@ -50,6 +51,10 @@ macro k8s_json_discriminator(mappings)
       raise ::JSON::SerializableError.new("Missing JSON discriminator field 'kind'", to_s, nil, *location, nil)
     end
 
+    if discriminator_value == "APIResourceList"
+      return ::K8S::Apimachinery::Apis::Meta::V1::APIResourceList.from_json(json)
+    end
+
     case {api_value, discriminator_value}
     {% for value in mappings.resolve %}
     when { {{ value[0] }}, {{value[1]}} }
@@ -79,7 +84,7 @@ macro k8s_yaml_discriminator(mappings)
       next unless key.value == "kind" || key.value == "apiVersion"
 
       discriminator_value = value.value if key.value == "kind"
-      api_value = value.value if key.value == "apiVersion"
+      api_value = value.value if key.value == "apiVersion" || key.value == "groupVersion"
     end
 
     node.raise "Missing YAML discriminator field 'kind'" unless discriminator_value

@@ -8,6 +8,10 @@ require "yaml_mapping"
 module K8S
   # Node is a worker node in Kubernetes. Each node will have a unique identifier in the cache (i.e. in etcd).
   class Kubernetes::Api::V1::Node < ::K8S::Kubernetes::Resource
+    include ::K8S::Kubernetes::Resource::Object
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     getter api_version : String = "v1"
     getter kind : String = "Node"
     # Standard object's metadata. More info: [http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#metadata](http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#metadata)

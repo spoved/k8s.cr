@@ -13,6 +13,10 @@ module K8S
     args: [{name: "context", type: String | Nil, default: nil}]
   )]
   class Kubernetes::Apis::Authorization::V1::LocalSubjectAccessReview < ::K8S::Kubernetes::Resource
+    include ::K8S::Kubernetes::Resource::Object
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     getter api_version : String = "authorization/v1"
     getter kind : String = "LocalSubjectAccessReview"
     property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil

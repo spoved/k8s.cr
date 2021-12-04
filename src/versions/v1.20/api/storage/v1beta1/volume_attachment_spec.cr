@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # VolumeAttachmentSpec is the specification of a VolumeAttachment request.
   class Api::Storage::V1beta1::VolumeAttachmentSpec
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Attacher indicates the name of the volume driver that MUST handle this request. This is the name returned by GetPluginName().
     property attacher : String
 

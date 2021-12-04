@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # BoundObjectReference is a reference to an object that a token is bound to.
   class Api::Authentication::V1::BoundObjectReference
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # API version of the referent.
     property api_version : String | Nil
 

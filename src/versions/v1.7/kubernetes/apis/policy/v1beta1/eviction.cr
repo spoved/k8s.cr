@@ -13,6 +13,10 @@ module K8S
     args: [{name: "context", type: String | Nil, default: nil}]
   )]
   class Kubernetes::Apis::Policy::V1beta1::Eviction < ::K8S::Kubernetes::Resource
+    include ::K8S::Kubernetes::Resource::Object
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     getter api_version : String = "policy/v1beta1"
     getter kind : String = "Eviction"
     # DeleteOptions may be provided

@@ -45,22 +45,26 @@ module K8S
            {name: "resource_version_match", type: String | Nil, default: nil},
            {name: "timeout_seconds", type: Int32 | Nil, default: nil}]
   )]
-  class Api::Apiserverinternal::V1alpha1::StorageVersionList < ::K8S::Kubernetes::Resource
-    getter api_version : String = "v1"
+  class Api::Apiserverinternal::V1alpha1::StorageVersionList < ::K8S::Kubernetes::ResourceList(Api::Apiserverinternal::V1alpha1::StorageVersion)
+    include ::K8S::Kubernetes::Resource::List
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
+    getter api_version : String = "apiserverinternal/v1alpha1"
     getter kind : String = "List"
     property items : Array(Api::Apiserverinternal::V1alpha1::StorageVersion)
 
     property metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil
 
     ::YAML.mapping({
-      api_version: {type: String, default: "v1", key: "apiVersion", setter: false},
+      api_version: {type: String, default: "apiserverinternal/v1alpha1", key: "apiVersion", setter: false},
       kind:        {type: String, default: "List", key: "kind", setter: false},
       items:       {type: Array(Api::Apiserverinternal::V1alpha1::StorageVersion), nilable: false, key: "items", getter: false, setter: false},
       metadata:    {type: Apimachinery::Apis::Meta::V1::ListMeta, nilable: true, key: "metadata", getter: false, setter: false},
     }, true)
 
     ::JSON.mapping({
-      api_version: {type: String, default: "v1", key: "apiVersion", setter: false},
+      api_version: {type: String, default: "apiserverinternal/v1alpha1", key: "apiVersion", setter: false},
       kind:        {type: String, default: "List", key: "kind", setter: false},
       items:       {type: Array(Api::Apiserverinternal::V1alpha1::StorageVersion), nilable: false, key: "items", getter: false, setter: false},
       metadata:    {type: Apimachinery::Apis::Meta::V1::ListMeta, nilable: true, key: "metadata", getter: false, setter: false},

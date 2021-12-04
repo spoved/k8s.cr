@@ -7,7 +7,11 @@ require "yaml_mapping"
 
 module K8S
   # LimitRangeList is a list of LimitRange items.
-  class Kubernetes::Api::V1::LimitRangeList < ::K8S::Kubernetes::Resource
+  class Kubernetes::Api::V1::LimitRangeList < ::K8S::Kubernetes::ResourceList(Kubernetes::Api::V1::LimitRange)
+    include ::K8S::Kubernetes::Resource::List
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     getter api_version : String = "v1"
     getter kind : String = "List"
     # Items is a list of LimitRange objects. More info: [http://releases.k8s.io/HEAD/docs/design/admission_control_limit_range.md](http://releases.k8s.io/HEAD/docs/design/admission_control_limit_range.md)

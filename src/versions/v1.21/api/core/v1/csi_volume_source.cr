@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # Represents a source location of a volume to mount, managed by an external CSI driver
   class Api::Core::V1::CSIVolumeSource
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Driver is the name of the CSI driver that handles this volume. Consult with your admin for the correct name as registered in the cluster.
     property driver : String
 

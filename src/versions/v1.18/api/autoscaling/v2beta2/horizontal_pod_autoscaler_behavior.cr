@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # HorizontalPodAutoscalerBehavior configures the scaling behavior of the target in both Up and Down directions (scaleUp and scaleDown fields respectively).
   class Api::Autoscaling::V2beta2::HorizontalPodAutoscalerBehavior
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # scaleDown is scaling policy for scaling Down. If not set, the default value is to allow to scale down to minReplicas pods, with a 300 second stabilization window (i.e., the highest recommendation for the last 300sec is used).
     property scale_down : Api::Autoscaling::V2beta2::HPAScalingRules | Nil
 

@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # NodeCondition contains condition information for a node.
   class Api::Core::V1::NodeCondition
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Last time we got an update on a given condition.
     property last_heartbeat_time : Time | Nil
 

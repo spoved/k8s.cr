@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # Describes the state of the storageVersion at a certain point.
   class Api::Apiserverinternal::V1alpha1::StorageVersionCondition
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Last time the condition transitioned from one status to another.
     property last_transition_time : Time | Nil
 

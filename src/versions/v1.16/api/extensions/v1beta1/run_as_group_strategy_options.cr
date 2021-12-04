@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # RunAsGroupStrategyOptions defines the strategy type and any options used to create the strategy. Deprecated: use RunAsGroupStrategyOptions from policy API Group instead.
   class Api::Extensions::V1beta1::RunAsGroupStrategyOptions
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # ranges are the allowed ranges of gids that may be used. If you would like to force a single gid then supply a single range with the same start and end. Required for MustRunAs.
     property ranges : Array(Api::Extensions::V1beta1::IDRange) | Nil
 

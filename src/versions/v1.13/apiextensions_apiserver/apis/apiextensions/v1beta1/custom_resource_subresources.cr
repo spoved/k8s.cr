@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # CustomResourceSubresources defines the status and scale subresources for CustomResources.
   class ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresources
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Scale denotes the scale subresource for CustomResources
     property scale : ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresourceScale | Nil
 

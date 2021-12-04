@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all objects. A null label selector matches no objects.
   class Apimachinery::Apis::Meta::V1::LabelSelector
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # matchExpressions is a list of label selector requirements. The requirements are ANDed.
     property match_expressions : Array(Apimachinery::Apis::Meta::V1::LabelSelectorRequirement) | Nil
 

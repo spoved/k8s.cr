@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # PodDisruptionBudgetStatus represents information about the status of a PodDisruptionBudget. Status may trail the actual state of a system.
   class Api::Policy::V1::PodDisruptionBudgetStatus
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Conditions contain conditions for PDB. The disruption controller sets the DisruptionAllowed condition. The following are known values for the reason field (additional reasons could be added in the future): - SyncFailed: The controller encountered an error and wasn't able to compute
     #               the number of allowed disruptions. Therefore no disruptions are
     #               allowed and the status of the condition will be False.

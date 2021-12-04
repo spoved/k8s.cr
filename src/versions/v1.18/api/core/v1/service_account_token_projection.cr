@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # ServiceAccountTokenProjection represents a projected service account token volume. This projection can be used to insert a service account token into the pods runtime filesystem for use against APIs (Kubernetes API Server or otherwise).
   class Api::Core::V1::ServiceAccountTokenProjection
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Audience is the intended audience of the token. A recipient of a token must identify itself with an identifier specified in the audience of the token, and otherwise should reject the token. The audience defaults to the identifier of the apiserver.
     property audience : String | Nil
 

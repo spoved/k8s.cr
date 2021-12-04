@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # EndpointHints provides hints describing how an endpoint should be consumed.
   class Api::Discovery::V1::EndpointHints
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # forZones indicates the zone(s) this endpoint should be consumed by to enable topology aware routing.
     property for_zones : Array(Api::Discovery::V1::ForZone) | Nil
 

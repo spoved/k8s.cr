@@ -34,6 +34,7 @@ end
 
 major = 1
 minor = 6
+# minor = 22
 
 FileUtils.rm_rf File.join(".", Generator::VERSIONS_DIR)
 
@@ -43,6 +44,7 @@ loop do
 
   if last_res && patch
     version = "#{prefix}.#{patch}"
+    puts "Generating #{version}"
     Generator.generate(last_res, version)
     minor += 1
   else

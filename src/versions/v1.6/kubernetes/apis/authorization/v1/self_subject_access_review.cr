@@ -8,6 +8,10 @@ require "yaml_mapping"
 module K8S
   # SelfSubjectAccessReview checks whether or the current user can perform an action.  Not filling in a spec.namespace means "in all namespaces".  Self is a special case, because users should always be able to check whether they can perform an action
   class Kubernetes::Apis::Authorization::V1::SelfSubjectAccessReview < ::K8S::Kubernetes::Resource
+    include ::K8S::Kubernetes::Resource::Object
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     getter api_version : String = "authorization/v1"
     getter kind : String = "SelfSubjectAccessReview"
     property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil

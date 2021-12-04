@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # LoadBalancerIngress represents the status of a load-balancer ingress point: traffic intended for the service should be sent to an ingress point.
   class Kubernetes::Api::V1::LoadBalancerIngress
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Hostname is set for load-balancer ingress points that are DNS based (typically AWS load-balancers)
     property hostname : String | Nil
 

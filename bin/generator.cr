@@ -60,7 +60,7 @@ class Generator
     Dir.cd(File.join(File.join(".", VERSIONS_DIR))) do
       File.open(filename, "w+") do |file|
         file.puts "# THIS FILE WAS AUTO GENERATED FROM THE K8S SWAGGER SPEC", "",
-          %<require "../macros.cr">, "",
+          %<require "../k8s/*">, "",
           "annotation ::#{base_class.lchop("::")}::GroupVersionKind; end",
           "annotation ::#{base_class.lchop("::")}::Action; end", ""
 
@@ -75,9 +75,18 @@ class Generator
         file.puts "abstract class Resource"
         file.puts "  include JSON::Serializable", ""
         file.puts %<  MAPPINGS = [>
-        definitions.select(&.is_resource?).reject(&.is_list?).each do |r|
-          file.puts %<    {"#{r.api_version}", "#{r.kind}", #{r.resource_alias}::#{r.kind}},>
-        end
+        definitions.select(&.is_resource?)
+          .reject(&.class_name.==("Api::Core::V1::List"))
+          .map { |r|
+            kind = if r.kind == "List"
+                     r.name.split('.').last
+                   else
+                     r.kind
+                   end
+            {r.api_version, kind, r.class_name}
+          }
+          # .uniq! { |a| {a[0], a[1]} }
+          .each { |r| file.puts "    #{r.inspect}," }
         file.puts %< ]>, ""
         file.puts "k8s_json_discriminator(MAPPINGS)", "k8s_yaml_discriminator(MAPPINGS)"
         file.puts "", "end", "", "end"

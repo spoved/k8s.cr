@@ -74,6 +74,10 @@ module K8S
            {name: "propagation_policy", type: String | Nil, default: nil}]
   )]
   class Api::Discovery::V1alpha1::EndpointSlice < ::K8S::Kubernetes::Resource
+    include ::K8S::Kubernetes::Resource::Object
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     getter api_version : String = "discovery/v1alpha1"
     getter kind : String = "EndpointSlice"
     # addressType specifies the type of address carried by this EndpointSlice. All addresses in this slice must be the same type. Default is IP

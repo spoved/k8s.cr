@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # PolicyRule holds information that describes a policy rule, but does not contain information about who the rule applies to or which namespace the rule applies to.
   class Kubernetes::Apis::Rbac::V1beta1::PolicyRule
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # APIGroups is the name of the APIGroup that contains the resources.  If multiple API groups are specified, any action requested against one of the enumerated resources in any API group will be allowed.
     property api_groups : Array(String) | Nil
 

@@ -8,6 +8,10 @@ require "yaml_mapping"
 module K8S
   # Pod is a collection of containers that can run on a host. This resource is created by clients and scheduled onto hosts.
   class Kubernetes::Api::V1::Pod < ::K8S::Kubernetes::Resource
+    include ::K8S::Kubernetes::Resource::Object
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     getter api_version : String = "v1"
     getter kind : String = "Pod"
     # Standard object's metadata. More info: [http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#metadata](http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#metadata)

@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # Scheduling specifies the scheduling constraints for nodes supporting a RuntimeClass.
   class Api::Node::V1alpha1::Scheduling
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # nodeSelector lists labels that must be present on nodes that support this RuntimeClass. Pods using this RuntimeClass can only be scheduled to a node matched by this selector. The RuntimeClass nodeSelector is merged with a pod's existing nodeSelector. Any conflicts will cause the pod to be rejected in admission.
     property node_selector : Hash(String, String) | Nil
 

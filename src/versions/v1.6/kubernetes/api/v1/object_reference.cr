@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # ObjectReference contains enough information to let you inspect or modify the referred object.
   class Kubernetes::Api::V1::ObjectReference
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # API version of the referent.
     property api_version : String | Nil
 

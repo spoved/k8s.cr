@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # UncountedTerminatedPods holds UIDs of Pods that have terminated but haven't been accounted in Job status counters.
   class Api::Batch::V1::UncountedTerminatedPods
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Failed holds UIDs of failed Pods.
     property failed : Array(String) | Nil
 

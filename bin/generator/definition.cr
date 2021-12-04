@@ -68,6 +68,14 @@ class Generator::Definition
     file.puts ""
     load_requires
     file.puts "module #{base_class.lchop("::")}"
+
+    if class_name == "Api::Core::V1::List"
+      file.puts %<alias #{class_name} = ::K8S::Kubernetes::ResourceList>
+      _end
+      file.close
+      return self
+    end
+
     define_class
     define_alias if !is_list? && is_resource?
     _end
@@ -89,22 +97,35 @@ class Generator::Definition
   private def open_class
     # Class Description
     generate_description definition.description
-
     generate_annotations
 
     # Open the class
     if is_resource?
-      file.puts "class #{class_name.lchop("::")} < ::K8S::Kubernetes::Resource"
+      if is_list?
+        file.puts "class #{class_name.lchop("::")} < ::K8S::Kubernetes::ResourceList(#{class_name.lchop("::").rchop("List")})"
+        file.puts "  include ::K8S::Kubernetes::Resource::List"
+      else
+        file.puts "class #{class_name.lchop("::")} < ::K8S::Kubernetes::Resource"
+        file.puts "  include ::K8S::Kubernetes::Resource::Object"
+      end
     else
       file.puts "class #{class_name.lchop("::")}"
     end
   end
 
+  private def define_serialization
+    file.puts "include ::JSON::Serializable", "include ::YAML::Serializable", ""
+  end
+
   private def define_class
     open_class
+
+    define_serialization
     define_properties
     define_mappings
     define_initializer
+    # end
+
     # define_actions
     _end
   end
@@ -238,8 +259,7 @@ class Generator::Definition
 
   private def define_properties
     if properties.empty?
-      file.puts "include ::JSON::Serializable"
-      file.puts "include ::YAML::Serializable"
+      define_serialization
     end
     if is_resource?
       file.puts "getter api_version : String = #{api_version_name.inspect}"
@@ -305,7 +325,7 @@ class Generator::Definition
   end
 
   def api_version
-    is_list? ? "v1" : name.sub(/^io\.k8s(\.[-a-z]+\.pkg)?\.apis?(\.core)?\./, "").split(".")[0..-2].join("/")
+    name.sub(/^io\.k8s(\.[-a-z]+\.pkg)?\.apis?(\.core)?\./, "").split(".")[0..-2].join("/")
   end
 
   def api_version_name

@@ -7,7 +7,11 @@ require "yaml_mapping"
 
 module K8S
   # NamespaceList is a list of Namespaces.
-  class Kubernetes::Api::V1::NamespaceList < ::K8S::Kubernetes::Resource
+  class Kubernetes::Api::V1::NamespaceList < ::K8S::Kubernetes::ResourceList(Kubernetes::Api::V1::Namespace)
+    include ::K8S::Kubernetes::Resource::List
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     getter api_version : String = "v1"
     getter kind : String = "List"
     # Items is the list of Namespace objects in the list. More info: [http://kubernetes.io/docs/user-guide/namespaces](http://kubernetes.io/docs/user-guide/namespaces)

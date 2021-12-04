@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # ServiceReference holds a reference to Service.legacy.k8s.io
   class ApiextensionsApiserver::Apis::Apiextensions::V1beta1::ServiceReference
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # `name` is the name of the service. Required
     property name : String
 

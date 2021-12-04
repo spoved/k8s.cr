@@ -8,6 +8,10 @@ require "yaml_mapping"
 module K8S
   # TokenReview attempts to authenticate a token to a known user. Note: TokenReview requests may be cached by the webhook token authenticator plugin in the kube-apiserver.
   class Kubernetes::Apis::Authentication::V1beta1::TokenReview < ::K8S::Kubernetes::Resource
+    include ::K8S::Kubernetes::Resource::Object
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     getter api_version : String = "authentication/v1beta1"
     getter kind : String = "TokenReview"
     property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil

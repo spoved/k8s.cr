@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # NodeConfigSource specifies a source of node configuration. Exactly one subfield (excluding metadata) must be non-nil. This API is deprecated since 1.22
   class Api::Core::V1::NodeConfigSource
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # ConfigMap is a reference to a Node's ConfigMap
     property config_map : Api::Core::V1::ConfigMapNodeConfigSource | Nil
 

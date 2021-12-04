@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # An APIVersion represents a single concrete version of an object model.
   class Kubernetes::Apis::Extensions::V1beta1::APIVersion
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Name of this version (e.g. 'v1').
     property name : String | Nil
 

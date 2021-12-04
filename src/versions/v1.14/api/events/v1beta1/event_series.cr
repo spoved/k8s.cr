@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # EventSeries contain information on series of events, i.e. thing that [was/is happening continuously for some time.](was/is happening continuously for some time.)
   class Api::Events::V1beta1::EventSeries
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Number of occurrences in this series up to the last heartbeat time
     property count : Int32
 

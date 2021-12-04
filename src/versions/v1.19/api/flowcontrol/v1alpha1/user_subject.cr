@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # UserSubject holds detailed information for user-kind subject.
   class Api::Flowcontrol::V1alpha1::UserSubject
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # `name` is the username that matches, or "*" to match all usernames. Required.
     property name : String
 

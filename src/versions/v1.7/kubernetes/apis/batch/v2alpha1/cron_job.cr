@@ -142,6 +142,10 @@ module K8S
     args: [{name: "context", type: String | Nil, default: nil}]
   )]
   class Kubernetes::Apis::Batch::V2alpha1::CronJob < ::K8S::Kubernetes::Resource
+    include ::K8S::Kubernetes::Resource::Object
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     getter api_version : String = "batch/v2alpha1"
     getter kind : String = "CronJob"
     # Standard object's metadata. More info: [https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata)

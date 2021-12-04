@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # WebhookConversion describes how to call a conversion webhook
   class ApiextensionsApiserver::Apis::Apiextensions::V1::WebhookConversion
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # clientConfig is the instructions for how to call the webhook if strategy is `Webhook`.
     property client_config : ApiextensionsApiserver::Apis::Apiextensions::V1::WebhookClientConfig | Nil
 

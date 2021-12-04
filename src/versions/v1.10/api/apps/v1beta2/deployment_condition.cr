@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # DeploymentCondition describes the state of a deployment at a certain point.
   class Api::Apps::V1beta2::DeploymentCondition
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Last time the condition transitioned from one status to another.
     property last_transition_time : Time | Nil
 

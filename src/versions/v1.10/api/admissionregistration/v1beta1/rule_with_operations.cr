@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # RuleWithOperations is a tuple of Operations and Resources. It is recommended to make sure that all the tuple expansions are valid.
   class Api::Admissionregistration::V1beta1::RuleWithOperations
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # APIGroups is the API groups the resources belong to. '*' is all groups. If '*' is present, the length of the slice must be one. Required.
     property api_groups : Array(String) | Nil
 

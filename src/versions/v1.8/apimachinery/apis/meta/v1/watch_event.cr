@@ -35,6 +35,9 @@ module K8S
   @[::K8S::GroupVersionKind(group: "storage.k8s.io", kind: "WatchEvent", version: "v1")]
   @[::K8S::GroupVersionKind(group: "storage.k8s.io", kind: "WatchEvent", version: "v1beta1")]
   class Apimachinery::Apis::Meta::V1::WatchEvent
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Object is:
     #  * If Type is Added or Modified: the new state of the object.
     #  * If Type is Deleted: the state of the object immediately before deletion.

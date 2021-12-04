@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # DaemonSetStatus represents the current status of a daemon set.
   class Kubernetes::Apis::Extensions::V1beta1::DaemonSetStatus
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Count of hash collisions for the DaemonSet. The DaemonSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision.
     property collision_count : Int32 | Nil
 

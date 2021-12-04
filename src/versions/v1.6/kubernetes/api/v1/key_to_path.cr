@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # Maps a string key to a path within a volume.
   class Kubernetes::Api::V1::KeyToPath
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # The key to project.
     property key : String
 

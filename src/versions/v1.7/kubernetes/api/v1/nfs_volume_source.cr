@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # Represents an NFS mount that lasts the lifetime of a pod. NFS volumes do not support ownership management or SELinux relabeling.
   class Kubernetes::Api::V1::NFSVolumeSource
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Path that is exported by the NFS server. More info: [https://kubernetes.io/docs/concepts/storage/volumes#nfs](https://kubernetes.io/docs/concepts/storage/volumes#nfs)
     property path : String
 

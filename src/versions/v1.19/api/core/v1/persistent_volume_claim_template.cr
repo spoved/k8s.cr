@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # PersistentVolumeClaimTemplate is used to produce PersistentVolumeClaim objects as part of an EphemeralVolumeSource.
   class Api::Core::V1::PersistentVolumeClaimTemplate
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # May contain labels and annotations that will be copied into the PVC when creating it. No other fields are allowed and will be rejected during validation.
     property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil
 

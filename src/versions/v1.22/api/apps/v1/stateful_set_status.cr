@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # StatefulSetStatus represents the current state of a StatefulSet.
   class Api::Apps::V1::StatefulSetStatus
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Total number of available pods (ready for at least minReadySeconds) targeted by this statefulset. This is an alpha field and requires enabling StatefulSetMinReadySeconds feature gate. Remove omitempty when graduating to beta
     property available_replicas : Int32 | Nil
 

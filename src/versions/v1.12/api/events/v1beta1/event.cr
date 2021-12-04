@@ -70,6 +70,10 @@ module K8S
            {name: "context", type: String | Nil, default: nil}]
   )]
   class Api::Events::V1beta1::Event < ::K8S::Kubernetes::Resource
+    include ::K8S::Kubernetes::Resource::Object
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     getter api_version : String = "events/v1beta1"
     getter kind : String = "Event"
     # What action was [taken/failed regarding to the regarding object.](taken/failed regarding to the regarding object.)

@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # Information about the condition of a component.
   class Kubernetes::Api::V1::ComponentCondition
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Condition error code for a component. For example, a health check error code.
     property error : String | Nil
 

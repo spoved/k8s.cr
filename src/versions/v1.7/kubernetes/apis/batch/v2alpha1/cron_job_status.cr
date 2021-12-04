@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # CronJobStatus represents the current state of a cron job.
   class Kubernetes::Apis::Batch::V2alpha1::CronJobStatus
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # A list of pointers to currently running jobs.
     property active : Array(Kubernetes::Api::V1::ObjectReference) | Nil
 

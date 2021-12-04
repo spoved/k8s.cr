@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # Projection that may be projected along with other supported volume types
   class Api::Core::V1::VolumeProjection
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # information about the configMap data to project
     property config_map : Api::Core::V1::ConfigMapProjection | Nil
 

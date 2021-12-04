@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # DaemonEndpoint contains information about a single Daemon endpoint.
   class Api::Core::V1::DaemonEndpoint
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Port number of the given endpoint.
     property port : Int32
 

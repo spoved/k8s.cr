@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # ContainerStatus contains details for the current status of this container.
   class Api::Core::V1::ContainerStatus
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Container's ID in the format 'docker://<container_id>'.
     property container_id : String | Nil
 

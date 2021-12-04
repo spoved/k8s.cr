@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # ReplicationControllerCondition describes the state of a replication controller at a certain point.
   class Kubernetes::Api::V1::ReplicationControllerCondition
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # The last time the condition transitioned from one status to another.
     property last_transition_time : Time | Nil
 

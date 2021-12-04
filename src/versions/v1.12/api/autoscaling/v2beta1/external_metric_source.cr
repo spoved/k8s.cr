@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # ExternalMetricSource indicates how to scale on a metric not associated with any Kubernetes object (for example length of queue in cloud messaging service, or QPS from loadbalancer running outside of cluster). Exactly one "target" type should be set.
   class Api::Autoscaling::V2beta1::ExternalMetricSource
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # metricName is the name of the metric in question.
     property metric_name : String
 

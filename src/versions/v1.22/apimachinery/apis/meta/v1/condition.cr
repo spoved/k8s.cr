@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # Condition contains details for one aspect of the current state of this API Resource.
   class Apimachinery::Apis::Meta::V1::Condition
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # lastTransitionTime is the last time the condition transitioned from one status to another. This should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.
     property last_transition_time : Time
 

@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # CustomResourceSubresourceScale defines how to serve the scale subresource for CustomResources.
   class ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresourceScale
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # LabelSelectorPath defines the JSON path inside of a CustomResource that corresponds to Scale.Status.Selector. Only JSON paths without the array notation are allowed. Must be a JSON Path under .status or .spec. Must be set to work with HPA. The field pointed by this JSON path must be a string field (not a complex selector struct) which contains a serialized label selector in string form. More info: [https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions#scale-subresource If there is no value under the given path in the CustomResource, the status label selector value in the /scale subresource will default to the empty string.](https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions#scale-subresource If there is no value under the given path in the CustomResource, the status label selector value in the /scale subresource will default to the empty string.)
     property label_selector_path : String | Nil
 

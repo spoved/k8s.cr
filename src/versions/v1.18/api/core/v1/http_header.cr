@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # HTTPHeader describes a custom header to be used in HTTP probes
   class Api::Core::V1::HTTPHeader
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # The header field name
     property name : String
 

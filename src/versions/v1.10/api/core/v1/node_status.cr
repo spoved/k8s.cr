@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # NodeStatus is information about the current status of a node.
   class Api::Core::V1::NodeStatus
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # List of addresses reachable to the node. Queried from cloud provider, if available. More info: [https://kubernetes.io/docs/concepts/nodes/node/#addresses](https://kubernetes.io/docs/concepts/nodes/node/#addresses)
     property addresses : Array(Api::Core::V1::NodeAddress) | Nil
 

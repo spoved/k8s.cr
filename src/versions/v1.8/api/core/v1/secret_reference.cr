@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # SecretReference represents a Secret Reference. It has enough information to retrieve secret in any namespace
   class Api::Core::V1::SecretReference
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Name is unique within a namespace to reference a secret resource.
     property name : String | Nil
 

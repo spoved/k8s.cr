@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # SELinux  Strategy Options defines the strategy type and any options used to create the strategy.
   class Api::Extensions::V1beta1::SELinuxStrategyOptions
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # type is the strategy that will dictate the allowable labels that may be set.
     property rule : String
 

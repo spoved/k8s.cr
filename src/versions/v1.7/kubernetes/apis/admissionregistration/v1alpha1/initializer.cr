@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # Initializer describes the name and the failure policy of an initializer, and what resources it applies to.
   class Kubernetes::Apis::Admissionregistration::V1alpha1::Initializer
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # FailurePolicy defines what happens if the responsible initializer controller fails to takes action. Allowed values are Ignore, or Fail. If "Ignore" is set, initializer is removed from the initializers list of an object if the timeout is reached; If "Fail" is set, admissionregistration returns timeout error if the timeout is reached.
     property failure_policy : String | Nil
 

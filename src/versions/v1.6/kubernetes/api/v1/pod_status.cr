@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # PodStatus represents information about the status of a pod. Status may trail the actual state of a system.
   class Kubernetes::Api::V1::PodStatus
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Current service state of pod. More info: [http://kubernetes.io/docs/user-guide/pod-states#pod-conditions](http://kubernetes.io/docs/user-guide/pod-states#pod-conditions)
     property conditions : Array(Kubernetes::Api::V1::PodCondition) | Nil
 

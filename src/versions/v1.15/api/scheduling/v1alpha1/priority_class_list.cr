@@ -47,8 +47,12 @@ module K8S
            {name: "timeout_seconds", type: Int32 | Nil, default: nil},
            {name: "watch", type: Bool | Nil, default: nil}]
   )]
-  class Api::Scheduling::V1alpha1::PriorityClassList < ::K8S::Kubernetes::Resource
-    getter api_version : String = "v1"
+  class Api::Scheduling::V1alpha1::PriorityClassList < ::K8S::Kubernetes::ResourceList(Api::Scheduling::V1alpha1::PriorityClass)
+    include ::K8S::Kubernetes::Resource::List
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
+    getter api_version : String = "scheduling/v1alpha1"
     getter kind : String = "List"
     # items is the list of PriorityClasses
     property items : Array(Api::Scheduling::V1alpha1::PriorityClass)
@@ -57,14 +61,14 @@ module K8S
     property metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil
 
     ::YAML.mapping({
-      api_version: {type: String, default: "v1", key: "apiVersion", setter: false},
+      api_version: {type: String, default: "scheduling/v1alpha1", key: "apiVersion", setter: false},
       kind:        {type: String, default: "List", key: "kind", setter: false},
       items:       {type: Array(Api::Scheduling::V1alpha1::PriorityClass), nilable: false, key: "items", getter: false, setter: false},
       metadata:    {type: Apimachinery::Apis::Meta::V1::ListMeta, nilable: true, key: "metadata", getter: false, setter: false},
     }, true)
 
     ::JSON.mapping({
-      api_version: {type: String, default: "v1", key: "apiVersion", setter: false},
+      api_version: {type: String, default: "scheduling/v1alpha1", key: "apiVersion", setter: false},
       kind:        {type: String, default: "List", key: "kind", setter: false},
       items:       {type: Array(Api::Scheduling::V1alpha1::PriorityClass), nilable: false, key: "items", getter: false, setter: false},
       metadata:    {type: Apimachinery::Apis::Meta::V1::ListMeta, nilable: true, key: "metadata", getter: false, setter: false},

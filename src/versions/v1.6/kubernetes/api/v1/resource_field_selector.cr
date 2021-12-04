@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # ResourceFieldSelector represents container resources (cpu, memory) and their output format
   class Kubernetes::Api::V1::ResourceFieldSelector
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Container name: required for volumes, optional for env vars
     property container_name : String | Nil
 

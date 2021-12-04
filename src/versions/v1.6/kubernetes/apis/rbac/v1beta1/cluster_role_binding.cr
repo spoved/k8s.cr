@@ -8,6 +8,10 @@ require "yaml_mapping"
 module K8S
   # ClusterRoleBinding references a ClusterRole, but not contain it.  It can reference a ClusterRole in the global namespace, and adds who information via Subject.
   class Kubernetes::Apis::Rbac::V1beta1::ClusterRoleBinding < ::K8S::Kubernetes::Resource
+    include ::K8S::Kubernetes::Resource::Object
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     getter api_version : String = "rbac.authorization.k8s.io/v1beta1"
     getter kind : String = "ClusterRoleBinding"
     # Standard object's metadata.

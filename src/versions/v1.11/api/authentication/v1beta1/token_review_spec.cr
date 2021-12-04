@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # TokenReviewSpec is a description of the token authentication request.
   class Api::Authentication::V1beta1::TokenReviewSpec
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Token is the opaque bearer token.
     property token : String | Nil
 

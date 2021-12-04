@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # DeploymentStrategy describes how to replace existing pods with new ones.
   class Api::Extensions::V1beta1::DeploymentStrategy
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Rolling update config params. Present only if DeploymentStrategyType = RollingUpdate.
     property rolling_update : Api::Extensions::V1beta1::RollingUpdateDeployment | Nil
 

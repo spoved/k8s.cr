@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # TokenRequestStatus is the result of a token request.
   class Api::Authentication::V1::TokenRequestStatus
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # ExpirationTimestamp is the time of expiration of the returned token.
     property expiration_timestamp : Time
 

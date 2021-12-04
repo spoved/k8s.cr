@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # JobTemplateSpec describes the data a Job should have when created from a template
   class Kubernetes::Apis::Batch::V2alpha1::JobTemplateSpec
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Standard object's metadata of the jobs created from this template. More info: [http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#metadata](http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#metadata)
     property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil
 

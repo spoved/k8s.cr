@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # StatefulSetUpdateStrategy indicates the strategy that the StatefulSet controller will use to perform updates. It includes any additional parameters necessary to perform the update for the indicated strategy.
   class Kubernetes::Apis::Apps::V1beta1::StatefulSetUpdateStrategy
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # RollingUpdate is used to communicate parameters when Type is RollingUpdateStatefulSetStrategyType.
     property rolling_update : Kubernetes::Apis::Apps::V1beta1::RollingUpdateStatefulSetStrategy | Nil
 

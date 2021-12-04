@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # Handler defines a specific action that should be taken
   class Api::Core::V1::Handler
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # One and only one of the following should be specified. Exec specifies the action to take.
     property exec : Api::Core::V1::ExecAction | Nil
 

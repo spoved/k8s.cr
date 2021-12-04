@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # PodDisruptionBudgetStatus represents information about the status of a PodDisruptionBudget. Status may trail the actual state of a system.
   class Kubernetes::Apis::Policy::V1beta1::PodDisruptionBudgetStatus
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # current number of healthy pods
     property current_healthy : Int32
 

@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # SelfSubjectRulesReviewSpec defines the specification for SelfSubjectRulesReview.
   class Api::Authorization::V1::SelfSubjectRulesReviewSpec
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Namespace to evaluate rules for. Required.
     property namespace : String | Nil
 

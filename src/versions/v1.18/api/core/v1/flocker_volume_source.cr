@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # Represents a Flocker volume mounted by the Flocker agent. One and only one of datasetName and datasetUUID should be set. Flocker volumes do not support ownership management or SELinux relabeling.
   class Api::Core::V1::FlockerVolumeSource
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Name of the dataset stored as metadata -> name on the dataset for Flocker should be considered as deprecated
     property dataset_name : String | Nil
 

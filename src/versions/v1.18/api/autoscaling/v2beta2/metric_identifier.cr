@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # MetricIdentifier defines the name and optionally selector for a metric
   class Api::Autoscaling::V2beta2::MetricIdentifier
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # name is the name of the given metric
     property name : String
 

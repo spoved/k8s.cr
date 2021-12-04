@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # WebhookClientConfig contains the information to make a TLS connection with the webhook
   class Api::Admissionregistration::V1beta1::WebhookClientConfig
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # `caBundle` is a PEM encoded CA bundle which will be used to validate the webhook's server certificate. Required.
     property ca_bundle : String
 

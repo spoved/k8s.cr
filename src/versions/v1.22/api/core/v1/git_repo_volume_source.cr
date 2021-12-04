@@ -10,6 +10,9 @@ module K8S
   #
   # DEPRECATED: GitRepo is deprecated. To provision a container with a git repo, mount an EmptyDir into an InitContainer that clones the repo using git, then mount the EmptyDir into the Pod's container.
   class Api::Core::V1::GitRepoVolumeSource
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Target directory name. Must not contain or start with '..'.  If '.' is supplied, the volume directory will be the git repository.  Otherwise, if specified, the volume will contain the git repository in the subdirectory with the given name.
     property directory : String | Nil
 

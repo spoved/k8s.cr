@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # TypedLocalObjectReference contains enough information to let you locate the typed referenced object inside the same namespace.
   class Api::Core::V1::TypedLocalObjectReference
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # APIGroup is the group for the resource being referenced. If APIGroup is not specified, the specified Kind must be in the core API group. For any other third-party types, APIGroup is required.
     property api_group : String | Nil
 

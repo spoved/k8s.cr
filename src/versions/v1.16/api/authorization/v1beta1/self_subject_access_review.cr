@@ -15,6 +15,10 @@ module K8S
            {name: "field_manager", type: String | Nil, default: nil}]
   )]
   class Api::Authorization::V1beta1::SelfSubjectAccessReview < ::K8S::Kubernetes::Resource
+    include ::K8S::Kubernetes::Resource::Object
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     getter api_version : String = "authorization/v1beta1"
     getter kind : String = "SelfSubjectAccessReview"
     property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil

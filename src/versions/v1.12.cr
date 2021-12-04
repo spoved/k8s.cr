@@ -1,6 +1,6 @@
 # THIS FILE WAS AUTO GENERATED FROM THE K8S SWAGGER SPEC
 
-require "../macros.cr"
+require "../k8s/*"
 
 annotation ::K8S::GroupVersionKind; end
 annotation ::K8S::Action; end

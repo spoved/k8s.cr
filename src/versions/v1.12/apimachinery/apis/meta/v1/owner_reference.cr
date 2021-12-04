@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # OwnerReference contains enough information to let you identify an owning object. Currently, an owning object must be in the same namespace, so there is no namespace field.
   class Apimachinery::Apis::Meta::V1::OwnerReference
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # API version of the referent.
     property api_version : String
 

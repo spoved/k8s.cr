@@ -7,7 +7,11 @@ require "yaml_mapping"
 
 module K8S
   # PersistentVolumeClaimList is a list of PersistentVolumeClaim items.
-  class Kubernetes::Api::V1::PersistentVolumeClaimList < ::K8S::Kubernetes::Resource
+  class Kubernetes::Api::V1::PersistentVolumeClaimList < ::K8S::Kubernetes::ResourceList(Kubernetes::Api::V1::PersistentVolumeClaim)
+    include ::K8S::Kubernetes::Resource::List
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     getter api_version : String = "v1"
     getter kind : String = "List"
     # A list of persistent volume claims. More info: [http://kubernetes.io/docs/user-guide/persistent-volumes#persistentvolumeclaims](http://kubernetes.io/docs/user-guide/persistent-volumes#persistentvolumeclaims)

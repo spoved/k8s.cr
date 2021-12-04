@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # ValidatingWebhook describes an admission webhook and the resources and operations it applies to.
   class Api::Admissionregistration::V1beta1::ValidatingWebhook
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # AdmissionReviewVersions is an ordered list of preferred `AdmissionReview` versions the Webhook expects. API server will try to use first version in the list which it supports. If none of the versions specified in this list supported by API server, validation will fail for this object. If a persisted webhook configuration specifies allowed versions and does not include any versions known to the API Server, calls to the webhook will fail and be subject to the failure policy. Default to `['v1beta1']`.
     property admission_review_versions : Array(String) | Nil
 

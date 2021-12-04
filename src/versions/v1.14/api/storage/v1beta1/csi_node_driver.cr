@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # CSINodeDriver holds information about the specification of one CSI driver installed on a node
   class Api::Storage::V1beta1::CSINodeDriver
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # This is the name of the CSI driver that this object refers to. This MUST be the same name returned by the CSI GetPluginName() call for that driver.
     property name : String
 

@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # EventSource contains information for an event.
   class Api::Core::V1::EventSource
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Component from which the event is generated.
     property component : String | Nil
 

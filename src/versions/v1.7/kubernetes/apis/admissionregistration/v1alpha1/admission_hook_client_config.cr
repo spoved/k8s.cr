@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # AdmissionHookClientConfig contains the information to make a TLS connection with the webhook
   class Kubernetes::Apis::Admissionregistration::V1alpha1::AdmissionHookClientConfig
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # CABundle is a PEM encoded CA bundle which will be used to validate webhook's server certificate. Required
     property ca_bundle : String
 

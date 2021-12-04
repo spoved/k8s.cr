@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # specification of a horizontal pod autoscaler.
   class Kubernetes::Apis::Autoscaling::V1::HorizontalPodAutoscalerSpec
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # upper limit for the number of pods that can be set by the autoscaler; cannot be smaller than MinReplicas.
     property max_replicas : Int32
 

@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # represents the current status of a scale subresource.
   class Api::Extensions::V1beta1::ScaleStatus
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # actual number of observed instances of the scaled object.
     property replicas : Int32
 

@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # FlowSchemaCondition describes conditions for a FlowSchema.
   class Api::Flowcontrol::V1beta1::FlowSchemaCondition
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # `lastTransitionTime` is the last time the condition transitioned from one status to another.
     property last_transition_time : Time | Nil
 

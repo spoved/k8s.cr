@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # HorizontalPodAutoscalerStatus describes the current status of a horizontal pod autoscaler.
   class Kubernetes::Apis::Autoscaling::V2alpha1::HorizontalPodAutoscalerStatus
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # conditions is the set of conditions required for this autoscaler to scale its target, and indicates whether or not those conditions are met.
     property conditions : Array(Kubernetes::Apis::Autoscaling::V2alpha1::HorizontalPodAutoscalerCondition)
 

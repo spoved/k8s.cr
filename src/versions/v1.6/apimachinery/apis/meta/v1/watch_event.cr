@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # Event represents a single event to a watched resource.
   class Apimachinery::Apis::Meta::V1::WatchEvent
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Object is:
     #  * If Type is Added or Modified: the new state of the object.
     #  * If Type is Deleted: the state of the object immediately before deletion.

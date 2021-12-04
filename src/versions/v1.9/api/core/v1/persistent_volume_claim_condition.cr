@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # PersistentVolumeClaimCondition contails details about state of pvc
   class Api::Core::V1::PersistentVolumeClaimCondition
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Last time we probed the condition.
     property last_probe_time : Time | Nil
 

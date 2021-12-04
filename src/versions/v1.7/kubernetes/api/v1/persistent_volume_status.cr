@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # PersistentVolumeStatus is the current status of a persistent volume.
   class Kubernetes::Api::V1::PersistentVolumeStatus
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # A human-readable message indicating details about why the volume is in this state.
     property message : String | Nil
 

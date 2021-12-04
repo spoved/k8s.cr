@@ -7,6 +7,9 @@ require "yaml_mapping"
 
 module K8S
   class Api::Extensions::V1beta1::NetworkPolicyPeer
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # IPBlock defines policy on a particular IPBlock
     property ip_block : Api::Extensions::V1beta1::IPBlock | Nil
 

@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # NamespaceSpec describes the attributes on a Namespace.
   class Kubernetes::Api::V1::NamespaceSpec
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Finalizers is an opaque list of values that must be empty to permanently remove object from storage. More info: [http://releases.k8s.io/HEAD/docs/design/namespaces.md#finalizers](http://releases.k8s.io/HEAD/docs/design/namespaces.md#finalizers)
     property finalizers : Array(String) | Nil
 

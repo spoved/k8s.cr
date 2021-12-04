@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # A single application container that you want to run within a pod.
   class Kubernetes::Api::V1::Container
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Arguments to the entrypoint. The docker image's CMD is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated. More info: [http://kubernetes.io/docs/user-guide/containers#containers-and-commands](http://kubernetes.io/docs/user-guide/containers#containers-and-commands)
     property args : Array(String) | Nil
 

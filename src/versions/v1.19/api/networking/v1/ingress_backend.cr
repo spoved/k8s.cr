@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # IngressBackend describes all endpoints for a given service and port.
   class Api::Networking::V1::IngressBackend
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Resource is an ObjectRef to another Kubernetes resource in the namespace of the Ingress object. If resource is specified, a service.Name and service.Port must not be specified. This is a mutually exclusive setting with "Service".
     property resource : Api::Core::V1::TypedLocalObjectReference | Nil
 

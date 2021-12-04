@@ -63,6 +63,10 @@ module K8S
            {name: "context", type: String | Nil, default: nil}]
   )]
   class Api::Rbac::V1::Role < ::K8S::Kubernetes::Resource
+    include ::K8S::Kubernetes::Resource::Object
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     getter api_version : String = "rbac.authorization.k8s.io/v1"
     getter kind : String = "Role"
     # Standard object's metadata.

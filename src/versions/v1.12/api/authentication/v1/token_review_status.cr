@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # TokenReviewStatus is the result of the token authentication request.
   class Api::Authentication::V1::TokenReviewStatus
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Authenticated indicates that the token was associated with a known user.
     property authenticated : Bool | Nil
 

@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # SubjectAccessReviewStatus
   class Kubernetes::Apis::Authorization::V1::SubjectAccessReviewStatus
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Allowed is required.  True if the action would be allowed, false otherwise.
     property allowed : Bool
 

@@ -7,6 +7,9 @@ require "yaml_mapping"
 
 module K8S
   class Kubernetes::Apis::Extensions::V1beta1::DaemonSetUpdateStrategy
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Rolling update config params. Present only if type = "RollingUpdate".
     property rolling_update : Kubernetes::Apis::Extensions::V1beta1::RollingUpdateDaemonSet | Nil
 

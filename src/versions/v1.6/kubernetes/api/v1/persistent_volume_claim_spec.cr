@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # PersistentVolumeClaimSpec describes the common attributes of storage devices and allows a Source for provider-specific attributes
   class Kubernetes::Api::V1::PersistentVolumeClaimSpec
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # AccessModes contains the desired access modes the volume should have. More info: [http://kubernetes.io/docs/user-guide/persistent-volumes#access-modes-1](http://kubernetes.io/docs/user-guide/persistent-volumes#access-modes-1)
     property access_modes : Array(String) | Nil
 

@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # A scoped-resource selector requirement is a selector that contains values, a scope name, and an operator that relates the scope name and values.
   class Api::Core::V1::ScopedResourceSelectorRequirement
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Represents a scope's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist.
     property operator : String
 

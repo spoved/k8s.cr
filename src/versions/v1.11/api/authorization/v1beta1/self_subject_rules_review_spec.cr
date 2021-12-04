@@ -7,6 +7,9 @@ require "yaml_mapping"
 
 module K8S
   class Api::Authorization::V1beta1::SelfSubjectRulesReviewSpec
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Namespace to evaluate rules for. Required.
     property namespace : String | Nil
 

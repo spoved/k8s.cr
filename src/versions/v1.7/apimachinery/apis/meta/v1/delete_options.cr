@@ -31,6 +31,9 @@ module K8S
   @[::K8S::GroupVersionKind(group: "storage.k8s.io", kind: "DeleteOptions", version: "v1")]
   @[::K8S::GroupVersionKind(group: "storage.k8s.io", kind: "DeleteOptions", version: "v1beta1")]
   class Apimachinery::Apis::Meta::V1::DeleteOptions
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [https://git.k8s.io/community/contributors/devel/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/api-conventions.md#resources)
     property api_version : String | Nil
 

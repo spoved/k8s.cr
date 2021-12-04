@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # PriorityLevelConfigurationReference contains information that points to the "request-priority" being used.
   class Api::Flowcontrol::V1beta1::PriorityLevelConfigurationReference
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # `name` is the name of the priority level configuration being referenced Required.
     property name : String
 

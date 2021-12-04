@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
   class Kubernetes::Api::V1::WeightedPodAffinityTerm
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Required. A pod affinity term, associated with the corresponding weight.
     property pod_affinity_term : Kubernetes::Api::V1::PodAffinityTerm
 

@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # CustomResourceDefinitionNames indicates the names to serve this CustomResourceDefinition
   class ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceDefinitionNames
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Categories is a list of grouped resources custom resources belong to (e.g. 'all')
     property categories : Array(String) | Nil
 

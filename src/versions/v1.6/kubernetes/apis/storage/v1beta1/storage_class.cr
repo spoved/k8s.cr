@@ -10,6 +10,10 @@ module K8S
   #
   # StorageClasses are non-namespaced; the name of the storage class according to etcd is in ObjectMeta.Name.
   class Kubernetes::Apis::Storage::V1beta1::StorageClass < ::K8S::Kubernetes::Resource
+    include ::K8S::Kubernetes::Resource::Object
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     getter api_version : String = "storage/v1beta1"
     getter kind : String = "StorageClass"
     # Standard object's metadata. More info: [http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#metadata](http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#metadata)

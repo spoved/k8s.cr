@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # VolumeError captures an error encountered during a volume operation.
   class Api::Storage::V1beta1::VolumeError
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # String detailing the error encountered during Attach or Detach operation. This string may be logged, so it should not contain sensitive information.
     property message : String | Nil
 

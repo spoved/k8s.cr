@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # Local represents directly-attached storage with node affinity (Beta feature)
   class Api::Core::V1::LocalVolumeSource
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Filesystem type to mount. It applies only when the Path is a block device. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". The default value is to auto-select a fileystem if unspecified.
     property fs_type : String | Nil
 

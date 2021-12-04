@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # EndpointPort represents a Port used by an EndpointSlice
   class Api::Discovery::V1alpha1::EndpointPort
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # The name of this port. All ports in an EndpointSlice must have a unique name. If the EndpointSlice is dervied from a Kubernetes service, this corresponds to the Service.ports[].name. Name must either be an empty string or pass IANA_SVC_NAME validation: * must be no more than 15 characters long * may contain only [-a-z0-9] * must contain at least one letter [a-z] * it must not start or end with a hyphen, nor contain adjacent hyphens Default is empty string.
     property name : String | Nil
 

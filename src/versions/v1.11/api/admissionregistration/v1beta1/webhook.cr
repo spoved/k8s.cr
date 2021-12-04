@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # Webhook describes an admission webhook and the resources and operations it applies to.
   class Api::Admissionregistration::V1beta1::Webhook
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # ClientConfig defines how to communicate with the hook. Required
     property client_config : Api::Admissionregistration::V1beta1::WebhookClientConfig
 

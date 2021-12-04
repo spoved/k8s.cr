@@ -7,7 +7,11 @@ require "yaml_mapping"
 
 module K8S
   # Status of all the conditions for the component as a list of ComponentStatus objects.
-  class Kubernetes::Api::V1::ComponentStatusList < ::K8S::Kubernetes::Resource
+  class Kubernetes::Api::V1::ComponentStatusList < ::K8S::Kubernetes::ResourceList(Kubernetes::Api::V1::ComponentStatus)
+    include ::K8S::Kubernetes::Resource::List
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     getter api_version : String = "v1"
     getter kind : String = "List"
     # List of ComponentStatus objects.

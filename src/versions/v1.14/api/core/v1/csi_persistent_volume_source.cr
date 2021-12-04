@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # Represents storage that is managed by an external CSI volume driver (Beta feature)
   class Api::Core::V1::CSIPersistentVolumeSource
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # ControllerPublishSecretRef is a reference to the secret object containing sensitive information to pass to the CSI driver to complete the CSI ControllerPublishVolume and ControllerUnpublishVolume calls. This field is optional, and may be empty if no secret is required. If the secret object contains more than one secret, all secrets are passed.
     property controller_publish_secret_ref : Api::Core::V1::SecretReference | Nil
 

@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # PodDNSConfig defines the DNS parameters of a pod in addition to those generated from DNSPolicy.
   class Api::Core::V1::PodDNSConfig
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # A list of DNS name server IP addresses. This will be appended to the base nameservers generated from DNSPolicy. Duplicated nameservers will be removed.
     property nameservers : Array(String) | Nil
 

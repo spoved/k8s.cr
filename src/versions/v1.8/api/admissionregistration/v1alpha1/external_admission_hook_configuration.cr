@@ -62,6 +62,10 @@ module K8S
            {name: "context", type: String | Nil, default: nil}]
   )]
   class Api::Admissionregistration::V1alpha1::ExternalAdmissionHookConfiguration < ::K8S::Kubernetes::Resource
+    include ::K8S::Kubernetes::Resource::Object
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     getter api_version : String = "admissionregistration/v1alpha1"
     getter kind : String = "ExternalAdmissionHookConfiguration"
     # ExternalAdmissionHooks is a list of external admission webhooks and the affected resources and operations.

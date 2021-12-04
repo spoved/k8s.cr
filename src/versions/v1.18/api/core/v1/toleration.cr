@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
   class Api::Core::V1::Toleration
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
     property effect : String | Nil
 

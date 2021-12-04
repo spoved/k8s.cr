@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # VolumeAttachmentSource represents a volume that should be attached. Right now only PersistenVolumes can be attached via external attacher, in future we may allow also inline volumes in pods. Exactly one member can be set.
   class Api::Storage::V1alpha1::VolumeAttachmentSource
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Name of the persistent volume to attach.
     property persistent_volume_name : String | Nil
 

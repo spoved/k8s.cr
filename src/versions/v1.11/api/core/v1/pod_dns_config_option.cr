@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # PodDNSConfigOption defines DNS resolver options of a pod.
   class Api::Core::V1::PodDNSConfigOption
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Required.
     property name : String | Nil
 

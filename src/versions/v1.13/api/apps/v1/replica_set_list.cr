@@ -55,8 +55,12 @@ module K8S
            {name: "timeout_seconds", type: Int32 | Nil, default: nil},
            {name: "watch", type: Bool | Nil, default: nil}]
   )]
-  class Api::Apps::V1::ReplicaSetList < ::K8S::Kubernetes::Resource
-    getter api_version : String = "v1"
+  class Api::Apps::V1::ReplicaSetList < ::K8S::Kubernetes::ResourceList(Api::Apps::V1::ReplicaSet)
+    include ::K8S::Kubernetes::Resource::List
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
+    getter api_version : String = "apps/v1"
     getter kind : String = "List"
     # List of ReplicaSets. More info: [https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller](https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller)
     property items : Array(Api::Apps::V1::ReplicaSet)
@@ -65,14 +69,14 @@ module K8S
     property metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil
 
     ::YAML.mapping({
-      api_version: {type: String, default: "v1", key: "apiVersion", setter: false},
+      api_version: {type: String, default: "apps/v1", key: "apiVersion", setter: false},
       kind:        {type: String, default: "List", key: "kind", setter: false},
       items:       {type: Array(Api::Apps::V1::ReplicaSet), nilable: false, key: "items", getter: false, setter: false},
       metadata:    {type: Apimachinery::Apis::Meta::V1::ListMeta, nilable: true, key: "metadata", getter: false, setter: false},
     }, true)
 
     ::JSON.mapping({
-      api_version: {type: String, default: "v1", key: "apiVersion", setter: false},
+      api_version: {type: String, default: "apps/v1", key: "apiVersion", setter: false},
       kind:        {type: String, default: "List", key: "kind", setter: false},
       items:       {type: Array(Api::Apps::V1::ReplicaSet), nilable: false, key: "items", getter: false, setter: false},
       metadata:    {type: Apimachinery::Apis::Meta::V1::ListMeta, nilable: true, key: "metadata", getter: false, setter: false},

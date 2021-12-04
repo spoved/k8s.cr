@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # FSGroupStrategyOptions defines the strategy type and options used to create the strategy.
   class Api::Policy::V1beta1::FSGroupStrategyOptions
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # ranges are the allowed ranges of fs groups.  If you would like to force a single fs group then supply a single range with the same start and end. Required for MustRunAs.
     property ranges : Array(Api::Policy::V1beta1::IDRange) | Nil
 

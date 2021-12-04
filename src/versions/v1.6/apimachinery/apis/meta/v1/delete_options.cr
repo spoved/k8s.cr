@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # DeleteOptions may be provided when deleting an API object.
   class Apimachinery::Apis::Meta::V1::DeleteOptions
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#resources](http://releases.k8s.io/HEAD/docs/devel/api-conventions.md#resources)
     property api_version : String | Nil
 

@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # FlowDistinguisherMethod specifies the method of a flow distinguisher.
   class Api::Flowcontrol::V1beta1::FlowDistinguisherMethod
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # `type` is the type of flow distinguisher method The supported types are "ByUser" and "ByNamespace". Required.
     property type : String
 

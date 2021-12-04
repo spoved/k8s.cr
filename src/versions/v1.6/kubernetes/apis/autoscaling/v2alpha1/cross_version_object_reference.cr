@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # CrossVersionObjectReference contains enough information to let you identify the referred resource.
   class Kubernetes::Apis::Autoscaling::V2alpha1::CrossVersionObjectReference
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # API version of the referent
     property api_version : String | Nil
 

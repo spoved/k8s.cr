@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # ServiceReference holds a reference to Service.legacy.k8s.io
   class Kubernetes::Apis::Admissionregistration::V1alpha1::ServiceReference
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Name is the name of the service Required
     property name : String
 

@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # DEPRECATED 1.9 - This group version of NetworkPolicyPeer is deprecated by [networking/v1/NetworkPolicyPeer.](networking/v1/NetworkPolicyPeer.)
   class Api::Extensions::V1beta1::NetworkPolicyPeer
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # IPBlock defines policy on a particular IPBlock. If this field is set then neither of the other fields can be.
     property ip_block : Api::Extensions::V1beta1::IPBlock | Nil
 

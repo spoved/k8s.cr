@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # NetworkPolicyPort describes a port to allow traffic on
   class Api::Networking::V1::NetworkPolicyPort
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # If set, indicates that the range of ports from port to endPort, inclusive, should be allowed by the policy. This field cannot be defined if the port field is not defined or if the port field is defined as a named (string) port. The endPort must be equal or greater than port. This feature is in Alpha state and should be enabled using the Feature Gate "NetworkPolicyEndPort".
     property end_port : Int32 | Nil
 

@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # ServiceStatus represents the current status of a service.
   class Api::Core::V1::ServiceStatus
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # LoadBalancer contains the current status of the load-balancer, if one is present.
     property load_balancer : Api::Core::V1::LoadBalancerStatus | Nil
 

@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # IngressBackend describes all endpoints for a given service and port.
   class Api::Extensions::V1beta1::IngressBackend
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Specifies the name of the referenced service.
     property service_name : String
 

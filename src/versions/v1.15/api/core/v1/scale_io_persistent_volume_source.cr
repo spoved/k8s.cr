@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # ScaleIOPersistentVolumeSource represents a persistent ScaleIO volume
   class Api::Core::V1::ScaleIOPersistentVolumeSource
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". Default is "xfs"
     property fs_type : String | Nil
 

@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # WebhookThrottleConfig holds the configuration for throttling events
   class Api::Auditregistration::V1alpha1::WebhookThrottleConfig
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # ThrottleBurst is the maximum number of events sent at the same moment default 15 QPS
     property burst : Int32 | Nil
 

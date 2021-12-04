@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # API server instances report the versions they can decode and the version they encode objects to when persisting objects in the backend.
   class Api::Apiserverinternal::V1alpha1::StorageVersionStatus
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # If all API server instances agree on the same encoding storage version, then this field is set to that version. Otherwise this field is left empty. API servers should finish updating its storageVersionStatus entry before serving write operations, so that this field will be in sync with the reality.
     property common_encoding_version : String | Nil
 

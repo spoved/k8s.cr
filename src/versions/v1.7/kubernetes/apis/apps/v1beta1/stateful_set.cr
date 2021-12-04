@@ -78,6 +78,10 @@ module K8S
     args: [{name: "context", type: String | Nil, default: nil}]
   )]
   class Kubernetes::Apis::Apps::V1beta1::StatefulSet < ::K8S::Kubernetes::Resource
+    include ::K8S::Kubernetes::Resource::Object
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     getter api_version : String = "apps/v1beta1"
     getter kind : String = "StatefulSet"
     property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil

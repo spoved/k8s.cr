@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # RoleRef contains information that points to the role being used
   class Api::Rbac::V1alpha1::RoleRef
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # APIGroup is the group for the resource being referenced
     property api_group : String
 

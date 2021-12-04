@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # Adds and removes POSIX capabilities from running containers.
   class Api::Core::V1::Capabilities
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Added capabilities
     property add : Array(String) | Nil
 

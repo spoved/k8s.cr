@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # ServiceBackendPort is the service port being referenced.
   class Api::Networking::V1::ServiceBackendPort
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Name is the name of the port on the Service. This is a mutually exclusive setting with "Number".
     property name : String | Nil
 

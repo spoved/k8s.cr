@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # LimitResponse defines how to handle requests that can not be executed right now.
   class Api::Flowcontrol::V1beta1::LimitResponse
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # `queuing` holds the configuration parameters for queuing. This field may be non-empty only if `type` is `"Queue"`.
     property queuing : Api::Flowcontrol::V1beta1::QueuingConfiguration | Nil
 

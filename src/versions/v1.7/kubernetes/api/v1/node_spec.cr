@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # NodeSpec describes the attributes that a node is created with.
   class Kubernetes::Api::V1::NodeSpec
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # External ID of the node assigned by some machine database (e.g. a cloud provider). Deprecated.
     property external_id : String | Nil
 

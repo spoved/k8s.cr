@@ -8,6 +8,10 @@ require "yaml_mapping"
 module K8S
   # PodDisruptionBudget is an object to define the max disruption that can be caused to a collection of pods
   class Kubernetes::Apis::Policy::V1beta1::PodDisruptionBudget < ::K8S::Kubernetes::Resource
+    include ::K8S::Kubernetes::Resource::Object
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     getter api_version : String = "policy/v1beta1"
     getter kind : String = "PodDisruptionBudget"
     property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil

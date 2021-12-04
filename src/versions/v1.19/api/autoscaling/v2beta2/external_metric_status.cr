@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # ExternalMetricStatus indicates the current value of a global metric not associated with any Kubernetes object.
   class Api::Autoscaling::V2beta2::ExternalMetricStatus
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # current contains the current value for the given metric
     property current : Api::Autoscaling::V2beta2::MetricValueStatus
 

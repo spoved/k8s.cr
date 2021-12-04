@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # JobCondition describes current state of a job.
   class Kubernetes::Apis::Batch::V1::JobCondition
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Last time the condition was checked.
     property last_probe_time : Time | Nil
 

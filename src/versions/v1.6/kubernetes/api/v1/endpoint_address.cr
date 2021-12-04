@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # EndpointAddress is a tuple that describes single IP address.
   class Kubernetes::Api::V1::EndpointAddress
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # The Hostname of this endpoint
     property hostname : String | Nil
 

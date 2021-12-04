@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # Info contains versioning information. how we'll want to distribute that information.
   class Apimachinery::Version::Info
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     property build_date : String
 
     property compiler : String

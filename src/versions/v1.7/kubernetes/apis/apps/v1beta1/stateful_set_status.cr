@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # StatefulSetStatus represents the current state of a StatefulSet.
   class Kubernetes::Apis::Apps::V1beta1::StatefulSetStatus
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # currentReplicas is the number of Pods created by the StatefulSet controller from the StatefulSet version indicated by currentRevision.
     property current_replicas : Int32 | Nil
 

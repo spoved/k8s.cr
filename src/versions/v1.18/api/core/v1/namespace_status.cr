@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # NamespaceStatus is information about the current status of a Namespace.
   class Api::Core::V1::NamespaceStatus
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Represents the latest available observations of a namespace's current state.
     property conditions : Array(Api::Core::V1::NamespaceCondition) | Nil
 

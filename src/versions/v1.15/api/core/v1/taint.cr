@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # The node this Taint is attached to has the "effect" on any pod that does not tolerate the Taint.
   class Api::Core::V1::Taint
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Required. The effect of the taint on pods that do not tolerate the taint. Valid effects are NoSchedule, PreferNoSchedule and NoExecute.
     property effect : String
 

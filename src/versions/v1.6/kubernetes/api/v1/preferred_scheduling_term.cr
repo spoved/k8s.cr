@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # An empty preferred scheduling term matches all objects with implicit weight 0 (i.e. it's a no-op). A null preferred scheduling term matches no objects (i.e. is also a no-op).
   class Kubernetes::Api::V1::PreferredSchedulingTerm
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # A node selector term, associated with the corresponding weight.
     property preference : Kubernetes::Api::V1::NodeSelectorTerm
 

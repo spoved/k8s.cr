@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # A StatefulSetSpec is the specification of a StatefulSet.
   class Api::Apps::V1::StatefulSetSpec
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Minimum number of seconds for which a newly created pod should be ready without any of its container crashing for it to be considered available. Defaults to 0 (pod will be considered available as soon as it is ready) This is an alpha field and requires enabling StatefulSetMinReadySeconds feature gate.
     property min_ready_seconds : Int32 | Nil
 

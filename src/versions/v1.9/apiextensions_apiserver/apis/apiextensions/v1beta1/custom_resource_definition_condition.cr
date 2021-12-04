@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # CustomResourceDefinitionCondition contains details for the current condition of this pod.
   class ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceDefinitionCondition
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Last time the condition transitioned from one status to another.
     property last_transition_time : Time | Nil
 

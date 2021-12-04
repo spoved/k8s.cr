@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # ScaleSpec describes the attributes of a scale subresource.
   class Kubernetes::Apis::Autoscaling::V1::ScaleSpec
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # desired number of instances for the scaled object.
     property replicas : Int32 | Nil
 

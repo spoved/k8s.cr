@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # NamespaceCondition contains details about state of namespace.
   class Api::Core::V1::NamespaceCondition
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     property last_transition_time : Time | Nil
 
     property message : String | Nil

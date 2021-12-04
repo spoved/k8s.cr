@@ -8,6 +8,10 @@ require "yaml_mapping"
 module K8S
   # RoleBinding references a role, but does not contain it.  It can reference a Role in the same namespace or a ClusterRole in the global namespace. It adds who information via Subjects and namespace information by which namespace it exists in.  RoleBindings in a given namespace only have effect in that namespace.
   class Kubernetes::Apis::Rbac::V1beta1::RoleBinding < ::K8S::Kubernetes::Resource
+    include ::K8S::Kubernetes::Resource::Object
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     getter api_version : String = "rbac.authorization.k8s.io/v1beta1"
     getter kind : String = "RoleBinding"
     # Standard object's metadata.

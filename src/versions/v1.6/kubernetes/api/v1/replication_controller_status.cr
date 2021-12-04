@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # ReplicationControllerStatus represents the current status of a replication controller.
   class Kubernetes::Api::V1::ReplicationControllerStatus
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # The number of available replicas (ready for at least minReadySeconds) for this replication controller.
     property available_replicas : Int32 | Nil
 

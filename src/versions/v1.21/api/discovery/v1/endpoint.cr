@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # Endpoint represents a single logical "backend" implementing a service.
   class Api::Discovery::V1::Endpoint
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # addresses of this endpoint. The contents of this field are interpreted according to the corresponding EndpointSlice addressType field. Consumers must handle different types of addresses in the context of their own capabilities. This must contain at least one address but no more than 100.
     property addresses : Array(String)
 

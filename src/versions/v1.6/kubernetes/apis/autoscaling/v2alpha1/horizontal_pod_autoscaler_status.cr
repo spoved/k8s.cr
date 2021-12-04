@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # HorizontalPodAutoscalerStatus describes the current status of a horizontal pod autoscaler.
   class Kubernetes::Apis::Autoscaling::V2alpha1::HorizontalPodAutoscalerStatus
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # currentMetrics is the last read state of the metrics used by this autoscaler.
     property current_metrics : Array(Kubernetes::Apis::Autoscaling::V2alpha1::MetricStatus)
 

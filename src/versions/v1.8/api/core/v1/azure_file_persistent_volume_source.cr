@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # AzureFile represents an Azure File Service mount on the host and bind mount to the pod.
   class Api::Core::V1::AzureFilePersistentVolumeSource
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Defaults to false [(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.)
     property read_only : Bool | Nil
 

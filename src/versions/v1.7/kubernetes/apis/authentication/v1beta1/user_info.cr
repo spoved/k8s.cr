@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # UserInfo holds the information about the user needed to implement the user.Info interface.
   class Kubernetes::Apis::Authentication::V1beta1::UserInfo
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Any additional information provided by the authenticator.
     property extra : Hash(String, String) | Nil
 

@@ -71,6 +71,10 @@ module K8S
            {name: "propagation_policy", type: String | Nil, default: nil}]
   )]
   class Api::Auditregistration::V1alpha1::AuditSink < ::K8S::Kubernetes::Resource
+    include ::K8S::Kubernetes::Resource::Object
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     getter api_version : String = "auditregistration/v1alpha1"
     getter kind : String = "AuditSink"
     property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil

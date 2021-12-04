@@ -7,6 +7,9 @@ require "yaml_mapping"
 
 module K8S
   class Kubernetes::Apis::Certificates::V1beta1::CertificateSigningRequestCondition
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # timestamp for the last update to this condition
     property last_update_time : Time | Nil
 

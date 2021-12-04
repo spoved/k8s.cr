@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # Represents an ephemeral volume that is handled by a normal storage driver.
   class Api::Core::V1::EphemeralVolumeSource
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Specifies a read-only configuration for the volume. Defaults to false [(read/write).]((read/write).)
     property read_only : Bool | Nil
 

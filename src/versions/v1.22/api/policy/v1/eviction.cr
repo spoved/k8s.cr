@@ -15,6 +15,10 @@ module K8S
            {name: "field_manager", type: String | Nil, default: nil}]
   )]
   class Api::Policy::V1::Eviction < ::K8S::Kubernetes::Resource
+    include ::K8S::Kubernetes::Resource::Object
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     getter api_version : String = "policy/v1"
     getter kind : String = "Eviction"
     # DeleteOptions may be provided

@@ -8,6 +8,10 @@ require "yaml_mapping"
 module K8S
   # ClusterRole is a cluster level, logical grouping of PolicyRules that can be referenced as a unit by a RoleBinding or ClusterRoleBinding.
   class Kubernetes::Apis::Rbac::V1alpha1::ClusterRole < ::K8S::Kubernetes::Resource
+    include ::K8S::Kubernetes::Resource::Object
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     getter api_version : String = "rbac.authorization.k8s.io/v1alpha1"
     getter kind : String = "ClusterRole"
     # Standard object's metadata.

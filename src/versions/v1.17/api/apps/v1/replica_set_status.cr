@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # ReplicaSetStatus represents the current status of a ReplicaSet.
   class Api::Apps::V1::ReplicaSetStatus
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # The number of available replicas (ready for at least minReadySeconds) for this replica set.
     property available_replicas : Int32 | Nil
 

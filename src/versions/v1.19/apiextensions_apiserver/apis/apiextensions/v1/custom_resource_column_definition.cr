@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # CustomResourceColumnDefinition specifies a column for server side printing.
   class ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceColumnDefinition
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # description is a human readable description of this column.
     property description : String | Nil
 

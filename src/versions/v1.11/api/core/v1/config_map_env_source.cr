@@ -10,6 +10,9 @@ module K8S
   #
   # The contents of the target ConfigMap's Data field will represent the key-value pairs as environment variables.
   class Api::Core::V1::ConfigMapEnvSource
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Name of the referent. More info: [https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names)
     property name : String | Nil
 

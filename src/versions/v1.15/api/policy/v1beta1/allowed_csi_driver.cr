@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # AllowedCSIDriver represents a single inline CSI Driver that is allowed to be used.
   class Api::Policy::V1beta1::AllowedCSIDriver
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Name is the registered name of the CSI driver
     property name : String
 

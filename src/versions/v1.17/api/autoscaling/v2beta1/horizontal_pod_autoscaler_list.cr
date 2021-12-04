@@ -59,8 +59,12 @@ module K8S
            {name: "watch", type: Bool | Nil, default: nil},
            {name: "namespace", type: String, default: "default"}]
   )]
-  class Api::Autoscaling::V2beta1::HorizontalPodAutoscalerList < ::K8S::Kubernetes::Resource
-    getter api_version : String = "v1"
+  class Api::Autoscaling::V2beta1::HorizontalPodAutoscalerList < ::K8S::Kubernetes::ResourceList(Api::Autoscaling::V2beta1::HorizontalPodAutoscaler)
+    include ::K8S::Kubernetes::Resource::List
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
+    getter api_version : String = "autoscaling/v2beta1"
     getter kind : String = "List"
     # items is the list of horizontal pod autoscaler objects.
     property items : Array(Api::Autoscaling::V2beta1::HorizontalPodAutoscaler)
@@ -69,14 +73,14 @@ module K8S
     property metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil
 
     ::YAML.mapping({
-      api_version: {type: String, default: "v1", key: "apiVersion", setter: false},
+      api_version: {type: String, default: "autoscaling/v2beta1", key: "apiVersion", setter: false},
       kind:        {type: String, default: "List", key: "kind", setter: false},
       items:       {type: Array(Api::Autoscaling::V2beta1::HorizontalPodAutoscaler), nilable: false, key: "items", getter: false, setter: false},
       metadata:    {type: Apimachinery::Apis::Meta::V1::ListMeta, nilable: true, key: "metadata", getter: false, setter: false},
     }, true)
 
     ::JSON.mapping({
-      api_version: {type: String, default: "v1", key: "apiVersion", setter: false},
+      api_version: {type: String, default: "autoscaling/v2beta1", key: "apiVersion", setter: false},
       kind:        {type: String, default: "List", key: "kind", setter: false},
       items:       {type: Array(Api::Autoscaling::V2beta1::HorizontalPodAutoscaler), nilable: false, key: "items", getter: false, setter: false},
       metadata:    {type: Apimachinery::Apis::Meta::V1::ListMeta, nilable: true, key: "metadata", getter: false, setter: false},

@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # Affinity is a group of affinity scheduling rules.
   class Api::Core::V1::Affinity
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Describes node affinity scheduling rules for the pod.
     property node_affinity : Api::Core::V1::NodeAffinity | Nil
 

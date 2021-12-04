@@ -7,6 +7,9 @@ require "yaml_mapping"
 
 module K8S
   class Api::Certificates::V1beta1::CertificateSigningRequestStatus
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # If request was approved, the controller will place the issued certificate here.
     property certificate : String | Nil
 

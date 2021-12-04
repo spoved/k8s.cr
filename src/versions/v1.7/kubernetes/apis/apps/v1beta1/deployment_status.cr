@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # DeploymentStatus is the most recently observed status of the Deployment.
   class Kubernetes::Apis::Apps::V1beta1::DeploymentStatus
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Total number of available pods (ready for at least minReadySeconds) targeted by this deployment.
     property available_replicas : Int32 | Nil
 

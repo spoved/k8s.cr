@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # PriorityLevelConfigurationCondition defines the condition of priority level.
   class Api::Flowcontrol::V1alpha1::PriorityLevelConfigurationCondition
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # `lastTransitionTime` is the last time the condition transitioned from one status to another.
     property last_transition_time : Time | Nil
 

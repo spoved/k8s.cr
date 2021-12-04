@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # Webhook holds the configuration of the webhook
   class Api::Auditregistration::V1alpha1::Webhook
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # ClientConfig holds the connection parameters for the webhook required
     property client_config : Api::Auditregistration::V1alpha1::WebhookClientConfig
 

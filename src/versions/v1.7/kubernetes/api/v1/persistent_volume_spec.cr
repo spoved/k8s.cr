@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # PersistentVolumeSpec is the specification of a persistent volume.
   class Kubernetes::Api::V1::PersistentVolumeSpec
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # AccessModes contains all ways the volume can be mounted. More info: [https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes](https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes)
     property access_modes : Array(String) | Nil
 

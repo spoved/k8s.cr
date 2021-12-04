@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # ConfigMapNodeConfigSource contains the information to reference a ConfigMap as a config source for the Node. This API is deprecated since 1.22: [https://git.k8s.io/enhancements/keps/sig-node/281-dynamic-kubelet-configuration](https://git.k8s.io/enhancements/keps/sig-node/281-dynamic-kubelet-configuration)
   class Api::Core::V1::ConfigMapNodeConfigSource
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # KubeletConfigKey declares which key of the referenced ConfigMap corresponds to the KubeletConfiguration structure This field is required in all cases.
     property kubelet_config_key : String
 

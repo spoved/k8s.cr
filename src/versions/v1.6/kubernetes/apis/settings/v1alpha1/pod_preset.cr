@@ -8,6 +8,10 @@ require "yaml_mapping"
 module K8S
   # PodPreset is a policy resource that defines additional runtime requirements for a Pod.
   class Kubernetes::Apis::Settings::V1alpha1::PodPreset < ::K8S::Kubernetes::Resource
+    include ::K8S::Kubernetes::Resource::Object
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     getter api_version : String = "settings/v1alpha1"
     getter kind : String = "PodPreset"
     property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil

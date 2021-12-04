@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # LeaseSpec is a specification of a Lease.
   class Api::Coordination::V1beta1::LeaseSpec
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # acquireTime is a time when the current lease was acquired.
     property acquire_time : Time | Nil
 

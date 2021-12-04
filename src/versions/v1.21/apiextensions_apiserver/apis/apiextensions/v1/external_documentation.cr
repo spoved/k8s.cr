@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # ExternalDocumentation allows referencing an external resource for extended documentation.
   class ApiextensionsApiserver::Apis::Apiextensions::V1::ExternalDocumentation
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     property description : String | Nil
 
     property url : String | Nil

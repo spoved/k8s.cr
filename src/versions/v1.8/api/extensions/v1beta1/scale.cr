@@ -51,6 +51,10 @@ module K8S
     args: [{name: "context", type: String | Nil, default: nil}]
   )]
   class Api::Extensions::V1beta1::Scale < ::K8S::Kubernetes::Resource
+    include ::K8S::Kubernetes::Resource::Object
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     getter api_version : String = "extensions/v1beta1"
     getter kind : String = "Scale"
     # Standard object metadata; More info: [https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata.](https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata.)

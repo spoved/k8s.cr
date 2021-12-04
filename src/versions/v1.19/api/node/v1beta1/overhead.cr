@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # Overhead structure represents the resource overhead associated with running a pod.
   class Api::Node::V1beta1::Overhead
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # PodFixed represents the fixed resource overhead associated with running a pod.
     property pod_fixed : Hash(String, String) | Nil
 

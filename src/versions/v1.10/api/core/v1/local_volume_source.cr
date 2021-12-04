@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # Local represents directly-attached storage with node affinity
   class Api::Core::V1::LocalVolumeSource
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # The full path to the volume on the node For alpha, this path must be a directory Once block as a source is supported, then this path can point to a block device
     property path : String
 

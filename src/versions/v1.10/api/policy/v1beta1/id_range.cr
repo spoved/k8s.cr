@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # ID Range provides a [min/max of an allowed range of IDs.](min/max of an allowed range of IDs.)
   class Api::Policy::V1beta1::IDRange
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Max is the end of the range, inclusive.
     property max : Int32
 

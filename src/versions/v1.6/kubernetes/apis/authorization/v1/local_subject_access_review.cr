@@ -8,6 +8,10 @@ require "yaml_mapping"
 module K8S
   # LocalSubjectAccessReview checks whether or not a user or group can perform an action in a given namespace. Having a namespace scoped resource makes it much easier to grant namespace scoped policy that includes permissions checking.
   class Kubernetes::Apis::Authorization::V1::LocalSubjectAccessReview < ::K8S::Kubernetes::Resource
+    include ::K8S::Kubernetes::Resource::Object
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     getter api_version : String = "authorization/v1"
     getter kind : String = "LocalSubjectAccessReview"
     property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil

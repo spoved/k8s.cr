@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # PolicyRulesWithSubjects prescribes a test that applies to a request to an apiserver. The test considers the subject making the request, the verb being requested, and the resource to be acted upon. This PolicyRulesWithSubjects matches a request if and only if both (a) at least one member of subjects matches the request and (b) at least one member of resourceRules or nonResourceRules matches the request.
   class Api::Flowcontrol::V1beta1::PolicyRulesWithSubjects
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # `nonResourceRules` is a list of NonResourcePolicyRules that identify matching requests according to their verb and the target non-resource URL.
     property non_resource_rules : Array(Api::Flowcontrol::V1beta1::NonResourcePolicyRule) | Nil
 

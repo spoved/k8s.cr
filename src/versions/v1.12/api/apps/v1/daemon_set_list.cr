@@ -55,8 +55,12 @@ module K8S
            {name: "watch", type: Bool | Nil, default: nil},
            {name: "namespace", type: String, default: "default"}]
   )]
-  class Api::Apps::V1::DaemonSetList < ::K8S::Kubernetes::Resource
-    getter api_version : String = "v1"
+  class Api::Apps::V1::DaemonSetList < ::K8S::Kubernetes::ResourceList(Api::Apps::V1::DaemonSet)
+    include ::K8S::Kubernetes::Resource::List
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
+    getter api_version : String = "apps/v1"
     getter kind : String = "List"
     # A list of daemon sets.
     property items : Array(Api::Apps::V1::DaemonSet)
@@ -65,14 +69,14 @@ module K8S
     property metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil
 
     ::YAML.mapping({
-      api_version: {type: String, default: "v1", key: "apiVersion", setter: false},
+      api_version: {type: String, default: "apps/v1", key: "apiVersion", setter: false},
       kind:        {type: String, default: "List", key: "kind", setter: false},
       items:       {type: Array(Api::Apps::V1::DaemonSet), nilable: false, key: "items", getter: false, setter: false},
       metadata:    {type: Apimachinery::Apis::Meta::V1::ListMeta, nilable: true, key: "metadata", getter: false, setter: false},
     }, true)
 
     ::JSON.mapping({
-      api_version: {type: String, default: "v1", key: "apiVersion", setter: false},
+      api_version: {type: String, default: "apps/v1", key: "apiVersion", setter: false},
       kind:        {type: String, default: "List", key: "kind", setter: false},
       items:       {type: Array(Api::Apps::V1::DaemonSet), nilable: false, key: "items", getter: false, setter: false},
       metadata:    {type: Apimachinery::Apis::Meta::V1::ListMeta, nilable: true, key: "metadata", getter: false, setter: false},

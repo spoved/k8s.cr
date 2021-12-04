@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # SelfSubjectAccessReviewSpec is a description of the access request.  Exactly one of ResourceAuthorizationAttributes and NonResourceAuthorizationAttributes must be set
   class Kubernetes::Apis::Authorization::V1::SelfSubjectAccessReviewSpec
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # NonResourceAttributes describes information for a non-resource access request
     property non_resource_attributes : Kubernetes::Apis::Authorization::V1::NonResourceAttributes | Nil
 

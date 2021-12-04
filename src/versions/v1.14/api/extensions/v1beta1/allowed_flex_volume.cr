@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # AllowedFlexVolume represents a single Flexvolume that is allowed to be used. Deprecated: use AllowedFlexVolume from policy API Group instead.
   class Api::Extensions::V1beta1::AllowedFlexVolume
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # driver is the name of the Flexvolume driver.
     property driver : String
 

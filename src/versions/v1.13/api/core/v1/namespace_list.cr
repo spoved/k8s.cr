@@ -29,7 +29,11 @@ module K8S
            {name: "timeout_seconds", type: Int32 | Nil, default: nil},
            {name: "watch", type: Bool | Nil, default: nil}]
   )]
-  class Api::Core::V1::NamespaceList < ::K8S::Kubernetes::Resource
+  class Api::Core::V1::NamespaceList < ::K8S::Kubernetes::ResourceList(Api::Core::V1::Namespace)
+    include ::K8S::Kubernetes::Resource::List
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     getter api_version : String = "v1"
     getter kind : String = "List"
     # Items is the list of Namespace objects in the list. More info: [https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/)

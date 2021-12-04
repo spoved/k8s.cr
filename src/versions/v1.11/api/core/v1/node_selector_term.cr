@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # A null or empty node selector term matches no objects. The requirements of them are ANDed. The TopologySelectorTerm type implements a subset of the NodeSelectorTerm.
   class Api::Core::V1::NodeSelectorTerm
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # A list of node selector requirements by node's labels.
     property match_expressions : Array(Api::Core::V1::NodeSelectorRequirement) | Nil
 

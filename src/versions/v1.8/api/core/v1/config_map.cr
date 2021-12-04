@@ -65,6 +65,10 @@ module K8S
            {name: "context", type: String | Nil, default: nil}]
   )]
   class Api::Core::V1::ConfigMap < ::K8S::Kubernetes::Resource
+    include ::K8S::Kubernetes::Resource::Object
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     getter api_version : String = "v1"
     getter kind : String = "ConfigMap"
     # Data contains the configuration data. Each key must consist of alphanumeric characters, '-', '_' or '.'.

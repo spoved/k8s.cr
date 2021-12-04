@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # CSINodeDriver holds information about the specification of one CSI driver installed on a node
   class Api::Storage::V1::CSINodeDriver
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # allocatable represents the volume resources of a node that are available for scheduling. This field is beta.
     property allocatable : Api::Storage::V1::VolumeNodeResources | Nil
 

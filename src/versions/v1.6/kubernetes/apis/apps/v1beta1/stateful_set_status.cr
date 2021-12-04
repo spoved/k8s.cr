@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # StatefulSetStatus represents the current state of a StatefulSet.
   class Kubernetes::Apis::Apps::V1beta1::StatefulSetStatus
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # most recent generation observed by this StatefulSet.
     property observed_generation : Int32 | Nil
 

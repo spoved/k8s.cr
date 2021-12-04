@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # PodTemplateSpec describes the data a pod should have when created from a template
   class Api::Core::V1::PodTemplateSpec
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Standard object's metadata. More info: [https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata)
     property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil
 

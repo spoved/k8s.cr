@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # PodsMetricSource indicates how to scale on a metric describing each pod in the current scale target (for example, transactions-processed-per-second). The values will be averaged together before being compared to the target value.
   class Api::Autoscaling::V2beta1::PodsMetricSource
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # metricName is the name of the metric in question
     property metric_name : String
 

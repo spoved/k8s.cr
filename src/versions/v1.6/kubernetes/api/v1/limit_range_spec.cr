@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # LimitRangeSpec defines a [min/max usage limit for resources that match on kind.](min/max usage limit for resources that match on kind.)
   class Kubernetes::Api::V1::LimitRangeSpec
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Limits is the list of LimitRangeItem objects that are enforced.
     property limits : Array(Kubernetes::Api::V1::LimitRangeItem)
 

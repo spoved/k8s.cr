@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # HorizontalPodAutoscalerSpec describes the desired functionality of the HorizontalPodAutoscaler.
   class Api::Autoscaling::V2beta2::HorizontalPodAutoscalerSpec
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # behavior configures the scaling behavior of the target in both Up and Down directions (scaleUp and scaleDown fields respectively). If not set, the default HPAScalingRules for scale up and scale down are used.
     property behavior : Api::Autoscaling::V2beta2::HorizontalPodAutoscalerBehavior | Nil
 

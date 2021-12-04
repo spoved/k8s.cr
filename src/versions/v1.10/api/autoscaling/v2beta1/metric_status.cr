@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # MetricStatus describes the last-read state of a single metric.
   class Api::Autoscaling::V2beta1::MetricStatus
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # external refers to a global metric that is not associated with any Kubernetes object. It allows autoscaling based on information coming from components running outside of cluster (for example length of queue in cloud messaging service, or QPS from loadbalancer running outside of cluster).
     property external : Api::Autoscaling::V2beta1::ExternalMetricStatus | Nil
 

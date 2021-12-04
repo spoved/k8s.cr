@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # NonResourceAttributes includes the authorization attributes available for non-resource requests to the Authorizer interface
   class Api::Authorization::V1beta1::NonResourceAttributes
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Path is the URL path of the request
     property path : String | Nil
 

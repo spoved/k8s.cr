@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # Run A sUser Strategy Options defines the strategy type and any options used to create the strategy.
   class Api::Extensions::V1beta1::RunAsUserStrategyOptions
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Ranges are the allowed ranges of uids that may be used.
     property ranges : Array(Api::Extensions::V1beta1::IDRange) | Nil
 

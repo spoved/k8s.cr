@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # PodsMetricStatus indicates the current value of a metric describing each pod in the current scale target (for example, transactions-processed-per-second).
   class Api::Autoscaling::V2beta2::PodsMetricStatus
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # current contains the current value for the given metric
     property current : Api::Autoscaling::V2beta2::MetricValueStatus
 

@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # HorizontalPodAutoscalerCondition describes the state of a HorizontalPodAutoscaler at a certain point.
   class Api::Autoscaling::V2beta2::HorizontalPodAutoscalerCondition
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # lastTransitionTime is the last time the condition transitioned from one status to another
     property last_transition_time : Time | Nil
 

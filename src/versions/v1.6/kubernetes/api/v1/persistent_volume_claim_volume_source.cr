@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # PersistentVolumeClaimVolumeSource references the user's PVC in the same namespace. This volume finds the bound PV and mounts that volume for the pod. A PersistentVolumeClaimVolumeSource is, essentially, a wrapper around another type of volume that is owned by someone else (the system).
   class Kubernetes::Api::V1::PersistentVolumeClaimVolumeSource
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # ClaimName is the name of a PersistentVolumeClaim in the same namespace as the pod using this volume. More info: [http://kubernetes.io/docs/user-guide/persistent-volumes#persistentvolumeclaims](http://kubernetes.io/docs/user-guide/persistent-volumes#persistentvolumeclaims)
     property claim_name : String
 

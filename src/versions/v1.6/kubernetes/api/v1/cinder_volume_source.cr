@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # Represents a cinder volume resource in Openstack. A Cinder volume must exist before mounting to a container. The volume must also be in the same region as the kubelet. Cinder volumes support ownership management and SELinux relabeling.
   class Kubernetes::Api::V1::CinderVolumeSource
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Filesystem type to mount. Must be a filesystem type supported by the host operating system. Examples: "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified. More info: [http://releases.k8s.io/HEAD/examples/mysql-cinder-pd/README.md](http://releases.k8s.io/HEAD/examples/mysql-cinder-pd/README.md)
     property fs_type : String | Nil
 

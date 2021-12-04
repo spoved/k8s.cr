@@ -8,6 +8,9 @@ require "yaml_mapping"
 module K8S
   # PodPresetSpec is a description of a pod preset.
   class Api::Settings::V1alpha1::PodPresetSpec
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     # Env defines the collection of EnvVar to inject into containers.
     property env : Array(Api::Core::V1::EnvVar) | Nil
 

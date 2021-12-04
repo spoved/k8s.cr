@@ -94,6 +94,10 @@ module K8S
            {name: "force", type: Bool | Nil, default: nil}]
   )]
   class Api::Apps::V1::StatefulSet < ::K8S::Kubernetes::Resource
+    include ::K8S::Kubernetes::Resource::Object
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
     getter api_version : String = "apps/v1"
     getter kind : String = "StatefulSet"
     # Standard object's metadata. More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)
