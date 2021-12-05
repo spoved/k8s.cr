@@ -2,11 +2,13 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # RunAsGroupStrategyOptions defines the strategy type and any options used to create the strategy. Deprecated: use RunAsGroupStrategyOptions from policy API Group instead.
+  @[::K8S::Properties(
+    ranges: {type: Array(Api::Extensions::V1beta1::IDRange), nilable: true, key: "ranges", getter: false, setter: false},
+    rule: {type: String, nilable: false, key: "rule", getter: false, setter: false},
+  )]
   class Api::Extensions::V1beta1::RunAsGroupStrategyOptions
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -16,16 +18,6 @@ module K8S
 
     # rule is the strategy that will dictate the allowable RunAsGroup values that may be set.
     property rule : String
-
-    ::YAML.mapping({
-      ranges: {type: Array(Api::Extensions::V1beta1::IDRange), nilable: true, key: "ranges", getter: false, setter: false},
-      rule:   {type: String, nilable: false, key: "rule", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      ranges: {type: Array(Api::Extensions::V1beta1::IDRange), nilable: true, key: "ranges", getter: false, setter: false},
-      rule:   {type: String, nilable: false, key: "rule", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @rule : String, @ranges : Array | Nil = nil)
     end

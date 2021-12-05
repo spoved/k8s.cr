@@ -2,8 +2,6 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   alias Api::Core::V1::List = ::K8S::Kubernetes::ResourceList

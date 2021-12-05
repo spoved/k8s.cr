@@ -2,25 +2,18 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # ForZone provides information about which zones should consume this endpoint.
+  @[::K8S::Properties(
+    name: {type: String, nilable: false, key: "name", getter: false, setter: false},
+  )]
   class Api::Discovery::V1::ForZone
     include ::JSON::Serializable
     include ::YAML::Serializable
 
     # name represents the name of the zone.
     property name : String
-
-    ::YAML.mapping({
-      name: {type: String, nilable: false, key: "name", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      name: {type: String, nilable: false, key: "name", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @name : String)
     end

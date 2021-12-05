@@ -2,17 +2,27 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # Status is a return value for calls that don't return other objects.
-  @[::K8S::GroupVersionKind(group: "", kind: "Status", version: "v1")]
+  @[::K8S::GroupVersionKind(group: "", kind: "Status", version: "v1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.Status")]
+  @[::K8S::Properties(
+    api_version: {type: String, nilable: true, key: "apiVersion", getter: false, setter: false},
+    code: {type: Int32, nilable: true, key: "code", getter: false, setter: false},
+    details: {type: Apimachinery::Apis::Meta::V1::StatusDetails, nilable: true, key: "details", getter: false, setter: false},
+    kind: {type: String, nilable: true, key: "kind", getter: false, setter: false},
+    message: {type: String, nilable: true, key: "message", getter: false, setter: false},
+    metadata: {type: Apimachinery::Apis::Meta::V1::ListMeta, nilable: true, key: "metadata", getter: false, setter: false},
+    reason: {type: String, nilable: true, key: "reason", getter: false, setter: false},
+    status: {type: String, nilable: true, key: "status", getter: false, setter: false},
+  )]
   class Apimachinery::Apis::Meta::V1::Status
     include ::JSON::Serializable
     include ::YAML::Serializable
 
     # APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)
+    @[::JSON::Field(key: "apiVersion")]
+    @[::YAML::Field(key: "apiVersion")]
     property api_version : String | Nil
 
     # Suggested HTTP return code for this status, 0 if not set.
@@ -35,28 +45,6 @@ module K8S
 
     # Status of the operation. One of: "Success" or "Failure". More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status)
     property status : String | Nil
-
-    ::YAML.mapping({
-      api_version: {type: String, nilable: true, key: "apiVersion", getter: false, setter: false},
-      code:        {type: Int32, nilable: true, key: "code", getter: false, setter: false},
-      details:     {type: Apimachinery::Apis::Meta::V1::StatusDetails, nilable: true, key: "details", getter: false, setter: false},
-      kind:        {type: String, nilable: true, key: "kind", getter: false, setter: false},
-      message:     {type: String, nilable: true, key: "message", getter: false, setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ListMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      reason:      {type: String, nilable: true, key: "reason", getter: false, setter: false},
-      status:      {type: String, nilable: true, key: "status", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      api_version: {type: String, nilable: true, key: "apiVersion", getter: false, setter: false},
-      code:        {type: Int32, nilable: true, key: "code", getter: false, setter: false},
-      details:     {type: Apimachinery::Apis::Meta::V1::StatusDetails, nilable: true, key: "details", getter: false, setter: false},
-      kind:        {type: String, nilable: true, key: "kind", getter: false, setter: false},
-      message:     {type: String, nilable: true, key: "message", getter: false, setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ListMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      reason:      {type: String, nilable: true, key: "reason", getter: false, setter: false},
-      status:      {type: String, nilable: true, key: "status", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @api_version : String | Nil = nil, @code : Int32 | Nil = nil, @details : Apimachinery::Apis::Meta::V1::StatusDetails | Nil = nil, @kind : String | Nil = nil, @message : String | Nil = nil, @metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil = nil, @reason : String | Nil = nil, @status : String | Nil = nil)
     end

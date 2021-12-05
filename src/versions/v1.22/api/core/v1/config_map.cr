@@ -2,12 +2,18 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # ConfigMap holds configuration data for pods to consume.
-  @[::K8S::GroupVersionKind(group: "", kind: "ConfigMap", version: "v1")]
+  @[::K8S::GroupVersionKind(group: "", kind: "ConfigMap", version: "v1", full: "io.k8s.api.core.v1.ConfigMap")]
+  @[::K8S::Properties(
+    api_version: {type: String, nilable: true, key: "apiVersion", getter: false, setter: false},
+    binary_data: {type: Hash(String, String), nilable: true, key: "binaryData", getter: false, setter: false},
+    data: {type: Hash(String, String), nilable: true, key: "data", getter: false, setter: false},
+    immutable: {type: Bool, nilable: true, key: "immutable", getter: false, setter: false},
+    kind: {type: String, nilable: true, key: "kind", getter: false, setter: false},
+    metadata: {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
+  )]
   @[::K8S::Action(name: "post", verb: "post",
     path: "/api/v1/namespaces/{namespace}/configmaps", toplevel: false,
     args: [{name: "context", type: String | Nil, default: nil},
@@ -79,6 +85,8 @@ module K8S
     getter api_version : String = "v1"
     getter kind : String = "ConfigMap"
     # BinaryData contains the binary data. Each key must consist of alphanumeric characters, '-', '_' or '.'. BinaryData can contain byte sequences that are not in the UTF-8 range. The keys stored in BinaryData must not overlap with the ones in the Data field, this is enforced during validation process. Using this field will require 1.10+ apiserver and kubelet.
+    @[::JSON::Field(key: "binaryData")]
+    @[::YAML::Field(key: "binaryData")]
     property binary_data : Hash(String, String) | Nil
 
     # Data contains the configuration data. Each key must consist of alphanumeric characters, '-', '_' or '.'. Values with non-UTF-8 byte sequences must use the BinaryData field. The keys stored in Data must not overlap with the keys in the BinaryData field, this is enforced during validation process.
@@ -89,24 +97,6 @@ module K8S
 
     # Standard object's metadata. More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)
     property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil
-
-    ::YAML.mapping({
-      api_version: {type: String, default: "v1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "ConfigMap", key: "kind", setter: false},
-      binary_data: {type: Hash(String, String), nilable: true, key: "binaryData", getter: false, setter: false},
-      data:        {type: Hash(String, String), nilable: true, key: "data", getter: false, setter: false},
-      immutable:   {type: Bool, nilable: true, key: "immutable", getter: false, setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      api_version: {type: String, default: "v1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "ConfigMap", key: "kind", setter: false},
-      binary_data: {type: Hash(String, String), nilable: true, key: "binaryData", getter: false, setter: false},
-      data:        {type: Hash(String, String), nilable: true, key: "data", getter: false, setter: false},
-      immutable:   {type: Bool, nilable: true, key: "immutable", getter: false, setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @binary_data : Hash(String, String) | Nil = nil, @data : Hash(String, String) | Nil = nil, @immutable : Bool | Nil = nil, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil)
     end

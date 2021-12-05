@@ -2,12 +2,17 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # CustomResourceDefinition represents a resource that should be exposed on the API server.  Its name MUST be in the format <.spec.name>.<.spec.group>.
-  @[::K8S::GroupVersionKind(group: "apiextensions.k8s.io", kind: "CustomResourceDefinition", version: "v1")]
+  @[::K8S::GroupVersionKind(group: "apiextensions.k8s.io", kind: "CustomResourceDefinition", version: "v1", full: "io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1.CustomResourceDefinition")]
+  @[::K8S::Properties(
+    api_version: {type: String, nilable: true, key: "apiVersion", getter: false, setter: false},
+    kind: {type: String, nilable: true, key: "kind", getter: false, setter: false},
+    metadata: {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
+    spec: {type: ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionSpec, nilable: false, key: "spec", getter: false, setter: false},
+    status: {type: ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionStatus, nilable: true, key: "status", getter: false, setter: false},
+  )]
   @[::K8S::Action(name: "post", verb: "post",
     path: "/apis/apiextensions.k8s.io/v1/customresourcedefinitions", toplevel: false,
     args: [{name: "context", type: String | Nil, default: nil},
@@ -101,22 +106,6 @@ module K8S
 
     # status indicates the actual state of the CustomResourceDefinition
     property status : ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionStatus | Nil
-
-    ::YAML.mapping({
-      api_version: {type: String, default: "apiextensions/v1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "CustomResourceDefinition", key: "kind", setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      spec:        {type: ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionSpec, nilable: false, key: "spec", getter: false, setter: false},
-      status:      {type: ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionStatus, nilable: true, key: "status", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      api_version: {type: String, default: "apiextensions/v1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "CustomResourceDefinition", key: "kind", setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      spec:        {type: ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionSpec, nilable: false, key: "spec", getter: false, setter: false},
-      status:      {type: ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionStatus, nilable: true, key: "status", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @spec : ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionSpec, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil, @status : ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionStatus | Nil = nil)
     end

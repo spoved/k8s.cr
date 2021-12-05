@@ -2,11 +2,22 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # NodeStatus is information about the current status of a node.
+  @[::K8S::Properties(
+    addresses: {type: Array(Api::Core::V1::NodeAddress), nilable: true, key: "addresses", getter: false, setter: false},
+    allocatable: {type: Hash(String, String), nilable: true, key: "allocatable", getter: false, setter: false},
+    capacity: {type: Hash(String, String), nilable: true, key: "capacity", getter: false, setter: false},
+    conditions: {type: Array(Api::Core::V1::NodeCondition), nilable: true, key: "conditions", getter: false, setter: false},
+    config: {type: Api::Core::V1::NodeConfigStatus, nilable: true, key: "config", getter: false, setter: false},
+    daemon_endpoints: {type: Api::Core::V1::NodeDaemonEndpoints, nilable: true, key: "daemonEndpoints", getter: false, setter: false},
+    images: {type: Array(Api::Core::V1::ContainerImage), nilable: true, key: "images", getter: false, setter: false},
+    node_info: {type: Api::Core::V1::NodeSystemInfo, nilable: true, key: "nodeInfo", getter: false, setter: false},
+    phase: {type: String, nilable: true, key: "phase", getter: false, setter: false},
+    volumes_attached: {type: Array(Api::Core::V1::AttachedVolume), nilable: true, key: "volumesAttached", getter: false, setter: false},
+    volumes_in_use: {type: Array(String), nilable: true, key: "volumesInUse", getter: false, setter: false},
+  )]
   class Api::Core::V1::NodeStatus
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -27,50 +38,30 @@ module K8S
     property config : Api::Core::V1::NodeConfigStatus | Nil
 
     # Endpoints of daemons running on the Node.
+    @[::JSON::Field(key: "daemonEndpoints")]
+    @[::YAML::Field(key: "daemonEndpoints")]
     property daemon_endpoints : Api::Core::V1::NodeDaemonEndpoints | Nil
 
     # List of container images on this node
     property images : Array(Api::Core::V1::ContainerImage) | Nil
 
     # Set of [ids/uuids to uniquely identify the node. More info: https://kubernetes.io/docs/concepts/nodes/node/#info](ids/uuids to uniquely identify the node. More info: https://kubernetes.io/docs/concepts/nodes/node/#info)
+    @[::JSON::Field(key: "nodeInfo")]
+    @[::YAML::Field(key: "nodeInfo")]
     property node_info : Api::Core::V1::NodeSystemInfo | Nil
 
     # NodePhase is the recently observed lifecycle phase of the node. More info: [https://kubernetes.io/docs/concepts/nodes/node/#phase The field is never populated, and now is deprecated.](https://kubernetes.io/docs/concepts/nodes/node/#phase The field is never populated, and now is deprecated.)
     property phase : String | Nil
 
     # List of volumes that are attached to the node.
+    @[::JSON::Field(key: "volumesAttached")]
+    @[::YAML::Field(key: "volumesAttached")]
     property volumes_attached : Array(Api::Core::V1::AttachedVolume) | Nil
 
     # List of attachable volumes in use (mounted) by the node.
+    @[::JSON::Field(key: "volumesInUse")]
+    @[::YAML::Field(key: "volumesInUse")]
     property volumes_in_use : Array(String) | Nil
-
-    ::YAML.mapping({
-      addresses:        {type: Array(Api::Core::V1::NodeAddress), nilable: true, key: "addresses", getter: false, setter: false},
-      allocatable:      {type: Hash(String, String), nilable: true, key: "allocatable", getter: false, setter: false},
-      capacity:         {type: Hash(String, String), nilable: true, key: "capacity", getter: false, setter: false},
-      conditions:       {type: Array(Api::Core::V1::NodeCondition), nilable: true, key: "conditions", getter: false, setter: false},
-      config:           {type: Api::Core::V1::NodeConfigStatus, nilable: true, key: "config", getter: false, setter: false},
-      daemon_endpoints: {type: Api::Core::V1::NodeDaemonEndpoints, nilable: true, key: "daemonEndpoints", getter: false, setter: false},
-      images:           {type: Array(Api::Core::V1::ContainerImage), nilable: true, key: "images", getter: false, setter: false},
-      node_info:        {type: Api::Core::V1::NodeSystemInfo, nilable: true, key: "nodeInfo", getter: false, setter: false},
-      phase:            {type: String, nilable: true, key: "phase", getter: false, setter: false},
-      volumes_attached: {type: Array(Api::Core::V1::AttachedVolume), nilable: true, key: "volumesAttached", getter: false, setter: false},
-      volumes_in_use:   {type: Array(String), nilable: true, key: "volumesInUse", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      addresses:        {type: Array(Api::Core::V1::NodeAddress), nilable: true, key: "addresses", getter: false, setter: false},
-      allocatable:      {type: Hash(String, String), nilable: true, key: "allocatable", getter: false, setter: false},
-      capacity:         {type: Hash(String, String), nilable: true, key: "capacity", getter: false, setter: false},
-      conditions:       {type: Array(Api::Core::V1::NodeCondition), nilable: true, key: "conditions", getter: false, setter: false},
-      config:           {type: Api::Core::V1::NodeConfigStatus, nilable: true, key: "config", getter: false, setter: false},
-      daemon_endpoints: {type: Api::Core::V1::NodeDaemonEndpoints, nilable: true, key: "daemonEndpoints", getter: false, setter: false},
-      images:           {type: Array(Api::Core::V1::ContainerImage), nilable: true, key: "images", getter: false, setter: false},
-      node_info:        {type: Api::Core::V1::NodeSystemInfo, nilable: true, key: "nodeInfo", getter: false, setter: false},
-      phase:            {type: String, nilable: true, key: "phase", getter: false, setter: false},
-      volumes_attached: {type: Array(Api::Core::V1::AttachedVolume), nilable: true, key: "volumesAttached", getter: false, setter: false},
-      volumes_in_use:   {type: Array(String), nilable: true, key: "volumesInUse", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @addresses : Array | Nil = nil, @allocatable : Hash(String, String) | Nil = nil, @capacity : Hash(String, String) | Nil = nil, @conditions : Array | Nil = nil, @config : Api::Core::V1::NodeConfigStatus | Nil = nil, @daemon_endpoints : Api::Core::V1::NodeDaemonEndpoints | Nil = nil, @images : Array | Nil = nil, @node_info : Api::Core::V1::NodeSystemInfo | Nil = nil, @phase : String | Nil = nil, @volumes_attached : Array | Nil = nil, @volumes_in_use : Array | Nil = nil)
     end

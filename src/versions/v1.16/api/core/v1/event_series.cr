@@ -2,11 +2,14 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # EventSeries contain information on series of events, i.e. thing that [was/is happening continuously for some time.](was/is happening continuously for some time.)
+  @[::K8S::Properties(
+    count: {type: Int32, nilable: true, key: "count", getter: false, setter: false},
+    last_observed_time: {type: Time, nilable: true, key: "lastObservedTime", getter: false, setter: false},
+    state: {type: String, nilable: true, key: "state", getter: false, setter: false},
+  )]
   class Api::Core::V1::EventSeries
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -15,22 +18,12 @@ module K8S
     property count : Int32 | Nil
 
     # Time of the last occurrence observed
+    @[::JSON::Field(key: "lastObservedTime")]
+    @[::YAML::Field(key: "lastObservedTime")]
     property last_observed_time : Time | Nil
 
     # State of this Series: Ongoing or Finished Deprecated. Planned removal for 1.18
     property state : String | Nil
-
-    ::YAML.mapping({
-      count:              {type: Int32, nilable: true, key: "count", getter: false, setter: false},
-      last_observed_time: {type: Time, nilable: true, key: "lastObservedTime", getter: false, setter: false},
-      state:              {type: String, nilable: true, key: "state", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      count:              {type: Int32, nilable: true, key: "count", getter: false, setter: false},
-      last_observed_time: {type: Time, nilable: true, key: "lastObservedTime", getter: false, setter: false},
-      state:              {type: String, nilable: true, key: "state", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @count : Int32 | Nil = nil, @last_observed_time : Time | Nil = nil, @state : String | Nil = nil)
     end

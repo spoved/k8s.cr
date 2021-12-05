@@ -2,12 +2,16 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # PriorityLevelConfigurationList is a list of PriorityLevelConfiguration objects.
-  @[::K8S::GroupVersionKind(group: "flowcontrol.apiserver.k8s.io", kind: "PriorityLevelConfigurationList", version: "v1alpha1")]
+  @[::K8S::GroupVersionKind(group: "flowcontrol.apiserver.k8s.io", kind: "PriorityLevelConfigurationList", version: "v1alpha1", full: "io.k8s.api.flowcontrol.v1alpha1.PriorityLevelConfigurationList")]
+  @[::K8S::Properties(
+    api_version: {type: String, nilable: true, key: "apiVersion", getter: false, setter: false},
+    items: {type: Array(Api::Flowcontrol::V1alpha1::PriorityLevelConfiguration), nilable: false, key: "items", getter: false, setter: false},
+    kind: {type: String, nilable: true, key: "kind", getter: false, setter: false},
+    metadata: {type: Apimachinery::Apis::Meta::V1::ListMeta, nilable: true, key: "metadata", getter: false, setter: false},
+  )]
   @[::K8S::Action(name: "post", verb: "post",
     path: "/apis/flowcontrol.apiserver.k8s.io/v1alpha1/prioritylevelconfigurations", toplevel: false,
     args: [{name: "metadata", type: Apimachinery::Apis::Meta::V1::ObjectMeta | Nil, default: nil},
@@ -57,20 +61,6 @@ module K8S
 
     # `metadata` is the standard object's metadata. More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)
     property metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil
-
-    ::YAML.mapping({
-      api_version: {type: String, default: "flowcontrol/v1alpha1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "List", key: "kind", setter: false},
-      items:       {type: Array(Api::Flowcontrol::V1alpha1::PriorityLevelConfiguration), nilable: false, key: "items", getter: false, setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ListMeta, nilable: true, key: "metadata", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      api_version: {type: String, default: "flowcontrol/v1alpha1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "List", key: "kind", setter: false},
-      items:       {type: Array(Api::Flowcontrol::V1alpha1::PriorityLevelConfiguration), nilable: false, key: "items", getter: false, setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ListMeta, nilable: true, key: "metadata", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @items : Array, @metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil = nil)
     end

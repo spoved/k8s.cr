@@ -2,16 +2,24 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # MetricSpec specifies how to scale based on a single metric (only `type` and one other matching field should be set at once).
+  @[::K8S::Properties(
+    container_resource: {type: Api::Autoscaling::V2beta1::ContainerResourceMetricSource, nilable: true, key: "containerResource", getter: false, setter: false},
+    external: {type: Api::Autoscaling::V2beta1::ExternalMetricSource, nilable: true, key: "external", getter: false, setter: false},
+    object: {type: Api::Autoscaling::V2beta1::ObjectMetricSource, nilable: true, key: "object", getter: false, setter: false},
+    pods: {type: Api::Autoscaling::V2beta1::PodsMetricSource, nilable: true, key: "pods", getter: false, setter: false},
+    resource: {type: Api::Autoscaling::V2beta1::ResourceMetricSource, nilable: true, key: "resource", getter: false, setter: false},
+    type: {type: String, nilable: false, key: "type", getter: false, setter: false},
+  )]
   class Api::Autoscaling::V2beta1::MetricSpec
     include ::JSON::Serializable
     include ::YAML::Serializable
 
     # container resource refers to a resource metric (such as those specified in requests and limits) known to Kubernetes describing a single container in each pod of the current scale target (e.g. CPU or memory). Such metrics are built in to Kubernetes, and have special scaling options on top of those available to normal per-pod metrics using the "pods" source. This is an alpha feature and can be enabled by the HPAContainerMetrics feature flag.
+    @[::JSON::Field(key: "containerResource")]
+    @[::YAML::Field(key: "containerResource")]
     property container_resource : Api::Autoscaling::V2beta1::ContainerResourceMetricSource | Nil
 
     # external refers to a global metric that is not associated with any Kubernetes object. It allows autoscaling based on information coming from components running outside of cluster (for example length of queue in cloud messaging service, or QPS from loadbalancer running outside of cluster).
@@ -28,24 +36,6 @@ module K8S
 
     # type is the type of metric source.  It should be one of "ContainerResource", "External", "Object", "Pods" or "Resource", each mapping to a matching field in the object. Note: "ContainerResource" type is available on when the feature-gate HPAContainerMetrics is enabled
     property type : String
-
-    ::YAML.mapping({
-      container_resource: {type: Api::Autoscaling::V2beta1::ContainerResourceMetricSource, nilable: true, key: "containerResource", getter: false, setter: false},
-      external:           {type: Api::Autoscaling::V2beta1::ExternalMetricSource, nilable: true, key: "external", getter: false, setter: false},
-      object:             {type: Api::Autoscaling::V2beta1::ObjectMetricSource, nilable: true, key: "object", getter: false, setter: false},
-      pods:               {type: Api::Autoscaling::V2beta1::PodsMetricSource, nilable: true, key: "pods", getter: false, setter: false},
-      resource:           {type: Api::Autoscaling::V2beta1::ResourceMetricSource, nilable: true, key: "resource", getter: false, setter: false},
-      type:               {type: String, nilable: false, key: "type", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      container_resource: {type: Api::Autoscaling::V2beta1::ContainerResourceMetricSource, nilable: true, key: "containerResource", getter: false, setter: false},
-      external:           {type: Api::Autoscaling::V2beta1::ExternalMetricSource, nilable: true, key: "external", getter: false, setter: false},
-      object:             {type: Api::Autoscaling::V2beta1::ObjectMetricSource, nilable: true, key: "object", getter: false, setter: false},
-      pods:               {type: Api::Autoscaling::V2beta1::PodsMetricSource, nilable: true, key: "pods", getter: false, setter: false},
-      resource:           {type: Api::Autoscaling::V2beta1::ResourceMetricSource, nilable: true, key: "resource", getter: false, setter: false},
-      type:               {type: String, nilable: false, key: "type", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @type : String, @container_resource : Api::Autoscaling::V2beta1::ContainerResourceMetricSource | Nil = nil, @external : Api::Autoscaling::V2beta1::ExternalMetricSource | Nil = nil, @object : Api::Autoscaling::V2beta1::ObjectMetricSource | Nil = nil, @pods : Api::Autoscaling::V2beta1::PodsMetricSource | Nil = nil, @resource : Api::Autoscaling::V2beta1::ResourceMetricSource | Nil = nil)
     end

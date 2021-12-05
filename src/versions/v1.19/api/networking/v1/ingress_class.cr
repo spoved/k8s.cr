@@ -2,12 +2,16 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # IngressClass represents the class of the Ingress, referenced by the Ingress Spec. The [`ingressclass.kubernetes.io/is-default-class` annotation can be used to indicate that an IngressClass should be considered default. When a single IngressClass resource has this annotation set to true, new Ingress resources without a class specified will be assigned this default class.](`ingressclass.kubernetes.io/is-default-class` annotation can be used to indicate that an IngressClass should be considered default. When a single IngressClass resource has this annotation set to true, new Ingress resources without a class specified will be assigned this default class.)
-  @[::K8S::GroupVersionKind(group: "networking.k8s.io", kind: "IngressClass", version: "v1")]
+  @[::K8S::GroupVersionKind(group: "networking.k8s.io", kind: "IngressClass", version: "v1", full: "io.k8s.api.networking.v1.IngressClass")]
+  @[::K8S::Properties(
+    api_version: {type: String, nilable: true, key: "apiVersion", getter: false, setter: false},
+    kind: {type: String, nilable: true, key: "kind", getter: false, setter: false},
+    metadata: {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
+    spec: {type: Api::Networking::V1::IngressClassSpec, nilable: true, key: "spec", getter: false, setter: false},
+  )]
   @[::K8S::Action(name: "post", verb: "post",
     path: "/apis/networking.k8s.io/v1/ingressclasses", toplevel: false,
     args: [{name: "context", type: String | Nil, default: nil},
@@ -82,20 +86,6 @@ module K8S
 
     # Spec is the desired state of the IngressClass. More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status)
     property spec : Api::Networking::V1::IngressClassSpec | Nil
-
-    ::YAML.mapping({
-      api_version: {type: String, default: "networking/v1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "IngressClass", key: "kind", setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      spec:        {type: Api::Networking::V1::IngressClassSpec, nilable: true, key: "spec", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      api_version: {type: String, default: "networking/v1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "IngressClass", key: "kind", setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      spec:        {type: Api::Networking::V1::IngressClassSpec, nilable: true, key: "spec", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil, @spec : Api::Networking::V1::IngressClassSpec | Nil = nil)
     end

@@ -2,12 +2,16 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # CustomResourceDefinitionList is a list of CustomResourceDefinition objects.
-  @[::K8S::GroupVersionKind(group: "apiextensions.k8s.io", kind: "CustomResourceDefinitionList", version: "v1")]
+  @[::K8S::GroupVersionKind(group: "apiextensions.k8s.io", kind: "CustomResourceDefinitionList", version: "v1", full: "io.k8s.apiextensions-apiserver.pkg.apis.apiextensions.v1.CustomResourceDefinitionList")]
+  @[::K8S::Properties(
+    api_version: {type: String, nilable: true, key: "apiVersion", getter: false, setter: false},
+    items: {type: Array(ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinition), nilable: false, key: "items", getter: false, setter: false},
+    kind: {type: String, nilable: true, key: "kind", getter: false, setter: false},
+    metadata: {type: Apimachinery::Apis::Meta::V1::ListMeta, nilable: true, key: "metadata", getter: false, setter: false},
+  )]
   @[::K8S::Action(name: "post", verb: "post",
     path: "/apis/apiextensions.k8s.io/v1/customresourcedefinitions", toplevel: false,
     args: [{name: "spec", type: ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionSpec},
@@ -56,20 +60,6 @@ module K8S
     property items : Array(ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinition)
 
     property metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil
-
-    ::YAML.mapping({
-      api_version: {type: String, default: "apiextensions/v1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "List", key: "kind", setter: false},
-      items:       {type: Array(ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinition), nilable: false, key: "items", getter: false, setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ListMeta, nilable: true, key: "metadata", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      api_version: {type: String, default: "apiextensions/v1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "List", key: "kind", setter: false},
-      items:       {type: Array(ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinition), nilable: false, key: "items", getter: false, setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ListMeta, nilable: true, key: "metadata", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @items : Array, @metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil = nil)
     end

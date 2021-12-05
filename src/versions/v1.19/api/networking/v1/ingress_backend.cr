@@ -2,11 +2,13 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # IngressBackend describes all endpoints for a given service and port.
+  @[::K8S::Properties(
+    resource: {type: Api::Core::V1::TypedLocalObjectReference, nilable: true, key: "resource", getter: false, setter: false},
+    service: {type: Api::Networking::V1::IngressServiceBackend, nilable: true, key: "service", getter: false, setter: false},
+  )]
   class Api::Networking::V1::IngressBackend
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -16,16 +18,6 @@ module K8S
 
     # Service references a Service as a Backend. This is a mutually exclusive setting with "Resource".
     property service : Api::Networking::V1::IngressServiceBackend | Nil
-
-    ::YAML.mapping({
-      resource: {type: Api::Core::V1::TypedLocalObjectReference, nilable: true, key: "resource", getter: false, setter: false},
-      service:  {type: Api::Networking::V1::IngressServiceBackend, nilable: true, key: "service", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      resource: {type: Api::Core::V1::TypedLocalObjectReference, nilable: true, key: "resource", getter: false, setter: false},
-      service:  {type: Api::Networking::V1::IngressServiceBackend, nilable: true, key: "service", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @resource : Api::Core::V1::TypedLocalObjectReference | Nil = nil, @service : Api::Networking::V1::IngressServiceBackend | Nil = nil)
     end

@@ -2,25 +2,18 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # VolumeNodeAffinity defines constraints that limit what nodes this volume can be accessed from.
+  @[::K8S::Properties(
+    required: {type: Api::Core::V1::NodeSelector, nilable: true, key: "required", getter: false, setter: false},
+  )]
   class Api::Core::V1::VolumeNodeAffinity
     include ::JSON::Serializable
     include ::YAML::Serializable
 
     # Required specifies hard node constraints that must be met.
     property required : Api::Core::V1::NodeSelector | Nil
-
-    ::YAML.mapping({
-      required: {type: Api::Core::V1::NodeSelector, nilable: true, key: "required", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      required: {type: Api::Core::V1::NodeSelector, nilable: true, key: "required", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @required : Api::Core::V1::NodeSelector | Nil = nil)
     end

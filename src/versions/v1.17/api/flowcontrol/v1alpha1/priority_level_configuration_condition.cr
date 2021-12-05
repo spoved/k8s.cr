@@ -2,16 +2,23 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # PriorityLevelConfigurationCondition defines the condition of priority level.
+  @[::K8S::Properties(
+    last_transition_time: {type: Time, nilable: true, key: "lastTransitionTime", getter: false, setter: false},
+    message: {type: String, nilable: true, key: "message", getter: false, setter: false},
+    reason: {type: String, nilable: true, key: "reason", getter: false, setter: false},
+    status: {type: String, nilable: true, key: "status", getter: false, setter: false},
+    type: {type: String, nilable: true, key: "type", getter: false, setter: false},
+  )]
   class Api::Flowcontrol::V1alpha1::PriorityLevelConfigurationCondition
     include ::JSON::Serializable
     include ::YAML::Serializable
 
     # `lastTransitionTime` is the last time the condition transitioned from one status to another.
+    @[::JSON::Field(key: "lastTransitionTime")]
+    @[::YAML::Field(key: "lastTransitionTime")]
     property last_transition_time : Time | Nil
 
     # `message` is a human-readable message indicating details about last transition.
@@ -25,22 +32,6 @@ module K8S
 
     # `type` is the type of the condition. Required.
     property type : String | Nil
-
-    ::YAML.mapping({
-      last_transition_time: {type: Time, nilable: true, key: "lastTransitionTime", getter: false, setter: false},
-      message:              {type: String, nilable: true, key: "message", getter: false, setter: false},
-      reason:               {type: String, nilable: true, key: "reason", getter: false, setter: false},
-      status:               {type: String, nilable: true, key: "status", getter: false, setter: false},
-      type:                 {type: String, nilable: true, key: "type", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      last_transition_time: {type: Time, nilable: true, key: "lastTransitionTime", getter: false, setter: false},
-      message:              {type: String, nilable: true, key: "message", getter: false, setter: false},
-      reason:               {type: String, nilable: true, key: "reason", getter: false, setter: false},
-      status:               {type: String, nilable: true, key: "status", getter: false, setter: false},
-      type:                 {type: String, nilable: true, key: "type", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @last_transition_time : Time | Nil = nil, @message : String | Nil = nil, @reason : String | Nil = nil, @status : String | Nil = nil, @type : String | Nil = nil)
     end

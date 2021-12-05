@@ -2,12 +2,16 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # RuntimeClassList is a list of RuntimeClass objects.
-  @[::K8S::GroupVersionKind(group: "node.k8s.io", kind: "RuntimeClassList", version: "v1")]
+  @[::K8S::GroupVersionKind(group: "node.k8s.io", kind: "RuntimeClassList", version: "v1", full: "io.k8s.api.node.v1.RuntimeClassList")]
+  @[::K8S::Properties(
+    api_version: {type: String, nilable: true, key: "apiVersion", getter: false, setter: false},
+    items: {type: Array(Api::Node::V1::RuntimeClass), nilable: false, key: "items", getter: false, setter: false},
+    kind: {type: String, nilable: true, key: "kind", getter: false, setter: false},
+    metadata: {type: Apimachinery::Apis::Meta::V1::ListMeta, nilable: true, key: "metadata", getter: false, setter: false},
+  )]
   @[::K8S::Action(name: "post", verb: "post",
     path: "/apis/node.k8s.io/v1/runtimeclasses", toplevel: false,
     args: [{name: "handler", type: String},
@@ -58,20 +62,6 @@ module K8S
 
     # Standard list metadata. More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)
     property metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil
-
-    ::YAML.mapping({
-      api_version: {type: String, default: "node/v1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "List", key: "kind", setter: false},
-      items:       {type: Array(Api::Node::V1::RuntimeClass), nilable: false, key: "items", getter: false, setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ListMeta, nilable: true, key: "metadata", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      api_version: {type: String, default: "node/v1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "List", key: "kind", setter: false},
-      items:       {type: Array(Api::Node::V1::RuntimeClass), nilable: false, key: "items", getter: false, setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ListMeta, nilable: true, key: "metadata", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @items : Array, @metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil = nil)
     end

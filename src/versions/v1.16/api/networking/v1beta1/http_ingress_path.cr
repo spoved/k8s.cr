@@ -2,32 +2,7 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
-  # HTTPIngressPath associates a path regex with a backend. Incoming urls matching the path are forwarded to the backend.
-  class Api::Networking::V1beta1::HTTPIngressPath
-    include ::JSON::Serializable
-    include ::YAML::Serializable
-
-    # Backend defines the referenced service endpoint to which the traffic will be forwarded to.
-    property backend : Api::Networking::V1beta1::IngressBackend
-
-    # Path is an extended POSIX regex as defined by IEEE Std 1003.1, (i.e this follows the [egrep/unix syntax, not the perl syntax) matched against the path of an incoming request. Currently it can contain characters disallowed from the conventional "path" part of a URL as defined by RFC 3986. Paths must begin with a '/'. If unspecified, the path defaults to a catch all sending traffic to the backend.](egrep/unix syntax, not the perl syntax) matched against the path of an incoming request. Currently it can contain characters disallowed from the conventional "path" part of a URL as defined by RFC 3986. Paths must begin with a '/'. If unspecified, the path defaults to a catch all sending traffic to the backend.)
-    property path : String | Nil
-
-    ::YAML.mapping({
-      backend: {type: Api::Networking::V1beta1::IngressBackend, nilable: false, key: "backend", getter: false, setter: false},
-      path:    {type: String, nilable: true, key: "path", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      backend: {type: Api::Networking::V1beta1::IngressBackend, nilable: false, key: "backend", getter: false, setter: false},
-      path:    {type: String, nilable: true, key: "path", getter: false, setter: false},
-    }, true)
-
-    def initialize(*, @backend : Api::Networking::V1beta1::IngressBackend, @path : String | Nil = nil)
-    end
-  end
+  alias Api::Networking::V1beta1::HTTPIngressPath = Api::Extensions::V1beta1::HTTPIngressPath
 end

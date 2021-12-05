@@ -2,12 +2,17 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # Node is a worker node in Kubernetes. Each node will have a unique identifier in the cache (i.e. in etcd).
-  @[::K8S::GroupVersionKind(group: "", kind: "Node", version: "v1")]
+  @[::K8S::GroupVersionKind(group: "", kind: "Node", version: "v1", full: "io.k8s.api.core.v1.Node")]
+  @[::K8S::Properties(
+    api_version: {type: String, nilable: true, key: "apiVersion", getter: false, setter: false},
+    kind: {type: String, nilable: true, key: "kind", getter: false, setter: false},
+    metadata: {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
+    spec: {type: Api::Core::V1::NodeSpec, nilable: true, key: "spec", getter: false, setter: false},
+    status: {type: Api::Core::V1::NodeStatus, nilable: true, key: "status", getter: false, setter: false},
+  )]
   @[::K8S::Action(name: "post", verb: "post",
     path: "/api/v1/nodes", toplevel: false,
     args: [{name: "context", type: String | Nil, default: nil},
@@ -103,22 +108,6 @@ module K8S
 
     # Most recently observed status of the node. Populated by the system. Read-only. More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status)
     property status : Api::Core::V1::NodeStatus | Nil
-
-    ::YAML.mapping({
-      api_version: {type: String, default: "v1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "Node", key: "kind", setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      spec:        {type: Api::Core::V1::NodeSpec, nilable: true, key: "spec", getter: false, setter: false},
-      status:      {type: Api::Core::V1::NodeStatus, nilable: true, key: "status", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      api_version: {type: String, default: "v1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "Node", key: "kind", setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      spec:        {type: Api::Core::V1::NodeSpec, nilable: true, key: "spec", getter: false, setter: false},
-      status:      {type: Api::Core::V1::NodeStatus, nilable: true, key: "status", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil, @spec : Api::Core::V1::NodeSpec | Nil = nil, @status : Api::Core::V1::NodeStatus | Nil = nil)
     end

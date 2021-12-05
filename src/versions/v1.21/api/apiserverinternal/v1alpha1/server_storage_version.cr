@@ -2,35 +2,32 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # An API server instance reports the version it can decode and the version it encodes objects to when persisting objects in the backend.
+  @[::K8S::Properties(
+    api_server_id: {type: String, nilable: true, key: "apiServerID", getter: false, setter: false},
+    decodable_versions: {type: Array(String), nilable: true, key: "decodableVersions", getter: false, setter: false},
+    encoding_version: {type: String, nilable: true, key: "encodingVersion", getter: false, setter: false},
+  )]
   class Api::Apiserverinternal::V1alpha1::ServerStorageVersion
     include ::JSON::Serializable
     include ::YAML::Serializable
 
     # The ID of the reporting API server.
+    @[::JSON::Field(key: "apiServerID")]
+    @[::YAML::Field(key: "apiServerID")]
     property api_server_id : String | Nil
 
     # The API server can decode objects encoded in these versions. The encodingVersion must be included in the decodableVersions.
+    @[::JSON::Field(key: "decodableVersions")]
+    @[::YAML::Field(key: "decodableVersions")]
     property decodable_versions : Array(String) | Nil
 
     # The API server encodes the object to this version when persisting it in the backend (e.g., etcd).
+    @[::JSON::Field(key: "encodingVersion")]
+    @[::YAML::Field(key: "encodingVersion")]
     property encoding_version : String | Nil
-
-    ::YAML.mapping({
-      api_server_id:      {type: String, nilable: true, key: "apiServerID", getter: false, setter: false},
-      decodable_versions: {type: Array(String), nilable: true, key: "decodableVersions", getter: false, setter: false},
-      encoding_version:   {type: String, nilable: true, key: "encodingVersion", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      api_server_id:      {type: String, nilable: true, key: "apiServerID", getter: false, setter: false},
-      decodable_versions: {type: Array(String), nilable: true, key: "decodableVersions", getter: false, setter: false},
-      encoding_version:   {type: String, nilable: true, key: "encodingVersion", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @api_server_id : String | Nil = nil, @decodable_versions : Array | Nil = nil, @encoding_version : String | Nil = nil)
     end

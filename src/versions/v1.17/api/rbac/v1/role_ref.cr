@@ -2,16 +2,21 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # RoleRef contains information that points to the role being used
+  @[::K8S::Properties(
+    api_group: {type: String, nilable: false, key: "apiGroup", getter: false, setter: false},
+    kind: {type: String, nilable: false, key: "kind", getter: false, setter: false},
+    name: {type: String, nilable: false, key: "name", getter: false, setter: false},
+  )]
   class Api::Rbac::V1::RoleRef
     include ::JSON::Serializable
     include ::YAML::Serializable
 
     # APIGroup is the group for the resource being referenced
+    @[::JSON::Field(key: "apiGroup")]
+    @[::YAML::Field(key: "apiGroup")]
     property api_group : String
 
     # Kind is the type of resource being referenced
@@ -19,18 +24,6 @@ module K8S
 
     # Name is the name of resource being referenced
     property name : String
-
-    ::YAML.mapping({
-      api_group: {type: String, nilable: false, key: "apiGroup", getter: false, setter: false},
-      kind:      {type: String, nilable: false, key: "kind", getter: false, setter: false},
-      name:      {type: String, nilable: false, key: "name", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      api_group: {type: String, nilable: false, key: "apiGroup", getter: false, setter: false},
-      kind:      {type: String, nilable: false, key: "kind", getter: false, setter: false},
-      name:      {type: String, nilable: false, key: "name", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @api_group : String, @kind : String, @name : String)
     end

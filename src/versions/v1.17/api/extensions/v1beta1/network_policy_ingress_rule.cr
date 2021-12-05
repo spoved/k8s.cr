@@ -2,11 +2,13 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # DEPRECATED 1.9 - This group version of NetworkPolicyIngressRule is deprecated by [networking/v1/NetworkPolicyIngressRule. This NetworkPolicyIngressRule matches traffic if and only if the traffic matches both ports AND from.](networking/v1/NetworkPolicyIngressRule. This NetworkPolicyIngressRule matches traffic if and only if the traffic matches both ports AND from.)
+  @[::K8S::Properties(
+    from: {type: Array(Api::Extensions::V1beta1::NetworkPolicyPeer), nilable: true, key: "from", getter: false, setter: false},
+    ports: {type: Array(Api::Extensions::V1beta1::NetworkPolicyPort), nilable: true, key: "ports", getter: false, setter: false},
+  )]
   class Api::Extensions::V1beta1::NetworkPolicyIngressRule
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -16,16 +18,6 @@ module K8S
 
     # List of ports which should be made accessible on the pods selected for this rule. Each item in this list is combined using a logical OR. If this field is empty or missing, this rule matches all ports (traffic not restricted by port). If this field is present and contains at least one item, then this rule allows traffic only if the traffic matches at least one port in the list.
     property ports : Array(Api::Extensions::V1beta1::NetworkPolicyPort) | Nil
-
-    ::YAML.mapping({
-      from:  {type: Array(Api::Extensions::V1beta1::NetworkPolicyPeer), nilable: true, key: "from", getter: false, setter: false},
-      ports: {type: Array(Api::Extensions::V1beta1::NetworkPolicyPort), nilable: true, key: "ports", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      from:  {type: Array(Api::Extensions::V1beta1::NetworkPolicyPeer), nilable: true, key: "from", getter: false, setter: false},
-      ports: {type: Array(Api::Extensions::V1beta1::NetworkPolicyPort), nilable: true, key: "ports", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @from : Array | Nil = nil, @ports : Array | Nil = nil)
     end

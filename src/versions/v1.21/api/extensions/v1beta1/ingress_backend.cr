@@ -2,11 +2,14 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # IngressBackend describes all endpoints for a given service and port.
+  @[::K8S::Properties(
+    resource: {type: Api::Core::V1::TypedLocalObjectReference, nilable: true, key: "resource", getter: false, setter: false},
+    service_name: {type: String, nilable: true, key: "serviceName", getter: false, setter: false},
+    service_port: {type: Int32 | String, nilable: true, key: "servicePort", getter: false, setter: false},
+  )]
   class Api::Extensions::V1beta1::IngressBackend
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -15,22 +18,14 @@ module K8S
     property resource : Api::Core::V1::TypedLocalObjectReference | Nil
 
     # Specifies the name of the referenced service.
+    @[::JSON::Field(key: "serviceName")]
+    @[::YAML::Field(key: "serviceName")]
     property service_name : String | Nil
 
     # Specifies the port of the referenced service.
+    @[::JSON::Field(key: "servicePort")]
+    @[::YAML::Field(key: "servicePort")]
     property service_port : Int32 | String | Nil
-
-    ::YAML.mapping({
-      resource:     {type: Api::Core::V1::TypedLocalObjectReference, nilable: true, key: "resource", getter: false, setter: false},
-      service_name: {type: String, nilable: true, key: "serviceName", getter: false, setter: false},
-      service_port: {type: Int32 | String, nilable: true, key: "servicePort", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      resource:     {type: Api::Core::V1::TypedLocalObjectReference, nilable: true, key: "resource", getter: false, setter: false},
-      service_name: {type: String, nilable: true, key: "serviceName", getter: false, setter: false},
-      service_port: {type: Int32 | String, nilable: true, key: "servicePort", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @resource : Api::Core::V1::TypedLocalObjectReference | Nil = nil, @service_name : String | Nil = nil, @service_port : Int32 | String | Nil = nil)
     end

@@ -2,11 +2,14 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # StatusCause provides more information about an api.Status failure, including cases when multiple errors are encountered.
+  @[::K8S::Properties(
+    field: {type: String, nilable: true, key: "field", getter: false, setter: false},
+    message: {type: String, nilable: true, key: "message", getter: false, setter: false},
+    reason: {type: String, nilable: true, key: "reason", getter: false, setter: false},
+  )]
   class Apimachinery::Apis::Meta::V1::StatusCause
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -23,18 +26,6 @@ module K8S
 
     # A machine-readable description of the cause of the error. If this value is empty there is no information available.
     property reason : String | Nil
-
-    ::YAML.mapping({
-      field:   {type: String, nilable: true, key: "field", getter: false, setter: false},
-      message: {type: String, nilable: true, key: "message", getter: false, setter: false},
-      reason:  {type: String, nilable: true, key: "reason", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      field:   {type: String, nilable: true, key: "field", getter: false, setter: false},
-      message: {type: String, nilable: true, key: "message", getter: false, setter: false},
-      reason:  {type: String, nilable: true, key: "reason", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @field : String | Nil = nil, @message : String | Nil = nil, @reason : String | Nil = nil)
     end

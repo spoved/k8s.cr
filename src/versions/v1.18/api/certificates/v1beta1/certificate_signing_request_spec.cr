@@ -2,11 +2,18 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # This information is immutable after the request is created. Only the Request and Usages fields can be set on creation, other fields are derived by Kubernetes and cannot be modified by users.
+  @[::K8S::Properties(
+    extra: {type: Hash(String, String), nilable: true, key: "extra", getter: false, setter: false},
+    groups: {type: Array(String), nilable: true, key: "groups", getter: false, setter: false},
+    request: {type: String, nilable: false, key: "request", getter: false, setter: false},
+    signer_name: {type: String, nilable: true, key: "signerName", getter: false, setter: false},
+    uid: {type: String, nilable: true, key: "uid", getter: false, setter: false},
+    usages: {type: Array(String), nilable: true, key: "usages", getter: false, setter: false},
+    username: {type: String, nilable: true, key: "username", getter: false, setter: false},
+  )]
   class Api::Certificates::V1beta1::CertificateSigningRequestSpec
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -27,6 +34,8 @@ module K8S
     #     ["kubernetes.io/kubelet-serving".]("kubernetes.io/kubelet-serving".)
     #  3. Otherwise, it is assigned ["kubernetes.io/legacy-unknown".]("kubernetes.io/legacy-unknown".)
     # Distribution of trust for signers happens out of band. You can select on this field using `spec.signerName`.
+    @[::JSON::Field(key: "signerName")]
+    @[::YAML::Field(key: "signerName")]
     property signer_name : String | Nil
 
     # UID information about the requesting user. See user.Info interface for details.
@@ -38,26 +47,6 @@ module K8S
 
     # Information about the requesting user. See user.Info interface for details.
     property username : String | Nil
-
-    ::YAML.mapping({
-      extra:       {type: Hash(String, String), nilable: true, key: "extra", getter: false, setter: false},
-      groups:      {type: Array(String), nilable: true, key: "groups", getter: false, setter: false},
-      request:     {type: String, nilable: false, key: "request", getter: false, setter: false},
-      signer_name: {type: String, nilable: true, key: "signerName", getter: false, setter: false},
-      uid:         {type: String, nilable: true, key: "uid", getter: false, setter: false},
-      usages:      {type: Array(String), nilable: true, key: "usages", getter: false, setter: false},
-      username:    {type: String, nilable: true, key: "username", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      extra:       {type: Hash(String, String), nilable: true, key: "extra", getter: false, setter: false},
-      groups:      {type: Array(String), nilable: true, key: "groups", getter: false, setter: false},
-      request:     {type: String, nilable: false, key: "request", getter: false, setter: false},
-      signer_name: {type: String, nilable: true, key: "signerName", getter: false, setter: false},
-      uid:         {type: String, nilable: true, key: "uid", getter: false, setter: false},
-      usages:      {type: Array(String), nilable: true, key: "usages", getter: false, setter: false},
-      username:    {type: String, nilable: true, key: "username", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @request : String, @extra : Hash(String, String) | Nil = nil, @groups : Array | Nil = nil, @signer_name : String | Nil = nil, @uid : String | Nil = nil, @usages : Array | Nil = nil, @username : String | Nil = nil)
     end

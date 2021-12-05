@@ -2,11 +2,13 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # SecretReference represents a Secret Reference. It has enough information to retrieve secret in any namespace
+  @[::K8S::Properties(
+    name: {type: String, nilable: true, key: "name", getter: false, setter: false},
+    namespace: {type: String, nilable: true, key: "namespace", getter: false, setter: false},
+  )]
   class Api::Core::V1::SecretReference
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -16,16 +18,6 @@ module K8S
 
     # Namespace defines the space within which the secret name must be unique.
     property namespace : String | Nil
-
-    ::YAML.mapping({
-      name:      {type: String, nilable: true, key: "name", getter: false, setter: false},
-      namespace: {type: String, nilable: true, key: "namespace", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      name:      {type: String, nilable: true, key: "name", getter: false, setter: false},
-      namespace: {type: String, nilable: true, key: "namespace", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @name : String | Nil = nil, @namespace : String | Nil = nil)
     end

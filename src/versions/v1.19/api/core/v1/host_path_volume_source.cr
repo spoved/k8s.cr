@@ -2,11 +2,13 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # Represents a host path mapped into a pod. Host path volumes do not support ownership management or SELinux relabeling.
+  @[::K8S::Properties(
+    path: {type: String, nilable: false, key: "path", getter: false, setter: false},
+    type: {type: String, nilable: true, key: "type", getter: false, setter: false},
+  )]
   class Api::Core::V1::HostPathVolumeSource
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -16,16 +18,6 @@ module K8S
 
     # Type for HostPath Volume Defaults to "" More info: [https://kubernetes.io/docs/concepts/storage/volumes#hostpath](https://kubernetes.io/docs/concepts/storage/volumes#hostpath)
     property type : String | Nil
-
-    ::YAML.mapping({
-      path: {type: String, nilable: false, key: "path", getter: false, setter: false},
-      type: {type: String, nilable: true, key: "type", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      path: {type: String, nilable: false, key: "path", getter: false, setter: false},
-      type: {type: String, nilable: true, key: "type", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @path : String, @type : String | Nil = nil)
     end

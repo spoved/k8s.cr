@@ -2,19 +2,29 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # CertificateSigningRequestCondition describes a condition of a CertificateSigningRequest object
+  @[::K8S::Properties(
+    last_transition_time: {type: Time, nilable: true, key: "lastTransitionTime", getter: false, setter: false},
+    last_update_time: {type: Time, nilable: true, key: "lastUpdateTime", getter: false, setter: false},
+    message: {type: String, nilable: true, key: "message", getter: false, setter: false},
+    reason: {type: String, nilable: true, key: "reason", getter: false, setter: false},
+    status: {type: String, nilable: false, key: "status", getter: false, setter: false},
+    type: {type: String, nilable: false, key: "type", getter: false, setter: false},
+  )]
   class Api::Certificates::V1::CertificateSigningRequestCondition
     include ::JSON::Serializable
     include ::YAML::Serializable
 
     # lastTransitionTime is the time the condition last transitioned from one status to another. If unset, when a new condition type is added or an existing condition's status is changed, the server defaults this to the current time.
+    @[::JSON::Field(key: "lastTransitionTime")]
+    @[::YAML::Field(key: "lastTransitionTime")]
     property last_transition_time : Time | Nil
 
     # lastUpdateTime is the time of the last update to this condition
+    @[::JSON::Field(key: "lastUpdateTime")]
+    @[::YAML::Field(key: "lastUpdateTime")]
     property last_update_time : Time | Nil
 
     # message contains a human readable message with details about the request state
@@ -38,24 +48,6 @@ module K8S
     #
     # Only one condition of a given type is allowed.
     property type : String
-
-    ::YAML.mapping({
-      last_transition_time: {type: Time, nilable: true, key: "lastTransitionTime", getter: false, setter: false},
-      last_update_time:     {type: Time, nilable: true, key: "lastUpdateTime", getter: false, setter: false},
-      message:              {type: String, nilable: true, key: "message", getter: false, setter: false},
-      reason:               {type: String, nilable: true, key: "reason", getter: false, setter: false},
-      status:               {type: String, nilable: false, key: "status", getter: false, setter: false},
-      type:                 {type: String, nilable: false, key: "type", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      last_transition_time: {type: Time, nilable: true, key: "lastTransitionTime", getter: false, setter: false},
-      last_update_time:     {type: Time, nilable: true, key: "lastUpdateTime", getter: false, setter: false},
-      message:              {type: String, nilable: true, key: "message", getter: false, setter: false},
-      reason:               {type: String, nilable: true, key: "reason", getter: false, setter: false},
-      status:               {type: String, nilable: false, key: "status", getter: false, setter: false},
-      type:                 {type: String, nilable: false, key: "type", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @status : String, @type : String, @last_transition_time : Time | Nil = nil, @last_update_time : Time | Nil = nil, @message : String | Nil = nil, @reason : String | Nil = nil)
     end

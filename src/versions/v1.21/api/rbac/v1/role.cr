@@ -2,12 +2,16 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # Role is a namespaced, logical grouping of PolicyRules that can be referenced as a unit by a RoleBinding.
-  @[::K8S::GroupVersionKind(group: "rbac.authorization.k8s.io", kind: "Role", version: "v1")]
+  @[::K8S::GroupVersionKind(group: "rbac.authorization.k8s.io", kind: "Role", version: "v1", full: "io.k8s.api.rbac.v1.Role")]
+  @[::K8S::Properties(
+    api_version: {type: String, nilable: true, key: "apiVersion", getter: false, setter: false},
+    kind: {type: String, nilable: true, key: "kind", getter: false, setter: false},
+    metadata: {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
+    rules: {type: Array(Api::Rbac::V1::PolicyRule), nilable: true, key: "rules", getter: false, setter: false},
+  )]
   @[::K8S::Action(name: "post", verb: "post",
     path: "/apis/rbac.authorization.k8s.io/v1/namespaces/{namespace}/roles", toplevel: false,
     args: [{name: "context", type: String | Nil, default: nil},
@@ -83,20 +87,6 @@ module K8S
 
     # Rules holds all the PolicyRules for this Role
     property rules : Array(Api::Rbac::V1::PolicyRule) | Nil
-
-    ::YAML.mapping({
-      api_version: {type: String, default: "rbac.authorization.k8s.io/v1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "Role", key: "kind", setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      rules:       {type: Array(Api::Rbac::V1::PolicyRule), nilable: true, key: "rules", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      api_version: {type: String, default: "rbac.authorization.k8s.io/v1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "Role", key: "kind", setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      rules:       {type: Array(Api::Rbac::V1::PolicyRule), nilable: true, key: "rules", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil, @rules : Array | Nil = nil)
     end

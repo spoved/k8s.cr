@@ -2,11 +2,19 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # CertificateSigningRequestSpec contains the certificate request.
+  @[::K8S::Properties(
+    expiration_seconds: {type: Int32, nilable: true, key: "expirationSeconds", getter: false, setter: false},
+    extra: {type: Hash(String, String), nilable: true, key: "extra", getter: false, setter: false},
+    groups: {type: Array(String), nilable: true, key: "groups", getter: false, setter: false},
+    request: {type: String, nilable: false, key: "request", getter: false, setter: false},
+    signer_name: {type: String, nilable: false, key: "signerName", getter: false, setter: false},
+    uid: {type: String, nilable: true, key: "uid", getter: false, setter: false},
+    usages: {type: Array(String), nilable: true, key: "usages", getter: false, setter: false},
+    username: {type: String, nilable: true, key: "username", getter: false, setter: false},
+  )]
   class Api::Certificates::V1::CertificateSigningRequestSpec
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -25,6 +33,8 @@ module K8S
     # The minimum valid value for expirationSeconds is 600, i.e. 10 minutes.
     #
     # As of v1.22, this field is beta and is controlled via the CSRDuration feature gate.
+    @[::JSON::Field(key: "expirationSeconds")]
+    @[::YAML::Field(key: "expirationSeconds")]
     property expiration_seconds : Int32 | Nil
 
     # extra contains extra attributes of the user that created the CertificateSigningRequest. Populated by the API server on creation and immutable.
@@ -57,6 +67,8 @@ module K8S
     #  4. Required, permitted, or forbidden key usages / extended key usages.
     #  5. [Expiration/certificate lifetime: whether it is fixed by the signer, configurable by the admin.](Expiration/certificate lifetime: whether it is fixed by the signer, configurable by the admin.)
     #  6. Whether or not requests for CA certificates are allowed.
+    @[::JSON::Field(key: "signerName")]
+    @[::YAML::Field(key: "signerName")]
     property signer_name : String
 
     # uid contains the uid of the user that created the CertificateSigningRequest. Populated by the API server on creation and immutable.
@@ -80,28 +92,6 @@ module K8S
 
     # username contains the name of the user that created the CertificateSigningRequest. Populated by the API server on creation and immutable.
     property username : String | Nil
-
-    ::YAML.mapping({
-      expiration_seconds: {type: Int32, nilable: true, key: "expirationSeconds", getter: false, setter: false},
-      extra:              {type: Hash(String, String), nilable: true, key: "extra", getter: false, setter: false},
-      groups:             {type: Array(String), nilable: true, key: "groups", getter: false, setter: false},
-      request:            {type: String, nilable: false, key: "request", getter: false, setter: false},
-      signer_name:        {type: String, nilable: false, key: "signerName", getter: false, setter: false},
-      uid:                {type: String, nilable: true, key: "uid", getter: false, setter: false},
-      usages:             {type: Array(String), nilable: true, key: "usages", getter: false, setter: false},
-      username:           {type: String, nilable: true, key: "username", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      expiration_seconds: {type: Int32, nilable: true, key: "expirationSeconds", getter: false, setter: false},
-      extra:              {type: Hash(String, String), nilable: true, key: "extra", getter: false, setter: false},
-      groups:             {type: Array(String), nilable: true, key: "groups", getter: false, setter: false},
-      request:            {type: String, nilable: false, key: "request", getter: false, setter: false},
-      signer_name:        {type: String, nilable: false, key: "signerName", getter: false, setter: false},
-      uid:                {type: String, nilable: true, key: "uid", getter: false, setter: false},
-      usages:             {type: Array(String), nilable: true, key: "usages", getter: false, setter: false},
-      username:           {type: String, nilable: true, key: "username", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @request : String, @signer_name : String, @expiration_seconds : Int32 | Nil = nil, @extra : Hash(String, String) | Nil = nil, @groups : Array | Nil = nil, @uid : String | Nil = nil, @usages : Array | Nil = nil, @username : String | Nil = nil)
     end

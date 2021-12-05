@@ -2,12 +2,16 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # NetworkPolicy describes what network traffic is allowed for a set of Pods
-  @[::K8S::GroupVersionKind(group: "networking.k8s.io", kind: "NetworkPolicy", version: "v1")]
+  @[::K8S::GroupVersionKind(group: "networking.k8s.io", kind: "NetworkPolicy", version: "v1", full: "io.k8s.api.networking.v1.NetworkPolicy")]
+  @[::K8S::Properties(
+    api_version: {type: String, nilable: true, key: "apiVersion", getter: false, setter: false},
+    kind: {type: String, nilable: true, key: "kind", getter: false, setter: false},
+    metadata: {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
+    spec: {type: Api::Networking::V1::NetworkPolicySpec, nilable: true, key: "spec", getter: false, setter: false},
+  )]
   @[::K8S::Action(name: "post", verb: "post",
     path: "/apis/networking.k8s.io/v1/namespaces/{namespace}/networkpolicies", toplevel: false,
     args: [{name: "context", type: String | Nil, default: nil},
@@ -85,20 +89,6 @@ module K8S
 
     # Specification of the desired behavior for this NetworkPolicy.
     property spec : Api::Networking::V1::NetworkPolicySpec | Nil
-
-    ::YAML.mapping({
-      api_version: {type: String, default: "networking/v1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "NetworkPolicy", key: "kind", setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      spec:        {type: Api::Networking::V1::NetworkPolicySpec, nilable: true, key: "spec", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      api_version: {type: String, default: "networking/v1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "NetworkPolicy", key: "kind", setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      spec:        {type: Api::Networking::V1::NetworkPolicySpec, nilable: true, key: "spec", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil, @spec : Api::Networking::V1::NetworkPolicySpec | Nil = nil)
     end

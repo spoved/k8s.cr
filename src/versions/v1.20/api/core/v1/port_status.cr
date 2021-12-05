@@ -2,10 +2,13 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
+  @[::K8S::Properties(
+    error: {type: String, nilable: true, key: "error", getter: false, setter: false},
+    port: {type: Int32, nilable: false, key: "port", getter: false, setter: false},
+    protocol: {type: String, nilable: false, key: "protocol", getter: false, setter: false},
+  )]
   class Api::Core::V1::PortStatus
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -21,18 +24,6 @@ module K8S
 
     # Protocol is the protocol of the service port of which status is recorded here The supported values are: "TCP", "UDP", "SCTP"
     property protocol : String
-
-    ::YAML.mapping({
-      error:    {type: String, nilable: true, key: "error", getter: false, setter: false},
-      port:     {type: Int32, nilable: false, key: "port", getter: false, setter: false},
-      protocol: {type: String, nilable: false, key: "protocol", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      error:    {type: String, nilable: true, key: "error", getter: false, setter: false},
-      port:     {type: Int32, nilable: false, key: "port", getter: false, setter: false},
-      protocol: {type: String, nilable: false, key: "protocol", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @port : Int32, @protocol : String, @error : String | Nil = nil)
     end

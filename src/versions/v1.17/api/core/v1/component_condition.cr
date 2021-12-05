@@ -2,11 +2,15 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # Information about the condition of a component.
+  @[::K8S::Properties(
+    error: {type: String, nilable: true, key: "error", getter: false, setter: false},
+    message: {type: String, nilable: true, key: "message", getter: false, setter: false},
+    status: {type: String, nilable: false, key: "status", getter: false, setter: false},
+    type: {type: String, nilable: false, key: "type", getter: false, setter: false},
+  )]
   class Api::Core::V1::ComponentCondition
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -22,20 +26,6 @@ module K8S
 
     # Type of condition for a component. Valid value: "Healthy"
     property type : String
-
-    ::YAML.mapping({
-      error:   {type: String, nilable: true, key: "error", getter: false, setter: false},
-      message: {type: String, nilable: true, key: "message", getter: false, setter: false},
-      status:  {type: String, nilable: false, key: "status", getter: false, setter: false},
-      type:    {type: String, nilable: false, key: "type", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      error:   {type: String, nilable: true, key: "error", getter: false, setter: false},
-      message: {type: String, nilable: true, key: "message", getter: false, setter: false},
-      status:  {type: String, nilable: false, key: "status", getter: false, setter: false},
-      type:    {type: String, nilable: false, key: "type", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @status : String, @type : String, @error : String | Nil = nil, @message : String | Nil = nil)
     end

@@ -2,22 +2,34 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # ManagedFieldsEntry is a workflow-id, a FieldSet and the group version of the resource that the fieldset applies to.
+  @[::K8S::Properties(
+    api_version: {type: String, nilable: true, key: "apiVersion", getter: false, setter: false},
+    fields_type: {type: String, nilable: true, key: "fieldsType", getter: false, setter: false},
+    fields_v1: {type: Apimachinery::Apis::Meta::V1::FieldsV1, nilable: true, key: "fieldsV1", getter: false, setter: false},
+    manager: {type: String, nilable: true, key: "manager", getter: false, setter: false},
+    operation: {type: String, nilable: true, key: "operation", getter: false, setter: false},
+    time: {type: Time, nilable: true, key: "time", getter: false, setter: false},
+  )]
   class Apimachinery::Apis::Meta::V1::ManagedFieldsEntry
     include ::JSON::Serializable
     include ::YAML::Serializable
 
     # APIVersion defines the version of this resource that this field set applies to. The format is ["group/version" just like the top-level APIVersion field. It is necessary to track the version of a field set because it cannot be automatically converted.]("group/version" just like the top-level APIVersion field. It is necessary to track the version of a field set because it cannot be automatically converted.)
+    @[::JSON::Field(key: "apiVersion")]
+    @[::YAML::Field(key: "apiVersion")]
     property api_version : String | Nil
 
     # FieldsType is the discriminator for the different fields format and version. There is currently only one possible value: "FieldsV1"
+    @[::JSON::Field(key: "fieldsType")]
+    @[::YAML::Field(key: "fieldsType")]
     property fields_type : String | Nil
 
     # FieldsV1 holds the first JSON version format as described in the "FieldsV1" type.
+    @[::JSON::Field(key: "fieldsV1")]
+    @[::YAML::Field(key: "fieldsV1")]
     property fields_v1 : Apimachinery::Apis::Meta::V1::FieldsV1 | Nil
 
     # Manager is an identifier of the workflow managing these fields.
@@ -28,24 +40,6 @@ module K8S
 
     # Time is timestamp of when these fields were set. It should always be empty if Operation is 'Apply'
     property time : Time | Nil
-
-    ::YAML.mapping({
-      api_version: {type: String, nilable: true, key: "apiVersion", getter: false, setter: false},
-      fields_type: {type: String, nilable: true, key: "fieldsType", getter: false, setter: false},
-      fields_v1:   {type: Apimachinery::Apis::Meta::V1::FieldsV1, nilable: true, key: "fieldsV1", getter: false, setter: false},
-      manager:     {type: String, nilable: true, key: "manager", getter: false, setter: false},
-      operation:   {type: String, nilable: true, key: "operation", getter: false, setter: false},
-      time:        {type: Time, nilable: true, key: "time", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      api_version: {type: String, nilable: true, key: "apiVersion", getter: false, setter: false},
-      fields_type: {type: String, nilable: true, key: "fieldsType", getter: false, setter: false},
-      fields_v1:   {type: Apimachinery::Apis::Meta::V1::FieldsV1, nilable: true, key: "fieldsV1", getter: false, setter: false},
-      manager:     {type: String, nilable: true, key: "manager", getter: false, setter: false},
-      operation:   {type: String, nilable: true, key: "operation", getter: false, setter: false},
-      time:        {type: Time, nilable: true, key: "time", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @api_version : String | Nil = nil, @fields_type : String | Nil = nil, @fields_v1 : Apimachinery::Apis::Meta::V1::FieldsV1 | Nil = nil, @manager : String | Nil = nil, @operation : String | Nil = nil, @time : Time | Nil = nil)
     end

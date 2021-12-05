@@ -2,12 +2,16 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # RuntimeClass defines a class of container runtime supported in the cluster. The RuntimeClass is used to determine which container runtime is used to run all containers in a pod. RuntimeClasses are (currently) manually defined by a user or cluster provisioner, and referenced in the PodSpec. The Kubelet is responsible for resolving the RuntimeClassName reference before running the pod.  For more details, see [https://git.k8s.io/enhancements/keps/sig-node/runtime-class.md](https://git.k8s.io/enhancements/keps/sig-node/runtime-class.md)
-  @[::K8S::GroupVersionKind(group: "node.k8s.io", kind: "RuntimeClass", version: "v1alpha1")]
+  @[::K8S::GroupVersionKind(group: "node.k8s.io", kind: "RuntimeClass", version: "v1alpha1", full: "io.k8s.api.node.v1alpha1.RuntimeClass")]
+  @[::K8S::Properties(
+    api_version: {type: String, nilable: true, key: "apiVersion", getter: false, setter: false},
+    kind: {type: String, nilable: true, key: "kind", getter: false, setter: false},
+    metadata: {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
+    spec: {type: Api::Node::V1alpha1::RuntimeClassSpec, nilable: false, key: "spec", getter: false, setter: false},
+  )]
   @[::K8S::Action(name: "post", verb: "post",
     path: "/apis/node.k8s.io/v1alpha1/runtimeclasses", toplevel: false,
     args: [{name: "context", type: String | Nil, default: nil},
@@ -82,20 +86,6 @@ module K8S
 
     # Specification of the RuntimeClass More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status)
     property spec : Api::Node::V1alpha1::RuntimeClassSpec
-
-    ::YAML.mapping({
-      api_version: {type: String, default: "node/v1alpha1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "RuntimeClass", key: "kind", setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      spec:        {type: Api::Node::V1alpha1::RuntimeClassSpec, nilable: false, key: "spec", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      api_version: {type: String, default: "node/v1alpha1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "RuntimeClass", key: "kind", setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      spec:        {type: Api::Node::V1alpha1::RuntimeClassSpec, nilable: false, key: "spec", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @spec : Api::Node::V1alpha1::RuntimeClassSpec, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil)
     end

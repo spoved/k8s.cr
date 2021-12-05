@@ -2,11 +2,13 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # DEPRECATED 1.9 - This group version of NetworkPolicyPort is deprecated by [networking/v1/NetworkPolicyPort.](networking/v1/NetworkPolicyPort.)
+  @[::K8S::Properties(
+    port: {type: Int32 | String, nilable: true, key: "port", getter: false, setter: false},
+    protocol: {type: String, nilable: true, key: "protocol", getter: false, setter: false},
+  )]
   class Api::Extensions::V1beta1::NetworkPolicyPort
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -16,16 +18,6 @@ module K8S
 
     # Optional.  The protocol (TCP, UDP, or SCTP) which traffic must match. If not specified, this field defaults to TCP.
     property protocol : String | Nil
-
-    ::YAML.mapping({
-      port:     {type: Int32 | String, nilable: true, key: "port", getter: false, setter: false},
-      protocol: {type: String, nilable: true, key: "protocol", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      port:     {type: Int32 | String, nilable: true, key: "port", getter: false, setter: false},
-      protocol: {type: String, nilable: true, key: "protocol", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @port : Int32 | String | Nil = nil, @protocol : String | Nil = nil)
     end

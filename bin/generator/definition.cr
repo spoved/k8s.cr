@@ -1,4 +1,6 @@
 require "file_utils"
+require "./aliases"
+require "./overrides"
 
 private def crystalize_name(name : String)
   name.gsub(/JSON/, "Json").gsub(/UUID/, "Uuid").gsub(/APIV3/, "Apiv3")
@@ -39,9 +41,10 @@ class Generator::Definition
 
   getter class_name : String
   getter name : String
-  getter file : IO::FileDescriptor
+  setter file : IO::FileDescriptor? = nil
   getter filename : String
   getter definition : Swagger::Definition
+  getter alias_of : String? = nil
 
   delegate required, properties, to: definition
 
@@ -49,26 +52,40 @@ class Generator::Definition
     file.print block.body + "\n"
   end
 
+  def file : IO::FileDescriptor
+    @file ||= File.open(@filename, "w+")
+  end
+
   def self.generate(*args)
     new(*args).generate
   end
 
   def initialize(@generator : Generator, @name : String)
+    @alias_of = @generator.is_alias?(@name)
     @class_name = generator.definitions[name]
     @definition = generator.schema.definitions[name]
     path = @class_name.split("::").map(&.underscore).join("/")
     @filename = File.join(base_dir, path) + ".cr"
     FileUtils.mkdir_p(File.dirname(@filename))
-    @file = File.open(@filename, "w+")
   end
 
   def generate
+    apply_overrides
+
     STDOUT.puts "Writing: #{filename}"
     file.puts "# THIS FILE WAS AUTO GENERATED FROM THE K8S SWAGGER SPEC"
     file.puts ""
     load_requires
     file.puts "module #{base_class.lchop("::")}"
 
+    if alias_of
+      file.puts %<alias #{class_name} = #{@generator.definitions[alias_of.not_nil!]}>
+      _end
+      file.close
+      return self
+    end
+
+    # TODO: Properly handle List alias
     if class_name == "Api::Core::V1::List"
       file.puts %<alias #{class_name} = ::K8S::Kubernetes::ResourceList>
       _end
@@ -114,7 +131,8 @@ class Generator::Definition
   end
 
   private def define_serialization
-    file.puts "include ::JSON::Serializable", "include ::YAML::Serializable", ""
+    file.puts "include ::JSON::Serializable",
+      "include ::YAML::Serializable", ""
   end
 
   private def define_class
@@ -122,7 +140,7 @@ class Generator::Definition
 
     define_serialization
     define_properties
-    define_mappings
+    # define_mappings
     define_initializer
     # end
 
@@ -246,7 +264,7 @@ class Generator::Definition
   end
 
   private def load_requires
-    %w(yaml json json_mapping yaml_mapping).each do |req|
+    %w(yaml json).each do |req|
       file.puts "require #{req.inspect}"
     end
     file.puts
@@ -261,12 +279,17 @@ class Generator::Definition
     if properties.empty?
       define_serialization
     end
+
     if is_resource?
+      # file.puts %<  @[::JSON::Field(key: "apiVersion")]>
+      # file.puts %<  @[::YAML::Field(key: "apiVersion")]>
       file.puts "getter api_version : String = #{api_version_name.inspect}"
       file.puts "getter kind : String = #{kind.inspect}"
     end
+
     properties.each do |name, property|
       next if is_resource? && resource_property?(name)
+
       crystal_name = crystalize_name(name)
       prop_type = property.type
       prop_ref = property._ref
@@ -278,7 +301,13 @@ class Generator::Definition
       # Print property descriptions
       generate_description property.description
 
-      file.puts "property #{crystal_name} : #{convert_type(property, required.includes?(name))}"
+      _type = convert_type(property, required.includes?(name))
+
+      if crystal_name != name
+        file.puts %<@[::JSON::Field(key: "#{name}")]>
+        file.puts %<@[::YAML::Field(key: "#{name}")]>
+      end
+      file.puts "property #{crystal_name} : #{_type}"
       file.puts ""
     end
   end
@@ -289,9 +318,21 @@ class Generator::Definition
     unless group_versions.nil?
       group_versions.each do |ver|
         next if ver.group.nil? || ver.kind.nil? || ver.version.nil?
-        file.puts(%<@[::#{base_class.lchop("::")}::GroupVersionKind(group: "#{ver.group}", kind: "#{ver.kind}", version: "#{ver.version}")]>)
+        file.puts(%<@[::#{base_class.lchop("::")}::GroupVersionKind(group: "#{ver.group}", kind: "#{ver.kind}", version: "#{ver.version}", full: "#{name}")]>)
       end
     end
+
+    # Define property annotations
+    file.puts(%<@[::#{base_class.lchop("::")}::Properties(>)
+    # first_arg = true
+    properties.each do |name, property|
+      # next if is_resource? && resource_property?(name)
+      crystal_name = crystalize_name(name)
+      # file.puts "," unless first_arg
+      file.puts "#{crystal_name}: { type: #{convert_type(property)}, nilable: #{!required.includes?(name)}, key: #{name.inspect}, getter: false, setter: false },"
+      # first_arg = false
+    end
+    file.puts ")]"
 
     # Define action/operation annotations
     each_actions do |path_name, path|
@@ -345,6 +386,7 @@ class Generator::Definition
     is_list? ? "List" : self.name.split(".")[-1]
   end
 
+  # :deprecated:
   private def define_mappings
     {"YAML", "JSON"}.each do |t|
       file.puts "::#{t}.mapping({ "
@@ -354,6 +396,7 @@ class Generator::Definition
         file.print %(kind: { type: String, default: #{kind.inspect}, key: "kind", setter: false })
         first_arg = false
       end
+
       properties.each do |name, property|
         next if is_resource? && resource_property?(name)
         crystal_name = crystalize_name(name)

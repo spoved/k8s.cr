@@ -2,31 +2,7 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
-  class Api::Extensions::V1beta1::DaemonSetUpdateStrategy
-    include ::JSON::Serializable
-    include ::YAML::Serializable
-
-    # Rolling update config params. Present only if type = "RollingUpdate".
-    property rolling_update : Api::Extensions::V1beta1::RollingUpdateDaemonSet | Nil
-
-    # Type of daemon set update. Can be "RollingUpdate" or "OnDelete". Default is OnDelete.
-    property type : String | Nil
-
-    ::YAML.mapping({
-      rolling_update: {type: Api::Extensions::V1beta1::RollingUpdateDaemonSet, nilable: true, key: "rollingUpdate", getter: false, setter: false},
-      type:           {type: String, nilable: true, key: "type", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      rolling_update: {type: Api::Extensions::V1beta1::RollingUpdateDaemonSet, nilable: true, key: "rollingUpdate", getter: false, setter: false},
-      type:           {type: String, nilable: true, key: "type", getter: false, setter: false},
-    }, true)
-
-    def initialize(*, @rolling_update : Api::Extensions::V1beta1::RollingUpdateDaemonSet | Nil = nil, @type : String | Nil = nil)
-    end
-  end
+  alias Api::Extensions::V1beta1::DaemonSetUpdateStrategy = Api::Apps::V1::DaemonSetUpdateStrategy
 end

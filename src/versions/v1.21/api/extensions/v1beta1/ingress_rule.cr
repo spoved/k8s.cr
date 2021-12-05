@@ -2,11 +2,13 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # IngressRule represents the rules mapping the paths under a specified host to the related backend services. Incoming requests are first evaluated for a host match, then routed to the backend associated with the matching IngressRuleValue.
+  @[::K8S::Properties(
+    host: {type: String, nilable: true, key: "host", getter: false, setter: false},
+    http: {type: Api::Extensions::V1beta1::HTTPIngressRuleValue, nilable: true, key: "http", getter: false, setter: false},
+  )]
   class Api::Extensions::V1beta1::IngressRule
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -22,16 +24,6 @@ module K8S
     property host : String | Nil
 
     property http : Api::Extensions::V1beta1::HTTPIngressRuleValue | Nil
-
-    ::YAML.mapping({
-      host: {type: String, nilable: true, key: "host", getter: false, setter: false},
-      http: {type: Api::Extensions::V1beta1::HTTPIngressRuleValue, nilable: true, key: "http", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      host: {type: String, nilable: true, key: "host", getter: false, setter: false},
-      http: {type: Api::Extensions::V1beta1::HTTPIngressRuleValue, nilable: true, key: "http", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @host : String | Nil = nil, @http : Api::Extensions::V1beta1::HTTPIngressRuleValue | Nil = nil)
     end

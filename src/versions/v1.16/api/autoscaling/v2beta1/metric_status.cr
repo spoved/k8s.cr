@@ -2,11 +2,16 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # MetricStatus describes the last-read state of a single metric.
+  @[::K8S::Properties(
+    external: {type: Api::Autoscaling::V2beta1::ExternalMetricStatus, nilable: true, key: "external", getter: false, setter: false},
+    object: {type: Api::Autoscaling::V2beta1::ObjectMetricStatus, nilable: true, key: "object", getter: false, setter: false},
+    pods: {type: Api::Autoscaling::V2beta1::PodsMetricStatus, nilable: true, key: "pods", getter: false, setter: false},
+    resource: {type: Api::Autoscaling::V2beta1::ResourceMetricStatus, nilable: true, key: "resource", getter: false, setter: false},
+    type: {type: String, nilable: false, key: "type", getter: false, setter: false},
+  )]
   class Api::Autoscaling::V2beta1::MetricStatus
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -25,22 +30,6 @@ module K8S
 
     # type is the type of metric source.  It will be one of "Object", "Pods" or "Resource", each corresponds to a matching field in the object.
     property type : String
-
-    ::YAML.mapping({
-      external: {type: Api::Autoscaling::V2beta1::ExternalMetricStatus, nilable: true, key: "external", getter: false, setter: false},
-      object:   {type: Api::Autoscaling::V2beta1::ObjectMetricStatus, nilable: true, key: "object", getter: false, setter: false},
-      pods:     {type: Api::Autoscaling::V2beta1::PodsMetricStatus, nilable: true, key: "pods", getter: false, setter: false},
-      resource: {type: Api::Autoscaling::V2beta1::ResourceMetricStatus, nilable: true, key: "resource", getter: false, setter: false},
-      type:     {type: String, nilable: false, key: "type", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      external: {type: Api::Autoscaling::V2beta1::ExternalMetricStatus, nilable: true, key: "external", getter: false, setter: false},
-      object:   {type: Api::Autoscaling::V2beta1::ObjectMetricStatus, nilable: true, key: "object", getter: false, setter: false},
-      pods:     {type: Api::Autoscaling::V2beta1::PodsMetricStatus, nilable: true, key: "pods", getter: false, setter: false},
-      resource: {type: Api::Autoscaling::V2beta1::ResourceMetricStatus, nilable: true, key: "resource", getter: false, setter: false},
-      type:     {type: String, nilable: false, key: "type", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @type : String, @external : Api::Autoscaling::V2beta1::ExternalMetricStatus | Nil = nil, @object : Api::Autoscaling::V2beta1::ObjectMetricStatus | Nil = nil, @pods : Api::Autoscaling::V2beta1::PodsMetricStatus | Nil = nil, @resource : Api::Autoscaling::V2beta1::ResourceMetricStatus | Nil = nil)
     end

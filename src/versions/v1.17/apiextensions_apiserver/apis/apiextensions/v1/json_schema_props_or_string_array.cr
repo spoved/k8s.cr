@@ -2,11 +2,10 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # JSONSchemaPropsOrStringArray represents a JSONSchemaProps or a string array.
+  @[::K8S::Properties]
   class ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaPropsOrStringArray
     include ::JSON::Serializable
     include ::YAML::Serializable

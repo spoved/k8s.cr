@@ -2,11 +2,17 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # Represents a Quobyte mount that lasts the lifetime of a pod. Quobyte volumes do not support ownership management or SELinux relabeling.
+  @[::K8S::Properties(
+    group: {type: String, nilable: true, key: "group", getter: false, setter: false},
+    read_only: {type: Bool, nilable: true, key: "readOnly", getter: false, setter: false},
+    registry: {type: String, nilable: false, key: "registry", getter: false, setter: false},
+    tenant: {type: String, nilable: true, key: "tenant", getter: false, setter: false},
+    user: {type: String, nilable: true, key: "user", getter: false, setter: false},
+    volume: {type: String, nilable: false, key: "volume", getter: false, setter: false},
+  )]
   class Api::Core::V1::QuobyteVolumeSource
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -15,6 +21,8 @@ module K8S
     property group : String | Nil
 
     # ReadOnly here will force the Quobyte volume to be mounted with read-only permissions. Defaults to false.
+    @[::JSON::Field(key: "readOnly")]
+    @[::YAML::Field(key: "readOnly")]
     property read_only : Bool | Nil
 
     # Registry represents a single or multiple Quobyte Registry services specified as a string as host:port pair (multiple entries are separated with commas) which acts as the central registry for volumes
@@ -28,24 +36,6 @@ module K8S
 
     # Volume is a string that references an already created Quobyte volume by name.
     property volume : String
-
-    ::YAML.mapping({
-      group:     {type: String, nilable: true, key: "group", getter: false, setter: false},
-      read_only: {type: Bool, nilable: true, key: "readOnly", getter: false, setter: false},
-      registry:  {type: String, nilable: false, key: "registry", getter: false, setter: false},
-      tenant:    {type: String, nilable: true, key: "tenant", getter: false, setter: false},
-      user:      {type: String, nilable: true, key: "user", getter: false, setter: false},
-      volume:    {type: String, nilable: false, key: "volume", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      group:     {type: String, nilable: true, key: "group", getter: false, setter: false},
-      read_only: {type: Bool, nilable: true, key: "readOnly", getter: false, setter: false},
-      registry:  {type: String, nilable: false, key: "registry", getter: false, setter: false},
-      tenant:    {type: String, nilable: true, key: "tenant", getter: false, setter: false},
-      user:      {type: String, nilable: true, key: "user", getter: false, setter: false},
-      volume:    {type: String, nilable: false, key: "volume", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @registry : String, @volume : String, @group : String | Nil = nil, @read_only : Bool | Nil = nil, @tenant : String | Nil = nil, @user : String | Nil = nil)
     end

@@ -2,12 +2,17 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # Describes a certificate signing request
-  @[::K8S::GroupVersionKind(group: "certificates.k8s.io", kind: "CertificateSigningRequest", version: "v1beta1")]
+  @[::K8S::GroupVersionKind(group: "certificates.k8s.io", kind: "CertificateSigningRequest", version: "v1beta1", full: "io.k8s.api.certificates.v1beta1.CertificateSigningRequest")]
+  @[::K8S::Properties(
+    api_version: {type: String, nilable: true, key: "apiVersion", getter: false, setter: false},
+    kind: {type: String, nilable: true, key: "kind", getter: false, setter: false},
+    metadata: {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
+    spec: {type: Api::Certificates::V1beta1::CertificateSigningRequestSpec, nilable: true, key: "spec", getter: false, setter: false},
+    status: {type: Api::Certificates::V1beta1::CertificateSigningRequestStatus, nilable: true, key: "status", getter: false, setter: false},
+  )]
   @[::K8S::Action(name: "post", verb: "post",
     path: "/apis/certificates.k8s.io/v1beta1/certificatesigningrequests", toplevel: false,
     args: [{name: "context", type: String | Nil, default: nil},
@@ -118,22 +123,6 @@ module K8S
 
     # Derived information about the request.
     property status : Api::Certificates::V1beta1::CertificateSigningRequestStatus | Nil
-
-    ::YAML.mapping({
-      api_version: {type: String, default: "certificates/v1beta1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "CertificateSigningRequest", key: "kind", setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      spec:        {type: Api::Certificates::V1beta1::CertificateSigningRequestSpec, nilable: true, key: "spec", getter: false, setter: false},
-      status:      {type: Api::Certificates::V1beta1::CertificateSigningRequestStatus, nilable: true, key: "status", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      api_version: {type: String, default: "certificates/v1beta1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "CertificateSigningRequest", key: "kind", setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      spec:        {type: Api::Certificates::V1beta1::CertificateSigningRequestSpec, nilable: true, key: "spec", getter: false, setter: false},
-      status:      {type: Api::Certificates::V1beta1::CertificateSigningRequestStatus, nilable: true, key: "status", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil, @spec : Api::Certificates::V1beta1::CertificateSigningRequestSpec | Nil = nil, @status : Api::Certificates::V1beta1::CertificateSigningRequestStatus | Nil = nil)
     end

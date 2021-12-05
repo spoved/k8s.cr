@@ -2,11 +2,13 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # IngressTLS describes the transport layer security associated with an Ingress.
+  @[::K8S::Properties(
+    hosts: {type: Array(String), nilable: true, key: "hosts", getter: false, setter: false},
+    secret_name: {type: String, nilable: true, key: "secretName", getter: false, setter: false},
+  )]
   class Api::Extensions::V1beta1::IngressTLS
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -15,17 +17,9 @@ module K8S
     property hosts : Array(String) | Nil
 
     # SecretName is the name of the secret used to terminate SSL traffic on 443. Field is left optional to allow SSL routing based on SNI hostname alone. If the SNI host in a listener conflicts with the "Host" header field used by an IngressRule, the SNI host is used for termination and value of the Host header is used for routing.
+    @[::JSON::Field(key: "secretName")]
+    @[::YAML::Field(key: "secretName")]
     property secret_name : String | Nil
-
-    ::YAML.mapping({
-      hosts:       {type: Array(String), nilable: true, key: "hosts", getter: false, setter: false},
-      secret_name: {type: String, nilable: true, key: "secretName", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      hosts:       {type: Array(String), nilable: true, key: "hosts", getter: false, setter: false},
-      secret_name: {type: String, nilable: true, key: "secretName", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @hosts : Array | Nil = nil, @secret_name : String | Nil = nil)
     end

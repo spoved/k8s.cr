@@ -2,11 +2,13 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # NonResourcePolicyRule is a predicate that matches non-resource requests according to their verb and the target non-resource URL. A NonResourcePolicyRule matches a request if and only if both (a) at least one member of verbs matches the request and (b) at least one member of nonResourceURLs matches the request.
+  @[::K8S::Properties(
+    non_resource_urls: {type: Array(String), nilable: false, key: "nonResourceURLs", getter: false, setter: false},
+    verbs: {type: Array(String), nilable: false, key: "verbs", getter: false, setter: false},
+  )]
   class Api::Flowcontrol::V1beta1::NonResourcePolicyRule
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -18,20 +20,12 @@ module K8S
     #   - ["/hea/*" also matches nothing]("/hea/*" also matches nothing)
     #   - ["/healthz/*" matches all per-component health checks.]("/healthz/*" matches all per-component health checks.)
     # "*" matches all non-resource urls. if it is present, it must be the only entry. Required.
+    @[::JSON::Field(key: "nonResourceURLs")]
+    @[::YAML::Field(key: "nonResourceURLs")]
     property non_resource_urls : Array(String)
 
     # `verbs` is a list of matching verbs and may not be empty. "*" matches all verbs. If it is present, it must be the only entry. Required.
     property verbs : Array(String)
-
-    ::YAML.mapping({
-      non_resource_urls: {type: Array(String), nilable: false, key: "nonResourceURLs", getter: false, setter: false},
-      verbs:             {type: Array(String), nilable: false, key: "verbs", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      non_resource_urls: {type: Array(String), nilable: false, key: "nonResourceURLs", getter: false, setter: false},
-      verbs:             {type: Array(String), nilable: false, key: "verbs", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @non_resource_urls : Array, @verbs : Array)
     end

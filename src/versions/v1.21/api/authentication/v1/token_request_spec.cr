@@ -2,11 +2,14 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # TokenRequestSpec contains client provided parameters of a token request.
+  @[::K8S::Properties(
+    audiences: {type: Array(String), nilable: false, key: "audiences", getter: false, setter: false},
+    bound_object_ref: {type: Api::Authentication::V1::BoundObjectReference, nilable: true, key: "boundObjectRef", getter: false, setter: false},
+    expiration_seconds: {type: Int32, nilable: true, key: "expirationSeconds", getter: false, setter: false},
+  )]
   class Api::Authentication::V1::TokenRequestSpec
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -15,22 +18,14 @@ module K8S
     property audiences : Array(String)
 
     # BoundObjectRef is a reference to an object that the token will be bound to. The token will only be valid for as long as the bound object exists. NOTE: The API server's TokenReview endpoint will validate the BoundObjectRef, but other audiences may not. Keep ExpirationSeconds small if you want prompt revocation.
+    @[::JSON::Field(key: "boundObjectRef")]
+    @[::YAML::Field(key: "boundObjectRef")]
     property bound_object_ref : Api::Authentication::V1::BoundObjectReference | Nil
 
     # ExpirationSeconds is the requested duration of validity of the request. The token issuer may return a token with a different validity duration so a client needs to check the 'expiration' field in a response.
+    @[::JSON::Field(key: "expirationSeconds")]
+    @[::YAML::Field(key: "expirationSeconds")]
     property expiration_seconds : Int32 | Nil
-
-    ::YAML.mapping({
-      audiences:          {type: Array(String), nilable: false, key: "audiences", getter: false, setter: false},
-      bound_object_ref:   {type: Api::Authentication::V1::BoundObjectReference, nilable: true, key: "boundObjectRef", getter: false, setter: false},
-      expiration_seconds: {type: Int32, nilable: true, key: "expirationSeconds", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      audiences:          {type: Array(String), nilable: false, key: "audiences", getter: false, setter: false},
-      bound_object_ref:   {type: Api::Authentication::V1::BoundObjectReference, nilable: true, key: "boundObjectRef", getter: false, setter: false},
-      expiration_seconds: {type: Int32, nilable: true, key: "expirationSeconds", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @audiences : Array, @bound_object_ref : Api::Authentication::V1::BoundObjectReference | Nil = nil, @expiration_seconds : Int32 | Nil = nil)
     end

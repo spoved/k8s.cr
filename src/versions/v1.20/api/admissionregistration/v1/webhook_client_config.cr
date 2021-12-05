@@ -2,16 +2,21 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # WebhookClientConfig contains the information to make a TLS connection with the webhook
+  @[::K8S::Properties(
+    ca_bundle: {type: String, nilable: true, key: "caBundle", getter: false, setter: false},
+    service: {type: Api::Admissionregistration::V1::ServiceReference, nilable: true, key: "service", getter: false, setter: false},
+    url: {type: String, nilable: true, key: "url", getter: false, setter: false},
+  )]
   class Api::Admissionregistration::V1::WebhookClientConfig
     include ::JSON::Serializable
     include ::YAML::Serializable
 
     # `caBundle` is a PEM encoded CA bundle which will be used to validate the webhook's server certificate. If unspecified, system trust roots on the apiserver are used.
+    @[::JSON::Field(key: "caBundle")]
+    @[::YAML::Field(key: "caBundle")]
     property ca_bundle : String | Nil
 
     # `service` is a reference to the service for this webhook. Either `service` or `url` must be specified.
@@ -31,18 +36,6 @@ module K8S
     #
     # Attempting to use a user or basic auth e.g. "user:password@" is not allowed. Fragments ("#...") and query parameters ("?...") are not allowed, either.
     property url : String | Nil
-
-    ::YAML.mapping({
-      ca_bundle: {type: String, nilable: true, key: "caBundle", getter: false, setter: false},
-      service:   {type: Api::Admissionregistration::V1::ServiceReference, nilable: true, key: "service", getter: false, setter: false},
-      url:       {type: String, nilable: true, key: "url", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      ca_bundle: {type: String, nilable: true, key: "caBundle", getter: false, setter: false},
-      service:   {type: Api::Admissionregistration::V1::ServiceReference, nilable: true, key: "service", getter: false, setter: false},
-      url:       {type: String, nilable: true, key: "url", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @ca_bundle : String | Nil = nil, @service : Api::Admissionregistration::V1::ServiceReference | Nil = nil, @url : String | Nil = nil)
     end

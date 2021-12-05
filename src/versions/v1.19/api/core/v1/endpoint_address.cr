@@ -2,11 +2,15 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # EndpointAddress is a tuple that describes single IP address.
+  @[::K8S::Properties(
+    hostname: {type: String, nilable: true, key: "hostname", getter: false, setter: false},
+    ip: {type: String, nilable: false, key: "ip", getter: false, setter: false},
+    node_name: {type: String, nilable: true, key: "nodeName", getter: false, setter: false},
+    target_ref: {type: Api::Core::V1::ObjectReference, nilable: true, key: "targetRef", getter: false, setter: false},
+  )]
   class Api::Core::V1::EndpointAddress
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -18,24 +22,14 @@ module K8S
     property ip : String
 
     # Optional: Node hosting this endpoint. This can be used to determine endpoints local to a node.
+    @[::JSON::Field(key: "nodeName")]
+    @[::YAML::Field(key: "nodeName")]
     property node_name : String | Nil
 
     # Reference to object providing the endpoint.
+    @[::JSON::Field(key: "targetRef")]
+    @[::YAML::Field(key: "targetRef")]
     property target_ref : Api::Core::V1::ObjectReference | Nil
-
-    ::YAML.mapping({
-      hostname:   {type: String, nilable: true, key: "hostname", getter: false, setter: false},
-      ip:         {type: String, nilable: false, key: "ip", getter: false, setter: false},
-      node_name:  {type: String, nilable: true, key: "nodeName", getter: false, setter: false},
-      target_ref: {type: Api::Core::V1::ObjectReference, nilable: true, key: "targetRef", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      hostname:   {type: String, nilable: true, key: "hostname", getter: false, setter: false},
-      ip:         {type: String, nilable: false, key: "ip", getter: false, setter: false},
-      node_name:  {type: String, nilable: true, key: "nodeName", getter: false, setter: false},
-      target_ref: {type: Api::Core::V1::ObjectReference, nilable: true, key: "targetRef", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @ip : String, @hostname : String | Nil = nil, @node_name : String | Nil = nil, @target_ref : Api::Core::V1::ObjectReference | Nil = nil)
     end

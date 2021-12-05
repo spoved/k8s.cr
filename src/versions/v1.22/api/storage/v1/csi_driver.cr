@@ -2,12 +2,16 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # CSIDriver captures information about a Container Storage Interface (CSI) volume driver deployed on the cluster. Kubernetes attach detach controller uses this object to determine whether attach is required. Kubelet uses this object to determine whether pod information needs to be passed on mount. CSIDriver objects are non-namespaced.
-  @[::K8S::GroupVersionKind(group: "storage.k8s.io", kind: "CSIDriver", version: "v1")]
+  @[::K8S::GroupVersionKind(group: "storage.k8s.io", kind: "CSIDriver", version: "v1", full: "io.k8s.api.storage.v1.CSIDriver")]
+  @[::K8S::Properties(
+    api_version: {type: String, nilable: true, key: "apiVersion", getter: false, setter: false},
+    kind: {type: String, nilable: true, key: "kind", getter: false, setter: false},
+    metadata: {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
+    spec: {type: Api::Storage::V1::CSIDriverSpec, nilable: false, key: "spec", getter: false, setter: false},
+  )]
   @[::K8S::Action(name: "post", verb: "post",
     path: "/apis/storage.k8s.io/v1/csidrivers", toplevel: false,
     args: [{name: "context", type: String | Nil, default: nil},
@@ -80,20 +84,6 @@ module K8S
 
     # Specification of the CSI Driver.
     property spec : Api::Storage::V1::CSIDriverSpec
-
-    ::YAML.mapping({
-      api_version: {type: String, default: "storage/v1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "CSIDriver", key: "kind", setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      spec:        {type: Api::Storage::V1::CSIDriverSpec, nilable: false, key: "spec", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      api_version: {type: String, default: "storage/v1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "CSIDriver", key: "kind", setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      spec:        {type: Api::Storage::V1::CSIDriverSpec, nilable: false, key: "spec", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @spec : Api::Storage::V1::CSIDriverSpec, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil)
     end

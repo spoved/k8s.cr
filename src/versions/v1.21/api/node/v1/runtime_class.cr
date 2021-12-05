@@ -2,12 +2,18 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # RuntimeClass defines a class of container runtime supported in the cluster. The RuntimeClass is used to determine which container runtime is used to run all containers in a pod. RuntimeClasses are manually defined by a user or cluster provisioner, and referenced in the PodSpec. The Kubelet is responsible for resolving the RuntimeClassName reference before running the pod.  For more details, see [https://kubernetes.io/docs/concepts/containers/runtime-class/](https://kubernetes.io/docs/concepts/containers/runtime-class/)
-  @[::K8S::GroupVersionKind(group: "node.k8s.io", kind: "RuntimeClass", version: "v1")]
+  @[::K8S::GroupVersionKind(group: "node.k8s.io", kind: "RuntimeClass", version: "v1", full: "io.k8s.api.node.v1.RuntimeClass")]
+  @[::K8S::Properties(
+    api_version: {type: String, nilable: true, key: "apiVersion", getter: false, setter: false},
+    handler: {type: String, nilable: false, key: "handler", getter: false, setter: false},
+    kind: {type: String, nilable: true, key: "kind", getter: false, setter: false},
+    metadata: {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
+    overhead: {type: Api::Node::V1::Overhead, nilable: true, key: "overhead", getter: false, setter: false},
+    scheduling: {type: Api::Node::V1::Scheduling, nilable: true, key: "scheduling", getter: false, setter: false},
+  )]
   @[::K8S::Action(name: "post", verb: "post",
     path: "/apis/node.k8s.io/v1/runtimeclasses", toplevel: false,
     args: [{name: "context", type: String | Nil, default: nil},
@@ -88,24 +94,6 @@ module K8S
 
     # Scheduling holds the scheduling constraints to ensure that pods running with this RuntimeClass are scheduled to nodes that support it. If scheduling is nil, this RuntimeClass is assumed to be supported by all nodes.
     property scheduling : Api::Node::V1::Scheduling | Nil
-
-    ::YAML.mapping({
-      api_version: {type: String, default: "node/v1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "RuntimeClass", key: "kind", setter: false},
-      handler:     {type: String, nilable: false, key: "handler", getter: false, setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      overhead:    {type: Api::Node::V1::Overhead, nilable: true, key: "overhead", getter: false, setter: false},
-      scheduling:  {type: Api::Node::V1::Scheduling, nilable: true, key: "scheduling", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      api_version: {type: String, default: "node/v1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "RuntimeClass", key: "kind", setter: false},
-      handler:     {type: String, nilable: false, key: "handler", getter: false, setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      overhead:    {type: Api::Node::V1::Overhead, nilable: true, key: "overhead", getter: false, setter: false},
-      scheduling:  {type: Api::Node::V1::Scheduling, nilable: true, key: "scheduling", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @handler : String, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil, @overhead : Api::Node::V1::Overhead | Nil = nil, @scheduling : Api::Node::V1::Scheduling | Nil = nil)
     end

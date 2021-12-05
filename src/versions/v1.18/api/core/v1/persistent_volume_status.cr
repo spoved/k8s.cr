@@ -2,11 +2,14 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # PersistentVolumeStatus is the current status of a persistent volume.
+  @[::K8S::Properties(
+    message: {type: String, nilable: true, key: "message", getter: false, setter: false},
+    phase: {type: String, nilable: true, key: "phase", getter: false, setter: false},
+    reason: {type: String, nilable: true, key: "reason", getter: false, setter: false},
+  )]
   class Api::Core::V1::PersistentVolumeStatus
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -19,18 +22,6 @@ module K8S
 
     # Reason is a brief CamelCase string that describes any failure and is meant for machine parsing and tidy display in the CLI.
     property reason : String | Nil
-
-    ::YAML.mapping({
-      message: {type: String, nilable: true, key: "message", getter: false, setter: false},
-      phase:   {type: String, nilable: true, key: "phase", getter: false, setter: false},
-      reason:  {type: String, nilable: true, key: "reason", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      message: {type: String, nilable: true, key: "message", getter: false, setter: false},
-      phase:   {type: String, nilable: true, key: "phase", getter: false, setter: false},
-      reason:  {type: String, nilable: true, key: "reason", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @message : String | Nil = nil, @phase : String | Nil = nil, @reason : String | Nil = nil)
     end

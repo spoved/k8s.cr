@@ -2,11 +2,13 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # ServiceAccountSubject holds detailed information for service-account-kind subject.
+  @[::K8S::Properties(
+    name: {type: String, nilable: false, key: "name", getter: false, setter: false},
+    namespace: {type: String, nilable: false, key: "namespace", getter: false, setter: false},
+  )]
   class Api::Flowcontrol::V1beta1::ServiceAccountSubject
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -16,16 +18,6 @@ module K8S
 
     # `namespace` is the namespace of matching ServiceAccount objects. Required.
     property namespace : String
-
-    ::YAML.mapping({
-      name:      {type: String, nilable: false, key: "name", getter: false, setter: false},
-      namespace: {type: String, nilable: false, key: "namespace", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      name:      {type: String, nilable: false, key: "name", getter: false, setter: false},
-      namespace: {type: String, nilable: false, key: "namespace", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @name : String, @namespace : String)
     end

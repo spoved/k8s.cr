@@ -2,15 +2,22 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # NamespaceCondition contains details about state of namespace.
+  @[::K8S::Properties(
+    last_transition_time: {type: Time, nilable: true, key: "lastTransitionTime", getter: false, setter: false},
+    message: {type: String, nilable: true, key: "message", getter: false, setter: false},
+    reason: {type: String, nilable: true, key: "reason", getter: false, setter: false},
+    status: {type: String, nilable: false, key: "status", getter: false, setter: false},
+    type: {type: String, nilable: false, key: "type", getter: false, setter: false},
+  )]
   class Api::Core::V1::NamespaceCondition
     include ::JSON::Serializable
     include ::YAML::Serializable
 
+    @[::JSON::Field(key: "lastTransitionTime")]
+    @[::YAML::Field(key: "lastTransitionTime")]
     property last_transition_time : Time | Nil
 
     property message : String | Nil
@@ -22,22 +29,6 @@ module K8S
 
     # Type of namespace controller condition.
     property type : String
-
-    ::YAML.mapping({
-      last_transition_time: {type: Time, nilable: true, key: "lastTransitionTime", getter: false, setter: false},
-      message:              {type: String, nilable: true, key: "message", getter: false, setter: false},
-      reason:               {type: String, nilable: true, key: "reason", getter: false, setter: false},
-      status:               {type: String, nilable: false, key: "status", getter: false, setter: false},
-      type:                 {type: String, nilable: false, key: "type", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      last_transition_time: {type: Time, nilable: true, key: "lastTransitionTime", getter: false, setter: false},
-      message:              {type: String, nilable: true, key: "message", getter: false, setter: false},
-      reason:               {type: String, nilable: true, key: "reason", getter: false, setter: false},
-      status:               {type: String, nilable: false, key: "status", getter: false, setter: false},
-      type:                 {type: String, nilable: false, key: "type", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @status : String, @type : String, @last_transition_time : Time | Nil = nil, @message : String | Nil = nil, @reason : String | Nil = nil)
     end

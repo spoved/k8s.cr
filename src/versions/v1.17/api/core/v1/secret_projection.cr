@@ -2,13 +2,16 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # Adapts a secret into a projected volume.
   #
   # The contents of the target Secret's Data field will be presented in a projected volume as files using the keys in the Data field as the file names. Note that this is identical to a secret volume source without the default mode.
+  @[::K8S::Properties(
+    items: {type: Array(Api::Core::V1::KeyToPath), nilable: true, key: "items", getter: false, setter: false},
+    name: {type: String, nilable: true, key: "name", getter: false, setter: false},
+    optional: {type: Bool, nilable: true, key: "optional", getter: false, setter: false},
+  )]
   class Api::Core::V1::SecretProjection
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -21,18 +24,6 @@ module K8S
 
     # Specify whether the Secret or its key must be defined
     property optional : Bool | Nil
-
-    ::YAML.mapping({
-      items:    {type: Array(Api::Core::V1::KeyToPath), nilable: true, key: "items", getter: false, setter: false},
-      name:     {type: String, nilable: true, key: "name", getter: false, setter: false},
-      optional: {type: Bool, nilable: true, key: "optional", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      items:    {type: Array(Api::Core::V1::KeyToPath), nilable: true, key: "items", getter: false, setter: false},
-      name:     {type: String, nilable: true, key: "name", getter: false, setter: false},
-      optional: {type: Bool, nilable: true, key: "optional", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @items : Array | Nil = nil, @name : String | Nil = nil, @optional : Bool | Nil = nil)
     end

@@ -2,12 +2,17 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # APIService represents a server for a particular GroupVersion. Name must be "version.group".
-  @[::K8S::GroupVersionKind(group: "apiregistration.k8s.io", kind: "APIService", version: "v1")]
+  @[::K8S::GroupVersionKind(group: "apiregistration.k8s.io", kind: "APIService", version: "v1", full: "io.k8s.kube-aggregator.pkg.apis.apiregistration.v1.APIService")]
+  @[::K8S::Properties(
+    api_version: {type: String, nilable: true, key: "apiVersion", getter: false, setter: false},
+    kind: {type: String, nilable: true, key: "kind", getter: false, setter: false},
+    metadata: {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
+    spec: {type: KubeAggregator::Apis::Apiregistration::V1::APIServiceSpec, nilable: true, key: "spec", getter: false, setter: false},
+    status: {type: KubeAggregator::Apis::Apiregistration::V1::APIServiceStatus, nilable: true, key: "status", getter: false, setter: false},
+  )]
   @[::K8S::Action(name: "post", verb: "post",
     path: "/apis/apiregistration.k8s.io/v1/apiservices", toplevel: false,
     args: [{name: "context", type: String | Nil, default: nil},
@@ -101,22 +106,6 @@ module K8S
 
     # Status contains derived information about an API server
     property status : KubeAggregator::Apis::Apiregistration::V1::APIServiceStatus | Nil
-
-    ::YAML.mapping({
-      api_version: {type: String, default: "apiregistration/v1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "APIService", key: "kind", setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      spec:        {type: KubeAggregator::Apis::Apiregistration::V1::APIServiceSpec, nilable: true, key: "spec", getter: false, setter: false},
-      status:      {type: KubeAggregator::Apis::Apiregistration::V1::APIServiceStatus, nilable: true, key: "status", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      api_version: {type: String, default: "apiregistration/v1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "APIService", key: "kind", setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      spec:        {type: KubeAggregator::Apis::Apiregistration::V1::APIServiceSpec, nilable: true, key: "spec", getter: false, setter: false},
-      status:      {type: KubeAggregator::Apis::Apiregistration::V1::APIServiceStatus, nilable: true, key: "status", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil, @spec : KubeAggregator::Apis::Apiregistration::V1::APIServiceSpec | Nil = nil, @status : KubeAggregator::Apis::Apiregistration::V1::APIServiceStatus | Nil = nil)
     end

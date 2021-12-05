@@ -2,11 +2,12 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # Represents an ephemeral volume that is handled by a normal storage driver.
+  @[::K8S::Properties(
+    volume_claim_template: {type: Api::Core::V1::PersistentVolumeClaimTemplate, nilable: true, key: "volumeClaimTemplate", getter: false, setter: false},
+  )]
   class Api::Core::V1::EphemeralVolumeSource
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -18,15 +19,9 @@ module K8S
     # This field is read-only and no changes will be made by Kubernetes to the PVC after it has been created.
     #
     # Required, must not be nil.
+    @[::JSON::Field(key: "volumeClaimTemplate")]
+    @[::YAML::Field(key: "volumeClaimTemplate")]
     property volume_claim_template : Api::Core::V1::PersistentVolumeClaimTemplate | Nil
-
-    ::YAML.mapping({
-      volume_claim_template: {type: Api::Core::V1::PersistentVolumeClaimTemplate, nilable: true, key: "volumeClaimTemplate", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      volume_claim_template: {type: Api::Core::V1::PersistentVolumeClaimTemplate, nilable: true, key: "volumeClaimTemplate", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @volume_claim_template : Api::Core::V1::PersistentVolumeClaimTemplate | Nil = nil)
     end

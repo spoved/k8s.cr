@@ -2,11 +2,14 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # IngressSpec describes the Ingress the user wishes to exist.
+  @[::K8S::Properties(
+    backend: {type: Api::Extensions::V1beta1::IngressBackend, nilable: true, key: "backend", getter: false, setter: false},
+    rules: {type: Array(Api::Extensions::V1beta1::IngressRule), nilable: true, key: "rules", getter: false, setter: false},
+    tls: {type: Array(Api::Extensions::V1beta1::IngressTLS), nilable: true, key: "tls", getter: false, setter: false},
+  )]
   class Api::Extensions::V1beta1::IngressSpec
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -19,18 +22,6 @@ module K8S
 
     # TLS configuration. Currently the Ingress only supports a single TLS port, 443. If multiple members of this list specify different hosts, they will be multiplexed on the same port according to the hostname specified through the SNI TLS extension, if the ingress controller fulfilling the ingress supports SNI.
     property tls : Array(Api::Extensions::V1beta1::IngressTLS) | Nil
-
-    ::YAML.mapping({
-      backend: {type: Api::Extensions::V1beta1::IngressBackend, nilable: true, key: "backend", getter: false, setter: false},
-      rules:   {type: Array(Api::Extensions::V1beta1::IngressRule), nilable: true, key: "rules", getter: false, setter: false},
-      tls:     {type: Array(Api::Extensions::V1beta1::IngressTLS), nilable: true, key: "tls", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      backend: {type: Api::Extensions::V1beta1::IngressBackend, nilable: true, key: "backend", getter: false, setter: false},
-      rules:   {type: Array(Api::Extensions::V1beta1::IngressRule), nilable: true, key: "rules", getter: false, setter: false},
-      tls:     {type: Array(Api::Extensions::V1beta1::IngressTLS), nilable: true, key: "tls", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @backend : Api::Extensions::V1beta1::IngressBackend | Nil = nil, @rules : Array | Nil = nil, @tls : Array | Nil = nil)
     end

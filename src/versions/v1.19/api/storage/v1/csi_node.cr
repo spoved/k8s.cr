@@ -2,12 +2,16 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # CSINode holds information about all CSI drivers installed on a node. CSI drivers do not need to create the CSINode object directly. As long as they use the node-driver-registrar sidecar container, the kubelet will automatically populate the CSINode object for the CSI driver as part of kubelet plugin registration. CSINode has the same name as a node. If the object is missing, it means either there are no CSI Drivers available on the node, or the Kubelet version is low enough that it doesn't create this object. CSINode has an OwnerReference that points to the corresponding node object.
-  @[::K8S::GroupVersionKind(group: "storage.k8s.io", kind: "CSINode", version: "v1")]
+  @[::K8S::GroupVersionKind(group: "storage.k8s.io", kind: "CSINode", version: "v1", full: "io.k8s.api.storage.v1.CSINode")]
+  @[::K8S::Properties(
+    api_version: {type: String, nilable: true, key: "apiVersion", getter: false, setter: false},
+    kind: {type: String, nilable: true, key: "kind", getter: false, setter: false},
+    metadata: {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
+    spec: {type: Api::Storage::V1::CSINodeSpec, nilable: false, key: "spec", getter: false, setter: false},
+  )]
   @[::K8S::Action(name: "post", verb: "post",
     path: "/apis/storage.k8s.io/v1/csinodes", toplevel: false,
     args: [{name: "context", type: String | Nil, default: nil},
@@ -82,20 +86,6 @@ module K8S
 
     # spec is the specification of CSINode
     property spec : Api::Storage::V1::CSINodeSpec
-
-    ::YAML.mapping({
-      api_version: {type: String, default: "storage/v1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "CSINode", key: "kind", setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      spec:        {type: Api::Storage::V1::CSINodeSpec, nilable: false, key: "spec", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      api_version: {type: String, default: "storage/v1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "CSINode", key: "kind", setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      spec:        {type: Api::Storage::V1::CSINodeSpec, nilable: false, key: "spec", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @spec : Api::Storage::V1::CSINodeSpec, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil)
     end

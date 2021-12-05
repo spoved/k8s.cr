@@ -2,25 +2,18 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # UserSubject holds detailed information for user-kind subject.
+  @[::K8S::Properties(
+    name: {type: String, nilable: false, key: "name", getter: false, setter: false},
+  )]
   class Api::Flowcontrol::V1alpha1::UserSubject
     include ::JSON::Serializable
     include ::YAML::Serializable
 
     # `name` is the username that matches, or "*" to match all usernames. Required.
     property name : String
-
-    ::YAML.mapping({
-      name: {type: String, nilable: false, key: "name", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      name: {type: String, nilable: false, key: "name", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @name : String)
     end

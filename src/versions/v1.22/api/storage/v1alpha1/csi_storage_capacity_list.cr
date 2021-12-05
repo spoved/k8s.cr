@@ -2,12 +2,16 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # CSIStorageCapacityList is a collection of CSIStorageCapacity objects.
-  @[::K8S::GroupVersionKind(group: "storage.k8s.io", kind: "CSIStorageCapacityList", version: "v1alpha1")]
+  @[::K8S::GroupVersionKind(group: "storage.k8s.io", kind: "CSIStorageCapacityList", version: "v1alpha1", full: "io.k8s.api.storage.v1alpha1.CSIStorageCapacityList")]
+  @[::K8S::Properties(
+    api_version: {type: String, nilable: true, key: "apiVersion", getter: false, setter: false},
+    items: {type: Array(Api::Storage::V1alpha1::CSIStorageCapacity), nilable: false, key: "items", getter: false, setter: false},
+    kind: {type: String, nilable: true, key: "kind", getter: false, setter: false},
+    metadata: {type: Apimachinery::Apis::Meta::V1::ListMeta, nilable: true, key: "metadata", getter: false, setter: false},
+  )]
   @[::K8S::Action(name: "list", verb: "get",
     path: "/apis/storage.k8s.io/v1alpha1/csistoragecapacities", toplevel: true,
     args: [{name: "context", type: String | Nil, default: nil},
@@ -24,8 +28,8 @@ module K8S
   @[::K8S::Action(name: "post", verb: "post",
     path: "/apis/storage.k8s.io/v1alpha1/namespaces/{namespace}/csistoragecapacities", toplevel: false,
     args: [{name: "storage_class_name", type: String},
-           {name: "capacity", type: Int32 | Nil, default: nil},
-           {name: "maximum_volume_size", type: Int32 | Nil, default: nil},
+           {name: "capacity", type: Int32 | String | Nil, default: nil},
+           {name: "maximum_volume_size", type: Int32 | String | Nil, default: nil},
            {name: "metadata", type: Apimachinery::Apis::Meta::V1::ObjectMeta | Nil, default: nil},
            {name: "node_topology", type: Apimachinery::Apis::Meta::V1::LabelSelector | Nil, default: nil},
            {name: "context", type: String | Nil, default: nil},
@@ -74,20 +78,6 @@ module K8S
 
     # Standard list metadata More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)
     property metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil
-
-    ::YAML.mapping({
-      api_version: {type: String, default: "storage/v1alpha1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "List", key: "kind", setter: false},
-      items:       {type: Array(Api::Storage::V1alpha1::CSIStorageCapacity), nilable: false, key: "items", getter: false, setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ListMeta, nilable: true, key: "metadata", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      api_version: {type: String, default: "storage/v1alpha1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "List", key: "kind", setter: false},
-      items:       {type: Array(Api::Storage::V1alpha1::CSIStorageCapacity), nilable: false, key: "items", getter: false, setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ListMeta, nilable: true, key: "metadata", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @items : Array, @metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil = nil)
     end

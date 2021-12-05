@@ -2,11 +2,13 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # HTTPHeader describes a custom header to be used in HTTP probes
+  @[::K8S::Properties(
+    name: {type: String, nilable: false, key: "name", getter: false, setter: false},
+    value: {type: String, nilable: false, key: "value", getter: false, setter: false},
+  )]
   class Api::Core::V1::HTTPHeader
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -16,16 +18,6 @@ module K8S
 
     # The header field value
     property value : String
-
-    ::YAML.mapping({
-      name:  {type: String, nilable: false, key: "name", getter: false, setter: false},
-      value: {type: String, nilable: false, key: "value", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      name:  {type: String, nilable: false, key: "name", getter: false, setter: false},
-      value: {type: String, nilable: false, key: "value", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @name : String, @value : String)
     end

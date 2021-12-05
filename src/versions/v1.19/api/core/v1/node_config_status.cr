@@ -2,11 +2,15 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # NodeConfigStatus describes the status of the config assigned by Node.Spec.ConfigSource.
+  @[::K8S::Properties(
+    active: {type: Api::Core::V1::NodeConfigSource, nilable: true, key: "active", getter: false, setter: false},
+    assigned: {type: Api::Core::V1::NodeConfigSource, nilable: true, key: "assigned", getter: false, setter: false},
+    error: {type: String, nilable: true, key: "error", getter: false, setter: false},
+    last_known_good: {type: Api::Core::V1::NodeConfigSource, nilable: true, key: "lastKnownGood", getter: false, setter: false},
+  )]
   class Api::Core::V1::NodeConfigStatus
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -21,21 +25,9 @@ module K8S
     property error : String | Nil
 
     # LastKnownGood reports the checkpointed config the node will fall back to when it encounters an error attempting to use the Assigned config. The Assigned config becomes the LastKnownGood config when the node determines that the Assigned config is stable and correct. This is currently implemented as a 10-minute soak period starting when the local record of Assigned config is updated. If the Assigned config is Active at the end of this period, it becomes the LastKnownGood. Note that if Spec.ConfigSource is reset to nil (use local defaults), the LastKnownGood is also immediately reset to nil, because the local default config is always assumed good. You should not make assumptions about the node's method of determining config stability and correctness, as this may change or become configurable in the future.
+    @[::JSON::Field(key: "lastKnownGood")]
+    @[::YAML::Field(key: "lastKnownGood")]
     property last_known_good : Api::Core::V1::NodeConfigSource | Nil
-
-    ::YAML.mapping({
-      active:          {type: Api::Core::V1::NodeConfigSource, nilable: true, key: "active", getter: false, setter: false},
-      assigned:        {type: Api::Core::V1::NodeConfigSource, nilable: true, key: "assigned", getter: false, setter: false},
-      error:           {type: String, nilable: true, key: "error", getter: false, setter: false},
-      last_known_good: {type: Api::Core::V1::NodeConfigSource, nilable: true, key: "lastKnownGood", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      active:          {type: Api::Core::V1::NodeConfigSource, nilable: true, key: "active", getter: false, setter: false},
-      assigned:        {type: Api::Core::V1::NodeConfigSource, nilable: true, key: "assigned", getter: false, setter: false},
-      error:           {type: String, nilable: true, key: "error", getter: false, setter: false},
-      last_known_good: {type: Api::Core::V1::NodeConfigSource, nilable: true, key: "lastKnownGood", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @active : Api::Core::V1::NodeConfigSource | Nil = nil, @assigned : Api::Core::V1::NodeConfigSource | Nil = nil, @error : String | Nil = nil, @last_known_good : Api::Core::V1::NodeConfigSource | Nil = nil)
     end

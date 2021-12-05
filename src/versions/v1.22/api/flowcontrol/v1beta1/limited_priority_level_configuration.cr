@@ -2,13 +2,15 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # LimitedPriorityLevelConfiguration specifies how to handle requests that are subject to limits. It addresses two issues:
   #  * How are requests for this priority level limited?
   #  * What should be done with requests that exceed the limit?
+  @[::K8S::Properties(
+    assured_concurrency_shares: {type: Int32, nilable: true, key: "assuredConcurrencyShares", getter: false, setter: false},
+    limit_response: {type: Api::Flowcontrol::V1beta1::LimitResponse, nilable: true, key: "limitResponse", getter: false, setter: false},
+  )]
   class Api::Flowcontrol::V1beta1::LimitedPriorityLevelConfiguration
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -18,20 +20,14 @@ module K8S
     #             ACV(l) = ceil( SCL * ACS(l) / ( sum[priority levels k] ACS(k) ) )
     #
     # bigger numbers of ACS mean more reserved concurrent requests (at the expense of every other PL). This field has a default value of 30.
+    @[::JSON::Field(key: "assuredConcurrencyShares")]
+    @[::YAML::Field(key: "assuredConcurrencyShares")]
     property assured_concurrency_shares : Int32 | Nil
 
     # `limitResponse` indicates what to do with requests that can not be executed right now
+    @[::JSON::Field(key: "limitResponse")]
+    @[::YAML::Field(key: "limitResponse")]
     property limit_response : Api::Flowcontrol::V1beta1::LimitResponse | Nil
-
-    ::YAML.mapping({
-      assured_concurrency_shares: {type: Int32, nilable: true, key: "assuredConcurrencyShares", getter: false, setter: false},
-      limit_response:             {type: Api::Flowcontrol::V1beta1::LimitResponse, nilable: true, key: "limitResponse", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      assured_concurrency_shares: {type: Int32, nilable: true, key: "assuredConcurrencyShares", getter: false, setter: false},
-      limit_response:             {type: Api::Flowcontrol::V1beta1::LimitResponse, nilable: true, key: "limitResponse", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @assured_concurrency_shares : Int32 | Nil = nil, @limit_response : Api::Flowcontrol::V1beta1::LimitResponse | Nil = nil)
     end

@@ -2,11 +2,13 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # Represents an empty directory for a pod. Empty directory volumes support ownership management and SELinux relabeling.
+  @[::K8S::Properties(
+    medium: {type: String, nilable: true, key: "medium", getter: false, setter: false},
+    size_limit: {type: Int32 | String, nilable: true, key: "sizeLimit", getter: false, setter: false},
+  )]
   class Api::Core::V1::EmptyDirVolumeSource
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -15,19 +17,11 @@ module K8S
     property medium : String | Nil
 
     # Total amount of local storage required for this EmptyDir volume. The size limit is also applicable for memory medium. The maximum usage on memory medium EmptyDir would be the minimum value between the SizeLimit specified here and the sum of memory limits of all containers in a pod. The default is nil which means that the limit is undefined. More info: [http://kubernetes.io/docs/user-guide/volumes#emptydir](http://kubernetes.io/docs/user-guide/volumes#emptydir)
-    property size_limit : Int32 | Nil
+    @[::JSON::Field(key: "sizeLimit")]
+    @[::YAML::Field(key: "sizeLimit")]
+    property size_limit : Int32 | String | Nil
 
-    ::YAML.mapping({
-      medium:     {type: String, nilable: true, key: "medium", getter: false, setter: false},
-      size_limit: {type: Int32, nilable: true, key: "sizeLimit", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      medium:     {type: String, nilable: true, key: "medium", getter: false, setter: false},
-      size_limit: {type: Int32, nilable: true, key: "sizeLimit", getter: false, setter: false},
-    }, true)
-
-    def initialize(*, @medium : String | Nil = nil, @size_limit : Int32 | Nil = nil)
+    def initialize(*, @medium : String | Nil = nil, @size_limit : Int32 | String | Nil = nil)
     end
   end
 end

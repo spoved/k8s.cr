@@ -2,27 +2,7 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
-  # EndpointHints provides hints describing how an endpoint should be consumed.
-  class Api::Discovery::V1beta1::EndpointHints
-    include ::JSON::Serializable
-    include ::YAML::Serializable
-
-    # forZones indicates the zone(s) this endpoint should be consumed by to enable topology aware routing. May contain a maximum of 8 entries.
-    property for_zones : Array(Api::Discovery::V1beta1::ForZone) | Nil
-
-    ::YAML.mapping({
-      for_zones: {type: Array(Api::Discovery::V1beta1::ForZone), nilable: true, key: "forZones", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      for_zones: {type: Array(Api::Discovery::V1beta1::ForZone), nilable: true, key: "forZones", getter: false, setter: false},
-    }, true)
-
-    def initialize(*, @for_zones : Array | Nil = nil)
-    end
-  end
+  alias Api::Discovery::V1beta1::EndpointHints = Api::Discovery::V1::EndpointHints
 end

@@ -2,12 +2,17 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # FlowSchema defines the schema of a group of flows. Note that a flow is made up of a set of inbound API requests with similar attributes and is identified by a pair of strings: the name of the FlowSchema and a "flow distinguisher".
-  @[::K8S::GroupVersionKind(group: "flowcontrol.apiserver.k8s.io", kind: "FlowSchema", version: "v1alpha1")]
+  @[::K8S::GroupVersionKind(group: "flowcontrol.apiserver.k8s.io", kind: "FlowSchema", version: "v1alpha1", full: "io.k8s.api.flowcontrol.v1alpha1.FlowSchema")]
+  @[::K8S::Properties(
+    api_version: {type: String, nilable: true, key: "apiVersion", getter: false, setter: false},
+    kind: {type: String, nilable: true, key: "kind", getter: false, setter: false},
+    metadata: {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
+    spec: {type: Api::Flowcontrol::V1alpha1::FlowSchemaSpec, nilable: true, key: "spec", getter: false, setter: false},
+    status: {type: Api::Flowcontrol::V1alpha1::FlowSchemaStatus, nilable: true, key: "status", getter: false, setter: false},
+  )]
   @[::K8S::Action(name: "post", verb: "post",
     path: "/apis/flowcontrol.apiserver.k8s.io/v1alpha1/flowschemas", toplevel: false,
     args: [{name: "context", type: String | Nil, default: nil},
@@ -103,22 +108,6 @@ module K8S
 
     # `status` is the current status of a FlowSchema. More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status)
     property status : Api::Flowcontrol::V1alpha1::FlowSchemaStatus | Nil
-
-    ::YAML.mapping({
-      api_version: {type: String, default: "flowcontrol/v1alpha1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "FlowSchema", key: "kind", setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      spec:        {type: Api::Flowcontrol::V1alpha1::FlowSchemaSpec, nilable: true, key: "spec", getter: false, setter: false},
-      status:      {type: Api::Flowcontrol::V1alpha1::FlowSchemaStatus, nilable: true, key: "status", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      api_version: {type: String, default: "flowcontrol/v1alpha1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "FlowSchema", key: "kind", setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      spec:        {type: Api::Flowcontrol::V1alpha1::FlowSchemaSpec, nilable: true, key: "spec", getter: false, setter: false},
-      status:      {type: Api::Flowcontrol::V1alpha1::FlowSchemaStatus, nilable: true, key: "status", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil, @spec : Api::Flowcontrol::V1alpha1::FlowSchemaSpec | Nil = nil, @status : Api::Flowcontrol::V1alpha1::FlowSchemaStatus | Nil = nil)
     end

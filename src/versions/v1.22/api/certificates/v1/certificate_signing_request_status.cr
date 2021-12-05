@@ -2,11 +2,13 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # CertificateSigningRequestStatus contains conditions used to indicate [approved/denied/failed status of the request, and the issued certificate.](approved/denied/failed status of the request, and the issued certificate.)
+  @[::K8S::Properties(
+    certificate: {type: String, nilable: true, key: "certificate", getter: false, setter: false},
+    conditions: {type: Array(Api::Certificates::V1::CertificateSigningRequestCondition), nilable: true, key: "conditions", getter: false, setter: false},
+  )]
   class Api::Certificates::V1::CertificateSigningRequestStatus
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -37,16 +39,6 @@ module K8S
 
     # conditions applied to the request. Known conditions are "Approved", "Denied", and "Failed".
     property conditions : Array(Api::Certificates::V1::CertificateSigningRequestCondition) | Nil
-
-    ::YAML.mapping({
-      certificate: {type: String, nilable: true, key: "certificate", getter: false, setter: false},
-      conditions:  {type: Array(Api::Certificates::V1::CertificateSigningRequestCondition), nilable: true, key: "conditions", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      certificate: {type: String, nilable: true, key: "certificate", getter: false, setter: false},
-      conditions:  {type: Array(Api::Certificates::V1::CertificateSigningRequestCondition), nilable: true, key: "conditions", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @certificate : String | Nil = nil, @conditions : Array | Nil = nil)
     end

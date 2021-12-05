@@ -2,11 +2,13 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # LoadBalancerIngress represents the status of a load-balancer ingress point: traffic intended for the service should be sent to an ingress point.
+  @[::K8S::Properties(
+    hostname: {type: String, nilable: true, key: "hostname", getter: false, setter: false},
+    ip: {type: String, nilable: true, key: "ip", getter: false, setter: false},
+  )]
   class Api::Core::V1::LoadBalancerIngress
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -16,16 +18,6 @@ module K8S
 
     # IP is set for load-balancer ingress points that are IP based (typically GCE or OpenStack load-balancers)
     property ip : String | Nil
-
-    ::YAML.mapping({
-      hostname: {type: String, nilable: true, key: "hostname", getter: false, setter: false},
-      ip:       {type: String, nilable: true, key: "ip", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      hostname: {type: String, nilable: true, key: "hostname", getter: false, setter: false},
-      ip:       {type: String, nilable: true, key: "ip", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @hostname : String | Nil = nil, @ip : String | Nil = nil)
     end

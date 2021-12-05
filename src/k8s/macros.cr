@@ -1,6 +1,10 @@
 require "json"
 require "yaml"
 
+macro sanitize_api(api)
+  {{api}}.gsub(/(\.authorization)?\.k8s\.io/, "")
+end
+
 macro k8s_json_discriminator(mappings)
   def self.new(pull : ::JSON::PullParser)
     location = pull.location
@@ -19,7 +23,7 @@ macro k8s_json_discriminator(mappings)
             value_kind = pull.kind
             case value_kind
             when .string?
-              api_value = pull.string_value
+              api_value = sanitize_api(pull.string_value)
             else
               raise ::JSON::SerializableError.new("JSON discriminator field 'apiVersion' has an invalid value type of #{value_kind.to_s}", to_s, nil, *location, nil)
             end
@@ -57,11 +61,13 @@ macro k8s_json_discriminator(mappings)
 
     case {api_value, discriminator_value}
     {% for value in mappings.resolve %}
-    when { {{ value[0] }}, {{value[1]}} }
+    when { sanitize_api({{ value[0] }}), {{value[1]}} }
       {{value[2].id}}.from_json(json)
     {% end %}
     else
-      raise ::JSON::SerializableError.new("Unknown 'apiVersion', 'kind' discriminator values: #{api_value.inspect} #{discriminator_value.inspect}", to_s, nil, *location, nil)
+      Log.error {"Unknown 'apiVersion', 'kind' discriminator values: #{api_value.inspect} #{discriminator_value.inspect}"}
+      # raise ::JSON::SerializableError.new("Unknown 'apiVersion', 'kind' discriminator values: #{api_value.inspect} #{discriminator_value.inspect}", to_s, nil, *location, nil)
+      JSON.parse(json)
     end
   end
 end
@@ -84,7 +90,7 @@ macro k8s_yaml_discriminator(mappings)
       next unless key.value == "kind" || key.value == "apiVersion"
 
       discriminator_value = value.value if key.value == "kind"
-      api_value = value.value if key.value == "apiVersion" || key.value == "groupVersion"
+      api_value = value.value.gsub(".k8s.io", "") if key.value == "apiVersion" || key.value == "groupVersion"
     end
 
     node.raise "Missing YAML discriminator field 'kind'" unless discriminator_value
@@ -92,7 +98,7 @@ macro k8s_yaml_discriminator(mappings)
 
     case {api_value, discriminator_value}
     {% for value in mappings.resolve %}
-    when { {{ value[0] }}, {{value[1]}} }
+    when { {{ value[0] }}.gsub(".k8s.io", ""), {{value[1]}} }
       return {{value[2].id}}.new(ctx, node)
     {% end %}
     else

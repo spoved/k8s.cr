@@ -2,13 +2,16 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # Represents a volume that is populated with the contents of a git repository. Git repo volumes do not support ownership management. Git repo volumes support SELinux relabeling.
   #
   # DEPRECATED: GitRepo is deprecated. To provision a container with a git repo, mount an EmptyDir into an InitContainer that clones the repo using git, then mount the EmptyDir into the Pod's container.
+  @[::K8S::Properties(
+    directory: {type: String, nilable: true, key: "directory", getter: false, setter: false},
+    repository: {type: String, nilable: false, key: "repository", getter: false, setter: false},
+    revision: {type: String, nilable: true, key: "revision", getter: false, setter: false},
+  )]
   class Api::Core::V1::GitRepoVolumeSource
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -21,18 +24,6 @@ module K8S
 
     # Commit hash for the specified revision.
     property revision : String | Nil
-
-    ::YAML.mapping({
-      directory:  {type: String, nilable: true, key: "directory", getter: false, setter: false},
-      repository: {type: String, nilable: false, key: "repository", getter: false, setter: false},
-      revision:   {type: String, nilable: true, key: "revision", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      directory:  {type: String, nilable: true, key: "directory", getter: false, setter: false},
-      repository: {type: String, nilable: false, key: "repository", getter: false, setter: false},
-      revision:   {type: String, nilable: true, key: "revision", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @repository : String, @directory : String | Nil = nil, @revision : String | Nil = nil)
     end

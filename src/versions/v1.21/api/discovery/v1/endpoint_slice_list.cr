@@ -2,12 +2,16 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # EndpointSliceList represents a list of endpoint slices
-  @[::K8S::GroupVersionKind(group: "discovery.k8s.io", kind: "EndpointSliceList", version: "v1")]
+  @[::K8S::GroupVersionKind(group: "discovery.k8s.io", kind: "EndpointSliceList", version: "v1", full: "io.k8s.api.discovery.v1.EndpointSliceList")]
+  @[::K8S::Properties(
+    api_version: {type: String, nilable: true, key: "apiVersion", getter: false, setter: false},
+    items: {type: Array(Api::Discovery::V1::EndpointSlice), nilable: false, key: "items", getter: false, setter: false},
+    kind: {type: String, nilable: true, key: "kind", getter: false, setter: false},
+    metadata: {type: Apimachinery::Apis::Meta::V1::ListMeta, nilable: true, key: "metadata", getter: false, setter: false},
+  )]
   @[::K8S::Action(name: "list", verb: "get",
     path: "/apis/discovery.k8s.io/v1/endpointslices", toplevel: true,
     args: [{name: "context", type: String | Nil, default: nil},
@@ -24,7 +28,7 @@ module K8S
   @[::K8S::Action(name: "post", verb: "post",
     path: "/apis/discovery.k8s.io/v1/namespaces/{namespace}/endpointslices", toplevel: false,
     args: [{name: "address_type", type: String},
-           {name: "endpoints", type: Array},
+           {name: "endpoints", type: Array | Nil, default: nil},
            {name: "metadata", type: Apimachinery::Apis::Meta::V1::ObjectMeta | Nil, default: nil},
            {name: "ports", type: Array | Nil, default: nil},
            {name: "context", type: String | Nil, default: nil},
@@ -73,20 +77,6 @@ module K8S
 
     # Standard list metadata.
     property metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil
-
-    ::YAML.mapping({
-      api_version: {type: String, default: "discovery/v1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "List", key: "kind", setter: false},
-      items:       {type: Array(Api::Discovery::V1::EndpointSlice), nilable: false, key: "items", getter: false, setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ListMeta, nilable: true, key: "metadata", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      api_version: {type: String, default: "discovery/v1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "List", key: "kind", setter: false},
-      items:       {type: Array(Api::Discovery::V1::EndpointSlice), nilable: false, key: "items", getter: false, setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ListMeta, nilable: true, key: "metadata", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @items : Array, @metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil = nil)
     end

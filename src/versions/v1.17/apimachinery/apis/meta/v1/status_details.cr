@@ -2,11 +2,17 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # StatusDetails is a set of additional properties that MAY be set by the server to provide additional information about a response. The Reason field of a Status object defines what attributes will be set. Clients must ignore fields that do not match the defined type of each attribute, and should assume that any attribute may be empty, invalid, or under defined.
+  @[::K8S::Properties(
+    causes: {type: Array(Apimachinery::Apis::Meta::V1::StatusCause), nilable: true, key: "causes", getter: false, setter: false},
+    group: {type: String, nilable: true, key: "group", getter: false, setter: false},
+    kind: {type: String, nilable: true, key: "kind", getter: false, setter: false},
+    name: {type: String, nilable: true, key: "name", getter: false, setter: false},
+    retry_after_seconds: {type: Int32, nilable: true, key: "retryAfterSeconds", getter: false, setter: false},
+    uid: {type: String, nilable: true, key: "uid", getter: false, setter: false},
+  )]
   class Apimachinery::Apis::Meta::V1::StatusDetails
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -24,28 +30,12 @@ module K8S
     property name : String | Nil
 
     # If specified, the time in seconds before the operation should be retried. Some errors may indicate the client must take an alternate action - for those errors this field may indicate how long to wait before taking the alternate action.
+    @[::JSON::Field(key: "retryAfterSeconds")]
+    @[::YAML::Field(key: "retryAfterSeconds")]
     property retry_after_seconds : Int32 | Nil
 
     # UID of the resource. (when there is a single resource which can be described). More info: [http://kubernetes.io/docs/user-guide/identifiers#uids](http://kubernetes.io/docs/user-guide/identifiers#uids)
     property uid : String | Nil
-
-    ::YAML.mapping({
-      causes:              {type: Array(Apimachinery::Apis::Meta::V1::StatusCause), nilable: true, key: "causes", getter: false, setter: false},
-      group:               {type: String, nilable: true, key: "group", getter: false, setter: false},
-      kind:                {type: String, nilable: true, key: "kind", getter: false, setter: false},
-      name:                {type: String, nilable: true, key: "name", getter: false, setter: false},
-      retry_after_seconds: {type: Int32, nilable: true, key: "retryAfterSeconds", getter: false, setter: false},
-      uid:                 {type: String, nilable: true, key: "uid", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      causes:              {type: Array(Apimachinery::Apis::Meta::V1::StatusCause), nilable: true, key: "causes", getter: false, setter: false},
-      group:               {type: String, nilable: true, key: "group", getter: false, setter: false},
-      kind:                {type: String, nilable: true, key: "kind", getter: false, setter: false},
-      name:                {type: String, nilable: true, key: "name", getter: false, setter: false},
-      retry_after_seconds: {type: Int32, nilable: true, key: "retryAfterSeconds", getter: false, setter: false},
-      uid:                 {type: String, nilable: true, key: "uid", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @causes : Array | Nil = nil, @group : String | Nil = nil, @kind : String | Nil = nil, @name : String | Nil = nil, @retry_after_seconds : Int32 | Nil = nil, @uid : String | Nil = nil)
     end

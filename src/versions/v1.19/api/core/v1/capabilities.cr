@@ -2,11 +2,13 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # Adds and removes POSIX capabilities from running containers.
+  @[::K8S::Properties(
+    add: {type: Array(String), nilable: true, key: "add", getter: false, setter: false},
+    drop: {type: Array(String), nilable: true, key: "drop", getter: false, setter: false},
+  )]
   class Api::Core::V1::Capabilities
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -16,16 +18,6 @@ module K8S
 
     # Removed capabilities
     property drop : Array(String) | Nil
-
-    ::YAML.mapping({
-      add:  {type: Array(String), nilable: true, key: "add", getter: false, setter: false},
-      drop: {type: Array(String), nilable: true, key: "drop", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      add:  {type: Array(String), nilable: true, key: "add", getter: false, setter: false},
-      drop: {type: Array(String), nilable: true, key: "drop", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @add : Array | Nil = nil, @drop : Array | Nil = nil)
     end

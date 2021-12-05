@@ -2,12 +2,17 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # configuration of a horizontal pod autoscaler.
-  @[::K8S::GroupVersionKind(group: "autoscaling", kind: "HorizontalPodAutoscaler", version: "v1")]
+  @[::K8S::GroupVersionKind(group: "autoscaling", kind: "HorizontalPodAutoscaler", version: "v1", full: "io.k8s.api.autoscaling.v1.HorizontalPodAutoscaler")]
+  @[::K8S::Properties(
+    api_version: {type: String, nilable: true, key: "apiVersion", getter: false, setter: false},
+    kind: {type: String, nilable: true, key: "kind", getter: false, setter: false},
+    metadata: {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
+    spec: {type: Api::Autoscaling::V1::HorizontalPodAutoscalerSpec, nilable: true, key: "spec", getter: false, setter: false},
+    status: {type: Api::Autoscaling::V1::HorizontalPodAutoscalerStatus, nilable: true, key: "status", getter: false, setter: false},
+  )]
   @[::K8S::Action(name: "post", verb: "post",
     path: "/apis/autoscaling/v1/namespaces/{namespace}/horizontalpodautoscalers", toplevel: false,
     args: [{name: "context", type: String | Nil, default: nil},
@@ -107,22 +112,6 @@ module K8S
 
     # current information about the autoscaler.
     property status : Api::Autoscaling::V1::HorizontalPodAutoscalerStatus | Nil
-
-    ::YAML.mapping({
-      api_version: {type: String, default: "autoscaling/v1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "HorizontalPodAutoscaler", key: "kind", setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      spec:        {type: Api::Autoscaling::V1::HorizontalPodAutoscalerSpec, nilable: true, key: "spec", getter: false, setter: false},
-      status:      {type: Api::Autoscaling::V1::HorizontalPodAutoscalerStatus, nilable: true, key: "status", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      api_version: {type: String, default: "autoscaling/v1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "HorizontalPodAutoscaler", key: "kind", setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      spec:        {type: Api::Autoscaling::V1::HorizontalPodAutoscalerSpec, nilable: true, key: "spec", getter: false, setter: false},
-      status:      {type: Api::Autoscaling::V1::HorizontalPodAutoscalerStatus, nilable: true, key: "status", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil, @spec : Api::Autoscaling::V1::HorizontalPodAutoscalerSpec | Nil = nil, @status : Api::Autoscaling::V1::HorizontalPodAutoscalerStatus | Nil = nil)
     end

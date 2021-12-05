@@ -2,8 +2,6 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # CertificateSigningRequest objects provide a mechanism to obtain x509 certificates by submitting a certificate signing request, and having it asynchronously approved and issued.
@@ -13,7 +11,14 @@ module K8S
   #  2. serving certificates for TLS endpoints kube-apiserver can connect to securely (with the ["kubernetes.io/kubelet-serving" signerName).]("kubernetes.io/kubelet-serving" signerName).)
   #
   # This API can be used to request client certificates to authenticate to kube-apiserver (with the ["kubernetes.io/kube-apiserver-client" signerName), or to obtain certificates from custom non-Kubernetes signers.]("kubernetes.io/kube-apiserver-client" signerName), or to obtain certificates from custom non-Kubernetes signers.)
-  @[::K8S::GroupVersionKind(group: "certificates.k8s.io", kind: "CertificateSigningRequest", version: "v1")]
+  @[::K8S::GroupVersionKind(group: "certificates.k8s.io", kind: "CertificateSigningRequest", version: "v1", full: "io.k8s.api.certificates.v1.CertificateSigningRequest")]
+  @[::K8S::Properties(
+    api_version: {type: String, nilable: true, key: "apiVersion", getter: false, setter: false},
+    kind: {type: String, nilable: true, key: "kind", getter: false, setter: false},
+    metadata: {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
+    spec: {type: Api::Certificates::V1::CertificateSigningRequestSpec, nilable: false, key: "spec", getter: false, setter: false},
+    status: {type: Api::Certificates::V1::CertificateSigningRequestStatus, nilable: true, key: "status", getter: false, setter: false},
+  )]
   @[::K8S::Action(name: "post", verb: "post",
     path: "/apis/certificates.k8s.io/v1/certificatesigningrequests", toplevel: false,
     args: [{name: "context", type: String | Nil, default: nil},
@@ -124,22 +129,6 @@ module K8S
 
     # status contains information about whether the request is approved or denied, and the certificate issued by the signer, or the failure condition indicating signer failure.
     property status : Api::Certificates::V1::CertificateSigningRequestStatus | Nil
-
-    ::YAML.mapping({
-      api_version: {type: String, default: "certificates/v1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "CertificateSigningRequest", key: "kind", setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      spec:        {type: Api::Certificates::V1::CertificateSigningRequestSpec, nilable: false, key: "spec", getter: false, setter: false},
-      status:      {type: Api::Certificates::V1::CertificateSigningRequestStatus, nilable: true, key: "status", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      api_version: {type: String, default: "certificates/v1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "CertificateSigningRequest", key: "kind", setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      spec:        {type: Api::Certificates::V1::CertificateSigningRequestSpec, nilable: false, key: "spec", getter: false, setter: false},
-      status:      {type: Api::Certificates::V1::CertificateSigningRequestStatus, nilable: true, key: "status", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @spec : Api::Certificates::V1::CertificateSigningRequestSpec, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil, @status : Api::Certificates::V1::CertificateSigningRequestStatus | Nil = nil)
     end

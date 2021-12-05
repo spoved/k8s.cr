@@ -2,12 +2,17 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # DaemonSet represents the configuration of a daemon set.
-  @[::K8S::GroupVersionKind(group: "apps", kind: "DaemonSet", version: "v1")]
+  @[::K8S::GroupVersionKind(group: "apps", kind: "DaemonSet", version: "v1", full: "io.k8s.api.apps.v1.DaemonSet")]
+  @[::K8S::Properties(
+    api_version: {type: String, nilable: true, key: "apiVersion", getter: false, setter: false},
+    kind: {type: String, nilable: true, key: "kind", getter: false, setter: false},
+    metadata: {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
+    spec: {type: Api::Apps::V1::DaemonSetSpec, nilable: true, key: "spec", getter: false, setter: false},
+    status: {type: Api::Apps::V1::DaemonSetStatus, nilable: true, key: "status", getter: false, setter: false},
+  )]
   @[::K8S::Action(name: "post", verb: "post",
     path: "/apis/apps/v1/namespaces/{namespace}/daemonsets", toplevel: false,
     args: [{name: "context", type: String | Nil, default: nil},
@@ -105,22 +110,6 @@ module K8S
 
     # The current status of this daemon set. This data may be out of date by some window of time. Populated by the system. Read-only. More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status)
     property status : Api::Apps::V1::DaemonSetStatus | Nil
-
-    ::YAML.mapping({
-      api_version: {type: String, default: "apps/v1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "DaemonSet", key: "kind", setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      spec:        {type: Api::Apps::V1::DaemonSetSpec, nilable: true, key: "spec", getter: false, setter: false},
-      status:      {type: Api::Apps::V1::DaemonSetStatus, nilable: true, key: "status", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      api_version: {type: String, default: "apps/v1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "DaemonSet", key: "kind", setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      spec:        {type: Api::Apps::V1::DaemonSetSpec, nilable: true, key: "spec", getter: false, setter: false},
-      status:      {type: Api::Apps::V1::DaemonSetStatus, nilable: true, key: "status", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil, @spec : Api::Apps::V1::DaemonSetSpec | Nil = nil, @status : Api::Apps::V1::DaemonSetStatus | Nil = nil)
     end

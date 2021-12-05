@@ -2,11 +2,13 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # IngressClassSpec provides information about the class of an Ingress.
+  @[::K8S::Properties(
+    controller: {type: String, nilable: true, key: "controller", getter: false, setter: false},
+    parameters: {type: Api::Core::V1::TypedLocalObjectReference, nilable: true, key: "parameters", getter: false, setter: false},
+  )]
   class Api::Networking::V1beta1::IngressClassSpec
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -16,16 +18,6 @@ module K8S
 
     # Parameters is a link to a custom resource containing additional configuration for the controller. This is optional if the controller does not require extra parameters.
     property parameters : Api::Core::V1::TypedLocalObjectReference | Nil
-
-    ::YAML.mapping({
-      controller: {type: String, nilable: true, key: "controller", getter: false, setter: false},
-      parameters: {type: Api::Core::V1::TypedLocalObjectReference, nilable: true, key: "parameters", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      controller: {type: String, nilable: true, key: "controller", getter: false, setter: false},
-      parameters: {type: Api::Core::V1::TypedLocalObjectReference, nilable: true, key: "parameters", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @controller : String | Nil = nil, @parameters : Api::Core::V1::TypedLocalObjectReference | Nil = nil)
     end

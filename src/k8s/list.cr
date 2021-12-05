@@ -6,8 +6,6 @@ abstract class ::K8S::Kubernetes::ResourceList(T) < ::K8S::Kubernetes::Resource
   include JSON::Serializable
   include YAML::Serializable
 
-  @[JSON::Field(key: "apiVersion")]
-  @[YAML::Field(key: "apiVersion")]
   getter api_version : String = "v1"
   getter kind : String = "List"
   property items : Array(T)

@@ -4,6 +4,8 @@ require "http/client"
 require "./swagger"
 require "./generator"
 
+FileUtils.mkdir_p(File.join(".", Generator::SCHEMAS_DIR))
+
 struct Range
   def next
     {{@type}}.new(self.end + 1, self.end + 1 + self.end - self.begin)
@@ -13,15 +15,23 @@ end
 def latest_patch_for(prefix, patch_range = 0..22, last_res = nil)
   last_patch = patch_range.bsearch do |patch|
     version = "#{prefix}.#{patch}"
-    url = "https://raw.githubusercontent.com/kubernetes/kubernetes/#{version}/api/openapi-spec/swagger.json"
-    res = HTTP::Client.get(url)
+    file_path = File.join(".", Generator::SCHEMAS_DIR, "#{version}.json")
 
-    case res.status_code
-    when 200
-      last_res = res
+    if File.exists?(file_path)
+      last_res = File.read(file_path)
       false
     else
-      true
+      url = "https://raw.githubusercontent.com/kubernetes/kubernetes/#{version}/api/openapi-spec/swagger.json"
+      res = HTTP::Client.get(url)
+
+      case res.status_code
+      when 200
+        File.write(file_path, res.body)
+        last_res = res.body
+        false
+      else
+        true
+      end
     end
   end
 
@@ -33,7 +43,7 @@ def latest_patch_for(prefix, patch_range = 0..22, last_res = nil)
 end
 
 major = 1
-minor = 6
+minor = 16
 # minor = 22
 
 FileUtils.rm_rf File.join(".", Generator::VERSIONS_DIR)

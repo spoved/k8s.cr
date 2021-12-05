@@ -2,12 +2,17 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # ClusterRole is a cluster level, logical grouping of PolicyRules that can be referenced as a unit by a RoleBinding or ClusterRoleBinding.
-  @[::K8S::GroupVersionKind(group: "rbac.authorization.k8s.io", kind: "ClusterRole", version: "v1")]
+  @[::K8S::GroupVersionKind(group: "rbac.authorization.k8s.io", kind: "ClusterRole", version: "v1", full: "io.k8s.api.rbac.v1.ClusterRole")]
+  @[::K8S::Properties(
+    aggregation_rule: {type: Api::Rbac::V1::AggregationRule, nilable: true, key: "aggregationRule", getter: false, setter: false},
+    api_version: {type: String, nilable: true, key: "apiVersion", getter: false, setter: false},
+    kind: {type: String, nilable: true, key: "kind", getter: false, setter: false},
+    metadata: {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
+    rules: {type: Array(Api::Rbac::V1::PolicyRule), nilable: true, key: "rules", getter: false, setter: false},
+  )]
   @[::K8S::Action(name: "post", verb: "post",
     path: "/apis/rbac.authorization.k8s.io/v1/clusterroles", toplevel: false,
     args: [{name: "context", type: String | Nil, default: nil},
@@ -76,6 +81,8 @@ module K8S
     getter api_version : String = "rbac.authorization.k8s.io/v1"
     getter kind : String = "ClusterRole"
     # AggregationRule is an optional field that describes how to build the Rules for this ClusterRole. If AggregationRule is set, then the Rules are controller managed and direct changes to Rules will be stomped by the controller.
+    @[::JSON::Field(key: "aggregationRule")]
+    @[::YAML::Field(key: "aggregationRule")]
     property aggregation_rule : Api::Rbac::V1::AggregationRule | Nil
 
     # Standard object's metadata.
@@ -83,22 +90,6 @@ module K8S
 
     # Rules holds all the PolicyRules for this ClusterRole
     property rules : Array(Api::Rbac::V1::PolicyRule) | Nil
-
-    ::YAML.mapping({
-      api_version:      {type: String, default: "rbac.authorization.k8s.io/v1", key: "apiVersion", setter: false},
-      kind:             {type: String, default: "ClusterRole", key: "kind", setter: false},
-      aggregation_rule: {type: Api::Rbac::V1::AggregationRule, nilable: true, key: "aggregationRule", getter: false, setter: false},
-      metadata:         {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      rules:            {type: Array(Api::Rbac::V1::PolicyRule), nilable: true, key: "rules", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      api_version:      {type: String, default: "rbac.authorization.k8s.io/v1", key: "apiVersion", setter: false},
-      kind:             {type: String, default: "ClusterRole", key: "kind", setter: false},
-      aggregation_rule: {type: Api::Rbac::V1::AggregationRule, nilable: true, key: "aggregationRule", getter: false, setter: false},
-      metadata:         {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      rules:            {type: Array(Api::Rbac::V1::PolicyRule), nilable: true, key: "rules", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @aggregation_rule : Api::Rbac::V1::AggregationRule | Nil = nil, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil, @rules : Array | Nil = nil)
     end

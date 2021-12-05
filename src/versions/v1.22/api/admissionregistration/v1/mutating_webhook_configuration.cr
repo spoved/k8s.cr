@@ -2,12 +2,16 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # MutatingWebhookConfiguration describes the configuration of and admission webhook that accept or reject and may change the object.
-  @[::K8S::GroupVersionKind(group: "admissionregistration.k8s.io", kind: "MutatingWebhookConfiguration", version: "v1")]
+  @[::K8S::GroupVersionKind(group: "admissionregistration.k8s.io", kind: "MutatingWebhookConfiguration", version: "v1", full: "io.k8s.api.admissionregistration.v1.MutatingWebhookConfiguration")]
+  @[::K8S::Properties(
+    api_version: {type: String, nilable: true, key: "apiVersion", getter: false, setter: false},
+    kind: {type: String, nilable: true, key: "kind", getter: false, setter: false},
+    metadata: {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
+    webhooks: {type: Array(Api::Admissionregistration::V1::MutatingWebhook), nilable: true, key: "webhooks", getter: false, setter: false},
+  )]
   @[::K8S::Action(name: "post", verb: "post",
     path: "/apis/admissionregistration.k8s.io/v1/mutatingwebhookconfigurations", toplevel: false,
     args: [{name: "context", type: String | Nil, default: nil},
@@ -80,20 +84,6 @@ module K8S
 
     # Webhooks is a list of webhooks and the affected resources and operations.
     property webhooks : Array(Api::Admissionregistration::V1::MutatingWebhook) | Nil
-
-    ::YAML.mapping({
-      api_version: {type: String, default: "admissionregistration/v1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "MutatingWebhookConfiguration", key: "kind", setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      webhooks:    {type: Array(Api::Admissionregistration::V1::MutatingWebhook), nilable: true, key: "webhooks", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      api_version: {type: String, default: "admissionregistration/v1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "MutatingWebhookConfiguration", key: "kind", setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      webhooks:    {type: Array(Api::Admissionregistration::V1::MutatingWebhook), nilable: true, key: "webhooks", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil, @webhooks : Array | Nil = nil)
     end

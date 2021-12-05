@@ -2,12 +2,16 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # ComponentStatus (and ComponentStatusList) holds the cluster validation info. Deprecated: This API is deprecated in v1.19+
-  @[::K8S::GroupVersionKind(group: "", kind: "ComponentStatus", version: "v1")]
+  @[::K8S::GroupVersionKind(group: "", kind: "ComponentStatus", version: "v1", full: "io.k8s.api.core.v1.ComponentStatus")]
+  @[::K8S::Properties(
+    api_version: {type: String, nilable: true, key: "apiVersion", getter: false, setter: false},
+    conditions: {type: Array(Api::Core::V1::ComponentCondition), nilable: true, key: "conditions", getter: false, setter: false},
+    kind: {type: String, nilable: true, key: "kind", getter: false, setter: false},
+    metadata: {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
+  )]
   @[::K8S::Action(name: "get", verb: "get",
     path: "/api/v1/componentstatuses/{name}", toplevel: true,
     args: [{name: "name", type: String},
@@ -25,20 +29,6 @@ module K8S
 
     # Standard object's metadata. More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)
     property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil
-
-    ::YAML.mapping({
-      api_version: {type: String, default: "v1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "ComponentStatus", key: "kind", setter: false},
-      conditions:  {type: Array(Api::Core::V1::ComponentCondition), nilable: true, key: "conditions", getter: false, setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      api_version: {type: String, default: "v1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "ComponentStatus", key: "kind", setter: false},
-      conditions:  {type: Array(Api::Core::V1::ComponentCondition), nilable: true, key: "conditions", getter: false, setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @conditions : Array | Nil = nil, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil)
     end

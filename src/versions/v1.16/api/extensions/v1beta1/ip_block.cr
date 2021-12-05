@@ -2,11 +2,13 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # DEPRECATED 1.9 - This group version of IPBlock is deprecated by [networking/v1/IPBlock. IPBlock describes a particular CIDR (Ex. "192.168.1.1/24") that is allowed to the pods matched by a NetworkPolicySpec's podSelector. The except entry describes CIDRs that should not be included within this rule.](networking/v1/IPBlock. IPBlock describes a particular CIDR (Ex. "192.168.1.1/24") that is allowed to the pods matched by a NetworkPolicySpec's podSelector. The except entry describes CIDRs that should not be included within this rule.)
+  @[::K8S::Properties(
+    cidr: {type: String, nilable: false, key: "cidr", getter: false, setter: false},
+    except: {type: Array(String), nilable: true, key: "except", getter: false, setter: false},
+  )]
   class Api::Extensions::V1beta1::IPBlock
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -16,16 +18,6 @@ module K8S
 
     # Except is a slice of CIDRs that should not be included within an IP Block Valid examples are ["192.168.1.1/24" Except values will be rejected if they are outside the CIDR range]("192.168.1.1/24" Except values will be rejected if they are outside the CIDR range)
     property except : Array(String) | Nil
-
-    ::YAML.mapping({
-      cidr:   {type: String, nilable: false, key: "cidr", getter: false, setter: false},
-      except: {type: Array(String), nilable: true, key: "except", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      cidr:   {type: String, nilable: false, key: "cidr", getter: false, setter: false},
-      except: {type: Array(String), nilable: true, key: "except", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @cidr : String, @except : Array | Nil = nil)
     end

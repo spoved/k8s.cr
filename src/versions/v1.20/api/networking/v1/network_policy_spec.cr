@@ -2,11 +2,15 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # NetworkPolicySpec provides the specification of a NetworkPolicy
+  @[::K8S::Properties(
+    egress: {type: Array(Api::Networking::V1::NetworkPolicyEgressRule), nilable: true, key: "egress", getter: false, setter: false},
+    ingress: {type: Array(Api::Networking::V1::NetworkPolicyIngressRule), nilable: true, key: "ingress", getter: false, setter: false},
+    pod_selector: {type: Apimachinery::Apis::Meta::V1::LabelSelector, nilable: false, key: "podSelector", getter: false, setter: false},
+    policy_types: {type: Array(String), nilable: true, key: "policyTypes", getter: false, setter: false},
+  )]
   class Api::Networking::V1::NetworkPolicySpec
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -18,24 +22,14 @@ module K8S
     property ingress : Array(Api::Networking::V1::NetworkPolicyIngressRule) | Nil
 
     # Selects the pods to which this NetworkPolicy object applies. The array of ingress rules is applied to any pods selected by this field. Multiple network policies can select the same set of pods. In this case, the ingress rules for each are combined additively. This field is NOT optional and follows standard label selector semantics. An empty podSelector matches all pods in this namespace.
+    @[::JSON::Field(key: "podSelector")]
+    @[::YAML::Field(key: "podSelector")]
     property pod_selector : Apimachinery::Apis::Meta::V1::LabelSelector
 
     # List of rule types that the NetworkPolicy relates to. Valid options are "Ingress", "Egress", or "Ingress,Egress". If this field is not specified, it will default based on the existence of Ingress or Egress rules; policies that contain an Egress section are assumed to affect Egress, and all policies (whether or not they contain an Ingress section) are assumed to affect Ingress. If you want to write an egress-only policy, you must explicitly specify policyTypes [ "Egress" ]. Likewise, if you want to write a policy that specifies that no egress is allowed, you must specify a policyTypes value that include "Egress" (since such a policy would not include an Egress section and would otherwise default to just [ "Ingress" ]). This field is beta-level in 1.8
+    @[::JSON::Field(key: "policyTypes")]
+    @[::YAML::Field(key: "policyTypes")]
     property policy_types : Array(String) | Nil
-
-    ::YAML.mapping({
-      egress:       {type: Array(Api::Networking::V1::NetworkPolicyEgressRule), nilable: true, key: "egress", getter: false, setter: false},
-      ingress:      {type: Array(Api::Networking::V1::NetworkPolicyIngressRule), nilable: true, key: "ingress", getter: false, setter: false},
-      pod_selector: {type: Apimachinery::Apis::Meta::V1::LabelSelector, nilable: false, key: "podSelector", getter: false, setter: false},
-      policy_types: {type: Array(String), nilable: true, key: "policyTypes", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      egress:       {type: Array(Api::Networking::V1::NetworkPolicyEgressRule), nilable: true, key: "egress", getter: false, setter: false},
-      ingress:      {type: Array(Api::Networking::V1::NetworkPolicyIngressRule), nilable: true, key: "ingress", getter: false, setter: false},
-      pod_selector: {type: Apimachinery::Apis::Meta::V1::LabelSelector, nilable: false, key: "podSelector", getter: false, setter: false},
-      policy_types: {type: Array(String), nilable: true, key: "policyTypes", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @pod_selector : Apimachinery::Apis::Meta::V1::LabelSelector, @egress : Array | Nil = nil, @ingress : Array | Nil = nil, @policy_types : Array | Nil = nil)
     end

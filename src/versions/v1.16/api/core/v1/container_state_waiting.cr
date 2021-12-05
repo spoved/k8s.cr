@@ -2,11 +2,13 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # ContainerStateWaiting is a waiting state of a container.
+  @[::K8S::Properties(
+    message: {type: String, nilable: true, key: "message", getter: false, setter: false},
+    reason: {type: String, nilable: true, key: "reason", getter: false, setter: false},
+  )]
   class Api::Core::V1::ContainerStateWaiting
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -16,16 +18,6 @@ module K8S
 
     # (brief) reason the container is not yet running.
     property reason : String | Nil
-
-    ::YAML.mapping({
-      message: {type: String, nilable: true, key: "message", getter: false, setter: false},
-      reason:  {type: String, nilable: true, key: "reason", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      message: {type: String, nilable: true, key: "message", getter: false, setter: false},
-      reason:  {type: String, nilable: true, key: "reason", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @message : String | Nil = nil, @reason : String | Nil = nil)
     end

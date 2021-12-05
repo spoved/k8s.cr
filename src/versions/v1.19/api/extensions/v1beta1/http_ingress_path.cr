@@ -2,11 +2,14 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # HTTPIngressPath associates a path with a backend. Incoming urls matching the path are forwarded to the backend.
+  @[::K8S::Properties(
+    backend: {type: Api::Extensions::V1beta1::IngressBackend, nilable: false, key: "backend", getter: false, setter: false},
+    path: {type: String, nilable: true, key: "path", getter: false, setter: false},
+    path_type: {type: String, nilable: true, key: "pathType", getter: false, setter: false},
+  )]
   class Api::Extensions::V1beta1::HTTPIngressPath
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -28,19 +31,9 @@ module K8S
     #   the IngressClass. Implementations can treat this as a separate PathType
     #   or treat it identically to Prefix or Exact path types.
     # Implementations are required to support all path types. Defaults to ImplementationSpecific.
+    @[::JSON::Field(key: "pathType")]
+    @[::YAML::Field(key: "pathType")]
     property path_type : String | Nil
-
-    ::YAML.mapping({
-      backend:   {type: Api::Extensions::V1beta1::IngressBackend, nilable: false, key: "backend", getter: false, setter: false},
-      path:      {type: String, nilable: true, key: "path", getter: false, setter: false},
-      path_type: {type: String, nilable: true, key: "pathType", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      backend:   {type: Api::Extensions::V1beta1::IngressBackend, nilable: false, key: "backend", getter: false, setter: false},
-      path:      {type: String, nilable: true, key: "path", getter: false, setter: false},
-      path_type: {type: String, nilable: true, key: "pathType", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @backend : Api::Extensions::V1beta1::IngressBackend, @path : String | Nil = nil, @path_type : String | Nil = nil)
     end

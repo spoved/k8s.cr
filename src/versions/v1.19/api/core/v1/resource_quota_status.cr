@@ -2,11 +2,13 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # ResourceQuotaStatus defines the enforced hard limits and observed use.
+  @[::K8S::Properties(
+    hard: {type: Hash(String, String), nilable: true, key: "hard", getter: false, setter: false},
+    used: {type: Hash(String, String), nilable: true, key: "used", getter: false, setter: false},
+  )]
   class Api::Core::V1::ResourceQuotaStatus
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -16,16 +18,6 @@ module K8S
 
     # Used is the current observed total usage of the resource in the namespace.
     property used : Hash(String, String) | Nil
-
-    ::YAML.mapping({
-      hard: {type: Hash(String, String), nilable: true, key: "hard", getter: false, setter: false},
-      used: {type: Hash(String, String), nilable: true, key: "used", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      hard: {type: Hash(String, String), nilable: true, key: "hard", getter: false, setter: false},
-      used: {type: Hash(String, String), nilable: true, key: "used", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @hard : Hash(String, String) | Nil = nil, @used : Hash(String, String) | Nil = nil)
     end

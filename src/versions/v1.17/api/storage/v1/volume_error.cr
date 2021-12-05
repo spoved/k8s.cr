@@ -2,11 +2,13 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # VolumeError captures an error encountered during a volume operation.
+  @[::K8S::Properties(
+    message: {type: String, nilable: true, key: "message", getter: false, setter: false},
+    time: {type: Time, nilable: true, key: "time", getter: false, setter: false},
+  )]
   class Api::Storage::V1::VolumeError
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -16,16 +18,6 @@ module K8S
 
     # Time the error was encountered.
     property time : Time | Nil
-
-    ::YAML.mapping({
-      message: {type: String, nilable: true, key: "message", getter: false, setter: false},
-      time:    {type: Time, nilable: true, key: "time", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      message: {type: String, nilable: true, key: "message", getter: false, setter: false},
-      time:    {type: Time, nilable: true, key: "time", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @message : String | Nil = nil, @time : Time | Nil = nil)
     end

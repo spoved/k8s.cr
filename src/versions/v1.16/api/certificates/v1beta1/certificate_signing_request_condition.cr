@@ -2,15 +2,21 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
+  @[::K8S::Properties(
+    last_update_time: {type: Time, nilable: true, key: "lastUpdateTime", getter: false, setter: false},
+    message: {type: String, nilable: true, key: "message", getter: false, setter: false},
+    reason: {type: String, nilable: true, key: "reason", getter: false, setter: false},
+    type: {type: String, nilable: false, key: "type", getter: false, setter: false},
+  )]
   class Api::Certificates::V1beta1::CertificateSigningRequestCondition
     include ::JSON::Serializable
     include ::YAML::Serializable
 
     # timestamp for the last update to this condition
+    @[::JSON::Field(key: "lastUpdateTime")]
+    @[::YAML::Field(key: "lastUpdateTime")]
     property last_update_time : Time | Nil
 
     # human readable message with details about the request state
@@ -21,20 +27,6 @@ module K8S
 
     # request approval state, currently Approved or Denied.
     property type : String
-
-    ::YAML.mapping({
-      last_update_time: {type: Time, nilable: true, key: "lastUpdateTime", getter: false, setter: false},
-      message:          {type: String, nilable: true, key: "message", getter: false, setter: false},
-      reason:           {type: String, nilable: true, key: "reason", getter: false, setter: false},
-      type:             {type: String, nilable: false, key: "type", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      last_update_time: {type: Time, nilable: true, key: "lastUpdateTime", getter: false, setter: false},
-      message:          {type: String, nilable: true, key: "message", getter: false, setter: false},
-      reason:           {type: String, nilable: true, key: "reason", getter: false, setter: false},
-      type:             {type: String, nilable: false, key: "type", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @type : String, @last_update_time : Time | Nil = nil, @message : String | Nil = nil, @reason : String | Nil = nil)
     end

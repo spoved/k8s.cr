@@ -2,11 +2,14 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # Maps a string key to a path within a volume.
+  @[::K8S::Properties(
+    key: {type: String, nilable: false, key: "key", getter: false, setter: false},
+    mode: {type: Int32, nilable: true, key: "mode", getter: false, setter: false},
+    path: {type: String, nilable: false, key: "path", getter: false, setter: false},
+  )]
   class Api::Core::V1::KeyToPath
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -19,18 +22,6 @@ module K8S
 
     # The relative path of the file to map the key to. May not be an absolute path. May not contain the path element '..'. May not start with the string '..'.
     property path : String
-
-    ::YAML.mapping({
-      key:  {type: String, nilable: false, key: "key", getter: false, setter: false},
-      mode: {type: Int32, nilable: true, key: "mode", getter: false, setter: false},
-      path: {type: String, nilable: false, key: "path", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      key:  {type: String, nilable: false, key: "key", getter: false, setter: false},
-      mode: {type: Int32, nilable: true, key: "mode", getter: false, setter: false},
-      path: {type: String, nilable: false, key: "path", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @key : String, @path : String, @mode : Int32 | Nil = nil)
     end

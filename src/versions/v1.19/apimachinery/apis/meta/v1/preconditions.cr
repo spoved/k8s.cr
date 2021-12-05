@@ -2,30 +2,24 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # Preconditions must be fulfilled before an operation (update, delete, etc.) is carried out.
+  @[::K8S::Properties(
+    resource_version: {type: String, nilable: true, key: "resourceVersion", getter: false, setter: false},
+    uid: {type: String, nilable: true, key: "uid", getter: false, setter: false},
+  )]
   class Apimachinery::Apis::Meta::V1::Preconditions
     include ::JSON::Serializable
     include ::YAML::Serializable
 
     # Specifies the target ResourceVersion
+    @[::JSON::Field(key: "resourceVersion")]
+    @[::YAML::Field(key: "resourceVersion")]
     property resource_version : String | Nil
 
     # Specifies the target UID.
     property uid : String | Nil
-
-    ::YAML.mapping({
-      resource_version: {type: String, nilable: true, key: "resourceVersion", getter: false, setter: false},
-      uid:              {type: String, nilable: true, key: "uid", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      resource_version: {type: String, nilable: true, key: "resourceVersion", getter: false, setter: false},
-      uid:              {type: String, nilable: true, key: "uid", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @resource_version : String | Nil = nil, @uid : String | Nil = nil)
     end

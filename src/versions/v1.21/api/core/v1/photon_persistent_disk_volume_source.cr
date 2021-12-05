@@ -2,30 +2,26 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # Represents a Photon Controller persistent disk resource.
+  @[::K8S::Properties(
+    fs_type: {type: String, nilable: true, key: "fsType", getter: false, setter: false},
+    pd_id: {type: String, nilable: false, key: "pdID", getter: false, setter: false},
+  )]
   class Api::Core::V1::PhotonPersistentDiskVolumeSource
     include ::JSON::Serializable
     include ::YAML::Serializable
 
     # Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified.
+    @[::JSON::Field(key: "fsType")]
+    @[::YAML::Field(key: "fsType")]
     property fs_type : String | Nil
 
     # ID that identifies Photon Controller persistent disk
+    @[::JSON::Field(key: "pdID")]
+    @[::YAML::Field(key: "pdID")]
     property pd_id : String
-
-    ::YAML.mapping({
-      fs_type: {type: String, nilable: true, key: "fsType", getter: false, setter: false},
-      pd_id:   {type: String, nilable: false, key: "pdID", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      fs_type: {type: String, nilable: true, key: "fsType", getter: false, setter: false},
-      pd_id:   {type: String, nilable: false, key: "pdID", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @pd_id : String, @fs_type : String | Nil = nil)
     end

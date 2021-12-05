@@ -2,12 +2,16 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # AuditSink represents a cluster level audit sink
-  @[::K8S::GroupVersionKind(group: "auditregistration.k8s.io", kind: "AuditSink", version: "v1alpha1")]
+  @[::K8S::GroupVersionKind(group: "auditregistration.k8s.io", kind: "AuditSink", version: "v1alpha1", full: "io.k8s.api.auditregistration.v1alpha1.AuditSink")]
+  @[::K8S::Properties(
+    api_version: {type: String, nilable: true, key: "apiVersion", getter: false, setter: false},
+    kind: {type: String, nilable: true, key: "kind", getter: false, setter: false},
+    metadata: {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
+    spec: {type: Api::Auditregistration::V1alpha1::AuditSinkSpec, nilable: true, key: "spec", getter: false, setter: false},
+  )]
   @[::K8S::Action(name: "post", verb: "post",
     path: "/apis/auditregistration.k8s.io/v1alpha1/auditsinks", toplevel: false,
     args: [{name: "context", type: String | Nil, default: nil},
@@ -81,20 +85,6 @@ module K8S
 
     # Spec defines the audit configuration spec
     property spec : Api::Auditregistration::V1alpha1::AuditSinkSpec | Nil
-
-    ::YAML.mapping({
-      api_version: {type: String, default: "auditregistration/v1alpha1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "AuditSink", key: "kind", setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      spec:        {type: Api::Auditregistration::V1alpha1::AuditSinkSpec, nilable: true, key: "spec", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      api_version: {type: String, default: "auditregistration/v1alpha1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "AuditSink", key: "kind", setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      spec:        {type: Api::Auditregistration::V1alpha1::AuditSinkSpec, nilable: true, key: "spec", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil, @spec : Api::Auditregistration::V1alpha1::AuditSinkSpec | Nil = nil)
     end

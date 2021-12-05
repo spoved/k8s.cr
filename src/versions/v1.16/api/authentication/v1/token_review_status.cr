@@ -2,11 +2,15 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # TokenReviewStatus is the result of the token authentication request.
+  @[::K8S::Properties(
+    audiences: {type: Array(String), nilable: true, key: "audiences", getter: false, setter: false},
+    authenticated: {type: Bool, nilable: true, key: "authenticated", getter: false, setter: false},
+    error: {type: String, nilable: true, key: "error", getter: false, setter: false},
+    user: {type: Api::Authentication::V1::UserInfo, nilable: true, key: "user", getter: false, setter: false},
+  )]
   class Api::Authentication::V1::TokenReviewStatus
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -22,20 +26,6 @@ module K8S
 
     # User is the UserInfo associated with the provided token.
     property user : Api::Authentication::V1::UserInfo | Nil
-
-    ::YAML.mapping({
-      audiences:     {type: Array(String), nilable: true, key: "audiences", getter: false, setter: false},
-      authenticated: {type: Bool, nilable: true, key: "authenticated", getter: false, setter: false},
-      error:         {type: String, nilable: true, key: "error", getter: false, setter: false},
-      user:          {type: Api::Authentication::V1::UserInfo, nilable: true, key: "user", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      audiences:     {type: Array(String), nilable: true, key: "audiences", getter: false, setter: false},
-      authenticated: {type: Bool, nilable: true, key: "authenticated", getter: false, setter: false},
-      error:         {type: String, nilable: true, key: "error", getter: false, setter: false},
-      user:          {type: Api::Authentication::V1::UserInfo, nilable: true, key: "user", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @audiences : Array | Nil = nil, @authenticated : Bool | Nil = nil, @error : String | Nil = nil, @user : Api::Authentication::V1::UserInfo | Nil = nil)
     end

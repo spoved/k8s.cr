@@ -2,12 +2,16 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # PodPreset is a policy resource that defines additional runtime requirements for a Pod.
-  @[::K8S::GroupVersionKind(group: "settings.k8s.io", kind: "PodPreset", version: "v1alpha1")]
+  @[::K8S::GroupVersionKind(group: "settings.k8s.io", kind: "PodPreset", version: "v1alpha1", full: "io.k8s.api.settings.v1alpha1.PodPreset")]
+  @[::K8S::Properties(
+    api_version: {type: String, nilable: true, key: "apiVersion", getter: false, setter: false},
+    kind: {type: String, nilable: true, key: "kind", getter: false, setter: false},
+    metadata: {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
+    spec: {type: Api::Settings::V1alpha1::PodPresetSpec, nilable: true, key: "spec", getter: false, setter: false},
+  )]
   @[::K8S::Action(name: "post", verb: "post",
     path: "/apis/settings.k8s.io/v1alpha1/namespaces/{namespace}/podpresets", toplevel: false,
     args: [{name: "context", type: String | Nil, default: nil},
@@ -83,20 +87,6 @@ module K8S
     property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil
 
     property spec : Api::Settings::V1alpha1::PodPresetSpec | Nil
-
-    ::YAML.mapping({
-      api_version: {type: String, default: "settings/v1alpha1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "PodPreset", key: "kind", setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      spec:        {type: Api::Settings::V1alpha1::PodPresetSpec, nilable: true, key: "spec", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      api_version: {type: String, default: "settings/v1alpha1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "PodPreset", key: "kind", setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      spec:        {type: Api::Settings::V1alpha1::PodPresetSpec, nilable: true, key: "spec", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil, @spec : Api::Settings::V1alpha1::PodPresetSpec | Nil = nil)
     end

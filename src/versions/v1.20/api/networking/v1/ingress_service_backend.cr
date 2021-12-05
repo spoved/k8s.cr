@@ -2,11 +2,13 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # IngressServiceBackend references a Kubernetes Service as a Backend.
+  @[::K8S::Properties(
+    name: {type: String, nilable: false, key: "name", getter: false, setter: false},
+    port: {type: Api::Networking::V1::ServiceBackendPort, nilable: true, key: "port", getter: false, setter: false},
+  )]
   class Api::Networking::V1::IngressServiceBackend
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -16,16 +18,6 @@ module K8S
 
     # Port of the referenced service. A port name or port number is required for a IngressServiceBackend.
     property port : Api::Networking::V1::ServiceBackendPort | Nil
-
-    ::YAML.mapping({
-      name: {type: String, nilable: false, key: "name", getter: false, setter: false},
-      port: {type: Api::Networking::V1::ServiceBackendPort, nilable: true, key: "port", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      name: {type: String, nilable: false, key: "name", getter: false, setter: false},
-      port: {type: Api::Networking::V1::ServiceBackendPort, nilable: true, key: "port", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @name : String, @port : Api::Networking::V1::ServiceBackendPort | Nil = nil)
     end

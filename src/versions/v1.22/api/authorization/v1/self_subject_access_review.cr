@@ -2,12 +2,17 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # SelfSubjectAccessReview checks whether or the current user can perform an action.  Not filling in a spec.namespace means "in all namespaces".  Self is a special case, because users should always be able to check whether they can perform an action
-  @[::K8S::GroupVersionKind(group: "authorization.k8s.io", kind: "SelfSubjectAccessReview", version: "v1")]
+  @[::K8S::GroupVersionKind(group: "authorization.k8s.io", kind: "SelfSubjectAccessReview", version: "v1", full: "io.k8s.api.authorization.v1.SelfSubjectAccessReview")]
+  @[::K8S::Properties(
+    api_version: {type: String, nilable: true, key: "apiVersion", getter: false, setter: false},
+    kind: {type: String, nilable: true, key: "kind", getter: false, setter: false},
+    metadata: {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
+    spec: {type: Api::Authorization::V1::SelfSubjectAccessReviewSpec, nilable: false, key: "spec", getter: false, setter: false},
+    status: {type: Api::Authorization::V1::SubjectAccessReviewStatus, nilable: true, key: "status", getter: false, setter: false},
+  )]
   @[::K8S::Action(name: "post", verb: "post",
     path: "/apis/authorization.k8s.io/v1/selfsubjectaccessreviews", toplevel: false,
     args: [{name: "context", type: String | Nil, default: nil},
@@ -29,22 +34,6 @@ module K8S
 
     # Status is filled in by the server and indicates whether the request is allowed or not
     property status : Api::Authorization::V1::SubjectAccessReviewStatus | Nil
-
-    ::YAML.mapping({
-      api_version: {type: String, default: "authorization/v1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "SelfSubjectAccessReview", key: "kind", setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      spec:        {type: Api::Authorization::V1::SelfSubjectAccessReviewSpec, nilable: false, key: "spec", getter: false, setter: false},
-      status:      {type: Api::Authorization::V1::SubjectAccessReviewStatus, nilable: true, key: "status", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      api_version: {type: String, default: "authorization/v1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "SelfSubjectAccessReview", key: "kind", setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      spec:        {type: Api::Authorization::V1::SelfSubjectAccessReviewSpec, nilable: false, key: "spec", getter: false, setter: false},
-      status:      {type: Api::Authorization::V1::SubjectAccessReviewStatus, nilable: true, key: "status", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @spec : Api::Authorization::V1::SelfSubjectAccessReviewSpec, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil, @status : Api::Authorization::V1::SubjectAccessReviewStatus | Nil = nil)
     end

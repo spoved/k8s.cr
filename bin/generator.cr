@@ -1,8 +1,7 @@
-require "open-api"
-
 class Generator
   ROOT_NAME    = "K8S"
   VERSIONS_DIR = "src/versions"
+  SCHEMAS_DIR  = "tmp/schemas"
 
   getter filename : String
   getter definitions : Hash(String, String)
@@ -14,8 +13,8 @@ class Generator
     new(*args).tap(&.generate)
   end
 
-  def initialize(response : HTTP::Client::Response, fallback_version : String)
-    @schema = Swagger.from_json(response.body)
+  def initialize(response : String, fallback_version : String)
+    @schema = Swagger.from_json(response)
 
     Swagger::Definition.new.tap do |list_def|
       template = @schema.definitions["io.k8s.api.core.v1.PodList"]?
@@ -43,56 +42,79 @@ class Generator
       memo[name] = parts.join("::")
     end
 
-    @definitions["io.k8s.apimachinery.pkg.util.intstr.IntOrString"] = "Int32 | String"
-    @definitions["io.k8s.apimachinery.pkg.api.resource.Quantity"] = "Int32"
-    @definitions["io.k8s.apimachinery.pkg.apis.meta.v1.Time"] = "Time"
-    @definitions["io.k8s.apimachinery.pkg.apis.meta.v1.MicroTime"] = "Time"
+    add_missing_definitions
+  end
+
+  DEFAULT_DEFINITIONS = {
+    "io.k8s.apimachinery.pkg.util.intstr.IntOrString" => "Int32 | String",
+    "io.k8s.apimachinery.pkg.api.resource.Quantity"   => "Int32 | String",
+    "io.k8s.apimachinery.pkg.apis.meta.v1.Time"       => "Time",
+    "io.k8s.apimachinery.pkg.apis.meta.v1.MicroTime"  => "Time",
+  }
+
+  # Add any definitions that are missing
+  private def add_missing_definitions
+    DEFAULT_DEFINITIONS.each do |name, type|
+      @definitions[name] = type
+    end
   end
 
   def generate
-    definitions = @definitions.reject do |_, klass|
+    api_map = @definitions.reject do |_, klass|
       (["Int32", "Time", "String"] & klass.split("|").map(&.strip)).first?
-    end.map do |key, value|
-      Definition.generate(self, key)
     end
+    find_aliases(api_map)
+    definitions = api_map.map do |key, _|
+      Definition.new(self, key)
+    end
+
     FileUtils.mkdir_p(base_dir)
-    puts "Writing: #{filename}"
+    definitions.each(&.generate)
     Dir.cd(File.join(File.join(".", VERSIONS_DIR))) do
-      File.open(filename, "w+") do |file|
-        file.puts "# THIS FILE WAS AUTO GENERATED FROM THE K8S SWAGGER SPEC", "",
-          %<require "../k8s/*">, "",
-          "annotation ::#{base_class.lchop("::")}::GroupVersionKind; end",
-          "annotation ::#{base_class.lchop("::")}::Action; end", ""
-
-        file.puts "require \"./#{version}/kubernetes\""
-        definitions.map(&.filename).each { |r| file.puts "require \"#{r.sub(base_dir, "./#{version}")}\"" }
-      end
-      File.open(File.join(version, "kubernetes.cr"), "w+") do |file|
-        file.puts "",
-          "module ::#{base_class.lchop("::")}::Kubernetes",
-          " VERSION = SemanticVersion.parse(\"#{version.lchop("v")}.0\")", ""
-
-        file.puts "abstract class Resource"
-        file.puts "  include JSON::Serializable", ""
-        file.puts %<  MAPPINGS = [>
-        definitions.select(&.is_resource?)
-          .reject(&.class_name.==("Api::Core::V1::List"))
-          .map { |r|
-            kind = if r.kind == "List"
-                     r.name.split('.').last
-                   else
-                     r.kind
-                   end
-            {r.api_version, kind, r.class_name}
-          }
-          # .uniq! { |a| {a[0], a[1]} }
-          .each { |r| file.puts "    #{r.inspect}," }
-        file.puts %< ]>, ""
-        file.puts "k8s_json_discriminator(MAPPINGS)", "k8s_yaml_discriminator(MAPPINGS)"
-        file.puts "", "end", "", "end"
-      end
-      system "crystal tool format #{version}"
+      write_version_file(definitions)
+      write_kubernetes_file(definitions)
     end
+  end
+
+  private def write_version_file(definitions)
+    puts "Writing: #{filename}"
+    File.open(filename, "w+") do |file|
+      file.puts "# THIS FILE WAS AUTO GENERATED FROM THE K8S SWAGGER SPEC", "",
+        %<require "../k8s/*">, "",
+        "annotation ::#{base_class.lchop("::")}::GroupVersionKind; end",
+        "annotation ::#{base_class.lchop("::")}::Action; end", ""
+
+      file.puts "require \"./#{version}/kubernetes\""
+      definitions.map(&.filename).each { |r| file.puts "require \"#{r.sub(base_dir, "./#{version}")}\"" }
+    end
+    system "crystal tool format #{filename}"
+  end
+
+  private def write_kubernetes_file(definitions)
+    File.open(File.join(version, "kubernetes.cr"), "w+") do |file|
+      file.puts "",
+        "module ::#{base_class.lchop("::")}::Kubernetes",
+        " VERSION = SemanticVersion.parse(\"#{version.lchop("v")}.0\")", ""
+      file.puts "abstract class Resource"
+      file.puts "  include JSON::Serializable", ""
+      write_mappings(file, definitions)
+      file.puts "end", "", "end"
+    end
+    system "crystal tool format #{version}"
+  end
+
+  private def write_mappings(file, definitions)
+    file.puts %<  MAPPINGS = [>
+    definitions.select(&.is_resource?)
+      .reject(&.class_name.==("Api::Core::V1::List"))
+      .map { |r|
+        kind = r.kind == "List" ? r.name.split('.').last : r.kind
+        {r.api_version, kind, r.class_name}
+      }.uniq!
+      .each { |r| file.puts %<    {"#{r[0]}","#{r[1]}",#{r[2]}},> }
+    file.puts %< ]>, ""
+    file.puts "k8s_json_discriminator(MAPPINGS)",
+      "k8s_yaml_discriminator(MAPPINGS)", ""
   end
 
   private def version

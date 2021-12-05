@@ -2,11 +2,13 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # NamespaceStatus is information about the current status of a Namespace.
+  @[::K8S::Properties(
+    conditions: {type: Array(Api::Core::V1::NamespaceCondition), nilable: true, key: "conditions", getter: false, setter: false},
+    phase: {type: String, nilable: true, key: "phase", getter: false, setter: false},
+  )]
   class Api::Core::V1::NamespaceStatus
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -16,16 +18,6 @@ module K8S
 
     # Phase is the current lifecycle phase of the namespace. More info: [https://kubernetes.io/docs/tasks/administer-cluster/namespaces/](https://kubernetes.io/docs/tasks/administer-cluster/namespaces/)
     property phase : String | Nil
-
-    ::YAML.mapping({
-      conditions: {type: Array(Api::Core::V1::NamespaceCondition), nilable: true, key: "conditions", getter: false, setter: false},
-      phase:      {type: String, nilable: true, key: "phase", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      conditions: {type: Array(Api::Core::V1::NamespaceCondition), nilable: true, key: "conditions", getter: false, setter: false},
-      phase:      {type: String, nilable: true, key: "phase", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @conditions : Array | Nil = nil, @phase : String | Nil = nil)
     end

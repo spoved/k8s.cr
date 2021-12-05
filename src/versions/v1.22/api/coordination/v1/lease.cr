@@ -2,12 +2,16 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # Lease defines a lease concept.
-  @[::K8S::GroupVersionKind(group: "coordination.k8s.io", kind: "Lease", version: "v1")]
+  @[::K8S::GroupVersionKind(group: "coordination.k8s.io", kind: "Lease", version: "v1", full: "io.k8s.api.coordination.v1.Lease")]
+  @[::K8S::Properties(
+    api_version: {type: String, nilable: true, key: "apiVersion", getter: false, setter: false},
+    kind: {type: String, nilable: true, key: "kind", getter: false, setter: false},
+    metadata: {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
+    spec: {type: Api::Coordination::V1::LeaseSpec, nilable: true, key: "spec", getter: false, setter: false},
+  )]
   @[::K8S::Action(name: "post", verb: "post",
     path: "/apis/coordination.k8s.io/v1/namespaces/{namespace}/leases", toplevel: false,
     args: [{name: "context", type: String | Nil, default: nil},
@@ -83,20 +87,6 @@ module K8S
 
     # Specification of the Lease. More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status)
     property spec : Api::Coordination::V1::LeaseSpec | Nil
-
-    ::YAML.mapping({
-      api_version: {type: String, default: "coordination/v1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "Lease", key: "kind", setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      spec:        {type: Api::Coordination::V1::LeaseSpec, nilable: true, key: "spec", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      api_version: {type: String, default: "coordination/v1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "Lease", key: "kind", setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      spec:        {type: Api::Coordination::V1::LeaseSpec, nilable: true, key: "spec", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil, @spec : Api::Coordination::V1::LeaseSpec | Nil = nil)
     end

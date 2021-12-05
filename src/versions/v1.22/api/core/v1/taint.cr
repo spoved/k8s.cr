@@ -2,11 +2,15 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # The node this Taint is attached to has the "effect" on any pod that does not tolerate the Taint.
+  @[::K8S::Properties(
+    effect: {type: String, nilable: false, key: "effect", getter: false, setter: false},
+    key: {type: String, nilable: false, key: "key", getter: false, setter: false},
+    time_added: {type: Time, nilable: true, key: "timeAdded", getter: false, setter: false},
+    value: {type: String, nilable: true, key: "value", getter: false, setter: false},
+  )]
   class Api::Core::V1::Taint
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -18,24 +22,12 @@ module K8S
     property key : String
 
     # TimeAdded represents the time at which the taint was added. It is only written for NoExecute taints.
+    @[::JSON::Field(key: "timeAdded")]
+    @[::YAML::Field(key: "timeAdded")]
     property time_added : Time | Nil
 
     # The taint value corresponding to the taint key.
     property value : String | Nil
-
-    ::YAML.mapping({
-      effect:     {type: String, nilable: false, key: "effect", getter: false, setter: false},
-      key:        {type: String, nilable: false, key: "key", getter: false, setter: false},
-      time_added: {type: Time, nilable: true, key: "timeAdded", getter: false, setter: false},
-      value:      {type: String, nilable: true, key: "value", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      effect:     {type: String, nilable: false, key: "effect", getter: false, setter: false},
-      key:        {type: String, nilable: false, key: "key", getter: false, setter: false},
-      time_added: {type: Time, nilable: true, key: "timeAdded", getter: false, setter: false},
-      value:      {type: String, nilable: true, key: "value", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @effect : String, @key : String, @time_added : Time | Nil = nil, @value : String | Nil = nil)
     end

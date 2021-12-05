@@ -2,11 +2,13 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # LimitResponse defines how to handle requests that can not be executed right now.
+  @[::K8S::Properties(
+    queuing: {type: Api::Flowcontrol::V1alpha1::QueuingConfiguration, nilable: true, key: "queuing", getter: false, setter: false},
+    type: {type: String, nilable: false, key: "type", getter: false, setter: false},
+  )]
   class Api::Flowcontrol::V1alpha1::LimitResponse
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -16,16 +18,6 @@ module K8S
 
     # `type` is "Queue" or "Reject". "Queue" means that requests that can not be executed upon arrival are held in a queue until they can be executed or a queuing limit is reached. "Reject" means that requests that can not be executed upon arrival are rejected. Required.
     property type : String
-
-    ::YAML.mapping({
-      queuing: {type: Api::Flowcontrol::V1alpha1::QueuingConfiguration, nilable: true, key: "queuing", getter: false, setter: false},
-      type:    {type: String, nilable: false, key: "type", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      queuing: {type: Api::Flowcontrol::V1alpha1::QueuingConfiguration, nilable: true, key: "queuing", getter: false, setter: false},
-      type:    {type: String, nilable: false, key: "type", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @type : String, @queuing : Api::Flowcontrol::V1alpha1::QueuingConfiguration | Nil = nil)
     end

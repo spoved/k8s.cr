@@ -2,11 +2,14 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # Selects a key from a ConfigMap.
+  @[::K8S::Properties(
+    key: {type: String, nilable: false, key: "key", getter: false, setter: false},
+    name: {type: String, nilable: true, key: "name", getter: false, setter: false},
+    optional: {type: Bool, nilable: true, key: "optional", getter: false, setter: false},
+  )]
   class Api::Core::V1::ConfigMapKeySelector
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -19,18 +22,6 @@ module K8S
 
     # Specify whether the ConfigMap or its key must be defined
     property optional : Bool | Nil
-
-    ::YAML.mapping({
-      key:      {type: String, nilable: false, key: "key", getter: false, setter: false},
-      name:     {type: String, nilable: true, key: "name", getter: false, setter: false},
-      optional: {type: Bool, nilable: true, key: "optional", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      key:      {type: String, nilable: false, key: "key", getter: false, setter: false},
-      name:     {type: String, nilable: true, key: "name", getter: false, setter: false},
-      optional: {type: Bool, nilable: true, key: "optional", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @key : String, @name : String | Nil = nil, @optional : Bool | Nil = nil)
     end

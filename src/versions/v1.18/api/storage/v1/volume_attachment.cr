@@ -2,14 +2,19 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # VolumeAttachment captures the intent to attach or detach the specified volume [to/from the specified node.](to/from the specified node.)
   #
   # VolumeAttachment objects are non-namespaced.
-  @[::K8S::GroupVersionKind(group: "storage.k8s.io", kind: "VolumeAttachment", version: "v1")]
+  @[::K8S::GroupVersionKind(group: "storage.k8s.io", kind: "VolumeAttachment", version: "v1", full: "io.k8s.api.storage.v1.VolumeAttachment")]
+  @[::K8S::Properties(
+    api_version: {type: String, nilable: true, key: "apiVersion", getter: false, setter: false},
+    kind: {type: String, nilable: true, key: "kind", getter: false, setter: false},
+    metadata: {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
+    spec: {type: Api::Storage::V1::VolumeAttachmentSpec, nilable: false, key: "spec", getter: false, setter: false},
+    status: {type: Api::Storage::V1::VolumeAttachmentStatus, nilable: true, key: "status", getter: false, setter: false},
+  )]
   @[::K8S::Action(name: "post", verb: "post",
     path: "/apis/storage.k8s.io/v1/volumeattachments", toplevel: false,
     args: [{name: "context", type: String | Nil, default: nil},
@@ -105,22 +110,6 @@ module K8S
 
     # Status of the VolumeAttachment request. Populated by the entity completing the attach or detach operation, i.e. the external-attacher.
     property status : Api::Storage::V1::VolumeAttachmentStatus | Nil
-
-    ::YAML.mapping({
-      api_version: {type: String, default: "storage/v1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "VolumeAttachment", key: "kind", setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      spec:        {type: Api::Storage::V1::VolumeAttachmentSpec, nilable: false, key: "spec", getter: false, setter: false},
-      status:      {type: Api::Storage::V1::VolumeAttachmentStatus, nilable: true, key: "status", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      api_version: {type: String, default: "storage/v1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "VolumeAttachment", key: "kind", setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      spec:        {type: Api::Storage::V1::VolumeAttachmentSpec, nilable: false, key: "spec", getter: false, setter: false},
-      status:      {type: Api::Storage::V1::VolumeAttachmentStatus, nilable: true, key: "status", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @spec : Api::Storage::V1::VolumeAttachmentSpec, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil, @status : Api::Storage::V1::VolumeAttachmentStatus | Nil = nil)
     end

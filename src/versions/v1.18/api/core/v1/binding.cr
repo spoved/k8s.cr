@@ -2,12 +2,16 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # Binding ties one object to another; for example, a pod is bound to a node by a scheduler. Deprecated in 1.7, please use the bindings subresource of pods instead.
-  @[::K8S::GroupVersionKind(group: "", kind: "Binding", version: "v1")]
+  @[::K8S::GroupVersionKind(group: "", kind: "Binding", version: "v1", full: "io.k8s.api.core.v1.Binding")]
+  @[::K8S::Properties(
+    api_version: {type: String, nilable: true, key: "apiVersion", getter: false, setter: false},
+    kind: {type: String, nilable: true, key: "kind", getter: false, setter: false},
+    metadata: {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
+    target: {type: Api::Core::V1::ObjectReference, nilable: false, key: "target", getter: false, setter: false},
+  )]
   @[::K8S::Action(name: "post", verb: "post",
     path: "/api/v1/namespaces/{namespace}/bindings", toplevel: false,
     args: [{name: "context", type: String | Nil, default: nil},
@@ -32,20 +36,6 @@ module K8S
 
     # The target object that you want to bind to the standard object.
     property target : Api::Core::V1::ObjectReference
-
-    ::YAML.mapping({
-      api_version: {type: String, default: "v1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "Binding", key: "kind", setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      target:      {type: Api::Core::V1::ObjectReference, nilable: false, key: "target", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      api_version: {type: String, default: "v1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "Binding", key: "kind", setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      target:      {type: Api::Core::V1::ObjectReference, nilable: false, key: "target", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @target : Api::Core::V1::ObjectReference, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil)
     end

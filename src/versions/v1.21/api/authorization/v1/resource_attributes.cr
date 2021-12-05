@@ -2,11 +2,18 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # ResourceAttributes includes the authorization attributes available for resource requests to the Authorizer interface
+  @[::K8S::Properties(
+    group: {type: String, nilable: true, key: "group", getter: false, setter: false},
+    name: {type: String, nilable: true, key: "name", getter: false, setter: false},
+    namespace: {type: String, nilable: true, key: "namespace", getter: false, setter: false},
+    resource: {type: String, nilable: true, key: "resource", getter: false, setter: false},
+    subresource: {type: String, nilable: true, key: "subresource", getter: false, setter: false},
+    verb: {type: String, nilable: true, key: "verb", getter: false, setter: false},
+    version: {type: String, nilable: true, key: "version", getter: false, setter: false},
+  )]
   class Api::Authorization::V1::ResourceAttributes
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -31,26 +38,6 @@ module K8S
 
     # Version is the API Version of the Resource.  "*" means all.
     property version : String | Nil
-
-    ::YAML.mapping({
-      group:       {type: String, nilable: true, key: "group", getter: false, setter: false},
-      name:        {type: String, nilable: true, key: "name", getter: false, setter: false},
-      namespace:   {type: String, nilable: true, key: "namespace", getter: false, setter: false},
-      resource:    {type: String, nilable: true, key: "resource", getter: false, setter: false},
-      subresource: {type: String, nilable: true, key: "subresource", getter: false, setter: false},
-      verb:        {type: String, nilable: true, key: "verb", getter: false, setter: false},
-      version:     {type: String, nilable: true, key: "version", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      group:       {type: String, nilable: true, key: "group", getter: false, setter: false},
-      name:        {type: String, nilable: true, key: "name", getter: false, setter: false},
-      namespace:   {type: String, nilable: true, key: "namespace", getter: false, setter: false},
-      resource:    {type: String, nilable: true, key: "resource", getter: false, setter: false},
-      subresource: {type: String, nilable: true, key: "subresource", getter: false, setter: false},
-      verb:        {type: String, nilable: true, key: "verb", getter: false, setter: false},
-      version:     {type: String, nilable: true, key: "version", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @group : String | Nil = nil, @name : String | Nil = nil, @namespace : String | Nil = nil, @resource : String | Nil = nil, @subresource : String | Nil = nil, @verb : String | Nil = nil, @version : String | Nil = nil)
     end

@@ -2,11 +2,13 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # EventSource contains information for an event.
+  @[::K8S::Properties(
+    component: {type: String, nilable: true, key: "component", getter: false, setter: false},
+    host: {type: String, nilable: true, key: "host", getter: false, setter: false},
+  )]
   class Api::Core::V1::EventSource
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -16,16 +18,6 @@ module K8S
 
     # Node name on which the event is generated.
     property host : String | Nil
-
-    ::YAML.mapping({
-      component: {type: String, nilable: true, key: "component", getter: false, setter: false},
-      host:      {type: String, nilable: true, key: "host", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      component: {type: String, nilable: true, key: "component", getter: false, setter: false},
-      host:      {type: String, nilable: true, key: "host", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @component : String | Nil = nil, @host : String | Nil = nil)
     end

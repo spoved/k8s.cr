@@ -2,11 +2,13 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # Policy defines the configuration of how audit events are logged
+  @[::K8S::Properties(
+    level: {type: String, nilable: false, key: "level", getter: false, setter: false},
+    stages: {type: Array(String), nilable: true, key: "stages", getter: false, setter: false},
+  )]
   class Api::Auditregistration::V1alpha1::Policy
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -16,16 +18,6 @@ module K8S
 
     # Stages is a list of stages for which events are created.
     property stages : Array(String) | Nil
-
-    ::YAML.mapping({
-      level:  {type: String, nilable: false, key: "level", getter: false, setter: false},
-      stages: {type: Array(String), nilable: true, key: "stages", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      level:  {type: String, nilable: false, key: "level", getter: false, setter: false},
-      stages: {type: Array(String), nilable: true, key: "stages", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @level : String, @stages : Array | Nil = nil)
     end

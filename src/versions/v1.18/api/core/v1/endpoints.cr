@@ -2,8 +2,6 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # Endpoints is a collection of endpoints that implement the actual service. Example:
@@ -18,7 +16,13 @@ module K8S
   #       Ports: [{"name": "a", "port": 93}, {"name": "b", "port": 76}]
   #     },
   #  ]
-  @[::K8S::GroupVersionKind(group: "", kind: "Endpoints", version: "v1")]
+  @[::K8S::GroupVersionKind(group: "", kind: "Endpoints", version: "v1", full: "io.k8s.api.core.v1.Endpoints")]
+  @[::K8S::Properties(
+    api_version: {type: String, nilable: true, key: "apiVersion", getter: false, setter: false},
+    kind: {type: String, nilable: true, key: "kind", getter: false, setter: false},
+    metadata: {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
+    subsets: {type: Array(Api::Core::V1::EndpointSubset), nilable: true, key: "subsets", getter: false, setter: false},
+  )]
   @[::K8S::Action(name: "post", verb: "post",
     path: "/api/v1/namespaces/{namespace}/endpoints", toplevel: false,
     args: [{name: "context", type: String | Nil, default: nil},
@@ -96,20 +100,6 @@ module K8S
 
     # The set of all endpoints is the union of all subsets. Addresses are placed into subsets according to the IPs they share. A single address with multiple ports, some of which are ready and some of which are not (because they come from different containers) will result in the address being displayed in different subsets for the different ports. No address will appear in both Addresses and NotReadyAddresses in the same subset. Sets of addresses and ports that comprise a service.
     property subsets : Array(Api::Core::V1::EndpointSubset) | Nil
-
-    ::YAML.mapping({
-      api_version: {type: String, default: "v1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "Endpoints", key: "kind", setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      subsets:     {type: Array(Api::Core::V1::EndpointSubset), nilable: true, key: "subsets", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      api_version: {type: String, default: "v1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "Endpoints", key: "kind", setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      subsets:     {type: Array(Api::Core::V1::EndpointSubset), nilable: true, key: "subsets", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil, @subsets : Array | Nil = nil)
     end

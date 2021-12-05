@@ -2,16 +2,21 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # HPAScalingPolicy is a single policy which must hold true for a specified past interval.
+  @[::K8S::Properties(
+    period_seconds: {type: Int32, nilable: false, key: "periodSeconds", getter: false, setter: false},
+    type: {type: String, nilable: false, key: "type", getter: false, setter: false},
+    value: {type: Int32, nilable: false, key: "value", getter: false, setter: false},
+  )]
   class Api::Autoscaling::V2beta2::HPAScalingPolicy
     include ::JSON::Serializable
     include ::YAML::Serializable
 
     # PeriodSeconds specifies the window of time for which the policy should hold true. PeriodSeconds must be greater than zero and less than or equal to 1800 (30 min).
+    @[::JSON::Field(key: "periodSeconds")]
+    @[::YAML::Field(key: "periodSeconds")]
     property period_seconds : Int32
 
     # Type is used to specify the scaling policy.
@@ -19,18 +24,6 @@ module K8S
 
     # Value contains the amount of change which is permitted by the policy. It must be greater than zero
     property value : Int32
-
-    ::YAML.mapping({
-      period_seconds: {type: Int32, nilable: false, key: "periodSeconds", getter: false, setter: false},
-      type:           {type: String, nilable: false, key: "type", getter: false, setter: false},
-      value:          {type: Int32, nilable: false, key: "value", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      period_seconds: {type: Int32, nilable: false, key: "periodSeconds", getter: false, setter: false},
-      type:           {type: String, nilable: false, key: "type", getter: false, setter: false},
-      value:          {type: Int32, nilable: false, key: "value", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @period_seconds : Int32, @type : String, @value : Int32)
     end

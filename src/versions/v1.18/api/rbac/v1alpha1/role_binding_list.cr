@@ -2,12 +2,16 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # RoleBindingList is a collection of RoleBindings Deprecated in v1.17 in favor of [rbac.authorization.k8s.io/v1 RoleBindingList, and will no longer be served in v1.20.](rbac.authorization.k8s.io/v1 RoleBindingList, and will no longer be served in v1.20.)
-  @[::K8S::GroupVersionKind(group: "rbac.authorization.k8s.io", kind: "RoleBindingList", version: "v1alpha1")]
+  @[::K8S::GroupVersionKind(group: "rbac.authorization.k8s.io", kind: "RoleBindingList", version: "v1alpha1", full: "io.k8s.api.rbac.v1alpha1.RoleBindingList")]
+  @[::K8S::Properties(
+    api_version: {type: String, nilable: true, key: "apiVersion", getter: false, setter: false},
+    items: {type: Array(Api::Rbac::V1alpha1::RoleBinding), nilable: false, key: "items", getter: false, setter: false},
+    kind: {type: String, nilable: true, key: "kind", getter: false, setter: false},
+    metadata: {type: Apimachinery::Apis::Meta::V1::ListMeta, nilable: true, key: "metadata", getter: false, setter: false},
+  )]
   @[::K8S::Action(name: "post", verb: "post",
     path: "/apis/rbac.authorization.k8s.io/v1alpha1/namespaces/{namespace}/rolebindings", toplevel: false,
     args: [{name: "role_ref", type: Api::Rbac::V1alpha1::RoleRef},
@@ -71,20 +75,6 @@ module K8S
 
     # Standard object's metadata.
     property metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil
-
-    ::YAML.mapping({
-      api_version: {type: String, default: "rbac.authorization.k8s.io/v1alpha1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "List", key: "kind", setter: false},
-      items:       {type: Array(Api::Rbac::V1alpha1::RoleBinding), nilable: false, key: "items", getter: false, setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ListMeta, nilable: true, key: "metadata", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      api_version: {type: String, default: "rbac.authorization.k8s.io/v1alpha1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "List", key: "kind", setter: false},
-      items:       {type: Array(Api::Rbac::V1alpha1::RoleBinding), nilable: false, key: "items", getter: false, setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ListMeta, nilable: true, key: "metadata", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @items : Array, @metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil = nil)
     end

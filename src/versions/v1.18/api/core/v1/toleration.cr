@@ -2,11 +2,16 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.
+  @[::K8S::Properties(
+    effect: {type: String, nilable: true, key: "effect", getter: false, setter: false},
+    key: {type: String, nilable: true, key: "key", getter: false, setter: false},
+    operator: {type: String, nilable: true, key: "operator", getter: false, setter: false},
+    toleration_seconds: {type: Int32, nilable: true, key: "tolerationSeconds", getter: false, setter: false},
+    value: {type: String, nilable: true, key: "value", getter: false, setter: false},
+  )]
   class Api::Core::V1::Toleration
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -21,26 +26,12 @@ module K8S
     property operator : String | Nil
 
     # TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.
+    @[::JSON::Field(key: "tolerationSeconds")]
+    @[::YAML::Field(key: "tolerationSeconds")]
     property toleration_seconds : Int32 | Nil
 
     # Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.
     property value : String | Nil
-
-    ::YAML.mapping({
-      effect:             {type: String, nilable: true, key: "effect", getter: false, setter: false},
-      key:                {type: String, nilable: true, key: "key", getter: false, setter: false},
-      operator:           {type: String, nilable: true, key: "operator", getter: false, setter: false},
-      toleration_seconds: {type: Int32, nilable: true, key: "tolerationSeconds", getter: false, setter: false},
-      value:              {type: String, nilable: true, key: "value", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      effect:             {type: String, nilable: true, key: "effect", getter: false, setter: false},
-      key:                {type: String, nilable: true, key: "key", getter: false, setter: false},
-      operator:           {type: String, nilable: true, key: "operator", getter: false, setter: false},
-      toleration_seconds: {type: Int32, nilable: true, key: "tolerationSeconds", getter: false, setter: false},
-      value:              {type: String, nilable: true, key: "value", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @effect : String | Nil = nil, @key : String | Nil = nil, @operator : String | Nil = nil, @toleration_seconds : Int32 | Nil = nil, @value : String | Nil = nil)
     end

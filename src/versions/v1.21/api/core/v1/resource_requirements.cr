@@ -2,11 +2,13 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # ResourceRequirements describes the compute resource requirements.
+  @[::K8S::Properties(
+    limits: {type: Hash(String, String), nilable: true, key: "limits", getter: false, setter: false},
+    requests: {type: Hash(String, String), nilable: true, key: "requests", getter: false, setter: false},
+  )]
   class Api::Core::V1::ResourceRequirements
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -16,16 +18,6 @@ module K8S
 
     # Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: [https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/)
     property requests : Hash(String, String) | Nil
-
-    ::YAML.mapping({
-      limits:   {type: Hash(String, String), nilable: true, key: "limits", getter: false, setter: false},
-      requests: {type: Hash(String, String), nilable: true, key: "requests", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      limits:   {type: Hash(String, String), nilable: true, key: "limits", getter: false, setter: false},
-      requests: {type: Hash(String, String), nilable: true, key: "requests", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @limits : Hash(String, String) | Nil = nil, @requests : Hash(String, String) | Nil = nil)
     end

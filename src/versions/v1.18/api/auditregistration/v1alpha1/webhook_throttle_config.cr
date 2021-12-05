@@ -2,11 +2,13 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # WebhookThrottleConfig holds the configuration for throttling events
+  @[::K8S::Properties(
+    burst: {type: Int32, nilable: true, key: "burst", getter: false, setter: false},
+    qps: {type: Int32, nilable: true, key: "qps", getter: false, setter: false},
+  )]
   class Api::Auditregistration::V1alpha1::WebhookThrottleConfig
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -16,16 +18,6 @@ module K8S
 
     # ThrottleQPS maximum number of batches per second default 10 QPS
     property qps : Int32 | Nil
-
-    ::YAML.mapping({
-      burst: {type: Int32, nilable: true, key: "burst", getter: false, setter: false},
-      qps:   {type: Int32, nilable: true, key: "qps", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      burst: {type: Int32, nilable: true, key: "burst", getter: false, setter: false},
-      qps:   {type: Int32, nilable: true, key: "qps", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @burst : Int32 | Nil = nil, @qps : Int32 | Nil = nil)
     end

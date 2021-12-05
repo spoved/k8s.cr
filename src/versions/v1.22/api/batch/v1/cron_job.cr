@@ -2,12 +2,17 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # CronJob represents the configuration of a single cron job.
-  @[::K8S::GroupVersionKind(group: "batch", kind: "CronJob", version: "v1")]
+  @[::K8S::GroupVersionKind(group: "batch", kind: "CronJob", version: "v1", full: "io.k8s.api.batch.v1.CronJob")]
+  @[::K8S::Properties(
+    api_version: {type: String, nilable: true, key: "apiVersion", getter: false, setter: false},
+    kind: {type: String, nilable: true, key: "kind", getter: false, setter: false},
+    metadata: {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
+    spec: {type: Api::Batch::V1::CronJobSpec, nilable: true, key: "spec", getter: false, setter: false},
+    status: {type: Api::Batch::V1::CronJobStatus, nilable: true, key: "status", getter: false, setter: false},
+  )]
   @[::K8S::Action(name: "post", verb: "post",
     path: "/apis/batch/v1/namespaces/{namespace}/cronjobs", toplevel: false,
     args: [{name: "context", type: String | Nil, default: nil},
@@ -105,22 +110,6 @@ module K8S
 
     # Current status of a cron job. More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status)
     property status : Api::Batch::V1::CronJobStatus | Nil
-
-    ::YAML.mapping({
-      api_version: {type: String, default: "batch/v1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "CronJob", key: "kind", setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      spec:        {type: Api::Batch::V1::CronJobSpec, nilable: true, key: "spec", getter: false, setter: false},
-      status:      {type: Api::Batch::V1::CronJobStatus, nilable: true, key: "status", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      api_version: {type: String, default: "batch/v1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "CronJob", key: "kind", setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      spec:        {type: Api::Batch::V1::CronJobSpec, nilable: true, key: "spec", getter: false, setter: false},
-      status:      {type: Api::Batch::V1::CronJobStatus, nilable: true, key: "status", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil, @spec : Api::Batch::V1::CronJobSpec | Nil = nil, @status : Api::Batch::V1::CronJobStatus | Nil = nil)
     end

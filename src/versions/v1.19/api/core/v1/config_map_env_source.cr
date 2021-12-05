@@ -2,13 +2,15 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # ConfigMapEnvSource selects a ConfigMap to populate the environment variables with.
   #
   # The contents of the target ConfigMap's Data field will represent the key-value pairs as environment variables.
+  @[::K8S::Properties(
+    name: {type: String, nilable: true, key: "name", getter: false, setter: false},
+    optional: {type: Bool, nilable: true, key: "optional", getter: false, setter: false},
+  )]
   class Api::Core::V1::ConfigMapEnvSource
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -18,16 +20,6 @@ module K8S
 
     # Specify whether the ConfigMap must be defined
     property optional : Bool | Nil
-
-    ::YAML.mapping({
-      name:     {type: String, nilable: true, key: "name", getter: false, setter: false},
-      optional: {type: Bool, nilable: true, key: "optional", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      name:     {type: String, nilable: true, key: "name", getter: false, setter: false},
-      optional: {type: Bool, nilable: true, key: "optional", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @name : String | Nil = nil, @optional : Bool | Nil = nil)
     end

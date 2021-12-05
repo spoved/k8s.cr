@@ -2,11 +2,13 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # AuditSinkSpec holds the spec for the audit sink
+  @[::K8S::Properties(
+    policy: {type: Api::Auditregistration::V1alpha1::Policy, nilable: false, key: "policy", getter: false, setter: false},
+    webhook: {type: Api::Auditregistration::V1alpha1::Webhook, nilable: false, key: "webhook", getter: false, setter: false},
+  )]
   class Api::Auditregistration::V1alpha1::AuditSinkSpec
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -16,16 +18,6 @@ module K8S
 
     # Webhook to send events required
     property webhook : Api::Auditregistration::V1alpha1::Webhook
-
-    ::YAML.mapping({
-      policy:  {type: Api::Auditregistration::V1alpha1::Policy, nilable: false, key: "policy", getter: false, setter: false},
-      webhook: {type: Api::Auditregistration::V1alpha1::Webhook, nilable: false, key: "webhook", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      policy:  {type: Api::Auditregistration::V1alpha1::Policy, nilable: false, key: "policy", getter: false, setter: false},
-      webhook: {type: Api::Auditregistration::V1alpha1::Webhook, nilable: false, key: "webhook", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @policy : Api::Auditregistration::V1alpha1::Policy, @webhook : Api::Auditregistration::V1alpha1::Webhook)
     end

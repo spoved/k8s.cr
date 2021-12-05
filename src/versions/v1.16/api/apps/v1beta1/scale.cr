@@ -2,12 +2,17 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # Scale represents a scaling request for a resource.
-  @[::K8S::GroupVersionKind(group: "apps", kind: "Scale", version: "v1beta1")]
+  @[::K8S::GroupVersionKind(group: "apps", kind: "Scale", version: "v1beta1", full: "io.k8s.api.apps.v1beta1.Scale")]
+  @[::K8S::Properties(
+    api_version: {type: String, nilable: true, key: "apiVersion", getter: false, setter: false},
+    kind: {type: String, nilable: true, key: "kind", getter: false, setter: false},
+    metadata: {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
+    spec: {type: Api::Apps::V1beta1::ScaleSpec, nilable: true, key: "spec", getter: false, setter: false},
+    status: {type: Api::Apps::V1beta1::ScaleStatus, nilable: true, key: "status", getter: false, setter: false},
+  )]
   @[::K8S::Action(name: "get", verb: "get",
     path: "/apis/apps/v1beta1/namespaces/{namespace}/deployments/{name}/scale", toplevel: true,
     args: [{name: "name", type: String},
@@ -61,22 +66,6 @@ module K8S
 
     # current status of the scale. More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status. Read-only.](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status. Read-only.)
     property status : Api::Apps::V1beta1::ScaleStatus | Nil
-
-    ::YAML.mapping({
-      api_version: {type: String, default: "apps/v1beta1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "Scale", key: "kind", setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      spec:        {type: Api::Apps::V1beta1::ScaleSpec, nilable: true, key: "spec", getter: false, setter: false},
-      status:      {type: Api::Apps::V1beta1::ScaleStatus, nilable: true, key: "status", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      api_version: {type: String, default: "apps/v1beta1", key: "apiVersion", setter: false},
-      kind:        {type: String, default: "Scale", key: "kind", setter: false},
-      metadata:    {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-      spec:        {type: Api::Apps::V1beta1::ScaleSpec, nilable: true, key: "spec", getter: false, setter: false},
-      status:      {type: Api::Apps::V1beta1::ScaleStatus, nilable: true, key: "status", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil, @spec : Api::Apps::V1beta1::ScaleSpec | Nil = nil, @status : Api::Apps::V1beta1::ScaleStatus | Nil = nil)
     end

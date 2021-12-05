@@ -2,11 +2,13 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # TokenReviewSpec is a description of the token authentication request.
+  @[::K8S::Properties(
+    audiences: {type: Array(String), nilable: true, key: "audiences", getter: false, setter: false},
+    token: {type: String, nilable: true, key: "token", getter: false, setter: false},
+  )]
   class Api::Authentication::V1::TokenReviewSpec
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -16,16 +18,6 @@ module K8S
 
     # Token is the opaque bearer token.
     property token : String | Nil
-
-    ::YAML.mapping({
-      audiences: {type: Array(String), nilable: true, key: "audiences", getter: false, setter: false},
-      token:     {type: String, nilable: true, key: "token", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      audiences: {type: Array(String), nilable: true, key: "audiences", getter: false, setter: false},
-      token:     {type: String, nilable: true, key: "token", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @audiences : Array | Nil = nil, @token : String | Nil = nil)
     end

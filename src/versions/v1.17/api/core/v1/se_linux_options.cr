@@ -2,11 +2,15 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # SELinuxOptions are the labels to be applied to the container
+  @[::K8S::Properties(
+    level: {type: String, nilable: true, key: "level", getter: false, setter: false},
+    role: {type: String, nilable: true, key: "role", getter: false, setter: false},
+    type: {type: String, nilable: true, key: "type", getter: false, setter: false},
+    user: {type: String, nilable: true, key: "user", getter: false, setter: false},
+  )]
   class Api::Core::V1::SELinuxOptions
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -22,20 +26,6 @@ module K8S
 
     # User is a SELinux user label that applies to the container.
     property user : String | Nil
-
-    ::YAML.mapping({
-      level: {type: String, nilable: true, key: "level", getter: false, setter: false},
-      role:  {type: String, nilable: true, key: "role", getter: false, setter: false},
-      type:  {type: String, nilable: true, key: "type", getter: false, setter: false},
-      user:  {type: String, nilable: true, key: "user", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      level: {type: String, nilable: true, key: "level", getter: false, setter: false},
-      role:  {type: String, nilable: true, key: "role", getter: false, setter: false},
-      type:  {type: String, nilable: true, key: "type", getter: false, setter: false},
-      user:  {type: String, nilable: true, key: "user", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @level : String | Nil = nil, @role : String | Nil = nil, @type : String | Nil = nil, @user : String | Nil = nil)
     end

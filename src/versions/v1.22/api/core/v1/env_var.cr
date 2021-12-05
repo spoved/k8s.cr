@@ -2,11 +2,14 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # EnvVar represents an environment variable present in a Container.
+  @[::K8S::Properties(
+    name: {type: String, nilable: false, key: "name", getter: false, setter: false},
+    value: {type: String, nilable: true, key: "value", getter: false, setter: false},
+    value_from: {type: Api::Core::V1::EnvVarSource, nilable: true, key: "valueFrom", getter: false, setter: false},
+  )]
   class Api::Core::V1::EnvVar
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -18,19 +21,9 @@ module K8S
     property value : String | Nil
 
     # Source for the environment variable's value. Cannot be used if value is not empty.
+    @[::JSON::Field(key: "valueFrom")]
+    @[::YAML::Field(key: "valueFrom")]
     property value_from : Api::Core::V1::EnvVarSource | Nil
-
-    ::YAML.mapping({
-      name:       {type: String, nilable: false, key: "name", getter: false, setter: false},
-      value:      {type: String, nilable: true, key: "value", getter: false, setter: false},
-      value_from: {type: Api::Core::V1::EnvVarSource, nilable: true, key: "valueFrom", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      name:       {type: String, nilable: false, key: "name", getter: false, setter: false},
-      value:      {type: String, nilable: true, key: "value", getter: false, setter: false},
-      value_from: {type: Api::Core::V1::EnvVarSource, nilable: true, key: "valueFrom", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @name : String, @value : String | Nil = nil, @value_from : Api::Core::V1::EnvVarSource | Nil = nil)
     end

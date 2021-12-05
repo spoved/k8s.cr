@@ -2,11 +2,13 @@
 
 require "yaml"
 require "json"
-require "json_mapping"
-require "yaml_mapping"
 
 module K8S
   # CustomResourceConversion describes how to convert different versions of a CR.
+  @[::K8S::Properties(
+    strategy: {type: String, nilable: false, key: "strategy", getter: false, setter: false},
+    webhook: {type: ApiextensionsApiserver::Apis::Apiextensions::V1::WebhookConversion, nilable: true, key: "webhook", getter: false, setter: false},
+  )]
   class ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceConversion
     include ::JSON::Serializable
     include ::YAML::Serializable
@@ -17,16 +19,6 @@ module K8S
 
     # webhook describes how to call the conversion webhook. Required when `strategy` is set to `Webhook`.
     property webhook : ApiextensionsApiserver::Apis::Apiextensions::V1::WebhookConversion | Nil
-
-    ::YAML.mapping({
-      strategy: {type: String, nilable: false, key: "strategy", getter: false, setter: false},
-      webhook:  {type: ApiextensionsApiserver::Apis::Apiextensions::V1::WebhookConversion, nilable: true, key: "webhook", getter: false, setter: false},
-    }, true)
-
-    ::JSON.mapping({
-      strategy: {type: String, nilable: false, key: "strategy", getter: false, setter: false},
-      webhook:  {type: ApiextensionsApiserver::Apis::Apiextensions::V1::WebhookConversion, nilable: true, key: "webhook", getter: false, setter: false},
-    }, true)
 
     def initialize(*, @strategy : String, @webhook : ApiextensionsApiserver::Apis::Apiextensions::V1::WebhookConversion | Nil = nil)
     end
