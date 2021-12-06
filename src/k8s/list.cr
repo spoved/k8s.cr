@@ -11,4 +11,8 @@ abstract class ::K8S::Kubernetes::ResourceList(T) < ::K8S::Kubernetes::Resource
   property metadata : Apimachinery::Apis::Meta::V1::ListMeta?
 
   def initialize(*, @items : Array(T), @metadata : Apimachinery::Apis::Meta::V1::ListMeta? = nil); end
+
+  def self.new(pull : ::JSON::PullParser)
+    ::K8S::Kubernetes::Resource.new(pull)
+  end
 end

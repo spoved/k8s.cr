@@ -2,7 +2,7 @@ require "json"
 require "yaml"
 require "./error"
 
-macro sanitize_api(api)
+macro k8s_sanitize_api(api)
   {{api}}.gsub(/(\.authorization)?\.k8s\.io/, "")
 end
 
@@ -65,7 +65,7 @@ macro k8s_json_discriminator(mappings)
             value_kind = pull.kind
             case value_kind
             when .string?
-              api_value = sanitize_api(pull.string_value)
+              api_value = k8s_sanitize_api(pull.string_value)
             else
               raise ::JSON::SerializableError.new("JSON discriminator field 'apiVersion' has an invalid value type of #{value_kind.to_s}", to_s, nil, *location, nil)
             end

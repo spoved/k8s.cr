@@ -4,6 +4,17 @@ require "yaml"
 annotation ::K8S::Properties; end
 
 abstract class ::K8S::Kubernetes::Resource
+  include JSON::Serializable
+  include YAML::Serializable
+
+  abstract def api_version : String
+  abstract def kind : String
+
+  def from_file(file)
+    Log.trace { "Loading #{file}" }
+    from_yaml(File.read(file))
+  end
+
   macro inherited
     {% if @type.annotation(::K8S::Properties) %}
     {% anno = @type.annotation(::K8S::Properties) %}
@@ -46,6 +57,7 @@ abstract class ::K8S::Kubernetes::Resource
     def self.from_h(hash)
       from_json(hash.to_json)
     end
+
     {% end %}
   end
 
@@ -68,25 +80,10 @@ abstract class ::K8S::Kubernetes::Resource
       @metadata ||= Apimachinery::Apis::Meta::V1::ListMeta.new
     end
   end
-
-  include JSON::Serializable
-  include YAML::Serializable
-
-  abstract def api_version : String
-  abstract def kind : String
-
-  def from_file(file)
-    Log.trace { "Loading #{file}" }
-    from_yaml(File.read(file))
-  end
 end
 
 alias ::K8S::Resource = ::K8S::Kubernetes::Resource
 alias ::K8S::ObjectMeta = ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta
 alias ::K8S::ListMeta = ::K8S::Apimachinery::Apis::Meta::V1::ListMeta
-
-# class ::K8S::Kubernetes::GenericResource < ::K8S::Kubernetes::Resource
-#   macro method_missing(call)
-#     raise "Unknown method {{call.name.id}} with {{call.args.size}} arguments"
-#   end
-# end
+alias ::K8S::APIResource = ::K8S::Apimachinery::Apis::Meta::V1::APIResource
+alias ::K8S::APIResourceList = ::K8S::Apimachinery::Apis::Meta::V1::APIResourceList
