@@ -66,12 +66,7 @@ abstract class ::K8S::Kubernetes::Resource
   end
 
   include JSON::Serializable
-  # include JSON::Serializable::Unmapped
-  # @json_unmapped : Hash(String, JSON::Any) = Hash(String, JSON::Any).new
-
   include YAML::Serializable
-  # include YAML::Serializable::Unmapped
-  # @yaml_unmapped : Hash(String, YAML::Any) = Hash(String, YAML::Any).new
 
   @[::JSON::Field(key: "apiVersion")]
   @[::YAML::Field(key: "apiVersion")]
@@ -79,6 +74,17 @@ abstract class ::K8S::Kubernetes::Resource
 
   abstract def api_version : String
   abstract def kind : String
+
+  def from_file(file)
+    Log.trace { "Loading #{file}" }
+    from_yaml(File.read(file))
+  end
 end
 
 alias ::K8S::Resource = ::K8S::Kubernetes::Resource
+
+# class ::K8S::Kubernetes::GenericResource < ::K8S::Kubernetes::Resource
+#   macro method_missing(call)
+#     raise "Unknown method {{call.name.id}} with {{call.args.size}} arguments"
+#   end
+# end

@@ -65,8 +65,11 @@ macro k8s_json_discriminator(mappings)
       {{value[2].id}}.from_json(json)
     {% end %}
     else
+      if discriminator_value =~ /List$/
+        return ::K8S::Kubernetes::ResourceList(::K8S::Kubernetes::GenericResource).from_json(json)
+      end
+
       Log.error {"Unknown 'apiVersion', 'kind' discriminator values: #{api_value.inspect} #{discriminator_value.inspect}"}
-      # raise ::JSON::SerializableError.new("Unknown 'apiVersion', 'kind' discriminator values: #{api_value.inspect} #{discriminator_value.inspect}", to_s, nil, *location, nil)
       JSON.parse(json)
     end
   end

@@ -111,7 +111,7 @@ class Generator
         kind = r.kind == "List" ? r.name.split('.').last : r.kind
         {r.api_version, kind, r.class_name}
       }.uniq!
-      .each { |r| file.puts %<    {"#{r[0]}","#{r[1]}",#{r[2]}},> }
+      .each { |r| file.puts %<    {"#{r[0]}","#{r[1]}",K8S::#{r[2]}},> }
     file.puts %< ]>, ""
     file.puts "k8s_json_discriminator(MAPPINGS)",
       "k8s_yaml_discriminator(MAPPINGS)", ""
