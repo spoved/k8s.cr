@@ -281,32 +281,34 @@ class Generator::Definition
     end
 
     if is_resource?
-      # file.puts %<  @[::JSON::Field(key: "apiVersion")]>
-      # file.puts %<  @[::YAML::Field(key: "apiVersion")]>
+      file.puts %<  @[::JSON::Field(key: "apiVersion")]>
+      file.puts %<  @[::YAML::Field(key: "apiVersion")]>
       file.puts "getter api_version : String = #{api_version_name.inspect}"
       file.puts "getter kind : String = #{kind.inspect}"
     end
 
     properties.each do |name, property|
       next if is_resource? && resource_property?(name)
-
       crystal_name = crystalize_name(name)
       prop_type = property.type
       prop_ref = property._ref
       prop_items = property.items
+
+      next if is_list? && name == "items"
+      next if is_list? && name == "metadata"
 
       next unless prop_type || prop_ref
       next if prop_type == "array" && !prop_items
 
       # Print property descriptions
       generate_description property.description
+      req = required.includes?(name)
+      _type = convert_type(property, req)
 
-      _type = convert_type(property, required.includes?(name))
-
-      if crystal_name != name
-        file.puts %<@[::JSON::Field(key: "#{name}")]>
-        file.puts %<@[::YAML::Field(key: "#{name}")]>
-      end
+      # if crystal_name != name
+      file.puts %<@[::JSON::Field(key: "#{name}", emit_null: #{req})]>
+      file.puts %<@[::YAML::Field(key: "#{name}", emit_null: #{req})]>
+      # end
       file.puts "property #{crystal_name} : #{_type}"
       file.puts ""
     end

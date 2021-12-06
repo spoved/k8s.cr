@@ -3,7 +3,7 @@ require "yaml"
 
 annotation ::K8S::Properties; end
 
-class ::K8S::Kubernetes::Resource
+abstract class ::K8S::Kubernetes::Resource
   macro inherited
     {% if @type.annotation(::K8S::Properties) %}
     {% anno = @type.annotation(::K8S::Properties) %}
@@ -72,12 +72,8 @@ class ::K8S::Kubernetes::Resource
   include JSON::Serializable
   include YAML::Serializable
 
-  @[::JSON::Field(key: "apiVersion")]
-  @[::YAML::Field(key: "apiVersion")]
-  getter api_version : String
-  getter kind : String
-
-  def initialize(@api_version, @kind); end
+  abstract def api_version : String
+  abstract def kind : String
 
   def from_file(file)
     Log.trace { "Loading #{file}" }
@@ -86,6 +82,8 @@ class ::K8S::Kubernetes::Resource
 end
 
 alias ::K8S::Resource = ::K8S::Kubernetes::Resource
+alias ::K8S::ObjectMeta = ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta
+alias ::K8S::ListMeta = ::K8S::Apimachinery::Apis::Meta::V1::ListMeta
 
 # class ::K8S::Kubernetes::GenericResource < ::K8S::Kubernetes::Resource
 #   macro method_missing(call)
