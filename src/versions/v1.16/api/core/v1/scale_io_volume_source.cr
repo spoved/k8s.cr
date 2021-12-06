@@ -22,49 +22,53 @@ module K8S
     include ::YAML::Serializable
 
     # Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". Default is "xfs".
-    @[::JSON::Field(key: "fsType")]
-    @[::YAML::Field(key: "fsType")]
+    @[::JSON::Field(key: "fsType", emit_null: false)]
+    @[::YAML::Field(key: "fsType", emit_null: false)]
     property fs_type : String | Nil
 
     # The host address of the ScaleIO API Gateway.
+    @[::JSON::Field(key: "gateway", emit_null: true)]
+    @[::YAML::Field(key: "gateway", emit_null: true)]
     property gateway : String
 
     # The name of the ScaleIO Protection Domain for the configured storage.
-    @[::JSON::Field(key: "protectionDomain")]
-    @[::YAML::Field(key: "protectionDomain")]
+    @[::JSON::Field(key: "protectionDomain", emit_null: false)]
+    @[::YAML::Field(key: "protectionDomain", emit_null: false)]
     property protection_domain : String | Nil
 
     # Defaults to false [(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.)
-    @[::JSON::Field(key: "readOnly")]
-    @[::YAML::Field(key: "readOnly")]
+    @[::JSON::Field(key: "readOnly", emit_null: false)]
+    @[::YAML::Field(key: "readOnly", emit_null: false)]
     property read_only : Bool | Nil
 
     # SecretRef references to the secret for ScaleIO user and other sensitive information. If this is not provided, Login operation will fail.
-    @[::JSON::Field(key: "secretRef")]
-    @[::YAML::Field(key: "secretRef")]
+    @[::JSON::Field(key: "secretRef", emit_null: true)]
+    @[::YAML::Field(key: "secretRef", emit_null: true)]
     property secret_ref : Api::Core::V1::LocalObjectReference
 
     # Flag to [enable/disable SSL communication with Gateway, default false](enable/disable SSL communication with Gateway, default false)
-    @[::JSON::Field(key: "sslEnabled")]
-    @[::YAML::Field(key: "sslEnabled")]
+    @[::JSON::Field(key: "sslEnabled", emit_null: false)]
+    @[::YAML::Field(key: "sslEnabled", emit_null: false)]
     property ssl_enabled : Bool | Nil
 
     # Indicates whether the storage for a volume should be ThickProvisioned or ThinProvisioned. Default is ThinProvisioned.
-    @[::JSON::Field(key: "storageMode")]
-    @[::YAML::Field(key: "storageMode")]
+    @[::JSON::Field(key: "storageMode", emit_null: false)]
+    @[::YAML::Field(key: "storageMode", emit_null: false)]
     property storage_mode : String | Nil
 
     # The ScaleIO Storage Pool associated with the protection domain.
-    @[::JSON::Field(key: "storagePool")]
-    @[::YAML::Field(key: "storagePool")]
+    @[::JSON::Field(key: "storagePool", emit_null: false)]
+    @[::YAML::Field(key: "storagePool", emit_null: false)]
     property storage_pool : String | Nil
 
     # The name of the storage system as configured in ScaleIO.
+    @[::JSON::Field(key: "system", emit_null: true)]
+    @[::YAML::Field(key: "system", emit_null: true)]
     property system : String
 
     # The name of a volume already created in the ScaleIO system that is associated with this volume source.
-    @[::JSON::Field(key: "volumeName")]
-    @[::YAML::Field(key: "volumeName")]
+    @[::JSON::Field(key: "volumeName", emit_null: false)]
+    @[::YAML::Field(key: "volumeName", emit_null: false)]
     property volume_name : String | Nil
 
     def initialize(*, @gateway : String, @secret_ref : Api::Core::V1::LocalObjectReference, @system : String, @fs_type : String | Nil = nil, @protection_domain : String | Nil = nil, @read_only : Bool | Nil = nil, @ssl_enabled : Bool | Nil = nil, @storage_mode : String | Nil = nil, @storage_pool : String | Nil = nil, @volume_name : String | Nil = nil)

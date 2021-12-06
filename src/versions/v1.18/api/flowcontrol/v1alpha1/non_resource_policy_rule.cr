@@ -20,11 +20,13 @@ module K8S
     #   - ["/hea/*" also matches nothing]("/hea/*" also matches nothing)
     #   - ["/healthz/*" matches all per-component health checks.]("/healthz/*" matches all per-component health checks.)
     # "*" matches all non-resource urls. if it is present, it must be the only entry. Required.
-    @[::JSON::Field(key: "nonResourceURLs")]
-    @[::YAML::Field(key: "nonResourceURLs")]
+    @[::JSON::Field(key: "nonResourceURLs", emit_null: true)]
+    @[::YAML::Field(key: "nonResourceURLs", emit_null: true)]
     property non_resource_urls : Array(String)
 
     # `verbs` is a list of matching verbs and may not be empty. "*" matches all verbs. If it is present, it must be the only entry. Required.
+    @[::JSON::Field(key: "verbs", emit_null: true)]
+    @[::YAML::Field(key: "verbs", emit_null: true)]
     property verbs : Array(String)
 
     def initialize(*, @non_resource_urls : Array, @verbs : Array)

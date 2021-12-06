@@ -15,16 +15,18 @@ module K8S
     include ::YAML::Serializable
 
     # If all API server instances agree on the same encoding storage version, then this field is set to that version. Otherwise this field is left empty. API servers should finish updating its storageVersionStatus entry before serving write operations, so that this field will be in sync with the reality.
-    @[::JSON::Field(key: "commonEncodingVersion")]
-    @[::YAML::Field(key: "commonEncodingVersion")]
+    @[::JSON::Field(key: "commonEncodingVersion", emit_null: false)]
+    @[::YAML::Field(key: "commonEncodingVersion", emit_null: false)]
     property common_encoding_version : String | Nil
 
     # The latest available observations of the storageVersion's state.
+    @[::JSON::Field(key: "conditions", emit_null: false)]
+    @[::YAML::Field(key: "conditions", emit_null: false)]
     property conditions : Array(Api::Apiserverinternal::V1alpha1::StorageVersionCondition) | Nil
 
     # The reported versions per API server instance.
-    @[::JSON::Field(key: "storageVersions")]
-    @[::YAML::Field(key: "storageVersions")]
+    @[::JSON::Field(key: "storageVersions", emit_null: false)]
+    @[::YAML::Field(key: "storageVersions", emit_null: false)]
     property storage_versions : Array(Api::Apiserverinternal::V1alpha1::ServerStorageVersion) | Nil
 
     def initialize(*, @common_encoding_version : String | Nil = nil, @conditions : Array | Nil = nil, @storage_versions : Array | Nil = nil)

@@ -13,6 +13,8 @@ module K8S
     include ::YAML::Serializable
 
     # Name is the registered name of the CSI driver
+    @[::JSON::Field(key: "name", emit_null: true)]
+    @[::YAML::Field(key: "name", emit_null: true)]
     property name : String
 
     def initialize(*, @name : String)

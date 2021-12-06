@@ -16,20 +16,24 @@ module K8S
     include ::YAML::Serializable
 
     # APIGroups is the name of the APIGroup that contains the resources.  If multiple API groups are specified, any action requested against one of the enumerated resources in any API group will be allowed.  "*" means all.
-    @[::JSON::Field(key: "apiGroups")]
-    @[::YAML::Field(key: "apiGroups")]
+    @[::JSON::Field(key: "apiGroups", emit_null: false)]
+    @[::YAML::Field(key: "apiGroups", emit_null: false)]
     property api_groups : Array(String) | Nil
 
     # ResourceNames is an optional white list of names that the rule applies to.  An empty set means that everything is allowed.  "*" means all.
-    @[::JSON::Field(key: "resourceNames")]
-    @[::YAML::Field(key: "resourceNames")]
+    @[::JSON::Field(key: "resourceNames", emit_null: false)]
+    @[::YAML::Field(key: "resourceNames", emit_null: false)]
     property resource_names : Array(String) | Nil
 
     # Resources is a list of resources this rule applies to.  "*" means all in the specified apiGroups.
     #  ["*/foo" represents the subresource 'foo' for all resources in the specified apiGroups.]("*/foo" represents the subresource 'foo' for all resources in the specified apiGroups.)
+    @[::JSON::Field(key: "resources", emit_null: false)]
+    @[::YAML::Field(key: "resources", emit_null: false)]
     property resources : Array(String) | Nil
 
     # Verb is a list of kubernetes resource API verbs, like: get, list, watch, create, update, delete, proxy.  "*" means all.
+    @[::JSON::Field(key: "verbs", emit_null: true)]
+    @[::YAML::Field(key: "verbs", emit_null: true)]
     property verbs : Array(String)
 
     def initialize(*, @verbs : Array, @api_groups : Array | Nil = nil, @resource_names : Array | Nil = nil, @resources : Array | Nil = nil)

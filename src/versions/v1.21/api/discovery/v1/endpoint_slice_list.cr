@@ -70,13 +70,10 @@ module K8S
     include ::JSON::Serializable
     include ::YAML::Serializable
 
+    @[::JSON::Field(key: "apiVersion")]
+    @[::YAML::Field(key: "apiVersion")]
     getter api_version : String = "discovery/v1"
     getter kind : String = "List"
-    # List of endpoint slices
-    property items : Array(Api::Discovery::V1::EndpointSlice)
-
-    # Standard list metadata.
-    property metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil
 
     def initialize(*, @items : Array, @metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil = nil)
     end

@@ -14,11 +14,13 @@ module K8S
     include ::YAML::Serializable
 
     # Rolling update config params. Present only if DeploymentStrategyType = RollingUpdate.
-    @[::JSON::Field(key: "rollingUpdate")]
-    @[::YAML::Field(key: "rollingUpdate")]
+    @[::JSON::Field(key: "rollingUpdate", emit_null: false)]
+    @[::YAML::Field(key: "rollingUpdate", emit_null: false)]
     property rolling_update : Api::Apps::V1::RollingUpdateDeployment | Nil
 
     # Type of deployment. Can be "Recreate" or "RollingUpdate". Default is RollingUpdate.
+    @[::JSON::Field(key: "type", emit_null: false)]
+    @[::YAML::Field(key: "type", emit_null: false)]
     property type : String | Nil
 
     def initialize(*, @rolling_update : Api::Apps::V1::RollingUpdateDeployment | Nil = nil, @type : String | Nil = nil)

@@ -68,13 +68,10 @@ module K8S
     include ::JSON::Serializable
     include ::YAML::Serializable
 
+    @[::JSON::Field(key: "apiVersion")]
+    @[::YAML::Field(key: "apiVersion")]
     getter api_version : String = "extensions/v1beta1"
     getter kind : String = "List"
-    # Items is the list of Ingress.
-    property items : Array(Api::Extensions::V1beta1::Ingress)
-
-    # Standard object's metadata. More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)
-    property metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil
 
     def initialize(*, @items : Array, @metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil = nil)
     end

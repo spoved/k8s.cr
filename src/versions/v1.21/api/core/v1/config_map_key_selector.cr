@@ -15,12 +15,18 @@ module K8S
     include ::YAML::Serializable
 
     # The key to select.
+    @[::JSON::Field(key: "key", emit_null: true)]
+    @[::YAML::Field(key: "key", emit_null: true)]
     property key : String
 
     # Name of the referent. More info: [https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names)
+    @[::JSON::Field(key: "name", emit_null: false)]
+    @[::YAML::Field(key: "name", emit_null: false)]
     property name : String | Nil
 
     # Specify whether the ConfigMap or its key must be defined
+    @[::JSON::Field(key: "optional", emit_null: false)]
+    @[::YAML::Field(key: "optional", emit_null: false)]
     property optional : Bool | Nil
 
     def initialize(*, @key : String, @name : String | Nil = nil, @optional : Bool | Nil = nil)

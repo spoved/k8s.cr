@@ -14,11 +14,13 @@ module K8S
     include ::YAML::Serializable
 
     # groupVersion specifies the API group and version in the form ["group/version"]("group/version")
-    @[::JSON::Field(key: "groupVersion")]
-    @[::YAML::Field(key: "groupVersion")]
+    @[::JSON::Field(key: "groupVersion", emit_null: true)]
+    @[::YAML::Field(key: "groupVersion", emit_null: true)]
     property group_version : String
 
     # version specifies the version in the form of "version". This is to save the clients the trouble of splitting the GroupVersion.
+    @[::JSON::Field(key: "version", emit_null: true)]
+    @[::YAML::Field(key: "version", emit_null: true)]
     property version : String
 
     def initialize(*, @group_version : String, @version : String)

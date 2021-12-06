@@ -19,32 +19,38 @@ module K8S
     include ::YAML::Serializable
 
     # Container's ID in the format 'docker://<container_id>'
-    @[::JSON::Field(key: "containerID")]
-    @[::YAML::Field(key: "containerID")]
+    @[::JSON::Field(key: "containerID", emit_null: false)]
+    @[::YAML::Field(key: "containerID", emit_null: false)]
     property container_id : String | Nil
 
     # Exit status from the last termination of the container
-    @[::JSON::Field(key: "exitCode")]
-    @[::YAML::Field(key: "exitCode")]
+    @[::JSON::Field(key: "exitCode", emit_null: true)]
+    @[::YAML::Field(key: "exitCode", emit_null: true)]
     property exit_code : Int32
 
     # Time at which the container last terminated
-    @[::JSON::Field(key: "finishedAt")]
-    @[::YAML::Field(key: "finishedAt")]
+    @[::JSON::Field(key: "finishedAt", emit_null: false)]
+    @[::YAML::Field(key: "finishedAt", emit_null: false)]
     property finished_at : Time | Nil
 
     # Message regarding the last termination of the container
+    @[::JSON::Field(key: "message", emit_null: false)]
+    @[::YAML::Field(key: "message", emit_null: false)]
     property message : String | Nil
 
     # (brief) reason from the last termination of the container
+    @[::JSON::Field(key: "reason", emit_null: false)]
+    @[::YAML::Field(key: "reason", emit_null: false)]
     property reason : String | Nil
 
     # Signal from the last termination of the container
+    @[::JSON::Field(key: "signal", emit_null: false)]
+    @[::YAML::Field(key: "signal", emit_null: false)]
     property signal : Int32 | Nil
 
     # Time at which previous execution of the container started
-    @[::JSON::Field(key: "startedAt")]
-    @[::YAML::Field(key: "startedAt")]
+    @[::JSON::Field(key: "startedAt", emit_null: false)]
+    @[::YAML::Field(key: "startedAt", emit_null: false)]
     property started_at : Time | Nil
 
     def initialize(*, @exit_code : Int32, @container_id : String | Nil = nil, @finished_at : Time | Nil = nil, @message : String | Nil = nil, @reason : String | Nil = nil, @signal : Int32 | Nil = nil, @started_at : Time | Nil = nil)

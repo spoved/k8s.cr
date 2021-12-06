@@ -15,12 +15,18 @@ module K8S
     include ::YAML::Serializable
 
     # container is the name of the container in the pods of the scaling target
+    @[::JSON::Field(key: "container", emit_null: true)]
+    @[::YAML::Field(key: "container", emit_null: true)]
     property container : String
 
     # name is the name of the resource in question.
+    @[::JSON::Field(key: "name", emit_null: true)]
+    @[::YAML::Field(key: "name", emit_null: true)]
     property name : String
 
     # target specifies the target value for the given metric
+    @[::JSON::Field(key: "target", emit_null: true)]
+    @[::YAML::Field(key: "target", emit_null: true)]
     property target : Api::Autoscaling::V2beta2::MetricTarget
 
     def initialize(*, @container : String, @name : String, @target : Api::Autoscaling::V2beta2::MetricTarget)

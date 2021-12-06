@@ -14,9 +14,13 @@ module K8S
     include ::YAML::Serializable
 
     # name is the name of the resource in question.
+    @[::JSON::Field(key: "name", emit_null: true)]
+    @[::YAML::Field(key: "name", emit_null: true)]
     property name : String
 
     # target specifies the target value for the given metric
+    @[::JSON::Field(key: "target", emit_null: true)]
+    @[::YAML::Field(key: "target", emit_null: true)]
     property target : Api::Autoscaling::V2beta2::MetricTarget
 
     def initialize(*, @name : String, @target : Api::Autoscaling::V2beta2::MetricTarget)

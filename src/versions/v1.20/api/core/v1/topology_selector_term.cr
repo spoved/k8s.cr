@@ -13,8 +13,8 @@ module K8S
     include ::YAML::Serializable
 
     # A list of topology selector requirements by labels.
-    @[::JSON::Field(key: "matchLabelExpressions")]
-    @[::YAML::Field(key: "matchLabelExpressions")]
+    @[::JSON::Field(key: "matchLabelExpressions", emit_null: false)]
+    @[::YAML::Field(key: "matchLabelExpressions", emit_null: false)]
     property match_label_expressions : Array(Api::Core::V1::TopologySelectorLabelRequirement) | Nil
 
     def initialize(*, @match_label_expressions : Array | Nil = nil)

@@ -12,6 +12,8 @@ module K8S
     include ::YAML::Serializable
 
     # Namespace to evaluate rules for. Required.
+    @[::JSON::Field(key: "namespace", emit_null: false)]
+    @[::YAML::Field(key: "namespace", emit_null: false)]
     property namespace : String | Nil
 
     def initialize(*, @namespace : String | Nil = nil)

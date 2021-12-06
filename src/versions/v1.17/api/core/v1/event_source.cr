@@ -14,9 +14,13 @@ module K8S
     include ::YAML::Serializable
 
     # Component from which the event is generated.
+    @[::JSON::Field(key: "component", emit_null: false)]
+    @[::YAML::Field(key: "component", emit_null: false)]
     property component : String | Nil
 
     # Node name on which the event is generated.
+    @[::JSON::Field(key: "host", emit_null: false)]
+    @[::YAML::Field(key: "host", emit_null: false)]
     property host : String | Nil
 
     def initialize(*, @component : String | Nil = nil, @host : String | Nil = nil)

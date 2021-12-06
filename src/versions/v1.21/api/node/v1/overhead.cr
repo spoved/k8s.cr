@@ -13,8 +13,8 @@ module K8S
     include ::YAML::Serializable
 
     # PodFixed represents the fixed resource overhead associated with running a pod.
-    @[::JSON::Field(key: "podFixed")]
-    @[::YAML::Field(key: "podFixed")]
+    @[::JSON::Field(key: "podFixed", emit_null: false)]
+    @[::YAML::Field(key: "podFixed", emit_null: false)]
     property pod_fixed : Hash(String, String) | Nil
 
     def initialize(*, @pod_fixed : Hash(String, String) | Nil = nil)

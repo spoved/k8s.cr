@@ -14,9 +14,13 @@ module K8S
     include ::YAML::Serializable
 
     # Name is the referenced service. The service must exist in the same namespace as the Ingress object.
+    @[::JSON::Field(key: "name", emit_null: true)]
+    @[::YAML::Field(key: "name", emit_null: true)]
     property name : String
 
     # Port of the referenced service. A port name or port number is required for a IngressServiceBackend.
+    @[::JSON::Field(key: "port", emit_null: false)]
+    @[::YAML::Field(key: "port", emit_null: false)]
     property port : Api::Networking::V1::ServiceBackendPort | Nil
 
     def initialize(*, @name : String, @port : Api::Networking::V1::ServiceBackendPort | Nil = nil)

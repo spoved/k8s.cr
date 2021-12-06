@@ -14,11 +14,13 @@ module K8S
     include ::YAML::Serializable
 
     # Optional: mode bits to use on created files by default. Must be a value between 0 and 0777. Defaults to 0644. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
-    @[::JSON::Field(key: "defaultMode")]
-    @[::YAML::Field(key: "defaultMode")]
+    @[::JSON::Field(key: "defaultMode", emit_null: false)]
+    @[::YAML::Field(key: "defaultMode", emit_null: false)]
     property default_mode : Int32 | Nil
 
     # Items is a list of downward API volume file
+    @[::JSON::Field(key: "items", emit_null: false)]
+    @[::YAML::Field(key: "items", emit_null: false)]
     property items : Array(Api::Core::V1::DownwardAPIVolumeFile) | Nil
 
     def initialize(*, @default_mode : Int32 | Nil = nil, @items : Array | Nil = nil)

@@ -13,6 +13,8 @@ module K8S
     include ::YAML::Serializable
 
     # desired number of instances for the scaled object.
+    @[::JSON::Field(key: "replicas", emit_null: false)]
+    @[::YAML::Field(key: "replicas", emit_null: false)]
     property replicas : Int32 | Nil
 
     def initialize(*, @replicas : Int32 | Nil = nil)

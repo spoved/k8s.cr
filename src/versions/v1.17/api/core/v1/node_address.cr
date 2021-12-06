@@ -14,9 +14,13 @@ module K8S
     include ::YAML::Serializable
 
     # The node address.
+    @[::JSON::Field(key: "address", emit_null: true)]
+    @[::YAML::Field(key: "address", emit_null: true)]
     property address : String
 
     # Node address type, one of Hostname, ExternalIP or InternalIP.
+    @[::JSON::Field(key: "type", emit_null: true)]
+    @[::YAML::Field(key: "type", emit_null: true)]
     property type : String
 
     def initialize(*, @address : String, @type : String)

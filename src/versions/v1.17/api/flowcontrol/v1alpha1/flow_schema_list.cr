@@ -54,13 +54,10 @@ module K8S
     include ::JSON::Serializable
     include ::YAML::Serializable
 
+    @[::JSON::Field(key: "apiVersion")]
+    @[::YAML::Field(key: "apiVersion")]
     getter api_version : String = "flowcontrol/v1alpha1"
     getter kind : String = "List"
-    # `items` is a list of FlowSchemas.
-    property items : Array(Api::Flowcontrol::V1alpha1::FlowSchema)
-
-    # `metadata` is the standard list metadata. More info: [https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata)
-    property metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil
 
     def initialize(*, @items : Array, @metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil = nil)
     end

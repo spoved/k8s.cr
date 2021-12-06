@@ -116,14 +116,22 @@ module K8S
     include ::JSON::Serializable
     include ::YAML::Serializable
 
+    @[::JSON::Field(key: "apiVersion")]
+    @[::YAML::Field(key: "apiVersion")]
     getter api_version : String = "certificates/v1beta1"
     getter kind : String = "CertificateSigningRequest"
+    @[::JSON::Field(key: "metadata", emit_null: false)]
+    @[::YAML::Field(key: "metadata", emit_null: false)]
     property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil
 
     # The certificate request itself and any additional information.
+    @[::JSON::Field(key: "spec", emit_null: false)]
+    @[::YAML::Field(key: "spec", emit_null: false)]
     property spec : Api::Certificates::V1beta1::CertificateSigningRequestSpec | Nil
 
     # Derived information about the request.
+    @[::JSON::Field(key: "status", emit_null: false)]
+    @[::YAML::Field(key: "status", emit_null: false)]
     property status : Api::Certificates::V1beta1::CertificateSigningRequestStatus | Nil
 
     def initialize(*, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil, @spec : Api::Certificates::V1beta1::CertificateSigningRequestSpec | Nil = nil, @status : Api::Certificates::V1beta1::CertificateSigningRequestStatus | Nil = nil)

@@ -15,9 +15,13 @@ module K8S
     include ::YAML::Serializable
 
     # Backend defines the referenced service endpoint to which the traffic will be forwarded to.
+    @[::JSON::Field(key: "backend", emit_null: true)]
+    @[::YAML::Field(key: "backend", emit_null: true)]
     property backend : Api::Extensions::V1beta1::IngressBackend
 
     # Path is matched against the path of an incoming request. Currently it can contain characters disallowed from the conventional "path" part of a URL as defined by RFC 3986. Paths must begin with a '/'. When unspecified, all paths from incoming requests are matched.
+    @[::JSON::Field(key: "path", emit_null: false)]
+    @[::YAML::Field(key: "path", emit_null: false)]
     property path : String | Nil
 
     # PathType determines the interpretation of the Path matching. PathType can be one of the following values: * Exact: Matches the URL path exactly. * Prefix: Matches based on a URL path prefix split by '/'. Matching is
@@ -31,8 +35,8 @@ module K8S
     #   the IngressClass. Implementations can treat this as a separate PathType
     #   or treat it identically to Prefix or Exact path types.
     # Implementations are required to support all path types. Defaults to ImplementationSpecific.
-    @[::JSON::Field(key: "pathType")]
-    @[::YAML::Field(key: "pathType")]
+    @[::JSON::Field(key: "pathType", emit_null: false)]
+    @[::YAML::Field(key: "pathType", emit_null: false)]
     property path_type : String | Nil
 
     def initialize(*, @backend : Api::Extensions::V1beta1::IngressBackend, @path : String | Nil = nil, @path_type : String | Nil = nil)

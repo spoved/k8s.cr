@@ -14,9 +14,13 @@ module K8S
     include ::YAML::Serializable
 
     # May contain labels and annotations that will be copied into the PVC when creating it. No other fields are allowed and will be rejected during validation.
+    @[::JSON::Field(key: "metadata", emit_null: false)]
+    @[::YAML::Field(key: "metadata", emit_null: false)]
     property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil
 
     # The specification for the PersistentVolumeClaim. The entire content is copied unchanged into the PVC that gets created from this template. The same fields as in a PersistentVolumeClaim are also valid here.
+    @[::JSON::Field(key: "spec", emit_null: true)]
+    @[::YAML::Field(key: "spec", emit_null: true)]
     property spec : Api::Core::V1::PersistentVolumeClaimSpec
 
     def initialize(*, @spec : Api::Core::V1::PersistentVolumeClaimSpec, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil)

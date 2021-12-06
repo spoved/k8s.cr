@@ -69,11 +69,10 @@ module K8S
     include ::JSON::Serializable
     include ::YAML::Serializable
 
+    @[::JSON::Field(key: "apiVersion")]
+    @[::YAML::Field(key: "apiVersion")]
     getter api_version : String = "apps/v1"
     getter kind : String = "List"
-    property items : Array(Api::Apps::V1::StatefulSet)
-
-    property metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil
 
     def initialize(*, @items : Array, @metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil = nil)
     end

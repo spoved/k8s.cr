@@ -15,16 +15,18 @@ module K8S
     include ::YAML::Serializable
 
     # A list of pointers to currently running jobs.
+    @[::JSON::Field(key: "active", emit_null: false)]
+    @[::YAML::Field(key: "active", emit_null: false)]
     property active : Array(Api::Core::V1::ObjectReference) | Nil
 
     # Information when was the last time the job was successfully scheduled.
-    @[::JSON::Field(key: "lastScheduleTime")]
-    @[::YAML::Field(key: "lastScheduleTime")]
+    @[::JSON::Field(key: "lastScheduleTime", emit_null: false)]
+    @[::YAML::Field(key: "lastScheduleTime", emit_null: false)]
     property last_schedule_time : Time | Nil
 
     # Information when was the last time the job successfully completed.
-    @[::JSON::Field(key: "lastSuccessfulTime")]
-    @[::YAML::Field(key: "lastSuccessfulTime")]
+    @[::JSON::Field(key: "lastSuccessfulTime", emit_null: false)]
+    @[::YAML::Field(key: "lastSuccessfulTime", emit_null: false)]
     property last_successful_time : Time | Nil
 
     def initialize(*, @active : Array | Nil = nil, @last_schedule_time : Time | Nil = nil, @last_successful_time : Time | Nil = nil)

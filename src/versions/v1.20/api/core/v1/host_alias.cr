@@ -14,9 +14,13 @@ module K8S
     include ::YAML::Serializable
 
     # Hostnames for the above IP address.
+    @[::JSON::Field(key: "hostnames", emit_null: false)]
+    @[::YAML::Field(key: "hostnames", emit_null: false)]
     property hostnames : Array(String) | Nil
 
     # IP address of the host file entry.
+    @[::JSON::Field(key: "ip", emit_null: false)]
+    @[::YAML::Field(key: "ip", emit_null: false)]
     property ip : String | Nil
 
     def initialize(*, @hostnames : Array | Nil = nil, @ip : String | Nil = nil)

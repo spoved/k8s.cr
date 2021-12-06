@@ -13,6 +13,8 @@ module K8S
     include ::YAML::Serializable
 
     # Partition indicates the ordinal at which the StatefulSet should be partitioned. Default value is 0.
+    @[::JSON::Field(key: "partition", emit_null: false)]
+    @[::YAML::Field(key: "partition", emit_null: false)]
     property partition : Int32 | Nil
 
     def initialize(*, @partition : Int32 | Nil = nil)

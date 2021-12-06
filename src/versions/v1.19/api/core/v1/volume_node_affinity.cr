@@ -13,6 +13,8 @@ module K8S
     include ::YAML::Serializable
 
     # Required specifies hard node constraints that must be met.
+    @[::JSON::Field(key: "required", emit_null: false)]
+    @[::YAML::Field(key: "required", emit_null: false)]
     property required : Api::Core::V1::NodeSelector | Nil
 
     def initialize(*, @required : Api::Core::V1::NodeSelector | Nil = nil)

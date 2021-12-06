@@ -14,9 +14,13 @@ module K8S
     include ::YAML::Serializable
 
     # `name` is the name of matching ServiceAccount objects, or "*" to match regardless of name. Required.
+    @[::JSON::Field(key: "name", emit_null: true)]
+    @[::YAML::Field(key: "name", emit_null: true)]
     property name : String
 
     # `namespace` is the namespace of matching ServiceAccount objects. Required.
+    @[::JSON::Field(key: "namespace", emit_null: true)]
+    @[::YAML::Field(key: "namespace", emit_null: true)]
     property namespace : String
 
     def initialize(*, @name : String, @namespace : String)

@@ -13,8 +13,8 @@ module K8S
     include ::YAML::Serializable
 
     # Port number of the given endpoint.
-    @[::JSON::Field(key: "Port")]
-    @[::YAML::Field(key: "Port")]
+    @[::JSON::Field(key: "Port", emit_null: true)]
+    @[::YAML::Field(key: "Port", emit_null: true)]
     property port : Int32
 
     def initialize(*, @port : Int32)

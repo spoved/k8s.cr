@@ -14,11 +14,13 @@ module K8S
     include ::YAML::Serializable
 
     # Specifies the target ResourceVersion
-    @[::JSON::Field(key: "resourceVersion")]
-    @[::YAML::Field(key: "resourceVersion")]
+    @[::JSON::Field(key: "resourceVersion", emit_null: false)]
+    @[::YAML::Field(key: "resourceVersion", emit_null: false)]
     property resource_version : String | Nil
 
     # Specifies the target UID.
+    @[::JSON::Field(key: "uid", emit_null: false)]
+    @[::YAML::Field(key: "uid", emit_null: false)]
     property uid : String | Nil
 
     def initialize(*, @resource_version : String | Nil = nil, @uid : String | Nil = nil)

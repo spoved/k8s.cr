@@ -78,17 +78,23 @@ module K8S
     include ::JSON::Serializable
     include ::YAML::Serializable
 
+    @[::JSON::Field(key: "apiVersion")]
+    @[::YAML::Field(key: "apiVersion")]
     getter api_version : String = "rbac.authorization.k8s.io/v1"
     getter kind : String = "ClusterRole"
     # AggregationRule is an optional field that describes how to build the Rules for this ClusterRole. If AggregationRule is set, then the Rules are controller managed and direct changes to Rules will be stomped by the controller.
-    @[::JSON::Field(key: "aggregationRule")]
-    @[::YAML::Field(key: "aggregationRule")]
+    @[::JSON::Field(key: "aggregationRule", emit_null: false)]
+    @[::YAML::Field(key: "aggregationRule", emit_null: false)]
     property aggregation_rule : Api::Rbac::V1::AggregationRule | Nil
 
     # Standard object's metadata.
+    @[::JSON::Field(key: "metadata", emit_null: false)]
+    @[::YAML::Field(key: "metadata", emit_null: false)]
     property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil
 
     # Rules holds all the PolicyRules for this ClusterRole
+    @[::JSON::Field(key: "rules", emit_null: false)]
+    @[::YAML::Field(key: "rules", emit_null: false)]
     property rules : Array(Api::Rbac::V1::PolicyRule) | Nil
 
     def initialize(*, @aggregation_rule : Api::Rbac::V1::AggregationRule | Nil = nil, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil, @rules : Array | Nil = nil)

@@ -13,6 +13,8 @@ module K8S
     include ::YAML::Serializable
 
     # Items is a list of DownwardAPIVolume file
+    @[::JSON::Field(key: "items", emit_null: false)]
+    @[::YAML::Field(key: "items", emit_null: false)]
     property items : Array(Api::Core::V1::DownwardAPIVolumeFile) | Nil
 
     def initialize(*, @items : Array | Nil = nil)

@@ -79,12 +79,18 @@ module K8S
     include ::JSON::Serializable
     include ::YAML::Serializable
 
+    @[::JSON::Field(key: "apiVersion")]
+    @[::YAML::Field(key: "apiVersion")]
     getter api_version : String = "admissionregistration/v1"
     getter kind : String = "MutatingWebhookConfiguration"
     # Standard object metadata; More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata.](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata.)
+    @[::JSON::Field(key: "metadata", emit_null: false)]
+    @[::YAML::Field(key: "metadata", emit_null: false)]
     property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil
 
     # Webhooks is a list of webhooks and the affected resources and operations.
+    @[::JSON::Field(key: "webhooks", emit_null: false)]
+    @[::YAML::Field(key: "webhooks", emit_null: false)]
     property webhooks : Array(Api::Admissionregistration::V1::MutatingWebhook) | Nil
 
     def initialize(*, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil, @webhooks : Array | Nil = nil)

@@ -13,6 +13,8 @@ module K8S
     include ::YAML::Serializable
 
     # `type` is the type of flow distinguisher method The supported types are "ByUser" and "ByNamespace". Required.
+    @[::JSON::Field(key: "type", emit_null: true)]
+    @[::YAML::Field(key: "type", emit_null: true)]
     property type : String
 
     def initialize(*, @type : String)

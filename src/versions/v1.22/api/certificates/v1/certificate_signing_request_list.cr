@@ -54,12 +54,10 @@ module K8S
     include ::JSON::Serializable
     include ::YAML::Serializable
 
+    @[::JSON::Field(key: "apiVersion")]
+    @[::YAML::Field(key: "apiVersion")]
     getter api_version : String = "certificates/v1"
     getter kind : String = "List"
-    # items is a collection of CertificateSigningRequest objects
-    property items : Array(Api::Certificates::V1::CertificateSigningRequest)
-
-    property metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil
 
     def initialize(*, @items : Array, @metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil = nil)
     end

@@ -14,11 +14,13 @@ module K8S
     include ::YAML::Serializable
 
     # Current service state
+    @[::JSON::Field(key: "conditions", emit_null: false)]
+    @[::YAML::Field(key: "conditions", emit_null: false)]
     property conditions : Array(Apimachinery::Apis::Meta::V1::Condition) | Nil
 
     # LoadBalancer contains the current status of the load-balancer, if one is present.
-    @[::JSON::Field(key: "loadBalancer")]
-    @[::YAML::Field(key: "loadBalancer")]
+    @[::JSON::Field(key: "loadBalancer", emit_null: false)]
+    @[::YAML::Field(key: "loadBalancer", emit_null: false)]
     property load_balancer : Api::Core::V1::LoadBalancerStatus | Nil
 
     def initialize(*, @conditions : Array | Nil = nil, @load_balancer : Api::Core::V1::LoadBalancerStatus | Nil = nil)

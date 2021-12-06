@@ -17,12 +17,18 @@ module K8S
     include ::YAML::Serializable
 
     # Target directory name. Must not contain or start with '..'.  If '.' is supplied, the volume directory will be the git repository.  Otherwise, if specified, the volume will contain the git repository in the subdirectory with the given name.
+    @[::JSON::Field(key: "directory", emit_null: false)]
+    @[::YAML::Field(key: "directory", emit_null: false)]
     property directory : String | Nil
 
     # Repository URL
+    @[::JSON::Field(key: "repository", emit_null: true)]
+    @[::YAML::Field(key: "repository", emit_null: true)]
     property repository : String
 
     # Commit hash for the specified revision.
+    @[::JSON::Field(key: "revision", emit_null: false)]
+    @[::YAML::Field(key: "revision", emit_null: false)]
     property revision : String | Nil
 
     def initialize(*, @repository : String, @directory : String | Nil = nil, @revision : String | Nil = nil)

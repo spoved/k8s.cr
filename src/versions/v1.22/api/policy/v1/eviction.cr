@@ -23,14 +23,18 @@ module K8S
     include ::JSON::Serializable
     include ::YAML::Serializable
 
+    @[::JSON::Field(key: "apiVersion")]
+    @[::YAML::Field(key: "apiVersion")]
     getter api_version : String = "policy/v1"
     getter kind : String = "Eviction"
     # DeleteOptions may be provided
-    @[::JSON::Field(key: "deleteOptions")]
-    @[::YAML::Field(key: "deleteOptions")]
+    @[::JSON::Field(key: "deleteOptions", emit_null: false)]
+    @[::YAML::Field(key: "deleteOptions", emit_null: false)]
     property delete_options : Apimachinery::Apis::Meta::V1::DeleteOptions | Nil
 
     # ObjectMeta describes the pod that is being evicted.
+    @[::JSON::Field(key: "metadata", emit_null: false)]
+    @[::YAML::Field(key: "metadata", emit_null: false)]
     property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil
 
     def initialize(*, @delete_options : Apimachinery::Apis::Meta::V1::DeleteOptions | Nil = nil, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil)

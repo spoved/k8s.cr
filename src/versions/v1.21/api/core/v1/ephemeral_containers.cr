@@ -36,13 +36,17 @@ module K8S
     include ::JSON::Serializable
     include ::YAML::Serializable
 
+    @[::JSON::Field(key: "apiVersion")]
+    @[::YAML::Field(key: "apiVersion")]
     getter api_version : String = "v1"
     getter kind : String = "EphemeralContainers"
     # A list of ephemeral containers associated with this pod. New ephemeral containers may be appended to this list, but existing ephemeral containers may not be removed or modified.
-    @[::JSON::Field(key: "ephemeralContainers")]
-    @[::YAML::Field(key: "ephemeralContainers")]
+    @[::JSON::Field(key: "ephemeralContainers", emit_null: true)]
+    @[::YAML::Field(key: "ephemeralContainers", emit_null: true)]
     property ephemeral_containers : Array(Api::Core::V1::EphemeralContainer)
 
+    @[::JSON::Field(key: "metadata", emit_null: false)]
+    @[::YAML::Field(key: "metadata", emit_null: false)]
     property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil
 
     def initialize(*, @ephemeral_containers : Array, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil)

@@ -95,64 +95,82 @@ module K8S
     include ::JSON::Serializable
     include ::YAML::Serializable
 
+    @[::JSON::Field(key: "apiVersion")]
+    @[::YAML::Field(key: "apiVersion")]
     getter api_version : String = "events/v1beta1"
     getter kind : String = "Event"
     # What action was [taken/failed regarding to the regarding object.](taken/failed regarding to the regarding object.)
+    @[::JSON::Field(key: "action", emit_null: false)]
+    @[::YAML::Field(key: "action", emit_null: false)]
     property action : String | Nil
 
     # Deprecated field assuring backward compatibility with core.v1 Event type
-    @[::JSON::Field(key: "deprecatedCount")]
-    @[::YAML::Field(key: "deprecatedCount")]
+    @[::JSON::Field(key: "deprecatedCount", emit_null: false)]
+    @[::YAML::Field(key: "deprecatedCount", emit_null: false)]
     property deprecated_count : Int32 | Nil
 
     # Deprecated field assuring backward compatibility with core.v1 Event type
-    @[::JSON::Field(key: "deprecatedFirstTimestamp")]
-    @[::YAML::Field(key: "deprecatedFirstTimestamp")]
+    @[::JSON::Field(key: "deprecatedFirstTimestamp", emit_null: false)]
+    @[::YAML::Field(key: "deprecatedFirstTimestamp", emit_null: false)]
     property deprecated_first_timestamp : Time | Nil
 
     # Deprecated field assuring backward compatibility with core.v1 Event type
-    @[::JSON::Field(key: "deprecatedLastTimestamp")]
-    @[::YAML::Field(key: "deprecatedLastTimestamp")]
+    @[::JSON::Field(key: "deprecatedLastTimestamp", emit_null: false)]
+    @[::YAML::Field(key: "deprecatedLastTimestamp", emit_null: false)]
     property deprecated_last_timestamp : Time | Nil
 
     # Deprecated field assuring backward compatibility with core.v1 Event type
-    @[::JSON::Field(key: "deprecatedSource")]
-    @[::YAML::Field(key: "deprecatedSource")]
+    @[::JSON::Field(key: "deprecatedSource", emit_null: false)]
+    @[::YAML::Field(key: "deprecatedSource", emit_null: false)]
     property deprecated_source : Api::Core::V1::EventSource | Nil
 
     # Required. Time when this Event was first observed.
-    @[::JSON::Field(key: "eventTime")]
-    @[::YAML::Field(key: "eventTime")]
+    @[::JSON::Field(key: "eventTime", emit_null: false)]
+    @[::YAML::Field(key: "eventTime", emit_null: false)]
     property event_time : Time | Nil
 
+    @[::JSON::Field(key: "metadata", emit_null: false)]
+    @[::YAML::Field(key: "metadata", emit_null: false)]
     property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil
 
     # Optional. A human-readable description of the status of this operation. Maximal length of the note is 1kB, but libraries should be prepared to handle values up to 64kB.
+    @[::JSON::Field(key: "note", emit_null: false)]
+    @[::YAML::Field(key: "note", emit_null: false)]
     property note : String | Nil
 
     # Why the action was taken.
+    @[::JSON::Field(key: "reason", emit_null: false)]
+    @[::YAML::Field(key: "reason", emit_null: false)]
     property reason : String | Nil
 
     # The object this Event is about. In most cases it's an Object reporting controller implements. E.g. ReplicaSetController implements ReplicaSets and this event is emitted because it acts on some changes in a ReplicaSet object.
+    @[::JSON::Field(key: "regarding", emit_null: false)]
+    @[::YAML::Field(key: "regarding", emit_null: false)]
     property regarding : Api::Core::V1::ObjectReference | Nil
 
     # Optional secondary object for more complex actions. E.g. when regarding object triggers a creation or deletion of related object.
+    @[::JSON::Field(key: "related", emit_null: false)]
+    @[::YAML::Field(key: "related", emit_null: false)]
     property related : Api::Core::V1::ObjectReference | Nil
 
     # Name of the controller that emitted this Event, e.g. [`kubernetes.io/kubelet`.](`kubernetes.io/kubelet`.)
-    @[::JSON::Field(key: "reportingController")]
-    @[::YAML::Field(key: "reportingController")]
+    @[::JSON::Field(key: "reportingController", emit_null: false)]
+    @[::YAML::Field(key: "reportingController", emit_null: false)]
     property reporting_controller : String | Nil
 
     # ID of the controller instance, e.g. `kubelet-xyzf`.
-    @[::JSON::Field(key: "reportingInstance")]
-    @[::YAML::Field(key: "reportingInstance")]
+    @[::JSON::Field(key: "reportingInstance", emit_null: false)]
+    @[::YAML::Field(key: "reportingInstance", emit_null: false)]
     property reporting_instance : String | Nil
 
     # Data about the Event series this event represents or nil if it's a singleton Event.
+    @[::JSON::Field(key: "series", emit_null: false)]
+    @[::YAML::Field(key: "series", emit_null: false)]
     property series : Api::Events::V1beta1::EventSeries | Nil
 
     # Type of this event (Normal, Warning), new types could be added in the future.
+    @[::JSON::Field(key: "type", emit_null: false)]
+    @[::YAML::Field(key: "type", emit_null: false)]
     property type : String | Nil
 
     def initialize(*, @action : String | Nil = nil, @deprecated_count : Int32 | Nil = nil, @deprecated_first_timestamp : Time | Nil = nil, @deprecated_last_timestamp : Time | Nil = nil, @deprecated_source : Api::Core::V1::EventSource | Nil = nil, @event_time : Time | Nil = nil, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil, @note : String | Nil = nil, @reason : String | Nil = nil, @regarding : Api::Core::V1::ObjectReference | Nil = nil, @related : Api::Core::V1::ObjectReference | Nil = nil, @reporting_controller : String | Nil = nil, @reporting_instance : String | Nil = nil, @series : Api::Events::V1beta1::EventSeries | Nil = nil, @type : String | Nil = nil)

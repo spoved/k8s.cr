@@ -14,9 +14,13 @@ module K8S
     include ::YAML::Serializable
 
     # Message regarding why the container is not yet running.
+    @[::JSON::Field(key: "message", emit_null: false)]
+    @[::YAML::Field(key: "message", emit_null: false)]
     property message : String | Nil
 
     # (brief) reason the container is not yet running.
+    @[::JSON::Field(key: "reason", emit_null: false)]
+    @[::YAML::Field(key: "reason", emit_null: false)]
     property reason : String | Nil
 
     def initialize(*, @message : String | Nil = nil, @reason : String | Nil = nil)

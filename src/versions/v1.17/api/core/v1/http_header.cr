@@ -14,9 +14,13 @@ module K8S
     include ::YAML::Serializable
 
     # The header field name
+    @[::JSON::Field(key: "name", emit_null: true)]
+    @[::YAML::Field(key: "name", emit_null: true)]
     property name : String
 
     # The header field value
+    @[::JSON::Field(key: "value", emit_null: true)]
+    @[::YAML::Field(key: "value", emit_null: true)]
     property value : String
 
     def initialize(*, @name : String, @value : String)

@@ -18,25 +18,33 @@ module K8S
     include ::YAML::Serializable
 
     # Extra corresponds to the user.Info.GetExtra() method from the authenticator.  Since that is input to the authorizer it needs a reflection here.
+    @[::JSON::Field(key: "extra", emit_null: false)]
+    @[::YAML::Field(key: "extra", emit_null: false)]
     property extra : Hash(String, String) | Nil
 
     # Groups is the groups you're testing for.
+    @[::JSON::Field(key: "groups", emit_null: false)]
+    @[::YAML::Field(key: "groups", emit_null: false)]
     property groups : Array(String) | Nil
 
     # NonResourceAttributes describes information for a non-resource access request
-    @[::JSON::Field(key: "nonResourceAttributes")]
-    @[::YAML::Field(key: "nonResourceAttributes")]
+    @[::JSON::Field(key: "nonResourceAttributes", emit_null: false)]
+    @[::YAML::Field(key: "nonResourceAttributes", emit_null: false)]
     property non_resource_attributes : Api::Authorization::V1::NonResourceAttributes | Nil
 
     # ResourceAuthorizationAttributes describes information for a resource access request
-    @[::JSON::Field(key: "resourceAttributes")]
-    @[::YAML::Field(key: "resourceAttributes")]
+    @[::JSON::Field(key: "resourceAttributes", emit_null: false)]
+    @[::YAML::Field(key: "resourceAttributes", emit_null: false)]
     property resource_attributes : Api::Authorization::V1::ResourceAttributes | Nil
 
     # UID information about the requesting user.
+    @[::JSON::Field(key: "uid", emit_null: false)]
+    @[::YAML::Field(key: "uid", emit_null: false)]
     property uid : String | Nil
 
     # User is the user you're testing for. If you specify "User" but not "Groups", then is it interpreted as "What if User were not a member of any groups
+    @[::JSON::Field(key: "user", emit_null: false)]
+    @[::YAML::Field(key: "user", emit_null: false)]
     property user : String | Nil
 
     def initialize(*, @extra : Hash(String, String) | Nil = nil, @groups : Array | Nil = nil, @non_resource_attributes : Api::Authorization::V1::NonResourceAttributes | Nil = nil, @resource_attributes : Api::Authorization::V1::ResourceAttributes | Nil = nil, @uid : String | Nil = nil, @user : String | Nil = nil)

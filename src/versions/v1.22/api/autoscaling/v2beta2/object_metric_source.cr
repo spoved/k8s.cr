@@ -14,14 +14,18 @@ module K8S
     include ::JSON::Serializable
     include ::YAML::Serializable
 
-    @[::JSON::Field(key: "describedObject")]
-    @[::YAML::Field(key: "describedObject")]
+    @[::JSON::Field(key: "describedObject", emit_null: true)]
+    @[::YAML::Field(key: "describedObject", emit_null: true)]
     property described_object : Api::Autoscaling::V2beta2::CrossVersionObjectReference
 
     # metric identifies the target metric by name and selector
+    @[::JSON::Field(key: "metric", emit_null: true)]
+    @[::YAML::Field(key: "metric", emit_null: true)]
     property metric : Api::Autoscaling::V2beta2::MetricIdentifier
 
     # target specifies the target value for the given metric
+    @[::JSON::Field(key: "target", emit_null: true)]
+    @[::YAML::Field(key: "target", emit_null: true)]
     property target : Api::Autoscaling::V2beta2::MetricTarget
 
     def initialize(*, @described_object : Api::Autoscaling::V2beta2::CrossVersionObjectReference, @metric : Api::Autoscaling::V2beta2::MetricIdentifier, @target : Api::Autoscaling::V2beta2::MetricTarget)

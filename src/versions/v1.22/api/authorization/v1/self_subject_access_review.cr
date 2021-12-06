@@ -24,15 +24,23 @@ module K8S
     include ::JSON::Serializable
     include ::YAML::Serializable
 
+    @[::JSON::Field(key: "apiVersion")]
+    @[::YAML::Field(key: "apiVersion")]
     getter api_version : String = "authorization/v1"
     getter kind : String = "SelfSubjectAccessReview"
     # Standard list metadata. More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)
+    @[::JSON::Field(key: "metadata", emit_null: false)]
+    @[::YAML::Field(key: "metadata", emit_null: false)]
     property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil
 
     # Spec holds information about the request being evaluated.  user and groups must be empty
+    @[::JSON::Field(key: "spec", emit_null: true)]
+    @[::YAML::Field(key: "spec", emit_null: true)]
     property spec : Api::Authorization::V1::SelfSubjectAccessReviewSpec
 
     # Status is filled in by the server and indicates whether the request is allowed or not
+    @[::JSON::Field(key: "status", emit_null: false)]
+    @[::YAML::Field(key: "status", emit_null: false)]
     property status : Api::Authorization::V1::SubjectAccessReviewStatus | Nil
 
     def initialize(*, @spec : Api::Authorization::V1::SelfSubjectAccessReviewSpec, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil, @status : Api::Authorization::V1::SubjectAccessReviewStatus | Nil = nil)

@@ -17,20 +17,28 @@ module K8S
     include ::YAML::Serializable
 
     # Host name to connect to, defaults to the pod IP. You probably want to set "Host" in httpHeaders instead.
+    @[::JSON::Field(key: "host", emit_null: false)]
+    @[::YAML::Field(key: "host", emit_null: false)]
     property host : String | Nil
 
     # Custom headers to set in the request. HTTP allows repeated headers.
-    @[::JSON::Field(key: "httpHeaders")]
-    @[::YAML::Field(key: "httpHeaders")]
+    @[::JSON::Field(key: "httpHeaders", emit_null: false)]
+    @[::YAML::Field(key: "httpHeaders", emit_null: false)]
     property http_headers : Array(Api::Core::V1::HTTPHeader) | Nil
 
     # Path to access on the HTTP server.
+    @[::JSON::Field(key: "path", emit_null: false)]
+    @[::YAML::Field(key: "path", emit_null: false)]
     property path : String | Nil
 
     # Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
+    @[::JSON::Field(key: "port", emit_null: true)]
+    @[::YAML::Field(key: "port", emit_null: true)]
     property port : Int32 | String
 
     # Scheme to use for connecting to the host. Defaults to HTTP.
+    @[::JSON::Field(key: "scheme", emit_null: false)]
+    @[::YAML::Field(key: "scheme", emit_null: false)]
     property scheme : String | Nil
 
     def initialize(*, @port : Int32 | String, @host : String | Nil = nil, @http_headers : Array | Nil = nil, @path : String | Nil = nil, @scheme : String | Nil = nil)

@@ -14,11 +14,13 @@ module K8S
     include ::YAML::Serializable
 
     # Required. A pod affinity term, associated with the corresponding weight.
-    @[::JSON::Field(key: "podAffinityTerm")]
-    @[::YAML::Field(key: "podAffinityTerm")]
+    @[::JSON::Field(key: "podAffinityTerm", emit_null: true)]
+    @[::YAML::Field(key: "podAffinityTerm", emit_null: true)]
     property pod_affinity_term : Api::Core::V1::PodAffinityTerm
 
     # weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
+    @[::JSON::Field(key: "weight", emit_null: true)]
+    @[::YAML::Field(key: "weight", emit_null: true)]
     property weight : Int32
 
     def initialize(*, @pod_affinity_term : Api::Core::V1::PodAffinityTerm, @weight : Int32)

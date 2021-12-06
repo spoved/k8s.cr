@@ -24,12 +24,20 @@ module K8S
     include ::JSON::Serializable
     include ::YAML::Serializable
 
+    @[::JSON::Field(key: "apiVersion")]
+    @[::YAML::Field(key: "apiVersion")]
     getter api_version : String = "authentication/v1"
     getter kind : String = "TokenRequest"
+    @[::JSON::Field(key: "metadata", emit_null: false)]
+    @[::YAML::Field(key: "metadata", emit_null: false)]
     property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil
 
+    @[::JSON::Field(key: "spec", emit_null: true)]
+    @[::YAML::Field(key: "spec", emit_null: true)]
     property spec : Api::Authentication::V1::TokenRequestSpec
 
+    @[::JSON::Field(key: "status", emit_null: false)]
+    @[::YAML::Field(key: "status", emit_null: false)]
     property status : Api::Authentication::V1::TokenRequestStatus | Nil
 
     def initialize(*, @spec : Api::Authentication::V1::TokenRequestSpec, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil, @status : Api::Authentication::V1::TokenRequestStatus | Nil = nil)

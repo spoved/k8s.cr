@@ -103,14 +103,22 @@ module K8S
     include ::JSON::Serializable
     include ::YAML::Serializable
 
+    @[::JSON::Field(key: "apiVersion")]
+    @[::YAML::Field(key: "apiVersion")]
     getter api_version : String = "apps/v1"
     getter kind : String = "StatefulSet"
+    @[::JSON::Field(key: "metadata", emit_null: false)]
+    @[::YAML::Field(key: "metadata", emit_null: false)]
     property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil
 
     # Spec defines the desired identities of pods in this set.
+    @[::JSON::Field(key: "spec", emit_null: false)]
+    @[::YAML::Field(key: "spec", emit_null: false)]
     property spec : Api::Apps::V1::StatefulSetSpec | Nil
 
     # Status is the current status of Pods in this StatefulSet. This data may be out of date by some window of time.
+    @[::JSON::Field(key: "status", emit_null: false)]
+    @[::YAML::Field(key: "status", emit_null: false)]
     property status : Api::Apps::V1::StatefulSetStatus | Nil
 
     def initialize(*, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil, @spec : Api::Apps::V1::StatefulSetSpec | Nil = nil, @status : Api::Apps::V1::StatefulSetStatus | Nil = nil)

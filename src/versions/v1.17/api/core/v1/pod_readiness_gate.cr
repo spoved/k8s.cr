@@ -13,8 +13,8 @@ module K8S
     include ::YAML::Serializable
 
     # ConditionType refers to a condition in the pod's condition list with matching type.
-    @[::JSON::Field(key: "conditionType")]
-    @[::YAML::Field(key: "conditionType")]
+    @[::JSON::Field(key: "conditionType", emit_null: true)]
+    @[::YAML::Field(key: "conditionType", emit_null: true)]
     property condition_type : String
 
     def initialize(*, @condition_type : String)

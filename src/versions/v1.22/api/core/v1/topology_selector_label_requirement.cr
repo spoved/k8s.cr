@@ -14,9 +14,13 @@ module K8S
     include ::YAML::Serializable
 
     # The label key that the selector applies to.
+    @[::JSON::Field(key: "key", emit_null: true)]
+    @[::YAML::Field(key: "key", emit_null: true)]
     property key : String
 
     # An array of string values. One value must match the label to be selected. Each entry in Values is ORed.
+    @[::JSON::Field(key: "values", emit_null: true)]
+    @[::YAML::Field(key: "values", emit_null: true)]
     property values : Array(String)
 
     def initialize(*, @key : String, @values : Array)

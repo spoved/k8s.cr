@@ -14,6 +14,8 @@ module K8S
     include ::YAML::Serializable
 
     # ip is an IP address (IPv4 or IPv6) assigned to the pod
+    @[::JSON::Field(key: "ip", emit_null: false)]
+    @[::YAML::Field(key: "ip", emit_null: false)]
     property ip : String | Nil
 
     def initialize(*, @ip : String | Nil = nil)

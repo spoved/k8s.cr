@@ -13,6 +13,8 @@ module K8S
     include ::YAML::Serializable
 
     # Current service state of apiService.
+    @[::JSON::Field(key: "conditions", emit_null: false)]
+    @[::YAML::Field(key: "conditions", emit_null: false)]
     property conditions : Array(KubeAggregator::Apis::Apiregistration::V1::APIServiceCondition) | Nil
 
     def initialize(*, @conditions : Array | Nil = nil)

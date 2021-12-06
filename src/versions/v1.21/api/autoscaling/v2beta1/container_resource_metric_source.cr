@@ -16,19 +16,23 @@ module K8S
     include ::YAML::Serializable
 
     # container is the name of the container in the pods of the scaling target
+    @[::JSON::Field(key: "container", emit_null: true)]
+    @[::YAML::Field(key: "container", emit_null: true)]
     property container : String
 
     # name is the name of the resource in question.
+    @[::JSON::Field(key: "name", emit_null: true)]
+    @[::YAML::Field(key: "name", emit_null: true)]
     property name : String
 
     # targetAverageUtilization is the target value of the average of the resource metric across all relevant pods, represented as a percentage of the requested value of the resource for the pods.
-    @[::JSON::Field(key: "targetAverageUtilization")]
-    @[::YAML::Field(key: "targetAverageUtilization")]
+    @[::JSON::Field(key: "targetAverageUtilization", emit_null: false)]
+    @[::YAML::Field(key: "targetAverageUtilization", emit_null: false)]
     property target_average_utilization : Int32 | Nil
 
     # targetAverageValue is the target value of the average of the resource metric across all relevant pods, as a raw value (instead of as a percentage of the request), similar to the "pods" metric source type.
-    @[::JSON::Field(key: "targetAverageValue")]
-    @[::YAML::Field(key: "targetAverageValue")]
+    @[::JSON::Field(key: "targetAverageValue", emit_null: false)]
+    @[::YAML::Field(key: "targetAverageValue", emit_null: false)]
     property target_average_value : Int32 | String | Nil
 
     def initialize(*, @container : String, @name : String, @target_average_utilization : Int32 | Nil = nil, @target_average_value : Int32 | String | Nil = nil)

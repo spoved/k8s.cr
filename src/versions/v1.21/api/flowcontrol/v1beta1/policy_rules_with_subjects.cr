@@ -15,16 +15,18 @@ module K8S
     include ::YAML::Serializable
 
     # `nonResourceRules` is a list of NonResourcePolicyRules that identify matching requests according to their verb and the target non-resource URL.
-    @[::JSON::Field(key: "nonResourceRules")]
-    @[::YAML::Field(key: "nonResourceRules")]
+    @[::JSON::Field(key: "nonResourceRules", emit_null: false)]
+    @[::YAML::Field(key: "nonResourceRules", emit_null: false)]
     property non_resource_rules : Array(Api::Flowcontrol::V1beta1::NonResourcePolicyRule) | Nil
 
     # `resourceRules` is a slice of ResourcePolicyRules that identify matching requests according to their verb and the target resource. At least one of `resourceRules` and `nonResourceRules` has to be non-empty.
-    @[::JSON::Field(key: "resourceRules")]
-    @[::YAML::Field(key: "resourceRules")]
+    @[::JSON::Field(key: "resourceRules", emit_null: false)]
+    @[::YAML::Field(key: "resourceRules", emit_null: false)]
     property resource_rules : Array(Api::Flowcontrol::V1beta1::ResourcePolicyRule) | Nil
 
     # subjects is the list of normal user, serviceaccount, or group that this rule cares about. There must be at least one member in this slice. A slice that includes both the system:authenticated and system:unauthenticated user groups matches every request. Required.
+    @[::JSON::Field(key: "subjects", emit_null: true)]
+    @[::YAML::Field(key: "subjects", emit_null: true)]
     property subjects : Array(Api::Flowcontrol::V1beta1::Subject)
 
     def initialize(*, @subjects : Array, @non_resource_rules : Array | Nil = nil, @resource_rules : Array | Nil = nil)

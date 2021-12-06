@@ -14,9 +14,13 @@ module K8S
     include ::YAML::Serializable
 
     # current contains the current value for the given metric
+    @[::JSON::Field(key: "current", emit_null: true)]
+    @[::YAML::Field(key: "current", emit_null: true)]
     property current : Api::Autoscaling::V2beta2::MetricValueStatus
 
     # metric identifies the target metric by name and selector
+    @[::JSON::Field(key: "metric", emit_null: true)]
+    @[::YAML::Field(key: "metric", emit_null: true)]
     property metric : Api::Autoscaling::V2beta2::MetricIdentifier
 
     def initialize(*, @current : Api::Autoscaling::V2beta2::MetricValueStatus, @metric : Api::Autoscaling::V2beta2::MetricIdentifier)

@@ -13,8 +13,8 @@ module K8S
     include ::YAML::Serializable
 
     # forZones indicates the zone(s) this endpoint should be consumed by to enable topology aware routing.
-    @[::JSON::Field(key: "forZones")]
-    @[::YAML::Field(key: "forZones")]
+    @[::JSON::Field(key: "forZones", emit_null: false)]
+    @[::YAML::Field(key: "forZones", emit_null: false)]
     property for_zones : Array(Api::Discovery::V1::ForZone) | Nil
 
     def initialize(*, @for_zones : Array | Nil = nil)

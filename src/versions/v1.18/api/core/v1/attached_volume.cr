@@ -14,11 +14,13 @@ module K8S
     include ::YAML::Serializable
 
     # DevicePath represents the device path where the volume should be available
-    @[::JSON::Field(key: "devicePath")]
-    @[::YAML::Field(key: "devicePath")]
+    @[::JSON::Field(key: "devicePath", emit_null: true)]
+    @[::YAML::Field(key: "devicePath", emit_null: true)]
     property device_path : String
 
     # Name of the attached volume
+    @[::JSON::Field(key: "name", emit_null: true)]
+    @[::YAML::Field(key: "name", emit_null: true)]
     property name : String
 
     def initialize(*, @device_path : String, @name : String)

@@ -99,15 +99,23 @@ module K8S
     include ::JSON::Serializable
     include ::YAML::Serializable
 
+    @[::JSON::Field(key: "apiVersion")]
+    @[::YAML::Field(key: "apiVersion")]
     getter api_version : String = "apiserverinternal/v1alpha1"
     getter kind : String = "StorageVersion"
     # The name is <group>.<resource>.
+    @[::JSON::Field(key: "metadata", emit_null: false)]
+    @[::YAML::Field(key: "metadata", emit_null: false)]
     property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil
 
     # Spec is an empty spec. It is here to comply with Kubernetes API style.
+    @[::JSON::Field(key: "spec", emit_null: true)]
+    @[::YAML::Field(key: "spec", emit_null: true)]
     property spec : Api::Apiserverinternal::V1alpha1::StorageVersionSpec
 
     # API server instances report the version they can decode and the version they encode objects to when persisting objects in the backend.
+    @[::JSON::Field(key: "status", emit_null: true)]
+    @[::YAML::Field(key: "status", emit_null: true)]
     property status : Api::Apiserverinternal::V1alpha1::StorageVersionStatus
 
     def initialize(*, @spec : Api::Apiserverinternal::V1alpha1::StorageVersionSpec, @status : Api::Apiserverinternal::V1alpha1::StorageVersionStatus, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil)

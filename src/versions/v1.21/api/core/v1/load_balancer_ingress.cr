@@ -15,12 +15,18 @@ module K8S
     include ::YAML::Serializable
 
     # Hostname is set for load-balancer ingress points that are DNS based (typically AWS load-balancers)
+    @[::JSON::Field(key: "hostname", emit_null: false)]
+    @[::YAML::Field(key: "hostname", emit_null: false)]
     property hostname : String | Nil
 
     # IP is set for load-balancer ingress points that are IP based (typically GCE or OpenStack load-balancers)
+    @[::JSON::Field(key: "ip", emit_null: false)]
+    @[::YAML::Field(key: "ip", emit_null: false)]
     property ip : String | Nil
 
     # Ports is a list of records of service ports If used, every port defined in the service should have an entry in it
+    @[::JSON::Field(key: "ports", emit_null: false)]
+    @[::YAML::Field(key: "ports", emit_null: false)]
     property ports : Array(Api::Core::V1::PortStatus) | Nil
 
     def initialize(*, @hostname : String | Nil = nil, @ip : String | Nil = nil, @ports : Array | Nil = nil)

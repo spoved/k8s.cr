@@ -96,15 +96,23 @@ module K8S
     include ::JSON::Serializable
     include ::YAML::Serializable
 
+    @[::JSON::Field(key: "apiVersion")]
+    @[::YAML::Field(key: "apiVersion")]
     getter api_version : String = "apiregistration/v1"
     getter kind : String = "APIService"
     # Standard object's metadata. More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)
+    @[::JSON::Field(key: "metadata", emit_null: false)]
+    @[::YAML::Field(key: "metadata", emit_null: false)]
     property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil
 
     # Spec contains information for locating and communicating with a server
+    @[::JSON::Field(key: "spec", emit_null: false)]
+    @[::YAML::Field(key: "spec", emit_null: false)]
     property spec : KubeAggregator::Apis::Apiregistration::V1::APIServiceSpec | Nil
 
     # Status contains derived information about an API server
+    @[::JSON::Field(key: "status", emit_null: false)]
+    @[::YAML::Field(key: "status", emit_null: false)]
     property status : KubeAggregator::Apis::Apiregistration::V1::APIServiceStatus | Nil
 
     def initialize(*, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil, @spec : KubeAggregator::Apis::Apiregistration::V1::APIServiceSpec | Nil = nil, @status : KubeAggregator::Apis::Apiregistration::V1::APIServiceStatus | Nil = nil)

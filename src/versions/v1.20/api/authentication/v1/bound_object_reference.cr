@@ -16,17 +16,23 @@ module K8S
     include ::YAML::Serializable
 
     # API version of the referent.
-    @[::JSON::Field(key: "apiVersion")]
-    @[::YAML::Field(key: "apiVersion")]
+    @[::JSON::Field(key: "apiVersion", emit_null: false)]
+    @[::YAML::Field(key: "apiVersion", emit_null: false)]
     property api_version : String | Nil
 
     # Kind of the referent. Valid kinds are 'Pod' and 'Secret'.
+    @[::JSON::Field(key: "kind", emit_null: false)]
+    @[::YAML::Field(key: "kind", emit_null: false)]
     property kind : String | Nil
 
     # Name of the referent.
+    @[::JSON::Field(key: "name", emit_null: false)]
+    @[::YAML::Field(key: "name", emit_null: false)]
     property name : String | Nil
 
     # UID of the referent.
+    @[::JSON::Field(key: "uid", emit_null: false)]
+    @[::YAML::Field(key: "uid", emit_null: false)]
     property uid : String | Nil
 
     def initialize(*, @api_version : String | Nil = nil, @kind : String | Nil = nil, @name : String | Nil = nil, @uid : String | Nil = nil)

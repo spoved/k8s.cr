@@ -14,9 +14,13 @@ module K8S
     include ::YAML::Serializable
 
     # The Level that all requests are recorded at. available options: None, Metadata, Request, RequestResponse required
+    @[::JSON::Field(key: "level", emit_null: true)]
+    @[::YAML::Field(key: "level", emit_null: true)]
     property level : String
 
     # Stages is a list of stages for which events are created.
+    @[::JSON::Field(key: "stages", emit_null: false)]
+    @[::YAML::Field(key: "stages", emit_null: false)]
     property stages : Array(String) | Nil
 
     def initialize(*, @level : String, @stages : Array | Nil = nil)

@@ -15,14 +15,18 @@ module K8S
     include ::YAML::Serializable
 
     # Number of occurrences in this series up to the last heartbeat time
+    @[::JSON::Field(key: "count", emit_null: true)]
+    @[::YAML::Field(key: "count", emit_null: true)]
     property count : Int32
 
     # Time when last Event from the series was seen before last heartbeat.
-    @[::JSON::Field(key: "lastObservedTime")]
-    @[::YAML::Field(key: "lastObservedTime")]
+    @[::JSON::Field(key: "lastObservedTime", emit_null: true)]
+    @[::YAML::Field(key: "lastObservedTime", emit_null: true)]
     property last_observed_time : Time
 
     # Information whether this series is ongoing or finished. Deprecated. Planned removal for 1.18
+    @[::JSON::Field(key: "state", emit_null: true)]
+    @[::YAML::Field(key: "state", emit_null: true)]
     property state : String
 
     def initialize(*, @count : Int32, @last_observed_time : Time, @state : String)

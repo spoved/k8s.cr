@@ -19,8 +19,12 @@ module K8S
     # 	  Currently the port of an Ingress is implicitly :80 for http and
     # 	  :443 for https.
     # Both these may change in the future. Incoming requests are matched against the host before the IngressRuleValue. If the host is unspecified, the Ingress routes all traffic based on the specified IngressRuleValue.
+    @[::JSON::Field(key: "host", emit_null: false)]
+    @[::YAML::Field(key: "host", emit_null: false)]
     property host : String | Nil
 
+    @[::JSON::Field(key: "http", emit_null: false)]
+    @[::YAML::Field(key: "http", emit_null: false)]
     property http : Api::Extensions::V1beta1::HTTPIngressRuleValue | Nil
 
     def initialize(*, @host : String | Nil = nil, @http : Api::Extensions::V1beta1::HTTPIngressRuleValue | Nil = nil)

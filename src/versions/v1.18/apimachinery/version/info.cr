@@ -20,32 +20,40 @@ module K8S
     include ::JSON::Serializable
     include ::YAML::Serializable
 
-    @[::JSON::Field(key: "buildDate")]
-    @[::YAML::Field(key: "buildDate")]
+    @[::JSON::Field(key: "buildDate", emit_null: true)]
+    @[::YAML::Field(key: "buildDate", emit_null: true)]
     property build_date : String
 
+    @[::JSON::Field(key: "compiler", emit_null: true)]
+    @[::YAML::Field(key: "compiler", emit_null: true)]
     property compiler : String
 
-    @[::JSON::Field(key: "gitCommit")]
-    @[::YAML::Field(key: "gitCommit")]
+    @[::JSON::Field(key: "gitCommit", emit_null: true)]
+    @[::YAML::Field(key: "gitCommit", emit_null: true)]
     property git_commit : String
 
-    @[::JSON::Field(key: "gitTreeState")]
-    @[::YAML::Field(key: "gitTreeState")]
+    @[::JSON::Field(key: "gitTreeState", emit_null: true)]
+    @[::YAML::Field(key: "gitTreeState", emit_null: true)]
     property git_tree_state : String
 
-    @[::JSON::Field(key: "gitVersion")]
-    @[::YAML::Field(key: "gitVersion")]
+    @[::JSON::Field(key: "gitVersion", emit_null: true)]
+    @[::YAML::Field(key: "gitVersion", emit_null: true)]
     property git_version : String
 
-    @[::JSON::Field(key: "goVersion")]
-    @[::YAML::Field(key: "goVersion")]
+    @[::JSON::Field(key: "goVersion", emit_null: true)]
+    @[::YAML::Field(key: "goVersion", emit_null: true)]
     property go_version : String
 
+    @[::JSON::Field(key: "major", emit_null: true)]
+    @[::YAML::Field(key: "major", emit_null: true)]
     property major : String
 
+    @[::JSON::Field(key: "minor", emit_null: true)]
+    @[::YAML::Field(key: "minor", emit_null: true)]
     property minor : String
 
+    @[::JSON::Field(key: "platform", emit_null: true)]
+    @[::YAML::Field(key: "platform", emit_null: true)]
     property platform : String
 
     def initialize(*, @build_date : String, @compiler : String, @git_commit : String, @git_tree_state : String, @git_version : String, @go_version : String, @major : String, @minor : String, @platform : String)

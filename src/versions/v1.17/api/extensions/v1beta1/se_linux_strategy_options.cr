@@ -14,11 +14,13 @@ module K8S
     include ::YAML::Serializable
 
     # rule is the strategy that will dictate the allowable labels that may be set.
+    @[::JSON::Field(key: "rule", emit_null: true)]
+    @[::YAML::Field(key: "rule", emit_null: true)]
     property rule : String
 
     # seLinuxOptions required to run as; required for MustRunAs More info: [https://kubernetes.io/docs/tasks/configure-pod-container/security-context/](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
-    @[::JSON::Field(key: "seLinuxOptions")]
-    @[::YAML::Field(key: "seLinuxOptions")]
+    @[::JSON::Field(key: "seLinuxOptions", emit_null: false)]
+    @[::YAML::Field(key: "seLinuxOptions", emit_null: false)]
     property se_linux_options : Api::Core::V1::SELinuxOptions | Nil
 
     def initialize(*, @rule : String, @se_linux_options : Api::Core::V1::SELinuxOptions | Nil = nil)

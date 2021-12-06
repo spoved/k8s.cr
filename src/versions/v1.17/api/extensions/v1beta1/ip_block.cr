@@ -14,9 +14,13 @@ module K8S
     include ::YAML::Serializable
 
     # CIDR is a string representing the IP Block Valid examples are ["192.168.1.1/24"]("192.168.1.1/24")
+    @[::JSON::Field(key: "cidr", emit_null: true)]
+    @[::YAML::Field(key: "cidr", emit_null: true)]
     property cidr : String
 
     # Except is a slice of CIDRs that should not be included within an IP Block Valid examples are ["192.168.1.1/24" Except values will be rejected if they are outside the CIDR range]("192.168.1.1/24" Except values will be rejected if they are outside the CIDR range)
+    @[::JSON::Field(key: "except", emit_null: false)]
+    @[::YAML::Field(key: "except", emit_null: false)]
     property except : Array(String) | Nil
 
     def initialize(*, @cidr : String, @except : Array | Nil = nil)

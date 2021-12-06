@@ -16,9 +16,13 @@ module K8S
     include ::YAML::Serializable
 
     # Name of the referent. More info: [https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names)
+    @[::JSON::Field(key: "name", emit_null: false)]
+    @[::YAML::Field(key: "name", emit_null: false)]
     property name : String | Nil
 
     # Specify whether the Secret must be defined
+    @[::JSON::Field(key: "optional", emit_null: false)]
+    @[::YAML::Field(key: "optional", emit_null: false)]
     property optional : Bool | Nil
 
     def initialize(*, @name : String | Nil = nil, @optional : Bool | Nil = nil)

@@ -13,6 +13,8 @@ module K8S
     include ::YAML::Serializable
 
     # driver is the name of the Flexvolume driver.
+    @[::JSON::Field(key: "driver", emit_null: true)]
+    @[::YAML::Field(key: "driver", emit_null: true)]
     property driver : String
 
     def initialize(*, @driver : String)

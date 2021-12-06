@@ -16,17 +16,23 @@ module K8S
     include ::YAML::Serializable
 
     # Required. The effect of the taint on pods that do not tolerate the taint. Valid effects are NoSchedule, PreferNoSchedule and NoExecute.
+    @[::JSON::Field(key: "effect", emit_null: true)]
+    @[::YAML::Field(key: "effect", emit_null: true)]
     property effect : String
 
     # Required. The taint key to be applied to a node.
+    @[::JSON::Field(key: "key", emit_null: true)]
+    @[::YAML::Field(key: "key", emit_null: true)]
     property key : String
 
     # TimeAdded represents the time at which the taint was added. It is only written for NoExecute taints.
-    @[::JSON::Field(key: "timeAdded")]
-    @[::YAML::Field(key: "timeAdded")]
+    @[::JSON::Field(key: "timeAdded", emit_null: false)]
+    @[::YAML::Field(key: "timeAdded", emit_null: false)]
     property time_added : Time | Nil
 
     # The taint value corresponding to the taint key.
+    @[::JSON::Field(key: "value", emit_null: false)]
+    @[::YAML::Field(key: "value", emit_null: false)]
     property value : String | Nil
 
     def initialize(*, @effect : String, @key : String, @time_added : Time | Nil = nil, @value : String | Nil = nil)

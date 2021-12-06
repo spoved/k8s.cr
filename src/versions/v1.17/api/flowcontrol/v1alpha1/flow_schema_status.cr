@@ -13,6 +13,8 @@ module K8S
     include ::YAML::Serializable
 
     # `conditions` is a list of the current states of FlowSchema.
+    @[::JSON::Field(key: "conditions", emit_null: false)]
+    @[::YAML::Field(key: "conditions", emit_null: false)]
     property conditions : Array(Api::Flowcontrol::V1alpha1::FlowSchemaCondition) | Nil
 
     def initialize(*, @conditions : Array | Nil = nil)

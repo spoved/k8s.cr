@@ -14,11 +14,13 @@ module K8S
     include ::YAML::Serializable
 
     # NonResourceURLs is a set of partial urls that a user should have access to.  *s are allowed, but only as the full, final step in the path.  "*" means all.
-    @[::JSON::Field(key: "nonResourceURLs")]
-    @[::YAML::Field(key: "nonResourceURLs")]
+    @[::JSON::Field(key: "nonResourceURLs", emit_null: false)]
+    @[::YAML::Field(key: "nonResourceURLs", emit_null: false)]
     property non_resource_urls : Array(String) | Nil
 
     # Verb is a list of kubernetes non-resource API verbs, like: get, post, put, delete, patch, head, options.  "*" means all.
+    @[::JSON::Field(key: "verbs", emit_null: true)]
+    @[::YAML::Field(key: "verbs", emit_null: true)]
     property verbs : Array(String)
 
     def initialize(*, @verbs : Array, @non_resource_urls : Array | Nil = nil)

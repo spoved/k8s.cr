@@ -84,22 +84,28 @@ module K8S
     include ::JSON::Serializable
     include ::YAML::Serializable
 
+    @[::JSON::Field(key: "apiVersion")]
+    @[::YAML::Field(key: "apiVersion")]
     getter api_version : String = "v1"
     getter kind : String = "ServiceAccount"
     # AutomountServiceAccountToken indicates whether pods running as this service account should have an API token automatically mounted. Can be overridden at the pod level.
-    @[::JSON::Field(key: "automountServiceAccountToken")]
-    @[::YAML::Field(key: "automountServiceAccountToken")]
+    @[::JSON::Field(key: "automountServiceAccountToken", emit_null: false)]
+    @[::YAML::Field(key: "automountServiceAccountToken", emit_null: false)]
     property automount_service_account_token : Bool | Nil
 
     # ImagePullSecrets is a list of references to secrets in the same namespace to use for pulling any images in pods that reference this ServiceAccount. ImagePullSecrets are distinct from Secrets because Secrets can be mounted in the pod, but ImagePullSecrets are only accessed by the kubelet. More info: [https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod](https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod)
-    @[::JSON::Field(key: "imagePullSecrets")]
-    @[::YAML::Field(key: "imagePullSecrets")]
+    @[::JSON::Field(key: "imagePullSecrets", emit_null: false)]
+    @[::YAML::Field(key: "imagePullSecrets", emit_null: false)]
     property image_pull_secrets : Array(Api::Core::V1::LocalObjectReference) | Nil
 
     # Standard object's metadata. More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)
+    @[::JSON::Field(key: "metadata", emit_null: false)]
+    @[::YAML::Field(key: "metadata", emit_null: false)]
     property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil
 
     # Secrets is the list of secrets allowed to be used by pods running using this ServiceAccount. More info: [https://kubernetes.io/docs/concepts/configuration/secret](https://kubernetes.io/docs/concepts/configuration/secret)
+    @[::JSON::Field(key: "secrets", emit_null: false)]
+    @[::YAML::Field(key: "secrets", emit_null: false)]
     property secrets : Array(Api::Core::V1::ObjectReference) | Nil
 
     def initialize(*, @automount_service_account_token : Bool | Nil = nil, @image_pull_secrets : Array | Nil = nil, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil, @secrets : Array | Nil = nil)

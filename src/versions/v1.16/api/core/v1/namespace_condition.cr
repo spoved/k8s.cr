@@ -16,18 +16,26 @@ module K8S
     include ::JSON::Serializable
     include ::YAML::Serializable
 
-    @[::JSON::Field(key: "lastTransitionTime")]
-    @[::YAML::Field(key: "lastTransitionTime")]
+    @[::JSON::Field(key: "lastTransitionTime", emit_null: false)]
+    @[::YAML::Field(key: "lastTransitionTime", emit_null: false)]
     property last_transition_time : Time | Nil
 
+    @[::JSON::Field(key: "message", emit_null: false)]
+    @[::YAML::Field(key: "message", emit_null: false)]
     property message : String | Nil
 
+    @[::JSON::Field(key: "reason", emit_null: false)]
+    @[::YAML::Field(key: "reason", emit_null: false)]
     property reason : String | Nil
 
     # Status of the condition, one of True, False, Unknown.
+    @[::JSON::Field(key: "status", emit_null: true)]
+    @[::YAML::Field(key: "status", emit_null: true)]
     property status : String
 
     # Type of namespace controller condition.
+    @[::JSON::Field(key: "type", emit_null: true)]
+    @[::YAML::Field(key: "type", emit_null: true)]
     property type : String
 
     def initialize(*, @status : String, @type : String, @last_transition_time : Time | Nil = nil, @message : String | Nil = nil, @reason : String | Nil = nil)

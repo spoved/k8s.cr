@@ -14,9 +14,13 @@ module K8S
     include ::YAML::Serializable
 
     # Name is the name of the port on the Service. This is a mutually exclusive setting with "Number".
+    @[::JSON::Field(key: "name", emit_null: false)]
+    @[::YAML::Field(key: "name", emit_null: false)]
     property name : String | Nil
 
     # Number is the numerical port number (e.g. 80) on the Service. This is a mutually exclusive setting with "Name".
+    @[::JSON::Field(key: "number", emit_null: false)]
+    @[::YAML::Field(key: "number", emit_null: false)]
     property number : Int32 | Nil
 
     def initialize(*, @name : String | Nil = nil, @number : Int32 | Nil = nil)

@@ -14,9 +14,13 @@ module K8S
     include ::YAML::Serializable
 
     # Added capabilities
+    @[::JSON::Field(key: "add", emit_null: false)]
+    @[::YAML::Field(key: "add", emit_null: false)]
     property add : Array(String) | Nil
 
     # Removed capabilities
+    @[::JSON::Field(key: "drop", emit_null: false)]
+    @[::YAML::Field(key: "drop", emit_null: false)]
     property drop : Array(String) | Nil
 
     def initialize(*, @add : Array | Nil = nil, @drop : Array | Nil = nil)

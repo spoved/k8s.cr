@@ -14,9 +14,13 @@ module K8S
     include ::YAML::Serializable
 
     # String detailing the error encountered during Attach or Detach operation. This string may be logged, so it should not contain sensitive information.
+    @[::JSON::Field(key: "message", emit_null: false)]
+    @[::YAML::Field(key: "message", emit_null: false)]
     property message : String | Nil
 
     # Time the error was encountered.
+    @[::JSON::Field(key: "time", emit_null: false)]
+    @[::YAML::Field(key: "time", emit_null: false)]
     property time : Time | Nil
 
     def initialize(*, @message : String | Nil = nil, @time : Time | Nil = nil)

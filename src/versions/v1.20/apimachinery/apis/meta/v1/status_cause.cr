@@ -19,12 +19,18 @@ module K8S
     # Examples:
     #   "name" - the field "name" on the current resource
     #   "items[0].name" - the field "name" on the first array entry in "items"
+    @[::JSON::Field(key: "field", emit_null: false)]
+    @[::YAML::Field(key: "field", emit_null: false)]
     property field : String | Nil
 
     # A human-readable description of the cause of the error.  This field may be presented as-is to a reader.
+    @[::JSON::Field(key: "message", emit_null: false)]
+    @[::YAML::Field(key: "message", emit_null: false)]
     property message : String | Nil
 
     # A machine-readable description of the cause of the error. If this value is empty there is no information available.
+    @[::JSON::Field(key: "reason", emit_null: false)]
+    @[::YAML::Field(key: "reason", emit_null: false)]
     property reason : String | Nil
 
     def initialize(*, @field : String | Nil = nil, @message : String | Nil = nil, @reason : String | Nil = nil)

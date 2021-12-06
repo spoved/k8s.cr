@@ -15,12 +15,18 @@ module K8S
     include ::YAML::Serializable
 
     # The name of this port.  This must match the 'name' field in the corresponding ServicePort. Must be a DNS_LABEL. Optional only if one port is defined.
+    @[::JSON::Field(key: "name", emit_null: false)]
+    @[::YAML::Field(key: "name", emit_null: false)]
     property name : String | Nil
 
     # The port number of the endpoint.
+    @[::JSON::Field(key: "port", emit_null: true)]
+    @[::YAML::Field(key: "port", emit_null: true)]
     property port : Int32
 
     # The IP protocol for this port. Must be UDP, TCP, or SCTP. Default is TCP.
+    @[::JSON::Field(key: "protocol", emit_null: false)]
+    @[::YAML::Field(key: "protocol", emit_null: false)]
     property protocol : String | Nil
 
     def initialize(*, @port : Int32, @name : String | Nil = nil, @protocol : String | Nil = nil)

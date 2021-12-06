@@ -14,9 +14,13 @@ module K8S
     include ::YAML::Serializable
 
     # Name is unique within a namespace to reference a secret resource.
+    @[::JSON::Field(key: "name", emit_null: false)]
+    @[::YAML::Field(key: "name", emit_null: false)]
     property name : String | Nil
 
     # Namespace defines the space within which the secret name must be unique.
+    @[::JSON::Field(key: "namespace", emit_null: false)]
+    @[::YAML::Field(key: "namespace", emit_null: false)]
     property namespace : String | Nil
 
     def initialize(*, @name : String | Nil = nil, @namespace : String | Nil = nil)

@@ -14,11 +14,13 @@ module K8S
     include ::YAML::Serializable
 
     # RollingUpdate is used to communicate parameters when Type is RollingUpdateStatefulSetStrategyType.
-    @[::JSON::Field(key: "rollingUpdate")]
-    @[::YAML::Field(key: "rollingUpdate")]
+    @[::JSON::Field(key: "rollingUpdate", emit_null: false)]
+    @[::YAML::Field(key: "rollingUpdate", emit_null: false)]
     property rolling_update : Api::Apps::V1::RollingUpdateStatefulSetStrategy | Nil
 
     # Type indicates the type of the StatefulSetUpdateStrategy. Default is RollingUpdate.
+    @[::JSON::Field(key: "type", emit_null: false)]
+    @[::YAML::Field(key: "type", emit_null: false)]
     property type : String | Nil
 
     def initialize(*, @rolling_update : Api::Apps::V1::RollingUpdateStatefulSetStrategy | Nil = nil, @type : String | Nil = nil)

@@ -84,20 +84,28 @@ module K8S
     include ::JSON::Serializable
     include ::YAML::Serializable
 
+    @[::JSON::Field(key: "apiVersion")]
+    @[::YAML::Field(key: "apiVersion")]
     getter api_version : String = "discovery/v1beta1"
     getter kind : String = "EndpointSlice"
     # addressType specifies the type of address carried by this EndpointSlice. All addresses in this slice must be the same type. This field is immutable after creation. The following address types are currently supported: * IPv4: Represents an IPv4 Address. * IPv6: Represents an IPv6 Address. * FQDN: Represents a Fully Qualified Domain Name.
-    @[::JSON::Field(key: "addressType")]
-    @[::YAML::Field(key: "addressType")]
+    @[::JSON::Field(key: "addressType", emit_null: true)]
+    @[::YAML::Field(key: "addressType", emit_null: true)]
     property address_type : String
 
     # endpoints is a list of unique endpoints in this slice. Each slice may include a maximum of 1000 endpoints.
+    @[::JSON::Field(key: "endpoints", emit_null: false)]
+    @[::YAML::Field(key: "endpoints", emit_null: false)]
     property endpoints : Array(Api::Discovery::V1beta1::Endpoint) | Nil
 
     # Standard object's metadata.
+    @[::JSON::Field(key: "metadata", emit_null: false)]
+    @[::YAML::Field(key: "metadata", emit_null: false)]
     property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil
 
     # ports specifies the list of network ports exposed by each endpoint in this slice. Each port must have a unique name. When ports is empty, it indicates that there are no defined ports. When a port is defined with a nil port value, it indicates "all ports". Each slice may include a maximum of 100 ports.
+    @[::JSON::Field(key: "ports", emit_null: false)]
+    @[::YAML::Field(key: "ports", emit_null: false)]
     property ports : Array(Api::Discovery::V1beta1::EndpointPort) | Nil
 
     def initialize(*, @address_type : String, @endpoints : Array | Nil = nil, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil, @ports : Array | Nil = nil)

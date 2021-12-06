@@ -16,19 +16,23 @@ module K8S
     include ::YAML::Serializable
 
     # averageUtilization is the target value of the average of the resource metric across all relevant pods, represented as a percentage of the requested value of the resource for the pods. Currently only valid for Resource metric source type
-    @[::JSON::Field(key: "averageUtilization")]
-    @[::YAML::Field(key: "averageUtilization")]
+    @[::JSON::Field(key: "averageUtilization", emit_null: false)]
+    @[::YAML::Field(key: "averageUtilization", emit_null: false)]
     property average_utilization : Int32 | Nil
 
     # averageValue is the target value of the average of the metric across all relevant pods (as a quantity)
-    @[::JSON::Field(key: "averageValue")]
-    @[::YAML::Field(key: "averageValue")]
+    @[::JSON::Field(key: "averageValue", emit_null: false)]
+    @[::YAML::Field(key: "averageValue", emit_null: false)]
     property average_value : Int32 | String | Nil
 
     # type represents whether the metric type is Utilization, Value, or AverageValue
+    @[::JSON::Field(key: "type", emit_null: true)]
+    @[::YAML::Field(key: "type", emit_null: true)]
     property type : String
 
     # value is the target value of the metric (as a quantity).
+    @[::JSON::Field(key: "value", emit_null: false)]
+    @[::YAML::Field(key: "value", emit_null: false)]
     property value : Int32 | String | Nil
 
     def initialize(*, @type : String, @average_utilization : Int32 | Nil = nil, @average_value : Int32 | String | Nil = nil, @value : Int32 | String | Nil = nil)

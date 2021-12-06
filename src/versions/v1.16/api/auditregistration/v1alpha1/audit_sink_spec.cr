@@ -14,9 +14,13 @@ module K8S
     include ::YAML::Serializable
 
     # Policy defines the policy for selecting which events should be sent to the webhook required
+    @[::JSON::Field(key: "policy", emit_null: true)]
+    @[::YAML::Field(key: "policy", emit_null: true)]
     property policy : Api::Auditregistration::V1alpha1::Policy
 
     # Webhook to send events required
+    @[::JSON::Field(key: "webhook", emit_null: true)]
+    @[::YAML::Field(key: "webhook", emit_null: true)]
     property webhook : Api::Auditregistration::V1alpha1::Webhook
 
     def initialize(*, @policy : Api::Auditregistration::V1alpha1::Policy, @webhook : Api::Auditregistration::V1alpha1::Webhook)

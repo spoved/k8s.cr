@@ -13,8 +13,8 @@ module K8S
     include ::YAML::Serializable
 
     # ConfigMap is a reference to a Node's ConfigMap
-    @[::JSON::Field(key: "configMap")]
-    @[::YAML::Field(key: "configMap")]
+    @[::JSON::Field(key: "configMap", emit_null: false)]
+    @[::YAML::Field(key: "configMap", emit_null: false)]
     property config_map : Api::Core::V1::ConfigMapNodeConfigSource | Nil
 
     def initialize(*, @config_map : Api::Core::V1::ConfigMapNodeConfigSource | Nil = nil)

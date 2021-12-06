@@ -13,6 +13,8 @@ module K8S
     include ::YAML::Serializable
 
     # `name` is the name of the priority level configuration being referenced Required.
+    @[::JSON::Field(key: "name", emit_null: true)]
+    @[::YAML::Field(key: "name", emit_null: true)]
     property name : String
 
     def initialize(*, @name : String)

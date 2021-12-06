@@ -14,11 +14,13 @@ module K8S
     include ::YAML::Serializable
 
     # ClientConfig holds the connection parameters for the webhook required
-    @[::JSON::Field(key: "clientConfig")]
-    @[::YAML::Field(key: "clientConfig")]
+    @[::JSON::Field(key: "clientConfig", emit_null: true)]
+    @[::YAML::Field(key: "clientConfig", emit_null: true)]
     property client_config : Api::Auditregistration::V1alpha1::WebhookClientConfig
 
     # Throttle holds the options for throttling the webhook
+    @[::JSON::Field(key: "throttle", emit_null: false)]
+    @[::YAML::Field(key: "throttle", emit_null: false)]
     property throttle : Api::Auditregistration::V1alpha1::WebhookThrottleConfig | Nil
 
     def initialize(*, @client_config : Api::Auditregistration::V1alpha1::WebhookClientConfig, @throttle : Api::Auditregistration::V1alpha1::WebhookThrottleConfig | Nil = nil)

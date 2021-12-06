@@ -14,9 +14,13 @@ module K8S
     include ::YAML::Serializable
 
     # ranges are the allowed ranges of gids that may be used. If you would like to force a single gid then supply a single range with the same start and end. Required for MustRunAs.
+    @[::JSON::Field(key: "ranges", emit_null: false)]
+    @[::YAML::Field(key: "ranges", emit_null: false)]
     property ranges : Array(Api::Policy::V1beta1::IDRange) | Nil
 
     # rule is the strategy that will dictate the allowable RunAsGroup values that may be set.
+    @[::JSON::Field(key: "rule", emit_null: true)]
+    @[::YAML::Field(key: "rule", emit_null: true)]
     property rule : String
 
     def initialize(*, @rule : String, @ranges : Array | Nil = nil)

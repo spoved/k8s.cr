@@ -13,6 +13,8 @@ module K8S
     include ::YAML::Serializable
 
     # The revision to rollback to. If set to 0, rollback to the last revision.
+    @[::JSON::Field(key: "revision", emit_null: false)]
+    @[::YAML::Field(key: "revision", emit_null: false)]
     property revision : Int32 | Nil
 
     def initialize(*, @revision : Int32 | Nil = nil)

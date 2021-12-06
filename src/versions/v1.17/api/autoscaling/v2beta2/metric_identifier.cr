@@ -14,9 +14,13 @@ module K8S
     include ::YAML::Serializable
 
     # name is the name of the given metric
+    @[::JSON::Field(key: "name", emit_null: true)]
+    @[::YAML::Field(key: "name", emit_null: true)]
     property name : String
 
     # selector is the string-encoded form of a standard kubernetes label selector for the given metric When set, it is passed as an additional parameter to the metrics server for more specific metrics scoping. When unset, just the metricName will be used to gather metrics.
+    @[::JSON::Field(key: "selector", emit_null: false)]
+    @[::YAML::Field(key: "selector", emit_null: false)]
     property selector : Apimachinery::Apis::Meta::V1::LabelSelector | Nil
 
     def initialize(*, @name : String, @selector : Apimachinery::Apis::Meta::V1::LabelSelector | Nil = nil)

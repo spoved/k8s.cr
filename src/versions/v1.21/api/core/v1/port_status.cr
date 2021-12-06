@@ -17,12 +17,18 @@ module K8S
     #   CamelCase names
     # - cloud provider specific error values must have names that comply with the
     #   format [foo.example.com/CamelCase.](foo.example.com/CamelCase.)
+    @[::JSON::Field(key: "error", emit_null: false)]
+    @[::YAML::Field(key: "error", emit_null: false)]
     property error : String | Nil
 
     # Port is the port number of the service port of which status is recorded here
+    @[::JSON::Field(key: "port", emit_null: true)]
+    @[::YAML::Field(key: "port", emit_null: true)]
     property port : Int32
 
     # Protocol is the protocol of the service port of which status is recorded here The supported values are: "TCP", "UDP", "SCTP"
+    @[::JSON::Field(key: "protocol", emit_null: true)]
+    @[::YAML::Field(key: "protocol", emit_null: true)]
     property protocol : String
 
     def initialize(*, @port : Int32, @protocol : String, @error : String | Nil = nil)

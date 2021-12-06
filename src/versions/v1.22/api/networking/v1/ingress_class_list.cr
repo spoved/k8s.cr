@@ -53,13 +53,10 @@ module K8S
     include ::JSON::Serializable
     include ::YAML::Serializable
 
+    @[::JSON::Field(key: "apiVersion")]
+    @[::YAML::Field(key: "apiVersion")]
     getter api_version : String = "networking/v1"
     getter kind : String = "List"
-    # Items is the list of IngressClasses.
-    property items : Array(Api::Networking::V1::IngressClass)
-
-    # Standard list metadata.
-    property metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil
 
     def initialize(*, @items : Array, @metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil = nil)
     end

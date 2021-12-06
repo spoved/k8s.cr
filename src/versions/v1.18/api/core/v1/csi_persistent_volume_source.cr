@@ -21,46 +21,48 @@ module K8S
     include ::YAML::Serializable
 
     # ControllerExpandSecretRef is a reference to the secret object containing sensitive information to pass to the CSI driver to complete the CSI ControllerExpandVolume call. This is an alpha field and requires enabling ExpandCSIVolumes feature gate. This field is optional, and may be empty if no secret is required. If the secret object contains more than one secret, all secrets are passed.
-    @[::JSON::Field(key: "controllerExpandSecretRef")]
-    @[::YAML::Field(key: "controllerExpandSecretRef")]
+    @[::JSON::Field(key: "controllerExpandSecretRef", emit_null: false)]
+    @[::YAML::Field(key: "controllerExpandSecretRef", emit_null: false)]
     property controller_expand_secret_ref : Api::Core::V1::SecretReference | Nil
 
     # ControllerPublishSecretRef is a reference to the secret object containing sensitive information to pass to the CSI driver to complete the CSI ControllerPublishVolume and ControllerUnpublishVolume calls. This field is optional, and may be empty if no secret is required. If the secret object contains more than one secret, all secrets are passed.
-    @[::JSON::Field(key: "controllerPublishSecretRef")]
-    @[::YAML::Field(key: "controllerPublishSecretRef")]
+    @[::JSON::Field(key: "controllerPublishSecretRef", emit_null: false)]
+    @[::YAML::Field(key: "controllerPublishSecretRef", emit_null: false)]
     property controller_publish_secret_ref : Api::Core::V1::SecretReference | Nil
 
     # Driver is the name of the driver to use for this volume. Required.
+    @[::JSON::Field(key: "driver", emit_null: true)]
+    @[::YAML::Field(key: "driver", emit_null: true)]
     property driver : String
 
     # Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs".
-    @[::JSON::Field(key: "fsType")]
-    @[::YAML::Field(key: "fsType")]
+    @[::JSON::Field(key: "fsType", emit_null: false)]
+    @[::YAML::Field(key: "fsType", emit_null: false)]
     property fs_type : String | Nil
 
     # NodePublishSecretRef is a reference to the secret object containing sensitive information to pass to the CSI driver to complete the CSI NodePublishVolume and NodeUnpublishVolume calls. This field is optional, and may be empty if no secret is required. If the secret object contains more than one secret, all secrets are passed.
-    @[::JSON::Field(key: "nodePublishSecretRef")]
-    @[::YAML::Field(key: "nodePublishSecretRef")]
+    @[::JSON::Field(key: "nodePublishSecretRef", emit_null: false)]
+    @[::YAML::Field(key: "nodePublishSecretRef", emit_null: false)]
     property node_publish_secret_ref : Api::Core::V1::SecretReference | Nil
 
     # NodeStageSecretRef is a reference to the secret object containing sensitive information to pass to the CSI driver to complete the CSI NodeStageVolume and NodeStageVolume and NodeUnstageVolume calls. This field is optional, and may be empty if no secret is required. If the secret object contains more than one secret, all secrets are passed.
-    @[::JSON::Field(key: "nodeStageSecretRef")]
-    @[::YAML::Field(key: "nodeStageSecretRef")]
+    @[::JSON::Field(key: "nodeStageSecretRef", emit_null: false)]
+    @[::YAML::Field(key: "nodeStageSecretRef", emit_null: false)]
     property node_stage_secret_ref : Api::Core::V1::SecretReference | Nil
 
     # Optional: The value to pass to ControllerPublishVolumeRequest. Defaults to false [(read/write).]((read/write).)
-    @[::JSON::Field(key: "readOnly")]
-    @[::YAML::Field(key: "readOnly")]
+    @[::JSON::Field(key: "readOnly", emit_null: false)]
+    @[::YAML::Field(key: "readOnly", emit_null: false)]
     property read_only : Bool | Nil
 
     # Attributes of the volume to publish.
-    @[::JSON::Field(key: "volumeAttributes")]
-    @[::YAML::Field(key: "volumeAttributes")]
+    @[::JSON::Field(key: "volumeAttributes", emit_null: false)]
+    @[::YAML::Field(key: "volumeAttributes", emit_null: false)]
     property volume_attributes : Hash(String, String) | Nil
 
     # VolumeHandle is the unique volume name returned by the CSI volume plugin’s CreateVolume to refer to the volume on all subsequent calls. Required.
-    @[::JSON::Field(key: "volumeHandle")]
-    @[::YAML::Field(key: "volumeHandle")]
+    @[::JSON::Field(key: "volumeHandle", emit_null: true)]
+    @[::YAML::Field(key: "volumeHandle", emit_null: true)]
     property volume_handle : String
 
     def initialize(*, @driver : String, @volume_handle : String, @controller_expand_secret_ref : Api::Core::V1::SecretReference | Nil = nil, @controller_publish_secret_ref : Api::Core::V1::SecretReference | Nil = nil, @fs_type : String | Nil = nil, @node_publish_secret_ref : Api::Core::V1::SecretReference | Nil = nil, @node_stage_secret_ref : Api::Core::V1::SecretReference | Nil = nil, @read_only : Bool | Nil = nil, @volume_attributes : Hash(String, String) | Nil = nil)

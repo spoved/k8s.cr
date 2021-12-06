@@ -13,8 +13,8 @@ module K8S
     include ::YAML::Serializable
 
     # Time at which the container was last (re-)started
-    @[::JSON::Field(key: "startedAt")]
-    @[::YAML::Field(key: "startedAt")]
+    @[::JSON::Field(key: "startedAt", emit_null: false)]
+    @[::YAML::Field(key: "startedAt", emit_null: false)]
     property started_at : Time | Nil
 
     def initialize(*, @started_at : Time | Nil = nil)

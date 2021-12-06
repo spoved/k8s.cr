@@ -14,13 +14,13 @@ module K8S
     include ::YAML::Serializable
 
     # NonResourceAttributes describes information for a non-resource access request
-    @[::JSON::Field(key: "nonResourceAttributes")]
-    @[::YAML::Field(key: "nonResourceAttributes")]
+    @[::JSON::Field(key: "nonResourceAttributes", emit_null: false)]
+    @[::YAML::Field(key: "nonResourceAttributes", emit_null: false)]
     property non_resource_attributes : Api::Authorization::V1::NonResourceAttributes | Nil
 
     # ResourceAuthorizationAttributes describes information for a resource access request
-    @[::JSON::Field(key: "resourceAttributes")]
-    @[::YAML::Field(key: "resourceAttributes")]
+    @[::JSON::Field(key: "resourceAttributes", emit_null: false)]
+    @[::YAML::Field(key: "resourceAttributes", emit_null: false)]
     property resource_attributes : Api::Authorization::V1::ResourceAttributes | Nil
 
     def initialize(*, @non_resource_attributes : Api::Authorization::V1::NonResourceAttributes | Nil = nil, @resource_attributes : Api::Authorization::V1::ResourceAttributes | Nil = nil)

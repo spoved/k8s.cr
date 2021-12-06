@@ -15,14 +15,18 @@ module K8S
     include ::YAML::Serializable
 
     # APIGroup is the group for the resource being referenced
-    @[::JSON::Field(key: "apiGroup")]
-    @[::YAML::Field(key: "apiGroup")]
+    @[::JSON::Field(key: "apiGroup", emit_null: true)]
+    @[::YAML::Field(key: "apiGroup", emit_null: true)]
     property api_group : String
 
     # Kind is the type of resource being referenced
+    @[::JSON::Field(key: "kind", emit_null: true)]
+    @[::YAML::Field(key: "kind", emit_null: true)]
     property kind : String
 
     # Name is the name of resource being referenced
+    @[::JSON::Field(key: "name", emit_null: true)]
+    @[::YAML::Field(key: "name", emit_null: true)]
     property name : String
 
     def initialize(*, @api_group : String, @kind : String, @name : String)

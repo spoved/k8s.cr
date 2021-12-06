@@ -68,13 +68,10 @@ module K8S
     include ::JSON::Serializable
     include ::YAML::Serializable
 
+    @[::JSON::Field(key: "apiVersion")]
+    @[::YAML::Field(key: "apiVersion")]
     getter api_version : String = "rbac.authorization.k8s.io/v1beta1"
     getter kind : String = "List"
-    # Items is a list of Roles
-    property items : Array(Api::Rbac::V1beta1::Role)
-
-    # Standard object's metadata.
-    property metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil
 
     def initialize(*, @items : Array, @metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil = nil)
     end

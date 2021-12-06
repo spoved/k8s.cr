@@ -14,9 +14,13 @@ module K8S
     include ::YAML::Serializable
 
     # A node selector term, associated with the corresponding weight.
+    @[::JSON::Field(key: "preference", emit_null: true)]
+    @[::YAML::Field(key: "preference", emit_null: true)]
     property preference : Api::Core::V1::NodeSelectorTerm
 
     # Weight associated with matching the corresponding nodeSelectorTerm, in the range 1-100.
+    @[::JSON::Field(key: "weight", emit_null: true)]
+    @[::YAML::Field(key: "weight", emit_null: true)]
     property weight : Int32
 
     def initialize(*, @preference : Api::Core::V1::NodeSelectorTerm, @weight : Int32)

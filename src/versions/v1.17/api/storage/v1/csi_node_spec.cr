@@ -13,6 +13,8 @@ module K8S
     include ::YAML::Serializable
 
     # drivers is a list of information of all CSI Drivers existing on a node. If all drivers in the list are uninstalled, this can become empty.
+    @[::JSON::Field(key: "drivers", emit_null: false)]
+    @[::YAML::Field(key: "drivers", emit_null: false)]
     property drivers : Array(Api::Storage::V1::CSINodeDriver) | Nil
 
     def initialize(*, @drivers : Array | Nil = nil)

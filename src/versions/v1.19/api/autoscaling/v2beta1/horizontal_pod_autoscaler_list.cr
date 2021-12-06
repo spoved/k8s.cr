@@ -69,13 +69,10 @@ module K8S
     include ::JSON::Serializable
     include ::YAML::Serializable
 
+    @[::JSON::Field(key: "apiVersion")]
+    @[::YAML::Field(key: "apiVersion")]
     getter api_version : String = "autoscaling/v2beta1"
     getter kind : String = "List"
-    # items is the list of horizontal pod autoscaler objects.
-    property items : Array(Api::Autoscaling::V2beta1::HorizontalPodAutoscaler)
-
-    # metadata is the standard list metadata.
-    property metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil
 
     def initialize(*, @items : Array, @metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil = nil)
     end

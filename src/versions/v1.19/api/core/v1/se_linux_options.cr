@@ -16,15 +16,23 @@ module K8S
     include ::YAML::Serializable
 
     # Level is SELinux level label that applies to the container.
+    @[::JSON::Field(key: "level", emit_null: false)]
+    @[::YAML::Field(key: "level", emit_null: false)]
     property level : String | Nil
 
     # Role is a SELinux role label that applies to the container.
+    @[::JSON::Field(key: "role", emit_null: false)]
+    @[::YAML::Field(key: "role", emit_null: false)]
     property role : String | Nil
 
     # Type is a SELinux type label that applies to the container.
+    @[::JSON::Field(key: "type", emit_null: false)]
+    @[::YAML::Field(key: "type", emit_null: false)]
     property type : String | Nil
 
     # User is a SELinux user label that applies to the container.
+    @[::JSON::Field(key: "user", emit_null: false)]
+    @[::YAML::Field(key: "user", emit_null: false)]
     property user : String | Nil
 
     def initialize(*, @level : String | Nil = nil, @role : String | Nil = nil, @type : String | Nil = nil, @user : String | Nil = nil)

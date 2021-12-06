@@ -21,38 +21,48 @@ module K8S
     include ::YAML::Serializable
 
     # Container's ID in the format 'docker://<container_id>'.
-    @[::JSON::Field(key: "containerID")]
-    @[::YAML::Field(key: "containerID")]
+    @[::JSON::Field(key: "containerID", emit_null: false)]
+    @[::YAML::Field(key: "containerID", emit_null: false)]
     property container_id : String | Nil
 
     # The image the container is running. More info: [https://kubernetes.io/docs/concepts/containers/images](https://kubernetes.io/docs/concepts/containers/images)
+    @[::JSON::Field(key: "image", emit_null: true)]
+    @[::YAML::Field(key: "image", emit_null: true)]
     property image : String
 
     # ImageID of the container's image.
-    @[::JSON::Field(key: "imageID")]
-    @[::YAML::Field(key: "imageID")]
+    @[::JSON::Field(key: "imageID", emit_null: true)]
+    @[::YAML::Field(key: "imageID", emit_null: true)]
     property image_id : String
 
     # Details about the container's last termination condition.
-    @[::JSON::Field(key: "lastState")]
-    @[::YAML::Field(key: "lastState")]
+    @[::JSON::Field(key: "lastState", emit_null: false)]
+    @[::YAML::Field(key: "lastState", emit_null: false)]
     property last_state : Api::Core::V1::ContainerState | Nil
 
     # This must be a DNS_LABEL. Each container in a pod must have a unique name. Cannot be updated.
+    @[::JSON::Field(key: "name", emit_null: true)]
+    @[::YAML::Field(key: "name", emit_null: true)]
     property name : String
 
     # Specifies whether the container has passed its readiness probe.
+    @[::JSON::Field(key: "ready", emit_null: true)]
+    @[::YAML::Field(key: "ready", emit_null: true)]
     property ready : Bool
 
     # The number of times the container has been restarted, currently based on the number of dead containers that have not yet been removed. Note that this is calculated from dead containers. But those containers are subject to garbage collection. This value will get capped at 5 by GC.
-    @[::JSON::Field(key: "restartCount")]
-    @[::YAML::Field(key: "restartCount")]
+    @[::JSON::Field(key: "restartCount", emit_null: true)]
+    @[::YAML::Field(key: "restartCount", emit_null: true)]
     property restart_count : Int32
 
     # Specifies whether the container has passed its startup probe. Initialized as false, becomes true after startupProbe is considered successful. Resets to false when the container is restarted, or if kubelet loses state temporarily. Is always true when no startupProbe is defined.
+    @[::JSON::Field(key: "started", emit_null: false)]
+    @[::YAML::Field(key: "started", emit_null: false)]
     property started : Bool | Nil
 
     # Details about the container's current condition.
+    @[::JSON::Field(key: "state", emit_null: false)]
+    @[::YAML::Field(key: "state", emit_null: false)]
     property state : Api::Core::V1::ContainerState | Nil
 
     def initialize(*, @image : String, @image_id : String, @name : String, @ready : Bool, @restart_count : Int32, @container_id : String | Nil = nil, @last_state : Api::Core::V1::ContainerState | Nil = nil, @started : Bool | Nil = nil, @state : Api::Core::V1::ContainerState | Nil = nil)

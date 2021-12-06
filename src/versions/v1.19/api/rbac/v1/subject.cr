@@ -16,17 +16,23 @@ module K8S
     include ::YAML::Serializable
 
     # APIGroup holds the API group of the referenced subject. Defaults to "" for ServiceAccount subjects. Defaults to "rbac.authorization.k8s.io" for User and Group subjects.
-    @[::JSON::Field(key: "apiGroup")]
-    @[::YAML::Field(key: "apiGroup")]
+    @[::JSON::Field(key: "apiGroup", emit_null: false)]
+    @[::YAML::Field(key: "apiGroup", emit_null: false)]
     property api_group : String | Nil
 
     # Kind of object being referenced. Values defined by this API group are "User", "Group", and "ServiceAccount". If the Authorizer does not recognized the kind value, the Authorizer should report an error.
+    @[::JSON::Field(key: "kind", emit_null: true)]
+    @[::YAML::Field(key: "kind", emit_null: true)]
     property kind : String
 
     # Name of the object being referenced.
+    @[::JSON::Field(key: "name", emit_null: true)]
+    @[::YAML::Field(key: "name", emit_null: true)]
     property name : String
 
     # Namespace of the referenced object.  If the object kind is non-namespace, such as "User" or "Group", and this value is not empty the Authorizer should report an error.
+    @[::JSON::Field(key: "namespace", emit_null: false)]
+    @[::YAML::Field(key: "namespace", emit_null: false)]
     property namespace : String | Nil
 
     def initialize(*, @kind : String, @name : String, @api_group : String | Nil = nil, @namespace : String | Nil = nil)

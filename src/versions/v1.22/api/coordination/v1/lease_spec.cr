@@ -17,28 +17,28 @@ module K8S
     include ::YAML::Serializable
 
     # acquireTime is a time when the current lease was acquired.
-    @[::JSON::Field(key: "acquireTime")]
-    @[::YAML::Field(key: "acquireTime")]
+    @[::JSON::Field(key: "acquireTime", emit_null: false)]
+    @[::YAML::Field(key: "acquireTime", emit_null: false)]
     property acquire_time : Time | Nil
 
     # holderIdentity contains the identity of the holder of a current lease.
-    @[::JSON::Field(key: "holderIdentity")]
-    @[::YAML::Field(key: "holderIdentity")]
+    @[::JSON::Field(key: "holderIdentity", emit_null: false)]
+    @[::YAML::Field(key: "holderIdentity", emit_null: false)]
     property holder_identity : String | Nil
 
     # leaseDurationSeconds is a duration that candidates for a lease need to wait to force acquire it. This is measure against time of last observed RenewTime.
-    @[::JSON::Field(key: "leaseDurationSeconds")]
-    @[::YAML::Field(key: "leaseDurationSeconds")]
+    @[::JSON::Field(key: "leaseDurationSeconds", emit_null: false)]
+    @[::YAML::Field(key: "leaseDurationSeconds", emit_null: false)]
     property lease_duration_seconds : Int32 | Nil
 
     # leaseTransitions is the number of transitions of a lease between holders.
-    @[::JSON::Field(key: "leaseTransitions")]
-    @[::YAML::Field(key: "leaseTransitions")]
+    @[::JSON::Field(key: "leaseTransitions", emit_null: false)]
+    @[::YAML::Field(key: "leaseTransitions", emit_null: false)]
     property lease_transitions : Int32 | Nil
 
     # renewTime is a time when the current holder of a lease has last updated the lease.
-    @[::JSON::Field(key: "renewTime")]
-    @[::YAML::Field(key: "renewTime")]
+    @[::JSON::Field(key: "renewTime", emit_null: false)]
+    @[::YAML::Field(key: "renewTime", emit_null: false)]
     property renew_time : Time | Nil
 
     def initialize(*, @acquire_time : Time | Nil = nil, @holder_identity : String | Nil = nil, @lease_duration_seconds : Int32 | Nil = nil, @lease_transitions : Int32 | Nil = nil, @renew_time : Time | Nil = nil)

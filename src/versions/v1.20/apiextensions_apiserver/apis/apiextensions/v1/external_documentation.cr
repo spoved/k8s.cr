@@ -13,8 +13,12 @@ module K8S
     include ::JSON::Serializable
     include ::YAML::Serializable
 
+    @[::JSON::Field(key: "description", emit_null: false)]
+    @[::YAML::Field(key: "description", emit_null: false)]
     property description : String | Nil
 
+    @[::JSON::Field(key: "url", emit_null: false)]
+    @[::YAML::Field(key: "url", emit_null: false)]
     property url : String | Nil
 
     def initialize(*, @description : String | Nil = nil, @url : String | Nil = nil)

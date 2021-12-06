@@ -13,6 +13,8 @@ module K8S
     include ::YAML::Serializable
 
     # Limits is the list of LimitRangeItem objects that are enforced.
+    @[::JSON::Field(key: "limits", emit_null: true)]
+    @[::YAML::Field(key: "limits", emit_null: true)]
     property limits : Array(Api::Core::V1::LimitRangeItem)
 
     def initialize(*, @limits : Array)

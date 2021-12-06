@@ -13,8 +13,8 @@ module K8S
     include ::YAML::Serializable
 
     # openAPIV3Schema is the OpenAPI v3 schema to use for validation and pruning.
-    @[::JSON::Field(key: "openAPIV3Schema")]
-    @[::YAML::Field(key: "openAPIV3Schema")]
+    @[::JSON::Field(key: "openAPIV3Schema", emit_null: false)]
+    @[::YAML::Field(key: "openAPIV3Schema", emit_null: false)]
     property open_apiv3_schema : ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps | Nil
 
     def initialize(*, @open_apiv3_schema : ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps | Nil = nil)

@@ -18,27 +18,33 @@ module K8S
     include ::YAML::Serializable
 
     # Required: Monitors is a collection of Ceph monitors More info: [https://examples.k8s.io/volumes/cephfs/README.md#how-to-use-it](https://examples.k8s.io/volumes/cephfs/README.md#how-to-use-it)
+    @[::JSON::Field(key: "monitors", emit_null: true)]
+    @[::YAML::Field(key: "monitors", emit_null: true)]
     property monitors : Array(String)
 
     # Optional: Used as the mounted root, rather than the full Ceph tree, default is /
+    @[::JSON::Field(key: "path", emit_null: false)]
+    @[::YAML::Field(key: "path", emit_null: false)]
     property path : String | Nil
 
     # Optional: Defaults to false [(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts. More info: https://examples.k8s.io/volumes/cephfs/README.md#how-to-use-it]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts. More info: https://examples.k8s.io/volumes/cephfs/README.md#how-to-use-it)
-    @[::JSON::Field(key: "readOnly")]
-    @[::YAML::Field(key: "readOnly")]
+    @[::JSON::Field(key: "readOnly", emit_null: false)]
+    @[::YAML::Field(key: "readOnly", emit_null: false)]
     property read_only : Bool | Nil
 
     # Optional: SecretFile is the path to key ring for User, default is [/etc/ceph/user.secret More info: https://examples.k8s.io/volumes/cephfs/README.md#how-to-use-it](/etc/ceph/user.secret More info: https://examples.k8s.io/volumes/cephfs/README.md#how-to-use-it)
-    @[::JSON::Field(key: "secretFile")]
-    @[::YAML::Field(key: "secretFile")]
+    @[::JSON::Field(key: "secretFile", emit_null: false)]
+    @[::YAML::Field(key: "secretFile", emit_null: false)]
     property secret_file : String | Nil
 
     # Optional: SecretRef is reference to the authentication secret for User, default is empty. More info: [https://examples.k8s.io/volumes/cephfs/README.md#how-to-use-it](https://examples.k8s.io/volumes/cephfs/README.md#how-to-use-it)
-    @[::JSON::Field(key: "secretRef")]
-    @[::YAML::Field(key: "secretRef")]
+    @[::JSON::Field(key: "secretRef", emit_null: false)]
+    @[::YAML::Field(key: "secretRef", emit_null: false)]
     property secret_ref : Api::Core::V1::LocalObjectReference | Nil
 
     # Optional: User is the rados user name, default is admin More info: [https://examples.k8s.io/volumes/cephfs/README.md#how-to-use-it](https://examples.k8s.io/volumes/cephfs/README.md#how-to-use-it)
+    @[::JSON::Field(key: "user", emit_null: false)]
+    @[::YAML::Field(key: "user", emit_null: false)]
     property user : String | Nil
 
     def initialize(*, @monitors : Array, @path : String | Nil = nil, @read_only : Bool | Nil = nil, @secret_file : String | Nil = nil, @secret_ref : Api::Core::V1::LocalObjectReference | Nil = nil, @user : String | Nil = nil)

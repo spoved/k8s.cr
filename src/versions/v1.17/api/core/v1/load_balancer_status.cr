@@ -13,6 +13,8 @@ module K8S
     include ::YAML::Serializable
 
     # Ingress is a list containing ingress points for the load-balancer. Traffic intended for the service should be sent to these ingress points.
+    @[::JSON::Field(key: "ingress", emit_null: false)]
+    @[::YAML::Field(key: "ingress", emit_null: false)]
     property ingress : Array(Api::Core::V1::LoadBalancerIngress) | Nil
 
     def initialize(*, @ingress : Array | Nil = nil)

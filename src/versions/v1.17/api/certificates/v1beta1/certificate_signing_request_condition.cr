@@ -15,17 +15,23 @@ module K8S
     include ::YAML::Serializable
 
     # timestamp for the last update to this condition
-    @[::JSON::Field(key: "lastUpdateTime")]
-    @[::YAML::Field(key: "lastUpdateTime")]
+    @[::JSON::Field(key: "lastUpdateTime", emit_null: false)]
+    @[::YAML::Field(key: "lastUpdateTime", emit_null: false)]
     property last_update_time : Time | Nil
 
     # human readable message with details about the request state
+    @[::JSON::Field(key: "message", emit_null: false)]
+    @[::YAML::Field(key: "message", emit_null: false)]
     property message : String | Nil
 
     # brief reason for the request state
+    @[::JSON::Field(key: "reason", emit_null: false)]
+    @[::YAML::Field(key: "reason", emit_null: false)]
     property reason : String | Nil
 
     # request approval state, currently Approved or Denied.
+    @[::JSON::Field(key: "type", emit_null: true)]
+    @[::YAML::Field(key: "type", emit_null: true)]
     property type : String
 
     def initialize(*, @type : String, @last_update_time : Time | Nil = nil, @message : String | Nil = nil, @reason : String | Nil = nil)

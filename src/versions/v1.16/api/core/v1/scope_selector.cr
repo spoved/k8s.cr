@@ -13,8 +13,8 @@ module K8S
     include ::YAML::Serializable
 
     # A list of scope selector requirements by scope of the resources.
-    @[::JSON::Field(key: "matchExpressions")]
-    @[::YAML::Field(key: "matchExpressions")]
+    @[::JSON::Field(key: "matchExpressions", emit_null: false)]
+    @[::YAML::Field(key: "matchExpressions", emit_null: false)]
     property match_expressions : Array(Api::Core::V1::ScopedResourceSelectorRequirement) | Nil
 
     def initialize(*, @match_expressions : Array | Nil = nil)

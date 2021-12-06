@@ -15,16 +15,18 @@ module K8S
     include ::YAML::Serializable
 
     # currentAverageUtilization is the current value of the average of the resource metric across all relevant pods, represented as a percentage of the requested value of the resource for the pods.
-    @[::JSON::Field(key: "averageUtilization")]
-    @[::YAML::Field(key: "averageUtilization")]
+    @[::JSON::Field(key: "averageUtilization", emit_null: false)]
+    @[::YAML::Field(key: "averageUtilization", emit_null: false)]
     property average_utilization : Int32 | Nil
 
     # averageValue is the current value of the average of the metric across all relevant pods (as a quantity)
-    @[::JSON::Field(key: "averageValue")]
-    @[::YAML::Field(key: "averageValue")]
+    @[::JSON::Field(key: "averageValue", emit_null: false)]
+    @[::YAML::Field(key: "averageValue", emit_null: false)]
     property average_value : Int32 | String | Nil
 
     # value is the current value of the metric (as a quantity).
+    @[::JSON::Field(key: "value", emit_null: false)]
+    @[::YAML::Field(key: "value", emit_null: false)]
     property value : Int32 | String | Nil
 
     def initialize(*, @average_utilization : Int32 | Nil = nil, @average_value : Int32 | String | Nil = nil, @value : Int32 | String | Nil = nil)

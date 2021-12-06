@@ -18,23 +18,33 @@ module K8S
     include ::YAML::Serializable
 
     # Group to map volume access to Default is no group
+    @[::JSON::Field(key: "group", emit_null: false)]
+    @[::YAML::Field(key: "group", emit_null: false)]
     property group : String | Nil
 
     # ReadOnly here will force the Quobyte volume to be mounted with read-only permissions. Defaults to false.
-    @[::JSON::Field(key: "readOnly")]
-    @[::YAML::Field(key: "readOnly")]
+    @[::JSON::Field(key: "readOnly", emit_null: false)]
+    @[::YAML::Field(key: "readOnly", emit_null: false)]
     property read_only : Bool | Nil
 
     # Registry represents a single or multiple Quobyte Registry services specified as a string as host:port pair (multiple entries are separated with commas) which acts as the central registry for volumes
+    @[::JSON::Field(key: "registry", emit_null: true)]
+    @[::YAML::Field(key: "registry", emit_null: true)]
     property registry : String
 
     # Tenant owning the given Quobyte volume in the Backend Used with dynamically provisioned Quobyte volumes, value is set by the plugin
+    @[::JSON::Field(key: "tenant", emit_null: false)]
+    @[::YAML::Field(key: "tenant", emit_null: false)]
     property tenant : String | Nil
 
     # User to map volume access to Defaults to serivceaccount user
+    @[::JSON::Field(key: "user", emit_null: false)]
+    @[::YAML::Field(key: "user", emit_null: false)]
     property user : String | Nil
 
     # Volume is a string that references an already created Quobyte volume by name.
+    @[::JSON::Field(key: "volume", emit_null: true)]
+    @[::YAML::Field(key: "volume", emit_null: true)]
     property volume : String
 
     def initialize(*, @registry : String, @volume : String, @group : String | Nil = nil, @read_only : Bool | Nil = nil, @tenant : String | Nil = nil, @user : String | Nil = nil)

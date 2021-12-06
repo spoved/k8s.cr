@@ -14,11 +14,13 @@ module K8S
     include ::YAML::Serializable
 
     # ExpirationTimestamp is the time of expiration of the returned token.
-    @[::JSON::Field(key: "expirationTimestamp")]
-    @[::YAML::Field(key: "expirationTimestamp")]
+    @[::JSON::Field(key: "expirationTimestamp", emit_null: true)]
+    @[::YAML::Field(key: "expirationTimestamp", emit_null: true)]
     property expiration_timestamp : Time
 
     # Token is the opaque bearer token.
+    @[::JSON::Field(key: "token", emit_null: true)]
+    @[::YAML::Field(key: "token", emit_null: true)]
     property token : String
 
     def initialize(*, @expiration_timestamp : Time, @token : String)

@@ -13,6 +13,8 @@ module K8S
     include ::YAML::Serializable
 
     # ready indicates that this endpoint is prepared to receive traffic, according to whatever system is managing the endpoint. A nil value indicates an unknown state. In most cases consumers should interpret this unknown state as ready.
+    @[::JSON::Field(key: "ready", emit_null: false)]
+    @[::YAML::Field(key: "ready", emit_null: false)]
     property ready : Bool | Nil
 
     def initialize(*, @ready : Bool | Nil = nil)

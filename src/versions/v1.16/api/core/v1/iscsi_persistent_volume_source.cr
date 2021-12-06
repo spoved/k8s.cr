@@ -23,52 +23,58 @@ module K8S
     include ::YAML::Serializable
 
     # whether support iSCSI Discovery CHAP authentication
-    @[::JSON::Field(key: "chapAuthDiscovery")]
-    @[::YAML::Field(key: "chapAuthDiscovery")]
+    @[::JSON::Field(key: "chapAuthDiscovery", emit_null: false)]
+    @[::YAML::Field(key: "chapAuthDiscovery", emit_null: false)]
     property chap_auth_discovery : Bool | Nil
 
     # whether support iSCSI Session CHAP authentication
-    @[::JSON::Field(key: "chapAuthSession")]
-    @[::YAML::Field(key: "chapAuthSession")]
+    @[::JSON::Field(key: "chapAuthSession", emit_null: false)]
+    @[::YAML::Field(key: "chapAuthSession", emit_null: false)]
     property chap_auth_session : Bool | Nil
 
     # Filesystem type of the volume that you want to mount. Tip: Ensure that the filesystem type is supported by the host operating system. Examples: "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified. More info: [https://kubernetes.io/docs/concepts/storage/volumes#iscsi](https://kubernetes.io/docs/concepts/storage/volumes#iscsi)
-    @[::JSON::Field(key: "fsType")]
-    @[::YAML::Field(key: "fsType")]
+    @[::JSON::Field(key: "fsType", emit_null: false)]
+    @[::YAML::Field(key: "fsType", emit_null: false)]
     property fs_type : String | Nil
 
     # Custom iSCSI Initiator Name. If initiatorName is specified with iscsiInterface simultaneously, new iSCSI interface <target portal>:<volume name> will be created for the connection.
-    @[::JSON::Field(key: "initiatorName")]
-    @[::YAML::Field(key: "initiatorName")]
+    @[::JSON::Field(key: "initiatorName", emit_null: false)]
+    @[::YAML::Field(key: "initiatorName", emit_null: false)]
     property initiator_name : String | Nil
 
     # Target iSCSI Qualified Name.
+    @[::JSON::Field(key: "iqn", emit_null: true)]
+    @[::YAML::Field(key: "iqn", emit_null: true)]
     property iqn : String
 
     # iSCSI Interface Name that uses an iSCSI transport. Defaults to 'default' (tcp).
-    @[::JSON::Field(key: "iscsiInterface")]
-    @[::YAML::Field(key: "iscsiInterface")]
+    @[::JSON::Field(key: "iscsiInterface", emit_null: false)]
+    @[::YAML::Field(key: "iscsiInterface", emit_null: false)]
     property iscsi_interface : String | Nil
 
     # iSCSI Target Lun number.
+    @[::JSON::Field(key: "lun", emit_null: true)]
+    @[::YAML::Field(key: "lun", emit_null: true)]
     property lun : Int32
 
     # iSCSI Target Portal List. The Portal is either an IP or ip_addr:port if the port is other than default (typically TCP ports 860 and 3260).
+    @[::JSON::Field(key: "portals", emit_null: false)]
+    @[::YAML::Field(key: "portals", emit_null: false)]
     property portals : Array(String) | Nil
 
     # ReadOnly here will force the ReadOnly setting in VolumeMounts. Defaults to false.
-    @[::JSON::Field(key: "readOnly")]
-    @[::YAML::Field(key: "readOnly")]
+    @[::JSON::Field(key: "readOnly", emit_null: false)]
+    @[::YAML::Field(key: "readOnly", emit_null: false)]
     property read_only : Bool | Nil
 
     # CHAP Secret for iSCSI target and initiator authentication
-    @[::JSON::Field(key: "secretRef")]
-    @[::YAML::Field(key: "secretRef")]
+    @[::JSON::Field(key: "secretRef", emit_null: false)]
+    @[::YAML::Field(key: "secretRef", emit_null: false)]
     property secret_ref : Api::Core::V1::SecretReference | Nil
 
     # iSCSI Target Portal. The Portal is either an IP or ip_addr:port if the port is other than default (typically TCP ports 860 and 3260).
-    @[::JSON::Field(key: "targetPortal")]
-    @[::YAML::Field(key: "targetPortal")]
+    @[::JSON::Field(key: "targetPortal", emit_null: true)]
+    @[::YAML::Field(key: "targetPortal", emit_null: true)]
     property target_portal : String
 
     def initialize(*, @iqn : String, @lun : Int32, @target_portal : String, @chap_auth_discovery : Bool | Nil = nil, @chap_auth_session : Bool | Nil = nil, @fs_type : String | Nil = nil, @initiator_name : String | Nil = nil, @iscsi_interface : String | Nil = nil, @portals : Array | Nil = nil, @read_only : Bool | Nil = nil, @secret_ref : Api::Core::V1::SecretReference | Nil = nil)

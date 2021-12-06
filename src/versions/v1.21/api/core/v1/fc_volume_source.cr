@@ -17,24 +17,28 @@ module K8S
     include ::YAML::Serializable
 
     # Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified.
-    @[::JSON::Field(key: "fsType")]
-    @[::YAML::Field(key: "fsType")]
+    @[::JSON::Field(key: "fsType", emit_null: false)]
+    @[::YAML::Field(key: "fsType", emit_null: false)]
     property fs_type : String | Nil
 
     # Optional: FC target lun number
+    @[::JSON::Field(key: "lun", emit_null: false)]
+    @[::YAML::Field(key: "lun", emit_null: false)]
     property lun : Int32 | Nil
 
     # Optional: Defaults to false [(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.)
-    @[::JSON::Field(key: "readOnly")]
-    @[::YAML::Field(key: "readOnly")]
+    @[::JSON::Field(key: "readOnly", emit_null: false)]
+    @[::YAML::Field(key: "readOnly", emit_null: false)]
     property read_only : Bool | Nil
 
     # Optional: FC target worldwide names (WWNs)
-    @[::JSON::Field(key: "targetWWNs")]
-    @[::YAML::Field(key: "targetWWNs")]
+    @[::JSON::Field(key: "targetWWNs", emit_null: false)]
+    @[::YAML::Field(key: "targetWWNs", emit_null: false)]
     property target_wwns : Array(String) | Nil
 
     # Optional: FC volume world wide identifiers (wwids) Either wwids or combination of targetWWNs and lun must be set, but not both simultaneously.
+    @[::JSON::Field(key: "wwids", emit_null: false)]
+    @[::YAML::Field(key: "wwids", emit_null: false)]
     property wwids : Array(String) | Nil
 
     def initialize(*, @fs_type : String | Nil = nil, @lun : Int32 | Nil = nil, @read_only : Bool | Nil = nil, @target_wwns : Array | Nil = nil, @wwids : Array | Nil = nil)

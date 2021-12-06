@@ -13,6 +13,8 @@ module K8S
     include ::YAML::Serializable
 
     # name represents the name of the zone.
+    @[::JSON::Field(key: "name", emit_null: true)]
+    @[::YAML::Field(key: "name", emit_null: true)]
     property name : String
 
     def initialize(*, @name : String)

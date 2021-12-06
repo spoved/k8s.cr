@@ -18,25 +18,33 @@ module K8S
     include ::YAML::Serializable
 
     # API version of the referent.
-    @[::JSON::Field(key: "apiVersion")]
-    @[::YAML::Field(key: "apiVersion")]
+    @[::JSON::Field(key: "apiVersion", emit_null: true)]
+    @[::YAML::Field(key: "apiVersion", emit_null: true)]
     property api_version : String
 
     # If true, AND if the owner has the "foregroundDeletion" finalizer, then the owner cannot be deleted from the key-value store until this reference is removed. Defaults to false. To set this field, a user needs "delete" permission of the owner, otherwise 422 (Unprocessable Entity) will be returned.
-    @[::JSON::Field(key: "blockOwnerDeletion")]
-    @[::YAML::Field(key: "blockOwnerDeletion")]
+    @[::JSON::Field(key: "blockOwnerDeletion", emit_null: false)]
+    @[::YAML::Field(key: "blockOwnerDeletion", emit_null: false)]
     property block_owner_deletion : Bool | Nil
 
     # If true, this reference points to the managing controller.
+    @[::JSON::Field(key: "controller", emit_null: false)]
+    @[::YAML::Field(key: "controller", emit_null: false)]
     property controller : Bool | Nil
 
     # Kind of the referent. More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)
+    @[::JSON::Field(key: "kind", emit_null: true)]
+    @[::YAML::Field(key: "kind", emit_null: true)]
     property kind : String
 
     # Name of the referent. More info: [http://kubernetes.io/docs/user-guide/identifiers#names](http://kubernetes.io/docs/user-guide/identifiers#names)
+    @[::JSON::Field(key: "name", emit_null: true)]
+    @[::YAML::Field(key: "name", emit_null: true)]
     property name : String
 
     # UID of the referent. More info: [http://kubernetes.io/docs/user-guide/identifiers#uids](http://kubernetes.io/docs/user-guide/identifiers#uids)
+    @[::JSON::Field(key: "uid", emit_null: true)]
+    @[::YAML::Field(key: "uid", emit_null: true)]
     property uid : String
 
     def initialize(*, @api_version : String, @kind : String, @name : String, @uid : String, @block_owner_deletion : Bool | Nil = nil, @controller : Bool | Nil = nil)

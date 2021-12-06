@@ -13,6 +13,8 @@ module K8S
     include ::YAML::Serializable
 
     # Finalizers is an opaque list of values that must be empty to permanently remove object from storage. More info: [https://kubernetes.io/docs/tasks/administer-cluster/namespaces/](https://kubernetes.io/docs/tasks/administer-cluster/namespaces/)
+    @[::JSON::Field(key: "finalizers", emit_null: false)]
+    @[::YAML::Field(key: "finalizers", emit_null: false)]
     property finalizers : Array(String) | Nil
 
     def initialize(*, @finalizers : Array | Nil = nil)

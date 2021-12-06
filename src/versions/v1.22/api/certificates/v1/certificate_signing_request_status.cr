@@ -35,9 +35,13 @@ module K8S
     #     ...
     #     -----END CERTIFICATE-----
     #     )
+    @[::JSON::Field(key: "certificate", emit_null: false)]
+    @[::YAML::Field(key: "certificate", emit_null: false)]
     property certificate : String | Nil
 
     # conditions applied to the request. Known conditions are "Approved", "Denied", and "Failed".
+    @[::JSON::Field(key: "conditions", emit_null: false)]
+    @[::YAML::Field(key: "conditions", emit_null: false)]
     property conditions : Array(Api::Certificates::V1::CertificateSigningRequestCondition) | Nil
 
     def initialize(*, @certificate : String | Nil = nil, @conditions : Array | Nil = nil)

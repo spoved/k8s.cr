@@ -19,8 +19,8 @@ module K8S
     # This field is read-only and no changes will be made by Kubernetes to the PVC after it has been created.
     #
     # Required, must not be nil.
-    @[::JSON::Field(key: "volumeClaimTemplate")]
-    @[::YAML::Field(key: "volumeClaimTemplate")]
+    @[::JSON::Field(key: "volumeClaimTemplate", emit_null: false)]
+    @[::YAML::Field(key: "volumeClaimTemplate", emit_null: false)]
     property volume_claim_template : Api::Core::V1::PersistentVolumeClaimTemplate | Nil
 
     def initialize(*, @volume_claim_template : Api::Core::V1::PersistentVolumeClaimTemplate | Nil = nil)

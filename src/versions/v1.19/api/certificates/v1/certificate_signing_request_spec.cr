@@ -19,12 +19,18 @@ module K8S
     include ::YAML::Serializable
 
     # extra contains extra attributes of the user that created the CertificateSigningRequest. Populated by the API server on creation and immutable.
+    @[::JSON::Field(key: "extra", emit_null: false)]
+    @[::YAML::Field(key: "extra", emit_null: false)]
     property extra : Hash(String, String) | Nil
 
     # groups contains group membership of the user that created the CertificateSigningRequest. Populated by the API server on creation and immutable.
+    @[::JSON::Field(key: "groups", emit_null: false)]
+    @[::YAML::Field(key: "groups", emit_null: false)]
     property groups : Array(String) | Nil
 
     # request contains an x509 certificate signing request encoded in a "CERTIFICATE REQUEST" PEM block. When serialized as JSON or YAML, the data is additionally base64-encoded.
+    @[::JSON::Field(key: "request", emit_null: true)]
+    @[::YAML::Field(key: "request", emit_null: true)]
     property request : String
 
     # signerName indicates the requested signer, and is a qualified name.
@@ -48,11 +54,13 @@ module K8S
     #  4. Required, permitted, or forbidden key usages / extended key usages.
     #  5. [Expiration/certificate lifetime: whether it is fixed by the signer, configurable by the admin.](Expiration/certificate lifetime: whether it is fixed by the signer, configurable by the admin.)
     #  6. Whether or not requests for CA certificates are allowed.
-    @[::JSON::Field(key: "signerName")]
-    @[::YAML::Field(key: "signerName")]
+    @[::JSON::Field(key: "signerName", emit_null: true)]
+    @[::YAML::Field(key: "signerName", emit_null: true)]
     property signer_name : String
 
     # uid contains the uid of the user that created the CertificateSigningRequest. Populated by the API server on creation and immutable.
+    @[::JSON::Field(key: "uid", emit_null: false)]
+    @[::YAML::Field(key: "uid", emit_null: false)]
     property uid : String | Nil
 
     # usages specifies a set of key usages requested in the issued certificate.
@@ -69,9 +77,13 @@ module K8S
     #  "code signing", "email protection", ["s/mime",]("s/mime",)
     #  "ipsec end system", "ipsec tunnel", "ipsec user",
     #  "timestamping", "ocsp signing", "microsoft sgc", "netscape sgc"
+    @[::JSON::Field(key: "usages", emit_null: false)]
+    @[::YAML::Field(key: "usages", emit_null: false)]
     property usages : Array(String) | Nil
 
     # username contains the name of the user that created the CertificateSigningRequest. Populated by the API server on creation and immutable.
+    @[::JSON::Field(key: "username", emit_null: false)]
+    @[::YAML::Field(key: "username", emit_null: false)]
     property username : String | Nil
 
     def initialize(*, @request : String, @signer_name : String, @extra : Hash(String, String) | Nil = nil, @groups : Array | Nil = nil, @uid : String | Nil = nil, @usages : Array | Nil = nil, @username : String | Nil = nil)

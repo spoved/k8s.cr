@@ -16,17 +16,23 @@ module K8S
     include ::YAML::Serializable
 
     # APIVersion holds the API group and version of the referenced subject. Defaults to "v1" for ServiceAccount subjects. Defaults to ["rbac.authorization.k8s.io/v1alpha1" for User and Group subjects.]("rbac.authorization.k8s.io/v1alpha1" for User and Group subjects.)
-    @[::JSON::Field(key: "apiVersion")]
-    @[::YAML::Field(key: "apiVersion")]
+    @[::JSON::Field(key: "apiVersion", emit_null: false)]
+    @[::YAML::Field(key: "apiVersion", emit_null: false)]
     property api_version : String | Nil
 
     # Kind of object being referenced. Values defined by this API group are "User", "Group", and "ServiceAccount". If the Authorizer does not recognized the kind value, the Authorizer should report an error.
+    @[::JSON::Field(key: "kind", emit_null: true)]
+    @[::YAML::Field(key: "kind", emit_null: true)]
     property kind : String
 
     # Name of the object being referenced.
+    @[::JSON::Field(key: "name", emit_null: true)]
+    @[::YAML::Field(key: "name", emit_null: true)]
     property name : String
 
     # Namespace of the referenced object.  If the object kind is non-namespace, such as "User" or "Group", and this value is not empty the Authorizer should report an error.
+    @[::JSON::Field(key: "namespace", emit_null: false)]
+    @[::YAML::Field(key: "namespace", emit_null: false)]
     property namespace : String | Nil
 
     def initialize(*, @kind : String, @name : String, @api_version : String | Nil = nil, @namespace : String | Nil = nil)

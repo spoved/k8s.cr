@@ -77,12 +77,18 @@ module K8S
     include ::JSON::Serializable
     include ::YAML::Serializable
 
+    @[::JSON::Field(key: "apiVersion")]
+    @[::YAML::Field(key: "apiVersion")]
     getter api_version : String = "storage/v1"
     getter kind : String = "CSINode"
     # metadata.name must be the Kubernetes node name.
+    @[::JSON::Field(key: "metadata", emit_null: false)]
+    @[::YAML::Field(key: "metadata", emit_null: false)]
     property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil
 
     # spec is the specification of CSINode
+    @[::JSON::Field(key: "spec", emit_null: true)]
+    @[::YAML::Field(key: "spec", emit_null: true)]
     property spec : Api::Storage::V1::CSINodeSpec
 
     def initialize(*, @spec : Api::Storage::V1::CSINodeSpec, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil)

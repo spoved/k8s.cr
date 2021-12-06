@@ -17,24 +17,28 @@ module K8S
     include ::YAML::Serializable
 
     # Number of port to expose on the pod's IP address. This must be a valid port number, 0 < x < 65536.
-    @[::JSON::Field(key: "containerPort")]
-    @[::YAML::Field(key: "containerPort")]
+    @[::JSON::Field(key: "containerPort", emit_null: true)]
+    @[::YAML::Field(key: "containerPort", emit_null: true)]
     property container_port : Int32
 
     # What host IP to bind the external port to.
-    @[::JSON::Field(key: "hostIP")]
-    @[::YAML::Field(key: "hostIP")]
+    @[::JSON::Field(key: "hostIP", emit_null: false)]
+    @[::YAML::Field(key: "hostIP", emit_null: false)]
     property host_ip : String | Nil
 
     # Number of port to expose on the host. If specified, this must be a valid port number, 0 < x < 65536. If HostNetwork is specified, this must match ContainerPort. Most containers do not need this.
-    @[::JSON::Field(key: "hostPort")]
-    @[::YAML::Field(key: "hostPort")]
+    @[::JSON::Field(key: "hostPort", emit_null: false)]
+    @[::YAML::Field(key: "hostPort", emit_null: false)]
     property host_port : Int32 | Nil
 
     # If specified, this must be an IANA_SVC_NAME and unique within the pod. Each named port in a pod must have a unique name. Name for the port that can be referred to by services.
+    @[::JSON::Field(key: "name", emit_null: false)]
+    @[::YAML::Field(key: "name", emit_null: false)]
     property name : String | Nil
 
     # Protocol for port. Must be UDP, TCP, or SCTP. Defaults to "TCP".
+    @[::JSON::Field(key: "protocol", emit_null: false)]
+    @[::YAML::Field(key: "protocol", emit_null: false)]
     property protocol : String | Nil
 
     def initialize(*, @container_port : Int32, @host_ip : String | Nil = nil, @host_port : Int32 | Nil = nil, @name : String | Nil = nil, @protocol : String | Nil = nil)

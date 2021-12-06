@@ -14,13 +14,13 @@ module K8S
     include ::YAML::Serializable
 
     # Version of the schema the FieldPath is written in terms of, defaults to "v1".
-    @[::JSON::Field(key: "apiVersion")]
-    @[::YAML::Field(key: "apiVersion")]
+    @[::JSON::Field(key: "apiVersion", emit_null: false)]
+    @[::YAML::Field(key: "apiVersion", emit_null: false)]
     property api_version : String | Nil
 
     # Path of the field to select in the specified API version.
-    @[::JSON::Field(key: "fieldPath")]
-    @[::YAML::Field(key: "fieldPath")]
+    @[::JSON::Field(key: "fieldPath", emit_null: true)]
+    @[::YAML::Field(key: "fieldPath", emit_null: true)]
     property field_path : String
 
     def initialize(*, @field_path : String, @api_version : String | Nil = nil)

@@ -14,13 +14,13 @@ module K8S
     include ::YAML::Serializable
 
     # Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified.
-    @[::JSON::Field(key: "fsType")]
-    @[::YAML::Field(key: "fsType")]
+    @[::JSON::Field(key: "fsType", emit_null: false)]
+    @[::YAML::Field(key: "fsType", emit_null: false)]
     property fs_type : String | Nil
 
     # ID that identifies Photon Controller persistent disk
-    @[::JSON::Field(key: "pdID")]
-    @[::YAML::Field(key: "pdID")]
+    @[::JSON::Field(key: "pdID", emit_null: true)]
+    @[::YAML::Field(key: "pdID", emit_null: true)]
     property pd_id : String
 
     def initialize(*, @pd_id : String, @fs_type : String | Nil = nil)

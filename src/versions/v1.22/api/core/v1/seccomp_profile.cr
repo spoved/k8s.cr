@@ -14,13 +14,15 @@ module K8S
     include ::YAML::Serializable
 
     # localhostProfile indicates a profile defined in a file on the node should be used. The profile must be preconfigured on the node to work. Must be a descending path, relative to the kubelet's configured seccomp profile location. Must only be set if type is "Localhost".
-    @[::JSON::Field(key: "localhostProfile")]
-    @[::YAML::Field(key: "localhostProfile")]
+    @[::JSON::Field(key: "localhostProfile", emit_null: false)]
+    @[::YAML::Field(key: "localhostProfile", emit_null: false)]
     property localhost_profile : String | Nil
 
     # type indicates which kind of seccomp profile will be applied. Valid options are:
     #
     # Localhost - a profile defined in a file on the node should be used. RuntimeDefault - the container runtime default profile should be used. Unconfined - no profile should be applied.
+    @[::JSON::Field(key: "type", emit_null: true)]
+    @[::YAML::Field(key: "type", emit_null: true)]
     property type : String
 
     def initialize(*, @type : String, @localhost_profile : String | Nil = nil)

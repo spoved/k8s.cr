@@ -16,23 +16,23 @@ module K8S
     include ::YAML::Serializable
 
     # metricName is the name of the metric in question.
-    @[::JSON::Field(key: "metricName")]
-    @[::YAML::Field(key: "metricName")]
+    @[::JSON::Field(key: "metricName", emit_null: true)]
+    @[::YAML::Field(key: "metricName", emit_null: true)]
     property metric_name : String
 
     # metricSelector is used to identify a specific time series within a given metric.
-    @[::JSON::Field(key: "metricSelector")]
-    @[::YAML::Field(key: "metricSelector")]
+    @[::JSON::Field(key: "metricSelector", emit_null: false)]
+    @[::YAML::Field(key: "metricSelector", emit_null: false)]
     property metric_selector : Apimachinery::Apis::Meta::V1::LabelSelector | Nil
 
     # targetAverageValue is the target per-pod value of global metric (as a quantity). Mutually exclusive with TargetValue.
-    @[::JSON::Field(key: "targetAverageValue")]
-    @[::YAML::Field(key: "targetAverageValue")]
+    @[::JSON::Field(key: "targetAverageValue", emit_null: false)]
+    @[::YAML::Field(key: "targetAverageValue", emit_null: false)]
     property target_average_value : Int32 | String | Nil
 
     # targetValue is the target value of the metric (as a quantity). Mutually exclusive with TargetAverageValue.
-    @[::JSON::Field(key: "targetValue")]
-    @[::YAML::Field(key: "targetValue")]
+    @[::JSON::Field(key: "targetValue", emit_null: false)]
+    @[::YAML::Field(key: "targetValue", emit_null: false)]
     property target_value : Int32 | String | Nil
 
     def initialize(*, @metric_name : String, @metric_selector : Apimachinery::Apis::Meta::V1::LabelSelector | Nil = nil, @target_average_value : Int32 | String | Nil = nil, @target_value : Int32 | String | Nil = nil)

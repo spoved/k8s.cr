@@ -16,17 +16,23 @@ module K8S
     include ::YAML::Serializable
 
     # `group` matches based on user group name.
+    @[::JSON::Field(key: "group", emit_null: false)]
+    @[::YAML::Field(key: "group", emit_null: false)]
     property group : Api::Flowcontrol::V1beta1::GroupSubject | Nil
 
     # `kind` indicates which one of the other fields is non-empty. Required
+    @[::JSON::Field(key: "kind", emit_null: true)]
+    @[::YAML::Field(key: "kind", emit_null: true)]
     property kind : String
 
     # `serviceAccount` matches ServiceAccounts.
-    @[::JSON::Field(key: "serviceAccount")]
-    @[::YAML::Field(key: "serviceAccount")]
+    @[::JSON::Field(key: "serviceAccount", emit_null: false)]
+    @[::YAML::Field(key: "serviceAccount", emit_null: false)]
     property service_account : Api::Flowcontrol::V1beta1::ServiceAccountSubject | Nil
 
     # `user` matches based on username.
+    @[::JSON::Field(key: "user", emit_null: false)]
+    @[::YAML::Field(key: "user", emit_null: false)]
     property user : Api::Flowcontrol::V1beta1::UserSubject | Nil
 
     def initialize(*, @kind : String, @group : Api::Flowcontrol::V1beta1::GroupSubject | Nil = nil, @service_account : Api::Flowcontrol::V1beta1::ServiceAccountSubject | Nil = nil, @user : Api::Flowcontrol::V1beta1::UserSubject | Nil = nil)

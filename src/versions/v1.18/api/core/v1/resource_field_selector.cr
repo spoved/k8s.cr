@@ -15,14 +15,18 @@ module K8S
     include ::YAML::Serializable
 
     # Container name: required for volumes, optional for env vars
-    @[::JSON::Field(key: "containerName")]
-    @[::YAML::Field(key: "containerName")]
+    @[::JSON::Field(key: "containerName", emit_null: false)]
+    @[::YAML::Field(key: "containerName", emit_null: false)]
     property container_name : String | Nil
 
     # Specifies the output format of the exposed resources, defaults to "1"
+    @[::JSON::Field(key: "divisor", emit_null: false)]
+    @[::YAML::Field(key: "divisor", emit_null: false)]
     property divisor : Int32 | String | Nil
 
     # Required: resource to select
+    @[::JSON::Field(key: "resource", emit_null: true)]
+    @[::YAML::Field(key: "resource", emit_null: true)]
     property resource : String
 
     def initialize(*, @resource : String, @container_name : String | Nil = nil, @divisor : Int32 | String | Nil = nil)

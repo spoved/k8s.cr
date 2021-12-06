@@ -13,6 +13,8 @@ module K8S
     include ::YAML::Serializable
 
     # A collection of paths that map requests to backends.
+    @[::JSON::Field(key: "paths", emit_null: true)]
+    @[::YAML::Field(key: "paths", emit_null: true)]
     property paths : Array(Api::Networking::V1::HTTPIngressPath)
 
     def initialize(*, @paths : Array)

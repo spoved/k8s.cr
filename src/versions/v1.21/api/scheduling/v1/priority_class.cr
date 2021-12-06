@@ -80,25 +80,33 @@ module K8S
     include ::JSON::Serializable
     include ::YAML::Serializable
 
+    @[::JSON::Field(key: "apiVersion")]
+    @[::YAML::Field(key: "apiVersion")]
     getter api_version : String = "scheduling/v1"
     getter kind : String = "PriorityClass"
     # description is an arbitrary string that usually provides guidelines on when this priority class should be used.
+    @[::JSON::Field(key: "description", emit_null: false)]
+    @[::YAML::Field(key: "description", emit_null: false)]
     property description : String | Nil
 
     # globalDefault specifies whether this PriorityClass should be considered as the default priority for pods that do not have any priority class. Only one PriorityClass can be marked as `globalDefault`. However, if more than one PriorityClasses exists with their `globalDefault` field set to true, the smallest value of such global default PriorityClasses will be used as the default priority.
-    @[::JSON::Field(key: "globalDefault")]
-    @[::YAML::Field(key: "globalDefault")]
+    @[::JSON::Field(key: "globalDefault", emit_null: false)]
+    @[::YAML::Field(key: "globalDefault", emit_null: false)]
     property global_default : Bool | Nil
 
     # Standard object's metadata. More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)
+    @[::JSON::Field(key: "metadata", emit_null: false)]
+    @[::YAML::Field(key: "metadata", emit_null: false)]
     property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil
 
     # PreemptionPolicy is the Policy for preempting pods with lower priority. One of Never, PreemptLowerPriority. Defaults to PreemptLowerPriority if unset. This field is beta-level, gated by the NonPreemptingPriority feature-gate.
-    @[::JSON::Field(key: "preemptionPolicy")]
-    @[::YAML::Field(key: "preemptionPolicy")]
+    @[::JSON::Field(key: "preemptionPolicy", emit_null: false)]
+    @[::YAML::Field(key: "preemptionPolicy", emit_null: false)]
     property preemption_policy : String | Nil
 
     # The value of this priority class. This is the actual priority that pods receive when they have the name of this class in their pod spec.
+    @[::JSON::Field(key: "value", emit_null: true)]
+    @[::YAML::Field(key: "value", emit_null: true)]
     property value : Int32
 
     def initialize(*, @value : Int32, @description : String | Nil = nil, @global_default : Bool | Nil = nil, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil, @preemption_policy : String | Nil = nil)

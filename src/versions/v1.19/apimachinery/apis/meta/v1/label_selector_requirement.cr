@@ -15,12 +15,18 @@ module K8S
     include ::YAML::Serializable
 
     # key is the label key that the selector applies to.
+    @[::JSON::Field(key: "key", emit_null: true)]
+    @[::YAML::Field(key: "key", emit_null: true)]
     property key : String
 
     # operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
+    @[::JSON::Field(key: "operator", emit_null: true)]
+    @[::YAML::Field(key: "operator", emit_null: true)]
     property operator : String
 
     # values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
+    @[::JSON::Field(key: "values", emit_null: false)]
+    @[::YAML::Field(key: "values", emit_null: false)]
     property values : Array(String) | Nil
 
     def initialize(*, @key : String, @operator : String, @values : Array | Nil = nil)

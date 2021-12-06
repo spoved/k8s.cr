@@ -13,8 +13,8 @@ module K8S
     include ::YAML::Serializable
 
     # LoadBalancer contains the current status of the load-balancer.
-    @[::JSON::Field(key: "loadBalancer")]
-    @[::YAML::Field(key: "loadBalancer")]
+    @[::JSON::Field(key: "loadBalancer", emit_null: false)]
+    @[::YAML::Field(key: "loadBalancer", emit_null: false)]
     property load_balancer : Api::Core::V1::LoadBalancerStatus | Nil
 
     def initialize(*, @load_balancer : Api::Core::V1::LoadBalancerStatus | Nil = nil)

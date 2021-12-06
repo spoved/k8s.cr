@@ -14,11 +14,13 @@ module K8S
     include ::YAML::Serializable
 
     # devicePath is the path inside of the container that the device will be mapped to.
-    @[::JSON::Field(key: "devicePath")]
-    @[::YAML::Field(key: "devicePath")]
+    @[::JSON::Field(key: "devicePath", emit_null: true)]
+    @[::YAML::Field(key: "devicePath", emit_null: true)]
     property device_path : String
 
     # name must match the name of a persistentVolumeClaim in the pod
+    @[::JSON::Field(key: "name", emit_null: true)]
+    @[::YAML::Field(key: "name", emit_null: true)]
     property name : String
 
     def initialize(*, @device_path : String, @name : String)

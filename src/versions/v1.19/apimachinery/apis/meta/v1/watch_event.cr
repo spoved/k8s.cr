@@ -66,8 +66,12 @@ module K8S
     #  * If Type is Deleted: the state of the object immediately before deletion.
     #  * If Type is Error: *Status is recommended; other types may make sense
     #    depending on context.
+    @[::JSON::Field(key: "object", emit_null: true)]
+    @[::YAML::Field(key: "object", emit_null: true)]
     property object : Apimachinery::Runtime::RawExtension
 
+    @[::JSON::Field(key: "type", emit_null: true)]
+    @[::YAML::Field(key: "type", emit_null: true)]
     property type : String
 
     def initialize(*, @object : Apimachinery::Runtime::RawExtension, @type : String)

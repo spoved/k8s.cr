@@ -91,18 +91,22 @@ module K8S
     include ::JSON::Serializable
     include ::YAML::Serializable
 
+    @[::JSON::Field(key: "apiVersion")]
+    @[::YAML::Field(key: "apiVersion")]
     getter api_version : String = "storage/v1alpha1"
     getter kind : String = "CSIStorageCapacity"
     # Capacity is the value reported by the CSI driver in its GetCapacityResponse for a GetCapacityRequest with topology and parameters that match the previous fields.
     #
     # The semantic is currently (CSI spec 1.2) defined as: The available capacity, in bytes, of the storage that can be used to provision volumes. If not set, that information is currently unavailable and treated like zero capacity.
+    @[::JSON::Field(key: "capacity", emit_null: false)]
+    @[::YAML::Field(key: "capacity", emit_null: false)]
     property capacity : Int32 | String | Nil
 
     # MaximumVolumeSize is the value reported by the CSI driver in its GetCapacityResponse for a GetCapacityRequest with topology and parameters that match the previous fields.
     #
     # This is defined since CSI spec 1.4.0 as the largest size that may be used in a CreateVolumeRequest.capacity_range.required_bytes field to create a volume with the same parameters as those in GetCapacityRequest. The corresponding value in the Kubernetes API is ResourceRequirements.Requests in a volume claim.
-    @[::JSON::Field(key: "maximumVolumeSize")]
-    @[::YAML::Field(key: "maximumVolumeSize")]
+    @[::JSON::Field(key: "maximumVolumeSize", emit_null: false)]
+    @[::YAML::Field(key: "maximumVolumeSize", emit_null: false)]
     property maximum_volume_size : Int32 | String | Nil
 
     # Standard object's metadata. The name has no particular meaning. It must be be a DNS subdomain (dots allowed, 253 characters). To ensure that there are no conflicts with other CSI drivers on the cluster, the recommendation is to use csisc-<uuid>, a generated name, or a reverse-domain name which ends with the unique CSI driver name.
@@ -110,16 +114,18 @@ module K8S
     # Objects are namespaced.
     #
     # More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)
+    @[::JSON::Field(key: "metadata", emit_null: false)]
+    @[::YAML::Field(key: "metadata", emit_null: false)]
     property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil
 
     # NodeTopology defines which nodes have access to the storage for which capacity was reported. If not set, the storage is not accessible from any node in the cluster. If empty, the storage is accessible from all nodes. This field is immutable.
-    @[::JSON::Field(key: "nodeTopology")]
-    @[::YAML::Field(key: "nodeTopology")]
+    @[::JSON::Field(key: "nodeTopology", emit_null: false)]
+    @[::YAML::Field(key: "nodeTopology", emit_null: false)]
     property node_topology : Apimachinery::Apis::Meta::V1::LabelSelector | Nil
 
     # The name of the StorageClass that the reported capacity applies to. It must meet the same requirements as the name of a StorageClass object (non-empty, DNS subdomain). If that object no longer exists, the CSIStorageCapacity object is obsolete and should be removed by its creator. This field is immutable.
-    @[::JSON::Field(key: "storageClassName")]
-    @[::YAML::Field(key: "storageClassName")]
+    @[::JSON::Field(key: "storageClassName", emit_null: true)]
+    @[::YAML::Field(key: "storageClassName", emit_null: true)]
     property storage_class_name : String
 
     def initialize(*, @storage_class_name : String, @capacity : Int32 | String | Nil = nil, @maximum_volume_size : Int32 | String | Nil = nil, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil, @node_topology : Apimachinery::Apis::Meta::V1::LabelSelector | Nil = nil)

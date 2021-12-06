@@ -14,13 +14,13 @@ module K8S
     include ::YAML::Serializable
 
     # A list of node selector requirements by node's labels.
-    @[::JSON::Field(key: "matchExpressions")]
-    @[::YAML::Field(key: "matchExpressions")]
+    @[::JSON::Field(key: "matchExpressions", emit_null: false)]
+    @[::YAML::Field(key: "matchExpressions", emit_null: false)]
     property match_expressions : Array(Api::Core::V1::NodeSelectorRequirement) | Nil
 
     # A list of node selector requirements by node's fields.
-    @[::JSON::Field(key: "matchFields")]
-    @[::YAML::Field(key: "matchFields")]
+    @[::JSON::Field(key: "matchFields", emit_null: false)]
+    @[::YAML::Field(key: "matchFields", emit_null: false)]
     property match_fields : Array(Api::Core::V1::NodeSelectorRequirement) | Nil
 
     def initialize(*, @match_expressions : Array | Nil = nil, @match_fields : Array | Nil = nil)

@@ -14,9 +14,13 @@ module K8S
     include ::YAML::Serializable
 
     # max is the end of the range, inclusive.
+    @[::JSON::Field(key: "max", emit_null: true)]
+    @[::YAML::Field(key: "max", emit_null: true)]
     property max : Int32
 
     # min is the start of the range, inclusive.
+    @[::JSON::Field(key: "min", emit_null: true)]
+    @[::YAML::Field(key: "min", emit_null: true)]
     property min : Int32
 
     def initialize(*, @max : Int32, @min : Int32)

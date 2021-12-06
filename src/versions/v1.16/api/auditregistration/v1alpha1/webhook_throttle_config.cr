@@ -14,9 +14,13 @@ module K8S
     include ::YAML::Serializable
 
     # ThrottleBurst is the maximum number of events sent at the same moment default 15 QPS
+    @[::JSON::Field(key: "burst", emit_null: false)]
+    @[::YAML::Field(key: "burst", emit_null: false)]
     property burst : Int32 | Nil
 
     # ThrottleQPS maximum number of batches per second default 10 QPS
+    @[::JSON::Field(key: "qps", emit_null: false)]
+    @[::YAML::Field(key: "qps", emit_null: false)]
     property qps : Int32 | Nil
 
     def initialize(*, @burst : Int32 | Nil = nil, @qps : Int32 | Nil = nil)
