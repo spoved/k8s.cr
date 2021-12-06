@@ -3,7 +3,7 @@ require "yaml"
 
 annotation ::K8S::Properties; end
 
-abstract class ::K8S::Kubernetes::Resource
+class ::K8S::Kubernetes::Resource
   macro inherited
     {% if @type.annotation(::K8S::Properties) %}
     {% anno = @type.annotation(::K8S::Properties) %}
@@ -50,6 +50,8 @@ abstract class ::K8S::Kubernetes::Resource
   end
 
   module Object
+    abstract def api_version : String
+    abstract def kind : String
     abstract def metadata : Apimachinery::Apis::Meta::V1::ObjectMeta?
 
     def metadata! : Apimachinery::Apis::Meta::V1::ObjectMeta
@@ -58,6 +60,8 @@ abstract class ::K8S::Kubernetes::Resource
   end
 
   module List
+    abstract def api_version : String
+    abstract def kind : String
     abstract def metadata : Apimachinery::Apis::Meta::V1::ListMeta?
 
     def metadata! : Apimachinery::Apis::Meta::V1::ListMeta
@@ -70,10 +74,10 @@ abstract class ::K8S::Kubernetes::Resource
 
   @[::JSON::Field(key: "apiVersion")]
   @[::YAML::Field(key: "apiVersion")]
-  @api_version : String
+  getter api_version : String
+  getter kind : String
 
-  abstract def api_version : String
-  abstract def kind : String
+  def initialize(@api_version, @kind); end
 
   def from_file(file)
     Log.trace { "Loading #{file}" }

@@ -1,11 +1,53 @@
 require "json"
 require "yaml"
+require "./error"
 
 macro sanitize_api(api)
   {{api}}.gsub(/(\.authorization)?\.k8s\.io/, "")
 end
 
+macro k8s_resource_class(group, ver, kind)
+  {% others = {} of StringLiteral => TypeNode %}
+  {% for resource in K8S::Kubernetes::Resource.all_subclasses %}
+    {% if !resource.abstract? && resource.annotation(::K8S::GroupVersionKind) %}
+    {% anno = resource.annotation(::K8S::GroupVersionKind) %}
+      {% value = "{#{anno[:group].gsub(/(\.authorization)?\.k8s\.io/, "")},#{anno[:version]},#{anno[:kind]}}" %}
+      {% if !others[value] %} {% others[value] = resource %} {% end %}
+    {% end %}
+  {% end %}
+  {% for resource in K8S::Kubernetes::Resource.all_subclasses %}
+    {% if !resource.abstract? && resource.annotation(::K8S::GroupVersionKind) %}
+      {% anno = resource.annotation(::K8S::GroupVersionKind) %}
+      {% value = "{\"\",#{anno[:version]},#{anno[:kind]}}" %}
+      {% if anno[:group] != "" && !others[value] %} {% others[value] = resource %} {% end %}
+      {% value1 = "{\"core\",#{anno[:version]},#{anno[:kind]}}" %}
+      {% if !others[value1] && anno[:group] == "" %} {% others[value1] = resource %} {% end %}
+    {% end %}
+  {% end %}
+  {% for mapping in K8S::Kubernetes::Resource::MAPPINGS %}
+    {% value = %<{"",#{mapping[0]},#{mapping[1].split("::").last}}> %}
+    {% if !others[value] %} {% others[value] = mapping[2].resolve %} {% end %}
+    {% if mapping[0] =~ /\// %}{% split = mapping[0].split('/') %}
+    {% value1 = "{#{split.first},#{split.last},#{anno[:kind]}}" %}
+    {% if !others[value1] && anno[:group] == "" %} {% others[value1] = resource %} {% end %}
+    {% end %}
+  {% end %}
+
+  case { {{group}}, {{ver}}, {{kind}} }
+  {% for key, resource in others %}
+  when {{key.id}}
+    {{resource.id}}
+  {% end %}
+  else
+    Log.warn &.emit %<Unknown api resource: "#{{{group}}}/#{{{ver}}}/#{{{kind}}}">,
+      group: {{group}}, version: {{ver}}, kind: {{kind}}
+    raise K8S::Error::UnknownResource.new("#{{{group}}}/#{{{ver}}}/#{{{kind}}}")
+  end
+end
+
 macro k8s_json_discriminator(mappings)
+  {% verbatim do %}
+  macro finished
   def self.new(pull : ::JSON::PullParser)
     location = pull.location
 
@@ -59,23 +101,28 @@ macro k8s_json_discriminator(mappings)
       return ::K8S::Apimachinery::Apis::Meta::V1::APIResourceList.from_json(json)
     end
 
-    case {api_value, discriminator_value}
-    {% for value in mappings.resolve %}
-    when { sanitize_api({{ value[0] }}), {{value[1]}} }
-      {{value[2].id}}.from_json(json)
-    {% end %}
-    else
-      if discriminator_value =~ /List$/
-        return ::K8S::Kubernetes::ResourceList(::K8S::Kubernetes::GenericResource).from_json(json)
-      end
+    parts = api_value.split('/')
+    ver = parts.pop
+    group = parts.join('/')
+    klass = k8s_resource_class(group, ver, discriminator_value)
 
-      Log.error {"Unknown 'apiVersion', 'kind' discriminator values: #{api_value.inspect} #{discriminator_value.inspect}"}
-      JSON.parse(json)
+    case klass
+    {% for resource in K8S::Kubernetes::Resource.all_subclasses %}
+    {% if !resource.abstract? && resource.annotation(::K8S::GroupVersionKind) %}
+    when {{resource.id}}.class
+      {{resource.id}}.from_json(json)
+    {% end %}{% end %}
+    else
+      raise K8S::Error::UndefinedResource.new(klass)
     end
   end
+  end
+  {% end %}
 end
 
 macro k8s_yaml_discriminator(mappings)
+  {% verbatim do %}
+  macro finished
   def self.new(ctx : YAML::ParseContext, node : YAML::Nodes::Node)
     api_value = nil
     discriminator_value = nil
@@ -99,13 +146,21 @@ macro k8s_yaml_discriminator(mappings)
     node.raise "Missing YAML discriminator field 'kind'" unless discriminator_value
     node.raise "Missing YAML discriminator field 'apiVersion'" unless api_value
 
-    case {api_value, discriminator_value}
-    {% for value in mappings.resolve %}
-    when { {{ value[0] }}.gsub(".k8s.io", ""), {{value[1]}} }
-      return {{value[2].id}}.new(ctx, node)
-    {% end %}
+    parts = api_value.split('/')
+    ver = parts.pop
+    group = parts.join('/')
+    klass = k8s_resource_class(group, ver, discriminator_value)
+
+    case klass
+    {% for resource in K8S::Kubernetes::Resource.all_subclasses %}
+    {% if !resource.abstract? && resource.annotation(::K8S::GroupVersionKind) %}
+    when {{resource.id}}.class
+      {{resource.id}}.new(ctx, node)
+    {% end %}{% end %}
     else
-      node.raise "Unknown 'apiVersion', 'kind' discriminator values: #{api_value.inspect} #{discriminator_value.inspect}"
+      raise K8S::Error::UndefinedResource.new(klass)
     end
   end
+  end
+  {% end %}
 end
