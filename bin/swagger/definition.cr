@@ -2,19 +2,15 @@ require "json"
 require "./ext/*"
 
 class Swagger::Definition
-  @required = [] of String
-  @properties = {} of String => Property
+  include JSON::Serializable
 
-  JSON.mapping({
-    description:                     String?,
-    required:                        {type: Array(String), default: [] of String},
-    properties:                      {type: Hash(String, Property), default: {} of String => Property},
-    _ref:                            {type: String, nilable: true, key: "$ref"},
-    x_kubernetes_group_version_kind: {
-      type: Array(XKubernetesGroupVersionKind)?,
-      key:  "x-kubernetes-group-version-kind",
-    },
-  })
+  property description : String? = nil
+  property required : Array(String) = [] of String
+  property properties : Hash(String, Property) = {} of String => Property
+  @[JSON::Field(key: "$ref")]
+  property _ref : String? = nil
+  @[JSON::Field(key: "x-kubernetes-group-version-kind")]
+  property x_kubernetes_group_version_kind : Array(XKubernetesGroupVersionKind)? = nil
 
   def initialize; end
 end

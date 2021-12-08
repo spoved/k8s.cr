@@ -1,19 +1,19 @@
 require "json"
 
 class Swagger::Path
-  JSON.mapping({
-    get:        Action?,
-    post:       Action?,
-    delete:     Action?,
-    patch:      Action?,
-    put:        Action?,
-    head:       Action?,
-    options:    Action?,
-    parameters: {type: Array(Parameter), default: [] of Parameter},
-  })
+  include JSON::Serializable
+
+  property get : Action?
+  property post : Action?
+  property delete : Action?
+  property patch : Action?
+  property put : Action?
+  property head : Action?
+  property options : Action?
+  property parameters : Array(Parameter) = [] of Parameter
 
   def actions
-    action_map.values.reject(&.nil?).map(&.as Action)
+    action_map.values.reject(Nil).map(&.as Action)
   end
 
   def action_map

@@ -3,19 +3,18 @@ require "./parameter"
 require "../ext/*"
 
 class Swagger::Path::Action
-  JSON.mapping({
-    description:         String?,
-    consumes:            Array(String)?,
-    produces:            Array(String)?,
-    operationId:         String,
-    responses:           Hash(String, Response),
-    parameters:          {type: Array(Parameter), default: [] of Parameter},
-    tags:                Array(String)?,
-    x_kubernetes_action: {
-      type: String?,
-      key:  "x-kubernetes-action",
-    },
-  })
+  include JSON::Serializable
+
+  property description : String?
+  property consumes : Array(String)?
+  property produces : Array(String)?
+  property operationId : String
+  property responses : Hash(String, Response)
+  property parameters : Array(Parameter) = [] of Parameter
+  property tags : Array(String)?
+
+  @[JSON::Field(key: "x-kubernetes-action")]
+  property x_kubernetes_action : Array(String) | String? = nil
 end
 
 require "./action/*"

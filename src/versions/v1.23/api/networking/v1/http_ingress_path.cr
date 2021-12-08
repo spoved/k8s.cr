@@ -1,0 +1,45 @@
+# THIS FILE WAS AUTO GENERATED FROM THE K8S SWAGGER SPEC
+
+require "yaml"
+require "json"
+
+module K8S
+  # HTTPIngressPath associates a path with a backend. Incoming urls matching the path are forwarded to the backend.
+  @[::K8S::Properties(
+    backend: {type: Api::Networking::V1::IngressBackend, nilable: false, key: "backend", getter: false, setter: false},
+    path: {type: String, nilable: true, key: "path", getter: false, setter: false},
+    path_type: {type: String, nilable: false, key: "pathType", getter: false, setter: false},
+  )]
+  class Api::Networking::V1::HTTPIngressPath
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
+    # Backend defines the referenced service endpoint to which the traffic will be forwarded to.
+    @[::JSON::Field(key: "backend", emit_null: true)]
+    @[::YAML::Field(key: "backend", emit_null: true)]
+    property backend : Api::Networking::V1::IngressBackend
+
+    # Path is matched against the path of an incoming request. Currently it can contain characters disallowed from the conventional "path" part of a URL as defined by RFC 3986. Paths must begin with a '/' and must be present when using PathType with value "Exact" or "Prefix".
+    @[::JSON::Field(key: "path", emit_null: false)]
+    @[::YAML::Field(key: "path", emit_null: false)]
+    property path : String | Nil
+
+    # PathType determines the interpretation of the Path matching. PathType can be one of the following values: * Exact: Matches the URL path exactly. * Prefix: Matches based on a URL path prefix split by '/'. Matching is
+    #   done on a path element by element basis. A path element refers is the
+    #   list of labels in the path split by the '/' separator. A request is a
+    #   match for path p if every p is an element-wise prefix of p of the
+    #   request path. Note that if the last element of the path is a substring
+    #   of the last element in request path, it is not a match (e.g. [/foo/bar](/foo/bar)
+    #   matches [/foo/bar/baz, but does not match /foo/barbaz).](/foo/bar/baz, but does not match /foo/barbaz).)
+    # * ImplementationSpecific: Interpretation of the Path matching is up to
+    #   the IngressClass. Implementations can treat this as a separate PathType
+    #   or treat it identically to Prefix or Exact path types.
+    # Implementations are required to support all path types.
+    @[::JSON::Field(key: "pathType", emit_null: true)]
+    @[::YAML::Field(key: "pathType", emit_null: true)]
+    property path_type : String
+
+    def initialize(*, @backend : Api::Networking::V1::IngressBackend, @path_type : String, @path : String | Nil = nil)
+    end
+  end
+end

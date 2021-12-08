@@ -2,15 +2,15 @@ require "json"
 require "./schema"
 
 class Swagger::Path::Parameter
-  JSON.mapping({
-    name:        String,
-    in:          String?,
-    description: String?,
-    uniqueItems: Bool?,
-    required:    {type: Bool, default: false},
-    type:        String?,
-    schema:      Schema?,
-  }, true)
+  include JSON::Serializable
+
+  property name : String
+  property in : String?
+  property description : String?
+  property uniqueItems : Bool?
+  property required : Bool = false
+  property type : String?
+  property schema : Schema?
 
   def initialize(@name : String, @type = "string", @required = true)
   end

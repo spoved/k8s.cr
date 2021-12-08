@@ -1,8 +1,9 @@
 require "json"
 
 class Swagger::Path::Schema
-  JSON.mapping({
-    type: String?,
-    _ref: {type: String, nilable: true, key: "$ref"},
-  }, true)
+  include JSON::Serializable
+
+  property type : String?
+  @[JSON::Field(key: "$ref")]
+  property _ref : String? = nil
 end

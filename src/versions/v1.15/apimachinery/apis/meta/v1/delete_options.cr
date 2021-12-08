@@ -1,0 +1,100 @@
+# THIS FILE WAS AUTO GENERATED FROM THE K8S SWAGGER SPEC
+
+require "yaml"
+require "json"
+
+module K8S
+  # DeleteOptions may be provided when deleting an API object.
+  @[::K8S::GroupVersionKind(group: "", kind: "DeleteOptions", version: "v1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions")]
+  @[::K8S::GroupVersionKind(group: "admission.k8s.io", kind: "DeleteOptions", version: "v1beta1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions")]
+  @[::K8S::GroupVersionKind(group: "admissionregistration.k8s.io", kind: "DeleteOptions", version: "v1beta1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions")]
+  @[::K8S::GroupVersionKind(group: "apiextensions.k8s.io", kind: "DeleteOptions", version: "v1beta1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions")]
+  @[::K8S::GroupVersionKind(group: "apiregistration.k8s.io", kind: "DeleteOptions", version: "v1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions")]
+  @[::K8S::GroupVersionKind(group: "apiregistration.k8s.io", kind: "DeleteOptions", version: "v1beta1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions")]
+  @[::K8S::GroupVersionKind(group: "apps", kind: "DeleteOptions", version: "v1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions")]
+  @[::K8S::GroupVersionKind(group: "apps", kind: "DeleteOptions", version: "v1beta1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions")]
+  @[::K8S::GroupVersionKind(group: "apps", kind: "DeleteOptions", version: "v1beta2", full: "io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions")]
+  @[::K8S::GroupVersionKind(group: "auditregistration.k8s.io", kind: "DeleteOptions", version: "v1alpha1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions")]
+  @[::K8S::GroupVersionKind(group: "authentication.k8s.io", kind: "DeleteOptions", version: "v1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions")]
+  @[::K8S::GroupVersionKind(group: "authentication.k8s.io", kind: "DeleteOptions", version: "v1beta1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions")]
+  @[::K8S::GroupVersionKind(group: "authorization.k8s.io", kind: "DeleteOptions", version: "v1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions")]
+  @[::K8S::GroupVersionKind(group: "authorization.k8s.io", kind: "DeleteOptions", version: "v1beta1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions")]
+  @[::K8S::GroupVersionKind(group: "autoscaling", kind: "DeleteOptions", version: "v1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions")]
+  @[::K8S::GroupVersionKind(group: "autoscaling", kind: "DeleteOptions", version: "v2beta1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions")]
+  @[::K8S::GroupVersionKind(group: "autoscaling", kind: "DeleteOptions", version: "v2beta2", full: "io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions")]
+  @[::K8S::GroupVersionKind(group: "batch", kind: "DeleteOptions", version: "v1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions")]
+  @[::K8S::GroupVersionKind(group: "batch", kind: "DeleteOptions", version: "v1beta1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions")]
+  @[::K8S::GroupVersionKind(group: "batch", kind: "DeleteOptions", version: "v2alpha1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions")]
+  @[::K8S::GroupVersionKind(group: "certificates.k8s.io", kind: "DeleteOptions", version: "v1beta1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions")]
+  @[::K8S::GroupVersionKind(group: "coordination.k8s.io", kind: "DeleteOptions", version: "v1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions")]
+  @[::K8S::GroupVersionKind(group: "coordination.k8s.io", kind: "DeleteOptions", version: "v1beta1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions")]
+  @[::K8S::GroupVersionKind(group: "events.k8s.io", kind: "DeleteOptions", version: "v1beta1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions")]
+  @[::K8S::GroupVersionKind(group: "extensions", kind: "DeleteOptions", version: "v1beta1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions")]
+  @[::K8S::GroupVersionKind(group: "imagepolicy.k8s.io", kind: "DeleteOptions", version: "v1alpha1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions")]
+  @[::K8S::GroupVersionKind(group: "networking.k8s.io", kind: "DeleteOptions", version: "v1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions")]
+  @[::K8S::GroupVersionKind(group: "networking.k8s.io", kind: "DeleteOptions", version: "v1beta1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions")]
+  @[::K8S::GroupVersionKind(group: "node.k8s.io", kind: "DeleteOptions", version: "v1alpha1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions")]
+  @[::K8S::GroupVersionKind(group: "node.k8s.io", kind: "DeleteOptions", version: "v1beta1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions")]
+  @[::K8S::GroupVersionKind(group: "policy", kind: "DeleteOptions", version: "v1beta1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions")]
+  @[::K8S::GroupVersionKind(group: "rbac.authorization.k8s.io", kind: "DeleteOptions", version: "v1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions")]
+  @[::K8S::GroupVersionKind(group: "rbac.authorization.k8s.io", kind: "DeleteOptions", version: "v1alpha1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions")]
+  @[::K8S::GroupVersionKind(group: "rbac.authorization.k8s.io", kind: "DeleteOptions", version: "v1beta1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions")]
+  @[::K8S::GroupVersionKind(group: "scheduling.k8s.io", kind: "DeleteOptions", version: "v1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions")]
+  @[::K8S::GroupVersionKind(group: "scheduling.k8s.io", kind: "DeleteOptions", version: "v1alpha1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions")]
+  @[::K8S::GroupVersionKind(group: "scheduling.k8s.io", kind: "DeleteOptions", version: "v1beta1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions")]
+  @[::K8S::GroupVersionKind(group: "settings.k8s.io", kind: "DeleteOptions", version: "v1alpha1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions")]
+  @[::K8S::GroupVersionKind(group: "storage.k8s.io", kind: "DeleteOptions", version: "v1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions")]
+  @[::K8S::GroupVersionKind(group: "storage.k8s.io", kind: "DeleteOptions", version: "v1alpha1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions")]
+  @[::K8S::GroupVersionKind(group: "storage.k8s.io", kind: "DeleteOptions", version: "v1beta1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.DeleteOptions")]
+  @[::K8S::Properties(
+    api_version: {type: String, nilable: true, key: "apiVersion", getter: false, setter: false},
+    dry_run: {type: Array(String), nilable: true, key: "dryRun", getter: false, setter: false},
+    grace_period_seconds: {type: Int32, nilable: true, key: "gracePeriodSeconds", getter: false, setter: false},
+    kind: {type: String, nilable: true, key: "kind", getter: false, setter: false},
+    orphan_dependents: {type: Bool, nilable: true, key: "orphanDependents", getter: false, setter: false},
+    preconditions: {type: Apimachinery::Apis::Meta::V1::Preconditions, nilable: true, key: "preconditions", getter: false, setter: false},
+    propagation_policy: {type: String, nilable: true, key: "propagationPolicy", getter: false, setter: false},
+  )]
+  class Apimachinery::Apis::Meta::V1::DeleteOptions
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
+    # APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [https://git.k8s.io/community/contributors/devel/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/api-conventions.md#resources)
+    @[::JSON::Field(key: "apiVersion", emit_null: false)]
+    @[::YAML::Field(key: "apiVersion", emit_null: false)]
+    property api_version : String | Nil
+
+    # When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
+    @[::JSON::Field(key: "dryRun", emit_null: false)]
+    @[::YAML::Field(key: "dryRun", emit_null: false)]
+    property dry_run : Array(String) | Nil
+
+    # The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
+    @[::JSON::Field(key: "gracePeriodSeconds", emit_null: false)]
+    @[::YAML::Field(key: "gracePeriodSeconds", emit_null: false)]
+    property grace_period_seconds : Int32 | Nil
+
+    # Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds)
+    @[::JSON::Field(key: "kind", emit_null: false)]
+    @[::YAML::Field(key: "kind", emit_null: false)]
+    property kind : String | Nil
+
+    # Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If [true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.](true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.)
+    @[::JSON::Field(key: "orphanDependents", emit_null: false)]
+    @[::YAML::Field(key: "orphanDependents", emit_null: false)]
+    property orphan_dependents : Bool | Nil
+
+    # Must be fulfilled before a deletion is carried out. If not possible, a 409 Conflict status will be returned.
+    @[::JSON::Field(key: "preconditions", emit_null: false)]
+    @[::YAML::Field(key: "preconditions", emit_null: false)]
+    property preconditions : Apimachinery::Apis::Meta::V1::Preconditions | Nil
+
+    # Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: 'Orphan' - orphan the dependents; 'Background' - allow the garbage collector to delete the dependents in the background; 'Foreground' - a cascading policy that deletes all dependents in the foreground.
+    @[::JSON::Field(key: "propagationPolicy", emit_null: false)]
+    @[::YAML::Field(key: "propagationPolicy", emit_null: false)]
+    property propagation_policy : String | Nil
+
+    def initialize(*, @api_version : String | Nil = nil, @dry_run : Array | Nil = nil, @grace_period_seconds : Int32 | Nil = nil, @kind : String | Nil = nil, @orphan_dependents : Bool | Nil = nil, @preconditions : Apimachinery::Apis::Meta::V1::Preconditions | Nil = nil, @propagation_policy : String | Nil = nil)
+    end
+  end
+end

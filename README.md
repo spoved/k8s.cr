@@ -35,3 +35,5 @@ require "k8s/versions/v1.11"
 
 - [[jwaldrip]](https://github.com/jwaldrip) Jason Waldrip - original creator
 - [[kalinon]](https://github.com/kalinon) Holden Omans - maintainer
+- Krzysztof Rybka ([@krzysiek1507](https://github.com/krzysiek1507)) - Ruby Hashdiff
+- Fengyun Liu ([@liufengyun](https://github.com/liufengyun)) - Ruby Hashdiff

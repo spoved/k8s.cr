@@ -43,7 +43,7 @@ def latest_patch_for(prefix, patch_range = 0..22, last_res = nil)
 end
 
 major = 1
-minor = 16
+minor = 11
 # minor = 22
 
 FileUtils.rm_rf File.join(".", Generator::VERSIONS_DIR)

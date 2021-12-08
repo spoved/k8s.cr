@@ -1,0 +1,29 @@
+# THIS FILE WAS AUTO GENERATED FROM THE K8S SWAGGER SPEC
+
+require "yaml"
+require "json"
+
+module K8S
+  # PodsMetricStatus indicates the current value of a metric describing each pod in the current scale target (for example, transactions-processed-per-second).
+  @[::K8S::Properties(
+    current: {type: Api::Autoscaling::V2::MetricValueStatus, nilable: false, key: "current", getter: false, setter: false},
+    metric: {type: Api::Autoscaling::V2::MetricIdentifier, nilable: false, key: "metric", getter: false, setter: false},
+  )]
+  class Api::Autoscaling::V2::PodsMetricStatus
+    include ::JSON::Serializable
+    include ::YAML::Serializable
+
+    # current contains the current value for the given metric
+    @[::JSON::Field(key: "current", emit_null: true)]
+    @[::YAML::Field(key: "current", emit_null: true)]
+    property current : Api::Autoscaling::V2::MetricValueStatus
+
+    # metric identifies the target metric by name and selector
+    @[::JSON::Field(key: "metric", emit_null: true)]
+    @[::YAML::Field(key: "metric", emit_null: true)]
+    property metric : Api::Autoscaling::V2::MetricIdentifier
+
+    def initialize(*, @current : Api::Autoscaling::V2::MetricValueStatus, @metric : Api::Autoscaling::V2::MetricIdentifier)
+    end
+  end
+end
