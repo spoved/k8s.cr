@@ -16,7 +16,7 @@ dependencies:
 ## Usage
 
 K8S.cr should support Kubernetes API from 1.11.0 and beyond. In order to use
-the bindings, you will want to include the VERSION that best maps to your k8s api version.
+the bindings, you will want to include the [VERSION](src/versions) that best maps to your k8s api version.
 Requiring more than one version at this time will result in an error.
 
 ```crystal
