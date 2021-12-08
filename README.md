@@ -1,7 +1,7 @@
-# K8S
+# K8S.cr
 
-A Kubernetes Client for Crystal-lang forked from [psykube/pyrite](https://github.com/psykube/pyrite).
-Forked due to possibly destructive changes to change namespaces and adapt for use with `Kube::Client`
+A Kubernetes Binding lib for Crystal-lang forked from [psykube/pyrite](https://github.com/psykube/pyrite).
+Forked due to possibly destructive changes to change namespaces and adapt for use with [`Kube::Client`](https://github.com/spoved/kube-client.cr)
 
 ## Installation
 
@@ -9,18 +9,18 @@ Add this to your application's `shard.yml`:
 
 ```yaml
 dependencies:
-  pyrite:
-    github: psykube/pyrite
+  k8s:
+    github: spoved/k8s.cr
 ```
 
 ## Usage
 
-K8S.cr should support Kubernetes API from 1.6.0 and beyond. In order to use
+K8S.cr should support Kubernetes API from 1.11.0 and beyond. In order to use
 the bindings, you will want to include the VERSION that best maps to your k8s api version.
 Requiring more than one version at this time will result in an error.
 
 ```crystal
-require "k8s/versions/v1.7"
+require "k8s/versions/v1.11"
 ```
 
 ## Contributing

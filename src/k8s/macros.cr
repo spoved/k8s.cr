@@ -164,3 +164,26 @@ macro k8s_yaml_discriminator(mappings)
   end
   {% end %}
 end
+
+# TODO: Would like to be able to create objects from named tuples, but
+#       that requires a lot of work.
+#
+# macro finished
+#   {% for obj in Object.all_subclasses %}
+#     {% if !obj.abstract? && obj.annotation(::K8S::Properties) %}
+
+#     class {{obj.id}}
+#       def initialize(**args)
+#       {% for anno in obj.annotations(::K8S::Properties) %}
+#         {% props = anno.named_args %}
+#         {% for name, prop in props %}
+#         if args[:{{name.id}}]
+#           @{{name.id}} = args[:{{name}}]
+#         end
+#         {% end %}
+#       {% end %}
+#       end
+#     end
+#     {% end %}
+#   {% end %}
+# end

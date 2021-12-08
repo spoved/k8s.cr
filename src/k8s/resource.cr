@@ -38,20 +38,14 @@ abstract class ::K8S::Kubernetes::Resource
       copy = self.to_h
       case other
       when Hash
-        {% for prop, value in anno.named_args %}
-          copy[{{prop.stringify}}] = other[:{{prop}}] if other.has_key?(:{{prop}})
-          copy[{{prop.stringify}}] = other[{{prop.stringify}}] if other.has_key?({{prop.stringify}})
-        {% end %}
+          copy = copy.deep_merge(other_hash)
       when {{@type.id}}
           other_hash = other.to_h
-          {% for prop, value in anno.named_args %}
-            copy[{{prop.stringify}}] = other_hash[:{{prop}}] if other_hash.has_key?(:{{prop}})
-            copy[{{prop.stringify}}] = other_hash[{{prop.stringify}}] if other_hash.has_key?({{prop.stringify}})
-          {% end %}
+          copy = copy.deep_merge(other_hash)
       else
         raise "Cannot merge {{@type.id}} with #{other.class}"
       end
-      copy
+      self.class.from_h(copy)
     end
 
     def self.from_h(hash)
