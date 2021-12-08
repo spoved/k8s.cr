@@ -139,7 +139,7 @@ module K8S
       # ["~", ["spec", "selector", "drink"], "old value", "new value"]
       # the path elements can be symbols too, depending on the input hashes
       Hashdiff.diff(patch_to, patch_from, array_path: true).each do |diff|
-        # Log.trace &.emit %<diff: #{diff.inspect}>
+        Log.trace &.emit %<diff: #{diff.inspect}>
         operator = diff[0]
         # substitute "/" with "~1" and "~" with "~0"
         # according to RFC 6901

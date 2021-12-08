@@ -147,7 +147,7 @@ Spectator.describe K8S::Util do
     end
   end
 
-  describe "#json_patch", focus: true do
+  describe "#json_patch" do
     it "handles inner hash addition" do
       a = {
         metadata: {

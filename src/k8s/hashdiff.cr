@@ -8,6 +8,11 @@ module K8S
     extend self
 
     def diff(obj1 : T, obj2 : L, **options) forall T, L
+      obj1 = obj1.to_h if obj1.is_a?(NamedTuple)
+      obj2 = obj2.to_h if obj2.is_a?(NamedTuple)
+      obj1 = obj1.to_h if obj1.is_a?(K8S::Resource)
+      obj2 = obj2.to_h if obj2.is_a?(K8S::Resource)
+
       Log.trace { "Diff: #{obj1.class} and #{obj2.class}" }
 
       opts = {
@@ -21,12 +26,6 @@ module K8S
         array_path:        true,
         use_lcs:           true,
       }.merge(options)
-
-      # return Array(Array(String)).new if obj1.nil? && obj2.nil?
-      # return [["~", opts[:prefix], obj1, obj2]] if obj1.nil? || obj2.nil?
-      # return [["~", opts[:prefix], obj1, obj2]] unless comparable?(obj1, obj2, opts[:strict])
-      # return LcsCompareArrays.call(obj1, obj2, opts) if obj1.is_a?(Array) && opts[:use_lcs]
-      # return CompareHashes.call(obj1, obj2, **opts)
 
       if obj1.nil? && obj2.nil?
         Array(DiffResult).new
