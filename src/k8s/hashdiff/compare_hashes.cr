@@ -7,8 +7,8 @@ module K8S::Hashdiff::CompareHashes
     result = Array(DiffResult).new
     return result if obj1.empty? && obj2.empty?
 
-    obj1_keys = Array(String | Symbol).new.concat obj1.keys
-    obj2_keys = Array(String | Symbol).new.concat obj2.keys
+    obj1_keys = Array(String | Symbol).new + obj1.keys
+    obj2_keys = Array(String | Symbol).new + obj2.keys
     obj1_lookup = Hash(String, String | K | V | T | L | Nil).new
     obj2_lookup = Hash(String, String | K | V | T | L | Nil).new
 

@@ -9,7 +9,7 @@ module K8S::Hashdiff::LcsCompareArrays
 
     changeset = Hashdiff.diff_array_lcs(obj1, obj2, **opts) do |lcs|
       lcs.each do |pair|
-        prefix = Hashdiff.prefix_append_array_index(**opts, array_index: pair[0].to_s)
+        prefix = Hashdiff.prefix_append_array_index(**opts, array_index: pair[0])
         Hashdiff.diff(obj1[pair[0]], obj2[pair[1]], **opts.merge(prefix: prefix)).each do |change|
           result += [change]
         end
@@ -18,7 +18,7 @@ module K8S::Hashdiff::LcsCompareArrays
 
     changeset.each do |change|
       next if change[0] != "-" && change[0] != "+"
-      change_key = Hashdiff.prefix_append_array_index(**opts, array_index: change[1].to_s)
+      change_key = Hashdiff.prefix_append_array_index(**opts, array_index: change[1])
       result += [{change[0], change_key, change[2]}]
     end
 

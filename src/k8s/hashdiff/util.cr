@@ -3,7 +3,7 @@ module K8S
     extend self
 
     # judge whether two objects are similar
-    def similar?(obja, objb, **options)
+    def similar?(obja, objb, **options) : Bool
       return compare_values(obja, objb, **options) if !options[:comparison]? && !any_hash_or_array?(obja, objb)
 
       count_a = count_nodes(obja)
@@ -18,7 +18,7 @@ module K8S
     end
 
     # check if objects are comparable
-    private def comparable?(obj1 : T, obj2 : L, strict = true) : Bool forall T, L
+    def comparable?(obj1 : T, obj2 : L, strict = true) : Bool forall T, L
       return true if (obj1.is_a?(Array) && obj2.is_a?(Array))
       return true if (obj1.is_a?(Hash) && obj2.is_a?(Hash))
       return true if !strict && obj1.is_a?(Number) && obj2.is_a?(Number)
@@ -56,17 +56,19 @@ module K8S
     #
     # e.g. "a.b[3].c" => ['a', 'b', 3, 'c']
     def decode_property_path(path, delimiter = '.')
-      path.split(delimiter).inject(Array(String).new) do |memo, part|
+      memo = Array(String).new
+      path.split(delimiter) do |part|
         if match = /^(.*)\[(\d+)\]$/.match(part)
-          if match[0]? && !match[0].empty?
-            memo + [match[0], match[1].to_i]
+          if match[1]? && !match[2].empty?
+            memo += [match[1], match[2].to_i]
           else
-            memo + [match[1].to_i]
+            memo += [match[2].to_i]
           end
         else
-          memo + [part]
+          memo += [part]
         end
       end
+      memo
     end
 
     # get the node of hash by given path parts
@@ -86,7 +88,7 @@ module K8S
     # :ditto:
     def compare_values(obj1 : Number, obj2 : Number, **options) : Bool
       if options[:numeric_tolerance]?.is_a?(Number)
-        (obj1 - obj2).abs <= options[:numeric_tolerance]
+        (obj1 - obj2).abs <= options[:numeric_tolerance]?.as(Number)
       else
         obj1 == obj2
       end
@@ -107,21 +109,23 @@ module K8S
       obj1 == obj2
     end
 
-    def prefix_append_key(key, prefix : Array(String), **opts) : Array(String)
-      prefix + [key.to_s]
+    def prefix_append_key(key : V, prefix : Array(T), **opts) forall T, V
+      Log.trace { "prefix_append_key(#{key}, #{prefix})" }
+      prefix + [key]
     end
 
-    # def prefix_append_key(key, prefix : String, **opts)
-    #   prefix.empty? ? key.to_s : "#{prefix}#{opts[:delimiter]}#{key}"
-    # end
+    def prefix_append_key(key, prefix : String, **opts)
+      Log.trace { "prefix_append_key(#{key}, #{prefix})" }
+      prefix.empty? ? key.to_s : "#{prefix}#{opts[:delimiter]}#{key}"
+    end
 
-    def prefix_append_array_index(prefix : Array(String), array_index, **opts) : Array(String)
+    def prefix_append_array_index(prefix : Array(T), array_index : V, **opts) forall T, V
       prefix + [array_index]
     end
 
-    # def prefix_append_array_index(prefix : String, array_index, **opts)
-    #   "#{prefix}[#{array_index}]"
-    # end
+    def prefix_append_array_index(prefix : String, array_index, **opts)
+      "#{prefix}[#{array_index}]"
+    end
 
     # checks if both objects are Arrays or Hashes
     private def any_hash_or_array?(obja, objb)

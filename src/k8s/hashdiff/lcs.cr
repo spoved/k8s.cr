@@ -6,10 +6,11 @@ module K8S::Hashdiff
   def lcs(arraya, arrayb, **options) : Array(Tuple(Int32, Int32))
     return Array(Tuple(Int32, Int32)).new if arraya.empty? || arrayb.empty?
 
-    opts = {similarity: 0.8}.merge(options)
-      .merge({
-        prefix: prefix_append_array_index(**options, array_index: "*"),
-      })
+    opts = {similarity: 0.8, prefix: ""}
+      .merge(options)
+    opts = opts.merge({
+      prefix: prefix_append_array_index(**opts, array_index: "*"),
+    })
 
     a_start = b_start = 0
     a_finish = arraya.size - 1
