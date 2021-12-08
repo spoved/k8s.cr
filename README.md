@@ -33,7 +33,7 @@ require "k8s/versions/v1.20"
 
 ## Contributors
 
-- [[jwaldrip]](https://github.com/jwaldrip) Jason Waldrip - original creator
 - [[kalinon]](https://github.com/kalinon) Holden Omans - maintainer
+- [[jwaldrip]](https://github.com/jwaldrip) Jason Waldrip - [psykube/pyrite](https://github.com/psykube/pyrite)
 - [[krzysiek1507]](https://github.com/krzysiek1507) Krzysztof Rybka - Ruby [Hashdiff](https://github.com/liufengyun/hashdiff)
 - [[liufengyun]](https://github.com/liufengyun) Fengyun Liu - Ruby [Hashdiff](https://github.com/liufengyun/hashdiff)
