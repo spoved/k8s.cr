@@ -15,9 +15,7 @@ jobs:
         include:
           - os: ubuntu-latest
           - os: ubuntu-latest
-            crystal: 1.0.0
-          - os: ubuntu-latest
-            crystal: 1.1.1
+            crystal: 1.2.2
           - os: macos-latest
           - os: windows-latest
     runs-on: ${{ matrix.os }}
