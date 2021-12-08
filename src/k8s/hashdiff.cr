@@ -49,6 +49,7 @@ module K8S
       (count < count3) ? diffs : diffs3
     end
 
+    # ameba:disable Metrics/CyclomaticComplexity
     def diff(obj1 : T, obj2 : L, **options) forall T, L
       obj1 = obj1.to_h if obj1.is_a?(NamedTuple)
       obj2 = obj2.to_h if obj2.is_a?(NamedTuple)

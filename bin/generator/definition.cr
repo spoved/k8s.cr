@@ -275,6 +275,7 @@ class Generator::Definition
     file.puts
   end
 
+  # ameba:disable Metrics/CyclomaticComplexity
   private def define_properties
     if properties.empty?
       define_serialization
@@ -343,7 +344,7 @@ class Generator::Definition
         action_name = action.x_kubernetes_action
 
         next if action_name.nil?
-        parse_action_operation(path_name, path, verb, action) do |function_name, args, toplevel|
+        parse_action_operation(path_name, path, verb, action) do |_, args, toplevel|
           file.puts(%<@[::#{base_class.lchop("::")}::Action(name: "#{action_name}", verb: "#{verb}",>)
           file.puts(%< path: "#{path_name}",toplevel: #{toplevel}, >)
           file.puts(%< args: [#{parse_operation_args_string(args).join(",\n")}]>)
@@ -412,7 +413,7 @@ class Generator::Definition
   end
 
   private def each_actions
-    paths = schema.paths.select do |path_name, path|
+    paths = schema.paths.select do |_, path|
       next true if path.parameters.any? { |val| definition_ref(val.schema.try(&._ref)) == class_name }
       next true if path.actions.any?(&.parameters.any? { |val| definition_ref(val.schema.try(&._ref)) == class_name })
       next true if path.actions.any?(&.responses.values.any? { |val| definition_ref(val.schema.try(&._ref)) == class_name })

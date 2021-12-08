@@ -72,12 +72,13 @@ module K8S
     end
 
     # get the node of hash by given path parts
-    def node(hash, parts)
-      temp = hash
+    def node(hash : Hash(K, V), parts : Array(W)) forall K, V, W
+      t = hash.dup
       parts.each do |part|
-        temp = temp[part]
+        return t unless t.is_a?(Indexable)
+        t = t[part]
       end
-      temp
+      t
     end
 
     # check for equality or "closeness" within given tolerance

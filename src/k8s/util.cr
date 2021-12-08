@@ -20,6 +20,7 @@ module K8S
       end
     end
 
+    # ameba:disable Metrics/CyclomaticComplexity
     private def _deep_merge_value(key, input, other : Hash(L, W), overwrite_arrays = true,
                                   union_arrays = false, keep_existing = false,
                                   merge_nil_values = false, merge_non_hash = false) forall L, W

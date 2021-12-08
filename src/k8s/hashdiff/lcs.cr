@@ -3,6 +3,7 @@ require "./util"
 module K8S::Hashdiff
   # caculate array difference using LCS algorithm
   # http://en.wikipedia.org/wiki/Longest_common_subsequence_problem
+  # ameba:disable Metrics/CyclomaticComplexity
   def lcs(arraya, arrayb, **options) : Array(Tuple(Int32, Int32))
     return Array(Tuple(Int32, Int32)).new if arraya.empty? || arrayb.empty?
 

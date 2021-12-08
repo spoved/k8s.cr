@@ -2,6 +2,7 @@ require "../../spec_helper"
 
 Spectator.describe K8S::Hashdiff do
   let(described_class) { K8S::Hashdiff }
+
   it "is able to find LCS between two equal array" do
     a = [1, 2, 3]
     b = [1, 2, 3]
