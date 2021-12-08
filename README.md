@@ -20,7 +20,7 @@ the bindings, you will want to include the VERSION that best maps to your k8s ap
 Requiring more than one version at this time will result in an error.
 
 ```crystal
-require "k8s/versions/v1.11"
+require "k8s/versions/v1.20"
 ```
 
 ## Contributing
@@ -35,5 +35,5 @@ require "k8s/versions/v1.11"
 
 - [[jwaldrip]](https://github.com/jwaldrip) Jason Waldrip - original creator
 - [[kalinon]](https://github.com/kalinon) Holden Omans - maintainer
-- Krzysztof Rybka ([@krzysiek1507](https://github.com/krzysiek1507)) - Ruby Hashdiff
-- Fengyun Liu ([@liufengyun](https://github.com/liufengyun)) - Ruby Hashdiff
+- [[krzysiek1507]](https://github.com/krzysiek1507) Krzysztof Rybka - Ruby [Hashdiff](https://github.com/liufengyun/hashdiff)
+- [[liufengyun]](https://github.com/liufengyun) Fengyun Liu - Ruby [Hashdiff](https://github.com/liufengyun/hashdiff)
