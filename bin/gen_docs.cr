@@ -1,5 +1,6 @@
 #!/usr/bin/env crystal
 require "./helper"
+DOCS_DIR = "docs"
 
 def git_commit
   `git rev-parse HEAD 2> /dev/null`.chomp
@@ -26,7 +27,7 @@ def generate_docs_for(prefix, version)
   puts "Generating docs for: #{prefix} : #{version}"
 
   k8s_ver = get_k8s_version
-  docs_dir = File.join(".", Generator::DOCS_DIR, k8s_ver, prefix)
+  docs_dir = File.join(".", DOCS_DIR, k8s_ver, prefix)
   version_file = File.join(".", Generator::VERSIONS_DIR, "#{prefix}.cr")
 
   FileUtils.rm_rf File.join(docs_dir) if Dir.exists?(docs_dir)
@@ -63,6 +64,7 @@ def gen_css(version)
 end
 
 def generate_release_docs
+  `git fetch --all --tags`
   # Generate for master
   generate_release_docs_for("master", git_commit)
   docs = ["master"]
@@ -74,7 +76,7 @@ def generate_release_docs
   end
 
   `git checkout #{current_ref}`
-  generate_version_list(File.join(".", Generator::DOCS_DIR), docs, "K8S Releases")
+  generate_version_list(File.join(".", DOCS_DIR), docs, "K8S Releases")
 end
 
 def generate_release_docs_for(tag, commit)
@@ -85,7 +87,7 @@ def generate_release_docs_for(tag, commit)
     generate_docs_for(prefix, version)
     versions << prefix
   end
-  docs_dir = File.join(".", Generator::DOCS_DIR, tag)
+  docs_dir = File.join(".", DOCS_DIR, tag)
   generate_version_list(docs_dir, versions, "Kubernetes APIs")
 end
 
