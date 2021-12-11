@@ -1,6 +1,10 @@
 #!/usr/bin/env crystal
 require "./helper"
-DOCS_DIR = "docs"
+require "../src/k8s/version"
+
+DOCS_DIR     = "docs"
+VERSIONS_DIR = Generator::VERSIONS_DIR
+LASTEST      = K8S::VERSION
 
 def git_commit
   `git rev-parse HEAD 2> /dev/null`.chomp
@@ -28,7 +32,7 @@ def generate_docs_for(prefix, version)
 
   k8s_ver = get_k8s_version
   docs_dir = File.join(".", DOCS_DIR, k8s_ver, prefix)
-  version_file = File.join(".", Generator::VERSIONS_DIR, "#{prefix}.cr")
+  version_file = File.join(".", VERSIONS_DIR, "#{prefix}.cr")
 
   FileUtils.rm_rf File.join(docs_dir) if Dir.exists?(docs_dir)
   FileUtils.mkdir_p(docs_dir) unless Dir.exists?(docs_dir)
