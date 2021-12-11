@@ -10,7 +10,7 @@ abstract class ::K8S::Kubernetes::Resource
   abstract def api_version : String
   abstract def kind : String
 
-  def from_file(file)
+  def self.from_file(file)
     Log.trace { "Loading #{file}" }
     from_yaml(File.read(file))
   end
