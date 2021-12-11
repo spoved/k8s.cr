@@ -3,7 +3,7 @@
 A Kubernetes Binding lib for Crystal-lang forked from [psykube/pyrite](https://github.com/psykube/pyrite).
 Forked due to possibly destructive changes to change namespaces and adapt for use with [`Kube::Client`](https://github.com/spoved/kube-client.cr)
 
-[![.github/workflows/ci.yml](https://github.com/spoved/k8s.cr/actions/workflows/ci.yml/badge.svg)](https://github.com/spoved/k8s.cr/actions/workflows/ci.yml)
+[![.github/workflows/ci.yml](https://github.com/spoved/k8s.cr/actions/workflows/ci.yml/badge.svg)](https://github.com/spoved/k8s.cr/actions/workflows/ci.yml) [![GitHub release](https://img.shields.io/github/release/spoved/k8s.cr.svg)](https://github.com/spoved/k8s.cr/releases)
 
 This library contains generated classes for Kubernetes resources for various Kubernetes API versions, as well as a `Hashdiff` module for comparing hashes of Kubernetes resources.
 

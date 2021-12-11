@@ -1,7 +1,10 @@
+require "./swagger"
+
 class Generator
   ROOT_NAME    = "K8S"
   VERSIONS_DIR = "src/versions"
   SCHEMAS_DIR  = "tmp/schemas"
+  DOCS_DIR     = "docs"
 
   getter filename : String
   getter definitions : Hash(String, String)
