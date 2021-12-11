@@ -1,5 +1,4 @@
 require "file_utils"
-require "../src/k8s/version.cr"
 require "./generator"
 require "http/client"
 
@@ -71,11 +70,10 @@ end
 def get_k8s_version
   tag = get_git_tags.find(&.[1].==(git_commit))
   if tag
-    tag[0]
+    tag[0].lchop('v')
   else
     "master"
   end
-  # K8S::VERSION
 end
 
 def generate_docs_for(prefix, version)
@@ -120,18 +118,52 @@ end
 
 def generate_release_docs
   # Generate for master
-  for_each_version do |prefix, last_res, version|
-    generate_docs_for(prefix, version)
-  end
+  generate_release_docs_for("master", current_ref)
+  docs = ["master"]
 
   current_ref = git_commit
   get_git_tags.each do |tag|
-    `git checkout #{tag[1]}`
-
-    for_each_version do |prefix, last_res, version|
-      generate_docs_for(prefix, version)
-    end
+    docs << tag[0].lchop('v')
+    generate_release_docs_for(tag[0].lchop('v'), tag[1])
   end
 
   `git checkout #{current_ref}`
+  generate_version_list(File.join(".", Generator::DOCS_DIR), docs)
+end
+
+def generate_release_docs_for(tag, commit)
+  `git checkout #{commit}`
+
+  versions = [] of String
+  for_each_version do |prefix, _, version|
+    generate_docs_for(prefix, version)
+    versions << "#{tag}/#{prefix}"
+  end
+  docs_dir = File.join(".", Generator::DOCS_DIR, tag)
+  generate_version_list(docs_dir, versions)
+end
+
+def generate_version_list(docs_dir, docs)
+  index = File.join(docs_dir, "index.html")
+  File.open(index, "w") do |f|
+    f.puts gen_index(docs)
+  end
+end
+
+def gen_index(docs)
+  String::Builder.new do |b|
+    b.puts <<-HTML
+        <!DOCTYPE html>
+        <html lang="en">
+        <div class="main-content">
+        <ul>
+        HTML
+    docs.each do |doc|
+      b.puts "<li><a href=\"#{doc}/index.html\">#{doc}</a></li>"
+    end
+    b.puts <<-HTML
+    </ul>
+    </div>
+    HTML
+  end
 end
