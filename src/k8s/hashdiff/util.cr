@@ -51,8 +51,8 @@ module K8S
     end
 
     # decode property path into an array
-    # @param [String] path Property-string
-    # @param [String] delimiter Property-string delimiter
+    # [String] path Property-string
+    # [String] delimiter Property-string delimiter
     #
     # e.g. "a.b[3].c" => ['a', 'b', 3, 'c']
     def decode_property_path(path, delimiter = '.')

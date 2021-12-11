@@ -7,11 +7,11 @@ module K8S
     PATH_TR_MAP = {"~" => "~0", "/" => "~1"}
     PATH_REGEX  = %r{(/|~(?!1))}
 
-    # @param overwrite_arrays [Boolean] when encountering an array, replace the array with the new array
-    # @param union_arrays [Boolean] when encountering an array, use Array#union to combine with the existing array
-    # @param keep_existing [Boolean] prefer old value over new value
-    # @param merge_nil_values [Boolean] overwrite an existing value with a nil value
-    # @param merge_non_hash [Boolean] will merge `::K8S::Kubernetes::Resource` objects
+    # overwrite_arrays [Boolean] when encountering an array, replace the array with the new array
+    # union_arrays [Boolean] when encountering an array, use Array#union to combine with the existing array
+    # keep_existing [Boolean] prefer old value over new value
+    # merge_nil_values [Boolean] overwrite an existing value with a nil value
+    # merge_non_hash [Boolean] will merge `::K8S::Kubernetes::Resource` objects
     def deep_merge(input, other, overwrite_arrays = true, union_arrays = false, keep_existing = false, merge_nil_values = false, merge_non_hash = false)
       (other.keys | input.keys).to_h do |key|
         _deep_merge_value(key, input, other, overwrite_arrays,
@@ -81,9 +81,6 @@ module K8S
     end
 
     # Recursive compact for Hash/Array
-    #
-    # @param hash_or_array [Hash,Array]
-    # @return [Hash,Array]
     def recursive_compact(value : Hash | Array | YAML::Any | JSON::Any)
       case value
       when Hash
@@ -129,8 +126,8 @@ module K8S
     # the operations on a, gives you the results of b
     # Used in correctly patching the Kube resources on stack updates
     #
-    # @param patch_to [Hash] Hash to compute patches against
-    # @param patch_from [Hash] New Hash to compute patches "from"
+    # patch_to [Hash] Hash to compute patches against
+    # patch_from [Hash] New Hash to compute patches "from"
     def json_patch(patch_to : Hash, patch_from : Hash)
       ops = Array(NamedTuple(op: String, path: String, value: Array(String) | String | Nil)).new
       # Each diff is like:

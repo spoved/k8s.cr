@@ -6,9 +6,7 @@ module K8S
     #
     # Hashdiff.best_diff is useful in case of comparing two objects which include similar hashes in arrays.
     #
-    # @param [Array, Hash] obj1
-    # @param [Array, Hash] obj2
-    # @param [Hash] options the options to use when comparing
+    # The options to use when comparing
     #   * :strict (Boolean) [true] whether numeric values will be compared on type as well as value.  Set to false to allow comparing Integer, Float, BigDecimal to each other
     #   * :indifferent (Boolean) [false] whether to treat hash keys indifferently.  Set to true to ignore differences between symbol keys (ie. {a: 1} ~= {'a' => 1})
     #   * :delimiter (String) ['.'] the delimiter used when returning nested key references
@@ -17,16 +15,15 @@ module K8S
     #   * :array_path (Boolean) [false] whether to return the path references for nested values in an array, can be used for patch compatibility with non string keys.
     #   * :use_lcs (Boolean) [true] whether or not to use an implementation of the Longest common subsequence algorithm for comparing arrays, produces better diffs but is slower.
     #
-    # @yield [path, value1, value2] Optional block is used to compare each value, instead of default #==. If the block returns value other than true of false, then other specified comparison options will be used to do the comparison.
+    # returns an array of change tuples.
+    #   e.g. [{ '+', 'a.b', '45' }, { '-', 'a.c', '5' }, { '~', 'a.x', '45', '63 }']
     #
-    # @return [Array] an array of changes.
-    #   e.g. [[ '+', 'a.b', '45' ], [ '-', 'a.c', '5' ], [ '~', 'a.x', '45', '63']]
-    #
-    # @example
+    # ```
     #   a = {'x' => [{'a' => 1, 'c' => 3, 'e' => 5}, {'y' => 3}]}
     #   b = {'x' => [{'a' => 1, 'b' => 2, 'e' => 5}] }
     #   diff = Hashdiff.best_diff(a, b)
-    #   diff.should == [['-', 'x[0].c', 3], ['+', 'x[0].b', 2], ['-', 'x[1].y', 3], ['-', 'x[1]', {}]]
+    #   diff.should == [{'-', 'x[0].c', 3}, {'+', 'x[0].b', 2}, {'-', 'x[1].y', 3}, {'-', 'x[1]', {}}]
+    # ```
     def best_diff(obj1, obj2, **options)
       opts = {similarity: 0.3}.merge(options)
       diffs1 = diff(obj1, obj2, **opts)
