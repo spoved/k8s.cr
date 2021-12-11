@@ -4,7 +4,7 @@ extend FixtureHelpers
 
 Spectator.describe K8S::Kubernetes::Resource do
   it "#from_json" do
-    r = K8S::Kubernetes::Resource.from_json(NAMESPACE_JSON)
+    r = K8S::Kubernetes::Resource.from_json(fixture_path("apis", "namespace.json"))
     expect(r).to be_a(K8S::Api::Core::V1::Namespace)
   end
 
