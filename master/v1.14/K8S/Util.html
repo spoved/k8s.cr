@@ -4746,7 +4746,7 @@
   </h2>
   
     
-      <a href="https://github.com/spoved/k8s.cr/blob/27ff5a35f98701d6c63b11abb509f775cba5315d/src/k8s/util.cr#L5" target="_blank">
+      <a href="https://github.com/spoved/k8s.cr/blob/7c6315141f08ed8927a92697a3ed1b72ef05e6ad/src/k8s/util.cr#L5" target="_blank">
         k8s/util.cr
       </a>
     
@@ -4817,7 +4817,7 @@
       <li class="entry-summary">
         <a href="#deep_merge%28input%2Cother%2Coverwrite_arrays%3Dtrue%2Cunion_arrays%3Dfalse%2Ckeep_existing%3Dfalse%2Cmerge_nil_values%3Dfalse%2Cmerge_non_hash%3Dfalse%29-instance-method" class="signature"><strong>#deep_merge</strong>(input, other, overwrite_arrays = <span class="n">true</span>, union_arrays = <span class="n">false</span>, keep_existing = <span class="n">false</span>, merge_nil_values = <span class="n">false</span>, merge_non_hash = <span class="n">false</span>)</a>
         
-          <div class="summary"><p>@param overwrite_arrays [Boolean] when encountering an array, replace the array with the new array @param union_arrays [Boolean] when encountering an array, use Array#union to combine with the existing array @param keep_existing [Boolean] prefer old value over new value @param merge_nil_values [Boolean] overwrite an existing value with a nil value @param merge_non_hash [Boolean] will merge <code><a href="../K8S/Kubernetes/Resource.html">::K8S::Kubernetes::Resource</a></code> objects</p></div>
+          <div class="summary"><p>overwrite_arrays [Boolean] when encountering an array, replace the array with the new array union_arrays [Boolean] when encountering an array, use Array#union to combine with the existing array keep_existing [Boolean] prefer old value over new value merge_nil_values [Boolean] overwrite an existing value with a nil value merge_non_hash [Boolean] will merge <code><a href="../K8S/Kubernetes/Resource.html">::K8S::Kubernetes::Resource</a></code> objects</p></div>
         
       </li>
     
@@ -4879,7 +4879,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/27ff5a35f98701d6c63b11abb509f775cba5315d/src/k8s/util.cr#L76" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/7c6315141f08ed8927a92697a3ed1b72ef05e6ad/src/k8s/util.cr#L76" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4906,17 +4906,17 @@
       
         <div class="doc">
           
-          <p>@param overwrite_arrays [Boolean] when encountering an array, replace the array with the new array
-@param union_arrays [Boolean] when encountering an array, use Array#union to combine with the existing array
-@param keep_existing [Boolean] prefer old value over new value
-@param merge_nil_values [Boolean] overwrite an existing value with a nil value
-@param merge_non_hash [Boolean] will merge <code><a href="../K8S/Kubernetes/Resource.html">::K8S::Kubernetes::Resource</a></code> objects</p>
+          <p>overwrite_arrays [Boolean] when encountering an array, replace the array with the new array
+union_arrays [Boolean] when encountering an array, use Array#union to combine with the existing array
+keep_existing [Boolean] prefer old value over new value
+merge_nil_values [Boolean] overwrite an existing value with a nil value
+merge_non_hash [Boolean] will merge <code><a href="../K8S/Kubernetes/Resource.html">::K8S::Kubernetes::Resource</a></code> objects</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/27ff5a35f98701d6c63b11abb509f775cba5315d/src/k8s/util.cr#L15" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/7c6315141f08ed8927a92697a3ed1b72ef05e6ad/src/k8s/util.cr#L15" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4934,14 +4934,14 @@
           <p>Produces a set of json-patch operations so that applying
 the operations on a, gives you the results of b
 Used in correctly patching the Kube resources on stack updates</p>
-<p>@param patch_to [Hash] Hash to compute patches against
-@param patch_from [Hash] New Hash to compute patches &quot;from&quot;</p>
+<p>patch_to [Hash] Hash to compute patches against
+patch_from [Hash] New Hash to compute patches &quot;from&quot;</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/27ff5a35f98701d6c63b11abb509f775cba5315d/src/k8s/util.cr#L134" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/7c6315141f08ed8927a92697a3ed1b72ef05e6ad/src/k8s/util.cr#L131" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4957,7 +4957,7 @@ Used in correctly patching the Kube resources on stack updates</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/27ff5a35f98701d6c63b11abb509f775cba5315d/src/k8s/util.cr#L173" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/7c6315141f08ed8927a92697a3ed1b72ef05e6ad/src/k8s/util.cr#L170" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4973,14 +4973,12 @@ Used in correctly patching the Kube resources on stack updates</p>
         <div class="doc">
           
           <p>Recursive compact for Hash/Array</p>
-<p>@param hash_or_array [Hash,Array]
-@return [Hash,Array]</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/27ff5a35f98701d6c63b11abb509f775cba5315d/src/k8s/util.cr#L87" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/7c6315141f08ed8927a92697a3ed1b72ef05e6ad/src/k8s/util.cr#L84" target="_blank">View source</a>]
         
       </div>
     </div>

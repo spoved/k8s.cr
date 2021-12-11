@@ -4795,35 +4795,35 @@
   </h2>
   
     
-      <a href="https://github.com/spoved/k8s.cr/blob/27ff5a35f98701d6c63b11abb509f775cba5315d/src/k8s/hashdiff.cr#L2" target="_blank">
+      <a href="https://github.com/spoved/k8s.cr/blob/7c6315141f08ed8927a92697a3ed1b72ef05e6ad/src/k8s/hashdiff.cr#L2" target="_blank">
         k8s/hashdiff.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/spoved/k8s.cr/blob/27ff5a35f98701d6c63b11abb509f775cba5315d/src/k8s/hashdiff/hashdiff.cr#L4" target="_blank">
+      <a href="https://github.com/spoved/k8s.cr/blob/7c6315141f08ed8927a92697a3ed1b72ef05e6ad/src/k8s/hashdiff/hashdiff.cr#L4" target="_blank">
         k8s/hashdiff/hashdiff.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/spoved/k8s.cr/blob/27ff5a35f98701d6c63b11abb509f775cba5315d/src/k8s/hashdiff/lcs.cr#L3" target="_blank">
+      <a href="https://github.com/spoved/k8s.cr/blob/7c6315141f08ed8927a92697a3ed1b72ef05e6ad/src/k8s/hashdiff/lcs.cr#L3" target="_blank">
         k8s/hashdiff/lcs.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/spoved/k8s.cr/blob/27ff5a35f98701d6c63b11abb509f775cba5315d/src/k8s/hashdiff/linear_compare_arrays.cr#L1" target="_blank">
+      <a href="https://github.com/spoved/k8s.cr/blob/7c6315141f08ed8927a92697a3ed1b72ef05e6ad/src/k8s/hashdiff/linear_compare_arrays.cr#L1" target="_blank">
         k8s/hashdiff/linear_compare_arrays.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/spoved/k8s.cr/blob/27ff5a35f98701d6c63b11abb509f775cba5315d/src/k8s/hashdiff/util.cr#L2" target="_blank">
+      <a href="https://github.com/spoved/k8s.cr/blob/7c6315141f08ed8927a92697a3ed1b72ef05e6ad/src/k8s/hashdiff/util.cr#L2" target="_blank">
         k8s/hashdiff/util.cr
       </a>
     
@@ -4900,7 +4900,7 @@
       <li class="entry-summary">
         <a href="#decode_property_path%28path%2Cdelimiter%3D%27.%27%29-instance-method" class="signature"><strong>#decode_property_path</strong>(path, delimiter = <span class="s">&#39;.&#39;</span>)</a>
         
-          <div class="summary"><p>decode property path into an array @param [String] path Property-string @param [String] delimiter Property-string delimiter</p></div>
+          <div class="summary"><p>decode property path into an array [String] path Property-string [String] delimiter Property-string delimiter</p></div>
         
       </li>
     
@@ -5000,9 +5000,7 @@
           
           <p>Best diff two objects, which tries to generate the smallest change set using different similarity values.</p>
 <p>Hashdiff.best_diff is useful in case of comparing two objects which include similar hashes in arrays.</p>
-<p>@param [Array, Hash] obj1
-@param [Array, Hash] obj2
-@param [Hash] options the options to use when comparing</p>
+<p>The options to use when comparing</p>
 <ul>
 <li>:strict (Boolean) [true] whether numeric values will be compared on type as well as value.  Set to false to allow comparing Integer, Float, BigDecimal to each other</li>
 <li>:indifferent (Boolean) [false] whether to treat hash keys indifferently.  Set to true to ignore differences between symbol keys (ie. {a: 1} ~= {'a' =&gt; 1})</li>
@@ -5012,20 +5010,18 @@
 <li>:array_path (Boolean) [false] whether to return the path references for nested values in an array, can be used for patch compatibility with non string keys.</li>
 <li>:use_lcs (Boolean) [true] whether or not to use an implementation of the Longest common subsequence algorithm for comparing arrays, produces better diffs but is slower.</li>
 </ul>
-<p>@yield [path, value1, value2] Optional block is used to compare each value, instead of default #==. If the block returns value other than true of false, then other specified comparison options will be used to do the comparison.</p>
-<p>@return [Array] an array of changes.
-e.g. [[ '+', 'a.b', '45' ], [ '-', 'a.c', '5' ], [ '~', 'a.x', '45', '63']]</p>
-<p>@example
-a = {'x' =&gt; [{'a' =&gt; 1, 'c' =&gt; 3, 'e' =&gt; 5}, {'y' =&gt; 3}]}
-b = {'x' =&gt; [{'a' =&gt; 1, 'b' =&gt; 2, 'e' =&gt; 5}] }
-diff = Hashdiff.best_diff(a, b)
-diff.should == [['-', 'x[0].c', 3], ['+', 'x[0].b', 2], ['-', 'x[1].y', 3], ['-', 'x[1]', {}]]</p>
+<p>returns an array of change tuples.
+e.g. [{ '+', 'a.b', '45' }, { '-', 'a.c', '5' }, { '~', 'a.x', '45', '63 }']</p>
+<pre><code class="language-crystal">  a = {'x' => [{'a' => 1, 'c' => 3, 'e' => 5}, {'y' => 3}]}
+  b = {'x' => [{'a' => 1, 'b' => 2, 'e' => 5}] }
+  diff = Hashdiff.best_diff(a, b)
+  diff.should == [{'-', 'x[0].c', 3}, {'+', 'x[0].b', 2}, {'-', 'x[1].y', 3}, {'-', 'x[1]', {}}]</code></pre>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/27ff5a35f98701d6c63b11abb509f775cba5315d/src/k8s/hashdiff/hashdiff.cr#L30" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/7c6315141f08ed8927a92697a3ed1b72ef05e6ad/src/k8s/hashdiff/hashdiff.cr#L27" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5046,7 +5042,7 @@ diff.should == [['-', 'x[0].c', 3], ['+', 'x[0].b', 2], ['-', 'x[1].y', 3], ['-'
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/27ff5a35f98701d6c63b11abb509f775cba5315d/src/k8s/hashdiff/util.cr#L21" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/7c6315141f08ed8927a92697a3ed1b72ef05e6ad/src/k8s/hashdiff/util.cr#L21" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5067,7 +5063,7 @@ diff.should == [['-', 'x[0].c', 3], ['+', 'x[0].b', 2], ['-', 'x[1].y', 3], ['-'
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/27ff5a35f98701d6c63b11abb509f775cba5315d/src/k8s/hashdiff/util.cr#L90" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/7c6315141f08ed8927a92697a3ed1b72ef05e6ad/src/k8s/hashdiff/util.cr#L90" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5088,7 +5084,7 @@ diff.should == [['-', 'x[0].c', 3], ['+', 'x[0].b', 2], ['-', 'x[1].y', 3], ['-'
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/27ff5a35f98701d6c63b11abb509f775cba5315d/src/k8s/hashdiff/util.cr#L99" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/7c6315141f08ed8927a92697a3ed1b72ef05e6ad/src/k8s/hashdiff/util.cr#L99" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5109,7 +5105,7 @@ diff.should == [['-', 'x[0].c', 3], ['+', 'x[0].b', 2], ['-', 'x[1].y', 3], ['-'
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/27ff5a35f98701d6c63b11abb509f775cba5315d/src/k8s/hashdiff/util.cr#L85" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/7c6315141f08ed8927a92697a3ed1b72ef05e6ad/src/k8s/hashdiff/util.cr#L85" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5130,7 +5126,7 @@ diff.should == [['-', 'x[0].c', 3], ['+', 'x[0].b', 2], ['-', 'x[1].y', 3], ['-'
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/27ff5a35f98701d6c63b11abb509f775cba5315d/src/k8s/hashdiff/util.cr#L29" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/7c6315141f08ed8927a92697a3ed1b72ef05e6ad/src/k8s/hashdiff/util.cr#L29" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5151,7 +5147,7 @@ diff.should == [['-', 'x[0].c', 3], ['+', 'x[0].b', 2], ['-', 'x[1].y', 3], ['-'
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/27ff5a35f98701d6c63b11abb509f775cba5315d/src/k8s/hashdiff/util.cr#L38" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/7c6315141f08ed8927a92697a3ed1b72ef05e6ad/src/k8s/hashdiff/util.cr#L38" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5167,15 +5163,15 @@ diff.should == [['-', 'x[0].c', 3], ['+', 'x[0].b', 2], ['-', 'x[1].y', 3], ['-'
         <div class="doc">
           
           <p>decode property path into an array
-@param [String] path Property-string
-@param [String] delimiter Property-string delimiter</p>
+[String] path Property-string
+[String] delimiter Property-string delimiter</p>
 <p>e.g. &quot;a.b[3].c&quot; =&gt; ['a', 'b', 3, 'c']</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/27ff5a35f98701d6c63b11abb509f775cba5315d/src/k8s/hashdiff/util.cr#L58" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/7c6315141f08ed8927a92697a3ed1b72ef05e6ad/src/k8s/hashdiff/util.cr#L58" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5191,7 +5187,7 @@ diff.should == [['-', 'x[0].c', 3], ['+', 'x[0].b', 2], ['-', 'x[1].y', 3], ['-'
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/27ff5a35f98701d6c63b11abb509f775cba5315d/src/k8s/hashdiff/hashdiff.cr#L93" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/7c6315141f08ed8927a92697a3ed1b72ef05e6ad/src/k8s/hashdiff/hashdiff.cr#L90" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5212,7 +5208,7 @@ diff.should == [['-', 'x[0].c', 3], ['+', 'x[0].b', 2], ['-', 'x[1].y', 3], ['-'
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/27ff5a35f98701d6c63b11abb509f775cba5315d/src/k8s/hashdiff/hashdiff.cr#L48" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/7c6315141f08ed8927a92697a3ed1b72ef05e6ad/src/k8s/hashdiff/hashdiff.cr#L45" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5233,7 +5229,7 @@ diff.should == [['-', 'x[0].c', 3], ['+', 'x[0].b', 2], ['-', 'x[1].y', 3], ['-'
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/27ff5a35f98701d6c63b11abb509f775cba5315d/src/k8s/hashdiff/hashdiff.cr#L98" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/7c6315141f08ed8927a92697a3ed1b72ef05e6ad/src/k8s/hashdiff/hashdiff.cr#L95" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5256,7 +5252,7 @@ ameba:disable Metrics/CyclomaticComplexity</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/27ff5a35f98701d6c63b11abb509f775cba5315d/src/k8s/hashdiff/lcs.cr#L7" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/7c6315141f08ed8927a92697a3ed1b72ef05e6ad/src/k8s/hashdiff/lcs.cr#L7" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5277,7 +5273,7 @@ ameba:disable Metrics/CyclomaticComplexity</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/27ff5a35f98701d6c63b11abb509f775cba5315d/src/k8s/hashdiff/util.cr#L75" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/7c6315141f08ed8927a92697a3ed1b72ef05e6ad/src/k8s/hashdiff/util.cr#L75" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5293,7 +5289,7 @@ ameba:disable Metrics/CyclomaticComplexity</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/27ff5a35f98701d6c63b11abb509f775cba5315d/src/k8s/hashdiff/util.cr#L123" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/7c6315141f08ed8927a92697a3ed1b72ef05e6ad/src/k8s/hashdiff/util.cr#L123" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5309,7 +5305,7 @@ ameba:disable Metrics/CyclomaticComplexity</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/27ff5a35f98701d6c63b11abb509f775cba5315d/src/k8s/hashdiff/util.cr#L127" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/7c6315141f08ed8927a92697a3ed1b72ef05e6ad/src/k8s/hashdiff/util.cr#L127" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5325,7 +5321,7 @@ ameba:disable Metrics/CyclomaticComplexity</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/27ff5a35f98701d6c63b11abb509f775cba5315d/src/k8s/hashdiff/util.cr#L113" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/7c6315141f08ed8927a92697a3ed1b72ef05e6ad/src/k8s/hashdiff/util.cr#L113" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5341,7 +5337,7 @@ ameba:disable Metrics/CyclomaticComplexity</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/27ff5a35f98701d6c63b11abb509f775cba5315d/src/k8s/hashdiff/util.cr#L118" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/7c6315141f08ed8927a92697a3ed1b72ef05e6ad/src/k8s/hashdiff/util.cr#L118" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5362,7 +5358,7 @@ ameba:disable Metrics/CyclomaticComplexity</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/27ff5a35f98701d6c63b11abb509f775cba5315d/src/k8s/hashdiff/util.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/7c6315141f08ed8927a92697a3ed1b72ef05e6ad/src/k8s/hashdiff/util.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>
