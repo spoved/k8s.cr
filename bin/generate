@@ -8,11 +8,9 @@ major = 1
 minor = 11
 # minor = 22
 
-FileUtils.rm_rf File.join(".", Generator::VERSIONS_DIR) unless docs_only
+FileUtils.rm_rf File.join(".", Generator::VERSIONS_DIR)
 
 for_each_version(major, minor) do |prefix, last_res, version|
-  unless docs_only
-    puts "Generating #{version}"
-    Generator.generate(last_res, version)
-  end
+  puts "Generating #{version}"
+  Generator.generate(last_res, version)
 end
