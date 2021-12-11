@@ -119,6 +119,11 @@ def gen_css(version)
 end
 
 def generate_release_docs
+  # Generate for master
+  for_each_version do |prefix, last_res, version|
+    generate_docs_for(prefix, version)
+  end
+
   current_ref = git_commit
   get_git_tags.each do |tag|
     `git checkout #{tag[1]}`
