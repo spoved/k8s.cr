@@ -143,8 +143,12 @@ macro k8s_yaml_discriminator(mappings)
       api_value = value.value.gsub(".k8s.io", "") if key.value == "apiVersion" || key.value == "groupVersion"
     end
 
-    node.raise "Missing YAML discriminator field 'kind'" unless discriminator_value
-    node.raise "Missing YAML discriminator field 'apiVersion'" unless api_value
+    node.raise "Missing YAML discriminator field 'kind'" if discriminator_value.nil?
+    node.raise "Missing YAML discriminator field 'apiVersion'" if api_value.nil?
+
+    # for the compilers benefit
+    discriminator_value = discriminator_value.not_nil!
+    api_value = api_value.not_nil!
 
     parts = api_value.split('/')
     ver = parts.pop

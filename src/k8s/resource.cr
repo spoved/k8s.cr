@@ -3,16 +3,42 @@ require "yaml"
 
 annotation ::K8S::Properties; end
 
+# :nodoc:
+class ::K8S::YAMLParser < YAML::Nodes::Parser
+  def new_documents
+    [] of Array(YAML::Nodes::Document)
+  end
+
+  # Deserializes multiple YAML document.
+  def parse_all_nodes
+    documents = Array(YAML::Nodes::Document).new
+
+    @pull_parser.read_next
+    loop do
+      case @pull_parser.kind
+      when .stream_end?
+        return documents
+      when .document_start?
+        add_to_documents(documents, parse_document)
+      else
+        unexpected_event
+      end
+    end
+  end
+end
+
 abstract class ::K8S::Kubernetes::Resource
   include JSON::Serializable
-  include YAML::Serializable
+  include ::YAML::Serializable
 
   abstract def api_version : String
   abstract def kind : String
 
   def self.from_file(file)
     Log.trace { "Loading #{file}" }
-    from_yaml(File.read(file))
+    # from_yaml(File.read(file))
+    nodes = ::K8S::YAMLParser.new(File.read(file), &.parse_all_nodes)
+    nodes.flat_map { |node| node.nodes.map { |n| ::K8S::Resource.new(YAML::ParseContext.new, n) } }
   end
 
   macro inherited
