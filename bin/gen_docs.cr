@@ -74,7 +74,7 @@ def generate_release_docs
   end
 
   `git checkout #{current_ref}`
-  generate_version_list(File.join(".", Generator::DOCS_DIR), docs)
+  generate_version_list(File.join(".", Generator::DOCS_DIR), docs, "K8S Releases")
 end
 
 def generate_release_docs_for(tag, commit)
@@ -83,25 +83,26 @@ def generate_release_docs_for(tag, commit)
   versions = [] of String
   for_each_version do |prefix, _, version|
     generate_docs_for(prefix, version)
-    versions << "#{tag}/#{prefix}"
+    versions << prefix
   end
   docs_dir = File.join(".", Generator::DOCS_DIR, tag)
-  generate_version_list(docs_dir, versions)
+  generate_version_list(docs_dir, versions, "Kubernetes APIs")
 end
 
-def generate_version_list(docs_dir, docs)
+def generate_version_list(docs_dir, docs, title = nil)
   index = File.join(docs_dir, "index.html")
   File.open(index, "w") do |f|
-    f.puts gen_index(docs)
+    f.puts gen_index(title, docs)
   end
 end
 
-def gen_index(docs)
+def gen_index(title, docs)
   String::Builder.build do |b|
     b.puts <<-HTML
         <!DOCTYPE html>
         <html lang="en">
         <div class="main-content">
+        <h2>#{title}</h2>
         <ul>
         HTML
     docs.each do |doc|
