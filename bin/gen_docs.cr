@@ -97,7 +97,7 @@ def generate_version_list(docs_dir, docs)
 end
 
 def gen_index(docs)
-  String::Builder.new do |b|
+  String::Builder.build do |b|
     b.puts <<-HTML
         <!DOCTYPE html>
         <html lang="en">
