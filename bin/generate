@@ -7,7 +7,6 @@ FileUtils.mkdir_p(File.join(".", Generator::SCHEMAS_DIR))
 major = 1
 minor = 11
 # minor = 22
-docs_only = ARGV.includes?("--docs-only")
 
 FileUtils.rm_rf File.join(".", Generator::VERSIONS_DIR) unless docs_only
 
@@ -16,6 +15,4 @@ for_each_version(major, minor) do |prefix, last_res, version|
     puts "Generating #{version}"
     Generator.generate(last_res, version)
   end
-
-  generate_docs_for(prefix, version)
 end
