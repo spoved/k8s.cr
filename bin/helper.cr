@@ -87,10 +87,10 @@ def generate_docs_for(prefix, version)
   FileUtils.rm_rf File.join(docs_dir) if Dir.exists?(docs_dir)
   FileUtils.mkdir_p(docs_dir) unless Dir.exists?(docs_dir)
 
-  _generate_docs(version_file, docs_dir, k8s_ver, git_commit)
+  _generate_docs(version_file, docs_dir, k8s_ver, git_commit, version)
 end
 
-def _generate_docs(version_file, docs_dir, k8s_ver, git_commit)
+def _generate_docs(version_file, docs_dir, k8s_ver, git_commit, api_ver)
   args = [
     "doc",
     version_file,
@@ -103,7 +103,7 @@ def _generate_docs(version_file, docs_dir, k8s_ver, git_commit)
   system "crystal", args
 
   File.open(File.join(docs_dir, "css", "style.css"), "a") do |f|
-    f.puts "", gen_css(version)
+    f.puts "", gen_css(api_ver)
   end
 end
 
