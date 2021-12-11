@@ -23,7 +23,7 @@ def get_k8s_version
 end
 
 def generate_docs_for(prefix, version)
-  puts "Generating docs for: #{prefix}"
+  puts "Generating docs for: #{prefix} : #{version}"
 
   k8s_ver = get_k8s_version
   docs_dir = File.join(".", Generator::DOCS_DIR, k8s_ver, prefix)

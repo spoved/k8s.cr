@@ -9,6 +9,8 @@ struct Range
 end
 
 def latest_patch_for(prefix, patch_range = 0..22, last_res = nil)
+  FileUtils.mkdir_p(File.join(".", Generator::SCHEMAS_DIR)) unless Dir.exists?(File.join(".", Generator::SCHEMAS_DIR))
+
   last_patch = patch_range.bsearch do |patch|
     version = "#{prefix}.#{patch}"
     file_path = File.join(".", Generator::SCHEMAS_DIR, "#{version}.json")
