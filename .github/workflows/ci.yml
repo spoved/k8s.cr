@@ -31,7 +31,6 @@ jobs:
           - os: ubuntu-latest
             crystal: 1.2.2
           - os: macos-latest
-          - os: windows-latest
     runs-on: ${{ matrix.os }}
     steps:
       - name: Download source
