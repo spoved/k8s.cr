@@ -6,7 +6,7 @@ require "json"
 module K8S
   # This information is immutable after the request is created. Only the Request and Usages fields can be set on creation, other fields are derived by Kubernetes and cannot be modified by users.
   @[::K8S::Properties(
-    extra: {type: Hash(String, String), nilable: true, key: "extra", getter: false, setter: false},
+    extra: {type: Hash(String, Array(String)), nilable: true, key: "extra", getter: false, setter: false},
     groups: {type: Array(String), nilable: true, key: "groups", getter: false, setter: false},
     request: {type: String, nilable: false, key: "request", getter: false, setter: false},
     uid: {type: String, nilable: true, key: "uid", getter: false, setter: false},
@@ -20,7 +20,7 @@ module K8S
     # Extra information about the requesting user. See user.Info interface for details.
     @[::JSON::Field(key: "extra", emit_null: false)]
     @[::YAML::Field(key: "extra", emit_null: false)]
-    property extra : Hash(String, String) | Nil
+    property extra : Hash(String, Array(String)) | Nil
 
     # Group information about the requesting user. See user.Info interface for details.
     @[::JSON::Field(key: "groups", emit_null: false)]

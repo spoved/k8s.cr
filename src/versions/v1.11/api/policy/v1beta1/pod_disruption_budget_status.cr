@@ -8,7 +8,7 @@ module K8S
   @[::K8S::Properties(
     current_healthy: {type: Int32, nilable: false, key: "currentHealthy", getter: false, setter: false},
     desired_healthy: {type: Int32, nilable: false, key: "desiredHealthy", getter: false, setter: false},
-    disrupted_pods: {type: Hash(String, String), nilable: false, key: "disruptedPods", getter: false, setter: false},
+    disrupted_pods: {type: Hash(String, Time), nilable: false, key: "disruptedPods", getter: false, setter: false},
     disruptions_allowed: {type: Int32, nilable: false, key: "disruptionsAllowed", getter: false, setter: false},
     expected_pods: {type: Int32, nilable: false, key: "expectedPods", getter: false, setter: false},
     observed_generation: {type: Int32, nilable: true, key: "observedGeneration", getter: false, setter: false},
@@ -30,7 +30,7 @@ module K8S
     # DisruptedPods contains information about pods whose eviction was processed by the API server eviction subresource handler but has not yet been observed by the PodDisruptionBudget controller. A pod will be in this map from the time when the API server processed the eviction request to the time when the pod is seen by PDB controller as having been marked for deletion (or after a timeout). The key in the map is the name of the pod and the value is the time when the API server processed the eviction request. If the deletion didn't occur and a pod is still there it will be removed from the list automatically by PodDisruptionBudget controller after some time. If everything goes smooth this map should be empty for the most of the time. Large number of entries in the map may indicate problems with pod deletions.
     @[::JSON::Field(key: "disruptedPods", emit_null: true)]
     @[::YAML::Field(key: "disruptedPods", emit_null: true)]
-    property disrupted_pods : Hash(String, String)
+    property disrupted_pods : Hash(String, Time)
 
     # Number of pod disruptions that are currently allowed.
     @[::JSON::Field(key: "disruptionsAllowed", emit_null: true)]

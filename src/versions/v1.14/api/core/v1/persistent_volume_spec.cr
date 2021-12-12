@@ -10,7 +10,7 @@ module K8S
     aws_elastic_block_store: {type: Api::Core::V1::AWSElasticBlockStoreVolumeSource, nilable: true, key: "awsElasticBlockStore", getter: false, setter: false},
     azure_disk: {type: Api::Core::V1::AzureDiskVolumeSource, nilable: true, key: "azureDisk", getter: false, setter: false},
     azure_file: {type: Api::Core::V1::AzureFilePersistentVolumeSource, nilable: true, key: "azureFile", getter: false, setter: false},
-    capacity: {type: Hash(String, String), nilable: true, key: "capacity", getter: false, setter: false},
+    capacity: {type: Hash(String, Int32 | String), nilable: true, key: "capacity", getter: false, setter: false},
     cephfs: {type: Api::Core::V1::CephFSPersistentVolumeSource, nilable: true, key: "cephfs", getter: false, setter: false},
     cinder: {type: Api::Core::V1::CinderPersistentVolumeSource, nilable: true, key: "cinder", getter: false, setter: false},
     claim_ref: {type: Api::Core::V1::ObjectReference, nilable: true, key: "claimRef", getter: false, setter: false},
@@ -64,7 +64,7 @@ module K8S
     # A description of the persistent volume's resources and capacity. More info: [https://kubernetes.io/docs/concepts/storage/persistent-volumes#capacity](https://kubernetes.io/docs/concepts/storage/persistent-volumes#capacity)
     @[::JSON::Field(key: "capacity", emit_null: false)]
     @[::YAML::Field(key: "capacity", emit_null: false)]
-    property capacity : Hash(String, String) | Nil
+    property capacity : Hash(String, Int32 | String) | Nil
 
     # CephFS represents a Ceph FS mount on the host that shares a pod's lifetime
     @[::JSON::Field(key: "cephfs", emit_null: false)]

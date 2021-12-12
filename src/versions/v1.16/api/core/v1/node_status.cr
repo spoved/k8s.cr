@@ -7,8 +7,8 @@ module K8S
   # NodeStatus is information about the current status of a node.
   @[::K8S::Properties(
     addresses: {type: Array(Api::Core::V1::NodeAddress), nilable: true, key: "addresses", getter: false, setter: false},
-    allocatable: {type: Hash(String, String), nilable: true, key: "allocatable", getter: false, setter: false},
-    capacity: {type: Hash(String, String), nilable: true, key: "capacity", getter: false, setter: false},
+    allocatable: {type: Hash(String, Int32 | String), nilable: true, key: "allocatable", getter: false, setter: false},
+    capacity: {type: Hash(String, Int32 | String), nilable: true, key: "capacity", getter: false, setter: false},
     conditions: {type: Array(Api::Core::V1::NodeCondition), nilable: true, key: "conditions", getter: false, setter: false},
     config: {type: Api::Core::V1::NodeConfigStatus, nilable: true, key: "config", getter: false, setter: false},
     daemon_endpoints: {type: Api::Core::V1::NodeDaemonEndpoints, nilable: true, key: "daemonEndpoints", getter: false, setter: false},
@@ -30,12 +30,12 @@ module K8S
     # Allocatable represents the resources of a node that are available for scheduling. Defaults to Capacity.
     @[::JSON::Field(key: "allocatable", emit_null: false)]
     @[::YAML::Field(key: "allocatable", emit_null: false)]
-    property allocatable : Hash(String, String) | Nil
+    property allocatable : Hash(String, Int32 | String) | Nil
 
     # Capacity represents the total resources of a node. More info: [https://kubernetes.io/docs/concepts/storage/persistent-volumes#capacity](https://kubernetes.io/docs/concepts/storage/persistent-volumes#capacity)
     @[::JSON::Field(key: "capacity", emit_null: false)]
     @[::YAML::Field(key: "capacity", emit_null: false)]
-    property capacity : Hash(String, String) | Nil
+    property capacity : Hash(String, Int32 | String) | Nil
 
     # Conditions is an array of current observed node conditions. More info: [https://kubernetes.io/docs/concepts/nodes/node/#condition](https://kubernetes.io/docs/concepts/nodes/node/#condition)
     @[::JSON::Field(key: "conditions", emit_null: false)]

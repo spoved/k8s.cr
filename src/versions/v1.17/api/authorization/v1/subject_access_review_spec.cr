@@ -6,7 +6,7 @@ require "json"
 module K8S
   # SubjectAccessReviewSpec is a description of the access request.  Exactly one of ResourceAuthorizationAttributes and NonResourceAuthorizationAttributes must be set
   @[::K8S::Properties(
-    extra: {type: Hash(String, String), nilable: true, key: "extra", getter: false, setter: false},
+    extra: {type: Hash(String, Array(String)), nilable: true, key: "extra", getter: false, setter: false},
     groups: {type: Array(String), nilable: true, key: "groups", getter: false, setter: false},
     non_resource_attributes: {type: Api::Authorization::V1::NonResourceAttributes, nilable: true, key: "nonResourceAttributes", getter: false, setter: false},
     resource_attributes: {type: Api::Authorization::V1::ResourceAttributes, nilable: true, key: "resourceAttributes", getter: false, setter: false},
@@ -20,7 +20,7 @@ module K8S
     # Extra corresponds to the user.Info.GetExtra() method from the authenticator.  Since that is input to the authorizer it needs a reflection here.
     @[::JSON::Field(key: "extra", emit_null: false)]
     @[::YAML::Field(key: "extra", emit_null: false)]
-    property extra : Hash(String, String) | Nil
+    property extra : Hash(String, Array(String)) | Nil
 
     # Groups is the groups you're testing for.
     @[::JSON::Field(key: "groups", emit_null: false)]

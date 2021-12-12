@@ -13,8 +13,8 @@ module K8S
     all_of: {type: Array(ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSONSchemaProps), nilable: true, key: "allOf", getter: false, setter: false},
     any_of: {type: Array(ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSONSchemaProps), nilable: true, key: "anyOf", getter: false, setter: false},
     default: {type: ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSON, nilable: true, key: "default", getter: false, setter: false},
-    definitions: {type: Hash(String, String), nilable: true, key: "definitions", getter: false, setter: false},
-    dependencies: {type: Hash(String, String), nilable: true, key: "dependencies", getter: false, setter: false},
+    definitions: {type: Hash(String, ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSONSchemaProps), nilable: true, key: "definitions", getter: false, setter: false},
+    dependencies: {type: Hash(String, ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSONSchemaPropsOrStringArray), nilable: true, key: "dependencies", getter: false, setter: false},
     description: {type: String, nilable: true, key: "description", getter: false, setter: false},
     enum: {type: Array(ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSON), nilable: true, key: "enum", getter: false, setter: false},
     example: {type: ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSON, nilable: true, key: "example", getter: false, setter: false},
@@ -36,8 +36,8 @@ module K8S
     not: {type: ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSONSchemaProps, nilable: true, key: "not", getter: false, setter: false},
     one_of: {type: Array(ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSONSchemaProps), nilable: true, key: "oneOf", getter: false, setter: false},
     pattern: {type: String, nilable: true, key: "pattern", getter: false, setter: false},
-    pattern_properties: {type: Hash(String, String), nilable: true, key: "patternProperties", getter: false, setter: false},
-    properties: {type: Hash(String, String), nilable: true, key: "properties", getter: false, setter: false},
+    pattern_properties: {type: Hash(String, ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSONSchemaProps), nilable: true, key: "patternProperties", getter: false, setter: false},
+    properties: {type: Hash(String, ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSONSchemaProps), nilable: true, key: "properties", getter: false, setter: false},
     required: {type: Array(String), nilable: true, key: "required", getter: false, setter: false},
     title: {type: String, nilable: true, key: "title", getter: false, setter: false},
     type: {type: String, nilable: true, key: "type", getter: false, setter: false},
@@ -77,11 +77,11 @@ module K8S
 
     @[::JSON::Field(key: "definitions", emit_null: false)]
     @[::YAML::Field(key: "definitions", emit_null: false)]
-    property definitions : Hash(String, String) | Nil
+    property definitions : Hash(String, ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSONSchemaProps) | Nil
 
     @[::JSON::Field(key: "dependencies", emit_null: false)]
     @[::YAML::Field(key: "dependencies", emit_null: false)]
-    property dependencies : Hash(String, String) | Nil
+    property dependencies : Hash(String, ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSONSchemaPropsOrStringArray) | Nil
 
     @[::JSON::Field(key: "description", emit_null: false)]
     @[::YAML::Field(key: "description", emit_null: false)]
@@ -169,11 +169,11 @@ module K8S
 
     @[::JSON::Field(key: "patternProperties", emit_null: false)]
     @[::YAML::Field(key: "patternProperties", emit_null: false)]
-    property pattern_properties : Hash(String, String) | Nil
+    property pattern_properties : Hash(String, ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSONSchemaProps) | Nil
 
     @[::JSON::Field(key: "properties", emit_null: false)]
     @[::YAML::Field(key: "properties", emit_null: false)]
-    property properties : Hash(String, String) | Nil
+    property properties : Hash(String, ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSONSchemaProps) | Nil
 
     @[::JSON::Field(key: "required", emit_null: false)]
     @[::YAML::Field(key: "required", emit_null: false)]

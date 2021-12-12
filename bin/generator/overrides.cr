@@ -8,6 +8,11 @@ class Generator::Definition
       Event:         "eventTime",
       CSINodeSpec:   "drivers",
     })
+
+    # if class_name =~ /JSONSchemaProps/
+    #   pp self
+    #   exit
+    # end
   end
 
   macro remove_required_fields(values)
@@ -16,5 +21,18 @@ class Generator::Definition
       required.delete("{{v.id}}")
     end
     {% end %}
+  end
+
+  def apply_alliases
+    case class_name
+    when "Api::Core::V1::List"
+      file.puts %<alias #{class_name} = ::K8S::Kubernetes::ResourceList>
+      true
+    when "ApiextensionsApiserver::Apis::Apiextensions::V1::JSON"
+      file.puts %<alias #{class_name} = ::JSON::Any>
+      true
+    else
+      false
+    end
   end
 end

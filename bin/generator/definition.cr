@@ -86,8 +86,7 @@ class Generator::Definition
     end
 
     # TODO: Properly handle List alias
-    if class_name == "Api::Core::V1::List"
-      file.puts %<alias #{class_name} = ::K8S::Kubernetes::ResourceList>
+    if apply_alliases
       _end
       file.close
       return self
@@ -207,6 +206,8 @@ class Generator::Definition
           ref
         elsif property.type.to_s == "array"
           "Array(#{convert_type(property.items.as(Swagger::Definition::Property))})"
+        elsif property.additional_properties
+          "Hash(String, #{convert_type(property.additional_properties.not_nil!)})"
         else
           convert_type(property.type.to_s, true)
         end

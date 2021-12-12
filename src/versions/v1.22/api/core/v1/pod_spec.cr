@@ -23,7 +23,7 @@ module K8S
     init_containers: {type: Array(Api::Core::V1::Container), nilable: true, key: "initContainers", getter: false, setter: false},
     node_name: {type: String, nilable: true, key: "nodeName", getter: false, setter: false},
     node_selector: {type: Hash(String, String), nilable: true, key: "nodeSelector", getter: false, setter: false},
-    overhead: {type: Hash(String, String), nilable: true, key: "overhead", getter: false, setter: false},
+    overhead: {type: Hash(String, Int32 | String), nilable: true, key: "overhead", getter: false, setter: false},
     preemption_policy: {type: String, nilable: true, key: "preemptionPolicy", getter: false, setter: false},
     priority: {type: Int32, nilable: true, key: "priority", getter: false, setter: false},
     priority_class_name: {type: String, nilable: true, key: "priorityClassName", getter: false, setter: false},
@@ -134,7 +134,7 @@ module K8S
     # Overhead represents the resource overhead associated with running a pod for a given RuntimeClass. This field will be autopopulated at admission time by the RuntimeClass admission controller. If the RuntimeClass admission controller is enabled, overhead must not be set in Pod create requests. The RuntimeClass admission controller will reject Pod create requests which have the overhead already set. If RuntimeClass is configured and selected in the PodSpec, Overhead will be set to the value defined in the corresponding RuntimeClass, otherwise it will remain unset and treated as zero. More info: [https://git.k8s.io/enhancements/keps/sig-node/688-pod-overhead/README.md This field is beta-level as of Kubernetes v1.18, and is only honored by servers that enable the PodOverhead feature.](https://git.k8s.io/enhancements/keps/sig-node/688-pod-overhead/README.md This field is beta-level as of Kubernetes v1.18, and is only honored by servers that enable the PodOverhead feature.)
     @[::JSON::Field(key: "overhead", emit_null: false)]
     @[::YAML::Field(key: "overhead", emit_null: false)]
-    property overhead : Hash(String, String) | Nil
+    property overhead : Hash(String, Int32 | String) | Nil
 
     # PreemptionPolicy is the Policy for preempting pods with lower priority. One of Never, PreemptLowerPriority. Defaults to PreemptLowerPriority if unset. This field is beta-level, gated by the NonPreemptingPriority feature-gate.
     @[::JSON::Field(key: "preemptionPolicy", emit_null: false)]

@@ -6,7 +6,7 @@ require "json"
 module K8S
   # CertificateSigningRequestSpec contains the certificate request.
   @[::K8S::Properties(
-    extra: {type: Hash(String, String), nilable: true, key: "extra", getter: false, setter: false},
+    extra: {type: Hash(String, Array(String)), nilable: true, key: "extra", getter: false, setter: false},
     groups: {type: Array(String), nilable: true, key: "groups", getter: false, setter: false},
     request: {type: String, nilable: false, key: "request", getter: false, setter: false},
     signer_name: {type: String, nilable: false, key: "signerName", getter: false, setter: false},
@@ -21,7 +21,7 @@ module K8S
     # extra contains extra attributes of the user that created the CertificateSigningRequest. Populated by the API server on creation and immutable.
     @[::JSON::Field(key: "extra", emit_null: false)]
     @[::YAML::Field(key: "extra", emit_null: false)]
-    property extra : Hash(String, String) | Nil
+    property extra : Hash(String, Array(String)) | Nil
 
     # groups contains group membership of the user that created the CertificateSigningRequest. Populated by the API server on creation and immutable.
     @[::JSON::Field(key: "groups", emit_null: false)]

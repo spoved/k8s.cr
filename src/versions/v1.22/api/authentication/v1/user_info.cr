@@ -6,7 +6,7 @@ require "json"
 module K8S
   # UserInfo holds the information about the user needed to implement the user.Info interface.
   @[::K8S::Properties(
-    extra: {type: Hash(String, String), nilable: true, key: "extra", getter: false, setter: false},
+    extra: {type: Hash(String, Array(String)), nilable: true, key: "extra", getter: false, setter: false},
     groups: {type: Array(String), nilable: true, key: "groups", getter: false, setter: false},
     uid: {type: String, nilable: true, key: "uid", getter: false, setter: false},
     username: {type: String, nilable: true, key: "username", getter: false, setter: false},
@@ -18,7 +18,7 @@ module K8S
     # Any additional information provided by the authenticator.
     @[::JSON::Field(key: "extra", emit_null: false)]
     @[::YAML::Field(key: "extra", emit_null: false)]
-    property extra : Hash(String, String) | Nil
+    property extra : Hash(String, Array(String)) | Nil
 
     # The names of groups this user is a part of.
     @[::JSON::Field(key: "groups", emit_null: false)]

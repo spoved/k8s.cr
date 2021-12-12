@@ -7,7 +7,7 @@ module K8S
   # PersistentVolumeClaimStatus is the current status of a persistent volume claim.
   @[::K8S::Properties(
     access_modes: {type: Array(String), nilable: true, key: "accessModes", getter: false, setter: false},
-    capacity: {type: Hash(String, String), nilable: true, key: "capacity", getter: false, setter: false},
+    capacity: {type: Hash(String, Int32 | String), nilable: true, key: "capacity", getter: false, setter: false},
     conditions: {type: Array(Api::Core::V1::PersistentVolumeClaimCondition), nilable: true, key: "conditions", getter: false, setter: false},
     phase: {type: String, nilable: true, key: "phase", getter: false, setter: false},
   )]
@@ -23,7 +23,7 @@ module K8S
     # Represents the actual resources of the underlying volume.
     @[::JSON::Field(key: "capacity", emit_null: false)]
     @[::YAML::Field(key: "capacity", emit_null: false)]
-    property capacity : Hash(String, String) | Nil
+    property capacity : Hash(String, Int32 | String) | Nil
 
     # Current Condition of persistent volume claim. If underlying persistent volume is being resized then the Condition will be set to 'ResizeStarted'.
     @[::JSON::Field(key: "conditions", emit_null: false)]

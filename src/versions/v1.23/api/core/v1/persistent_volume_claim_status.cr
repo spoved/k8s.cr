@@ -7,8 +7,8 @@ module K8S
   # PersistentVolumeClaimStatus is the current status of a persistent volume claim.
   @[::K8S::Properties(
     access_modes: {type: Array(String), nilable: true, key: "accessModes", getter: false, setter: false},
-    allocated_resources: {type: Hash(String, String), nilable: true, key: "allocatedResources", getter: false, setter: false},
-    capacity: {type: Hash(String, String), nilable: true, key: "capacity", getter: false, setter: false},
+    allocated_resources: {type: Hash(String, Int32 | String), nilable: true, key: "allocatedResources", getter: false, setter: false},
+    capacity: {type: Hash(String, Int32 | String), nilable: true, key: "capacity", getter: false, setter: false},
     conditions: {type: Array(Api::Core::V1::PersistentVolumeClaimCondition), nilable: true, key: "conditions", getter: false, setter: false},
     phase: {type: String, nilable: true, key: "phase", getter: false, setter: false},
     resize_status: {type: String, nilable: true, key: "resizeStatus", getter: false, setter: false},
@@ -25,12 +25,12 @@ module K8S
     # The storage resource within AllocatedResources tracks the capacity allocated to a PVC. It may be larger than the actual capacity when a volume expansion operation is requested. For storage quota, the larger value from allocatedResources and PVC.spec.resources is used. If allocatedResources is not set, PVC.spec.resources alone is used for quota calculation. If a volume expansion capacity request is lowered, allocatedResources is only lowered if there are no expansion operations in progress and if the actual volume capacity is equal or lower than the requested capacity. This is an alpha field and requires enabling RecoverVolumeExpansionFailure feature.
     @[::JSON::Field(key: "allocatedResources", emit_null: false)]
     @[::YAML::Field(key: "allocatedResources", emit_null: false)]
-    property allocated_resources : Hash(String, String) | Nil
+    property allocated_resources : Hash(String, Int32 | String) | Nil
 
     # Represents the actual resources of the underlying volume.
     @[::JSON::Field(key: "capacity", emit_null: false)]
     @[::YAML::Field(key: "capacity", emit_null: false)]
-    property capacity : Hash(String, String) | Nil
+    property capacity : Hash(String, Int32 | String) | Nil
 
     # Current Condition of persistent volume claim. If underlying persistent volume is being resized then the Condition will be set to 'ResizeStarted'.
     @[::JSON::Field(key: "conditions", emit_null: false)]

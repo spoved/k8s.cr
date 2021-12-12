@@ -1,5 +1,7 @@
 module ::K8S::Kubernetes
-  VERSION = SemanticVersion.parse("1.17.0")
+  VERSION       = SemanticVersion.parse("1.17.0")
+  VERSION_MINOR =  1
+  VERSION_MAJOR = 17
 
   abstract class Resource
     include JSON::Serializable

@@ -97,7 +97,10 @@ class Generator
     File.open(File.join(version, "kubernetes.cr"), "w+") do |file|
       file.puts "",
         "module ::#{base_class.lchop("::")}::Kubernetes",
-        " VERSION = SemanticVersion.parse(\"#{version.lchop("v")}.0\")", ""
+        " VERSION = SemanticVersion.parse(\"#{version.lchop("v")}.0\")",
+        " VERSION_MINOR = #{version.lchop("v").split(".").first}",
+        " VERSION_MAJOR = #{version.lchop("v").split(".").last}",
+        ""
       file.puts "abstract class Resource"
       file.puts "  include JSON::Serializable", ""
       write_mappings(file, definitions)
