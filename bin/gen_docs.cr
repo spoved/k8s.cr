@@ -1,10 +1,13 @@
 #!/usr/bin/env crystal
+
+require "file_utils"
 require "./helper"
 require "../src/k8s/version"
 
 DOCS_DIR     = "docs"
 VERSIONS_DIR = Generator::VERSIONS_DIR
 LASTEST      = K8S::VERSION
+PROJ_NAME    = "k8s.cr"
 
 def git_commit
   `git rev-parse HEAD 2> /dev/null`.chomp
@@ -18,7 +21,7 @@ def get_git_tags
   end
 end
 
-def get_k8s_version
+def get_release_version
   tag = get_git_tags.find(&.[1].==(git_commit))
   if tag
     tag[0].lchop('v')
@@ -30,25 +33,30 @@ end
 def generate_docs_for(prefix, version)
   puts "Generating docs for: #{prefix} : #{version}"
 
-  k8s_ver = get_k8s_version
-  docs_dir = File.join(".", DOCS_DIR, k8s_ver, prefix)
+  rel_ver = get_release_version
+  docs_dir = File.join(".", DOCS_DIR, rel_ver, prefix)
   version_file = File.join(".", VERSIONS_DIR, "#{prefix}.cr")
-
+  return unless File.exists?(version_file)
   FileUtils.rm_rf File.join(docs_dir) if Dir.exists?(docs_dir)
   FileUtils.mkdir_p(docs_dir) unless Dir.exists?(docs_dir)
 
-  _generate_docs(version_file, docs_dir, k8s_ver, git_commit, version)
+  _generate_docs(version_file, docs_dir, rel_ver, git_commit, version)
 end
 
-def _generate_docs(version_file, docs_dir, k8s_ver, git_commit, api_ver)
+def _generate_docs(version_file, docs_dir, rel_ver, git_commit, api_ver)
   args = [
     "doc",
-    version_file,
-    "--project-name", "K8S.cr",
+    "--project-name", PROJ_NAME,
     "--output", docs_dir,
-    "--project-version", k8s_ver,
+    "--project-version", rel_ver,
     "--source-refname", git_commit,
   ]
+
+  # Dir.glob("./lib/k8s/src/k8s/*.cr").each do |file|
+  #   args << file
+  # end
+  # args << File.join(".", "lib/k8s/src/versions", File.basename(version_file))
+  args << version_file
 
   system "crystal", args
 
@@ -60,7 +68,7 @@ end
 def gen_css(version)
   <<-CSS
   html body div.sidebar div.sidebar-header div.project-summary span.project-version::after {
-    content: "Api: #{version}";
+    content: "api: #{version}";
     display: block;
     clear: both;
   }
@@ -73,32 +81,33 @@ def generate_release_docs
   generate_release_docs_for("master", git_commit)
   docs = ["master"]
 
-  current_ref = git_commit
   get_git_tags.each do |tag|
-    docs << tag[0].lchop('v')
-    generate_release_docs_for(tag[0].lchop('v'), tag[1])
+    versions = generate_release_docs_for(tag[0].lchop('v'), tag[1])
+    docs << tag[0].lchop('v') unless versions.empty?
   end
 
-  `git checkout #{current_ref}`
+  `git checkout master`
   generate_version_list(File.join(".", DOCS_DIR), docs, "K8S Releases")
 end
 
 def generate_release_docs_for(tag, commit)
   `git checkout #{commit}`
-
+  `shards install`
   versions = [] of String
   for_each_version do |prefix, _, version|
     generate_docs_for(prefix, version)
     versions << prefix
   end
   docs_dir = File.join(".", DOCS_DIR, tag)
-  generate_version_list(docs_dir, versions, "Kubernetes APIs")
+  generate_version_list(docs_dir, versions, "Kubernetes APIs") unless versions.empty?
+  versions
 end
 
 def generate_version_list(docs_dir, docs, title = nil)
+  return unless Dir.exists?(docs_dir)
   index = File.join(docs_dir, "index.html")
   File.open(index, "w") do |f|
-    f.puts gen_index(title, docs)
+    f.puts gen_index(title, docs.sort.reverse!)
   end
 end
 
