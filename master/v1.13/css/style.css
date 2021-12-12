@@ -726,7 +726,7 @@ span.flag.lime {
 }
 
 html body div.sidebar div.sidebar-header div.project-summary span.project-version::after {
-  content: "Api: v1.13.12";
+  content: "api: v1.13.12";
   display: block;
   clear: both;
 }
