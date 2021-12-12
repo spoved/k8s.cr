@@ -5030,46 +5030,27 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">class</span> K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::JSON
+  <span class="kind">alias</span> K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::JSON
 
 </h1>
 
 
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../../../../K8S/ApiextensionsApiserver/Apis/Apiextensions/V1/JSON.html">K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::JSON</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
-
-
-
-
-  <h2>
-    <a id="overview" class="anchor" href="#overview">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Overview
-  </h2>
-
-  <p>JSON represents any valid JSON value. These types are supported: bool, int64, float64, string, []interface{}, map[string]interface{} and nil.</p>
 
 
 
 
 
   <h2>
-    <a id="included-modules" class="anchor" href="#included-modules">
+    <a id="alias-definition" class="anchor" href="#alias-definition">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>
-    Included Modules
+    Alias Definition
   </h2>
-  <ul class="other-types-list">
-    
-      <li class="other-type">JSON::Serializable</li>
-    
-      <li class="other-type">YAML::Serializable</li>
-    
-  </ul>
+  <code>JSON::Any</code>
+
+
 
 
 
@@ -5090,7 +5071,7 @@
   </h2>
   
     
-      <a href="https://github.com/spoved/k8s.cr/blob/5bd35912bffce3be323eb6e9d511f884fb0960ee/src/versions/v1.21/apiextensions_apiserver/apis/apiextensions/v1/json.cr#L9" target="_blank">
+      <a href="https://github.com/spoved/k8s.cr/blob/97dd4f8caccdfda47448a1ae51cd85f26ac2f826/src/versions/v1.21/apiextensions_apiserver/apis/apiextensions/v1/json.cr#L7" target="_blank">
         versions/v1.21/apiextensions_apiserver/apis/apiextensions/v1/json.cr
       </a>
     
@@ -5100,33 +5081,6 @@
 
 
 
-
-  <h2>
-    <a id="constructors" class="anchor" href="#constructors">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Constructors
-  </h2>
-  <ul class="list-summary">
-    
-      <li class="entry-summary">
-        <a href="#new%28ctx%3AYAML%3A%3AParseContext%2Cnode%3AYAML%3A%3ANodes%3A%3ANode%29-class-method" class="signature"><strong>.new</strong>(ctx : YAML::ParseContext, node : YAML::Nodes::Node)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#new%28pull%3A%3A%3AJSON%3A%3APullParser%29-class-method" class="signature"><strong>.new</strong>(pull : ::JSON::PullParser)</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#new-class-method" class="signature"><strong>.new</strong></a>
-        
-      </li>
-    
-  </ul>
 
 
 
@@ -5138,106 +5092,8 @@
 
 <div class="methods-inherited">
   
-    
-
-
-    
-
-
-    
-
-
-  
-    
-
-
-    
-
-
-    
-
-
-  
-    
-
-
-    
-
-
-    
-
-
-  
-    
-
-
-    
-
-
-    
-
-
-  
 </div>
 
-
-  <h2>
-    <a id="constructor-detail" class="anchor" href="#constructor-detail">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Constructor Detail
-  </h2>
-  
-    <div class="entry-detail" id="new(ctx:YAML::ParseContext,node:YAML::Nodes::Node)-class-method">
-      <div class="signature">
-        
-        def self.<strong>new</strong>(ctx : YAML::ParseContext, node : YAML::Nodes::Node)
-
-        <a class="method-permalink" href="#new%28ctx%3AYAML%3A%3AParseContext%2Cnode%3AYAML%3A%3ANodes%3A%3ANode%29-class-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/spoved/k8s.cr/blob/5bd35912bffce3be323eb6e9d511f884fb0960ee/src/versions/v1.21/apiextensions_apiserver/apis/apiextensions/v1/json.cr#L14" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="new(pull:::JSON::PullParser)-class-method">
-      <div class="signature">
-        
-        def self.<strong>new</strong>(pull : ::JSON::PullParser)
-
-        <a class="method-permalink" href="#new%28pull%3A%3A%3AJSON%3A%3APullParser%29-class-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/spoved/k8s.cr/blob/5bd35912bffce3be323eb6e9d511f884fb0960ee/src/versions/v1.21/apiextensions_apiserver/apis/apiextensions/v1/json.cr#L13" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="new-class-method">
-      <div class="signature">
-        
-        def self.<strong>new</strong>
-
-        <a class="method-permalink" href="#new-class-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/spoved/k8s.cr/blob/5bd35912bffce3be323eb6e9d511f884fb0960ee/src/versions/v1.21/apiextensions_apiserver/apis/apiextensions/v1/json.cr#L16" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
 
 
 
