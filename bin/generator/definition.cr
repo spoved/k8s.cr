@@ -59,12 +59,11 @@ class Generator::Definition
     @definition = generator.schema.definitions[name]
     path = @class_name.split("::").map(&.underscore).join("/")
     @filename = File.join(base_dir, path) + ".cr"
-    FileUtils.mkdir_p(File.dirname(@filename))
   end
 
   def generate
     apply_overrides
-
+    FileUtils.mkdir_p(File.dirname(@filename))
     STDOUT.puts "Writing: #{filename}"
     file.puts "# THIS FILE WAS AUTO GENERATED FROM THE K8S SWAGGER SPEC"
     file.puts ""

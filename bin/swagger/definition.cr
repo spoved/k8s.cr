@@ -7,7 +7,7 @@ class Swagger::Definition
 
   property description : String? = nil
   property required : Array(String) = [] of String
-  property properties : Hash(String, Property) = {} of String => Property
+  property properties : Hash(String, Swagger::Definition::Property) = Hash(String, Swagger::Definition::Property).new
   @[JSON::Field(key: "$ref")]
   property _ref : String? = nil
   @[JSON::Field(key: "x-kubernetes-group-version-kind")]

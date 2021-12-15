@@ -241,7 +241,7 @@ class K8S::CRD::Parser
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/#{ver.api_base}.#{ver.version}.#{spec.names.singular}"
+              "$ref": "#/definitions/#{ver.api_base}.#{ver.version}.#{ver.kind}"
             }
           }
         ]
@@ -253,19 +253,19 @@ class K8S::CRD::Parser
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/#{ver.api_base}.#{ver.version}.#{spec.names.singular}"
+              "$ref": "#/definitions/#{ver.api_base}.#{ver.version}.#{ver.kind}"
             }
           },
           "201": {
             "description": "Created",
             "schema": {
-              "$ref": "#/definitions/#{ver.api_base}.#{ver.version}.#{spec.names.singular}"
+              "$ref": "#/definitions/#{ver.api_base}.#{ver.version}.#{ver.kind}"
             }
           },
           "202": {
             "description": "Accepted",
             "schema": {
-              "$ref": "#/definitions/#{ver.api_base}.#{ver.version}.#{spec.names.singular}"
+              "$ref": "#/definitions/#{ver.api_base}.#{ver.version}.#{ver.kind}"
             }
           },
           "401": {

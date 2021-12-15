@@ -12,14 +12,13 @@ class Generator
   getter base_class : String
   getter base_dir : String
   getter schema : Swagger
+  getter only_groups : Array(String)? = nil
 
   def self.generate(*args)
     new(*args).tap(&.generate)
   end
 
-  def initialize(response : String, fallback_version : String)
-    @schema = Swagger.from_json(response)
-
+  def initialize(@schema : Swagger, @base_class, @base_dir, @only_groups = nil)
     Swagger::Definition.new.tap do |list_def|
       template = @schema.definitions["io.k8s.api.core.v1.PodList"]?
       defkey = "io.k8s.api.core.v1.List" if template
@@ -34,19 +33,23 @@ class Generator
       )
       @schema.definitions[defkey] = list_def
     end
-
-    @schema.info.version = fallback_version if @schema.info.version == "unversioned"
-    @base_class = ROOT_NAME
-    @base_dir = File.join(".", VERSIONS_DIR, version)
     @filename = version + ".cr"
 
     @definitions = @schema.definitions.each_with_object({} of String => String) do |(name, definition), memo|
       next if definition._ref
-      parts = name.lchop("io.k8s.").sub(".pkg.", ".").split(".").map(&.gsub('-', '_').camelcase)
+      parts = name.lchop("io.k8s.").sub(".pkg.", ".").lchop("io.").split(".").map(&.gsub('-', '_').camelcase)
       memo[name] = parts.join("::")
     end
 
     add_missing_definitions
+  end
+
+  def self.new(response : String, fallback_version : String)
+    schema = Swagger.from_json(response)
+    schema.info.version = fallback_version if schema.info.version == "unversioned"
+    base_class = ROOT_NAME
+    version = schema.info.version.downcase.split('.').tap(&.pop).join('.')
+    new(schema, base_class, File.join(".", VERSIONS_DIR, version))
   end
 
   DEFAULT_DEFINITIONS = {
@@ -73,11 +76,22 @@ class Generator
     end
 
     FileUtils.mkdir_p(base_dir)
-    definitions.each(&.generate)
-    Dir.cd(File.join(File.join(".", VERSIONS_DIR))) do
-      write_version_file(definitions)
-      write_kubernetes_file(definitions)
+    definitions.each do |definition|
+      # if only_groups is defined, only generate the groups specified
+      if only_groups.nil? || !(only_groups.not_nil!.find { |group| definition.name =~ /#{group}/ }.nil?)
+        definition.generate
+      end
     end
+
+    # Only generate the main file if there are no groups specified
+    if only_groups.nil?
+      Dir.cd(base_dir) do
+        write_version_file(definitions)
+        write_kubernetes_file(definitions)
+      end
+    end
+
+    system "crystal tool format #{base_dir}"
   end
 
   private def write_version_file(definitions)

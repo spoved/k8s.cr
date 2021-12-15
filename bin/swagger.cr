@@ -6,7 +6,7 @@ class Swagger
   property paths : Hash(String, Path)
   property definitions : Hash(String, Definition)
 
-  def initialize(@info = Info.new("", ""), @paths = Hash(String, Path).new, @definitions = Hash(String, Definition).new); end
+  def initialize(@info = Info.new("", "unversioned"), @paths = Hash(String, Path).new, @definitions = Hash(String, Definition).new); end
 end
 
 require "./swagger/*"
