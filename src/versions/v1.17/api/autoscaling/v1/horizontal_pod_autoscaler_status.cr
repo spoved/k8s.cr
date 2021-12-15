@@ -14,7 +14,9 @@ module K8S
   )]
   class Api::Autoscaling::V1::HorizontalPodAutoscalerStatus
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # current average CPU utilization over all pods, represented as a percentage of requested CPU, e.g. 70 means that an average pod is using now 70% of its requested CPU.
     @[::JSON::Field(key: "currentCPUUtilizationPercentage", emit_null: false)]

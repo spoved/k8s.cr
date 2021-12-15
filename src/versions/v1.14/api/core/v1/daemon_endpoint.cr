@@ -10,7 +10,9 @@ module K8S
   )]
   class Api::Core::V1::DaemonEndpoint
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Port number of the given endpoint.
     @[::JSON::Field(key: "Port", emit_null: true)]

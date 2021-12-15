@@ -10,7 +10,9 @@ module K8S
   )]
   class Api::Core::V1::NodeSelector
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Required. A list of node selector terms. The terms are ORed.
     @[::JSON::Field(key: "nodeSelectorTerms", emit_null: true)]

@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Networking::V1::IngressTLS
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Hosts are a list of hosts included in the TLS certificate. The values in this list must match the name/s used in the tlsSecret. Defaults to the wildcard host setting for the loadbalancer controller fulfilling this Ingress, if left unspecified.
     @[::JSON::Field(key: "hosts", emit_null: false)]

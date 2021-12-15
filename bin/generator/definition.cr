@@ -2,13 +2,6 @@ require "file_utils"
 require "./aliases"
 require "./overrides"
 
-private def crystalize_name(name : String)
-  name.gsub(/JSON/, "Json").gsub(/UUID/, "Uuid").gsub(/APIV3/, "Apiv3")
-    .gsub(/CIDR/, "Cidr").gsub(/CPU/, "Cpu").gsub(/CSI/, "Csi").gsub(/TLS/, "Tls")
-    .gsub(/[A-Z]{2,3}/, &.capitalize).underscore.lchop("_").lchop("$")
-    .gsub('-', '_')
-end
-
 class Generator::Definition
   URL_REGEX = /(?<url>((http[s]?):\/)?\/?([^:\/\s]+)((\/\w+)*\/)([\w\-\.]+[^#?\s]+)(.*)?(#[\w\-]+)?)/
 
@@ -131,7 +124,10 @@ class Generator::Definition
 
   private def define_serialization
     file.puts "include ::JSON::Serializable",
-      "include ::YAML::Serializable", ""
+      "include ::JSON::Serializable::Unmapped",
+      "include ::YAML::Serializable",
+      "include ::YAML::Serializable::Unmapped",
+      ""
   end
 
   private def define_class

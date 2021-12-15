@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Core::V1::HostAlias
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Hostnames for the above IP address.
     @[::JSON::Field(key: "hostnames", emit_null: false)]

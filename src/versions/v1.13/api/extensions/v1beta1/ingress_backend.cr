@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Extensions::V1beta1::IngressBackend
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Specifies the name of the referenced service.
     @[::JSON::Field(key: "serviceName", emit_null: true)]

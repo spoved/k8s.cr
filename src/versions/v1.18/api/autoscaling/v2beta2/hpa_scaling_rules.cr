@@ -12,7 +12,9 @@ module K8S
   )]
   class Api::Autoscaling::V2beta2::HPAScalingRules
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # policies is a list of potential scaling polices which can be used during scaling. At least one policy must be specified, otherwise the HPAScalingRules will be discarded as invalid
     @[::JSON::Field(key: "policies", emit_null: false)]

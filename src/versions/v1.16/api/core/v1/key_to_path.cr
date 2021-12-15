@@ -12,7 +12,9 @@ module K8S
   )]
   class Api::Core::V1::KeyToPath
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # The key to project.
     @[::JSON::Field(key: "key", emit_null: true)]

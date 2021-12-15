@@ -14,7 +14,9 @@ module K8S
   )]
   class Api::Core::V1::ServicePort
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # The name of this port within the service. This must be a DNS_LABEL. All ports within a ServiceSpec must have unique names. This maps to the 'Name' field in EndpointPort objects. Optional if only one ServicePort is defined on this service.
     @[::JSON::Field(key: "name", emit_null: false)]

@@ -26,7 +26,9 @@ module K8S
   )]
   class Apimachinery::Apis::Meta::V1::ObjectMeta
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: [http://kubernetes.io/docs/user-guide/annotations](http://kubernetes.io/docs/user-guide/annotations)
     @[::JSON::Field(key: "annotations", emit_null: false)]

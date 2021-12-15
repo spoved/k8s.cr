@@ -13,7 +13,9 @@ module K8S
   )]
   class Api::Flowcontrol::V1beta1::Subject
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     @[::JSON::Field(key: "group", emit_null: false)]
     @[::YAML::Field(key: "group", emit_null: false)]

@@ -16,7 +16,9 @@ module K8S
   )]
   class Api::Certificates::V1::CertificateSigningRequestSpec
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # extra contains extra attributes of the user that created the CertificateSigningRequest. Populated by the API server on creation and immutable.
     @[::JSON::Field(key: "extra", emit_null: false)]

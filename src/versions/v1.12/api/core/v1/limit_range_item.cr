@@ -15,7 +15,9 @@ module K8S
   )]
   class Api::Core::V1::LimitRangeItem
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Default resource requirement limit value by resource name if resource limit is omitted.
     @[::JSON::Field(key: "default", emit_null: false)]

@@ -15,6 +15,11 @@ class Swagger::Path::Action
 
   @[JSON::Field(key: "x-kubernetes-action")]
   property x_kubernetes_action : Array(String) | String? = nil
+
+  def initialize(@operationId, @responses,
+                 @description = nil, @consumes = nil, @produces = nil,
+                 @parameters = nil, @tags = nil, @x_kubernetes_action = nil)
+  end
 end
 
 require "./action/*"

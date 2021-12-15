@@ -14,7 +14,9 @@ module K8S
   )]
   class Api::Core::V1::FlexVolumeSource
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Driver is the name of the driver to use for this volume.
     @[::JSON::Field(key: "driver", emit_null: true)]

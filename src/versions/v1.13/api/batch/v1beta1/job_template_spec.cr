@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Batch::V1beta1::JobTemplateSpec
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Standard object's metadata of the jobs created from this template. More info: [https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata)
     @[::JSON::Field(key: "metadata", emit_null: false)]

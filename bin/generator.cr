@@ -1,4 +1,5 @@
 require "./swagger"
+require "./helper"
 
 class Generator
   ROOT_NAME    = "K8S"

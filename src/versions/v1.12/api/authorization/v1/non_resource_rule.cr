@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Authorization::V1::NonResourceRule
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # NonResourceURLs is a set of partial urls that a user should have access to.  *s are allowed, but only as the full, final step in the path.  "*" means all.
     @[::JSON::Field(key: "nonResourceURLs", emit_null: false)]

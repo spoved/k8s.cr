@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Core::V1::AttachedVolume
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # DevicePath represents the device path where the volume should be available
     @[::JSON::Field(key: "devicePath", emit_null: true)]

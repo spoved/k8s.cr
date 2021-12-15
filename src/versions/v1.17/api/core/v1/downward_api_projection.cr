@@ -10,7 +10,9 @@ module K8S
   )]
   class Api::Core::V1::DownwardAPIProjection
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Items is a list of DownwardAPIVolume file
     @[::JSON::Field(key: "items", emit_null: false)]

@@ -10,7 +10,9 @@ module K8S
   )]
   class Api::Networking::V1::HTTPIngressRuleValue
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # A collection of paths that map requests to backends.
     @[::JSON::Field(key: "paths", emit_null: true)]

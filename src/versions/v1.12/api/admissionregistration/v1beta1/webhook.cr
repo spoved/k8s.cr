@@ -15,7 +15,9 @@ module K8S
   )]
   class Api::Admissionregistration::V1beta1::Webhook
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # ClientConfig defines how to communicate with the hook. Required
     @[::JSON::Field(key: "clientConfig", emit_null: true)]

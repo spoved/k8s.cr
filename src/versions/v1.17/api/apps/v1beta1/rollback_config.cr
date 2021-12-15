@@ -10,7 +10,9 @@ module K8S
   )]
   class Api::Apps::V1beta1::RollbackConfig
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # The revision to rollback to. If set to 0, rollback to the last revision.
     @[::JSON::Field(key: "revision", emit_null: false)]

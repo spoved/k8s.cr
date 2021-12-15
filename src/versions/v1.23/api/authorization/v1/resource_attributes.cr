@@ -16,7 +16,9 @@ module K8S
   )]
   class Api::Authorization::V1::ResourceAttributes
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Group is the API Group of the Resource.  "*" means all.
     @[::JSON::Field(key: "group", emit_null: false)]

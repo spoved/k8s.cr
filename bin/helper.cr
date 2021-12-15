@@ -56,3 +56,10 @@ def for_each_version(major = 1, minor = 11)
     end
   end
 end
+
+def crystalize_name(name : String)
+  name.gsub(/JSON/, "Json").gsub(/UUID/, "Uuid").gsub(/APIV3/, "Apiv3")
+    .gsub(/CIDR/, "Cidr").gsub(/CPU/, "Cpu").gsub(/CSI/, "Csi").gsub(/TLS/, "Tls")
+    .gsub(/[A-Z]{2,3}/, &.capitalize).underscore.lchop("_").lchop("$")
+    .gsub('-', '_')
+end

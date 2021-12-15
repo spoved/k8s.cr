@@ -11,7 +11,9 @@ module K8S
   )]
   class Apimachinery::Apis::Meta::V1::GroupVersionForDiscovery
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # groupVersion specifies the API group and version in the form ["group/version"]("group/version")
     @[::JSON::Field(key: "groupVersion", emit_null: true)]

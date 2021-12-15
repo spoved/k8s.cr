@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Core::V1::WeightedPodAffinityTerm
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Required. A pod affinity term, associated with the corresponding weight.
     @[::JSON::Field(key: "podAffinityTerm", emit_null: true)]

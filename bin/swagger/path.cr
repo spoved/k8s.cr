@@ -12,6 +12,10 @@ class Swagger::Path
   property options : Action?
   property parameters : Array(Parameter) = [] of Parameter
 
+  def initialize(@get = nil, @post = nil, @delete = nil, @patch = nil, @put = nil,
+                 @head = nil, @options = nil, @parameters = Array(Parameter).new)
+  end
+
   def actions
     action_map.values.reject(Nil).map(&.as Action)
   end

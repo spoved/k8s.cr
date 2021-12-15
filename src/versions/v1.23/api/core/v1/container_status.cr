@@ -18,7 +18,9 @@ module K8S
   )]
   class Api::Core::V1::ContainerStatus
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Container's ID in the format 'docker://<container_id>'.
     @[::JSON::Field(key: "containerID", emit_null: false)]

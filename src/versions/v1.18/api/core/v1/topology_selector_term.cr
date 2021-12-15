@@ -10,7 +10,9 @@ module K8S
   )]
   class Api::Core::V1::TopologySelectorTerm
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # A list of topology selector requirements by labels.
     @[::JSON::Field(key: "matchLabelExpressions", emit_null: false)]

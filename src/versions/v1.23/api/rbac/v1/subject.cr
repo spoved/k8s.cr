@@ -13,7 +13,9 @@ module K8S
   )]
   class Api::Rbac::V1::Subject
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # APIGroup holds the API group of the referenced subject. Defaults to "" for ServiceAccount subjects. Defaults to "rbac.authorization.k8s.io" for User and Group subjects.
     @[::JSON::Field(key: "apiGroup", emit_null: false)]

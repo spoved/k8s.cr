@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Extensions::V1beta1::RunAsGroupStrategyOptions
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # ranges are the allowed ranges of gids that may be used. If you would like to force a single gid then supply a single range with the same start and end. Required for MustRunAs.
     @[::JSON::Field(key: "ranges", emit_null: false)]

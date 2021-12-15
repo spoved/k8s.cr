@@ -10,7 +10,9 @@ module K8S
   )]
   class Api::Core::V1::SessionAffinityConfig
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # clientIP contains the configurations of Client IP based session affinity.
     @[::JSON::Field(key: "clientIP", emit_null: false)]

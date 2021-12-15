@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Flowcontrol::V1beta1::PriorityLevelConfigurationSpec
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # `limited` specifies how requests are handled for a Limited priority level. This field must be non-empty if and only if `type` is `"Limited"`.
     @[::JSON::Field(key: "limited", emit_null: false)]

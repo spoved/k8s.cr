@@ -11,7 +11,9 @@ module K8S
   )]
   class KubeAggregator::Apis::Apiregistration::V1::ServiceReference
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Name is the name of the service
     @[::JSON::Field(key: "name", emit_null: false)]

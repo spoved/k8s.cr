@@ -12,7 +12,9 @@ module K8S
   )]
   class Api::Core::V1::ScopedResourceSelectorRequirement
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Represents a scope's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist.
     @[::JSON::Field(key: "operator", emit_null: true)]

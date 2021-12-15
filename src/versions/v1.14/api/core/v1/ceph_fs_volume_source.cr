@@ -15,7 +15,9 @@ module K8S
   )]
   class Api::Core::V1::CephFSVolumeSource
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Required: Monitors is a collection of Ceph monitors More info: [https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it](https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it)
     @[::JSON::Field(key: "monitors", emit_null: true)]

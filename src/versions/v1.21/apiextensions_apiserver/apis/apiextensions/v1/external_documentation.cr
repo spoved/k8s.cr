@@ -11,7 +11,9 @@ module K8S
   )]
   class ApiextensionsApiserver::Apis::Apiextensions::V1::ExternalDocumentation
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     @[::JSON::Field(key: "description", emit_null: false)]
     @[::YAML::Field(key: "description", emit_null: false)]

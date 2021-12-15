@@ -13,7 +13,9 @@ module K8S
   )]
   class Api::Autoscaling::V2beta1::HorizontalPodAutoscalerSpec
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # maxReplicas is the upper limit for the number of replicas to which the autoscaler can scale up. It cannot be less that minReplicas.
     @[::JSON::Field(key: "maxReplicas", emit_null: true)]

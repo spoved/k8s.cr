@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Auditregistration::V1alpha1::Policy
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # The Level that all requests are recorded at. available options: None, Metadata, Request, RequestResponse required
     @[::JSON::Field(key: "level", emit_null: true)]

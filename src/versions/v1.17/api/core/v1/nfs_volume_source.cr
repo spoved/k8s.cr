@@ -12,7 +12,9 @@ module K8S
   )]
   class Api::Core::V1::NFSVolumeSource
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Path that is exported by the NFS server. More info: [https://kubernetes.io/docs/concepts/storage/volumes#nfs](https://kubernetes.io/docs/concepts/storage/volumes#nfs)
     @[::JSON::Field(key: "path", emit_null: true)]

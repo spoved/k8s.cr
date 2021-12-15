@@ -12,7 +12,9 @@ module K8S
   )]
   class ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceDefinitionStatus
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # AcceptedNames are the names that are actually being used to serve discovery They may be different than the names in spec.
     @[::JSON::Field(key: "acceptedNames", emit_null: true)]

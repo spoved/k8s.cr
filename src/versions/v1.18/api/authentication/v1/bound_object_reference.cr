@@ -13,7 +13,9 @@ module K8S
   )]
   class Api::Authentication::V1::BoundObjectReference
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # API version of the referent.
     @[::JSON::Field(key: "apiVersion", emit_null: false)]

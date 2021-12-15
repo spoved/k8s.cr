@@ -13,7 +13,9 @@ module K8S
   )]
   class KubeAggregator::Apis::Apiregistration::V1::APIServiceCondition
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Last time the condition transitioned from one status to another.
     @[::JSON::Field(key: "lastTransitionTime", emit_null: false)]

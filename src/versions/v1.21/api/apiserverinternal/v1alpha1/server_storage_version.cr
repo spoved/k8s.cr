@@ -12,7 +12,9 @@ module K8S
   )]
   class Api::Apiserverinternal::V1alpha1::ServerStorageVersion
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # The ID of the reporting API server.
     @[::JSON::Field(key: "apiServerID", emit_null: false)]

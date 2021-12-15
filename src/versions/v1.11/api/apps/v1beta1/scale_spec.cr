@@ -10,7 +10,9 @@ module K8S
   )]
   class Api::Apps::V1beta1::ScaleSpec
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # desired number of instances for the scaled object.
     @[::JSON::Field(key: "replicas", emit_null: false)]

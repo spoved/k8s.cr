@@ -15,7 +15,9 @@ module K8S
   )]
   class Api::Certificates::V1beta1::CertificateSigningRequestSpec
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Extra information about the requesting user. See user.Info interface for details.
     @[::JSON::Field(key: "extra", emit_null: false)]

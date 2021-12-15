@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Core::V1::LoadBalancerIngress
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Hostname is set for load-balancer ingress points that are DNS based (typically AWS load-balancers)
     @[::JSON::Field(key: "hostname", emit_null: false)]

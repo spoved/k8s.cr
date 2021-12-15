@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Authorization::V1::SelfSubjectAccessReviewSpec
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # NonResourceAttributes describes information for a non-resource access request
     @[::JSON::Field(key: "nonResourceAttributes", emit_null: false)]

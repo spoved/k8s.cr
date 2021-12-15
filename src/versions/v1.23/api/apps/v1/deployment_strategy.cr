@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Apps::V1::DeploymentStrategy
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Rolling update config params. Present only if DeploymentStrategyType = RollingUpdate.
     @[::JSON::Field(key: "rollingUpdate", emit_null: false)]

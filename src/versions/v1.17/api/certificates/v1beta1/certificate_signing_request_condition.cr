@@ -12,7 +12,9 @@ module K8S
   )]
   class Api::Certificates::V1beta1::CertificateSigningRequestCondition
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # timestamp for the last update to this condition
     @[::JSON::Field(key: "lastUpdateTime", emit_null: false)]

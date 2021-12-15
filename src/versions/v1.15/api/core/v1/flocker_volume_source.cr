@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Core::V1::FlockerVolumeSource
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Name of the dataset stored as metadata -> name on the dataset for Flocker should be considered as deprecated
     @[::JSON::Field(key: "datasetName", emit_null: false)]

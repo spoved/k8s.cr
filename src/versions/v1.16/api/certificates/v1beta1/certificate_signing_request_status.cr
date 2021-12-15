@@ -10,7 +10,9 @@ module K8S
   )]
   class Api::Certificates::V1beta1::CertificateSigningRequestStatus
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # If request was approved, the controller will place the issued certificate here.
     @[::JSON::Field(key: "certificate", emit_null: false)]

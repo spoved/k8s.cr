@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Autoscaling::V2beta2::PodsMetricSource
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # metric identifies the target metric by name and selector
     @[::JSON::Field(key: "metric", emit_null: true)]

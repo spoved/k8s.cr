@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Auditregistration::V1alpha1::Webhook
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # ClientConfig holds the connection parameters for the webhook required
     @[::JSON::Field(key: "clientConfig", emit_null: true)]

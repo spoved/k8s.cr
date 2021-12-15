@@ -19,7 +19,9 @@ module K8S
   )]
   class Api::Core::V1::Probe
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Exec specifies the action to take.
     @[::JSON::Field(key: "exec", emit_null: false)]

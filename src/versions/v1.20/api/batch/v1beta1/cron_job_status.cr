@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Batch::V1beta1::CronJobStatus
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # A list of pointers to currently running jobs.
     @[::JSON::Field(key: "active", emit_null: false)]

@@ -15,7 +15,9 @@ module K8S
   )]
   class Api::Core::V1::ReplicationControllerStatus
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # The number of available replicas (ready for at least minReadySeconds) for this replication controller.
     @[::JSON::Field(key: "availableReplicas", emit_null: false)]

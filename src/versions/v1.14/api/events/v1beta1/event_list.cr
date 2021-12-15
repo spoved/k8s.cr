@@ -71,7 +71,9 @@ module K8S
   class Api::Events::V1beta1::EventList < ::K8S::Kubernetes::ResourceList(Api::Events::V1beta1::Event)
     include ::K8S::Kubernetes::Resource::List
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     @[::JSON::Field(key: "apiVersion")]
     @[::YAML::Field(key: "apiVersion")]

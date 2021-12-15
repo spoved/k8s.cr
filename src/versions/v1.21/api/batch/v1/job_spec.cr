@@ -19,7 +19,9 @@ module K8S
   )]
   class Api::Batch::V1::JobSpec
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Specifies the duration in seconds relative to the startTime that the job may be continuously active before the system tries to terminate it; value must be positive integer. If a Job is suspended (at creation or through an update), this timer will effectively be stopped and reset when the Job is resumed again.
     @[::JSON::Field(key: "activeDeadlineSeconds", emit_null: false)]

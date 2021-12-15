@@ -14,7 +14,9 @@ module K8S
   )]
   class Api::Core::V1::CSIVolumeSource
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Driver is the name of the CSI driver that handles this volume. Consult with your admin for the correct name as registered in the cluster.
     @[::JSON::Field(key: "driver", emit_null: true)]

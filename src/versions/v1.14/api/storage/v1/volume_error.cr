@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Storage::V1::VolumeError
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # String detailing the error encountered during Attach or Detach operation. This string may be logged, so it should not contain sensitive information.
     @[::JSON::Field(key: "message", emit_null: false)]

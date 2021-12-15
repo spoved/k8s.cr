@@ -15,7 +15,9 @@ module K8S
   )]
   class Api::Autoscaling::V2::HorizontalPodAutoscalerStatus
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # conditions is the set of conditions required for this autoscaler to scale its target, and indicates whether or not those conditions are met.
     @[::JSON::Field(key: "conditions", emit_null: false)]

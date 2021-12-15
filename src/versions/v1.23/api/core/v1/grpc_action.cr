@@ -10,7 +10,9 @@ module K8S
   )]
   class Api::Core::V1::GRPCAction
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Port number of the gRPC service. Number must be in the range 1 to 65535.
     @[::JSON::Field(key: "port", emit_null: true)]

@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Apps::V1::StatefulSetPersistentVolumeClaimRetentionPolicy
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # WhenDeleted specifies what happens to PVCs created from StatefulSet VolumeClaimTemplates when the StatefulSet is deleted. The default policy of `Retain` causes PVCs to not be affected by StatefulSet deletion. The `Delete` policy causes those PVCs to be deleted.
     @[::JSON::Field(key: "whenDeleted", emit_null: false)]

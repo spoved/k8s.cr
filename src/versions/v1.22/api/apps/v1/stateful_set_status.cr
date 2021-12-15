@@ -19,7 +19,9 @@ module K8S
   )]
   class Api::Apps::V1::StatefulSetStatus
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Total number of available pods (ready for at least minReadySeconds) targeted by this statefulset. This is an alpha field and requires enabling StatefulSetMinReadySeconds feature gate. Remove omitempty when graduating to beta
     @[::JSON::Field(key: "availableReplicas", emit_null: false)]

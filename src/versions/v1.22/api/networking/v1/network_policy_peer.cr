@@ -12,7 +12,9 @@ module K8S
   )]
   class Api::Networking::V1::NetworkPolicyPeer
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # IPBlock defines policy on a particular IPBlock. If this field is set then neither of the other fields can be.
     @[::JSON::Field(key: "ipBlock", emit_null: false)]

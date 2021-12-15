@@ -60,7 +60,9 @@ module K8S
   class Api::Apps::V1::DeploymentList < ::K8S::Kubernetes::ResourceList(Api::Apps::V1::Deployment)
     include ::K8S::Kubernetes::Resource::List
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     @[::JSON::Field(key: "apiVersion")]
     @[::YAML::Field(key: "apiVersion")]

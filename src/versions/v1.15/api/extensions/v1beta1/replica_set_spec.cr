@@ -13,7 +13,9 @@ module K8S
   )]
   class Api::Extensions::V1beta1::ReplicaSetSpec
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Minimum number of seconds for which a newly created pod should be ready without any of its container crashing, for it to be considered available. Defaults to 0 (pod will be considered available as soon as it is ready)
     @[::JSON::Field(key: "minReadySeconds", emit_null: false)]

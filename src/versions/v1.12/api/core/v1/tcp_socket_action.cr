@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Core::V1::TCPSocketAction
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Optional: Host name to connect to, defaults to the pod IP.
     @[::JSON::Field(key: "host", emit_null: false)]

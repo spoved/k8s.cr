@@ -13,7 +13,9 @@ module K8S
   )]
   class Api::Core::V1::EndpointAddress
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # The Hostname of this endpoint
     @[::JSON::Field(key: "hostname", emit_null: false)]

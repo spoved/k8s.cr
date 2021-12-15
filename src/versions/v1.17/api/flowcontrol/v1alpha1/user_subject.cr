@@ -10,7 +10,9 @@ module K8S
   )]
   class Api::Flowcontrol::V1alpha1::UserSubject
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # `name` is the username that matches, or "*" to match all usernames. Required.
     @[::JSON::Field(key: "name", emit_null: true)]

@@ -12,7 +12,9 @@ module K8S
   )]
   class Api::Core::V1::EnvFromSource
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # The ConfigMap to select from
     @[::JSON::Field(key: "configMapRef", emit_null: false)]

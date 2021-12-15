@@ -12,7 +12,9 @@ module K8S
   )]
   class Api::Core::V1::PersistentVolumeStatus
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # A human-readable message indicating details about why the volume is in this state.
     @[::JSON::Field(key: "message", emit_null: false)]

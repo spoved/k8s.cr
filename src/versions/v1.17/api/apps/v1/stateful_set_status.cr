@@ -18,7 +18,9 @@ module K8S
   )]
   class Api::Apps::V1::StatefulSetStatus
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # collisionCount is the count of hash collisions for the StatefulSet. The StatefulSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision.
     @[::JSON::Field(key: "collisionCount", emit_null: false)]

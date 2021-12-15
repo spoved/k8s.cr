@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Apps::V1::StatefulSetUpdateStrategy
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # RollingUpdate is used to communicate parameters when Type is RollingUpdateStatefulSetStrategyType.
     @[::JSON::Field(key: "rollingUpdate", emit_null: false)]

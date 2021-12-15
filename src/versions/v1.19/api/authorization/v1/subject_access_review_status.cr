@@ -13,7 +13,9 @@ module K8S
   )]
   class Api::Authorization::V1::SubjectAccessReviewStatus
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Allowed is required. True if the action would be allowed, false otherwise.
     @[::JSON::Field(key: "allowed", emit_null: true)]

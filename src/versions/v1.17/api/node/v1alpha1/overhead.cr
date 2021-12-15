@@ -10,7 +10,9 @@ module K8S
   )]
   class Api::Node::V1alpha1::Overhead
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # PodFixed represents the fixed resource overhead associated with running a pod.
     @[::JSON::Field(key: "podFixed", emit_null: false)]

@@ -12,7 +12,9 @@ module K8S
   )]
   class Api::Admissionregistration::V1beta1::ServiceReference
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # `name` is the name of the service. Required
     @[::JSON::Field(key: "name", emit_null: true)]

@@ -15,7 +15,9 @@ module K8S
   )]
   class ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionSpec
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # conversion defines conversion settings for the CRD.
     @[::JSON::Field(key: "conversion", emit_null: false)]

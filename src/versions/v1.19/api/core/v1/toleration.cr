@@ -14,7 +14,9 @@ module K8S
   )]
   class Api::Core::V1::Toleration
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
     @[::JSON::Field(key: "effect", emit_null: false)]

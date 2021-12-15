@@ -14,7 +14,9 @@ module K8S
   )]
   class Api::Coordination::V1beta1::LeaseSpec
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # acquireTime is a time when the current lease was acquired.
     @[::JSON::Field(key: "acquireTime", emit_null: false)]

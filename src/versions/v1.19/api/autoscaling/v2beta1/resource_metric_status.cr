@@ -12,7 +12,9 @@ module K8S
   )]
   class Api::Autoscaling::V2beta1::ResourceMetricStatus
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # currentAverageUtilization is the current value of the average of the resource metric across all relevant pods, represented as a percentage of the requested value of the resource for the pods.  It will only be present if `targetAverageValue` was set in the corresponding metric specification.
     @[::JSON::Field(key: "currentAverageUtilization", emit_null: false)]

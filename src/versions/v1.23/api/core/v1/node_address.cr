@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Core::V1::NodeAddress
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # The node address.
     @[::JSON::Field(key: "address", emit_null: true)]

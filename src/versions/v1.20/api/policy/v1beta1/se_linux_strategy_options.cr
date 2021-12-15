@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Policy::V1beta1::SELinuxStrategyOptions
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # rule is the strategy that will dictate the allowable labels that may be set.
     @[::JSON::Field(key: "rule", emit_null: true)]

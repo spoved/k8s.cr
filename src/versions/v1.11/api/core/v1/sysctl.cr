@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Core::V1::Sysctl
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Name of a property to set
     @[::JSON::Field(key: "name", emit_null: true)]

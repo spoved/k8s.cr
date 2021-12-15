@@ -11,7 +11,9 @@ module K8S
   )]
   class ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresources
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Scale denotes the scale subresource for CustomResources
     @[::JSON::Field(key: "scale", emit_null: false)]

@@ -12,7 +12,9 @@ module K8S
   )]
   class Api::Core::V1::ContainerState
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Details about a running container
     @[::JSON::Field(key: "running", emit_null: false)]

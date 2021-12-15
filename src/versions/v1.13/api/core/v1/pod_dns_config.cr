@@ -12,7 +12,9 @@ module K8S
   )]
   class Api::Core::V1::PodDNSConfig
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # A list of DNS name server IP addresses. This will be appended to the base nameservers generated from DNSPolicy. Duplicated nameservers will be removed.
     @[::JSON::Field(key: "nameservers", emit_null: false)]

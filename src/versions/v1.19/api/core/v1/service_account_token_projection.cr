@@ -12,7 +12,9 @@ module K8S
   )]
   class Api::Core::V1::ServiceAccountTokenProjection
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Audience is the intended audience of the token. A recipient of a token must identify itself with an identifier specified in the audience of the token, and otherwise should reject the token. The audience defaults to the identifier of the apiserver.
     @[::JSON::Field(key: "audience", emit_null: false)]

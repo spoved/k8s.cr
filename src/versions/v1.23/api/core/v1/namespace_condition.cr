@@ -14,7 +14,9 @@ module K8S
   )]
   class Api::Core::V1::NamespaceCondition
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     @[::JSON::Field(key: "lastTransitionTime", emit_null: false)]
     @[::YAML::Field(key: "lastTransitionTime", emit_null: false)]

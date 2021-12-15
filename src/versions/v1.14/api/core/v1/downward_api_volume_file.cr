@@ -13,7 +13,9 @@ module K8S
   )]
   class Api::Core::V1::DownwardAPIVolumeFile
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Required: Selects a field of the pod: only annotations, labels, name and namespace are supported.
     @[::JSON::Field(key: "fieldRef", emit_null: false)]

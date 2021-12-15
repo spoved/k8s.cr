@@ -12,7 +12,9 @@ module K8S
   )]
   class Api::Core::V1::ResourceFieldSelector
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Container name: required for volumes, optional for env vars
     @[::JSON::Field(key: "containerName", emit_null: false)]

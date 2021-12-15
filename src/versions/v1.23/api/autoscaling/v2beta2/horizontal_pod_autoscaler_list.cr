@@ -68,7 +68,9 @@ module K8S
   class Api::Autoscaling::V2beta2::HorizontalPodAutoscalerList < ::K8S::Kubernetes::ResourceList(Api::Autoscaling::V2beta2::HorizontalPodAutoscaler)
     include ::K8S::Kubernetes::Resource::List
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     @[::JSON::Field(key: "apiVersion")]
     @[::YAML::Field(key: "apiVersion")]

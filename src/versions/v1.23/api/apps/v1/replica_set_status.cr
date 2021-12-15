@@ -15,7 +15,9 @@ module K8S
   )]
   class Api::Apps::V1::ReplicaSetStatus
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # The number of available replicas (ready for at least minReadySeconds) for this replica set.
     @[::JSON::Field(key: "availableReplicas", emit_null: false)]

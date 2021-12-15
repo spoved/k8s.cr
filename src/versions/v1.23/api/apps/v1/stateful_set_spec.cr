@@ -19,7 +19,9 @@ module K8S
   )]
   class Api::Apps::V1::StatefulSetSpec
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Minimum number of seconds for which a newly created pod should be ready without any of its container crashing for it to be considered available. Defaults to 0 (pod will be considered available as soon as it is ready) This is an alpha field and requires enabling StatefulSetMinReadySeconds feature gate.
     @[::JSON::Field(key: "minReadySeconds", emit_null: false)]

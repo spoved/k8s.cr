@@ -17,7 +17,9 @@ module K8S
   )]
   class Api::Core::V1::SecurityContext
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # AllowPrivilegeEscalation controls whether a process can gain more privileges than its parent process. This bool directly controls if the no_new_privs flag will be set on the container process. AllowPrivilegeEscalation is true always when the container is: 1) run as Privileged 2) has CAP_SYS_ADMIN
     @[::JSON::Field(key: "allowPrivilegeEscalation", emit_null: false)]

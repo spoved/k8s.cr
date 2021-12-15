@@ -15,7 +15,9 @@ module K8S
   )]
   class ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceColumnDefinition
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # description is a human readable description of this column.
     @[::JSON::Field(key: "description", emit_null: false)]

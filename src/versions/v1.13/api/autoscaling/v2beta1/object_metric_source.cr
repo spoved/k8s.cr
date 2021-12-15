@@ -14,7 +14,9 @@ module K8S
   )]
   class Api::Autoscaling::V2beta1::ObjectMetricSource
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # averageValue is the target value of the average of the metric across all relevant pods (as a quantity)
     @[::JSON::Field(key: "averageValue", emit_null: false)]

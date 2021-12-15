@@ -12,7 +12,9 @@ module K8S
   )]
   class Api::Core::V1::PodAffinityTerm
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # A label query over a set of resources, in this case pods.
     @[::JSON::Field(key: "labelSelector", emit_null: false)]

@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Core::V1::ResourceRequirements
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Limits describes the maximum amount of compute resources allowed. More info: [https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/)
     @[::JSON::Field(key: "limits", emit_null: false)]

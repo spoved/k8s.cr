@@ -20,7 +20,9 @@ module K8S
   )]
   class Api::Core::V1::ISCSIVolumeSource
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # whether support iSCSI Discovery CHAP authentication
     @[::JSON::Field(key: "chapAuthDiscovery", emit_null: false)]

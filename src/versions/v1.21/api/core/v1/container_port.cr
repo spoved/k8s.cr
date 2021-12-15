@@ -14,7 +14,9 @@ module K8S
   )]
   class Api::Core::V1::ContainerPort
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Number of port to expose on the pod's IP address. This must be a valid port number, 0 < x < 65536.
     @[::JSON::Field(key: "containerPort", emit_null: true)]

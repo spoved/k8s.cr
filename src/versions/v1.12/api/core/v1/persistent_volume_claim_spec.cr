@@ -16,7 +16,9 @@ module K8S
   )]
   class Api::Core::V1::PersistentVolumeClaimSpec
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # AccessModes contains the desired access modes the volume should have. More info: [https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1](https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1)
     @[::JSON::Field(key: "accessModes", emit_null: false)]

@@ -10,7 +10,9 @@ module K8S
   )]
   class Api::Storage::V1::CSINodeSpec
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # drivers is a list of information of all CSI Drivers existing on a node. If all drivers in the list are uninstalled, this can become empty.
     @[::JSON::Field(key: "drivers", emit_null: false)]

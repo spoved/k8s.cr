@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Auditregistration::V1alpha1::AuditSinkSpec
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Policy defines the policy for selecting which events should be sent to the webhook required
     @[::JSON::Field(key: "policy", emit_null: true)]

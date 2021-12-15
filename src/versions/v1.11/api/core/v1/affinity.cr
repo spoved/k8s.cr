@@ -12,7 +12,9 @@ module K8S
   )]
   class Api::Core::V1::Affinity
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Describes node affinity scheduling rules for the pod.
     @[::JSON::Field(key: "nodeAffinity", emit_null: false)]

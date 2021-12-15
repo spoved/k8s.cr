@@ -15,7 +15,9 @@ module K8S
   )]
   class Api::Core::V1::PersistentVolumeClaimCondition
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Last time we probed the condition.
     @[::JSON::Field(key: "lastProbeTime", emit_null: false)]

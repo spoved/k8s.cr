@@ -12,7 +12,9 @@ module K8S
   )]
   class Api::Storage::V1alpha1::VolumeAttachmentSpec
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Attacher indicates the name of the volume driver that MUST handle this request. This is the name returned by GetPluginName().
     @[::JSON::Field(key: "attacher", emit_null: true)]

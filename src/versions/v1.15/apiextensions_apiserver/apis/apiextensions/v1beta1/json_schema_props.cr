@@ -49,7 +49,9 @@ module K8S
   )]
   class ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSONSchemaProps
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     @[::JSON::Field(key: "$ref", emit_null: false)]
     @[::YAML::Field(key: "$ref", emit_null: false)]

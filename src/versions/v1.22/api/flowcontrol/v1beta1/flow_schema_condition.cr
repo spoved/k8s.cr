@@ -14,7 +14,9 @@ module K8S
   )]
   class Api::Flowcontrol::V1beta1::FlowSchemaCondition
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # `lastTransitionTime` is the last time the condition transitioned from one status to another.
     @[::JSON::Field(key: "lastTransitionTime", emit_null: false)]

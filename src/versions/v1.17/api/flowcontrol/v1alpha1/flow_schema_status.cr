@@ -10,7 +10,9 @@ module K8S
   )]
   class Api::Flowcontrol::V1alpha1::FlowSchemaStatus
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # `conditions` is a list of the current states of FlowSchema.
     @[::JSON::Field(key: "conditions", emit_null: false)]

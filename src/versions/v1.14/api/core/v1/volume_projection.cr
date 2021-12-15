@@ -13,7 +13,9 @@ module K8S
   )]
   class Api::Core::V1::VolumeProjection
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # information about the configMap data to project
     @[::JSON::Field(key: "configMap", emit_null: false)]

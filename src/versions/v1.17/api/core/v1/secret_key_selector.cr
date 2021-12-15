@@ -12,7 +12,9 @@ module K8S
   )]
   class Api::Core::V1::SecretKeySelector
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # The key of the secret to select from.  Must be a valid secret key.
     @[::JSON::Field(key: "key", emit_null: true)]

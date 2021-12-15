@@ -13,7 +13,9 @@ module K8S
   )]
   class Api::Authorization::V1::ResourceRule
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # APIGroups is the name of the APIGroup that contains the resources.  If multiple API groups are specified, any action requested against one of the enumerated resources in any API group will be allowed.  "*" means all.
     @[::JSON::Field(key: "apiGroups", emit_null: false)]

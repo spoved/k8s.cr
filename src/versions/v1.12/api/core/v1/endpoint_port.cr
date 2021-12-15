@@ -12,7 +12,9 @@ module K8S
   )]
   class Api::Core::V1::EndpointPort
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # The name of this port (corresponds to ServicePort.Name). Must be a DNS_LABEL. Optional only if one port is defined.
     @[::JSON::Field(key: "name", emit_null: false)]

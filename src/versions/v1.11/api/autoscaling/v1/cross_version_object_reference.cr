@@ -12,7 +12,9 @@ module K8S
   )]
   class Api::Autoscaling::V1::CrossVersionObjectReference
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # API version of the referent
     @[::JSON::Field(key: "apiVersion", emit_null: false)]

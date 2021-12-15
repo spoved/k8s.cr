@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Core::V1::PodDNSConfigOption
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Required.
     @[::JSON::Field(key: "name", emit_null: false)]

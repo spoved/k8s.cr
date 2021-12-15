@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Networking::V1::IngressServiceBackend
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Name is the referenced service. The service must exist in the same namespace as the Ingress object.
     @[::JSON::Field(key: "name", emit_null: true)]

@@ -11,7 +11,9 @@ module K8S
   )]
   class Apimachinery::Apis::Meta::V1::LabelSelector
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # matchExpressions is a list of label selector requirements. The requirements are ANDed.
     @[::JSON::Field(key: "matchExpressions", emit_null: false)]

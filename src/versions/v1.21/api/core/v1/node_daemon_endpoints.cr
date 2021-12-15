@@ -10,7 +10,9 @@ module K8S
   )]
   class Api::Core::V1::NodeDaemonEndpoints
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Endpoint on which Kubelet is listening.
     @[::JSON::Field(key: "kubeletEndpoint", emit_null: false)]

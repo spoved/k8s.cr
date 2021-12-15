@@ -66,7 +66,9 @@ module K8S
   class Api::Coordination::V1::LeaseList < ::K8S::Kubernetes::ResourceList(Api::Coordination::V1::Lease)
     include ::K8S::Kubernetes::Resource::List
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     @[::JSON::Field(key: "apiVersion")]
     @[::YAML::Field(key: "apiVersion")]

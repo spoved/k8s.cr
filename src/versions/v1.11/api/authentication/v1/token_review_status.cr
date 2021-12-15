@@ -12,7 +12,9 @@ module K8S
   )]
   class Api::Authentication::V1::TokenReviewStatus
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Authenticated indicates that the token was associated with a known user.
     @[::JSON::Field(key: "authenticated", emit_null: false)]

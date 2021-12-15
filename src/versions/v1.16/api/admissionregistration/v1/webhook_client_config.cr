@@ -12,7 +12,9 @@ module K8S
   )]
   class Api::Admissionregistration::V1::WebhookClientConfig
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # `caBundle` is a PEM encoded CA bundle which will be used to validate the webhook's server certificate. If unspecified, system trust roots on the apiserver are used.
     @[::JSON::Field(key: "caBundle", emit_null: false)]

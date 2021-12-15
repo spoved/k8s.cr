@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Extensions::V1beta1::HostPortRange
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # max is the end of the range, inclusive.
     @[::JSON::Field(key: "max", emit_null: true)]

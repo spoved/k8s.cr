@@ -10,7 +10,9 @@ module K8S
   )]
   class Api::Core::V1::LoadBalancerStatus
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Ingress is a list containing ingress points for the load-balancer. Traffic intended for the service should be sent to these ingress points.
     @[::JSON::Field(key: "ingress", emit_null: false)]

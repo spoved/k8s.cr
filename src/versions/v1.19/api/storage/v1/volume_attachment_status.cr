@@ -13,7 +13,9 @@ module K8S
   )]
   class Api::Storage::V1::VolumeAttachmentStatus
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # The last error encountered during attach operation, if any. This field must only be set by the entity completing the attach operation, i.e. the external-attacher.
     @[::JSON::Field(key: "attachError", emit_null: false)]

@@ -12,10 +12,14 @@ module K8S
   @[::K8S::Properties]
   class Apimachinery::Apis::Meta::V1::FieldsV1
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     def initialize
     end

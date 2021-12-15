@@ -31,7 +31,9 @@ module K8S
   )]
   class Api::Extensions::V1beta1::PodSecurityPolicySpec
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # allowPrivilegeEscalation determines if a pod can request to allow privilege escalation. If unspecified, defaults to true.
     @[::JSON::Field(key: "allowPrivilegeEscalation", emit_null: false)]

@@ -15,7 +15,9 @@ module K8S
   )]
   class ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionNames
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # categories is a list of grouped resources this custom resource belongs to (e.g. 'all'). This is published in API discovery documents, and used by clients to support invocations like `kubectl get all`.
     @[::JSON::Field(key: "categories", emit_null: false)]

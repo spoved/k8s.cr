@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Autoscaling::V2::ResourceMetricStatus
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # current contains the current value for the given metric
     @[::JSON::Field(key: "current", emit_null: true)]

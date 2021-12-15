@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Core::V1::HTTPHeader
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # The header field name
     @[::JSON::Field(key: "name", emit_null: true)]

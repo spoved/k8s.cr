@@ -10,7 +10,9 @@ module K8S
   )]
   class Api::Policy::V1beta1::AllowedCSIDriver
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Name is the registered name of the CSI driver
     @[::JSON::Field(key: "name", emit_null: true)]

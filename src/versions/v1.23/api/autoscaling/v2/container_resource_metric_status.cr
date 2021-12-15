@@ -12,7 +12,9 @@ module K8S
   )]
   class Api::Autoscaling::V2::ContainerResourceMetricStatus
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Container is the name of the container in the pods of the scaling target
     @[::JSON::Field(key: "container", emit_null: true)]

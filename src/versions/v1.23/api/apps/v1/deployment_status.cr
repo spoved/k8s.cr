@@ -17,7 +17,9 @@ module K8S
   )]
   class Api::Apps::V1::DeploymentStatus
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Total number of available pods (ready for at least minReadySeconds) targeted by this deployment.
     @[::JSON::Field(key: "availableReplicas", emit_null: false)]

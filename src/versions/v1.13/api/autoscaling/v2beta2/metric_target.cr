@@ -13,7 +13,9 @@ module K8S
   )]
   class Api::Autoscaling::V2beta2::MetricTarget
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # averageUtilization is the target value of the average of the resource metric across all relevant pods, represented as a percentage of the requested value of the resource for the pods. Currently only valid for Resource metric source type
     @[::JSON::Field(key: "averageUtilization", emit_null: false)]

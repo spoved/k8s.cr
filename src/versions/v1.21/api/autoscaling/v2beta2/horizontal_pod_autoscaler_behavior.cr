@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Autoscaling::V2beta2::HorizontalPodAutoscalerBehavior
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # scaleDown is scaling policy for scaling Down. If not set, the default value is to allow to scale down to minReplicas pods, with a 300 second stabilization window (i.e., the highest recommendation for the last 300sec is used).
     @[::JSON::Field(key: "scaleDown", emit_null: false)]

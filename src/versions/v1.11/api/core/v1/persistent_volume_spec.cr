@@ -39,7 +39,9 @@ module K8S
   )]
   class Api::Core::V1::PersistentVolumeSpec
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # AccessModes contains all ways the volume can be mounted. More info: [https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes](https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes)
     @[::JSON::Field(key: "accessModes", emit_null: false)]

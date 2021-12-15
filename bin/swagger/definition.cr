@@ -1,5 +1,6 @@
 require "json"
 require "./ext/*"
+require "./k8s_annos"
 
 class Swagger::Definition
   include JSON::Serializable
@@ -12,7 +13,10 @@ class Swagger::Definition
   @[JSON::Field(key: "x-kubernetes-group-version-kind")]
   property x_kubernetes_group_version_kind : Array(XKubernetesGroupVersionKind)? = nil
 
-  def initialize; end
+  def initialize(@description = nil, @required = Array(String).new,
+                 @properties = Hash(String, Property).new,
+                 @_ref = nil, @x_kubernetes_group_version_kind = nil)
+  end
 end
 
 require "./definition/*"

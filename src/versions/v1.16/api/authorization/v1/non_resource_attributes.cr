@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Authorization::V1::NonResourceAttributes
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Path is the URL path of the request
     @[::JSON::Field(key: "path", emit_null: false)]

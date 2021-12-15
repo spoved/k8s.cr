@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Events::V1::EventSeries
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # count is the number of occurrences in this series up to the last heartbeat time.
     @[::JSON::Field(key: "count", emit_null: true)]

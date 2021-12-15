@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Core::V1::EphemeralVolumeSource
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Specifies a read-only configuration for the volume. Defaults to false [(read/write).]((read/write).)
     @[::JSON::Field(key: "readOnly", emit_null: false)]

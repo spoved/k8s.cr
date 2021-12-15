@@ -12,7 +12,9 @@ module K8S
   )]
   class Api::Autoscaling::V2::ObjectMetricSource
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # describedObject specifies the descriptions of a object,such as kind,name apiVersion
     @[::JSON::Field(key: "describedObject", emit_null: true)]

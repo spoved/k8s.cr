@@ -9,7 +9,9 @@ module K8S
   )]
   class Api::Authorization::V1::SelfSubjectRulesReviewSpec
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Namespace to evaluate rules for. Required.
     @[::JSON::Field(key: "namespace", emit_null: false)]

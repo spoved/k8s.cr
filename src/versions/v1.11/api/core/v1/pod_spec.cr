@@ -37,7 +37,9 @@ module K8S
   )]
   class Api::Core::V1::PodSpec
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Optional duration in seconds the pod may be active on the node relative to StartTime before the system will actively try to mark it failed and kill associated containers. Value must be a positive integer.
     @[::JSON::Field(key: "activeDeadlineSeconds", emit_null: false)]

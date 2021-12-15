@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Core::V1::Capabilities
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Added capabilities
     @[::JSON::Field(key: "add", emit_null: false)]

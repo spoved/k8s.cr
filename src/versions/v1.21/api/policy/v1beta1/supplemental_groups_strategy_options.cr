@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Policy::V1beta1::SupplementalGroupsStrategyOptions
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # ranges are the allowed ranges of supplemental groups.  If you would like to force a single supplemental group then supply a single range with the same start and end. Required for MustRunAs.
     @[::JSON::Field(key: "ranges", emit_null: false)]

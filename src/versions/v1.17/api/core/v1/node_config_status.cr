@@ -13,7 +13,9 @@ module K8S
   )]
   class Api::Core::V1::NodeConfigStatus
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Active reports the checkpointed config the node is actively using. Active will represent either the current version of the Assigned config, or the current LastKnownGood config, depending on whether attempting to use the Assigned config results in an error.
     @[::JSON::Field(key: "active", emit_null: false)]

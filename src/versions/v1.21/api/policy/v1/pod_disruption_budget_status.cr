@@ -16,7 +16,9 @@ module K8S
   )]
   class Api::Policy::V1::PodDisruptionBudgetStatus
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Conditions contain conditions for PDB. The disruption controller sets the DisruptionAllowed condition. The following are known values for the reason field (additional reasons could be added in the future): - SyncFailed: The controller encountered an error and wasn't able to compute
     #               the number of allowed disruptions. Therefore no disruptions are

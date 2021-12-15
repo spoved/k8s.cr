@@ -10,7 +10,9 @@ module K8S
   )]
   class Api::Apps::V1::RollingUpdateStatefulSetStrategy
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Partition indicates the ordinal at which the StatefulSet should be partitioned. Default value is 0.
     @[::JSON::Field(key: "partition", emit_null: false)]

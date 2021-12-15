@@ -37,7 +37,9 @@ module K8S
   )]
   class Apimachinery::Runtime::RawExtension
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Raw is the underlying serialization of this object.
     @[::JSON::Field(key: "Raw", emit_null: true)]

@@ -12,7 +12,9 @@ module K8S
   )]
   class Api::Core::V1::AzureFileVolumeSource
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Defaults to false [(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.)
     @[::JSON::Field(key: "readOnly", emit_null: false)]

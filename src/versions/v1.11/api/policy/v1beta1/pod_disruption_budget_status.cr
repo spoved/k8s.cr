@@ -15,7 +15,9 @@ module K8S
   )]
   class Api::Policy::V1beta1::PodDisruptionBudgetStatus
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # current number of healthy pods
     @[::JSON::Field(key: "currentHealthy", emit_null: true)]

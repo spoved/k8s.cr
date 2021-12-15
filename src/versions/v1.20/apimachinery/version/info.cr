@@ -18,7 +18,9 @@ module K8S
   )]
   class Apimachinery::Version::Info
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     @[::JSON::Field(key: "buildDate", emit_null: true)]
     @[::YAML::Field(key: "buildDate", emit_null: true)]

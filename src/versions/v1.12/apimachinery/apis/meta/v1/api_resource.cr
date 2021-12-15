@@ -18,7 +18,9 @@ module K8S
   )]
   class Apimachinery::Apis::Meta::V1::APIResource
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # categories is a list of the grouped resources this resource belongs to (e.g. 'all')
     @[::JSON::Field(key: "categories", emit_null: false)]

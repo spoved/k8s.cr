@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Autoscaling::V2::ResourceMetricSource
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # name is the name of the resource in question.
     @[::JSON::Field(key: "name", emit_null: true)]

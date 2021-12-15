@@ -53,7 +53,9 @@ module K8S
   class Api::Apiserverinternal::V1alpha1::StorageVersionList < ::K8S::Kubernetes::ResourceList(Api::Apiserverinternal::V1alpha1::StorageVersion)
     include ::K8S::Kubernetes::Resource::List
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     @[::JSON::Field(key: "apiVersion")]
     @[::YAML::Field(key: "apiVersion")]

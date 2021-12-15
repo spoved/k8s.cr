@@ -13,7 +13,9 @@ module K8S
   )]
   class Api::Networking::V1::IngressSpec
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # DefaultBackend is the backend that should handle requests that don't match any rule. If Rules are not specified, DefaultBackend must be specified. If DefaultBackend is not set, the handling of requests that do not match any of the rules will be up to the Ingress controller.
     @[::JSON::Field(key: "defaultBackend", emit_null: false)]

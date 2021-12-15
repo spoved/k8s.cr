@@ -15,7 +15,9 @@ module K8S
   )]
   class Api::Core::V1::NodeCondition
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Last time we got an update on a given condition.
     @[::JSON::Field(key: "lastHeartbeatTime", emit_null: false)]

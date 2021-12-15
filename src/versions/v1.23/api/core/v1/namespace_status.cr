@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Core::V1::NamespaceStatus
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Represents the latest available observations of a namespace's current state.
     @[::JSON::Field(key: "conditions", emit_null: false)]

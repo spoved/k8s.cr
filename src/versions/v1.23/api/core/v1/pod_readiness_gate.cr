@@ -10,7 +10,9 @@ module K8S
   )]
   class Api::Core::V1::PodReadinessGate
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # ConditionType refers to a condition in the pod's condition list with matching type.
     #

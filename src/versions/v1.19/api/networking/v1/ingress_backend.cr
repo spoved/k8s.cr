@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Networking::V1::IngressBackend
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Resource is an ObjectRef to another Kubernetes resource in the namespace of the Ingress object. If resource is specified, a service.Name and service.Port must not be specified. This is a mutually exclusive setting with "Service".
     @[::JSON::Field(key: "resource", emit_null: false)]

@@ -16,7 +16,9 @@ module K8S
   )]
   class Apimachinery::Apis::Meta::V1::ManagedFieldsEntry
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # APIVersion defines the version of this resource that this field set applies to. The format is ["group/version" just like the top-level APIVersion field. It is necessary to track the version of a field set because it cannot be automatically converted.]("group/version" just like the top-level APIVersion field. It is necessary to track the version of a field set because it cannot be automatically converted.)
     @[::JSON::Field(key: "apiVersion", emit_null: false)]

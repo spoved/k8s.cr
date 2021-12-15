@@ -12,7 +12,9 @@ module K8S
   )]
   class Apimachinery::Apis::Meta::V1::LabelSelectorRequirement
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # key is the label key that the selector applies to.
     @[::JSON::Field(key: "key", emit_null: true)]

@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Core::V1::ResourceQuotaStatus
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Hard is the set of enforced hard limits for each named resource. More info: [https://kubernetes.io/docs/concepts/policy/resource-quotas/](https://kubernetes.io/docs/concepts/policy/resource-quotas/)
     @[::JSON::Field(key: "hard", emit_null: false)]

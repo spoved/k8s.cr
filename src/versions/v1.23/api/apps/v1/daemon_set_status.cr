@@ -19,7 +19,9 @@ module K8S
   )]
   class Api::Apps::V1::DaemonSetStatus
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Count of hash collisions for the DaemonSet. The DaemonSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision.
     @[::JSON::Field(key: "collisionCount", emit_null: false)]

@@ -11,7 +11,9 @@ module K8S
   )]
   class Apimachinery::Apis::Meta::V1::ServerAddressByClientCIDR
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # The CIDR with which clients can match their IP to figure out the server address that they should use.
     @[::JSON::Field(key: "clientCIDR", emit_null: true)]

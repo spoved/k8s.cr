@@ -17,7 +17,9 @@ module K8S
   )]
   class Api::Batch::V1::JobSpec
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Specifies the duration in seconds relative to the startTime that the job may be active before the system tries to terminate it; value must be positive integer
     @[::JSON::Field(key: "activeDeadlineSeconds", emit_null: false)]

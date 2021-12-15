@@ -15,7 +15,9 @@ module K8S
   )]
   class Api::Core::V1::QuobyteVolumeSource
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Group to map volume access to Default is no group
     @[::JSON::Field(key: "group", emit_null: false)]

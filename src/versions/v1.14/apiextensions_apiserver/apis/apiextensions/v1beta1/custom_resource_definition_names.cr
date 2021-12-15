@@ -15,7 +15,9 @@ module K8S
   )]
   class ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceDefinitionNames
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Categories is a list of grouped resources custom resources belong to (e.g. 'all')
     @[::JSON::Field(key: "categories", emit_null: false)]

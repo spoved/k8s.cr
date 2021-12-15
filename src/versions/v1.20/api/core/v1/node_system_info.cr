@@ -19,7 +19,9 @@ module K8S
   )]
   class Api::Core::V1::NodeSystemInfo
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # The Architecture reported by the node
     @[::JSON::Field(key: "architecture", emit_null: true)]

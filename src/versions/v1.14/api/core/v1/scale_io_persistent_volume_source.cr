@@ -19,7 +19,9 @@ module K8S
   )]
   class Api::Core::V1::ScaleIOPersistentVolumeSource
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". Default is "xfs"
     @[::JSON::Field(key: "fsType", emit_null: false)]

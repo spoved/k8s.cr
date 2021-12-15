@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Autoscaling::V2beta1::PodsMetricStatus
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # currentAverageValue is the current value of the average of the metric across all relevant pods (as a quantity)
     @[::JSON::Field(key: "currentAverageValue", emit_null: true)]

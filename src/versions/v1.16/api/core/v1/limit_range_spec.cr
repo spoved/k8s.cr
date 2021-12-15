@@ -10,7 +10,9 @@ module K8S
   )]
   class Api::Core::V1::LimitRangeSpec
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Limits is the list of LimitRangeItem objects that are enforced.
     @[::JSON::Field(key: "limits", emit_null: true)]

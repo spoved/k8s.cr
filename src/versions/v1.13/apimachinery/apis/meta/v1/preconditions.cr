@@ -10,7 +10,9 @@ module K8S
   )]
   class Apimachinery::Apis::Meta::V1::Preconditions
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Specifies the target UID.
     @[::JSON::Field(key: "uid", emit_null: false)]

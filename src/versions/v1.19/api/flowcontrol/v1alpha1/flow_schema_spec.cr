@@ -13,7 +13,9 @@ module K8S
   )]
   class Api::Flowcontrol::V1alpha1::FlowSchemaSpec
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # `distinguisherMethod` defines how to compute the flow distinguisher for requests that match this schema. `nil` specifies that the distinguisher is disabled and thus will always be the empty string.
     @[::JSON::Field(key: "distinguisherMethod", emit_null: false)]

@@ -12,7 +12,9 @@ module K8S
   )]
   class Api::Apps::V1beta1::ScaleStatus
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # actual number of observed instances of the scaled object.
     @[::JSON::Field(key: "replicas", emit_null: true)]

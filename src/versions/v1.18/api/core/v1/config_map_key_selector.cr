@@ -12,7 +12,9 @@ module K8S
   )]
   class Api::Core::V1::ConfigMapKeySelector
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # The key to select.
     @[::JSON::Field(key: "key", emit_null: true)]

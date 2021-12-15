@@ -15,7 +15,9 @@ module K8S
   )]
   class Apimachinery::Apis::Meta::V1::StatusDetails
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # The Causes array includes more details associated with the StatusReason failure. Not all StatusReasons may provide detailed causes.
     @[::JSON::Field(key: "causes", emit_null: false)]

@@ -12,7 +12,9 @@ module K8S
   )]
   class Api::Rbac::V1::RoleRef
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # APIGroup is the group for the resource being referenced
     @[::JSON::Field(key: "apiGroup", emit_null: true)]

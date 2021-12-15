@@ -14,7 +14,9 @@ module K8S
   )]
   class Api::Core::V1::ConfigMapNodeConfigSource
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # KubeletConfigKey declares which key of the referenced ConfigMap corresponds to the KubeletConfiguration structure This field is required in all cases.
     @[::JSON::Field(key: "kubeletConfigKey", emit_null: true)]

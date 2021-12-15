@@ -10,7 +10,9 @@ module K8S
   )]
   class KubeAggregator::Apis::Apiregistration::V1::APIServiceStatus
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Current service state of apiService.
     @[::JSON::Field(key: "conditions", emit_null: false)]

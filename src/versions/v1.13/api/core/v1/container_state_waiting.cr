@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Core::V1::ContainerStateWaiting
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Message regarding why the container is not yet running.
     @[::JSON::Field(key: "message", emit_null: false)]

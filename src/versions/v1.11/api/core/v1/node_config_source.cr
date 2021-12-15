@@ -10,7 +10,9 @@ module K8S
   )]
   class Api::Core::V1::NodeConfigSource
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # ConfigMap is a reference to a Node's ConfigMap
     @[::JSON::Field(key: "configMap", emit_null: false)]

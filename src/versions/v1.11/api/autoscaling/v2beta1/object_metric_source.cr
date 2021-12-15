@@ -12,7 +12,9 @@ module K8S
   )]
   class Api::Autoscaling::V2beta1::ObjectMetricSource
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # metricName is the name of the metric in question.
     @[::JSON::Field(key: "metricName", emit_null: true)]

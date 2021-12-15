@@ -15,7 +15,9 @@ module K8S
   )]
   class Api::Batch::V1::JobCondition
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Last time the condition was checked.
     @[::JSON::Field(key: "lastProbeTime", emit_null: false)]

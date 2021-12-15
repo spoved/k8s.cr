@@ -10,7 +10,9 @@ module K8S
   )]
   class Api::Discovery::V1::ForZone
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # name represents the name of the zone.
     @[::JSON::Field(key: "name", emit_null: true)]

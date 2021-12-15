@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Auditregistration::V1alpha1::WebhookThrottleConfig
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # ThrottleBurst is the maximum number of events sent at the same moment default 15 QPS
     @[::JSON::Field(key: "burst", emit_null: false)]

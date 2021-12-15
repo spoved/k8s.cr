@@ -13,7 +13,9 @@ module K8S
   )]
   class Api::Autoscaling::V1::HorizontalPodAutoscalerSpec
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # upper limit for the number of pods that can be set by the autoscaler; cannot be smaller than MinReplicas.
     @[::JSON::Field(key: "maxReplicas", emit_null: true)]

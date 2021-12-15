@@ -12,7 +12,9 @@ module K8S
   )]
   class Api::Storage::V1beta1::CSINodeDriver
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # This is the name of the CSI driver that this object refers to. This MUST be the same name returned by the CSI GetPluginName() call for that driver.
     @[::JSON::Field(key: "name", emit_null: true)]

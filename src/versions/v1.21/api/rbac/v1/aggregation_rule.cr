@@ -10,7 +10,9 @@ module K8S
   )]
   class Api::Rbac::V1::AggregationRule
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # ClusterRoleSelectors holds a list of selectors which will be used to find ClusterRoles and create the rules. If any of the selectors match, then the ClusterRole's permissions will be added
     @[::JSON::Field(key: "clusterRoleSelectors", emit_null: false)]

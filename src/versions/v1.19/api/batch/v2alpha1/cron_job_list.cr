@@ -67,7 +67,9 @@ module K8S
   class Api::Batch::V2alpha1::CronJobList < ::K8S::Kubernetes::ResourceList(Api::Batch::V2alpha1::CronJob)
     include ::K8S::Kubernetes::Resource::List
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     @[::JSON::Field(key: "apiVersion")]
     @[::YAML::Field(key: "apiVersion")]

@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Core::V1::PodIP
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # ip is an IP address (IPv4 or IPv6) assigned to the pod
     @[::JSON::Field(key: "ip", emit_null: false)]

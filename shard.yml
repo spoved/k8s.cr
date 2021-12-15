@@ -3,7 +3,13 @@ description: Kubernetes Object Mappings for Crystal
 version: 0.0.3
 crystal: ">= 1.2.2, < 2.0.0"
 
+dependencies: {}
+
 development_dependencies:
   spectator:
     gitlab: arctic-fox/spectator
     version: ~> 0.10.1
+  open-api:
+    github: spoved/open-api.cr
+  any_hash:
+    github: sija/any_hash.cr

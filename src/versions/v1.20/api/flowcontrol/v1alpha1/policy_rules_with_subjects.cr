@@ -12,7 +12,9 @@ module K8S
   )]
   class Api::Flowcontrol::V1alpha1::PolicyRulesWithSubjects
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # `nonResourceRules` is a list of NonResourcePolicyRules that identify matching requests according to their verb and the target non-resource URL.
     @[::JSON::Field(key: "nonResourceRules", emit_null: false)]

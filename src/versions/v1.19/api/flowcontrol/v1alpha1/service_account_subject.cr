@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Flowcontrol::V1alpha1::ServiceAccountSubject
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # `name` is the name of matching ServiceAccount objects, or "*" to match regardless of name. Required.
     @[::JSON::Field(key: "name", emit_null: true)]

@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Core::V1::ObjectFieldSelector
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Version of the schema the FieldPath is written in terms of, defaults to "v1".
     @[::JSON::Field(key: "apiVersion", emit_null: false)]

@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Authentication::V1::TokenRequestStatus
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # ExpirationTimestamp is the time of expiration of the returned token.
     @[::JSON::Field(key: "expirationTimestamp", emit_null: true)]

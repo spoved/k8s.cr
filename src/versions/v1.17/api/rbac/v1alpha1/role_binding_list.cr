@@ -66,7 +66,9 @@ module K8S
   class Api::Rbac::V1alpha1::RoleBindingList < ::K8S::Kubernetes::ResourceList(Api::Rbac::V1alpha1::RoleBinding)
     include ::K8S::Kubernetes::Resource::List
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     @[::JSON::Field(key: "apiVersion")]
     @[::YAML::Field(key: "apiVersion")]

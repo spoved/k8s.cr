@@ -10,7 +10,9 @@ module K8S
   )]
   class ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceValidation
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # OpenAPIV3Schema is the OpenAPI v3 schema to be validated against.
     @[::JSON::Field(key: "openAPIV3Schema", emit_null: false)]

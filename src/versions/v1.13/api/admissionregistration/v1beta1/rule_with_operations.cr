@@ -13,7 +13,9 @@ module K8S
   )]
   class Api::Admissionregistration::V1beta1::RuleWithOperations
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # APIGroups is the API groups the resources belong to. '*' is all groups. If '*' is present, the length of the slice must be one. Required.
     @[::JSON::Field(key: "apiGroups", emit_null: false)]

@@ -11,7 +11,9 @@ module K8S
   )]
   class ApiextensionsApiserver::Apis::Apiextensions::V1::WebhookConversion
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # clientConfig is the instructions for how to call the webhook if strategy is `Webhook`.
     @[::JSON::Field(key: "clientConfig", emit_null: false)]

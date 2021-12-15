@@ -14,7 +14,9 @@ module K8S
   )]
   class ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionCondition
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # lastTransitionTime last time the condition transitioned from one status to another.
     @[::JSON::Field(key: "lastTransitionTime", emit_null: false)]

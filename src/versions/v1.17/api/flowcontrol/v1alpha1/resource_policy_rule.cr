@@ -14,7 +14,9 @@ module K8S
   )]
   class Api::Flowcontrol::V1alpha1::ResourcePolicyRule
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # `apiGroups` is a list of matching API groups and may not be empty. "*" matches all API groups and, if present, must be the only entry. Required.
     @[::JSON::Field(key: "apiGroups", emit_null: true)]

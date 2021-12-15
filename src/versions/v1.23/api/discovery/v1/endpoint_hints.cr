@@ -10,7 +10,9 @@ module K8S
   )]
   class Api::Discovery::V1::EndpointHints
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # forZones indicates the zone(s) this endpoint should be consumed by to enable topology aware routing.
     @[::JSON::Field(key: "forZones", emit_null: false)]

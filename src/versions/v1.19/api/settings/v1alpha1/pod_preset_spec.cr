@@ -14,7 +14,9 @@ module K8S
   )]
   class Api::Settings::V1alpha1::PodPresetSpec
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Env defines the collection of EnvVar to inject into containers.
     @[::JSON::Field(key: "env", emit_null: false)]

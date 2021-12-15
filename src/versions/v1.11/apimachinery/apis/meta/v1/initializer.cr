@@ -10,7 +10,9 @@ module K8S
   )]
   class Apimachinery::Apis::Meta::V1::Initializer
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # name of the process that is responsible for initializing this object.
     @[::JSON::Field(key: "name", emit_null: true)]

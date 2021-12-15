@@ -10,7 +10,9 @@ module K8S
   )]
   class Api::Core::V1::ContainerStateRunning
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Time at which the container was last (re-)started
     @[::JSON::Field(key: "startedAt", emit_null: false)]

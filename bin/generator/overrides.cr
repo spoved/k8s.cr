@@ -8,11 +8,6 @@ class Generator::Definition
       Event:         "eventTime",
       CSINodeSpec:   "drivers",
     })
-
-    # if class_name =~ /JSONSchemaProps/
-    #   pp self
-    #   exit
-    # end
   end
 
   macro remove_required_fields(values)
@@ -25,6 +20,15 @@ class Generator::Definition
 
   def apply_alliases
     case class_name
+    when "ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaPropsOrArray"
+      file.puts %<alias #{class_name} = ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps | Array(ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps)>
+      true
+    when "ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaPropsOrBool"
+      file.puts %<alias #{class_name} = ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps | Bool>
+      true
+    when "ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaPropsOrStringArray"
+      file.puts %<alias #{class_name} = ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps | Array(String)>
+      true
     when "Api::Core::V1::List"
       file.puts %<alias #{class_name} = ::K8S::Kubernetes::ResourceList>
       true

@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Core::V1::EventSource
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Component from which the event is generated.
     @[::JSON::Field(key: "component", emit_null: false)]

@@ -5,4 +5,7 @@ class Swagger::Info
 
   property title : String
   property version : String
+
+  def initialize(@title, @version)
+  end
 end

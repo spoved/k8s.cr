@@ -12,7 +12,9 @@ module K8S
   )]
   class Api::Networking::V1::HTTPIngressPath
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Backend defines the referenced service endpoint to which the traffic will be forwarded to.
     @[::JSON::Field(key: "backend", emit_null: true)]

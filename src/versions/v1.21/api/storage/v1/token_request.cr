@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Storage::V1::TokenRequest
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Audience is the intended audience of the token in "TokenRequestSpec". It will default to the audiences of kube apiserver.
     @[::JSON::Field(key: "audience", emit_null: true)]

@@ -12,7 +12,9 @@ module K8S
   )]
   class Api::Apiserverinternal::V1alpha1::StorageVersionStatus
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # If all API server instances agree on the same encoding storage version, then this field is set to that version. Otherwise this field is left empty. API servers should finish updating its storageVersionStatus entry before serving write operations, so that this field will be in sync with the reality.
     @[::JSON::Field(key: "commonEncodingVersion", emit_null: false)]

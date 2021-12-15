@@ -13,7 +13,9 @@ module K8S
   )]
   class Api::Core::V1::ComponentCondition
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Condition error code for a component. For example, a health check error code.
     @[::JSON::Field(key: "error", emit_null: false)]

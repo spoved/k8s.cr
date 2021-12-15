@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Core::V1::PodTemplateSpec
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Standard object's metadata. More info: [https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata)
     @[::JSON::Field(key: "metadata", emit_null: false)]

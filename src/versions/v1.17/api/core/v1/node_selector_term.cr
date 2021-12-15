@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Core::V1::NodeSelectorTerm
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # A list of node selector requirements by node's labels.
     @[::JSON::Field(key: "matchExpressions", emit_null: false)]

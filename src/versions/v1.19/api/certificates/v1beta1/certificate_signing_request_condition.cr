@@ -14,7 +14,9 @@ module K8S
   )]
   class Api::Certificates::V1beta1::CertificateSigningRequestCondition
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # lastTransitionTime is the time the condition last transitioned from one status to another. If unset, when a new condition type is added or an existing condition's status is changed, the server defaults this to the current time.
     @[::JSON::Field(key: "lastTransitionTime", emit_null: false)]

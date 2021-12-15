@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Core::V1::VolumeDevice
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # devicePath is the path inside of the container that the device will be mapped to.
     @[::JSON::Field(key: "devicePath", emit_null: true)]

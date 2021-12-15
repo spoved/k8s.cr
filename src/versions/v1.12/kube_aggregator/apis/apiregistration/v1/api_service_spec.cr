@@ -16,7 +16,9 @@ module K8S
   )]
   class KubeAggregator::Apis::Apiregistration::V1::APIServiceSpec
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # CABundle is a PEM encoded CA bundle which will be used to validate an API server's serving certificate.
     @[::JSON::Field(key: "caBundle", emit_null: false)]

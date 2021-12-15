@@ -11,7 +11,9 @@ module K8S
   )]
   class Apimachinery::Apis::Meta::V1::Preconditions
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Specifies the target ResourceVersion
     @[::JSON::Field(key: "resourceVersion", emit_null: false)]

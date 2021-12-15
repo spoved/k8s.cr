@@ -11,7 +11,9 @@ module K8S
   )]
   class ApiextensionsApiserver::Apis::Apiextensions::V1::ValidationRule
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Message represents the message displayed when validation fails. The message is required if the Rule contains line breaks. The message must not contain line breaks. If unset, the message is "failed rule: {Rule}". e.g. "must be a URL with the host matching spec.host"
     @[::JSON::Field(key: "message", emit_null: false)]

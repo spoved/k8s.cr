@@ -13,7 +13,9 @@ module K8S
   )]
   class Api::Authorization::V1::SubjectRulesReviewStatus
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # EvaluationError can appear in combination with Rules. It indicates an error occurred during rule evaluation, such as an authorizer that doesn't support rule evaluation, and that ResourceRules [and/or NonResourceRules may be incomplete.](and/or NonResourceRules may be incomplete.)
     @[::JSON::Field(key: "evaluationError", emit_null: false)]

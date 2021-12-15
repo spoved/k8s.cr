@@ -48,7 +48,9 @@ module K8S
   class KubeAggregator::Apis::Apiregistration::V1beta1::APIServiceList < ::K8S::Kubernetes::ResourceList(KubeAggregator::Apis::Apiregistration::V1beta1::APIService)
     include ::K8S::Kubernetes::Resource::List
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     @[::JSON::Field(key: "apiVersion")]
     @[::YAML::Field(key: "apiVersion")]

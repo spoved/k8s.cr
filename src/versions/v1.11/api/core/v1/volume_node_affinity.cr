@@ -10,7 +10,9 @@ module K8S
   )]
   class Api::Core::V1::VolumeNodeAffinity
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Required specifies hard node constraints that must be met.
     @[::JSON::Field(key: "required", emit_null: false)]

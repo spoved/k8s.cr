@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Core::V1::PreferredSchedulingTerm
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # A node selector term, associated with the corresponding weight.
     @[::JSON::Field(key: "preference", emit_null: true)]

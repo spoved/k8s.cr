@@ -58,7 +58,9 @@ module K8S
   class Api::Settings::V1alpha1::PodPresetList < ::K8S::Kubernetes::ResourceList(Api::Settings::V1alpha1::PodPreset)
     include ::K8S::Kubernetes::Resource::List
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     @[::JSON::Field(key: "apiVersion")]
     @[::YAML::Field(key: "apiVersion")]

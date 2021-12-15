@@ -15,7 +15,9 @@ module K8S
   )]
   class Api::Batch::V1::JobStatus
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # The number of actively running pods.
     @[::JSON::Field(key: "active", emit_null: false)]

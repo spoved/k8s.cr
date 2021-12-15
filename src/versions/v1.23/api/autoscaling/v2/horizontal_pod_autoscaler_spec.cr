@@ -14,7 +14,9 @@ module K8S
   )]
   class Api::Autoscaling::V2::HorizontalPodAutoscalerSpec
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # behavior configures the scaling behavior of the target in both Up and Down directions (scaleUp and scaleDown fields respectively). If not set, the default HPAScalingRules for scale up and scale down are used.
     @[::JSON::Field(key: "behavior", emit_null: false)]

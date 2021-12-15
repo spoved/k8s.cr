@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Core::V1::SeccompProfile
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # localhostProfile indicates a profile defined in a file on the node should be used. The profile must be preconfigured on the node to work. Must be a descending path, relative to the kubelet's configured seccomp profile location. Must only be set if type is "Localhost".
     @[::JSON::Field(key: "localhostProfile", emit_null: false)]

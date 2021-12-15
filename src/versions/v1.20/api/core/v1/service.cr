@@ -84,7 +84,9 @@ module K8S
   class Api::Core::V1::Service < ::K8S::Kubernetes::Resource
     include ::K8S::Kubernetes::Resource::Object
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     @[::JSON::Field(key: "apiVersion")]
     @[::YAML::Field(key: "apiVersion")]

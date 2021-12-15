@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Flowcontrol::V1beta1::NonResourcePolicyRule
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # `nonResourceURLs` is a set of url prefixes that a user should have access to and may not be empty. For example:
     #   - ["/healthz" is legal]("/healthz" is legal)

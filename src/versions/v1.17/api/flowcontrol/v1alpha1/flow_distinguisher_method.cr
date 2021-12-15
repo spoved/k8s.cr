@@ -10,7 +10,9 @@ module K8S
   )]
   class Api::Flowcontrol::V1alpha1::FlowDistinguisherMethod
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # `type` is the type of flow distinguisher method The supported types are "ByUser" and "ByNamespace". Required.
     @[::JSON::Field(key: "type", emit_null: true)]

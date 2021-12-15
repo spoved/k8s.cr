@@ -14,7 +14,9 @@ module K8S
   )]
   class Api::Core::V1::VolumeMount
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Path within the container at which the volume should be mounted.  Must not contain ':'.
     @[::JSON::Field(key: "mountPath", emit_null: true)]

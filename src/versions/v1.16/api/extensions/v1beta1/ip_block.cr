@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Extensions::V1beta1::IPBlock
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # CIDR is a string representing the IP Block Valid examples are ["192.168.1.1/24"]("192.168.1.1/24")
     @[::JSON::Field(key: "cidr", emit_null: true)]

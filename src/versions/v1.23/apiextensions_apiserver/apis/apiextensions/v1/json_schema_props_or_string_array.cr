@@ -4,16 +4,5 @@ require "yaml"
 require "json"
 
 module K8S
-  # JSONSchemaPropsOrStringArray represents a JSONSchemaProps or a string array.
-  @[::K8S::Properties]
-  class ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaPropsOrStringArray
-    include ::JSON::Serializable
-    include ::YAML::Serializable
-
-    include ::JSON::Serializable
-    include ::YAML::Serializable
-
-    def initialize
-    end
-  end
+  alias ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaPropsOrStringArray = ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps | Array(String)
 end

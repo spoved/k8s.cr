@@ -15,7 +15,9 @@ module K8S
   )]
   class ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceColumnDefinition
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # JSONPath is a simple JSON path, i.e. with array notation.
     @[::JSON::Field(key: "JSONPath", emit_null: true)]

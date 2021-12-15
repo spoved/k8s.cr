@@ -35,10 +35,14 @@ module K8S
   @[::K8S::Properties]
   class Apimachinery::Runtime::RawExtension
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     def initialize
     end

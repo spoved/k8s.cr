@@ -15,7 +15,9 @@ module K8S
   )]
   class Api::Core::V1::AzureDiskVolumeSource
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Host Caching mode: None, Read Only, Read Write.
     @[::JSON::Field(key: "cachingMode", emit_null: false)]

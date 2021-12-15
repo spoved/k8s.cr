@@ -13,7 +13,9 @@ module K8S
   )]
   class Api::Core::V1::SELinuxOptions
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Level is SELinux level label that applies to the container.
     @[::JSON::Field(key: "level", emit_null: false)]

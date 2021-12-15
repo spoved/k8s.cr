@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Batch::V1::UncountedTerminatedPods
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Failed holds UIDs of failed Pods.
     @[::JSON::Field(key: "failed", emit_null: false)]

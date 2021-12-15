@@ -10,7 +10,9 @@ module K8S
   )]
   class Api::Flowcontrol::V1beta1::PriorityLevelConfigurationStatus
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # `conditions` is the current state of "request-priority".
     @[::JSON::Field(key: "conditions", emit_null: false)]

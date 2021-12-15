@@ -13,7 +13,9 @@ module K8S
   )]
   class Api::Core::V1::TopologySpreadConstraint
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # LabelSelector is used to find matching pods. Pods that match this label selector are counted to determine the number of pods in their corresponding topology domain.
     @[::JSON::Field(key: "labelSelector", emit_null: false)]

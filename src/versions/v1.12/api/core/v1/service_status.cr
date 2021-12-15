@@ -10,7 +10,9 @@ module K8S
   )]
   class Api::Core::V1::ServiceStatus
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # LoadBalancer contains the current status of the load-balancer, if one is present.
     @[::JSON::Field(key: "loadBalancer", emit_null: false)]

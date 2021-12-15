@@ -13,7 +13,9 @@ module K8S
   )]
   class Api::Extensions::V1beta1::IngressSpec
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # A default backend capable of servicing requests that don't match any rule. At least one of 'backend' or 'rules' must be specified. This field is optional to allow the loadbalancer controller or defaulting logic to specify a global default.
     @[::JSON::Field(key: "backend", emit_null: false)]

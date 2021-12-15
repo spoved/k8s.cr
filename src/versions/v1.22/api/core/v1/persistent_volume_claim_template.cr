@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Core::V1::PersistentVolumeClaimTemplate
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # May contain labels and annotations that will be copied into the PVC when creating it. No other fields are allowed and will be rejected during validation.
     @[::JSON::Field(key: "metadata", emit_null: false)]

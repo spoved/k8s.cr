@@ -12,7 +12,9 @@ module K8S
   )]
   class Api::Policy::V1beta1::PodDisruptionBudgetSpec
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # An eviction is allowed if at most "maxUnavailable" pods selected by "selector" are unavailable after the eviction, i.e. even in absence of the evicted pod. For example, one can prevent all voluntary evictions by specifying 0. This is a mutually exclusive setting with "minAvailable".
     @[::JSON::Field(key: "maxUnavailable", emit_null: false)]

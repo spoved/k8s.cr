@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Policy::V1beta1::RuntimeClassStrategyOptions
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # allowedRuntimeClassNames is an allowlist of RuntimeClass names that may be specified on a pod. A value of "*" means that any RuntimeClass name is allowed, and must be the only item in the list. An empty list requires the RuntimeClassName field to be unset.
     @[::JSON::Field(key: "allowedRuntimeClassNames", emit_null: true)]

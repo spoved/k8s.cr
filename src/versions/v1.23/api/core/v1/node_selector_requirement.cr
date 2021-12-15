@@ -12,7 +12,9 @@ module K8S
   )]
   class Api::Core::V1::NodeSelectorRequirement
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # The label key that the selector applies to.
     @[::JSON::Field(key: "key", emit_null: true)]

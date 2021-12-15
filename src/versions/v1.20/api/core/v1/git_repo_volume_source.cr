@@ -14,7 +14,9 @@ module K8S
   )]
   class Api::Core::V1::GitRepoVolumeSource
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Target directory name. Must not contain or start with '..'.  If '.' is supplied, the volume directory will be the git repository.  Otherwise, if specified, the volume will contain the git repository in the subdirectory with the given name.
     @[::JSON::Field(key: "directory", emit_null: false)]

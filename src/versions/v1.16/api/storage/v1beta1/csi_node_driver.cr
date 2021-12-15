@@ -13,7 +13,9 @@ module K8S
   )]
   class Api::Storage::V1beta1::CSINodeDriver
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # allocatable represents the volume resources of a node that are available for scheduling.
     @[::JSON::Field(key: "allocatable", emit_null: false)]

@@ -12,7 +12,9 @@ module K8S
   )]
   class Api::Core::V1::PortworxVolumeSource
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # FSType represents the filesystem type to mount Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs". Implicitly inferred to be "ext4" if unspecified.
     @[::JSON::Field(key: "fsType", emit_null: false)]

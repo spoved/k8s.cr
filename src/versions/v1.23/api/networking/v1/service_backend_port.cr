@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Networking::V1::ServiceBackendPort
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Name is the name of the port on the Service. This is a mutually exclusive setting with "Number".
     @[::JSON::Field(key: "name", emit_null: false)]

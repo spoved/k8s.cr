@@ -13,7 +13,9 @@ module K8S
   )]
   class Api::Authentication::V1::UserInfo
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Any additional information provided by the authenticator.
     @[::JSON::Field(key: "extra", emit_null: false)]

@@ -56,7 +56,9 @@ module K8S
   )]
   class Apimachinery::Apis::Meta::V1::WatchEvent
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Object is:
     #  * If Type is Added or Modified: the new state of the object.

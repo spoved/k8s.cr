@@ -15,7 +15,9 @@ module K8S
   )]
   class Api::Authorization::V1::SubjectAccessReviewSpec
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Extra corresponds to the user.Info.GetExtra() method from the authenticator.  Since that is input to the authorizer it needs a reflection here.
     @[::JSON::Field(key: "extra", emit_null: false)]

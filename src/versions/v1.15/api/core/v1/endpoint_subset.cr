@@ -19,7 +19,9 @@ module K8S
   )]
   class Api::Core::V1::EndpointSubset
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # IP addresses which offer the related ports that are marked as ready. These endpoints should be considered safe for load balancers and clients to utilize.
     @[::JSON::Field(key: "addresses", emit_null: false)]

@@ -10,7 +10,9 @@ module K8S
   )]
   class Api::Policy::V1beta1::AllowedFlexVolume
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # driver is the name of the Flexvolume driver.
     @[::JSON::Field(key: "driver", emit_null: true)]

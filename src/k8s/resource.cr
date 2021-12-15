@@ -1,5 +1,6 @@
 require "json"
 require "yaml"
+require "log"
 
 annotation ::K8S::Properties; end
 
@@ -15,12 +16,25 @@ abstract class ::K8S::Kubernetes::Resource
   abstract def kind : String
 
   def self.from_file(file)
-    Log.trace { "Loading #{file}" }
+    Log.trace { "K8S::Resource: Loading: #{file}" }
     if File.extname(file) == ".json"
       [from_json(File.read(file))]
     else
       nodes = ::K8S::Kubernetes::Resource::YAMLParser.new(File.read(file), &.parse_all_nodes)
       nodes.flat_map { |doc| doc.nodes.map { |n| ::K8S::Resource.new(YAML::ParseContext.new, n) } }
+    end
+  end
+
+  def self.from_files(*paths)
+    paths.flat_map do |path|
+      Log.trace { "K8S::Resource: Loading recursivly: #{path}" }
+      if File.directory?(path)
+        Dir.glob(File.join(path, "**/*.yaml")).flat_map { |file| from_files(file) }
+      elsif File.extname(path) == ".yaml" && File.exists?(path)
+        from_file(path)
+      else
+        Array(Resource).new
+      end
     end
   end
 
@@ -42,7 +56,7 @@ abstract class ::K8S::Kubernetes::Resource
     end
 
     def merge(other)
-      Log.info { "Merging #{self.class.name} with #{other.class.name}" }
+      Log.info { "K8S::Resource: Merging #{self.class.name} with #{other.class.name}" }
 
       copy = self.to_h
       case other

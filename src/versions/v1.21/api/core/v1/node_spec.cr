@@ -16,7 +16,9 @@ module K8S
   )]
   class Api::Core::V1::NodeSpec
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # If specified, the source to get node configuration from The DynamicKubeletConfig feature gate must be enabled for the Kubelet to use this field
     @[::JSON::Field(key: "configSource", emit_null: false)]

@@ -10,7 +10,9 @@ module K8S
   )]
   class Api::Authentication::V1::TokenReviewSpec
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Token is the opaque bearer token.
     @[::JSON::Field(key: "token", emit_null: false)]

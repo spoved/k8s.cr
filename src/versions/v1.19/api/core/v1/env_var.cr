@@ -12,7 +12,9 @@ module K8S
   )]
   class Api::Core::V1::EnvVar
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Name of the environment variable. Must be a C_IDENTIFIER.
     @[::JSON::Field(key: "name", emit_null: true)]

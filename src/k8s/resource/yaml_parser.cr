@@ -31,3 +31,10 @@ struct JSON::Any
     JSON::Any.from_json YAML::Any.new(ctx, node).to_json
   end
 end
+
+struct YAML::Any
+  # Convert a JSON document to a YAML object.
+  def self.new(parser : JSON::PullParser) : YAML::Any
+    YAML.parse(JSON.parse(parser.read_raw).to_yaml)
+  end
+end

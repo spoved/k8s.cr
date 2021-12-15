@@ -11,7 +11,9 @@ module K8S
   )]
   class Api::Flowcontrol::V1beta1::LimitResponse
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # `queuing` holds the configuration parameters for queuing. This field may be non-empty only if `type` is `"Queue"`.
     @[::JSON::Field(key: "queuing", emit_null: false)]

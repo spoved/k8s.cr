@@ -14,7 +14,9 @@ module K8S
   )]
   class Api::Core::V1::HTTPGetAction
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Host name to connect to, defaults to the pod IP. You probably want to set "Host" in httpHeaders instead.
     @[::JSON::Field(key: "host", emit_null: false)]

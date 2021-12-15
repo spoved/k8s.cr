@@ -10,7 +10,9 @@ module K8S
   )]
   class Api::Core::V1::ScopeSelector
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # A list of scope selector requirements by scope of the resources.
     @[::JSON::Field(key: "matchExpressions", emit_null: false)]

@@ -10,7 +10,9 @@ module K8S
   )]
   class Api::Storage::V1alpha1::VolumeAttachmentSource
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # Name of the persistent volume to attach.
     @[::JSON::Field(key: "persistentVolumeName", emit_null: false)]

@@ -14,7 +14,9 @@ module K8S
   )]
   class Api::Autoscaling::V2beta1::MetricSpec
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # external refers to a global metric that is not associated with any Kubernetes object. It allows autoscaling based on information coming from components running outside of cluster (for example length of queue in cloud messaging service, or QPS from loadbalancer running outside of cluster).
     @[::JSON::Field(key: "external", emit_null: false)]

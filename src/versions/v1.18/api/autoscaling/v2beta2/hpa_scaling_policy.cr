@@ -12,7 +12,9 @@ module K8S
   )]
   class Api::Autoscaling::V2beta2::HPAScalingPolicy
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # PeriodSeconds specifies the window of time for which the policy should hold true. PeriodSeconds must be greater than zero and less than or equal to 1800 (30 min).
     @[::JSON::Field(key: "periodSeconds", emit_null: true)]

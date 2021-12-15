@@ -15,7 +15,9 @@ module K8S
   )]
   class Apimachinery::Apis::Meta::V1::OwnerReference
     include ::JSON::Serializable
+    include ::JSON::Serializable::Unmapped
     include ::YAML::Serializable
+    include ::YAML::Serializable::Unmapped
 
     # API version of the referent.
     @[::JSON::Field(key: "apiVersion", emit_null: true)]
