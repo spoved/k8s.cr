@@ -4460,25 +4460,17 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">alias</span> K8S::Api::Core::V1::List
+  <span class="kind">class</span> K8S::Api::Core::V1::List
 
 </h1>
 
 
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../../../K8S/Api/Core/V1/List.html">K8S::Api::Core::V1::List</a></li><li class="superclass"><a href="../../../../K8S/Kubernetes/ResourceList.html">K8S::Kubernetes::ResourceList</a>(<a href="../../../../K8S/Kubernetes/Resource.html">K8S::Kubernetes::Resource</a>)</li><li class="superclass"><a href="../../../../K8S/Kubernetes/Resource.html">K8S::Kubernetes::Resource</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
 
 
 
 
 
-  <h2>
-    <a id="alias-definition" class="anchor" href="#alias-definition">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Alias Definition
-  </h2>
-  <code><a href="../../../../K8S/Kubernetes/ResourceList.html">K8S::Kubernetes::ResourceList(T)</a></code>
 
 
 
@@ -4501,8 +4493,8 @@
   </h2>
   
     
-      <a href="https://github.com/spoved/k8s.cr/blob/a92f6ed906d4097cd59335a9a6465e1e335d9d9b/src/versions/v1.13/api/core/v1/list.cr#L7" target="_blank">
-        versions/v1.13/api/core/v1/list.cr
+      <a href="https://github.com/spoved/k8s.cr/blob/f4c2e21a56368a8153954627830ac93970850592/src/k8s/list.cr#L20" target="_blank">
+        k8s/list.cr
       </a>
     
     <br/>
@@ -4512,9 +4504,68 @@
 
 
 
+  <h2>
+    <a id="constructors" class="anchor" href="#constructors">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructors
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#new%28ctx%3AYAML%3A%3AParseContext%2Cnode%3AYAML%3A%3ANodes%3A%3ANode%29-class-method" class="signature"><strong>.new</strong>(ctx : YAML::ParseContext, node : YAML::Nodes::Node)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#new%28pull%3AJSON%3A%3APullParser%29-class-method" class="signature"><strong>.new</strong>(pull : JSON::PullParser)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#new%28%2A%2Citems%3AArray%28T%29%2Cmetadata%3AApimachinery%3A%3AApis%3A%3AMeta%3A%3AV1%3A%3AListMeta%3F%3Dnil%29-class-method" class="signature"><strong>.new</strong>(*, items : Array(T), metadata : Apimachinery::Apis::Meta::V1::ListMeta? = <span class="n">nil</span>)</a>
+        
+      </li>
+    
+  </ul>
 
 
 
+
+
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#api_version%3AString-instance-method" class="signature"><strong>#api_version</strong> : String</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#api_version%3D%28api_version%3AString%29-instance-method" class="signature"><strong>#api_version=</strong>(api_version : String)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#kind%3AString-instance-method" class="signature"><strong>#kind</strong> : String</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#kind%3D%28kind%3AString%29-instance-method" class="signature"><strong>#kind=</strong>(kind : String)</a>
+        
+      </li>
+    
+  </ul>
 
 
 
@@ -4522,12 +4573,308 @@
 
 <div class="methods-inherited">
   
+    
+
+  <h3>Instance methods inherited from class <code><a href="../../../../K8S/Kubernetes/ResourceList.html">K8S::Kubernetes::ResourceList</a>(<a href="../../../../K8S/Kubernetes/Resource.html">K8S::Kubernetes::Resource</a>)</code></h3>
+  
+  
+    <a href="../../../../K8S/Kubernetes/ResourceList.html#items%3AArray%28T%29-instance-method" class="tooltip">
+      <span>items : Array(T)</span>
+    items</a>, 
+    
+  
+    <a href="../../../../K8S/Kubernetes/ResourceList.html#items%3D%28items%3AArray%28T%29%29-instance-method" class="tooltip">
+      <span>items=(items : Array(T))</span>
+    items=</a>, 
+    
+  
+    <a href="../../../../K8S/Kubernetes/ResourceList.html#metadata%3AApimachinery%3A%3AApis%3A%3AMeta%3A%3AV1%3A%3AListMeta%3F-instance-method" class="tooltip">
+      <span>metadata : Apimachinery::Apis::Meta::V1::ListMeta?</span>
+    metadata</a>, 
+    
+  
+    <a href="../../../../K8S/Kubernetes/ResourceList.html#metadata%3D%28metadata%3AApimachinery%3A%3AApis%3A%3AMeta%3A%3AV1%3A%3AListMeta%3F%29-instance-method" class="tooltip">
+      <span>metadata=(metadata : Apimachinery::Apis::Meta::V1::ListMeta?)</span>
+    metadata=</a>
+    
+  
+
+
+    
+
+  <h3>Constructor methods inherited from class <code><a href="../../../../K8S/Kubernetes/ResourceList.html">K8S::Kubernetes::ResourceList</a>(<a href="../../../../K8S/Kubernetes/Resource.html">K8S::Kubernetes::Resource</a>)</code></h3>
+  
+  
+    <a href="../../../../K8S/Kubernetes/ResourceList.html#new%28ctx%3AYAML%3A%3AParseContext%2Cnode%3AYAML%3A%3ANodes%3A%3ANode%29-class-method" class="tooltip">
+      <span>new(ctx : YAML::ParseContext, node : YAML::Nodes::Node)<br/>new(pull : JSON::PullParser)<br/>new(*, items : Array(T), metadata : Apimachinery::Apis::Meta::V1::ListMeta? = <span class="n">nil</span>)</span>
+    new</a>
+    
+  
+
+
+    
+
+
+  
+    
+
+  <h3>Instance methods inherited from module <code><a href="../../../../K8S/Kubernetes/Resource/List.html">K8S::Kubernetes::Resource::List</a></code></h3>
+  
+  
+    <a href="../../../../K8S/Kubernetes/Resource/List.html#api_version%3AString-instance-method" class="tooltip">
+      <span>api_version : String</span>
+    api_version</a>, 
+    
+  
+    <a href="../../../../K8S/Kubernetes/Resource/List.html#kind%3AString-instance-method" class="tooltip">
+      <span>kind : String</span>
+    kind</a>, 
+    
+  
+    <a href="../../../../K8S/Kubernetes/Resource/List.html#metadata%3AApimachinery%3A%3AApis%3A%3AMeta%3A%3AV1%3A%3AListMeta%3F-instance-method" class="tooltip">
+      <span>metadata : Apimachinery::Apis::Meta::V1::ListMeta?</span>
+    metadata</a>, 
+    
+  
+    <a href="../../../../K8S/Kubernetes/Resource/List.html#metadata%21%3AApimachinery%3A%3AApis%3A%3AMeta%3A%3AV1%3A%3AListMeta-instance-method" class="tooltip">
+      <span>metadata! : Apimachinery::Apis::Meta::V1::ListMeta</span>
+    metadata!</a>
+    
+  
+
+
+    
+
+
+    
+
+
+  
+    
+
+  <h3>Instance methods inherited from class <code><a href="../../../../K8S/Kubernetes/Resource.html">K8S::Kubernetes::Resource</a></code></h3>
+  
+  
+    <a href="../../../../K8S/Kubernetes/Resource.html#api_version%3AString-instance-method" class="tooltip">
+      <span>api_version : String</span>
+    api_version</a>, 
+    
+  
+    <a href="../../../../K8S/Kubernetes/Resource.html#kind%3AString-instance-method" class="tooltip">
+      <span>kind : String</span>
+    kind</a>
+    
+  
+
+
+    
+
+  <h3>Constructor methods inherited from class <code><a href="../../../../K8S/Kubernetes/Resource.html">K8S::Kubernetes::Resource</a></code></h3>
+  
+  
+    <a href="../../../../K8S/Kubernetes/Resource.html#new%28ctx%3AYAML%3A%3AParseContext%2Cnode%3AYAML%3A%3ANodes%3A%3ANode%29-class-method" class="tooltip">
+      <span>new(ctx : YAML::ParseContext, node : YAML::Nodes::Node)<br/>new(pull : JSON::PullParser)</span>
+    new</a>
+    
+  
+
+
+    
+
+  <h3>Class methods inherited from class <code><a href="../../../../K8S/Kubernetes/Resource.html">K8S::Kubernetes::Resource</a></code></h3>
+  
+  
+    <a href="../../../../K8S/Kubernetes/Resource.html#from_file%28file%29-class-method" class="tooltip">
+      <span>from_file(file)</span>
+    from_file</a>, 
+    
+  
+    <a href="../../../../K8S/Kubernetes/Resource.html#from_files%28%2Apaths%29-class-method" class="tooltip">
+      <span>from_files(*paths)</span>
+    from_files</a>
+    
+  
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
 </div>
 
 
+  <h2>
+    <a id="constructor-detail" class="anchor" href="#constructor-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructor Detail
+  </h2>
+  
+    <div class="entry-detail" id="new(ctx:YAML::ParseContext,node:YAML::Nodes::Node)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(ctx : YAML::ParseContext, node : YAML::Nodes::Node)
+
+        <a class="method-permalink" href="#new%28ctx%3AYAML%3A%3AParseContext%2Cnode%3AYAML%3A%3ANodes%3A%3ANode%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/spoved/k8s.cr/blob/f4c2e21a56368a8153954627830ac93970850592/src/k8s/list.cr#L20" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="new(pull:JSON::PullParser)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(pull : JSON::PullParser)
+
+        <a class="method-permalink" href="#new%28pull%3AJSON%3A%3APullParser%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/spoved/k8s.cr/blob/f4c2e21a56368a8153954627830ac93970850592/src/k8s/list.cr#L20" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="new(*,items:Array(T),metadata:Apimachinery::Apis::Meta::V1::ListMeta?=nil)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(*, items : Array(<a href="../../../../K8S/Kubernetes/Resource.html">T</a>), metadata : <a href="../../../../K8S/Apimachinery/Apis/Meta/V1/ListMeta.html">Apimachinery::Apis::Meta::V1::ListMeta</a>? = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#new%28%2A%2Citems%3AArray%28T%29%2Cmetadata%3AApimachinery%3A%3AApis%3A%3AMeta%3A%3AV1%3A%3AListMeta%3F%3Dnil%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/spoved/k8s.cr/blob/f4c2e21a56368a8153954627830ac93970850592/src/k8s/list.cr#L13" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
 
 
 
+
+
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="api_version:String-instance-method">
+      <div class="signature">
+        
+        def <strong>api_version</strong> : String
+
+        <a class="method-permalink" href="#api_version%3AString-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/spoved/k8s.cr/blob/f4c2e21a56368a8153954627830ac93970850592/src/k8s/list.cr#L23" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="api_version=(api_version:String)-instance-method">
+      <div class="signature">
+        
+        def <strong>api_version=</strong>(api_version : String)
+
+        <a class="method-permalink" href="#api_version%3D%28api_version%3AString%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/spoved/k8s.cr/blob/f4c2e21a56368a8153954627830ac93970850592/src/k8s/list.cr#L23" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="kind:String-instance-method">
+      <div class="signature">
+        
+        def <strong>kind</strong> : String
+
+        <a class="method-permalink" href="#kind%3AString-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/spoved/k8s.cr/blob/f4c2e21a56368a8153954627830ac93970850592/src/k8s/list.cr#L24" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="kind=(kind:String)-instance-method">
+      <div class="signature">
+        
+        def <strong>kind=</strong>(kind : String)
+
+        <a class="method-permalink" href="#kind%3D%28kind%3AString%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/spoved/k8s.cr/blob/f4c2e21a56368a8153954627830ac93970850592/src/k8s/list.cr#L24" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
 
 
 
