@@ -79,8 +79,8 @@ module K8S
     property reason : String | Nil
 
     # RFC 3339 date and time at which the object was acknowledged by the Kubelet. This is before the Kubelet pulled the container image(s) for the pod.
-    @[::JSON::Field(key: "startTime", emit_null: false)]
-    @[::YAML::Field(key: "startTime", emit_null: false)]
+    @[::JSON::Field(key: "startTime", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
+    @[::YAML::Field(key: "startTime", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
     property start_time : Time | Nil
 
     def initialize(*, @conditions : Array | Nil = nil, @container_statuses : Array | Nil = nil, @host_ip : String | Nil = nil, @init_container_statuses : Array | Nil = nil, @message : String | Nil = nil, @nominated_node_name : String | Nil = nil, @phase : String | Nil = nil, @pod_ip : String | Nil = nil, @qos_class : String | Nil = nil, @reason : String | Nil = nil, @start_time : Time | Nil = nil)

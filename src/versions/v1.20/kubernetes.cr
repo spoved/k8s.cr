@@ -185,6 +185,7 @@ module ::K8S::Kubernetes
       {"apiregistration/v1", "APIServiceList", K8S::KubeAggregator::Apis::Apiregistration::V1::APIServiceList},
       {"apiregistration/v1beta1", "APIService", K8S::KubeAggregator::Apis::Apiregistration::V1beta1::APIService},
       {"apiregistration/v1beta1", "APIServiceList", K8S::KubeAggregator::Apis::Apiregistration::V1beta1::APIServiceList},
+      {"v1", "List", K8S::Api::Core::V1::List},
     ]
 
     k8s_json_discriminator(MAPPINGS)

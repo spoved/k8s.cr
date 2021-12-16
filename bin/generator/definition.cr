@@ -11,8 +11,10 @@ class Generator::Definition
     getter ref : String? = nil
     getter? required : Bool = false
     property default : String? = nil
+    getter prop : Swagger::Definition::Property? = nil
 
     def initialize(name : String, prop : Swagger::Definition::Property, definition : Swagger::Definition, *, ivar = false)
+      @prop = prop
       initialize name, required: definition.required.includes?(name), type: prop.type.to_s, ref: prop._ref, ivar: ivar
     end
 
@@ -67,6 +69,7 @@ class Generator::Definition
     STDOUT.puts "Writing: #{filename}"
     file.puts "# THIS FILE WAS AUTO GENERATED FROM THE K8S SWAGGER SPEC"
     file.puts ""
+
     load_requires
     file.puts "module #{base_class.lchop("::")}"
 
@@ -183,9 +186,13 @@ class Generator::Definition
   end
 
   private def convert_type(arg : FunctionArgument)
-    t = definition_ref(arg.ref) ||
-        convert_type(arg.type.to_s, true)
+    t = if arg.prop.nil?
+          definition_ref(arg.ref) || convert_type(arg.type.to_s, true)
+        else
+          convert_type(arg.prop.not_nil!, true)
+        end
     t += " | Nil" unless arg.required?
+    # Log.trace { "Converted type 1: #{t}" }
     t
   end
 
@@ -193,12 +200,15 @@ class Generator::Definition
     t = definition_ref(param.schema.try(&._ref)) ||
         convert_type(param.type.to_s, true)
     t += " | Nil" unless param.required
+    # Log.trace { "Converted type 2: #{t}" }
     t
   end
 
   private def convert_type(property : Swagger::Definition::Property, required : Bool = true)
     t = if ref = definition_ref(property._ref)
           ref
+        elsif property.x_kubernetes_preserve_unknown_fields
+          "Hash(String, JSON::Any)"
         elsif property.type.to_s == "array"
           "Array(#{convert_type(property.items.as(Swagger::Definition::Property))})"
         elsif property.additional_properties
@@ -207,6 +217,7 @@ class Generator::Definition
           convert_type(property.type.to_s, true)
         end
     t += " | Nil" unless required
+    # Log.trace { "Converted type 3: #{t}" }
     t
   end
 
@@ -303,9 +314,13 @@ class Generator::Definition
       _type = convert_type(property, req)
 
       # if crystal_name != name
-      file.puts %<@[::JSON::Field(key: "#{name}", emit_null: #{req})]>
-      file.puts %<@[::YAML::Field(key: "#{name}", emit_null: #{req})]>
-      # end
+      if _type =~ /^Time\b/
+        file.puts %<@[::JSON::Field(key: "#{name}", emit_null: #{req}, converter: Time::Format.new("%Y-%m-%dT%TZ"))]>
+        file.puts %<@[::YAML::Field(key: "#{name}", emit_null: #{req}, converter: Time::Format.new("%Y-%m-%dT%TZ"))]>
+      else
+        file.puts %<@[::JSON::Field(key: "#{name}", emit_null: #{req})]>
+        file.puts %<@[::YAML::Field(key: "#{name}", emit_null: #{req})]>
+      end
       file.puts "property #{crystal_name} : #{_type}"
       file.puts ""
     end

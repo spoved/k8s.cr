@@ -30,7 +30,6 @@ class Generator::Definition
       file.puts %<alias #{class_name} = ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps | Array(String)>
       true
     when "Api::Core::V1::List"
-      file.puts %<alias #{class_name} = ::K8S::Kubernetes::ResourceList>
       true
     when "ApiextensionsApiserver::Apis::Apiextensions::V1::JSON"
       file.puts %<alias #{class_name} = ::JSON::Any>

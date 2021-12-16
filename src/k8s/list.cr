@@ -16,3 +16,10 @@ abstract class ::K8S::Kubernetes::ResourceList(T) < ::K8S::Kubernetes::Resource
     ::K8S::Kubernetes::Resource.new(pull)
   end
 end
+
+class ::K8S::Api::Core::V1::List < ::K8S::Kubernetes::ResourceList(::K8S::Kubernetes::Resource)
+  @[::JSON::Field(key: "apiVersion")]
+  @[::YAML::Field(key: "apiVersion")]
+  property api_version : String = "v1"
+  property kind : String = "List"
+end

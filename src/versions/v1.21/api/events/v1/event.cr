@@ -110,13 +110,13 @@ module K8S
     property deprecated_count : Int32 | Nil
 
     # deprecatedFirstTimestamp is the deprecated field assuring backward compatibility with core.v1 Event type.
-    @[::JSON::Field(key: "deprecatedFirstTimestamp", emit_null: false)]
-    @[::YAML::Field(key: "deprecatedFirstTimestamp", emit_null: false)]
+    @[::JSON::Field(key: "deprecatedFirstTimestamp", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
+    @[::YAML::Field(key: "deprecatedFirstTimestamp", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
     property deprecated_first_timestamp : Time | Nil
 
     # deprecatedLastTimestamp is the deprecated field assuring backward compatibility with core.v1 Event type.
-    @[::JSON::Field(key: "deprecatedLastTimestamp", emit_null: false)]
-    @[::YAML::Field(key: "deprecatedLastTimestamp", emit_null: false)]
+    @[::JSON::Field(key: "deprecatedLastTimestamp", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
+    @[::YAML::Field(key: "deprecatedLastTimestamp", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
     property deprecated_last_timestamp : Time | Nil
 
     # deprecatedSource is the deprecated field assuring backward compatibility with core.v1 Event type.
@@ -125,8 +125,8 @@ module K8S
     property deprecated_source : Api::Core::V1::EventSource | Nil
 
     # eventTime is the time when this Event was first observed. It is required.
-    @[::JSON::Field(key: "eventTime", emit_null: false)]
-    @[::YAML::Field(key: "eventTime", emit_null: false)]
+    @[::JSON::Field(key: "eventTime", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
+    @[::YAML::Field(key: "eventTime", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
     property event_time : Time | Nil
 
     # Standard object's metadata. More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)

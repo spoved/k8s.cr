@@ -34,8 +34,8 @@ module K8S
     property desired_replicas : Int32
 
     # last time the HorizontalPodAutoscaler scaled the number of pods; used by the autoscaler to control how often the number of pods is changed.
-    @[::JSON::Field(key: "lastScaleTime", emit_null: false)]
-    @[::YAML::Field(key: "lastScaleTime", emit_null: false)]
+    @[::JSON::Field(key: "lastScaleTime", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
+    @[::YAML::Field(key: "lastScaleTime", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
     property last_scale_time : Time | Nil
 
     # most recent generation observed by this autoscaler.

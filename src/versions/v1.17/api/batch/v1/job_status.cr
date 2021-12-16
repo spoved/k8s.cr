@@ -25,8 +25,8 @@ module K8S
     property active : Int32 | Nil
 
     # Represents time when the job was completed. It is not guaranteed to be set in happens-before order across separate operations. It is represented in RFC3339 form and is in UTC.
-    @[::JSON::Field(key: "completionTime", emit_null: false)]
-    @[::YAML::Field(key: "completionTime", emit_null: false)]
+    @[::JSON::Field(key: "completionTime", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
+    @[::YAML::Field(key: "completionTime", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
     property completion_time : Time | Nil
 
     # The latest available observations of an object's current state. More info: [https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/)
@@ -40,8 +40,8 @@ module K8S
     property failed : Int32 | Nil
 
     # Represents time when the job was acknowledged by the job controller. It is not guaranteed to be set in happens-before order across separate operations. It is represented in RFC3339 form and is in UTC.
-    @[::JSON::Field(key: "startTime", emit_null: false)]
-    @[::YAML::Field(key: "startTime", emit_null: false)]
+    @[::JSON::Field(key: "startTime", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
+    @[::YAML::Field(key: "startTime", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
     property start_time : Time | Nil
 
     # The number of pods which reached phase Succeeded.

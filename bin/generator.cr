@@ -38,6 +38,9 @@ class Generator
     @definitions = @schema.definitions.each_with_object({} of String => String) do |(name, definition), memo|
       next if definition._ref
       parts = name.lchop("io.k8s.").sub(".pkg.", ".").lchop("io.").split(".").map(&.gsub('-', '_').camelcase)
+      # Remove the first part if it's 2 chars long. i.e "io", "us"
+      parts.shift if parts[0].size == 2
+
       memo[name] = parts.join("::")
     end
 
@@ -85,7 +88,7 @@ class Generator
 
     # Only generate the main file if there are no groups specified
     if only_groups.nil?
-      Dir.cd(base_dir) do
+      Dir.cd(File.join(base_dir, "..")) do
         write_version_file(definitions)
         write_kubernetes_file(definitions)
       end
@@ -109,7 +112,9 @@ class Generator
   end
 
   private def write_kubernetes_file(definitions)
-    File.open(File.join(version, "kubernetes.cr"), "w+") do |file|
+    kube_file = File.join(version, "kubernetes.cr")
+    puts "Writing: #{kube_file}"
+    File.open(kube_file, "w") do |file|
       file.puts "",
         "module ::#{base_class.lchop("::")}::Kubernetes",
         " VERSION = SemanticVersion.parse(\"#{version.lchop("v")}.0\")",
@@ -127,7 +132,7 @@ class Generator
   private def write_mappings(file, definitions)
     file.puts %<  MAPPINGS = [>
     definitions.select(&.is_resource?)
-      .reject(&.class_name.==("Api::Core::V1::List"))
+      # .reject(&.class_name.==("Api::Core::V1::List"))
       .map { |r|
         kind = r.kind == "List" ? r.name.split('.').last : r.kind
         {r.api_version, kind, r.class_name}

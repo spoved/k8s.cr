@@ -22,8 +22,8 @@ module K8S
     property count : Int32
 
     # Time when last Event from the series was seen before last heartbeat.
-    @[::JSON::Field(key: "lastObservedTime", emit_null: true)]
-    @[::YAML::Field(key: "lastObservedTime", emit_null: true)]
+    @[::JSON::Field(key: "lastObservedTime", emit_null: true, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
+    @[::YAML::Field(key: "lastObservedTime", emit_null: true, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
     property last_observed_time : Time
 
     # Information whether this series is ongoing or finished.

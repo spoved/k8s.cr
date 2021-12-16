@@ -39,8 +39,8 @@ module K8S
     property operation : String | Nil
 
     # Time is timestamp of when these fields were set. It should always be empty if Operation is 'Apply'
-    @[::JSON::Field(key: "time", emit_null: false)]
-    @[::YAML::Field(key: "time", emit_null: false)]
+    @[::JSON::Field(key: "time", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
+    @[::YAML::Field(key: "time", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
     property time : Time | Nil
 
     def initialize(*, @api_version : String | Nil = nil, @fields : Apimachinery::Apis::Meta::V1::Fields | Nil = nil, @manager : String | Nil = nil, @operation : String | Nil = nil, @time : Time | Nil = nil)

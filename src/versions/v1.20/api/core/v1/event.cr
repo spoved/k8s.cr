@@ -112,13 +112,13 @@ module K8S
     property count : Int32 | Nil
 
     # Time when this Event was first observed.
-    @[::JSON::Field(key: "eventTime", emit_null: false)]
-    @[::YAML::Field(key: "eventTime", emit_null: false)]
+    @[::JSON::Field(key: "eventTime", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
+    @[::YAML::Field(key: "eventTime", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
     property event_time : Time | Nil
 
     # The time at which the event was first recorded. (Time of server receipt is in TypeMeta.)
-    @[::JSON::Field(key: "firstTimestamp", emit_null: false)]
-    @[::YAML::Field(key: "firstTimestamp", emit_null: false)]
+    @[::JSON::Field(key: "firstTimestamp", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
+    @[::YAML::Field(key: "firstTimestamp", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
     property first_timestamp : Time | Nil
 
     # The object that this event is about.
@@ -127,8 +127,8 @@ module K8S
     property involved_object : Api::Core::V1::ObjectReference
 
     # The time at which the most recent occurrence of this event was recorded.
-    @[::JSON::Field(key: "lastTimestamp", emit_null: false)]
-    @[::YAML::Field(key: "lastTimestamp", emit_null: false)]
+    @[::JSON::Field(key: "lastTimestamp", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
+    @[::YAML::Field(key: "lastTimestamp", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
     property last_timestamp : Time | Nil
 
     # A human-readable description of the status of this operation.

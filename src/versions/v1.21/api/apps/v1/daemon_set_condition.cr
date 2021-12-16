@@ -19,8 +19,8 @@ module K8S
     include ::YAML::Serializable::Unmapped
 
     # Last time the condition transitioned from one status to another.
-    @[::JSON::Field(key: "lastTransitionTime", emit_null: false)]
-    @[::YAML::Field(key: "lastTransitionTime", emit_null: false)]
+    @[::JSON::Field(key: "lastTransitionTime", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
+    @[::YAML::Field(key: "lastTransitionTime", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
     property last_transition_time : Time | Nil
 
     # A human readable message indicating details about the transition.

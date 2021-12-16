@@ -21,8 +21,8 @@ module K8S
     property count : Int32
 
     # lastObservedTime is the time when last Event from the series was seen before last heartbeat.
-    @[::JSON::Field(key: "lastObservedTime", emit_null: true)]
-    @[::YAML::Field(key: "lastObservedTime", emit_null: true)]
+    @[::JSON::Field(key: "lastObservedTime", emit_null: true, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
+    @[::YAML::Field(key: "lastObservedTime", emit_null: true, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
     property last_observed_time : Time
 
     def initialize(*, @count : Int32, @last_observed_time : Time)

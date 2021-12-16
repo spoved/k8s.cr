@@ -110,6 +110,7 @@ macro k8s_json_discriminator(mappings)
     {% for resource in K8S::Kubernetes::Resource.all_subclasses %}
     {% if !resource.abstract? && resource.annotation(::K8S::GroupVersionKind) %}
       when {{resource.id}}.class
+        Log.trace { "Parsing #{klass} from YAML" }
         obj = {{resource.id}}.from_json(json)
         unless obj.json_unmapped.empty?
           Log.warn { "Unmapped JSON fields: #{obj.json_unmapped.inspect}" }
@@ -163,12 +164,15 @@ macro k8s_yaml_discriminator(mappings)
     {% for resource in K8S::Kubernetes::Resource.all_subclasses %}
     {% if !resource.abstract? && resource.annotation(::K8S::GroupVersionKind) %}
       when {{resource.id}}.class
+        Log.trace { "Parsing #{klass} from YAML" }
         obj = {{resource.id}}.new(ctx, node)
         unless obj.yaml_unmapped.empty?
           Log.warn { "Unmapped YAML fields: #{obj.json_unmapped.inspect}" }
         end
         obj
     {% end %}{% end %}
+      when K8S::Api::Core::V1::List.class
+        K8S::Api::Core::V1::List.new(ctx, node)
       else
         raise K8S::Error::UndefinedResource.new(klass)
       end

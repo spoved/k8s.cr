@@ -19,8 +19,8 @@ module K8S
     include ::YAML::Serializable::Unmapped
 
     # acquireTime is a time when the current lease was acquired.
-    @[::JSON::Field(key: "acquireTime", emit_null: false)]
-    @[::YAML::Field(key: "acquireTime", emit_null: false)]
+    @[::JSON::Field(key: "acquireTime", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
+    @[::YAML::Field(key: "acquireTime", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
     property acquire_time : Time | Nil
 
     # holderIdentity contains the identity of the holder of a current lease.
@@ -39,8 +39,8 @@ module K8S
     property lease_transitions : Int32 | Nil
 
     # renewTime is a time when the current holder of a lease has last updated the lease.
-    @[::JSON::Field(key: "renewTime", emit_null: false)]
-    @[::YAML::Field(key: "renewTime", emit_null: false)]
+    @[::JSON::Field(key: "renewTime", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
+    @[::YAML::Field(key: "renewTime", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
     property renew_time : Time | Nil
 
     def initialize(*, @acquire_time : Time | Nil = nil, @holder_identity : String | Nil = nil, @lease_duration_seconds : Int32 | Nil = nil, @lease_transitions : Int32 | Nil = nil, @renew_time : Time | Nil = nil)

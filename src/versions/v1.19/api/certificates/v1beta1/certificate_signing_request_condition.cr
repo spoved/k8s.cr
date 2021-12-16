@@ -19,13 +19,13 @@ module K8S
     include ::YAML::Serializable::Unmapped
 
     # lastTransitionTime is the time the condition last transitioned from one status to another. If unset, when a new condition type is added or an existing condition's status is changed, the server defaults this to the current time.
-    @[::JSON::Field(key: "lastTransitionTime", emit_null: false)]
-    @[::YAML::Field(key: "lastTransitionTime", emit_null: false)]
+    @[::JSON::Field(key: "lastTransitionTime", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
+    @[::YAML::Field(key: "lastTransitionTime", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
     property last_transition_time : Time | Nil
 
     # timestamp for the last update to this condition
-    @[::JSON::Field(key: "lastUpdateTime", emit_null: false)]
-    @[::YAML::Field(key: "lastUpdateTime", emit_null: false)]
+    @[::JSON::Field(key: "lastUpdateTime", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
+    @[::YAML::Field(key: "lastUpdateTime", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
     property last_update_time : Time | Nil
 
     # human readable message with details about the request state

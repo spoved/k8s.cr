@@ -31,8 +31,8 @@ module K8S
     property exit_code : Int32
 
     # Time at which the container last terminated
-    @[::JSON::Field(key: "finishedAt", emit_null: false)]
-    @[::YAML::Field(key: "finishedAt", emit_null: false)]
+    @[::JSON::Field(key: "finishedAt", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
+    @[::YAML::Field(key: "finishedAt", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
     property finished_at : Time | Nil
 
     # Message regarding the last termination of the container
@@ -51,8 +51,8 @@ module K8S
     property signal : Int32 | Nil
 
     # Time at which previous execution of the container started
-    @[::JSON::Field(key: "startedAt", emit_null: false)]
-    @[::YAML::Field(key: "startedAt", emit_null: false)]
+    @[::JSON::Field(key: "startedAt", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
+    @[::YAML::Field(key: "startedAt", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
     property started_at : Time | Nil
 
     def initialize(*, @exit_code : Int32, @container_id : String | Nil = nil, @finished_at : Time | Nil = nil, @message : String | Nil = nil, @reason : String | Nil = nil, @signal : Int32 | Nil = nil, @started_at : Time | Nil = nil)

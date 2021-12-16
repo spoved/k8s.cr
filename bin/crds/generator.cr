@@ -5,14 +5,26 @@ class K8S::CRD::Generator
 
   def initialize(files, @output_dir)
     FileUtils.mkdir_p(@output_dir) unless Dir.exists?(@output_dir)
-
-    @parsers = K8S::Resource.from_files(files).map do |crd|
-      if crd.is_a?(K8S::Resources::Apiextensions::V1::CustomResourceDefinition)
-        K8S::CRD::Parser.new(crd)
-      else
-        nil
-      end
+    Log.info { "Generating CRDs from #{files}" }
+    @parsers = K8S::Resource.from_files(files).flat_map do |crd|
+      get_parser(crd)
     end.select(K8S::CRD::Parser)
+    Log.info { "Found #{@parsers.size} CRDs" }
+  end
+
+  private def get_parser(crd)
+    Log.debug { "Getting parser for #{crd.class}" }
+    case crd
+    when K8S::Resources::Apiextensions::V1::CustomResourceDefinition
+      K8S::CRD::Parser.new(crd)
+    when K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionList, K8S::Api::Core::V1::List
+      crd.items.flat_map do |c|
+        get_parser(c)
+      end
+    else
+      Log.warn { "Unsupported CRD #{crd.class}" }
+      nil
+    end
   end
 
   private def get_swagger(ver)
@@ -32,31 +44,34 @@ class K8S::CRD::Generator
 
   def generate
     swagger = get_swagger("v1.23")
+    data, _ = latest_patch_for("v1.23", 0..0, true)
+    if data.is_a?(String)
+      api_groups = self.groups.map &.split('.').reverse.join('.')
 
-    api_groups = self.groups.map &.split('.').reverse.join('.')
+      Log.trace { "Generating CRDs for #{api_groups}" }
+      k3sgen = ::Generator.new(data, "v1.23")
+      swagger.definitions.merge!(k3sgen.schema.definitions)
+      crdgen = ::Generator.new(swagger, "K8S", output_dir, api_groups)
 
-    k3sgen = ::Generator.new(File.read("tmp/schemas/v1.23.0.json"), "v1.23")
-    swagger.definitions.merge!(k3sgen.schema.definitions)
-    crdgen = ::Generator.new(swagger, "K8S", output_dir, api_groups)
-
-    # populate lists
-    crds = crdgen.definitions.select { |k, _| !(api_groups.find { |g| k =~ /#{g}/ }.nil?) }
-    crds.each do |k, v|
-      unless k.ends_with?("List")
-        crdgen.definitions["#{k}List"] = "#{v}List"
-        crdgen.schema.definitions["#{k}List"] = Swagger::Definition.new.tap do |list_def|
-          template = crdgen.schema.definitions["io.k8s.api.core.v1.List"]
-          list_def.properties = template.properties.dup
-          list_def.properties["items"] = Swagger::Definition::Property.new(
-            description: "list of resources",
-            type: "array",
-            items: Swagger::Definition::Property.new(_ref: "#/definitions/#{k}")
-          )
+      # populate lists
+      crds = crdgen.definitions.select { |k, _| !(api_groups.find { |g| k =~ /#{g}/ }.nil?) }
+      crds.each do |k, v|
+        unless k.ends_with?("List")
+          crdgen.definitions["#{k}List"] = "#{v}List"
+          crdgen.schema.definitions["#{k}List"] = Swagger::Definition.new.tap do |list_def|
+            template = crdgen.schema.definitions["io.k8s.api.core.v1.List"]
+            list_def.properties = template.properties.dup
+            list_def.properties["items"] = Swagger::Definition::Property.new(
+              description: "list of resources",
+              type: "array",
+              items: Swagger::Definition::Property.new(_ref: "#/definitions/#{k}")
+            )
+          end
         end
       end
+      crdgen.generate
+    else
+      Log.error { "No patch data found for v1.23" }
     end
-    pp crdgen.definitions
-
-    crdgen.generate
   end
 end

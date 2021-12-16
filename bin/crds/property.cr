@@ -35,6 +35,7 @@ class K8S::CRD::Property
       items: self.items.nil? ? nil : self.items.not_nil!.to_swagger_prop,
       additional_properties: additional_properties.nil? ? nil : additional_properties.not_nil!.to_swagger_addprop,
       _enum: self._enum,
+      x_kubernetes_preserve_unknown_fields: self.x_kubernetes_preserve_unknown_fields,
     )
   end
 
@@ -46,6 +47,7 @@ class K8S::CRD::Property
       items: self.items.nil? ? nil : self.items.not_nil!.to_swagger_prop,
       additional_properties: additional_properties.nil? ? nil : additional_properties.not_nil!.to_swagger_addprop,
       _enum: self._enum,
+      x_kubernetes_preserve_unknown_fields: self.x_kubernetes_preserve_unknown_fields,
     )
   end
 

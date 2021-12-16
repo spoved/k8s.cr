@@ -16,8 +16,8 @@ module K8S
     include ::YAML::Serializable::Unmapped
 
     # ExpirationTimestamp is the time of expiration of the returned token.
-    @[::JSON::Field(key: "expirationTimestamp", emit_null: true)]
-    @[::YAML::Field(key: "expirationTimestamp", emit_null: true)]
+    @[::JSON::Field(key: "expirationTimestamp", emit_null: true, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
+    @[::YAML::Field(key: "expirationTimestamp", emit_null: true, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
     property expiration_timestamp : Time
 
     # Token is the opaque bearer token.

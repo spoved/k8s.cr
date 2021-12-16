@@ -17,8 +17,8 @@ module K8S
     include ::YAML::Serializable::Unmapped
 
     # timestamp for the last update to this condition
-    @[::JSON::Field(key: "lastUpdateTime", emit_null: false)]
-    @[::YAML::Field(key: "lastUpdateTime", emit_null: false)]
+    @[::JSON::Field(key: "lastUpdateTime", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
+    @[::YAML::Field(key: "lastUpdateTime", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
     property last_update_time : Time | Nil
 
     # human readable message with details about the request state

@@ -20,13 +20,13 @@ module K8S
     include ::YAML::Serializable::Unmapped
 
     # Last time we probed the condition.
-    @[::JSON::Field(key: "lastProbeTime", emit_null: false)]
-    @[::YAML::Field(key: "lastProbeTime", emit_null: false)]
+    @[::JSON::Field(key: "lastProbeTime", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
+    @[::YAML::Field(key: "lastProbeTime", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
     property last_probe_time : Time | Nil
 
     # Last time the condition transitioned from one status to another.
-    @[::JSON::Field(key: "lastTransitionTime", emit_null: false)]
-    @[::YAML::Field(key: "lastTransitionTime", emit_null: false)]
+    @[::JSON::Field(key: "lastTransitionTime", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
+    @[::YAML::Field(key: "lastTransitionTime", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
     property last_transition_time : Time | Nil
 
     # Human-readable message indicating details about last transition.

@@ -1,5 +1,4 @@
 require "../swagger/**"
-require "open-api"
 
 class K8S::CRD::Version
   getter group : String

@@ -108,13 +108,13 @@ module K8S
     property deprecated_count : Int32 | Nil
 
     # Deprecated field assuring backward compatibility with core.v1 Event type
-    @[::JSON::Field(key: "deprecatedFirstTimestamp", emit_null: false)]
-    @[::YAML::Field(key: "deprecatedFirstTimestamp", emit_null: false)]
+    @[::JSON::Field(key: "deprecatedFirstTimestamp", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
+    @[::YAML::Field(key: "deprecatedFirstTimestamp", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
     property deprecated_first_timestamp : Time | Nil
 
     # Deprecated field assuring backward compatibility with core.v1 Event type
-    @[::JSON::Field(key: "deprecatedLastTimestamp", emit_null: false)]
-    @[::YAML::Field(key: "deprecatedLastTimestamp", emit_null: false)]
+    @[::JSON::Field(key: "deprecatedLastTimestamp", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
+    @[::YAML::Field(key: "deprecatedLastTimestamp", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
     property deprecated_last_timestamp : Time | Nil
 
     # Deprecated field assuring backward compatibility with core.v1 Event type
@@ -123,8 +123,8 @@ module K8S
     property deprecated_source : Api::Core::V1::EventSource | Nil
 
     # Required. Time when this Event was first observed.
-    @[::JSON::Field(key: "eventTime", emit_null: false)]
-    @[::YAML::Field(key: "eventTime", emit_null: false)]
+    @[::JSON::Field(key: "eventTime", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
+    @[::YAML::Field(key: "eventTime", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
     property event_time : Time | Nil
 
     @[::JSON::Field(key: "metadata", emit_null: false)]
