@@ -5045,6 +5045,13 @@ Forked due to possibly destructive changes to change namespaces and adapt for us
 <pre><code class="language-yaml">dependencies:
   k8s:
     github: spoved/k8s.cr</code></pre>
+<h2><a id="documentation" class="anchor" href="#documentation">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Documentation</h2>
+<p>View the Documentation for the version you are using:</p>
+<p><a href="https://spoved.github.io/k8s.cr/">https://spoved.github.io/k8s.cr/</a></p>
 <h2><a id="usage" class="anchor" href="#usage">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
@@ -5054,8 +5061,17 @@ Forked due to possibly destructive changes to change namespaces and adapt for us
 the bindings, you will want to include the <a href="src/versions">VERSION</a> that best maps to your k8s api version.
 Requiring more than one version at this time will result in an error.</p>
 <pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;k8s/versions/v1.20&quot;</span></code></pre>
-<p>View the Documentation for the version you are using:</p>
-<p><a href="https://spoved.github.io/k8s.cr/">https://spoved.github.io/k8s.cr/</a></p>
+<h3><a id="crd-generation" class="anchor" href="#crd-generation">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>CRD Generation</h3>
+<p>To generate resources for a CRD, you can use the crd_gen.cr file.</p>
+<pre><code class="language-crystal"># First dump the CRDs to a file
+kubectl get crds -o yaml > crds.yaml
+
+# Then generate the resources
+./lib/k8s/bin/gen_crd.cr -- ./crds.yaml <output directory></code></pre>
 <h2><a id="contributing" class="anchor" href="#contributing">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
