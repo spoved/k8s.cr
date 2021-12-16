@@ -17,6 +17,12 @@ dependencies:
     github: spoved/k8s.cr
 ```
 
+## Documentation
+
+View the Documentation for the version you are using:
+
+<https://spoved.github.io/k8s.cr/>
+
 ## Usage
 
 K8S.cr should support Kubernetes API from 1.11.0 and beyond. In order to use
@@ -27,9 +33,17 @@ Requiring more than one version at this time will result in an error.
 require "k8s/versions/v1.20"
 ```
 
-View the Documentation for the version you are using:
+### CRD Generation
 
-<https://spoved.github.io/k8s.cr/>
+To generate resources for a CRD, you can use the crd_gen.cr file.
+
+```crystal
+# First dump the CRDs to a file
+kubectl get crds -o yaml > crds.yaml
+
+# Then generate the resources
+./lib/k8s/bin/gen_crd.cr -- ./crds.yaml <output directory>
+```
 
 ## Contributing
 
