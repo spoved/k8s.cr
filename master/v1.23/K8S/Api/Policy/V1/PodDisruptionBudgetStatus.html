@@ -4431,6 +4431,11 @@
       
     </li>
   
+  <li class=" " data-id="k8s.cr/K8S/TimeFormat" data-name="k8s::timeformat">
+      <a href="../../../../K8S/TimeFormat.html">TimeFormat</a>
+      
+    </li>
+  
   <li class=" " data-id="k8s.cr/K8S/Util" data-name="k8s::util">
       <a href="../../../../K8S/Util.html">Util</a>
       
@@ -4514,7 +4519,7 @@
   </h2>
   
     
-      <a href="https://github.com/spoved/k8s.cr/blob/6260a7551021a47b1830507940129b932f96327d/src/versions/v1.23/api/policy/v1/pod_disruption_budget_status.cr#L17" target="_blank">
+      <a href="https://github.com/spoved/k8s.cr/blob/ea957df4239c1c1e4916283dd131c22beb235b43/src/versions/v1.23/api/policy/v1/pod_disruption_budget_status.cr#L17" target="_blank">
         versions/v1.23/api/policy/v1/pod_disruption_budget_status.cr
       </a>
     
@@ -4546,7 +4551,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#new%28%2A%2Ccurrent_healthy%3AInt32%2Cdesired_healthy%3AInt32%2Cdisruptions_allowed%3AInt32%2Cexpected_pods%3AInt32%2Cconditions%3AArray%3F%3Dnil%2Cdisrupted_pods%3AHash%28String%2CString%29%3F%3Dnil%2Cobserved_generation%3AInt32%3F%3Dnil%29-class-method" class="signature"><strong>.new</strong>(*, current_healthy : Int32, desired_healthy : Int32, disruptions_allowed : Int32, expected_pods : Int32, conditions : Array? = <span class="n">nil</span>, disrupted_pods : Hash(String, String)? = <span class="n">nil</span>, observed_generation : Int32? = <span class="n">nil</span>)</a>
+        <a href="#new%28%2A%2Ccurrent_healthy%3AInt32%2Cdesired_healthy%3AInt32%2Cdisruptions_allowed%3AInt32%2Cexpected_pods%3AInt32%2Cconditions%3AArray%28Apimachinery%3A%3AApis%3A%3AMeta%3A%3AV1%3A%3ACondition%29%3F%3Dnil%2Cdisrupted_pods%3AHash%28String%2CTime%29%3F%3Dnil%2Cobserved_generation%3AInt32%3F%3Dnil%29-class-method" class="signature"><strong>.new</strong>(*, current_healthy : Int32, desired_healthy : Int32, disruptions_allowed : Int32, expected_pods : Int32, conditions : Array(Apimachinery::Apis::Meta::V1::Condition)? = <span class="n">nil</span>, disrupted_pods : Hash(String, Time)? = <span class="n">nil</span>, observed_generation : Int32? = <span class="n">nil</span>)</a>
         
       </li>
     
@@ -4727,7 +4732,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/6260a7551021a47b1830507940129b932f96327d/src/versions/v1.23/api/policy/v1/pod_disruption_budget_status.cr#L20" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/ea957df4239c1c1e4916283dd131c22beb235b43/src/versions/v1.23/api/policy/v1/pod_disruption_budget_status.cr#L20" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4743,23 +4748,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/6260a7551021a47b1830507940129b932f96327d/src/versions/v1.23/api/policy/v1/pod_disruption_budget_status.cr#L18" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/ea957df4239c1c1e4916283dd131c22beb235b43/src/versions/v1.23/api/policy/v1/pod_disruption_budget_status.cr#L18" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="new(*,current_healthy:Int32,desired_healthy:Int32,disruptions_allowed:Int32,expected_pods:Int32,conditions:Array?=nil,disrupted_pods:Hash(String,String)?=nil,observed_generation:Int32?=nil)-class-method">
+    <div class="entry-detail" id="new(*,current_healthy:Int32,desired_healthy:Int32,disruptions_allowed:Int32,expected_pods:Int32,conditions:Array(Apimachinery::Apis::Meta::V1::Condition)?=nil,disrupted_pods:Hash(String,Time)?=nil,observed_generation:Int32?=nil)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(*, current_healthy : Int32, desired_healthy : Int32, disruptions_allowed : Int32, expected_pods : Int32, conditions : Array? = <span class="n">nil</span>, disrupted_pods : Hash(String, String)? = <span class="n">nil</span>, observed_generation : Int32? = <span class="n">nil</span>)
+        def self.<strong>new</strong>(*, current_healthy : Int32, desired_healthy : Int32, disruptions_allowed : Int32, expected_pods : Int32, conditions : Array(<a href="../../../../K8S/Apimachinery/Apis/Meta/V1/Condition.html">Apimachinery::Apis::Meta::V1::Condition</a>)? = <span class="n">nil</span>, disrupted_pods : Hash(String, Time)? = <span class="n">nil</span>, observed_generation : Int32? = <span class="n">nil</span>)
 
-        <a class="method-permalink" href="#new%28%2A%2Ccurrent_healthy%3AInt32%2Cdesired_healthy%3AInt32%2Cdisruptions_allowed%3AInt32%2Cexpected_pods%3AInt32%2Cconditions%3AArray%3F%3Dnil%2Cdisrupted_pods%3AHash%28String%2CString%29%3F%3Dnil%2Cobserved_generation%3AInt32%3F%3Dnil%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28%2A%2Ccurrent_healthy%3AInt32%2Cdesired_healthy%3AInt32%2Cdisruptions_allowed%3AInt32%2Cexpected_pods%3AInt32%2Cconditions%3AArray%28Apimachinery%3A%3AApis%3A%3AMeta%3A%3AV1%3A%3ACondition%29%3F%3Dnil%2Cdisrupted_pods%3AHash%28String%2CTime%29%3F%3Dnil%2Cobserved_generation%3AInt32%3F%3Dnil%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/6260a7551021a47b1830507940129b932f96327d/src/versions/v1.23/api/policy/v1/pod_disruption_budget_status.cr#L66" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/ea957df4239c1c1e4916283dd131c22beb235b43/src/versions/v1.23/api/policy/v1/pod_disruption_budget_status.cr#L66" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4789,7 +4794,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/6260a7551021a47b1830507940129b932f96327d/src/versions/v1.23/api/policy/v1/pod_disruption_budget_status.cr#L34" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/ea957df4239c1c1e4916283dd131c22beb235b43/src/versions/v1.23/api/policy/v1/pod_disruption_budget_status.cr#L34" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4805,7 +4810,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/6260a7551021a47b1830507940129b932f96327d/src/versions/v1.23/api/policy/v1/pod_disruption_budget_status.cr#L34" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/ea957df4239c1c1e4916283dd131c22beb235b43/src/versions/v1.23/api/policy/v1/pod_disruption_budget_status.cr#L34" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4821,7 +4826,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/6260a7551021a47b1830507940129b932f96327d/src/versions/v1.23/api/policy/v1/pod_disruption_budget_status.cr#L39" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/ea957df4239c1c1e4916283dd131c22beb235b43/src/versions/v1.23/api/policy/v1/pod_disruption_budget_status.cr#L39" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4837,7 +4842,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/6260a7551021a47b1830507940129b932f96327d/src/versions/v1.23/api/policy/v1/pod_disruption_budget_status.cr#L39" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/ea957df4239c1c1e4916283dd131c22beb235b43/src/versions/v1.23/api/policy/v1/pod_disruption_budget_status.cr#L39" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4853,7 +4858,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/6260a7551021a47b1830507940129b932f96327d/src/versions/v1.23/api/policy/v1/pod_disruption_budget_status.cr#L44" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/ea957df4239c1c1e4916283dd131c22beb235b43/src/versions/v1.23/api/policy/v1/pod_disruption_budget_status.cr#L44" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4869,7 +4874,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/6260a7551021a47b1830507940129b932f96327d/src/versions/v1.23/api/policy/v1/pod_disruption_budget_status.cr#L44" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/ea957df4239c1c1e4916283dd131c22beb235b43/src/versions/v1.23/api/policy/v1/pod_disruption_budget_status.cr#L44" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4885,7 +4890,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/6260a7551021a47b1830507940129b932f96327d/src/versions/v1.23/api/policy/v1/pod_disruption_budget_status.cr#L49" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/ea957df4239c1c1e4916283dd131c22beb235b43/src/versions/v1.23/api/policy/v1/pod_disruption_budget_status.cr#L49" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4901,7 +4906,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/6260a7551021a47b1830507940129b932f96327d/src/versions/v1.23/api/policy/v1/pod_disruption_budget_status.cr#L49" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/ea957df4239c1c1e4916283dd131c22beb235b43/src/versions/v1.23/api/policy/v1/pod_disruption_budget_status.cr#L49" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4917,7 +4922,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/6260a7551021a47b1830507940129b932f96327d/src/versions/v1.23/api/policy/v1/pod_disruption_budget_status.cr#L54" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/ea957df4239c1c1e4916283dd131c22beb235b43/src/versions/v1.23/api/policy/v1/pod_disruption_budget_status.cr#L54" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4933,7 +4938,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/6260a7551021a47b1830507940129b932f96327d/src/versions/v1.23/api/policy/v1/pod_disruption_budget_status.cr#L54" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/ea957df4239c1c1e4916283dd131c22beb235b43/src/versions/v1.23/api/policy/v1/pod_disruption_budget_status.cr#L54" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4949,7 +4954,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/6260a7551021a47b1830507940129b932f96327d/src/versions/v1.23/api/policy/v1/pod_disruption_budget_status.cr#L59" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/ea957df4239c1c1e4916283dd131c22beb235b43/src/versions/v1.23/api/policy/v1/pod_disruption_budget_status.cr#L59" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4965,7 +4970,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/6260a7551021a47b1830507940129b932f96327d/src/versions/v1.23/api/policy/v1/pod_disruption_budget_status.cr#L59" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/ea957df4239c1c1e4916283dd131c22beb235b43/src/versions/v1.23/api/policy/v1/pod_disruption_budget_status.cr#L59" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4981,7 +4986,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/6260a7551021a47b1830507940129b932f96327d/src/versions/v1.23/api/policy/v1/pod_disruption_budget_status.cr#L64" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/ea957df4239c1c1e4916283dd131c22beb235b43/src/versions/v1.23/api/policy/v1/pod_disruption_budget_status.cr#L64" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4997,7 +5002,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/6260a7551021a47b1830507940129b932f96327d/src/versions/v1.23/api/policy/v1/pod_disruption_budget_status.cr#L64" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/ea957df4239c1c1e4916283dd131c22beb235b43/src/versions/v1.23/api/policy/v1/pod_disruption_budget_status.cr#L64" target="_blank">View source</a>]
         
       </div>
     </div>

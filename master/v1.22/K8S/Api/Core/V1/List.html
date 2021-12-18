@@ -4281,6 +4281,11 @@
       
     </li>
   
+  <li class=" " data-id="k8s.cr/K8S/TimeFormat" data-name="k8s::timeformat">
+      <a href="../../../../K8S/TimeFormat.html">TimeFormat</a>
+      
+    </li>
+  
   <li class=" " data-id="k8s.cr/K8S/Util" data-name="k8s::util">
       <a href="../../../../K8S/Util.html">Util</a>
       
@@ -4305,7 +4310,7 @@
 </h1>
 
 
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../../../K8S/Api/Core/V1/List.html">K8S::Api::Core::V1::List</a></li><li class="superclass"><a href="../../../../K8S/Kubernetes/ResourceList.html">K8S::Kubernetes::ResourceList</a>(<a href="../../../../K8S/Kubernetes/Resource.html">K8S::Kubernetes::Resource</a>)</li><li class="superclass"><a href="../../../../K8S/Kubernetes/Resource.html">K8S::Kubernetes::Resource</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../../../K8S/Api/Core/V1/List.html">K8S::Api::Core::V1::List</a></li><li class="superclass"><a href="../../../../K8S/Kubernetes/ResourceList.html">K8S::Kubernetes::ResourceList</a>(<a href="../../../../K8S/Apimachinery/Apis/Meta/V1/APIResourceList.html">K8S::Apimachinery::Apis::Meta::V1::APIResourceList</a> | <a href="../../../../K8S/Kubernetes/Resource.html">K8S::Kubernetes::Resource</a>)</li><li class="superclass"><a href="../../../../K8S/Kubernetes/Resource.html">K8S::Kubernetes::Resource</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
 
 
 
@@ -4333,7 +4338,7 @@
   </h2>
   
     
-      <a href="https://github.com/spoved/k8s.cr/blob/6260a7551021a47b1830507940129b932f96327d/src/k8s/list.cr#L20" target="_blank">
+      <a href="https://github.com/spoved/k8s.cr/blob/ea957df4239c1c1e4916283dd131c22beb235b43/src/k8s/list.cr#L20" target="_blank">
         k8s/list.cr
       </a>
     
@@ -4365,7 +4370,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#new%28%2A%2Citems%3AArray%28T%29%2Cmetadata%3AApimachinery%3A%3AApis%3A%3AMeta%3A%3AV1%3A%3AListMeta%3F%3Dnil%29-class-method" class="signature"><strong>.new</strong>(*, items : Array(T), metadata : Apimachinery::Apis::Meta::V1::ListMeta? = <span class="n">nil</span>)</a>
+        <a href="#new%28%2A%2Citems%3AArray%28T%7CT%29%2Cmetadata%3AApimachinery%3A%3AApis%3A%3AMeta%3A%3AV1%3A%3AListMeta%3F%3Dnil%29-class-method" class="signature"><strong>.new</strong>(*, items : Array(T | T), metadata : Apimachinery::Apis::Meta::V1::ListMeta? = <span class="n">nil</span>)</a>
         
       </li>
     
@@ -4415,16 +4420,16 @@
   
     
 
-  <h3>Instance methods inherited from class <code><a href="../../../../K8S/Kubernetes/ResourceList.html">K8S::Kubernetes::ResourceList</a>(<a href="../../../../K8S/Kubernetes/Resource.html">K8S::Kubernetes::Resource</a>)</code></h3>
+  <h3>Instance methods inherited from class <code><a href="../../../../K8S/Kubernetes/ResourceList.html">K8S::Kubernetes::ResourceList</a>(<a href="../../../../K8S/Apimachinery/Apis/Meta/V1/APIResourceList.html">K8S::Apimachinery::Apis::Meta::V1::APIResourceList</a> | <a href="../../../../K8S/Kubernetes/Resource.html">K8S::Kubernetes::Resource</a>)</code></h3>
   
   
-    <a href="../../../../K8S/Kubernetes/ResourceList.html#items%3AArray%28T%29-instance-method" class="tooltip">
-      <span>items : Array(T)</span>
+    <a href="../../../../K8S/Kubernetes/ResourceList.html#items%3AArray%28T%7CT%29-instance-method" class="tooltip">
+      <span>items : Array(T | T)</span>
     items</a>, 
     
   
-    <a href="../../../../K8S/Kubernetes/ResourceList.html#items%3D%28items%3AArray%28T%29%29-instance-method" class="tooltip">
-      <span>items=(items : Array(T))</span>
+    <a href="../../../../K8S/Kubernetes/ResourceList.html#items%3D%28items%3AArray%28T%7CT%29%29-instance-method" class="tooltip">
+      <span>items=(items : Array(T | T))</span>
     items=</a>, 
     
   
@@ -4442,11 +4447,11 @@
 
     
 
-  <h3>Constructor methods inherited from class <code><a href="../../../../K8S/Kubernetes/ResourceList.html">K8S::Kubernetes::ResourceList</a>(<a href="../../../../K8S/Kubernetes/Resource.html">K8S::Kubernetes::Resource</a>)</code></h3>
+  <h3>Constructor methods inherited from class <code><a href="../../../../K8S/Kubernetes/ResourceList.html">K8S::Kubernetes::ResourceList</a>(<a href="../../../../K8S/Apimachinery/Apis/Meta/V1/APIResourceList.html">K8S::Apimachinery::Apis::Meta::V1::APIResourceList</a> | <a href="../../../../K8S/Kubernetes/Resource.html">K8S::Kubernetes::Resource</a>)</code></h3>
   
   
     <a href="../../../../K8S/Kubernetes/ResourceList.html#new%28ctx%3AYAML%3A%3AParseContext%2Cnode%3AYAML%3A%3ANodes%3A%3ANode%29-class-method" class="tooltip">
-      <span>new(ctx : YAML::ParseContext, node : YAML::Nodes::Node)<br/>new(pull : JSON::PullParser)<br/>new(*, items : Array(T), metadata : Apimachinery::Apis::Meta::V1::ListMeta? = <span class="n">nil</span>)</span>
+      <span>new(ctx : YAML::ParseContext, node : YAML::Nodes::Node)<br/>new(pull : JSON::PullParser)<br/>new(*, items : Array(T | T), metadata : Apimachinery::Apis::Meta::V1::ListMeta? = <span class="n">nil</span>)</span>
     new</a>
     
   
@@ -4600,7 +4605,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/6260a7551021a47b1830507940129b932f96327d/src/k8s/list.cr#L20" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/ea957df4239c1c1e4916283dd131c22beb235b43/src/k8s/list.cr#L20" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4616,23 +4621,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/6260a7551021a47b1830507940129b932f96327d/src/k8s/list.cr#L20" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/ea957df4239c1c1e4916283dd131c22beb235b43/src/k8s/list.cr#L20" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="new(*,items:Array(T),metadata:Apimachinery::Apis::Meta::V1::ListMeta?=nil)-class-method">
+    <div class="entry-detail" id="new(*,items:Array(T|T),metadata:Apimachinery::Apis::Meta::V1::ListMeta?=nil)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(*, items : Array(<a href="../../../../K8S/Kubernetes/Resource.html">T</a>), metadata : <a href="../../../../K8S/Apimachinery/Apis/Meta/V1/ListMeta.html">Apimachinery::Apis::Meta::V1::ListMeta</a>? = <span class="n">nil</span>)
+        def self.<strong>new</strong>(*, items : Array(<a href="../../../../K8S/Apimachinery/Apis/Meta/V1/APIResourceList.html">T</a> | <a href="../../../../K8S/Kubernetes/Resource.html">T</a>), metadata : <a href="../../../../K8S/Apimachinery/Apis/Meta/V1/ListMeta.html">Apimachinery::Apis::Meta::V1::ListMeta</a>? = <span class="n">nil</span>)
 
-        <a class="method-permalink" href="#new%28%2A%2Citems%3AArray%28T%29%2Cmetadata%3AApimachinery%3A%3AApis%3A%3AMeta%3A%3AV1%3A%3AListMeta%3F%3Dnil%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28%2A%2Citems%3AArray%28T%7CT%29%2Cmetadata%3AApimachinery%3A%3AApis%3A%3AMeta%3A%3AV1%3A%3AListMeta%3F%3Dnil%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/6260a7551021a47b1830507940129b932f96327d/src/k8s/list.cr#L13" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/ea957df4239c1c1e4916283dd131c22beb235b43/src/k8s/list.cr#L13" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4662,7 +4667,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/6260a7551021a47b1830507940129b932f96327d/src/k8s/list.cr#L23" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/ea957df4239c1c1e4916283dd131c22beb235b43/src/k8s/list.cr#L23" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4678,7 +4683,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/6260a7551021a47b1830507940129b932f96327d/src/k8s/list.cr#L23" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/ea957df4239c1c1e4916283dd131c22beb235b43/src/k8s/list.cr#L23" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4694,7 +4699,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/6260a7551021a47b1830507940129b932f96327d/src/k8s/list.cr#L24" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/ea957df4239c1c1e4916283dd131c22beb235b43/src/k8s/list.cr#L24" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -4710,7 +4715,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/6260a7551021a47b1830507940129b932f96327d/src/k8s/list.cr#L24" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/ea957df4239c1c1e4916283dd131c22beb235b43/src/k8s/list.cr#L24" target="_blank">View source</a>]
         
       </div>
     </div>
