@@ -19,7 +19,7 @@ module K8S
     @[::YAML::Field(key: "finalizers", emit_null: false)]
     property finalizers : Array(String) | Nil
 
-    def initialize(*, @finalizers : Array | Nil = nil)
+    def initialize(*, @finalizers : Array(String) | Nil = nil)
     end
   end
 end

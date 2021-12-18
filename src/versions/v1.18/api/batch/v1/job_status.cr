@@ -25,8 +25,8 @@ module K8S
     property active : Int32 | Nil
 
     # Represents time when the job was completed. It is not guaranteed to be set in happens-before order across separate operations. It is represented in RFC3339 form and is in UTC.
-    @[::JSON::Field(key: "completionTime", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
-    @[::YAML::Field(key: "completionTime", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
+    @[::JSON::Field(key: "completionTime", emit_null: false, converter: K8S::TimeFormat.new)]
+    @[::YAML::Field(key: "completionTime", emit_null: false, converter: K8S::TimeFormat.new)]
     property completion_time : Time | Nil
 
     # The latest available observations of an object's current state. More info: [https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/)
@@ -40,8 +40,8 @@ module K8S
     property failed : Int32 | Nil
 
     # Represents time when the job was acknowledged by the job controller. It is not guaranteed to be set in happens-before order across separate operations. It is represented in RFC3339 form and is in UTC.
-    @[::JSON::Field(key: "startTime", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
-    @[::YAML::Field(key: "startTime", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
+    @[::JSON::Field(key: "startTime", emit_null: false, converter: K8S::TimeFormat.new)]
+    @[::YAML::Field(key: "startTime", emit_null: false, converter: K8S::TimeFormat.new)]
     property start_time : Time | Nil
 
     # The number of pods which reached phase Succeeded.
@@ -49,7 +49,7 @@ module K8S
     @[::YAML::Field(key: "succeeded", emit_null: false)]
     property succeeded : Int32 | Nil
 
-    def initialize(*, @active : Int32 | Nil = nil, @completion_time : Time | Nil = nil, @conditions : Array | Nil = nil, @failed : Int32 | Nil = nil, @start_time : Time | Nil = nil, @succeeded : Int32 | Nil = nil)
+    def initialize(*, @active : Int32 | Nil = nil, @completion_time : Time | Nil = nil, @conditions : Array(Api::Batch::V1::JobCondition) | Nil = nil, @failed : Int32 | Nil = nil, @start_time : Time | Nil = nil, @succeeded : Int32 | Nil = nil)
     end
   end
 end

@@ -37,7 +37,7 @@ module K8S
     @[::YAML::Field(key: "resources", emit_null: false)]
     property resources : Array(String) | Nil
 
-    def initialize(*, @api_groups : Array | Nil = nil, @api_versions : Array | Nil = nil, @resources : Array | Nil = nil)
+    def initialize(*, @api_groups : Array(String) | Nil = nil, @api_versions : Array(String) | Nil = nil, @resources : Array(String) | Nil = nil)
     end
   end
 end

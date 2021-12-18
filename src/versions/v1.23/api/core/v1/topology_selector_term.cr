@@ -19,7 +19,7 @@ module K8S
     @[::YAML::Field(key: "matchLabelExpressions", emit_null: false)]
     property match_label_expressions : Array(Api::Core::V1::TopologySelectorLabelRequirement) | Nil
 
-    def initialize(*, @match_label_expressions : Array | Nil = nil)
+    def initialize(*, @match_label_expressions : Array(Api::Core::V1::TopologySelectorLabelRequirement) | Nil = nil)
     end
   end
 end

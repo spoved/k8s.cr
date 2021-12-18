@@ -79,7 +79,7 @@ module K8S
     @[::YAML::Field(key: "targetPortal", emit_null: true)]
     property target_portal : String
 
-    def initialize(*, @iqn : String, @lun : Int32, @target_portal : String, @chap_auth_discovery : Bool | Nil = nil, @chap_auth_session : Bool | Nil = nil, @fs_type : String | Nil = nil, @initiator_name : String | Nil = nil, @iscsi_interface : String | Nil = nil, @portals : Array | Nil = nil, @read_only : Bool | Nil = nil, @secret_ref : Api::Core::V1::LocalObjectReference | Nil = nil)
+    def initialize(*, @iqn : String, @lun : Int32, @target_portal : String, @chap_auth_discovery : Bool | Nil = nil, @chap_auth_session : Bool | Nil = nil, @fs_type : String | Nil = nil, @initiator_name : String | Nil = nil, @iscsi_interface : String | Nil = nil, @portals : Array(String) | Nil = nil, @read_only : Bool | Nil = nil, @secret_ref : Api::Core::V1::LocalObjectReference | Nil = nil)
     end
   end
 end

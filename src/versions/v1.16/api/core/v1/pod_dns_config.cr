@@ -31,7 +31,7 @@ module K8S
     @[::YAML::Field(key: "searches", emit_null: false)]
     property searches : Array(String) | Nil
 
-    def initialize(*, @nameservers : Array | Nil = nil, @options : Array | Nil = nil, @searches : Array | Nil = nil)
+    def initialize(*, @nameservers : Array(String) | Nil = nil, @options : Array(Api::Core::V1::PodDNSConfigOption) | Nil = nil, @searches : Array(String) | Nil = nil)
     end
   end
 end

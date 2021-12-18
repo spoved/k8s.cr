@@ -97,7 +97,7 @@ module K8S
     @[::YAML::Field(key: "type", emit_null: false)]
     property type : String | Nil
 
-    def initialize(*, @cluster_ip : String | Nil = nil, @external_ips : Array | Nil = nil, @external_name : String | Nil = nil, @external_traffic_policy : String | Nil = nil, @health_check_node_port : Int32 | Nil = nil, @ip_family : String | Nil = nil, @load_balancer_ip : String | Nil = nil, @load_balancer_source_ranges : Array | Nil = nil, @ports : Array | Nil = nil, @publish_not_ready_addresses : Bool | Nil = nil, @selector : Hash(String, String) | Nil = nil, @session_affinity : String | Nil = nil, @session_affinity_config : Api::Core::V1::SessionAffinityConfig | Nil = nil, @type : String | Nil = nil)
+    def initialize(*, @cluster_ip : String | Nil = nil, @external_ips : Array(String) | Nil = nil, @external_name : String | Nil = nil, @external_traffic_policy : String | Nil = nil, @health_check_node_port : Int32 | Nil = nil, @ip_family : String | Nil = nil, @load_balancer_ip : String | Nil = nil, @load_balancer_source_ranges : Array(String) | Nil = nil, @ports : Array(Api::Core::V1::ServicePort) | Nil = nil, @publish_not_ready_addresses : Bool | Nil = nil, @selector : Hash(String, String) | Nil = nil, @session_affinity : String | Nil = nil, @session_affinity_config : Api::Core::V1::SessionAffinityConfig | Nil = nil, @type : String | Nil = nil)
     end
   end
 end

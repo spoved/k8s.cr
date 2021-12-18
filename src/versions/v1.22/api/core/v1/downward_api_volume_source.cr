@@ -25,7 +25,7 @@ module K8S
     @[::YAML::Field(key: "items", emit_null: false)]
     property items : Array(Api::Core::V1::DownwardAPIVolumeFile) | Nil
 
-    def initialize(*, @default_mode : Int32 | Nil = nil, @items : Array | Nil = nil)
+    def initialize(*, @default_mode : Int32 | Nil = nil, @items : Array(Api::Core::V1::DownwardAPIVolumeFile) | Nil = nil)
     end
   end
 end

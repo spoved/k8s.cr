@@ -29,7 +29,7 @@ module K8S
     @[::YAML::Field(key: "phase", emit_null: false)]
     property phase : String | Nil
 
-    def initialize(*, @conditions : Array | Nil = nil, @phase : String | Nil = nil)
+    def initialize(*, @conditions : Array(Api::Core::V1::NamespaceCondition) | Nil = nil, @phase : String | Nil = nil)
     end
   end
 end

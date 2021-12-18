@@ -61,7 +61,7 @@ module K8S
     @[::YAML::Field(key: "volumeClaimTemplates", emit_null: false)]
     property volume_claim_templates : Array(Api::Core::V1::PersistentVolumeClaim) | Nil
 
-    def initialize(*, @selector : Apimachinery::Apis::Meta::V1::LabelSelector, @service_name : String, @template : Api::Core::V1::PodTemplateSpec, @pod_management_policy : String | Nil = nil, @replicas : Int32 | Nil = nil, @revision_history_limit : Int32 | Nil = nil, @update_strategy : Api::Apps::V1::StatefulSetUpdateStrategy | Nil = nil, @volume_claim_templates : Array | Nil = nil)
+    def initialize(*, @selector : Apimachinery::Apis::Meta::V1::LabelSelector, @service_name : String, @template : Api::Core::V1::PodTemplateSpec, @pod_management_policy : String | Nil = nil, @replicas : Int32 | Nil = nil, @revision_history_limit : Int32 | Nil = nil, @update_strategy : Api::Apps::V1::StatefulSetUpdateStrategy | Nil = nil, @volume_claim_templates : Array(Api::Core::V1::PersistentVolumeClaim) | Nil = nil)
     end
   end
 end

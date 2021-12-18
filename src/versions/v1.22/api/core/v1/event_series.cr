@@ -21,8 +21,8 @@ module K8S
     property count : Int32 | Nil
 
     # Time of the last occurrence observed
-    @[::JSON::Field(key: "lastObservedTime", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
-    @[::YAML::Field(key: "lastObservedTime", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
+    @[::JSON::Field(key: "lastObservedTime", emit_null: false, converter: K8S::TimeFormat.new)]
+    @[::YAML::Field(key: "lastObservedTime", emit_null: false, converter: K8S::TimeFormat.new)]
     property last_observed_time : Time | Nil
 
     def initialize(*, @count : Int32 | Nil = nil, @last_observed_time : Time | Nil = nil)

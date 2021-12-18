@@ -61,7 +61,7 @@ module K8S
     getter api_version : String = "apiextensions/v1"
     getter kind : String = "List"
 
-    def initialize(*, @items : Array, @metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil = nil)
+    def initialize(*, @items : Array(ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinition), @metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil = nil)
     end
   end
 end

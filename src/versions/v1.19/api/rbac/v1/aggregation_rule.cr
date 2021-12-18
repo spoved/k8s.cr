@@ -19,7 +19,7 @@ module K8S
     @[::YAML::Field(key: "clusterRoleSelectors", emit_null: false)]
     property cluster_role_selectors : Array(Apimachinery::Apis::Meta::V1::LabelSelector) | Nil
 
-    def initialize(*, @cluster_role_selectors : Array | Nil = nil)
+    def initialize(*, @cluster_role_selectors : Array(Apimachinery::Apis::Meta::V1::LabelSelector) | Nil = nil)
     end
   end
 end

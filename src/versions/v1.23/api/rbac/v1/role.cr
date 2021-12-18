@@ -90,16 +90,13 @@ module K8S
     getter api_version : String = "rbac.authorization.k8s.io/v1"
     getter kind : String = "Role"
     # Standard object's metadata.
-    @[::JSON::Field(key: "metadata", emit_null: false)]
-    @[::YAML::Field(key: "metadata", emit_null: false)]
-    property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil
-
+    property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta?
     # Rules holds all the PolicyRules for this Role
     @[::JSON::Field(key: "rules", emit_null: false)]
     @[::YAML::Field(key: "rules", emit_null: false)]
     property rules : Array(Api::Rbac::V1::PolicyRule) | Nil
 
-    def initialize(*, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil, @rules : Array | Nil = nil)
+    def initialize(*, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil, @rules : Array(Api::Rbac::V1::PolicyRule) | Nil = nil)
     end
   end
 

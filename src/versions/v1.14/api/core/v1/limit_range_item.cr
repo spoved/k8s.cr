@@ -49,7 +49,7 @@ module K8S
     @[::YAML::Field(key: "type", emit_null: false)]
     property type : String | Nil
 
-    def initialize(*, @default : Hash(String, String) | Nil = nil, @default_request : Hash(String, String) | Nil = nil, @max : Hash(String, String) | Nil = nil, @max_limit_request_ratio : Hash(String, String) | Nil = nil, @min : Hash(String, String) | Nil = nil, @type : String | Nil = nil)
+    def initialize(*, @default : Hash(String, Int32 | String) | Nil = nil, @default_request : Hash(String, Int32 | String) | Nil = nil, @max : Hash(String, Int32 | String) | Nil = nil, @max_limit_request_ratio : Hash(String, Int32 | String) | Nil = nil, @min : Hash(String, Int32 | String) | Nil = nil, @type : String | Nil = nil)
     end
   end
 end

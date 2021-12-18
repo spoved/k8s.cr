@@ -88,10 +88,7 @@ module K8S
     getter api_version : String = "rbac.authorization.k8s.io/v1"
     getter kind : String = "RoleBinding"
     # Standard object's metadata.
-    @[::JSON::Field(key: "metadata", emit_null: false)]
-    @[::YAML::Field(key: "metadata", emit_null: false)]
-    property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil
-
+    property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta?
     # RoleRef can reference a Role in the current namespace or a ClusterRole in the global namespace. If the RoleRef cannot be resolved, the Authorizer must return an error.
     @[::JSON::Field(key: "roleRef", emit_null: true)]
     @[::YAML::Field(key: "roleRef", emit_null: true)]
@@ -102,7 +99,7 @@ module K8S
     @[::YAML::Field(key: "subjects", emit_null: false)]
     property subjects : Array(Api::Rbac::V1::Subject) | Nil
 
-    def initialize(*, @role_ref : Api::Rbac::V1::RoleRef, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil, @subjects : Array | Nil = nil)
+    def initialize(*, @role_ref : Api::Rbac::V1::RoleRef, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil, @subjects : Array(Api::Rbac::V1::Subject) | Nil = nil)
     end
   end
 

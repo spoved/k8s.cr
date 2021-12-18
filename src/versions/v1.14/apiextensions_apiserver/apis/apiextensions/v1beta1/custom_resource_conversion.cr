@@ -31,7 +31,7 @@ module K8S
     @[::YAML::Field(key: "webhookClientConfig", emit_null: false)]
     property webhook_client_config : ApiextensionsApiserver::Apis::Apiextensions::V1beta1::WebhookClientConfig | Nil
 
-    def initialize(*, @strategy : String, @conversion_review_versions : Array | Nil = nil, @webhook_client_config : ApiextensionsApiserver::Apis::Apiextensions::V1beta1::WebhookClientConfig | Nil = nil)
+    def initialize(*, @strategy : String, @conversion_review_versions : Array(String) | Nil = nil, @webhook_client_config : ApiextensionsApiserver::Apis::Apiextensions::V1beta1::WebhookClientConfig | Nil = nil)
     end
   end
 end

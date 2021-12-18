@@ -52,7 +52,7 @@ module K8S
     @[::YAML::Field(key: "volumeLifecycleModes", emit_null: false)]
     property volume_lifecycle_modes : Array(String) | Nil
 
-    def initialize(*, @attach_required : Bool | Nil = nil, @fs_group_policy : String | Nil = nil, @pod_info_on_mount : Bool | Nil = nil, @storage_capacity : Bool | Nil = nil, @volume_lifecycle_modes : Array | Nil = nil)
+    def initialize(*, @attach_required : Bool | Nil = nil, @fs_group_policy : String | Nil = nil, @pod_info_on_mount : Bool | Nil = nil, @storage_capacity : Bool | Nil = nil, @volume_lifecycle_modes : Array(String) | Nil = nil)
     end
   end
 end

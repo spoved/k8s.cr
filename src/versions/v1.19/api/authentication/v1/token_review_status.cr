@@ -37,7 +37,7 @@ module K8S
     @[::YAML::Field(key: "user", emit_null: false)]
     property user : Api::Authentication::V1::UserInfo | Nil
 
-    def initialize(*, @audiences : Array | Nil = nil, @authenticated : Bool | Nil = nil, @error : String | Nil = nil, @user : Api::Authentication::V1::UserInfo | Nil = nil)
+    def initialize(*, @audiences : Array(String) | Nil = nil, @authenticated : Bool | Nil = nil, @error : String | Nil = nil, @user : Api::Authentication::V1::UserInfo | Nil = nil)
     end
   end
 end

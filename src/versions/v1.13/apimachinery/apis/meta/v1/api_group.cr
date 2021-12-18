@@ -50,7 +50,7 @@ module K8S
     @[::YAML::Field(key: "versions", emit_null: true)]
     property versions : Array(Apimachinery::Apis::Meta::V1::GroupVersionForDiscovery)
 
-    def initialize(*, @name : String, @versions : Array, @api_version : String | Nil = nil, @kind : String | Nil = nil, @preferred_version : Apimachinery::Apis::Meta::V1::GroupVersionForDiscovery | Nil = nil, @server_address_by_client_cidrs : Array | Nil = nil)
+    def initialize(*, @name : String, @versions : Array(Apimachinery::Apis::Meta::V1::GroupVersionForDiscovery), @api_version : String | Nil = nil, @kind : String | Nil = nil, @preferred_version : Apimachinery::Apis::Meta::V1::GroupVersionForDiscovery | Nil = nil, @server_address_by_client_cidrs : Array(Apimachinery::Apis::Meta::V1::ServerAddressByClientCIDR) | Nil = nil)
     end
   end
 end

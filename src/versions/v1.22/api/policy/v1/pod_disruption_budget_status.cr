@@ -63,7 +63,7 @@ module K8S
     @[::YAML::Field(key: "observedGeneration", emit_null: false)]
     property observed_generation : Int32 | Nil
 
-    def initialize(*, @current_healthy : Int32, @desired_healthy : Int32, @disruptions_allowed : Int32, @expected_pods : Int32, @conditions : Array | Nil = nil, @disrupted_pods : Hash(String, String) | Nil = nil, @observed_generation : Int32 | Nil = nil)
+    def initialize(*, @current_healthy : Int32, @desired_healthy : Int32, @disruptions_allowed : Int32, @expected_pods : Int32, @conditions : Array(Apimachinery::Apis::Meta::V1::Condition) | Nil = nil, @disrupted_pods : Hash(String, Time) | Nil = nil, @observed_generation : Int32 | Nil = nil)
     end
   end
 end

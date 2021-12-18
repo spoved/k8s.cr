@@ -61,7 +61,7 @@ module K8S
     @[::YAML::Field(key: "zone", emit_null: false)]
     property zone : String | Nil
 
-    def initialize(*, @addresses : Array, @conditions : Api::Discovery::V1::EndpointConditions | Nil = nil, @deprecated_topology : Hash(String, String) | Nil = nil, @hints : Api::Discovery::V1::EndpointHints | Nil = nil, @hostname : String | Nil = nil, @node_name : String | Nil = nil, @target_ref : Api::Core::V1::ObjectReference | Nil = nil, @zone : String | Nil = nil)
+    def initialize(*, @addresses : Array(String), @conditions : Api::Discovery::V1::EndpointConditions | Nil = nil, @deprecated_topology : Hash(String, String) | Nil = nil, @hints : Api::Discovery::V1::EndpointHints | Nil = nil, @hostname : String | Nil = nil, @node_name : String | Nil = nil, @target_ref : Api::Core::V1::ObjectReference | Nil = nil, @zone : String | Nil = nil)
     end
   end
 end

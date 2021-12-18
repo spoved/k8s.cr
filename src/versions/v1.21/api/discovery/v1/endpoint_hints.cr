@@ -19,7 +19,7 @@ module K8S
     @[::YAML::Field(key: "forZones", emit_null: false)]
     property for_zones : Array(Api::Discovery::V1::ForZone) | Nil
 
-    def initialize(*, @for_zones : Array | Nil = nil)
+    def initialize(*, @for_zones : Array(Api::Discovery::V1::ForZone) | Nil = nil)
     end
   end
 end

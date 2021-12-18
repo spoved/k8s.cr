@@ -38,7 +38,7 @@ module K8S
     @[::YAML::Field(key: "verbs", emit_null: true)]
     property verbs : Array(String)
 
-    def initialize(*, @verbs : Array, @api_groups : Array | Nil = nil, @resource_names : Array | Nil = nil, @resources : Array | Nil = nil)
+    def initialize(*, @verbs : Array(String), @api_groups : Array(String) | Nil = nil, @resource_names : Array(String) | Nil = nil, @resources : Array(String) | Nil = nil)
     end
   end
 end

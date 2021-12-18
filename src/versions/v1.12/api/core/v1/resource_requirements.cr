@@ -25,7 +25,7 @@ module K8S
     @[::YAML::Field(key: "requests", emit_null: false)]
     property requests : Hash(String, Int32 | String) | Nil
 
-    def initialize(*, @limits : Hash(String, String) | Nil = nil, @requests : Hash(String, String) | Nil = nil)
+    def initialize(*, @limits : Hash(String, Int32 | String) | Nil = nil, @requests : Hash(String, Int32 | String) | Nil = nil)
     end
   end
 end

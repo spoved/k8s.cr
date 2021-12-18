@@ -25,7 +25,7 @@ module K8S
     @[::YAML::Field(key: "rules", emit_null: false)]
     property rules : Array(Api::Admissionregistration::V1alpha1::Rule) | Nil
 
-    def initialize(*, @name : String, @rules : Array | Nil = nil)
+    def initialize(*, @name : String, @rules : Array(Api::Admissionregistration::V1alpha1::Rule) | Nil = nil)
     end
   end
 end

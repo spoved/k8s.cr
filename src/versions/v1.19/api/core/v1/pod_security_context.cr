@@ -77,7 +77,7 @@ module K8S
     @[::YAML::Field(key: "windowsOptions", emit_null: false)]
     property windows_options : Api::Core::V1::WindowsSecurityContextOptions | Nil
 
-    def initialize(*, @fs_group : Int32 | Nil = nil, @fs_group_change_policy : String | Nil = nil, @run_as_group : Int32 | Nil = nil, @run_as_non_root : Bool | Nil = nil, @run_as_user : Int32 | Nil = nil, @se_linux_options : Api::Core::V1::SELinuxOptions | Nil = nil, @seccomp_profile : Api::Core::V1::SeccompProfile | Nil = nil, @supplemental_groups : Array | Nil = nil, @sysctls : Array | Nil = nil, @windows_options : Api::Core::V1::WindowsSecurityContextOptions | Nil = nil)
+    def initialize(*, @fs_group : Int32 | Nil = nil, @fs_group_change_policy : String | Nil = nil, @run_as_group : Int32 | Nil = nil, @run_as_non_root : Bool | Nil = nil, @run_as_user : Int32 | Nil = nil, @se_linux_options : Api::Core::V1::SELinuxOptions | Nil = nil, @seccomp_profile : Api::Core::V1::SeccompProfile | Nil = nil, @supplemental_groups : Array(Int32) | Nil = nil, @sysctls : Array(Api::Core::V1::Sysctl) | Nil = nil, @windows_options : Api::Core::V1::WindowsSecurityContextOptions | Nil = nil)
     end
   end
 end

@@ -28,7 +28,7 @@ module K8S
   @[::K8S::Action(name: "post", verb: "post",
     path: "/api/v1/namespaces/{namespace}/endpoints", toplevel: false,
     args: [{name: "metadata", type: Apimachinery::Apis::Meta::V1::ObjectMeta | Nil, default: nil},
-           {name: "subsets", type: Array | Nil, default: nil},
+           {name: "subsets", type: Array(Api::Core::V1::EndpointSubset) | Nil, default: nil},
            {name: "context", type: String | Nil, default: nil},
            {name: "dry_run", type: String | Nil, default: nil},
            {name: "field_manager", type: String | Nil, default: nil},
@@ -76,7 +76,7 @@ module K8S
     getter api_version : String = "v1"
     getter kind : String = "List"
 
-    def initialize(*, @items : Array, @metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil = nil)
+    def initialize(*, @items : Array(Api::Core::V1::Endpoints), @metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil = nil)
     end
   end
 end

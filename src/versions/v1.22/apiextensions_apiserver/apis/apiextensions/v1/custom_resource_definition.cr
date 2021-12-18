@@ -103,10 +103,7 @@ module K8S
     getter api_version : String = "apiextensions/v1"
     getter kind : String = "CustomResourceDefinition"
     # Standard object's metadata More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)
-    @[::JSON::Field(key: "metadata", emit_null: false)]
-    @[::YAML::Field(key: "metadata", emit_null: false)]
-    property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil
-
+    property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta?
     # spec describes how the user wants the resources to appear
     @[::JSON::Field(key: "spec", emit_null: true)]
     @[::YAML::Field(key: "spec", emit_null: true)]

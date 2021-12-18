@@ -74,7 +74,7 @@ module K8S
     getter api_version : String = "settings/v1alpha1"
     getter kind : String = "List"
 
-    def initialize(*, @items : Array, @metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil = nil)
+    def initialize(*, @items : Array(Api::Settings::V1alpha1::PodPreset), @metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil = nil)
     end
   end
 end

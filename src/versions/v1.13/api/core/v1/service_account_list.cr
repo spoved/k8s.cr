@@ -15,9 +15,9 @@ module K8S
   @[::K8S::Action(name: "post", verb: "post",
     path: "/api/v1/namespaces/{namespace}/serviceaccounts", toplevel: false,
     args: [{name: "automount_service_account_token", type: Bool | Nil, default: nil},
-           {name: "image_pull_secrets", type: Array | Nil, default: nil},
+           {name: "image_pull_secrets", type: Array(Api::Core::V1::LocalObjectReference) | Nil, default: nil},
            {name: "metadata", type: Apimachinery::Apis::Meta::V1::ObjectMeta | Nil, default: nil},
-           {name: "secrets", type: Array | Nil, default: nil},
+           {name: "secrets", type: Array(Api::Core::V1::ObjectReference) | Nil, default: nil},
            {name: "context", type: String | Nil, default: nil},
            {name: "include_uninitialized", type: Bool | Nil, default: nil},
            {name: "dry_run", type: String | Nil, default: nil}]
@@ -72,7 +72,7 @@ module K8S
     getter api_version : String = "v1"
     getter kind : String = "List"
 
-    def initialize(*, @items : Array, @metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil = nil)
+    def initialize(*, @items : Array(Api::Core::V1::ServiceAccount), @metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil = nil)
     end
   end
 end

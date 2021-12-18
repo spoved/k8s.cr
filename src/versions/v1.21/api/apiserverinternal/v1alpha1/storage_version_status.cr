@@ -31,7 +31,7 @@ module K8S
     @[::YAML::Field(key: "storageVersions", emit_null: false)]
     property storage_versions : Array(Api::Apiserverinternal::V1alpha1::ServerStorageVersion) | Nil
 
-    def initialize(*, @common_encoding_version : String | Nil = nil, @conditions : Array | Nil = nil, @storage_versions : Array | Nil = nil)
+    def initialize(*, @common_encoding_version : String | Nil = nil, @conditions : Array(Api::Apiserverinternal::V1alpha1::StorageVersionCondition) | Nil = nil, @storage_versions : Array(Api::Apiserverinternal::V1alpha1::ServerStorageVersion) | Nil = nil)
     end
   end
 end

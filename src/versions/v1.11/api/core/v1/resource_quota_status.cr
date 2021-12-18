@@ -25,7 +25,7 @@ module K8S
     @[::YAML::Field(key: "used", emit_null: false)]
     property used : Hash(String, Int32 | String) | Nil
 
-    def initialize(*, @hard : Hash(String, String) | Nil = nil, @used : Hash(String, String) | Nil = nil)
+    def initialize(*, @hard : Hash(String, Int32 | String) | Nil = nil, @used : Hash(String, Int32 | String) | Nil = nil)
     end
   end
 end

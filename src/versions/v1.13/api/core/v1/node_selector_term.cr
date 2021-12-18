@@ -25,7 +25,7 @@ module K8S
     @[::YAML::Field(key: "matchFields", emit_null: false)]
     property match_fields : Array(Api::Core::V1::NodeSelectorRequirement) | Nil
 
-    def initialize(*, @match_expressions : Array | Nil = nil, @match_fields : Array | Nil = nil)
+    def initialize(*, @match_expressions : Array(Api::Core::V1::NodeSelectorRequirement) | Nil = nil, @match_fields : Array(Api::Core::V1::NodeSelectorRequirement) | Nil = nil)
     end
   end
 end

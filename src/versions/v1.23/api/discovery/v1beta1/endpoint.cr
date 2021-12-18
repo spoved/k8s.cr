@@ -62,7 +62,7 @@ module K8S
     @[::YAML::Field(key: "topology", emit_null: false)]
     property topology : Hash(String, String) | Nil
 
-    def initialize(*, @addresses : Array, @conditions : Api::Discovery::V1beta1::EndpointConditions | Nil = nil, @hints : Api::Discovery::V1beta1::EndpointHints | Nil = nil, @hostname : String | Nil = nil, @node_name : String | Nil = nil, @target_ref : Api::Core::V1::ObjectReference | Nil = nil, @topology : Hash(String, String) | Nil = nil)
+    def initialize(*, @addresses : Array(String), @conditions : Api::Discovery::V1beta1::EndpointConditions | Nil = nil, @hints : Api::Discovery::V1beta1::EndpointHints | Nil = nil, @hostname : String | Nil = nil, @node_name : String | Nil = nil, @target_ref : Api::Core::V1::ObjectReference | Nil = nil, @topology : Hash(String, String) | Nil = nil)
     end
   end
 end

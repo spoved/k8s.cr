@@ -37,7 +37,7 @@ module K8S
     @[::YAML::Field(key: "policyTypes", emit_null: false)]
     property policy_types : Array(String) | Nil
 
-    def initialize(*, @pod_selector : Apimachinery::Apis::Meta::V1::LabelSelector, @egress : Array | Nil = nil, @ingress : Array | Nil = nil, @policy_types : Array | Nil = nil)
+    def initialize(*, @pod_selector : Apimachinery::Apis::Meta::V1::LabelSelector, @egress : Array(Api::Networking::V1::NetworkPolicyEgressRule) | Nil = nil, @ingress : Array(Api::Networking::V1::NetworkPolicyIngressRule) | Nil = nil, @policy_types : Array(String) | Nil = nil)
     end
   end
 end

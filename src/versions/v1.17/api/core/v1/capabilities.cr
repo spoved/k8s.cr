@@ -25,7 +25,7 @@ module K8S
     @[::YAML::Field(key: "drop", emit_null: false)]
     property drop : Array(String) | Nil
 
-    def initialize(*, @add : Array | Nil = nil, @drop : Array | Nil = nil)
+    def initialize(*, @add : Array(String) | Nil = nil, @drop : Array(String) | Nil = nil)
     end
   end
 end

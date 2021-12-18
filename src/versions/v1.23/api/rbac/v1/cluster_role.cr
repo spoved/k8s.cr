@@ -93,16 +93,13 @@ module K8S
     property aggregation_rule : Api::Rbac::V1::AggregationRule | Nil
 
     # Standard object's metadata.
-    @[::JSON::Field(key: "metadata", emit_null: false)]
-    @[::YAML::Field(key: "metadata", emit_null: false)]
-    property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil
-
+    property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta?
     # Rules holds all the PolicyRules for this ClusterRole
     @[::JSON::Field(key: "rules", emit_null: false)]
     @[::YAML::Field(key: "rules", emit_null: false)]
     property rules : Array(Api::Rbac::V1::PolicyRule) | Nil
 
-    def initialize(*, @aggregation_rule : Api::Rbac::V1::AggregationRule | Nil = nil, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil, @rules : Array | Nil = nil)
+    def initialize(*, @aggregation_rule : Api::Rbac::V1::AggregationRule | Nil = nil, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil, @rules : Array(Api::Rbac::V1::PolicyRule) | Nil = nil)
     end
   end
 

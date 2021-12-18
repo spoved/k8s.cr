@@ -62,7 +62,7 @@ module K8S
     getter api_version : String = "flowcontrol/v1beta2"
     getter kind : String = "List"
 
-    def initialize(*, @items : Array, @metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil = nil)
+    def initialize(*, @items : Array(Api::Flowcontrol::V1beta2::PriorityLevelConfiguration), @metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil = nil)
     end
   end
 end

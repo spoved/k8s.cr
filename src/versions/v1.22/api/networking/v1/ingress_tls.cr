@@ -25,7 +25,7 @@ module K8S
     @[::YAML::Field(key: "secretName", emit_null: false)]
     property secret_name : String | Nil
 
-    def initialize(*, @hosts : Array | Nil = nil, @secret_name : String | Nil = nil)
+    def initialize(*, @hosts : Array(String) | Nil = nil, @secret_name : String | Nil = nil)
     end
   end
 end

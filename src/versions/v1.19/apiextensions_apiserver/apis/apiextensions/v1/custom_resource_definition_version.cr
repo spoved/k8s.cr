@@ -61,7 +61,7 @@ module K8S
     @[::YAML::Field(key: "subresources", emit_null: false)]
     property subresources : ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresources | Nil
 
-    def initialize(*, @name : String, @served : Bool, @storage : Bool, @additional_printer_columns : Array | Nil = nil, @deprecated : Bool | Nil = nil, @deprecation_warning : String | Nil = nil, @schema : ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceValidation | Nil = nil, @subresources : ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresources | Nil = nil)
+    def initialize(*, @name : String, @served : Bool, @storage : Bool, @additional_printer_columns : Array(ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceColumnDefinition) | Nil = nil, @deprecated : Bool | Nil = nil, @deprecation_warning : String | Nil = nil, @schema : ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceValidation | Nil = nil, @subresources : ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresources | Nil = nil)
     end
   end
 end

@@ -37,7 +37,7 @@ module K8S
     @[::YAML::Field(key: "resourceRules", emit_null: true)]
     property resource_rules : Array(Api::Authorization::V1::ResourceRule)
 
-    def initialize(*, @incomplete : Bool, @non_resource_rules : Array, @resource_rules : Array, @evaluation_error : String | Nil = nil)
+    def initialize(*, @incomplete : Bool, @non_resource_rules : Array(Api::Authorization::V1::NonResourceRule), @resource_rules : Array(Api::Authorization::V1::ResourceRule), @evaluation_error : String | Nil = nil)
     end
   end
 end

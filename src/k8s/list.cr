@@ -17,7 +17,7 @@ abstract class ::K8S::Kubernetes::ResourceList(T) < ::K8S::Kubernetes::Resource
   end
 end
 
-class ::K8S::Api::Core::V1::List < ::K8S::Kubernetes::ResourceList(::K8S::Kubernetes::Resource)
+class ::K8S::Api::Core::V1::List < ::K8S::Kubernetes::ResourceList(::K8S::Resource | ::K8S::Apimachinery::Apis::Meta::V1::APIResourceList)
   @[::JSON::Field(key: "apiVersion")]
   @[::YAML::Field(key: "apiVersion")]
   property api_version : String = "v1"

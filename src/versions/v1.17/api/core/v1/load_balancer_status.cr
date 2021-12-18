@@ -19,7 +19,7 @@ module K8S
     @[::YAML::Field(key: "ingress", emit_null: false)]
     property ingress : Array(Api::Core::V1::LoadBalancerIngress) | Nil
 
-    def initialize(*, @ingress : Array | Nil = nil)
+    def initialize(*, @ingress : Array(Api::Core::V1::LoadBalancerIngress) | Nil = nil)
     end
   end
 end

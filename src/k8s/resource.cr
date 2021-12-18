@@ -6,6 +6,8 @@ annotation ::K8S::Properties; end
 
 abstract class ::K8S::Kubernetes::Resource; end
 
+class ::K8S::Apimachinery::Apis::Meta::V1::APIResourceList; end
+
 require "./resource/*"
 
 abstract class ::K8S::Kubernetes::Resource

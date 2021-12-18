@@ -79,10 +79,7 @@ module K8S
     @[::YAML::Field(key: "apiVersion")]
     getter api_version : String = "auditregistration/v1alpha1"
     getter kind : String = "AuditSink"
-    @[::JSON::Field(key: "metadata", emit_null: false)]
-    @[::YAML::Field(key: "metadata", emit_null: false)]
-    property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil
-
+    property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta?
     # Spec defines the audit configuration spec
     @[::JSON::Field(key: "spec", emit_null: false)]
     @[::YAML::Field(key: "spec", emit_null: false)]

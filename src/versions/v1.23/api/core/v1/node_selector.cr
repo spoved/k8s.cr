@@ -19,7 +19,7 @@ module K8S
     @[::YAML::Field(key: "nodeSelectorTerms", emit_null: true)]
     property node_selector_terms : Array(Api::Core::V1::NodeSelectorTerm)
 
-    def initialize(*, @node_selector_terms : Array)
+    def initialize(*, @node_selector_terms : Array(Api::Core::V1::NodeSelectorTerm))
     end
   end
 end

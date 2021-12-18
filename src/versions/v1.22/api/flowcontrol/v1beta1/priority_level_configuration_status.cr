@@ -19,7 +19,7 @@ module K8S
     @[::YAML::Field(key: "conditions", emit_null: false)]
     property conditions : Array(Api::Flowcontrol::V1beta1::PriorityLevelConfigurationCondition) | Nil
 
-    def initialize(*, @conditions : Array | Nil = nil)
+    def initialize(*, @conditions : Array(Api::Flowcontrol::V1beta1::PriorityLevelConfigurationCondition) | Nil = nil)
     end
   end
 end

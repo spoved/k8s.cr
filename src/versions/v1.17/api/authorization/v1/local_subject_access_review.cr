@@ -30,10 +30,7 @@ module K8S
     @[::YAML::Field(key: "apiVersion")]
     getter api_version : String = "authorization/v1"
     getter kind : String = "LocalSubjectAccessReview"
-    @[::JSON::Field(key: "metadata", emit_null: false)]
-    @[::YAML::Field(key: "metadata", emit_null: false)]
-    property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil
-
+    property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta?
     # Spec holds information about the request being evaluated.  spec.namespace must be equal to the namespace you made the request against.  If empty, it is defaulted.
     @[::JSON::Field(key: "spec", emit_null: true)]
     @[::YAML::Field(key: "spec", emit_null: true)]

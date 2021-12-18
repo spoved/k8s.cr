@@ -22,16 +22,16 @@ module K8S
     property active : Array(Api::Core::V1::ObjectReference) | Nil
 
     # Information when was the last time the job was successfully scheduled.
-    @[::JSON::Field(key: "lastScheduleTime", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
-    @[::YAML::Field(key: "lastScheduleTime", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
+    @[::JSON::Field(key: "lastScheduleTime", emit_null: false, converter: K8S::TimeFormat.new)]
+    @[::YAML::Field(key: "lastScheduleTime", emit_null: false, converter: K8S::TimeFormat.new)]
     property last_schedule_time : Time | Nil
 
     # Information when was the last time the job successfully completed.
-    @[::JSON::Field(key: "lastSuccessfulTime", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
-    @[::YAML::Field(key: "lastSuccessfulTime", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
+    @[::JSON::Field(key: "lastSuccessfulTime", emit_null: false, converter: K8S::TimeFormat.new)]
+    @[::YAML::Field(key: "lastSuccessfulTime", emit_null: false, converter: K8S::TimeFormat.new)]
     property last_successful_time : Time | Nil
 
-    def initialize(*, @active : Array | Nil = nil, @last_schedule_time : Time | Nil = nil, @last_successful_time : Time | Nil = nil)
+    def initialize(*, @active : Array(Api::Core::V1::ObjectReference) | Nil = nil, @last_schedule_time : Time | Nil = nil, @last_successful_time : Time | Nil = nil)
     end
   end
 end

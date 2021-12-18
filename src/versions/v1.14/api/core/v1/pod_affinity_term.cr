@@ -31,7 +31,7 @@ module K8S
     @[::YAML::Field(key: "topologyKey", emit_null: true)]
     property topology_key : String
 
-    def initialize(*, @topology_key : String, @label_selector : Apimachinery::Apis::Meta::V1::LabelSelector | Nil = nil, @namespaces : Array | Nil = nil)
+    def initialize(*, @topology_key : String, @label_selector : Apimachinery::Apis::Meta::V1::LabelSelector | Nil = nil, @namespaces : Array(String) | Nil = nil)
     end
   end
 end

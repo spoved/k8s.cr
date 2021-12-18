@@ -25,7 +25,7 @@ module K8S
     @[::YAML::Field(key: "succeeded", emit_null: false)]
     property succeeded : Array(String) | Nil
 
-    def initialize(*, @failed : Array | Nil = nil, @succeeded : Array | Nil = nil)
+    def initialize(*, @failed : Array(String) | Nil = nil, @succeeded : Array(String) | Nil = nil)
     end
   end
 end

@@ -67,7 +67,7 @@ module K8S
     @[::YAML::Field(key: "updatedReplicas", emit_null: false)]
     property updated_replicas : Int32 | Nil
 
-    def initialize(*, @replicas : Int32, @collision_count : Int32 | Nil = nil, @conditions : Array | Nil = nil, @current_replicas : Int32 | Nil = nil, @current_revision : String | Nil = nil, @observed_generation : Int32 | Nil = nil, @ready_replicas : Int32 | Nil = nil, @update_revision : String | Nil = nil, @updated_replicas : Int32 | Nil = nil)
+    def initialize(*, @replicas : Int32, @collision_count : Int32 | Nil = nil, @conditions : Array(Api::Apps::V1::StatefulSetCondition) | Nil = nil, @current_replicas : Int32 | Nil = nil, @current_revision : String | Nil = nil, @observed_generation : Int32 | Nil = nil, @ready_replicas : Int32 | Nil = nil, @update_revision : String | Nil = nil, @updated_replicas : Int32 | Nil = nil)
     end
   end
 end

@@ -73,7 +73,7 @@ module K8S
     @[::YAML::Field(key: "rules", emit_null: false)]
     property rules : Array(Api::Admissionregistration::V1beta1::RuleWithOperations) | Nil
 
-    def initialize(*, @client_config : Api::Admissionregistration::V1beta1::WebhookClientConfig, @name : String, @failure_policy : String | Nil = nil, @namespace_selector : Apimachinery::Apis::Meta::V1::LabelSelector | Nil = nil, @rules : Array | Nil = nil)
+    def initialize(*, @client_config : Api::Admissionregistration::V1beta1::WebhookClientConfig, @name : String, @failure_policy : String | Nil = nil, @namespace_selector : Apimachinery::Apis::Meta::V1::LabelSelector | Nil = nil, @rules : Array(Api::Admissionregistration::V1beta1::RuleWithOperations) | Nil = nil)
     end
   end
 end

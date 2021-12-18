@@ -37,7 +37,7 @@ module K8S
     @[::YAML::Field(key: "tls", emit_null: false)]
     property tls : Array(Api::Networking::V1::IngressTLS) | Nil
 
-    def initialize(*, @default_backend : Api::Networking::V1::IngressBackend | Nil = nil, @ingress_class_name : String | Nil = nil, @rules : Array | Nil = nil, @tls : Array | Nil = nil)
+    def initialize(*, @default_backend : Api::Networking::V1::IngressBackend | Nil = nil, @ingress_class_name : String | Nil = nil, @rules : Array(Api::Networking::V1::IngressRule) | Nil = nil, @tls : Array(Api::Networking::V1::IngressTLS) | Nil = nil)
     end
   end
 end

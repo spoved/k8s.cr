@@ -25,7 +25,7 @@ module K8S
     @[::YAML::Field(key: "token", emit_null: false)]
     property token : String | Nil
 
-    def initialize(*, @audiences : Array | Nil = nil, @token : String | Nil = nil)
+    def initialize(*, @audiences : Array(String) | Nil = nil, @token : String | Nil = nil)
     end
   end
 end

@@ -25,7 +25,7 @@ module K8S
     @[::YAML::Field(key: "values", emit_null: true)]
     property values : Array(String)
 
-    def initialize(*, @key : String, @values : Array)
+    def initialize(*, @key : String, @values : Array(String))
     end
   end
 end

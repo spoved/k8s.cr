@@ -31,7 +31,7 @@ module K8S
     @[::YAML::Field(key: "storedVersions", emit_null: true)]
     property stored_versions : Array(String)
 
-    def initialize(*, @accepted_names : ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionNames, @stored_versions : Array, @conditions : Array | Nil = nil)
+    def initialize(*, @accepted_names : ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionNames, @stored_versions : Array(String), @conditions : Array(ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionCondition) | Nil = nil)
     end
   end
 end

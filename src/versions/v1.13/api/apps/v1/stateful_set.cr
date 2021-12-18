@@ -101,10 +101,7 @@ module K8S
     @[::YAML::Field(key: "apiVersion")]
     getter api_version : String = "apps/v1"
     getter kind : String = "StatefulSet"
-    @[::JSON::Field(key: "metadata", emit_null: false)]
-    @[::YAML::Field(key: "metadata", emit_null: false)]
-    property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil
-
+    property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta?
     # Spec defines the desired identities of pods in this set.
     @[::JSON::Field(key: "spec", emit_null: false)]
     @[::YAML::Field(key: "spec", emit_null: false)]

@@ -25,7 +25,7 @@ module K8S
     @[::YAML::Field(key: "defaultRuntimeClassName", emit_null: false)]
     property default_runtime_class_name : String | Nil
 
-    def initialize(*, @allowed_runtime_class_names : Array, @default_runtime_class_name : String | Nil = nil)
+    def initialize(*, @allowed_runtime_class_names : Array(String), @default_runtime_class_name : String | Nil = nil)
     end
   end
 end

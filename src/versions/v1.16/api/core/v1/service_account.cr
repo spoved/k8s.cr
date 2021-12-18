@@ -101,16 +101,13 @@ module K8S
     property image_pull_secrets : Array(Api::Core::V1::LocalObjectReference) | Nil
 
     # Standard object's metadata. More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)
-    @[::JSON::Field(key: "metadata", emit_null: false)]
-    @[::YAML::Field(key: "metadata", emit_null: false)]
-    property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil
-
+    property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta?
     # Secrets is the list of secrets allowed to be used by pods running using this ServiceAccount. More info: [https://kubernetes.io/docs/concepts/configuration/secret](https://kubernetes.io/docs/concepts/configuration/secret)
     @[::JSON::Field(key: "secrets", emit_null: false)]
     @[::YAML::Field(key: "secrets", emit_null: false)]
     property secrets : Array(Api::Core::V1::ObjectReference) | Nil
 
-    def initialize(*, @automount_service_account_token : Bool | Nil = nil, @image_pull_secrets : Array | Nil = nil, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil, @secrets : Array | Nil = nil)
+    def initialize(*, @automount_service_account_token : Bool | Nil = nil, @image_pull_secrets : Array(Api::Core::V1::LocalObjectReference) | Nil = nil, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil, @secrets : Array(Api::Core::V1::ObjectReference) | Nil = nil)
     end
   end
 

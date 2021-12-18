@@ -126,10 +126,7 @@ module K8S
     @[::YAML::Field(key: "apiVersion")]
     getter api_version : String = "certificates/v1"
     getter kind : String = "CertificateSigningRequest"
-    @[::JSON::Field(key: "metadata", emit_null: false)]
-    @[::YAML::Field(key: "metadata", emit_null: false)]
-    property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil
-
+    property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta?
     # spec contains the certificate request, and is immutable after creation. Only the request, signerName, expirationSeconds, and usages fields can be set on creation. Other fields are derived by Kubernetes and cannot be modified by users.
     @[::JSON::Field(key: "spec", emit_null: true)]
     @[::YAML::Field(key: "spec", emit_null: true)]

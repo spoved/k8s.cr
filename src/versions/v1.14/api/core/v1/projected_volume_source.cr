@@ -25,7 +25,7 @@ module K8S
     @[::YAML::Field(key: "sources", emit_null: true)]
     property sources : Array(Api::Core::V1::VolumeProjection)
 
-    def initialize(*, @sources : Array, @default_mode : Int32 | Nil = nil)
+    def initialize(*, @sources : Array(Api::Core::V1::VolumeProjection), @default_mode : Int32 | Nil = nil)
     end
   end
 end

@@ -33,7 +33,7 @@ module K8S
     @[::YAML::Field(key: "optional", emit_null: false)]
     property optional : Bool | Nil
 
-    def initialize(*, @items : Array | Nil = nil, @name : String | Nil = nil, @optional : Bool | Nil = nil)
+    def initialize(*, @items : Array(Api::Core::V1::KeyToPath) | Nil = nil, @name : String | Nil = nil, @optional : Bool | Nil = nil)
     end
   end
 end

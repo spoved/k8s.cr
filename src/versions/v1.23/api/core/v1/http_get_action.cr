@@ -47,7 +47,7 @@ module K8S
     @[::YAML::Field(key: "scheme", emit_null: false)]
     property scheme : String | Nil
 
-    def initialize(*, @port : Int32 | String, @host : String | Nil = nil, @http_headers : Array | Nil = nil, @path : String | Nil = nil, @scheme : String | Nil = nil)
+    def initialize(*, @port : Int32 | String, @host : String | Nil = nil, @http_headers : Array(Api::Core::V1::HTTPHeader) | Nil = nil, @path : String | Nil = nil, @scheme : String | Nil = nil)
     end
   end
 end

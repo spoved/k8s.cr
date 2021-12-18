@@ -25,7 +25,7 @@ module K8S
     @[::YAML::Field(key: "loadBalancer", emit_null: false)]
     property load_balancer : Api::Core::V1::LoadBalancerStatus | Nil
 
-    def initialize(*, @conditions : Array | Nil = nil, @load_balancer : Api::Core::V1::LoadBalancerStatus | Nil = nil)
+    def initialize(*, @conditions : Array(Apimachinery::Apis::Meta::V1::Condition) | Nil = nil, @load_balancer : Api::Core::V1::LoadBalancerStatus | Nil = nil)
     end
   end
 end

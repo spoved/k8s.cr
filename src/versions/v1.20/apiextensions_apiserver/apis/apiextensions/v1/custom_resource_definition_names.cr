@@ -49,7 +49,7 @@ module K8S
     @[::YAML::Field(key: "singular", emit_null: false)]
     property singular : String | Nil
 
-    def initialize(*, @kind : String, @plural : String, @categories : Array | Nil = nil, @list_kind : String | Nil = nil, @short_names : Array | Nil = nil, @singular : String | Nil = nil)
+    def initialize(*, @kind : String, @plural : String, @categories : Array(String) | Nil = nil, @list_kind : String | Nil = nil, @short_names : Array(String) | Nil = nil, @singular : String | Nil = nil)
     end
   end
 end

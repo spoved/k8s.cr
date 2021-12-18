@@ -40,8 +40,8 @@ module K8S
     property desired_replicas : Int32
 
     # lastScaleTime is the last time the HorizontalPodAutoscaler scaled the number of pods, used by the autoscaler to control how often the number of pods is changed.
-    @[::JSON::Field(key: "lastScaleTime", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
-    @[::YAML::Field(key: "lastScaleTime", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
+    @[::JSON::Field(key: "lastScaleTime", emit_null: false, converter: K8S::TimeFormat.new)]
+    @[::YAML::Field(key: "lastScaleTime", emit_null: false, converter: K8S::TimeFormat.new)]
     property last_scale_time : Time | Nil
 
     # observedGeneration is the most recent generation observed by this autoscaler.
@@ -49,7 +49,7 @@ module K8S
     @[::YAML::Field(key: "observedGeneration", emit_null: false)]
     property observed_generation : Int32 | Nil
 
-    def initialize(*, @conditions : Array, @current_metrics : Array, @current_replicas : Int32, @desired_replicas : Int32, @last_scale_time : Time | Nil = nil, @observed_generation : Int32 | Nil = nil)
+    def initialize(*, @conditions : Array(Api::Autoscaling::V2beta1::HorizontalPodAutoscalerCondition), @current_metrics : Array(Api::Autoscaling::V2beta1::MetricStatus), @current_replicas : Int32, @desired_replicas : Int32, @last_scale_time : Time | Nil = nil, @observed_generation : Int32 | Nil = nil)
     end
   end
 end

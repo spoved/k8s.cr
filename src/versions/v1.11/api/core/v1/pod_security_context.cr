@@ -59,7 +59,7 @@ module K8S
     @[::YAML::Field(key: "sysctls", emit_null: false)]
     property sysctls : Array(Api::Core::V1::Sysctl) | Nil
 
-    def initialize(*, @fs_group : Int32 | Nil = nil, @run_as_group : Int32 | Nil = nil, @run_as_non_root : Bool | Nil = nil, @run_as_user : Int32 | Nil = nil, @se_linux_options : Api::Core::V1::SELinuxOptions | Nil = nil, @supplemental_groups : Array | Nil = nil, @sysctls : Array | Nil = nil)
+    def initialize(*, @fs_group : Int32 | Nil = nil, @run_as_group : Int32 | Nil = nil, @run_as_non_root : Bool | Nil = nil, @run_as_user : Int32 | Nil = nil, @se_linux_options : Api::Core::V1::SELinuxOptions | Nil = nil, @supplemental_groups : Array(Int32) | Nil = nil, @sysctls : Array(Api::Core::V1::Sysctl) | Nil = nil)
     end
   end
 end

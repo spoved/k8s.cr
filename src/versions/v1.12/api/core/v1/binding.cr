@@ -36,10 +36,7 @@ module K8S
     getter api_version : String = "v1"
     getter kind : String = "Binding"
     # Standard object's metadata. More info: [https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata)
-    @[::JSON::Field(key: "metadata", emit_null: false)]
-    @[::YAML::Field(key: "metadata", emit_null: false)]
-    property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil
-
+    property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta?
     # The target object that you want to bind to the standard object.
     @[::JSON::Field(key: "target", emit_null: true)]
     @[::YAML::Field(key: "target", emit_null: true)]

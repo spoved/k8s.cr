@@ -24,7 +24,7 @@ module K8S
     @[::YAML::Field(key: "conditions", emit_null: false)]
     property conditions : Array(Api::Certificates::V1beta1::CertificateSigningRequestCondition) | Nil
 
-    def initialize(*, @certificate : String | Nil = nil, @conditions : Array | Nil = nil)
+    def initialize(*, @certificate : String | Nil = nil, @conditions : Array(Api::Certificates::V1beta1::CertificateSigningRequestCondition) | Nil = nil)
     end
   end
 end

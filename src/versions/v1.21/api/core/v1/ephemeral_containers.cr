@@ -47,11 +47,9 @@ module K8S
     @[::YAML::Field(key: "ephemeralContainers", emit_null: true)]
     property ephemeral_containers : Array(Api::Core::V1::EphemeralContainer)
 
-    @[::JSON::Field(key: "metadata", emit_null: false)]
-    @[::YAML::Field(key: "metadata", emit_null: false)]
-    property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil
+    property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta?
 
-    def initialize(*, @ephemeral_containers : Array, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil)
+    def initialize(*, @ephemeral_containers : Array(Api::Core::V1::EphemeralContainer), @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil)
     end
   end
 

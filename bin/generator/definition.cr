@@ -205,6 +205,7 @@ class Generator::Definition
   end
 
   private def convert_type(property : Swagger::Definition::Property, required : Bool = true)
+    # debugger
     t = if ref = definition_ref(property._ref)
           ref
         elsif property.x_kubernetes_preserve_unknown_fields
@@ -302,6 +303,7 @@ class Generator::Definition
       prop_ref = property._ref
       prop_items = property.items
 
+      # Lists items and metadata are already defined
       next if is_list? && name == "items"
       next if is_list? && name == "metadata"
 
@@ -313,10 +315,15 @@ class Generator::Definition
       req = required.includes?(name)
       _type = convert_type(property, req)
 
-      # if crystal_name != name
+      # Resource metadata is already defined
+      if is_resource? && name == "metadata"
+        file.puts "property #{crystal_name} : Apimachinery::Apis::Meta::V1::ObjectMeta?"
+        next
+      end
+
       if _type =~ /^Time\b/
-        file.puts %<@[::JSON::Field(key: "#{name}", emit_null: #{req}, converter: Time::Format.new("%Y-%m-%dT%TZ"))]>
-        file.puts %<@[::YAML::Field(key: "#{name}", emit_null: #{req}, converter: Time::Format.new("%Y-%m-%dT%TZ"))]>
+        file.puts %<@[::JSON::Field(key: "#{name}", emit_null: #{req}, converter: K8S::TimeFormat.new)]>
+        file.puts %<@[::YAML::Field(key: "#{name}", emit_null: #{req}, converter: K8S::TimeFormat.new)]>
       else
         file.puts %<@[::JSON::Field(key: "#{name}", emit_null: #{req})]>
         file.puts %<@[::YAML::Field(key: "#{name}", emit_null: #{req})]>

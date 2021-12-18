@@ -33,9 +33,7 @@ module K8S
     property delete_options : Apimachinery::Apis::Meta::V1::DeleteOptions | Nil
 
     # ObjectMeta describes the pod that is being evicted.
-    @[::JSON::Field(key: "metadata", emit_null: false)]
-    @[::YAML::Field(key: "metadata", emit_null: false)]
-    property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil
+    property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta?
 
     def initialize(*, @delete_options : Apimachinery::Apis::Meta::V1::DeleteOptions | Nil = nil, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil)
     end

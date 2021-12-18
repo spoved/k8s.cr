@@ -25,7 +25,7 @@ module K8S
     @[::YAML::Field(key: "ports", emit_null: false)]
     property ports : Array(Api::Extensions::V1beta1::NetworkPolicyPort) | Nil
 
-    def initialize(*, @from : Array | Nil = nil, @ports : Array | Nil = nil)
+    def initialize(*, @from : Array(Api::Extensions::V1beta1::NetworkPolicyPeer) | Nil = nil, @ports : Array(Api::Extensions::V1beta1::NetworkPolicyPort) | Nil = nil)
     end
   end
 end

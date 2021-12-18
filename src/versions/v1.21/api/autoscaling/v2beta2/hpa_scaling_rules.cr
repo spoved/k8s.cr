@@ -31,7 +31,7 @@ module K8S
     @[::YAML::Field(key: "stabilizationWindowSeconds", emit_null: false)]
     property stabilization_window_seconds : Int32 | Nil
 
-    def initialize(*, @policies : Array | Nil = nil, @select_policy : String | Nil = nil, @stabilization_window_seconds : Int32 | Nil = nil)
+    def initialize(*, @policies : Array(Api::Autoscaling::V2beta2::HPAScalingPolicy) | Nil = nil, @select_policy : String | Nil = nil, @stabilization_window_seconds : Int32 | Nil = nil)
     end
   end
 end

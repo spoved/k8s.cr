@@ -107,7 +107,7 @@ module K8S
     @[::YAML::Field(key: "propagationPolicy", emit_null: false)]
     property propagation_policy : String | Nil
 
-    def initialize(*, @api_version : String | Nil = nil, @dry_run : Array | Nil = nil, @grace_period_seconds : Int32 | Nil = nil, @kind : String | Nil = nil, @orphan_dependents : Bool | Nil = nil, @preconditions : Apimachinery::Apis::Meta::V1::Preconditions | Nil = nil, @propagation_policy : String | Nil = nil)
+    def initialize(*, @api_version : String | Nil = nil, @dry_run : Array(String) | Nil = nil, @grace_period_seconds : Int32 | Nil = nil, @kind : String | Nil = nil, @orphan_dependents : Bool | Nil = nil, @preconditions : Apimachinery::Apis::Meta::V1::Preconditions | Nil = nil, @propagation_policy : String | Nil = nil)
     end
   end
 end

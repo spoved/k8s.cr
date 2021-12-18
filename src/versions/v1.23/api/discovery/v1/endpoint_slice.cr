@@ -107,16 +107,13 @@ module K8S
     property endpoints : Array(Api::Discovery::V1::Endpoint) | Nil
 
     # Standard object's metadata.
-    @[::JSON::Field(key: "metadata", emit_null: false)]
-    @[::YAML::Field(key: "metadata", emit_null: false)]
-    property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil
-
+    property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta?
     # ports specifies the list of network ports exposed by each endpoint in this slice. Each port must have a unique name. When ports is empty, it indicates that there are no defined ports. When a port is defined with a nil port value, it indicates "all ports". Each slice may include a maximum of 100 ports.
     @[::JSON::Field(key: "ports", emit_null: false)]
     @[::YAML::Field(key: "ports", emit_null: false)]
     property ports : Array(Api::Discovery::V1::EndpointPort) | Nil
 
-    def initialize(*, @address_type : String, @endpoints : Array | Nil = nil, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil, @ports : Array | Nil = nil)
+    def initialize(*, @address_type : String, @endpoints : Array(Api::Discovery::V1::Endpoint) | Nil = nil, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil, @ports : Array(Api::Discovery::V1::EndpointPort) | Nil = nil)
     end
   end
 

@@ -19,7 +19,7 @@ module K8S
     @[::YAML::Field(key: "limits", emit_null: true)]
     property limits : Array(Api::Core::V1::LimitRangeItem)
 
-    def initialize(*, @limits : Array)
+    def initialize(*, @limits : Array(Api::Core::V1::LimitRangeItem))
     end
   end
 end

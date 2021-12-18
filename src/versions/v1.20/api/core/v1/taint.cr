@@ -28,8 +28,8 @@ module K8S
     property key : String
 
     # TimeAdded represents the time at which the taint was added. It is only written for NoExecute taints.
-    @[::JSON::Field(key: "timeAdded", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
-    @[::YAML::Field(key: "timeAdded", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
+    @[::JSON::Field(key: "timeAdded", emit_null: false, converter: K8S::TimeFormat.new)]
+    @[::YAML::Field(key: "timeAdded", emit_null: false, converter: K8S::TimeFormat.new)]
     property time_added : Time | Nil
 
     # The taint value corresponding to the taint key.

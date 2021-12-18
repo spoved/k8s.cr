@@ -20,13 +20,13 @@ module K8S
     include ::YAML::Serializable::Unmapped
 
     # Last time we got an update on a given condition.
-    @[::JSON::Field(key: "lastHeartbeatTime", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
-    @[::YAML::Field(key: "lastHeartbeatTime", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
+    @[::JSON::Field(key: "lastHeartbeatTime", emit_null: false, converter: K8S::TimeFormat.new)]
+    @[::YAML::Field(key: "lastHeartbeatTime", emit_null: false, converter: K8S::TimeFormat.new)]
     property last_heartbeat_time : Time | Nil
 
     # Last time the condition transit from one status to another.
-    @[::JSON::Field(key: "lastTransitionTime", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
-    @[::YAML::Field(key: "lastTransitionTime", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
+    @[::JSON::Field(key: "lastTransitionTime", emit_null: false, converter: K8S::TimeFormat.new)]
+    @[::YAML::Field(key: "lastTransitionTime", emit_null: false, converter: K8S::TimeFormat.new)]
     property last_transition_time : Time | Nil
 
     # Human readable message indicating details about last transition.

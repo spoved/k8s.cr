@@ -84,11 +84,9 @@ module K8S
     property initializers : Array(Api::Admissionregistration::V1alpha1::Initializer) | Nil
 
     # Standard object metadata; More info: [https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata.](https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata.)
-    @[::JSON::Field(key: "metadata", emit_null: false)]
-    @[::YAML::Field(key: "metadata", emit_null: false)]
-    property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil
+    property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta?
 
-    def initialize(*, @initializers : Array | Nil = nil, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil)
+    def initialize(*, @initializers : Array(Api::Admissionregistration::V1alpha1::Initializer) | Nil = nil, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil)
     end
   end
 

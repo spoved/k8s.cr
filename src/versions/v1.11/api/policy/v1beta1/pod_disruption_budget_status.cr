@@ -49,7 +49,7 @@ module K8S
     @[::YAML::Field(key: "observedGeneration", emit_null: false)]
     property observed_generation : Int32 | Nil
 
-    def initialize(*, @current_healthy : Int32, @desired_healthy : Int32, @disrupted_pods : Hash(String, String), @disruptions_allowed : Int32, @expected_pods : Int32, @observed_generation : Int32 | Nil = nil)
+    def initialize(*, @current_healthy : Int32, @desired_healthy : Int32, @disrupted_pods : Hash(String, Time), @disruptions_allowed : Int32, @expected_pods : Int32, @observed_generation : Int32 | Nil = nil)
     end
   end
 end

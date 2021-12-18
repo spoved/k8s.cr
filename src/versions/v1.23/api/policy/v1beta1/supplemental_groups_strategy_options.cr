@@ -25,7 +25,7 @@ module K8S
     @[::YAML::Field(key: "rule", emit_null: false)]
     property rule : String | Nil
 
-    def initialize(*, @ranges : Array | Nil = nil, @rule : String | Nil = nil)
+    def initialize(*, @ranges : Array(Api::Policy::V1beta1::IDRange) | Nil = nil, @rule : String | Nil = nil)
     end
   end
 end

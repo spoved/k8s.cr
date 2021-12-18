@@ -31,7 +31,7 @@ module K8S
     @[::YAML::Field(key: "scopes", emit_null: false)]
     property scopes : Array(String) | Nil
 
-    def initialize(*, @hard : Hash(String, String) | Nil = nil, @scope_selector : Api::Core::V1::ScopeSelector | Nil = nil, @scopes : Array | Nil = nil)
+    def initialize(*, @hard : Hash(String, Int32 | String) | Nil = nil, @scope_selector : Api::Core::V1::ScopeSelector | Nil = nil, @scopes : Array(String) | Nil = nil)
     end
   end
 end

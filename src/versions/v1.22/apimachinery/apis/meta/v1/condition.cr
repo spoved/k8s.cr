@@ -20,8 +20,8 @@ module K8S
     include ::YAML::Serializable::Unmapped
 
     # lastTransitionTime is the last time the condition transitioned from one status to another. This should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.
-    @[::JSON::Field(key: "lastTransitionTime", emit_null: true, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
-    @[::YAML::Field(key: "lastTransitionTime", emit_null: true, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
+    @[::JSON::Field(key: "lastTransitionTime", emit_null: true, converter: K8S::TimeFormat.new)]
+    @[::YAML::Field(key: "lastTransitionTime", emit_null: true, converter: K8S::TimeFormat.new)]
     property last_transition_time : Time
 
     # message is a human readable message indicating details about the transition. This may be an empty string.

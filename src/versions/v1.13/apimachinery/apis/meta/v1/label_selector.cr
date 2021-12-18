@@ -25,7 +25,7 @@ module K8S
     @[::YAML::Field(key: "matchLabels", emit_null: false)]
     property match_labels : Hash(String, String) | Nil
 
-    def initialize(*, @match_expressions : Array | Nil = nil, @match_labels : Hash(String, String) | Nil = nil)
+    def initialize(*, @match_expressions : Array(Apimachinery::Apis::Meta::V1::LabelSelectorRequirement) | Nil = nil, @match_labels : Hash(String, String) | Nil = nil)
     end
   end
 end

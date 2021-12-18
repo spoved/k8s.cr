@@ -25,7 +25,7 @@ module K8S
     @[::YAML::Field(key: "tolerations", emit_null: false)]
     property tolerations : Array(Api::Core::V1::Toleration) | Nil
 
-    def initialize(*, @node_selector : Hash(String, String) | Nil = nil, @tolerations : Array | Nil = nil)
+    def initialize(*, @node_selector : Hash(String, String) | Nil = nil, @tolerations : Array(Api::Core::V1::Toleration) | Nil = nil)
     end
   end
 end

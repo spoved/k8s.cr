@@ -61,7 +61,7 @@ module K8S
     @[::YAML::Field(key: "user", emit_null: false)]
     property user : String | Nil
 
-    def initialize(*, @image : String, @monitors : Array, @fs_type : String | Nil = nil, @keyring : String | Nil = nil, @pool : String | Nil = nil, @read_only : Bool | Nil = nil, @secret_ref : Api::Core::V1::LocalObjectReference | Nil = nil, @user : String | Nil = nil)
+    def initialize(*, @image : String, @monitors : Array(String), @fs_type : String | Nil = nil, @keyring : String | Nil = nil, @pool : String | Nil = nil, @read_only : Bool | Nil = nil, @secret_ref : Api::Core::V1::LocalObjectReference | Nil = nil, @user : String | Nil = nil)
     end
   end
 end

@@ -109,7 +109,7 @@ module K8S
     @[::YAML::Field(key: "timeoutSeconds", emit_null: false)]
     property timeout_seconds : Int32 | Nil
 
-    def initialize(*, @admission_review_versions : Array, @client_config : Api::Admissionregistration::V1::WebhookClientConfig, @name : String, @side_effects : String, @failure_policy : String | Nil = nil, @match_policy : String | Nil = nil, @namespace_selector : Apimachinery::Apis::Meta::V1::LabelSelector | Nil = nil, @object_selector : Apimachinery::Apis::Meta::V1::LabelSelector | Nil = nil, @rules : Array | Nil = nil, @timeout_seconds : Int32 | Nil = nil)
+    def initialize(*, @admission_review_versions : Array(String), @client_config : Api::Admissionregistration::V1::WebhookClientConfig, @name : String, @side_effects : String, @failure_policy : String | Nil = nil, @match_policy : String | Nil = nil, @namespace_selector : Apimachinery::Apis::Meta::V1::LabelSelector | Nil = nil, @object_selector : Apimachinery::Apis::Meta::V1::LabelSelector | Nil = nil, @rules : Array(Api::Admissionregistration::V1::RuleWithOperations) | Nil = nil, @timeout_seconds : Int32 | Nil = nil)
     end
   end
 end

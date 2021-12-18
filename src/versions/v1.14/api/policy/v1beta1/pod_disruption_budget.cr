@@ -102,10 +102,7 @@ module K8S
     @[::YAML::Field(key: "apiVersion")]
     getter api_version : String = "policy/v1beta1"
     getter kind : String = "PodDisruptionBudget"
-    @[::JSON::Field(key: "metadata", emit_null: false)]
-    @[::YAML::Field(key: "metadata", emit_null: false)]
-    property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil
-
+    property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta?
     # Specification of the desired behavior of the PodDisruptionBudget.
     @[::JSON::Field(key: "spec", emit_null: false)]
     @[::YAML::Field(key: "spec", emit_null: false)]

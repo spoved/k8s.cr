@@ -109,10 +109,7 @@ module K8S
     getter api_version : String = "apiserverinternal/v1alpha1"
     getter kind : String = "StorageVersion"
     # The name is <group>.<resource>.
-    @[::JSON::Field(key: "metadata", emit_null: false)]
-    @[::YAML::Field(key: "metadata", emit_null: false)]
-    property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil
-
+    property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta?
     # Spec is an empty spec. It is here to comply with Kubernetes API style.
     @[::JSON::Field(key: "spec", emit_null: true)]
     @[::YAML::Field(key: "spec", emit_null: true)]

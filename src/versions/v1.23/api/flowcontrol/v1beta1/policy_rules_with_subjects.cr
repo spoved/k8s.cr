@@ -31,7 +31,7 @@ module K8S
     @[::YAML::Field(key: "subjects", emit_null: true)]
     property subjects : Array(Api::Flowcontrol::V1beta1::Subject)
 
-    def initialize(*, @subjects : Array, @non_resource_rules : Array | Nil = nil, @resource_rules : Array | Nil = nil)
+    def initialize(*, @subjects : Array(Api::Flowcontrol::V1beta1::Subject), @non_resource_rules : Array(Api::Flowcontrol::V1beta1::NonResourcePolicyRule) | Nil = nil, @resource_rules : Array(Api::Flowcontrol::V1beta1::ResourcePolicyRule) | Nil = nil)
     end
   end
 end

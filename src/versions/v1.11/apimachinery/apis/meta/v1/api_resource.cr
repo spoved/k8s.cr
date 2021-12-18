@@ -67,7 +67,7 @@ module K8S
     @[::YAML::Field(key: "version", emit_null: false)]
     property version : String | Nil
 
-    def initialize(*, @kind : String, @name : String, @namespaced : Bool, @singular_name : String, @verbs : Array, @categories : Array | Nil = nil, @group : String | Nil = nil, @short_names : Array | Nil = nil, @version : String | Nil = nil)
+    def initialize(*, @kind : String, @name : String, @namespaced : Bool, @singular_name : String, @verbs : Array(String), @categories : Array(String) | Nil = nil, @group : String | Nil = nil, @short_names : Array(String) | Nil = nil, @version : String | Nil = nil)
     end
   end
 end

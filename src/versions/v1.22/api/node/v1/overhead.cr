@@ -19,7 +19,7 @@ module K8S
     @[::YAML::Field(key: "podFixed", emit_null: false)]
     property pod_fixed : Hash(String, Int32 | String) | Nil
 
-    def initialize(*, @pod_fixed : Hash(String, String) | Nil = nil)
+    def initialize(*, @pod_fixed : Hash(String, Int32 | String) | Nil = nil)
     end
   end
 end

@@ -45,7 +45,7 @@ module K8S
     @[::YAML::Field(key: "values", emit_null: false)]
     property values : Array(String) | Nil
 
-    def initialize(*, @operator : String, @scope_name : String, @values : Array | Nil = nil)
+    def initialize(*, @operator : String, @scope_name : String, @values : Array(String) | Nil = nil)
     end
   end
 end

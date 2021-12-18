@@ -19,7 +19,7 @@ module K8S
     @[::YAML::Field(key: "paths", emit_null: true)]
     property paths : Array(Api::Networking::V1::HTTPIngressPath)
 
-    def initialize(*, @paths : Array)
+    def initialize(*, @paths : Array(Api::Networking::V1::HTTPIngressPath))
     end
   end
 end

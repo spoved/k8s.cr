@@ -38,7 +38,7 @@ module K8S
     @[::YAML::Field(key: "ports", emit_null: false)]
     property ports : Array(Api::Core::V1::EndpointPort) | Nil
 
-    def initialize(*, @addresses : Array | Nil = nil, @not_ready_addresses : Array | Nil = nil, @ports : Array | Nil = nil)
+    def initialize(*, @addresses : Array(Api::Core::V1::EndpointAddress) | Nil = nil, @not_ready_addresses : Array(Api::Core::V1::EndpointAddress) | Nil = nil, @ports : Array(Api::Core::V1::EndpointPort) | Nil = nil)
     end
   end
 end

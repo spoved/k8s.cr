@@ -108,10 +108,7 @@ module K8S
     getter api_version : String = "apiregistration/v1"
     getter kind : String = "APIService"
     # Standard object's metadata. More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)
-    @[::JSON::Field(key: "metadata", emit_null: false)]
-    @[::YAML::Field(key: "metadata", emit_null: false)]
-    property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil
-
+    property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta?
     # Spec contains information for locating and communicating with a server
     @[::JSON::Field(key: "spec", emit_null: false)]
     @[::YAML::Field(key: "spec", emit_null: false)]

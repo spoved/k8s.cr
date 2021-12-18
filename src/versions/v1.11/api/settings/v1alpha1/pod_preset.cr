@@ -79,10 +79,7 @@ module K8S
     @[::YAML::Field(key: "apiVersion")]
     getter api_version : String = "settings/v1alpha1"
     getter kind : String = "PodPreset"
-    @[::JSON::Field(key: "metadata", emit_null: false)]
-    @[::YAML::Field(key: "metadata", emit_null: false)]
-    property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil
-
+    property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta?
     @[::JSON::Field(key: "spec", emit_null: false)]
     @[::YAML::Field(key: "spec", emit_null: false)]
     property spec : Api::Settings::V1alpha1::PodPresetSpec | Nil

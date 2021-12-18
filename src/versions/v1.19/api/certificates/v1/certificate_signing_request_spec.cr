@@ -88,7 +88,7 @@ module K8S
     @[::YAML::Field(key: "username", emit_null: false)]
     property username : String | Nil
 
-    def initialize(*, @request : String, @signer_name : String, @extra : Hash(String, String) | Nil = nil, @groups : Array | Nil = nil, @uid : String | Nil = nil, @usages : Array | Nil = nil, @username : String | Nil = nil)
+    def initialize(*, @request : String, @signer_name : String, @extra : Hash(String, Array(String)) | Nil = nil, @groups : Array(String) | Nil = nil, @uid : String | Nil = nil, @usages : Array(String) | Nil = nil, @username : String | Nil = nil)
     end
   end
 end

@@ -43,7 +43,7 @@ module K8S
     @[::YAML::Field(key: "wwids", emit_null: false)]
     property wwids : Array(String) | Nil
 
-    def initialize(*, @fs_type : String | Nil = nil, @lun : Int32 | Nil = nil, @read_only : Bool | Nil = nil, @target_wwns : Array | Nil = nil, @wwids : Array | Nil = nil)
+    def initialize(*, @fs_type : String | Nil = nil, @lun : Int32 | Nil = nil, @read_only : Bool | Nil = nil, @target_wwns : Array(String) | Nil = nil, @wwids : Array(String) | Nil = nil)
     end
   end
 end

@@ -25,7 +25,7 @@ module K8S
     @[::YAML::Field(key: "conversionReviewVersions", emit_null: true)]
     property conversion_review_versions : Array(String)
 
-    def initialize(*, @conversion_review_versions : Array, @client_config : ApiextensionsApiserver::Apis::Apiextensions::V1::WebhookClientConfig | Nil = nil)
+    def initialize(*, @conversion_review_versions : Array(String), @client_config : ApiextensionsApiserver::Apis::Apiextensions::V1::WebhookClientConfig | Nil = nil)
     end
   end
 end

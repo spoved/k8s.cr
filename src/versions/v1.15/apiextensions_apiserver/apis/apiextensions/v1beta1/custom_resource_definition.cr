@@ -104,10 +104,7 @@ module K8S
     @[::YAML::Field(key: "apiVersion")]
     getter api_version : String = "apiextensions/v1beta1"
     getter kind : String = "CustomResourceDefinition"
-    @[::JSON::Field(key: "metadata", emit_null: false)]
-    @[::YAML::Field(key: "metadata", emit_null: false)]
-    property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil
-
+    property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta?
     # Spec describes how the user wants the resources to appear
     @[::JSON::Field(key: "spec", emit_null: true)]
     @[::YAML::Field(key: "spec", emit_null: true)]

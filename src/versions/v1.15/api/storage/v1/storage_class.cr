@@ -104,10 +104,7 @@ module K8S
     property allowed_topologies : Array(Api::Core::V1::TopologySelectorTerm) | Nil
 
     # Standard object's metadata. More info: [https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata)
-    @[::JSON::Field(key: "metadata", emit_null: false)]
-    @[::YAML::Field(key: "metadata", emit_null: false)]
-    property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil
-
+    property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta?
     # Dynamically provisioned PersistentVolumes of this storage class are created with these mountOptions, e.g. ["ro", "soft"]. Not validated - mount of the PVs will simply fail if one is invalid.
     @[::JSON::Field(key: "mountOptions", emit_null: false)]
     @[::YAML::Field(key: "mountOptions", emit_null: false)]
@@ -133,7 +130,7 @@ module K8S
     @[::YAML::Field(key: "volumeBindingMode", emit_null: false)]
     property volume_binding_mode : String | Nil
 
-    def initialize(*, @provisioner : String, @allow_volume_expansion : Bool | Nil = nil, @allowed_topologies : Array | Nil = nil, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil, @mount_options : Array | Nil = nil, @parameters : Hash(String, String) | Nil = nil, @reclaim_policy : String | Nil = nil, @volume_binding_mode : String | Nil = nil)
+    def initialize(*, @provisioner : String, @allow_volume_expansion : Bool | Nil = nil, @allowed_topologies : Array(Api::Core::V1::TopologySelectorTerm) | Nil = nil, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil, @mount_options : Array(String) | Nil = nil, @parameters : Hash(String, String) | Nil = nil, @reclaim_policy : String | Nil = nil, @volume_binding_mode : String | Nil = nil)
     end
   end
 

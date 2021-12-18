@@ -25,7 +25,7 @@ module K8S
     @[::YAML::Field(key: "stages", emit_null: false)]
     property stages : Array(String) | Nil
 
-    def initialize(*, @level : String, @stages : Array | Nil = nil)
+    def initialize(*, @level : String, @stages : Array(String) | Nil = nil)
     end
   end
 end

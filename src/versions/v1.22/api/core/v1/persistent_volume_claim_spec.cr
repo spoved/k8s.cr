@@ -66,7 +66,7 @@ module K8S
     @[::YAML::Field(key: "volumeName", emit_null: false)]
     property volume_name : String | Nil
 
-    def initialize(*, @access_modes : Array | Nil = nil, @data_source : Api::Core::V1::TypedLocalObjectReference | Nil = nil, @data_source_ref : Api::Core::V1::TypedLocalObjectReference | Nil = nil, @resources : Api::Core::V1::ResourceRequirements | Nil = nil, @selector : Apimachinery::Apis::Meta::V1::LabelSelector | Nil = nil, @storage_class_name : String | Nil = nil, @volume_mode : String | Nil = nil, @volume_name : String | Nil = nil)
+    def initialize(*, @access_modes : Array(String) | Nil = nil, @data_source : Api::Core::V1::TypedLocalObjectReference | Nil = nil, @data_source_ref : Api::Core::V1::TypedLocalObjectReference | Nil = nil, @resources : Api::Core::V1::ResourceRequirements | Nil = nil, @selector : Apimachinery::Apis::Meta::V1::LabelSelector | Nil = nil, @storage_class_name : String | Nil = nil, @volume_mode : String | Nil = nil, @volume_name : String | Nil = nil)
     end
   end
 end

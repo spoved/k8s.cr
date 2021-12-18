@@ -37,7 +37,7 @@ module K8S
     @[::YAML::Field(key: "phase", emit_null: false)]
     property phase : String | Nil
 
-    def initialize(*, @access_modes : Array | Nil = nil, @capacity : Hash(String, String) | Nil = nil, @conditions : Array | Nil = nil, @phase : String | Nil = nil)
+    def initialize(*, @access_modes : Array(String) | Nil = nil, @capacity : Hash(String, Int32 | String) | Nil = nil, @conditions : Array(Api::Core::V1::PersistentVolumeClaimCondition) | Nil = nil, @phase : String | Nil = nil)
     end
   end
 end

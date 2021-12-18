@@ -61,7 +61,7 @@ module K8S
     getter api_version : String = "apiregistration/v1"
     getter kind : String = "List"
 
-    def initialize(*, @items : Array, @metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil = nil)
+    def initialize(*, @items : Array(KubeAggregator::Apis::Apiregistration::V1::APIService), @metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil = nil)
     end
   end
 end

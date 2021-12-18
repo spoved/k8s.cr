@@ -103,11 +103,11 @@ module K8S
     property reason : String | Nil
 
     # RFC 3339 date and time at which the object was acknowledged by the Kubelet. This is before the Kubelet pulled the container image(s) for the pod.
-    @[::JSON::Field(key: "startTime", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
-    @[::YAML::Field(key: "startTime", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
+    @[::JSON::Field(key: "startTime", emit_null: false, converter: K8S::TimeFormat.new)]
+    @[::YAML::Field(key: "startTime", emit_null: false, converter: K8S::TimeFormat.new)]
     property start_time : Time | Nil
 
-    def initialize(*, @conditions : Array | Nil = nil, @container_statuses : Array | Nil = nil, @ephemeral_container_statuses : Array | Nil = nil, @host_ip : String | Nil = nil, @init_container_statuses : Array | Nil = nil, @message : String | Nil = nil, @nominated_node_name : String | Nil = nil, @phase : String | Nil = nil, @pod_ip : String | Nil = nil, @pod_ips : Array | Nil = nil, @qos_class : String | Nil = nil, @reason : String | Nil = nil, @start_time : Time | Nil = nil)
+    def initialize(*, @conditions : Array(Api::Core::V1::PodCondition) | Nil = nil, @container_statuses : Array(Api::Core::V1::ContainerStatus) | Nil = nil, @ephemeral_container_statuses : Array(Api::Core::V1::ContainerStatus) | Nil = nil, @host_ip : String | Nil = nil, @init_container_statuses : Array(Api::Core::V1::ContainerStatus) | Nil = nil, @message : String | Nil = nil, @nominated_node_name : String | Nil = nil, @phase : String | Nil = nil, @pod_ip : String | Nil = nil, @pod_ips : Array(Api::Core::V1::PodIP) | Nil = nil, @qos_class : String | Nil = nil, @reason : String | Nil = nil, @start_time : Time | Nil = nil)
     end
   end
 end

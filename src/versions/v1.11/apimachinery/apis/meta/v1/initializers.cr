@@ -25,7 +25,7 @@ module K8S
     @[::YAML::Field(key: "result", emit_null: false)]
     property result : Apimachinery::Apis::Meta::V1::Status | Nil
 
-    def initialize(*, @pending : Array, @result : Apimachinery::Apis::Meta::V1::Status | Nil = nil)
+    def initialize(*, @pending : Array(Apimachinery::Apis::Meta::V1::Initializer), @result : Apimachinery::Apis::Meta::V1::Status | Nil = nil)
     end
   end
 end

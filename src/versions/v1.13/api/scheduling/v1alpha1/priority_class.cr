@@ -91,10 +91,7 @@ module K8S
     property global_default : Bool | Nil
 
     # Standard object's metadata. More info: [https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata)
-    @[::JSON::Field(key: "metadata", emit_null: false)]
-    @[::YAML::Field(key: "metadata", emit_null: false)]
-    property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil
-
+    property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta?
     # The value of this priority class. This is the actual priority that pods receive when they have the name of this class in their pod spec.
     @[::JSON::Field(key: "value", emit_null: true)]
     @[::YAML::Field(key: "value", emit_null: true)]

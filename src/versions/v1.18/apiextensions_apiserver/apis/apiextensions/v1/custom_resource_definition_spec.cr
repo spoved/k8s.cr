@@ -49,7 +49,7 @@ module K8S
     @[::YAML::Field(key: "versions", emit_null: true)]
     property versions : Array(ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionVersion)
 
-    def initialize(*, @group : String, @names : ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionNames, @scope : String, @versions : Array, @conversion : ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceConversion | Nil = nil, @preserve_unknown_fields : Bool | Nil = nil)
+    def initialize(*, @group : String, @names : ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionNames, @scope : String, @versions : Array(ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionVersion), @conversion : ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceConversion | Nil = nil, @preserve_unknown_fields : Bool | Nil = nil)
     end
   end
 end

@@ -49,7 +49,7 @@ module K8S
     @[::YAML::Field(key: "scope", emit_null: false)]
     property scope : String | Nil
 
-    def initialize(*, @api_groups : Array | Nil = nil, @api_versions : Array | Nil = nil, @operations : Array | Nil = nil, @resources : Array | Nil = nil, @scope : String | Nil = nil)
+    def initialize(*, @api_groups : Array(String) | Nil = nil, @api_versions : Array(String) | Nil = nil, @operations : Array(String) | Nil = nil, @resources : Array(String) | Nil = nil, @scope : String | Nil = nil)
     end
   end
 end

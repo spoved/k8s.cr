@@ -14,7 +14,7 @@ module K8S
   )]
   @[::K8S::Action(name: "post", verb: "post",
     path: "/apis/admissionregistration.k8s.io/v1alpha1/initializerconfigurations", toplevel: false,
-    args: [{name: "initializers", type: Array | Nil, default: nil},
+    args: [{name: "initializers", type: Array(Api::Admissionregistration::V1alpha1::Initializer) | Nil, default: nil},
            {name: "metadata", type: Apimachinery::Apis::Meta::V1::ObjectMeta | Nil, default: nil},
            {name: "context", type: String | Nil, default: nil},
            {name: "include_uninitialized", type: Bool | Nil, default: nil},
@@ -56,7 +56,7 @@ module K8S
     getter api_version : String = "admissionregistration/v1alpha1"
     getter kind : String = "List"
 
-    def initialize(*, @items : Array, @metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil = nil)
+    def initialize(*, @items : Array(Api::Admissionregistration::V1alpha1::InitializerConfiguration), @metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil = nil)
     end
   end
 end

@@ -27,12 +27,23 @@ class K8S::CRD::Property
                  @x_kubernetes_list_map_keys = nil, @x_kubernetes_list_type = nil, @x_kubernetes_map_type = nil)
   end
 
+  def to_swagger_def : Swagger::Definition
+    Swagger::Definition.new(
+      description: self.description,
+      required: self.required.nil? ? Array(String).new : self.required.not_nil!,
+      _ref: self._ref,
+      properties: self.properties.transform_values(&.to_swagger_prop),
+    )
+  end
+
   def to_swagger_addprop : Swagger::Definition::Property::AdditionalProperties
     Swagger::Definition::Property::AdditionalProperties.new(
       type: self.type,
       description: self.description,
       _ref: self._ref,
       items: self.items.nil? ? nil : self.items.not_nil!.to_swagger_prop,
+      required: self.required,
+      properties: self.properties.transform_values(&.to_swagger_prop),
       additional_properties: additional_properties.nil? ? nil : additional_properties.not_nil!.to_swagger_addprop,
       _enum: self._enum,
       x_kubernetes_preserve_unknown_fields: self.x_kubernetes_preserve_unknown_fields,
@@ -45,6 +56,8 @@ class K8S::CRD::Property
       description: self.description,
       _ref: self._ref,
       items: self.items.nil? ? nil : self.items.not_nil!.to_swagger_prop,
+      required: self.required,
+      properties: self.properties.transform_values(&.to_swagger_prop),
       additional_properties: additional_properties.nil? ? nil : additional_properties.not_nil!.to_swagger_addprop,
       _enum: self._enum,
       x_kubernetes_preserve_unknown_fields: self.x_kubernetes_preserve_unknown_fields,

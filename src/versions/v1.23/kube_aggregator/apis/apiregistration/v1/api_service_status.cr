@@ -19,7 +19,7 @@ module K8S
     @[::YAML::Field(key: "conditions", emit_null: false)]
     property conditions : Array(KubeAggregator::Apis::Apiregistration::V1::APIServiceCondition) | Nil
 
-    def initialize(*, @conditions : Array | Nil = nil)
+    def initialize(*, @conditions : Array(KubeAggregator::Apis::Apiregistration::V1::APIServiceCondition) | Nil = nil)
     end
   end
 end

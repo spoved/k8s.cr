@@ -19,7 +19,7 @@ module K8S
     @[::YAML::Field(key: "command", emit_null: false)]
     property command : Array(String) | Nil
 
-    def initialize(*, @command : Array | Nil = nil)
+    def initialize(*, @command : Array(String) | Nil = nil)
     end
   end
 end

@@ -27,9 +27,9 @@ module K8S
   @[::K8S::Action(name: "post", verb: "post",
     path: "/apis/discovery.k8s.io/v1alpha1/namespaces/{namespace}/endpointslices", toplevel: false,
     args: [{name: "address_type", type: String | Nil, default: nil},
-           {name: "endpoints", type: Array | Nil, default: nil},
+           {name: "endpoints", type: Array(Api::Discovery::V1alpha1::Endpoint) | Nil, default: nil},
            {name: "metadata", type: Apimachinery::Apis::Meta::V1::ObjectMeta | Nil, default: nil},
-           {name: "ports", type: Array | Nil, default: nil},
+           {name: "ports", type: Array(Api::Discovery::V1alpha1::EndpointPort) | Nil, default: nil},
            {name: "context", type: String | Nil, default: nil},
            {name: "dry_run", type: String | Nil, default: nil},
            {name: "field_manager", type: String | Nil, default: nil}]
@@ -76,7 +76,7 @@ module K8S
     getter api_version : String = "discovery/v1alpha1"
     getter kind : String = "List"
 
-    def initialize(*, @items : Array, @metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil = nil)
+    def initialize(*, @items : Array(Api::Discovery::V1alpha1::EndpointSlice), @metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil = nil)
     end
   end
 end

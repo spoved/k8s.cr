@@ -39,7 +39,7 @@ module K8S
     @[::YAML::Field(key: "secretName", emit_null: false)]
     property secret_name : String | Nil
 
-    def initialize(*, @default_mode : Int32 | Nil = nil, @items : Array | Nil = nil, @optional : Bool | Nil = nil, @secret_name : String | Nil = nil)
+    def initialize(*, @default_mode : Int32 | Nil = nil, @items : Array(Api::Core::V1::KeyToPath) | Nil = nil, @optional : Bool | Nil = nil, @secret_name : String | Nil = nil)
     end
   end
 end

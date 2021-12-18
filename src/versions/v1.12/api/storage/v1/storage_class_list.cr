@@ -16,9 +16,9 @@ module K8S
     path: "/apis/storage.k8s.io/v1/storageclasses", toplevel: false,
     args: [{name: "provisioner", type: String},
            {name: "allow_volume_expansion", type: Bool | Nil, default: nil},
-           {name: "allowed_topologies", type: Array | Nil, default: nil},
+           {name: "allowed_topologies", type: Array(Api::Core::V1::TopologySelectorTerm) | Nil, default: nil},
            {name: "metadata", type: Apimachinery::Apis::Meta::V1::ObjectMeta | Nil, default: nil},
-           {name: "mount_options", type: Array | Nil, default: nil},
+           {name: "mount_options", type: Array(String) | Nil, default: nil},
            {name: "parameters", type: Hash(String, String) | Nil, default: nil},
            {name: "reclaim_policy", type: String | Nil, default: nil},
            {name: "volume_binding_mode", type: String | Nil, default: nil},
@@ -62,7 +62,7 @@ module K8S
     getter api_version : String = "storage/v1"
     getter kind : String = "List"
 
-    def initialize(*, @items : Array, @metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil = nil)
+    def initialize(*, @items : Array(Api::Storage::V1::StorageClass), @metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil = nil)
     end
   end
 end

@@ -105,13 +105,13 @@ module K8S
     property deprecated_count : Int32 | Nil
 
     # Deprecated field assuring backward compatibility with core.v1 Event type
-    @[::JSON::Field(key: "deprecatedFirstTimestamp", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
-    @[::YAML::Field(key: "deprecatedFirstTimestamp", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
+    @[::JSON::Field(key: "deprecatedFirstTimestamp", emit_null: false, converter: K8S::TimeFormat.new)]
+    @[::YAML::Field(key: "deprecatedFirstTimestamp", emit_null: false, converter: K8S::TimeFormat.new)]
     property deprecated_first_timestamp : Time | Nil
 
     # Deprecated field assuring backward compatibility with core.v1 Event type
-    @[::JSON::Field(key: "deprecatedLastTimestamp", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
-    @[::YAML::Field(key: "deprecatedLastTimestamp", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
+    @[::JSON::Field(key: "deprecatedLastTimestamp", emit_null: false, converter: K8S::TimeFormat.new)]
+    @[::YAML::Field(key: "deprecatedLastTimestamp", emit_null: false, converter: K8S::TimeFormat.new)]
     property deprecated_last_timestamp : Time | Nil
 
     # Deprecated field assuring backward compatibility with core.v1 Event type
@@ -120,14 +120,11 @@ module K8S
     property deprecated_source : Api::Core::V1::EventSource | Nil
 
     # Required. Time when this Event was first observed.
-    @[::JSON::Field(key: "eventTime", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
-    @[::YAML::Field(key: "eventTime", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
+    @[::JSON::Field(key: "eventTime", emit_null: false, converter: K8S::TimeFormat.new)]
+    @[::YAML::Field(key: "eventTime", emit_null: false, converter: K8S::TimeFormat.new)]
     property event_time : Time | Nil
 
-    @[::JSON::Field(key: "metadata", emit_null: false)]
-    @[::YAML::Field(key: "metadata", emit_null: false)]
-    property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil
-
+    property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta?
     # Optional. A human-readable description of the status of this operation. Maximal length of the note is 1kB, but libraries should be prepared to handle values up to 64kB.
     @[::JSON::Field(key: "note", emit_null: false)]
     @[::YAML::Field(key: "note", emit_null: false)]

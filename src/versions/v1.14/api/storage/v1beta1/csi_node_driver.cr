@@ -31,7 +31,7 @@ module K8S
     @[::YAML::Field(key: "topologyKeys", emit_null: false)]
     property topology_keys : Array(String) | Nil
 
-    def initialize(*, @name : String, @node_id : String, @topology_keys : Array | Nil = nil)
+    def initialize(*, @name : String, @node_id : String, @topology_keys : Array(String) | Nil = nil)
     end
   end
 end

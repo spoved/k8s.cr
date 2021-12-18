@@ -100,13 +100,15 @@ class K8S::CRD::Parser
 
   def parse
     versions.map do |v|
+      defs = v.to_swagger_defs
       {
-        group:      v.group,
-        kind:       v.kind,
-        version:    v.version,
-        full:       v.full_api,
-        definition: v.to_swagger_def,
-        paths:      paths(v),
+        group:       v.group,
+        kind:        v.kind,
+        version:     v.version,
+        full:        v.full_api,
+        definition:  defs[v.full_api],
+        definitions: defs,
+        paths:       paths(v),
       }
     end
   end

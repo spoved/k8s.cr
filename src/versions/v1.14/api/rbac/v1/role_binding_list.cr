@@ -16,7 +16,7 @@ module K8S
     path: "/apis/rbac.authorization.k8s.io/v1/namespaces/{namespace}/rolebindings", toplevel: false,
     args: [{name: "role_ref", type: Api::Rbac::V1::RoleRef},
            {name: "metadata", type: Apimachinery::Apis::Meta::V1::ObjectMeta | Nil, default: nil},
-           {name: "subjects", type: Array | Nil, default: nil},
+           {name: "subjects", type: Array(Api::Rbac::V1::Subject) | Nil, default: nil},
            {name: "context", type: String | Nil, default: nil},
            {name: "dry_run", type: String | Nil, default: nil},
            {name: "field_manager", type: String | Nil, default: nil}]
@@ -68,7 +68,7 @@ module K8S
     getter api_version : String = "rbac.authorization.k8s.io/v1"
     getter kind : String = "List"
 
-    def initialize(*, @items : Array, @metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil = nil)
+    def initialize(*, @items : Array(Api::Rbac::V1::RoleBinding), @metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil = nil)
     end
   end
 end

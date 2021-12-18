@@ -32,7 +32,7 @@ module K8S
     @[::YAML::Field(key: "kind", emit_null: false)]
     property kind : String | Nil
 
-    def initialize(*, @groups : Array, @api_version : String | Nil = nil, @kind : String | Nil = nil)
+    def initialize(*, @groups : Array(Apimachinery::Apis::Meta::V1::APIGroup), @api_version : String | Nil = nil, @kind : String | Nil = nil)
     end
   end
 end

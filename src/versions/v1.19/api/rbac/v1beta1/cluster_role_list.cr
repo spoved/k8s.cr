@@ -16,7 +16,7 @@ module K8S
     path: "/apis/rbac.authorization.k8s.io/v1beta1/clusterroles", toplevel: false,
     args: [{name: "aggregation_rule", type: Api::Rbac::V1beta1::AggregationRule | Nil, default: nil},
            {name: "metadata", type: Apimachinery::Apis::Meta::V1::ObjectMeta | Nil, default: nil},
-           {name: "rules", type: Array | Nil, default: nil},
+           {name: "rules", type: Array(Api::Rbac::V1beta1::PolicyRule) | Nil, default: nil},
            {name: "context", type: String | Nil, default: nil},
            {name: "dry_run", type: String | Nil, default: nil},
            {name: "field_manager", type: String | Nil, default: nil}]
@@ -61,7 +61,7 @@ module K8S
     getter api_version : String = "rbac.authorization.k8s.io/v1beta1"
     getter kind : String = "List"
 
-    def initialize(*, @items : Array, @metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil = nil)
+    def initialize(*, @items : Array(Api::Rbac::V1beta1::ClusterRole), @metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil = nil)
     end
   end
 end

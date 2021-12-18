@@ -73,7 +73,7 @@ module K8S
     @[::YAML::Field(key: "updatedNumberScheduled", emit_null: false)]
     property updated_number_scheduled : Int32 | Nil
 
-    def initialize(*, @current_number_scheduled : Int32, @desired_number_scheduled : Int32, @number_misscheduled : Int32, @number_ready : Int32, @collision_count : Int32 | Nil = nil, @conditions : Array | Nil = nil, @number_available : Int32 | Nil = nil, @number_unavailable : Int32 | Nil = nil, @observed_generation : Int32 | Nil = nil, @updated_number_scheduled : Int32 | Nil = nil)
+    def initialize(*, @current_number_scheduled : Int32, @desired_number_scheduled : Int32, @number_misscheduled : Int32, @number_ready : Int32, @collision_count : Int32 | Nil = nil, @conditions : Array(Api::Apps::V1::DaemonSetCondition) | Nil = nil, @number_available : Int32 | Nil = nil, @number_unavailable : Int32 | Nil = nil, @observed_generation : Int32 | Nil = nil, @updated_number_scheduled : Int32 | Nil = nil)
     end
   end
 end

@@ -25,7 +25,7 @@ module K8S
     @[::YAML::Field(key: "requiredDuringSchedulingIgnoredDuringExecution", emit_null: false)]
     property required_during_scheduling_ignored_during_execution : Api::Core::V1::NodeSelector | Nil
 
-    def initialize(*, @preferred_during_scheduling_ignored_during_execution : Array | Nil = nil, @required_during_scheduling_ignored_during_execution : Api::Core::V1::NodeSelector | Nil = nil)
+    def initialize(*, @preferred_during_scheduling_ignored_during_execution : Array(Api::Core::V1::PreferredSchedulingTerm) | Nil = nil, @required_during_scheduling_ignored_during_execution : Api::Core::V1::NodeSelector | Nil = nil)
     end
   end
 end

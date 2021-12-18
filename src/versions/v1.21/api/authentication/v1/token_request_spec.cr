@@ -31,7 +31,7 @@ module K8S
     @[::YAML::Field(key: "expirationSeconds", emit_null: false)]
     property expiration_seconds : Int32 | Nil
 
-    def initialize(*, @audiences : Array, @bound_object_ref : Api::Authentication::V1::BoundObjectReference | Nil = nil, @expiration_seconds : Int32 | Nil = nil)
+    def initialize(*, @audiences : Array(String), @bound_object_ref : Api::Authentication::V1::BoundObjectReference | Nil = nil, @expiration_seconds : Int32 | Nil = nil)
     end
   end
 end

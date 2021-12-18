@@ -19,7 +19,7 @@ module K8S
     @[::YAML::Field(key: "matchExpressions", emit_null: false)]
     property match_expressions : Array(Api::Core::V1::ScopedResourceSelectorRequirement) | Nil
 
-    def initialize(*, @match_expressions : Array | Nil = nil)
+    def initialize(*, @match_expressions : Array(Api::Core::V1::ScopedResourceSelectorRequirement) | Nil = nil)
     end
   end
 end

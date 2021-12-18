@@ -94,10 +94,7 @@ module K8S
     @[::YAML::Field(key: "apiVersion")]
     getter api_version : String = "certificates/v1beta1"
     getter kind : String = "CertificateSigningRequest"
-    @[::JSON::Field(key: "metadata", emit_null: false)]
-    @[::YAML::Field(key: "metadata", emit_null: false)]
-    property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil
-
+    property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta?
     # The certificate request itself and any additional information.
     @[::JSON::Field(key: "spec", emit_null: false)]
     @[::YAML::Field(key: "spec", emit_null: false)]

@@ -31,7 +31,7 @@ module K8S
     @[::YAML::Field(key: "encodingVersion", emit_null: false)]
     property encoding_version : String | Nil
 
-    def initialize(*, @api_server_id : String | Nil = nil, @decodable_versions : Array | Nil = nil, @encoding_version : String | Nil = nil)
+    def initialize(*, @api_server_id : String | Nil = nil, @decodable_versions : Array(String) | Nil = nil, @encoding_version : String | Nil = nil)
     end
   end
 end

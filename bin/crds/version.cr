@@ -29,7 +29,35 @@ class K8S::CRD::Version
       required: obj.required.nil? ? Array(String).new : obj.required.not_nil!,
       _ref: obj.ref,
       properties: properties.transform_values(&.to_swagger_prop),
+      x_kubernetes_group_version_kind: [
+        XKubernetesGroupVersionKind.new(
+          group: self.group,
+          version: self.version,
+          kind: self.kind
+        ),
+      ]
     )
+  end
+
+  def to_swagger_defs : Hash(String, Swagger::Definition)
+    sw_def = self.to_swagger_def
+    defs = {
+      full_api => sw_def,
+    }
+
+    self.properties.each do |name, prop|
+      if prop.type.to_s == "object" && !prop.properties.empty?
+        prop_def = prop.to_swagger_def
+        ref_name = "#{full_api}#{name.camelcase}"
+        sw_def.properties[name] = Swagger::Definition::Property.new(
+          _ref: "#/definitions/#{ref_name}"
+        )
+
+        defs[ref_name] = prop_def
+      end
+    end
+
+    defs
   end
 
   def properties

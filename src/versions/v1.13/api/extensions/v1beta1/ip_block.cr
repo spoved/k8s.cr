@@ -25,7 +25,7 @@ module K8S
     @[::YAML::Field(key: "except", emit_null: false)]
     property except : Array(String) | Nil
 
-    def initialize(*, @cidr : String, @except : Array | Nil = nil)
+    def initialize(*, @cidr : String, @except : Array(String) | Nil = nil)
     end
   end
 end

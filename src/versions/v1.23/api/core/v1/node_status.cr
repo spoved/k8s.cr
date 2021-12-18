@@ -84,7 +84,7 @@ module K8S
     @[::YAML::Field(key: "volumesInUse", emit_null: false)]
     property volumes_in_use : Array(String) | Nil
 
-    def initialize(*, @addresses : Array | Nil = nil, @allocatable : Hash(String, String) | Nil = nil, @capacity : Hash(String, String) | Nil = nil, @conditions : Array | Nil = nil, @config : Api::Core::V1::NodeConfigStatus | Nil = nil, @daemon_endpoints : Api::Core::V1::NodeDaemonEndpoints | Nil = nil, @images : Array | Nil = nil, @node_info : Api::Core::V1::NodeSystemInfo | Nil = nil, @phase : String | Nil = nil, @volumes_attached : Array | Nil = nil, @volumes_in_use : Array | Nil = nil)
+    def initialize(*, @addresses : Array(Api::Core::V1::NodeAddress) | Nil = nil, @allocatable : Hash(String, Int32 | String) | Nil = nil, @capacity : Hash(String, Int32 | String) | Nil = nil, @conditions : Array(Api::Core::V1::NodeCondition) | Nil = nil, @config : Api::Core::V1::NodeConfigStatus | Nil = nil, @daemon_endpoints : Api::Core::V1::NodeDaemonEndpoints | Nil = nil, @images : Array(Api::Core::V1::ContainerImage) | Nil = nil, @node_info : Api::Core::V1::NodeSystemInfo | Nil = nil, @phase : String | Nil = nil, @volumes_attached : Array(Api::Core::V1::AttachedVolume) | Nil = nil, @volumes_in_use : Array(String) | Nil = nil)
     end
   end
 end

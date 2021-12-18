@@ -43,7 +43,7 @@ module K8S
     @[::YAML::Field(key: "scaleTargetRef", emit_null: true)]
     property scale_target_ref : Api::Autoscaling::V2beta2::CrossVersionObjectReference
 
-    def initialize(*, @max_replicas : Int32, @scale_target_ref : Api::Autoscaling::V2beta2::CrossVersionObjectReference, @behavior : Api::Autoscaling::V2beta2::HorizontalPodAutoscalerBehavior | Nil = nil, @metrics : Array | Nil = nil, @min_replicas : Int32 | Nil = nil)
+    def initialize(*, @max_replicas : Int32, @scale_target_ref : Api::Autoscaling::V2beta2::CrossVersionObjectReference, @behavior : Api::Autoscaling::V2beta2::HorizontalPodAutoscalerBehavior | Nil = nil, @metrics : Array(Api::Autoscaling::V2beta2::MetricSpec) | Nil = nil, @min_replicas : Int32 | Nil = nil)
     end
   end
 end

@@ -86,10 +86,7 @@ module K8S
     getter api_version : String = "storage/v1"
     getter kind : String = "CSINode"
     # metadata.name must be the Kubernetes node name.
-    @[::JSON::Field(key: "metadata", emit_null: false)]
-    @[::YAML::Field(key: "metadata", emit_null: false)]
-    property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil
-
+    property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta?
     # spec is the specification of CSINode
     @[::JSON::Field(key: "spec", emit_null: true)]
     @[::YAML::Field(key: "spec", emit_null: true)]

@@ -21,8 +21,8 @@ module K8S
     property message : String | Nil
 
     # Time the error was encountered.
-    @[::JSON::Field(key: "time", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
-    @[::YAML::Field(key: "time", emit_null: false, converter: Time::Format.new("%Y-%m-%dT%TZ"))]
+    @[::JSON::Field(key: "time", emit_null: false, converter: K8S::TimeFormat.new)]
+    @[::YAML::Field(key: "time", emit_null: false, converter: K8S::TimeFormat.new)]
     property time : Time | Nil
 
     def initialize(*, @message : String | Nil = nil, @time : Time | Nil = nil)

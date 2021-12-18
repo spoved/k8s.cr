@@ -25,7 +25,7 @@ module K8S
     @[::YAML::Field(key: "ip", emit_null: false)]
     property ip : String | Nil
 
-    def initialize(*, @hostnames : Array | Nil = nil, @ip : String | Nil = nil)
+    def initialize(*, @hostnames : Array(String) | Nil = nil, @ip : String | Nil = nil)
     end
   end
 end

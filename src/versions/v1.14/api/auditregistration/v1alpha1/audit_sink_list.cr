@@ -54,7 +54,7 @@ module K8S
     getter api_version : String = "auditregistration/v1alpha1"
     getter kind : String = "List"
 
-    def initialize(*, @items : Array, @metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil = nil)
+    def initialize(*, @items : Array(Api::Auditregistration::V1alpha1::AuditSink), @metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil = nil)
     end
   end
 end

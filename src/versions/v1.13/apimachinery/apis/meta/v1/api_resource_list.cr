@@ -38,7 +38,7 @@ module K8S
     @[::YAML::Field(key: "resources", emit_null: true)]
     property resources : Array(Apimachinery::Apis::Meta::V1::APIResource)
 
-    def initialize(*, @group_version : String, @resources : Array, @api_version : String | Nil = nil, @kind : String | Nil = nil)
+    def initialize(*, @group_version : String, @resources : Array(Apimachinery::Apis::Meta::V1::APIResource), @api_version : String | Nil = nil, @kind : String | Nil = nil)
     end
   end
 end

@@ -49,7 +49,7 @@ module K8S
     @[::YAML::Field(key: "unschedulable", emit_null: false)]
     property unschedulable : Bool | Nil
 
-    def initialize(*, @config_source : Api::Core::V1::NodeConfigSource | Nil = nil, @external_id : String | Nil = nil, @pod_cidr : String | Nil = nil, @provider_id : String | Nil = nil, @taints : Array | Nil = nil, @unschedulable : Bool | Nil = nil)
+    def initialize(*, @config_source : Api::Core::V1::NodeConfigSource | Nil = nil, @external_id : String | Nil = nil, @pod_cidr : String | Nil = nil, @provider_id : String | Nil = nil, @taints : Array(Api::Core::V1::Taint) | Nil = nil, @unschedulable : Bool | Nil = nil)
     end
   end
 end

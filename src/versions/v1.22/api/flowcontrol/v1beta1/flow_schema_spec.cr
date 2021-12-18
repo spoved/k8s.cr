@@ -37,7 +37,7 @@ module K8S
     @[::YAML::Field(key: "rules", emit_null: false)]
     property rules : Array(Api::Flowcontrol::V1beta1::PolicyRulesWithSubjects) | Nil
 
-    def initialize(*, @priority_level_configuration : Api::Flowcontrol::V1beta1::PriorityLevelConfigurationReference, @distinguisher_method : Api::Flowcontrol::V1beta1::FlowDistinguisherMethod | Nil = nil, @matching_precedence : Int32 | Nil = nil, @rules : Array | Nil = nil)
+    def initialize(*, @priority_level_configuration : Api::Flowcontrol::V1beta1::PriorityLevelConfigurationReference, @distinguisher_method : Api::Flowcontrol::V1beta1::FlowDistinguisherMethod | Nil = nil, @matching_precedence : Int32 | Nil = nil, @rules : Array(Api::Flowcontrol::V1beta1::PolicyRulesWithSubjects) | Nil = nil)
     end
   end
 end

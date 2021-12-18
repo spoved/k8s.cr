@@ -49,7 +49,7 @@ module K8S
     @[::YAML::Field(key: "uid", emit_null: false)]
     property uid : String | Nil
 
-    def initialize(*, @causes : Array | Nil = nil, @group : String | Nil = nil, @kind : String | Nil = nil, @name : String | Nil = nil, @retry_after_seconds : Int32 | Nil = nil, @uid : String | Nil = nil)
+    def initialize(*, @causes : Array(Apimachinery::Apis::Meta::V1::StatusCause) | Nil = nil, @group : String | Nil = nil, @kind : String | Nil = nil, @name : String | Nil = nil, @retry_after_seconds : Int32 | Nil = nil, @uid : String | Nil = nil)
     end
   end
 end

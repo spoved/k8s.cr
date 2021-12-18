@@ -49,7 +49,7 @@ module K8S
     @[::YAML::Field(key: "user", emit_null: false)]
     property user : String | Nil
 
-    def initialize(*, @extra : Hash(String, String) | Nil = nil, @groups : Array | Nil = nil, @non_resource_attributes : Api::Authorization::V1::NonResourceAttributes | Nil = nil, @resource_attributes : Api::Authorization::V1::ResourceAttributes | Nil = nil, @uid : String | Nil = nil, @user : String | Nil = nil)
+    def initialize(*, @extra : Hash(String, Array(String)) | Nil = nil, @groups : Array(String) | Nil = nil, @non_resource_attributes : Api::Authorization::V1::NonResourceAttributes | Nil = nil, @resource_attributes : Api::Authorization::V1::ResourceAttributes | Nil = nil, @uid : String | Nil = nil, @user : String | Nil = nil)
     end
   end
 end

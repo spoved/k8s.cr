@@ -43,7 +43,7 @@ module K8S
     @[::YAML::Field(key: "volumes", emit_null: false)]
     property volumes : Array(Api::Core::V1::Volume) | Nil
 
-    def initialize(*, @env : Array | Nil = nil, @env_from : Array | Nil = nil, @selector : Apimachinery::Apis::Meta::V1::LabelSelector | Nil = nil, @volume_mounts : Array | Nil = nil, @volumes : Array | Nil = nil)
+    def initialize(*, @env : Array(Api::Core::V1::EnvVar) | Nil = nil, @env_from : Array(Api::Core::V1::EnvFromSource) | Nil = nil, @selector : Apimachinery::Apis::Meta::V1::LabelSelector | Nil = nil, @volume_mounts : Array(Api::Core::V1::VolumeMount) | Nil = nil, @volumes : Array(Api::Core::V1::Volume) | Nil = nil)
     end
   end
 end

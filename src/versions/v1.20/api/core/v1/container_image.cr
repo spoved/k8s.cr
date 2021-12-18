@@ -25,7 +25,7 @@ module K8S
     @[::YAML::Field(key: "sizeBytes", emit_null: false)]
     property size_bytes : Int32 | Nil
 
-    def initialize(*, @names : Array, @size_bytes : Int32 | Nil = nil)
+    def initialize(*, @names : Array(String), @size_bytes : Int32 | Nil = nil)
     end
   end
 end

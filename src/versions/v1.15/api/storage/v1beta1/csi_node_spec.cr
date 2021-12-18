@@ -19,7 +19,7 @@ module K8S
     @[::YAML::Field(key: "drivers", emit_null: false)]
     property drivers : Array(Api::Storage::V1beta1::CSINodeDriver) | Nil
 
-    def initialize(*, @drivers : Array | Nil = nil)
+    def initialize(*, @drivers : Array(Api::Storage::V1beta1::CSINodeDriver) | Nil = nil)
     end
   end
 end

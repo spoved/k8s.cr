@@ -38,7 +38,7 @@ module K8S
     @[::YAML::Field(key: "versions", emit_null: true)]
     property versions : Array(String)
 
-    def initialize(*, @server_address_by_client_cidrs : Array, @versions : Array, @api_version : String | Nil = nil, @kind : String | Nil = nil)
+    def initialize(*, @server_address_by_client_cidrs : Array(Apimachinery::Apis::Meta::V1::ServerAddressByClientCIDR), @versions : Array(String), @api_version : String | Nil = nil, @kind : String | Nil = nil)
     end
   end
 end

@@ -49,7 +49,7 @@ module K8S
     @[::YAML::Field(key: "replicas", emit_null: true)]
     property replicas : Int32
 
-    def initialize(*, @replicas : Int32, @available_replicas : Int32 | Nil = nil, @conditions : Array | Nil = nil, @fully_labeled_replicas : Int32 | Nil = nil, @observed_generation : Int32 | Nil = nil, @ready_replicas : Int32 | Nil = nil)
+    def initialize(*, @replicas : Int32, @available_replicas : Int32 | Nil = nil, @conditions : Array(Api::Apps::V1::ReplicaSetCondition) | Nil = nil, @fully_labeled_replicas : Int32 | Nil = nil, @observed_generation : Int32 | Nil = nil, @ready_replicas : Int32 | Nil = nil)
     end
   end
 end
