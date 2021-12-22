@@ -3,7 +3,9 @@ description: Kubernetes Object Mappings for Crystal
 version: 0.0.3
 crystal: ">= 1.2.2, < 2.0.0"
 
-dependencies: {}
+dependencies:
+  hashdiff:
+    github: spoved/hashdiff.cr
 
 development_dependencies:
   spectator:

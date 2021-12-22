@@ -1,4 +1,4 @@
-require "./hashdiff"
+require "hashdiff"
 
 module K8S
   # Miscellaneous helpers

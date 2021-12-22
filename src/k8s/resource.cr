@@ -1,6 +1,7 @@
 require "json"
 require "yaml"
 require "log"
+require "../ext/hashdiff"
 
 annotation ::K8S::Properties; end
 
