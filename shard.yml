@@ -6,7 +6,7 @@ crystal: ">= 1.2.2, < 2.0.0"
 dependencies:
   hashdiff:
     github: spoved/hashdiff.cr
-
+    version: ~> 1.0.2
 development_dependencies:
   spectator:
     gitlab: arctic-fox/spectator
