@@ -17,6 +17,8 @@ class K8S::CRD::Property
   property additional_properties : Property? = nil
   @[JSON::Field(key: "enum")]
   property _enum : Array(JSON::Any)? = nil
+  property any_of : Array(Property) = Array(Property).new
+  property all_of : Array(Property) = Array(Property).new
 
   include_k8s_annos
 
@@ -24,7 +26,8 @@ class K8S::CRD::Property
 
   def initialize(@type = nil, @default = nil, @description = nil, @required = Array(String).new, @format = nil, @_ref = nil, @nullable = false, @properties = {} of String => Property, @items = nil, @additional_properties = nil, @_enum = nil,
                  @x_kubernetes_embedded_resource = nil, @x_kubernetes_int_or_string = nil, @x_kubernetes_preserve_unknown_fields = nil,
-                 @x_kubernetes_list_map_keys = nil, @x_kubernetes_list_type = nil, @x_kubernetes_map_type = nil)
+                 @x_kubernetes_list_map_keys = nil, @x_kubernetes_list_type = nil, @x_kubernetes_map_type = nil,
+                 @any_of = Array(Property).new, @all_of = Array(Property).new)
   end
 
   def to_swagger_def : Swagger::Definition
@@ -37,6 +40,12 @@ class K8S::CRD::Property
   end
 
   def to_swagger_addprop : Swagger::Definition::Property::AdditionalProperties
+    # if self.properties["routes"]?
+    #   pp self.properties["routes"]
+    #   pp self.properties["routes"].to_swagger_prop
+    #   exit
+    # end
+
     Swagger::Definition::Property::AdditionalProperties.new(
       type: self.type,
       description: self.description,
@@ -47,10 +56,22 @@ class K8S::CRD::Property
       additional_properties: additional_properties.nil? ? nil : additional_properties.not_nil!.to_swagger_addprop,
       _enum: self._enum,
       x_kubernetes_preserve_unknown_fields: self.x_kubernetes_preserve_unknown_fields,
+      x_kubernetes_int_or_string: self.x_kubernetes_int_or_string,
+      x_kubernetes_embedded_resource: self.x_kubernetes_embedded_resource,
+      x_kubernetes_list_map_keys: self.x_kubernetes_list_map_keys,
+      x_kubernetes_list_type: self.x_kubernetes_list_type,
+      x_kubernetes_map_type: self.x_kubernetes_map_type,
+      any_of: self.any_of.map(&.to_swagger_prop),
+      all_of: self.all_of.map(&.to_swagger_prop),
     )
   end
 
   def to_swagger_prop : Swagger::Definition::Property
+    # if self.properties["forwardingTimeouts"]?
+    #   pp self.properties["forwardingTimeouts"]
+    #   pp self.properties["forwardingTimeouts"].to_swagger_prop
+    #   exit
+    # end
     Swagger::Definition::Property.new(
       type: self.type,
       description: self.description,
@@ -61,6 +82,13 @@ class K8S::CRD::Property
       additional_properties: additional_properties.nil? ? nil : additional_properties.not_nil!.to_swagger_addprop,
       _enum: self._enum,
       x_kubernetes_preserve_unknown_fields: self.x_kubernetes_preserve_unknown_fields,
+      x_kubernetes_int_or_string: self.x_kubernetes_int_or_string,
+      x_kubernetes_embedded_resource: self.x_kubernetes_embedded_resource,
+      x_kubernetes_list_map_keys: self.x_kubernetes_list_map_keys,
+      x_kubernetes_list_type: self.x_kubernetes_list_type,
+      x_kubernetes_map_type: self.x_kubernetes_map_type,
+      any_of: self.any_of.map(&.to_swagger_prop),
+      all_of: self.all_of.map(&.to_swagger_prop),
     )
   end
 
@@ -105,6 +133,8 @@ class K8S::CRD::Property
       x_kubernetes_list_map_keys: obj.x_kubernetes_list_map_keys,
       x_kubernetes_list_type: obj.x_kubernetes_list_type,
       x_kubernetes_map_type: obj.x_kubernetes_map_type,
+      any_of: obj.any_of.nil? ? Array(Property).new : obj.any_of.not_nil!.map { |i| schema_props_to_def(i).as(K8S::CRD::Property) },
+      all_of: obj.all_of.nil? ? Array(Property).new : obj.all_of.not_nil!.map { |i| schema_props_to_def(i).as(K8S::CRD::Property) },
     )
   end
 end

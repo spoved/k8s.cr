@@ -210,10 +210,35 @@ class Generator::Definition
           ref
         elsif property.x_kubernetes_preserve_unknown_fields
           "Hash(String, JSON::Any)"
+        elsif property.x_kubernetes_int_or_string
+          "Int32 | String"
         elsif property.type.to_s == "array"
           "Array(#{convert_type(property.items.as(Swagger::Definition::Property))})"
-        elsif property.additional_properties
-          "Hash(String, #{convert_type(property.additional_properties.not_nil!)})"
+        elsif property.type.to_s == "object"
+          types = Array(String).new
+          types.concat property.properties.values.map { |x| convert_type(x.as(Swagger::Definition::Property)).as(String) }
+          if property.additional_properties
+            types << convert_type(property.additional_properties.not_nil!)
+          end
+
+          unless property.any_of.empty?
+            types.concat property.any_of.map { |x| convert_type(x.as(Swagger::Definition::Property)).as(String) }
+          end
+
+          unless property.all_of.empty?
+            types.concat property.all_of.map { |x| convert_type(x.as(Swagger::Definition::Property)).as(String) }
+          end
+
+          types.uniq!.reject!(&.empty?)
+
+          if types.empty?
+            pp property
+            raise "No types found for property"
+          end
+
+          "Hash(String, #{types.join(" | ")})"
+          # elsif property.additional_properties
+          #   "Hash(String, #{convert_type(property.additional_properties.not_nil!)})"
         else
           convert_type(property.type.to_s, true)
         end
@@ -260,8 +285,14 @@ class Generator::Definition
     file.print "*, " if named_args && !args.empty?
     arg_list = (args.values.select(&.first_value?) + args.values.reject(&.first_value?)).map do |a|
       arg = a.name
-      arg += " : #{convert_type(a)}"
-      arg += " = #{a.default.inspect}" if !a.required? || a.default
+      if is_resource? && arg == "@metadata"
+        arg += " : Apimachinery::Apis::Meta::V1::ObjectMeta? = nil"
+      elsif is_list? && arg == "@metadata"
+        arg += " : Apimachinery::Apis::Meta::V1::ListMeta? = nil"
+      else
+        arg += " : #{convert_type(a)}"
+        arg += " = #{a.default.inspect}" if !a.required? || a.default
+      end
       arg
     end
     file.print arg_list.join(", ")
@@ -313,13 +344,15 @@ class Generator::Definition
       # Print property descriptions
       generate_description property.description
       req = required.includes?(name)
-      _type = convert_type(property, req)
 
       # Resource metadata is already defined
       if is_resource? && name == "metadata"
         file.puts "property #{crystal_name} : Apimachinery::Apis::Meta::V1::ObjectMeta?"
         next
       end
+
+      Log.info &.emit "define_properties", class_name: class_name, crystal_name: crystal_name, required: req, type: prop_type, ref: prop_ref
+      _type = convert_type(property, req)
 
       if _type =~ /^Time\b/
         file.puts %<@[::JSON::Field(key: "#{name}", emit_null: #{req}, converter: K8S::TimeFormat.new)]>
@@ -350,7 +383,14 @@ class Generator::Definition
       # next if is_resource? && resource_property?(name)
       crystal_name = crystalize_name(name)
       # file.puts "," unless first_arg
-      file.puts "#{crystal_name}: { type: #{convert_type(property)}, nilable: #{!required.includes?(name)}, key: #{name.inspect}, getter: false, setter: false },"
+
+      if is_resource? && name == "metadata"
+        file.puts "#{crystal_name}: { type: Apimachinery::Apis::Meta::V1::ObjectMeta?, nilable: #{!required.includes?(name)}, key: #{name.inspect}, getter: false, setter: false },"
+      else
+        Log.debug { "#{class_name} - property: #{name}" }
+        file.puts "#{crystal_name}: { type: #{convert_type(property)}, nilable: #{!required.includes?(name)}, key: #{name.inspect}, getter: false, setter: false },"
+      end
+
       # first_arg = false
     end
     file.puts ")]"
@@ -477,7 +517,13 @@ class Generator::Definition
 
   private def parse_operation_args_string(args : Hash(String, FunctionArgument))
     arg_list = (args.values.select(&.first_value?) + args.values.reject(&.first_value?)).map do |a|
-      ars = [%<name: "#{a.name}">, %<type: #{convert_type(a)}>]
+      ars = if is_resource? && a.name == "metadata"
+              [%<name: "#{a.name}">, %<type: Apimachinery::Apis::Meta::V1::ObjectMeta?>]
+            elsif is_list? && a.name == "metadata"
+              [%<name: "#{a.name}">, %<type: Apimachinery::Apis::Meta::V1::ListMeta?>]
+            else
+              [%<name: "#{a.name}">, %<type: #{convert_type(a)}>]
+            end
       ars << %<default: #{a.default.inspect}> if !a.required? || a.default
       %<{#{ars.join(',')}}>
     end
