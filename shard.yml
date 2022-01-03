@@ -1,6 +1,6 @@
 name: k8s
 description: Kubernetes Object Mappings for Crystal
-version: 0.0.3
+version: 0.0.4
 crystal: ">= 1.2.2, < 2.0.0"
 
 dependencies:
