@@ -74,4 +74,23 @@ class Generator
     end
     nil
   end
+
+  # Will return the alias if the api is an alias, otherwise nil
+  def default_allias?(class_name)
+    case class_name
+    when "ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaPropsOrArray"
+      %<ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps | Array(ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps)>
+    when "ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaPropsOrBool"
+      %<ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps | Bool>
+    when "ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaPropsOrStringArray"
+      %<ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps | Array(String)>
+    when "Api::Core::V1::List"
+      # TODO: Properly handle List alias
+      class_name
+    when "ApiextensionsApiserver::Apis::Apiextensions::V1::JSON"
+      %<::JSON::Any>
+    else
+      nil
+    end
+  end
 end

@@ -6,7 +6,7 @@ FileUtils.mkdir_p(File.join(".", Generator::SCHEMAS_DIR))
 
 major = 1
 minor = 11
-# minor = 22
+minor = 23
 
 FileUtils.rm_rf File.join(".", Generator::VERSIONS_DIR)
 

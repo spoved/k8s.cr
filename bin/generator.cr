@@ -2,6 +2,7 @@ require "./swagger"
 require "./helper"
 
 class Generator
+  URL_REGEX    = /(?<url>((http[s]?):\/)?\/?([^:\/\s]+)((\/\w+)*\/)([\w\-\.]+[^#?\s]+)(.*)?(#[\w\-]+)?)/
   ROOT_NAME    = "K8S"
   VERSIONS_DIR = "src/versions"
   SCHEMAS_DIR  = "tmp/schemas"
@@ -13,6 +14,11 @@ class Generator
   getter base_dir : String
   getter schema : Swagger
   getter only_groups : Array(String)? = nil
+  @writter : Generator::Writer? = nil
+
+  def writter
+    @writter ||= Generator::Writer.new(self)
+  end
 
   def self.generate(*args)
     new(*args).tap(&.generate)
@@ -82,7 +88,7 @@ class Generator
     definitions.each do |definition|
       # if only_groups is defined, only generate the groups specified
       if only_groups.nil? || !(only_groups.not_nil!.find { |group| definition.name =~ /#{group}/ }.nil?)
-        definition.generate
+        self.writter.write(definition)
       end
     end
 
@@ -145,6 +151,17 @@ class Generator
 
   private def version
     @schema.info.version.downcase.split('.').tap(&.pop).join('.')
+  end
+
+  def definition_ref(ref : String?)
+    return unless ref
+    _, kind, name = ref.split("/")
+    case kind
+    when "definitions"
+      definitions[name]
+    else
+      # Do nothing
+    end
   end
 end
 
