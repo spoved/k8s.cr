@@ -4,20 +4,39 @@ require "log"
 require "../ext/hashdiff"
 
 annotation ::K8S::Properties; end
+annotation ::K8S::GroupVersionKind; end
+annotation ::K8S::Action; end
 
-abstract class ::K8S::Kubernetes::Resource; end
+module ::K8S::Types::Apimachinery::Apis::Meta::V1::APIResourceList; end
 
-class ::K8S::Apimachinery::Apis::Meta::V1::APIResourceList; end
+module ::K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps; end
+
+module ::K8S::Kubernetes
+  module Object; end
+
+  # Defines a Kubernetes resource. Resources have API endpoints and are identified by a unique apiVersion and kind.
+  module Resource
+    abstract def api_version : String
+    abstract def kind : String
+  end
+
+  module Resource::Object
+    include ::K8S::Kubernetes::Resource
+
+    abstract def metadata : Apimachinery::Apis::Meta::V1::ObjectMeta?
+  end
+
+  module Resource::List(T)
+    include ::K8S::Kubernetes::Resource
+
+    abstract def metadata : Apimachinery::Apis::Meta::V1::ListMeta?
+    abstract def items : Array(T)
+  end
+end
 
 require "./resource/*"
 
-abstract class ::K8S::Kubernetes::Resource
-  include ::JSON::Serializable
-  include ::YAML::Serializable
-
-  abstract def api_version : String
-  abstract def kind : String
-
+module ::K8S::Kubernetes::Resource
   def self.from_file(file)
     Log.trace { "K8S::Resource: Loading: #{file}" }
     if File.extname(file) == ".json"
@@ -79,26 +98,6 @@ abstract class ::K8S::Kubernetes::Resource
     end
 
     {% end %}
-  end
-
-  module Object
-    abstract def api_version : String
-    abstract def kind : String
-    abstract def metadata : Apimachinery::Apis::Meta::V1::ObjectMeta?
-
-    def metadata! : Apimachinery::Apis::Meta::V1::ObjectMeta
-      @metadata ||= Apimachinery::Apis::Meta::V1::ObjectMeta.new
-    end
-  end
-
-  module List
-    abstract def api_version : String
-    abstract def kind : String
-    abstract def metadata : Apimachinery::Apis::Meta::V1::ListMeta?
-
-    def metadata! : Apimachinery::Apis::Meta::V1::ListMeta
-      @metadata ||= Apimachinery::Apis::Meta::V1::ListMeta.new
-    end
   end
 end
 

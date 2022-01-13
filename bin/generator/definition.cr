@@ -85,7 +85,7 @@ class Generator::Definition
   end
 
   def is_list?
-    name.ends_with? "List"
+    name.ends_with?("List") && definition.properties["items"]?
   end
 
   def api_version
@@ -106,7 +106,12 @@ class Generator::Definition
   end
 
   def kind
-    is_list? ? "List" : self.name.split(".")[-1]
+    # is_list? ? "List" : self.name.split(".")[-1]
+    self.name.split(".")[-1]
+  end
+
+  def list_kind
+    class_name.lchop("::").rchop("List")
   end
 
   # Helpers
@@ -164,9 +169,9 @@ class Generator::Definition
   def parse_operation_args_string(args : Hash(String, FunctionArgument))
     arg_list = (args.values.select(&.first_value?) + args.values.reject(&.first_value?)).map do |a|
       ars = if is_resource? && a.name == "metadata"
-              [%<name: "#{a.name}">, %<type: Apimachinery::Apis::Meta::V1::ObjectMeta?>]
+              [%<name: "#{a.name}">, %<type: ::#{base_class}::Apimachinery::Apis::Meta::V1::ObjectMeta?>]
             elsif is_list? && a.name == "metadata"
-              [%<name: "#{a.name}">, %<type: Apimachinery::Apis::Meta::V1::ListMeta?>]
+              [%<name: "#{a.name}">, %<type: ::#{base_class}::Apimachinery::Apis::Meta::V1::ListMeta?>]
             else
               [%<name: "#{a.name}">, %<type: #{convert_type(a)}>]
             end
@@ -189,15 +194,15 @@ class Generator::Definition
     return nil if properties.empty?
     props = Array(NamedTuple(key: String, accessor: String, kind: String, nilable: Bool, default: String?, read_only: Bool, description: String?)).new
 
-    if is_resource?
+    if (is_list? || is_resource?)
       props << {
         key:         "apiVersion",
         accessor:    "api_version",
         kind:        "String",
         nilable:     false,
-        default:     api_version_name.inspect,
+        default:     api_version_name,
         read_only:   true,
-        description: "API version of the referent.",
+        description: "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources))",
       }
 
       props << {
@@ -205,36 +210,34 @@ class Generator::Definition
         accessor:    "kind",
         kind:        "String",
         nilable:     false,
-        default:     kind.inspect,
+        default:     kind,
         read_only:   true,
-        description: "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+        description: "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds))",
+      }
+
+      props << {
+        key:         "metadata",
+        accessor:    "metadata",
+        kind:        is_list? ? "::K8S::Apimachinery::Apis::Meta::V1::ListMeta" : "::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta",
+        nilable:     true,
+        default:     nil,
+        read_only:   false,
+        description: "Standard object's metadata. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata))",
       }
     end
 
     properties.each do |name, property|
-      next if is_resource? && resource_property?(name)
+      next if (is_list? || is_resource?) && resource_property?(name)
       crystal_name = crystalize_name(name)
       description = property.description.nil? ? nil : property.description.not_nil!.gsub(URL_REGEX, "[\\k<url>](\\k<url>)")
-      req = required.includes?(name)
 
-      if name == "metadata" && (is_list? || is_resource?)
-        props << {
-          key:         "metadata",
-          accessor:    "metadata",
-          kind:        is_list? ? "::K8S::Apimachinery::Apis::Meta::V1::ListMeta" : "::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta",
-          nilable:     true,
-          default:     nil,
-          read_only:   false,
-          description: description,
-        }
-        next
-      end
+      next if name == "metadata" && (is_list? || is_resource?)
 
       if is_list? && name == "items"
         props << {
           key:         "items",
           accessor:    "items",
-          kind:        "Array(" + class_name.lchop("::").rchop("List") + ")",
+          kind:        "Array(::#{base_class}::#{list_kind})",
           nilable:     !required.includes?(name),
           default:     nil,
           read_only:   false,
@@ -242,8 +245,6 @@ class Generator::Definition
         }
         next
       end
-
-      _type = convert_type(property, req)
 
       props << {
         key:         name,

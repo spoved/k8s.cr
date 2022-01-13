@@ -62,10 +62,10 @@ class Generator
   end
 
   DEFAULT_DEFINITIONS = {
-    "io.k8s.apimachinery.pkg.util.intstr.IntOrString" => "Int32 | String",
-    "io.k8s.apimachinery.pkg.api.resource.Quantity"   => "Int32 | String",
-    "io.k8s.apimachinery.pkg.apis.meta.v1.Time"       => "Time",
-    "io.k8s.apimachinery.pkg.apis.meta.v1.MicroTime"  => "Time",
+    "io.k8s.apimachinery.pkg.util.intstr.IntOrString" => "::Int32 | ::String",
+    "io.k8s.apimachinery.pkg.api.resource.Quantity"   => "::Int32 | ::String",
+    "io.k8s.apimachinery.pkg.apis.meta.v1.Time"       => "::Time",
+    "io.k8s.apimachinery.pkg.apis.meta.v1.MicroTime"  => "::Time",
   }
 
   # Add any definitions that are missing
@@ -77,12 +77,13 @@ class Generator
 
   def generate
     api_map = @definitions.reject do |_, klass|
-      (["Int32", "Time", "String"] & klass.split("|").map(&.strip)).first?
+      (["::Int32", "::Time", "::String"] & klass.split("|").map(&.strip)).first?
     end
     find_aliases(api_map)
     definitions = api_map.map do |key, _|
       Definition.new(self, key)
     end
+    self.writter.definitions = definitions
 
     FileUtils.mkdir_p(base_dir)
     definitions.each do |definition|
@@ -108,10 +109,8 @@ class Generator
     File.open(filename, "w+") do |file|
       file.puts "# THIS FILE WAS AUTO GENERATED FROM THE K8S SWAGGER SPEC", "",
         %<require "../k8s/*">, "",
-        "annotation ::#{base_class.lchop("::")}::GroupVersionKind; end",
-        "annotation ::#{base_class.lchop("::")}::Action; end", ""
 
-      file.puts "require \"./#{version}/kubernetes\""
+        file.puts "require \"./#{version}/kubernetes\""
       definitions.map(&.filename).each { |r| file.puts "require \"#{r.sub(base_dir, "./#{version}")}\"" }
     end
     system "crystal tool format #{filename}"
@@ -127,8 +126,7 @@ class Generator
         " VERSION_MINOR = #{version.lchop("v").split(".").first}",
         " VERSION_MAJOR = #{version.lchop("v").split(".").last}",
         ""
-      file.puts "abstract class Resource"
-      file.puts "  include JSON::Serializable", ""
+      file.puts "module Resource"
       write_mappings(file, definitions)
       file.puts "end", "", "end"
     end
@@ -145,8 +143,8 @@ class Generator
       }.uniq!
       .each { |r| file.puts %<    {"#{r[0]}","#{r[1]}",K8S::#{r[2]}},> }
     file.puts %< ]>, ""
-    file.puts "k8s_json_discriminator(MAPPINGS)",
-      "k8s_yaml_discriminator(MAPPINGS)", ""
+    # file.puts "k8s_json_discriminator(MAPPINGS)",
+    #   "k8s_yaml_discriminator(MAPPINGS)", ""
   end
 
   private def version
@@ -158,7 +156,11 @@ class Generator
     _, kind, name = ref.split("/")
     case kind
     when "definitions"
-      definitions[name]
+      if definitions[name] =~ /^::/
+        definitions[name]
+      else
+        "::#{base_class}::#{definitions[name]}"
+      end
     else
       # Do nothing
     end

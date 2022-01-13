@@ -10,6 +10,7 @@ class Generator
         when "resource"
           "Kubernetes::Resource"
         else
+          # pp kind.to_s.camelcase
           kind.to_s.camelcase
         end
     t += " | Nil" unless required
@@ -30,6 +31,7 @@ class Generator
   def convert_type(param : Swagger::Path::Parameter)
     t = definition_ref(param.schema.try(&._ref)) ||
         convert_type(param.type.to_s, true)
+    # t = "::#{base_class}::#{t}"
     t += " | Nil" unless param.required
     # Log.trace { "Converted type 2: #{t}" }
     t
@@ -40,11 +42,11 @@ class Generator
     t = if ref = definition_ref(property._ref)
           ref
         elsif property.x_kubernetes_preserve_unknown_fields
-          "AnyHash::JSON"
+          "::AnyHash::JSON"
         elsif property.x_kubernetes_int_or_string
-          "Int32 | String"
+          "::Int32 | ::String"
         elsif property.type.to_s == "array"
-          "Array(#{convert_type(property.items.as(Swagger::Definition::Property))})"
+          "::Array(#{convert_type(property.items.as(Swagger::Definition::Property))})"
         elsif property.type.to_s == "object"
           types = Array(String).new
           types.concat property.properties.values.map { |x| convert_type(x.as(Swagger::Definition::Property)).as(String) }
@@ -67,14 +69,14 @@ class Generator
             raise "No types found for property"
           end
 
-          "Hash(String, #{types.join(" | ")})"
+          "::Hash(String, #{types.join(" | ")})"
           # elsif property.additional_properties
           #   "Hash(String, #{convert_type(property.additional_properties.not_nil!)})"
         else
           convert_type(property.type.to_s, true)
         end
     t += " | Nil" unless required
-    # Log.trace { "Converted type 3: #{t}" }
+    Log.trace { "Converted type 3: #{t}" }
     t
   end
 end
