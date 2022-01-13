@@ -194,7 +194,7 @@ class Generator::Definition
     return nil if properties.empty?
     props = Array(NamedTuple(key: String, accessor: String, kind: String, nilable: Bool, default: String?, read_only: Bool, description: String?)).new
 
-    if (is_list? || is_resource?)
+    if (is_list? || is_resource?) || name.ends_with?("APIResourceList")
       props << {
         key:         "apiVersion",
         accessor:    "api_version",
@@ -223,11 +223,12 @@ class Generator::Definition
         default:     nil,
         read_only:   false,
         description: "Standard object's metadata. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata))",
-      }
+      } if properties["metadata"]?
     end
 
     properties.each do |name, property|
-      next if (is_list? || is_resource?) && resource_property?(name)
+      next if (is_list? || is_resource? || self.name.ends_with?("APIResourceList")) && resource_property?(name)
+
       crystal_name = crystalize_name(name)
       description = property.description.nil? ? nil : property.description.not_nil!.gsub(URL_REGEX, "[\\k<url>](\\k<url>)")
 

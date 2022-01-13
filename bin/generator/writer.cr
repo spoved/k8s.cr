@@ -21,6 +21,8 @@ class Generator::Writer
     properties = definition.parse_properties
 
     write_preamble
+    file.puts "module #{base_class}::Types::#{definition.class_name}; end", ""
+
     write_depends(definition, properties)
     write_block "module #{base_class.lchop("::")}" do
       if definition.alias_of
@@ -156,11 +158,17 @@ class Generator::Writer
 
     write_block "class #{definition.class_name} < ::#{base_class}::Types::#{definition.class_name}::Instance" do
       file.puts "include ::#{base_class}::Types::#{definition.class_name}"
-      file.puts "include ::K8S::Kubernetes::Object"
-      file.puts "include ::K8S::Kubernetes::Resource" if definition.is_resource?
-      file.puts "include ::K8S::Kubernetes::Resource::List(::#{base_class}::#{definition.list_kind})" if definition.is_list?
+
+      if definition.is_list?
+        file.puts "include ::K8S::Kubernetes::Resource::List(::#{base_class}::#{definition.list_kind})"
+      elsif definition.is_resource?
+        file.puts "include ::K8S::Kubernetes::Resource::Object"
+      else
+        file.puts "include ::K8S::Kubernetes::Object"
+      end
 
       write_properties(properties)
+      file.puts "::K8S::Kubernetes::Resource.define_serialize_methods(#{properties.inspect})"
     end
   end
 

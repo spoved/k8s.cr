@@ -7,6 +7,14 @@ struct JSON::Any
 end
 
 # :nodoc:
+class AnyHash::JSON
+  # Convert a YAML object to a AnyHash::JSON document.
+  def self.new(ctx : YAML::ParseContext, node : YAML::Nodes::Node)
+    AnyHash::JSON.from_json YAML::Any.new(ctx, node).to_json
+  end
+end
+
+# :nodoc:
 struct YAML::Any
   # Convert a JSON document to a YAML object.
   def self.new(parser : JSON::PullParser) : YAML::Any
@@ -15,20 +23,6 @@ struct YAML::Any
 end
 
 module ::K8S::Kubernetes::Resource
-  REGISTRY = Array(Tuple(String, String, K8S::Kubernetes::Resource.class)).new
-
-  # Register a resource class.
-  macro inherited
-    {% if @type.annotation(::K8S::GroupVersionKind) %}
-    {% for anno in @type.annotations(::K8S::Properties) %}
-    REGISTRY << {
-      {{anno[:group]}},
-      {{anno[:version]}},
-      {{@type.id}}
-    }
-    {% end %}{% end %}
-  end
-
   macro define_serialize_methods(props)
     def self.new(pull : JSON::PullParser)
       hash = new
@@ -38,8 +32,8 @@ module ::K8S::Kubernetes::Resource
 
         case parsed_key
         {% for prop in props %}
-        when :{{prop[:key].id}}, {{prop[:key].id.stringify}}, :{{prop[:accessor].id}}, {{prop[:accessor].id.stringify}}
-          hash[parsed_key] = {{prop[:kind].id}}.new(pull)
+        when :{{prop[:key].id}}, {{prop[:key].id.stringify}} {% if prop[:key] != prop[:accessor] %}, :{{prop[:accessor].id}}, {{prop[:accessor].id.stringify}} {% end %}
+          hash[parsed_key] = ({{prop[:kind].id}}).new(pull)
         {% end %}
         else
           raise JSON::ParseException.new("Unknown key #{parsed_key}", *key_location)
@@ -68,21 +62,24 @@ module ::K8S::Kubernetes::Resource
     end
 
     def self.new(ctx : YAML::ParseContext, node : YAML::Nodes::Node)
+      hash = new
+
       unless node.is_a?(YAML::Nodes::Mapping)
         node.raise "Expected mapping, not #{node.kind}"
       end
 
       YAML::Schema::Core.each(node) do |key, value|
-        parsed_key = K.new(ctx, key)
+        parsed_key = String.new(ctx, key)
         case parsed_key
         {% for prop in props %}
-        when :{{prop[:key].id}}, {{prop[:key].id.stringify}}, :{{prop[:accessor].id}}, {{prop[:accessor].id.stringify}}
-          yield parsed_key, {{prop[:kind].id}}.new(ctx, value)
+        when :{{prop[:key].id}}, {{prop[:key].id.stringify}} {% if prop[:key] != prop[:accessor] %}, :{{prop[:accessor].id}}, {{prop[:accessor].id.stringify}} {% end %}
+          hash[:{{prop[:accessor].id}}] = ({{prop[:kind].id}}).new(ctx, value)
         {% end %}
         else
-          node.raise "Unknown key #{parsed_key}")
+          node.raise "Unknown key #{parsed_key}"
         end
       end
+      hash
     end
 
     def to_yaml(yaml : YAML::Nodes::Builder) : Nil
@@ -98,6 +95,227 @@ module ::K8S::Kubernetes::Resource
         #   key.to_yaml(yaml)
         #   value.to_yaml(yaml)
         # end
+      end
+    end
+  end
+
+  def self.new(pull : ::JSON::PullParser)
+    location = pull.location
+
+    api_value = nil
+    discriminator_value = nil
+
+    # Try to find the discriminator while also getting the raw
+    # string value of the parsed JSON, so then we can pass it
+    # to the final type.
+    json = String.build do |io|
+      JSON.build(io) do |builder|
+        builder.start_object
+        pull.read_object do |key|
+          if key == "apiVersion" || key == "groupVersion"
+            value_kind = pull.kind
+            case value_kind
+            when .string?
+              api_value = k8s_sanitize_api(pull.string_value)
+            else
+              raise ::JSON::SerializableError.new("JSON discriminator field 'apiVersion' has an invalid value type of #{value_kind}", to_s, nil, *location, nil)
+            end
+            builder.field(key, api_value)
+            pull.read_next
+          elsif key == "kind"
+            value_kind = pull.kind
+            case value_kind
+            when .string?
+              discriminator_value = pull.string_value
+            else
+              raise ::JSON::SerializableError.new("JSON discriminator field 'kind' has an invalid value type of #{value_kind}", to_s, nil, *location, nil)
+            end
+            builder.field(key, discriminator_value)
+            pull.read_next
+          else
+            builder.field(key) { pull.read_raw(builder) }
+          end
+        end
+        builder.end_object
+      end
+    end
+
+    unless api_value
+      raise ::JSON::SerializableError.new("Missing JSON discriminator field 'apiVersion'", to_s, nil, *location, nil)
+    end
+
+    unless discriminator_value
+      raise ::JSON::SerializableError.new("Missing JSON discriminator field 'kind'", to_s, nil, *location, nil)
+    end
+
+    parts = api_value.split('/')
+    ver = parts.pop
+    group = parts.join('/')
+    pp ({group: group, ver: ver, discriminator_value: discriminator_value})
+    from_json(group, ver, discriminator_value, pull)
+  end
+
+  def self.from_json(json : String)
+    new(JSON::PullParser.new(json))
+  end
+
+  def self.from_yaml(string_or_io)
+    parser = ::K8S::Kubernetes::Resource::YAMLParser.new(string_or_io, &.parse_all_nodes)
+
+    if parser.size == 1
+      return new(YAML::ParseContext.new, parser.first.nodes.first)
+    end
+
+    parser.flat_map { |doc| doc.nodes.map { |n| new(YAML::ParseContext.new, n) } }
+  end
+
+  def self.new(ctx : YAML::ParseContext, node : YAML::Nodes::Node)
+    api_value = nil
+    discriminator_value = nil
+
+    ctx.read_alias(node, {{@type}}) do |obj|
+      return obj
+    end
+
+    unless node.is_a?(YAML::Nodes::Mapping)
+      node.raise "expected YAML mapping, not #{node.class}"
+    end
+
+    node.each do |key, value|
+      next unless key.is_a?(YAML::Nodes::Scalar) && value.is_a?(YAML::Nodes::Scalar)
+      next unless key.value == "kind" || key.value == "apiVersion"
+
+      discriminator_value = value.value if key.value == "kind"
+      api_value = value.value.gsub(".k8s.io", "") if key.value == "apiVersion" || key.value == "groupVersion"
+    end
+
+    node.raise "Missing YAML discriminator field 'kind'" if discriminator_value.nil?
+    node.raise "Missing YAML discriminator field 'apiVersion'" if api_value.nil?
+
+    # for the compilers benefit
+    discriminator_value = discriminator_value.not_nil!
+    api_value = api_value.not_nil!
+
+    parts = api_value.split('/')
+    ver = parts.pop
+    group = parts.join('/')
+
+    pp ({group: group, ver: ver, discriminator_value: discriminator_value})
+    # klass = resource_class(group, ver, discriminator_value)
+    # if !klass.nil? && klass >= ::K8S::Kubernetes::Resource
+    #   klass.new(ctx, node)
+    # else
+    #   node.raise "unable to locate resource for #{group}, #{ver}, #{discriminator_value}"
+    # end
+    from_yaml(group, ver, discriminator_value, ctx, node)
+  end
+
+  protected def self.resource_class(group : String, ver : String, kind : String)
+    reg = REGISTRY.find { |a| a[:group] == group && a[:version] == ver && a[:kind] == kind }
+    pp reg
+    reg[:resource] unless reg.nil?
+  end
+
+  macro finished
+    {% entries = [] of NamedTuple %}
+    {% others = {} of StringLiteral => TypeNode %}
+    {% for resource in K8S::Kubernetes::Resource.all_subclasses %}
+      {% if !resource.abstract? && resource.annotation(::K8S::GroupVersionKind) %}
+        {% for anno in resource.annotations(::K8S::GroupVersionKind) %}
+          {% entries << {
+               group:    anno[:group].gsub(/(\.authorization)?\.k8s\.io/, ""),
+               version:  anno[:version],
+               kind:     anno[:kind],
+               resource: resource,
+             } %}
+          {% value = "{#{anno[:group].gsub(/(\.authorization)?\.k8s\.io/, "")},#{anno[:version]},#{anno[:kind]}}" %}
+          {% if !others[value] %}
+            {% others[value] = resource %}
+          {% end %}
+        {% end %}
+      {% end %}
+    {% end %}
+    {% for resource in K8S::Kubernetes::Resource.all_subclasses %}
+      {% if !resource.abstract? && resource.annotation(::K8S::GroupVersionKind) %}
+        {% for anno in resource.annotations(::K8S::GroupVersionKind) %}
+          {% value = "{\"\",#{anno[:version]},#{anno[:kind]}}" %}
+          {% if anno[:group] != "" && !others[value] %}
+            {% others[value] = resource %}
+            {% entries << {
+                 group:    "",
+                 version:  anno[:version],
+                 kind:     anno[:kind],
+                 resource: resource,
+               } %}
+          {% end %}
+          {% value1 = "{\"core\",#{anno[:version]},#{anno[:kind]}}" %}
+          {% if !others[value1] && anno[:group] == "" %}
+            {% others[value1] = resource %}
+            {% entries << {
+                 group:    "core",
+                 version:  anno[:version],
+                 kind:     anno[:kind],
+                 resource: resource,
+               } %}
+          {% end %}
+        {% end %}
+      {% end %}
+    {% end %}
+    {% for mapping in K8S::Kubernetes::Resource::MAPPINGS %}
+      {% value = %<{"",#{mapping[0]},#{mapping[1].split("::").last}}> %}
+      {% entries << {
+           group:    "",
+           version:  mapping[0],
+           kind:     mapping[1].split("::").last,
+           resource: mapping[2].resolve,
+         } %}
+      {% if !others[value] %}
+        {% others[value] = mapping[2].resolve %}
+      {% end %}
+      {% if mapping[0] =~ /\// %}
+        {% split = mapping[0].split('/') %}
+        {% value1 = "{#{split.first},#{split.last},#{mapping[2]}}" %}
+        {% entries << {
+             group:    split.first,
+             version:  split.last,
+             kind:     mapping[2],
+             resource: mapping[2].resolve,
+           } %}
+        {% if !others[value1] && split.first == "" %}
+          {% others[value1] = mapping[2].resolve %}
+        {% end %}
+      {% end %}
+    {% end %}
+
+    REGISTRY = [
+      {{*entries}}
+    ]
+
+    def self.from_json(group : String, ver : String, kind : String, pull : ::JSON::PullParser)
+      kind = resource_class(group, ver, kind)
+      raise "unable to locate resource for #{group}, #{ver}, #{kind}" if kind.nil?
+
+      case kind
+      {% for entry in entries %}
+      when {{entry[:resource]}}.class
+        {{entry[:resource]}}.new(pull)
+      {% end %}
+      else
+        raise K8S::Error::UndefinedResource.new(kind)
+      end
+    end
+
+    def self.from_yaml(group : String, ver : String, kind : String, ctx : YAML::ParseContext, node : YAML::Nodes::Node)
+      kind = resource_class(group, ver, kind)
+      raise "unable to locate resource for #{group}, #{ver}, #{kind}" if kind.nil?
+
+      case kind
+      {% for entry in entries %}
+      when {{entry[:resource]}}.class
+        {{entry[:resource]}}.new(ctx, node)
+      {% end %}
+      else
+        raise K8S::Error::UndefinedResource.new(kind)
       end
     end
   end

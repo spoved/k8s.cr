@@ -2,20 +2,21 @@ require "json"
 require "yaml"
 require "log"
 require "../ext/hashdiff"
+require "./macros"
 
 annotation ::K8S::Properties; end
 annotation ::K8S::GroupVersionKind; end
 annotation ::K8S::Action; end
 
-module ::K8S::Types::Apimachinery::Apis::Meta::V1::APIResourceList; end
-
-module ::K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps; end
-
 module ::K8S::Kubernetes
+  REGISTRY = Array(Tuple(String, String, K8S::Kubernetes::Resource.class)).new
+
   module Object; end
 
   # Defines a Kubernetes resource. Resources have API endpoints and are identified by a unique apiVersion and kind.
   module Resource
+    include ::K8S::Kubernetes::Object
+
     abstract def api_version : String
     abstract def kind : String
   end
@@ -33,6 +34,12 @@ module ::K8S::Kubernetes
     abstract def items : Array(T)
   end
 end
+
+module ::K8S::Types::Apimachinery::Apis::Meta::V1::APIResourceList
+  include ::K8S::Kubernetes::Resource
+end
+
+module ::K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps; end
 
 require "./resource/*"
 
@@ -58,46 +65,6 @@ module ::K8S::Kubernetes::Resource
         Array(Resource).new
       end
     end
-  end
-
-  macro inherited
-    {% if @type.annotation(::K8S::Properties) %}
-    {% anno = @type.annotation(::K8S::Properties) %}
-
-    def to_h
-      puts "to_h #{self.class}"
-      {
-      {% for prop, value in anno.named_args %}
-        {% if value[:type].is_a?(::K8S::Kubernetes::Resource) %}
-        {{prop.stringify}} => @{{prop.id}}.nil? ? nil : @{{prop.id}}.not_nil!.to_h,
-        {% else %}
-        {{prop.stringify}} => @{{prop.id}},
-        {% end %}
-      {% end %}
-      }
-    end
-
-    def merge(other)
-      Log.info { "K8S::Resource: Merging #{self.class.name} with #{other.class.name}" }
-
-      copy = self.to_h
-      case other
-      when Hash
-          copy = copy.deep_merge(other_hash)
-      when {{@type.id}}
-          other_hash = other.to_h
-          copy = copy.deep_merge(other_hash)
-      else
-        raise "Cannot merge {{@type.id}} with #{other.class}"
-      end
-      self.class.from_h(copy)
-    end
-
-    def self.from_h(hash)
-      from_json(hash.to_json)
-    end
-
-    {% end %}
   end
 end
 
