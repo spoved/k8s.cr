@@ -111,7 +111,7 @@ class Generator::Definition
   end
 
   def list_kind
-    class_name.lchop("::").rchop("List")
+    class_name.rchop("List")
   end
 
   # Helpers
@@ -190,6 +190,7 @@ class Generator::Definition
     end
   end
 
+  # ameba:disable Metrics/CyclomaticComplexity
   def parse_properties : Array(NamedTuple(key: String, accessor: String, kind: String, nilable: Bool, default: String?, read_only: Bool, description: String?))?
     return nil if properties.empty?
     props = Array(NamedTuple(key: String, accessor: String, kind: String, nilable: Bool, default: String?, read_only: Bool, description: String?)).new

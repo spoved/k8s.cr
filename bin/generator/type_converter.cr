@@ -2,13 +2,13 @@ class Generator
   def convert_type(kind : String, required = false)
     t = case kind
         when "object"
-          "Hash(String, String)"
+          "::Hash(String, String)"
         when "boolean"
-          "Bool"
+          "::Bool"
         when "integer", "number"
           "Int32"
         when "resource"
-          "Kubernetes::Resource"
+          "::K8S::Kubernetes::Resource"
         else
           # pp kind.to_s.camelcase
           kind.to_s.camelcase
@@ -76,7 +76,7 @@ class Generator
           convert_type(property.type.to_s, true)
         end
     t += " | Nil" unless required
-    Log.trace { "Converted type 3: #{t}" }
+    # Log.trace { "Converted type 3: #{t}" }
     t
   end
 end

@@ -81,7 +81,7 @@ module K8S
     end
 
     # Recursive compact for Hash/Array
-    def recursive_compact(value : Hash | Array | YAML::Any | JSON::Any)
+    def recursive_compact(value : Hash | Array | ::YAML::Any | ::JSON::Any)
       case value
       when Hash
         value.reject! { |_, v| _recursive_compact(v) }.to_h

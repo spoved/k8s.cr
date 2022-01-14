@@ -16,7 +16,7 @@ class Swagger::Definition::Property
   @[JSON::Field(key: "additionalProperties")]
   property additional_properties : AdditionalProperties? = nil
   @[JSON::Field(key: "enum")]
-  property _enum : Array(JSON::Any)? = nil
+  property _enum : Array(::JSON::Any)? = nil
 
   include_k8s_annos
 

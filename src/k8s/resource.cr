@@ -1,7 +1,7 @@
 require "json"
 require "yaml"
 require "log"
-require "../ext/hashdiff"
+require "../ext/*"
 require "./macros"
 
 annotation ::K8S::Properties; end
@@ -39,7 +39,13 @@ module ::K8S::Types::Apimachinery::Apis::Meta::V1::APIResourceList
   include ::K8S::Kubernetes::Resource
 end
 
-module ::K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps; end
+module ::K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps
+  macro finished
+    def self.new(*args, **kwargs)
+      ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps.new(*args, **kwargs)
+    end
+  end
+end
 
 require "./resource/*"
 

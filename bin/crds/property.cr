@@ -16,7 +16,7 @@ class K8S::CRD::Property
   @[JSON::Field(key: "additionalProperties")]
   property additional_properties : Property? = nil
   @[JSON::Field(key: "enum")]
-  property _enum : Array(JSON::Any)? = nil
+  property _enum : Array(::JSON::Any)? = nil
   property any_of : Array(Property) = Array(Property).new
   property all_of : Array(Property) = Array(Property).new
 
@@ -97,7 +97,7 @@ class K8S::CRD::Property
   end
 
   def self.schema_props_to_def(obj : Bool) : Property
-    Property.new(type: "boolean", default: JSON::Any.new(true))
+    Property.new(type: "boolean", default: ::JSON::Any.new(true))
   end
 
   def self.schema_props_to_def(obj : Nil) : Nil
