@@ -44,6 +44,20 @@ module ::K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchema
     def self.new(*args, **kwargs)
       ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps.new(*args, **kwargs)
     end
+
+    def self.from_json(string)
+      ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps.from_json(string)
+    end
+
+    def self.from_yaml(string)
+      ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps.from_yaml(string)
+    end
+
+    {% verbatim do %}
+      macro method_missing(call)
+        ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps.{{call}}
+      end
+    {% end %}
   end
 end
 

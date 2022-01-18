@@ -81,3 +81,9 @@ abstract class AnyHash(K, V)
     end
   end
 end
+
+class AnyHash::JSON
+  def self.new(pull : ::JSON::PullParser)
+    new Hash(String, ::JSON::Any).new(pull)
+  end
+end
