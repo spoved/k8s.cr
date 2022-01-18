@@ -2,6 +2,11 @@
 
 require "yaml"
 require "json"
+require "any_hash"
+
+module K8S::Types::Api::Networking::V1beta1::IngressClassSpec; end
+
+require "./ingress_class_parameters_reference"
 
 module K8S
   alias Api::Networking::V1beta1::IngressClassSpec = Api::Networking::V1::IngressClassSpec

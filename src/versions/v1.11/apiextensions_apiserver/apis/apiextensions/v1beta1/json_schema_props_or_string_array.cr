@@ -2,22 +2,10 @@
 
 require "yaml"
 require "json"
+require "any_hash"
+
+module K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSONSchemaPropsOrStringArray; end
 
 module K8S
-  # JSONSchemaPropsOrStringArray represents a JSONSchemaProps or a string array.
-  @[::K8S::Properties]
-  class ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSONSchemaPropsOrStringArray
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
-
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
-
-    def initialize
-    end
-  end
+  alias ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSONSchemaPropsOrStringArray = ::AnyHash::JSON
 end

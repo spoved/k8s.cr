@@ -2,6 +2,12 @@
 
 require "yaml"
 require "json"
+require "any_hash"
+
+module K8S::Types::Api::Batch::V2alpha1::JobTemplateSpec; end
+
+require "../../../apimachinery/apis/meta/v1/object_meta"
+require "../v1/job_spec"
 
 module K8S
   alias Api::Batch::V2alpha1::JobTemplateSpec = Api::Batch::V1beta1::JobTemplateSpec

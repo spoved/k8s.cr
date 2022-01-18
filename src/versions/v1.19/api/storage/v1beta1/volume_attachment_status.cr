@@ -2,6 +2,11 @@
 
 require "yaml"
 require "json"
+require "any_hash"
+
+module K8S::Types::Api::Storage::V1beta1::VolumeAttachmentStatus; end
+
+require "./volume_error"
 
 module K8S
   alias Api::Storage::V1beta1::VolumeAttachmentStatus = Api::Storage::V1::VolumeAttachmentStatus

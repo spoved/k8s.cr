@@ -2,6 +2,11 @@
 
 require "yaml"
 require "json"
+require "any_hash"
+
+module K8S::Types::Api::Extensions::V1beta1::DaemonSetUpdateStrategy; end
+
+require "./rolling_update_daemon_set"
 
 module K8S
   alias Api::Extensions::V1beta1::DaemonSetUpdateStrategy = Api::Apps::V1::DaemonSetUpdateStrategy

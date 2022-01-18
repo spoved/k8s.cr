@@ -2,6 +2,12 @@
 
 require "yaml"
 require "json"
+require "any_hash"
+
+module K8S::Types::Api::Rbac::V1beta1::Role; end
+
+require "../../../apimachinery/apis/meta/v1/object_meta"
+require "./policy_rule"
 
 module K8S
   alias Api::Rbac::V1beta1::Role = Api::Rbac::V1::Role

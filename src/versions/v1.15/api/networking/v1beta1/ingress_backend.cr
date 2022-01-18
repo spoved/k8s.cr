@@ -2,6 +2,9 @@
 
 require "yaml"
 require "json"
+require "any_hash"
+
+module K8S::Types::Api::Networking::V1beta1::IngressBackend; end
 
 module K8S
   alias Api::Networking::V1beta1::IngressBackend = Api::Extensions::V1beta1::IngressBackend

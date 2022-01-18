@@ -2,6 +2,13 @@
 
 require "yaml"
 require "json"
+require "any_hash"
+
+module K8S::Types::Api::Rbac::V1beta1::ClusterRole; end
+
+require "../../../apimachinery/apis/meta/v1/object_meta"
+require "./aggregation_rule"
+require "./policy_rule"
 
 module K8S
   alias Api::Rbac::V1beta1::ClusterRole = Api::Rbac::V1::ClusterRole

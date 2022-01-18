@@ -2,6 +2,13 @@
 
 require "yaml"
 require "json"
+require "any_hash"
+
+module K8S::Types::Api::Batch::V2alpha1::CronJob; end
+
+require "../../../apimachinery/apis/meta/v1/object_meta"
+require "./cron_job_spec"
+require "./cron_job_status"
 
 module K8S
   alias Api::Batch::V2alpha1::CronJob = Api::Batch::V1beta1::CronJob

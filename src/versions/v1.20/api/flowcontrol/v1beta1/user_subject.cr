@@ -2,6 +2,9 @@
 
 require "yaml"
 require "json"
+require "any_hash"
+
+module K8S::Types::Api::Flowcontrol::V1beta1::UserSubject; end
 
 module K8S
   alias Api::Flowcontrol::V1beta1::UserSubject = Api::Flowcontrol::V1alpha1::UserSubject

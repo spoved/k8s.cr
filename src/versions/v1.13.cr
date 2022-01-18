@@ -1,11 +1,8 @@
+require "./v1.13/kubernetes"
 # THIS FILE WAS AUTO GENERATED FROM THE K8S SWAGGER SPEC
 
 require "../k8s/*"
 
-annotation ::K8S::GroupVersionKind; end
-annotation ::K8S::Action; end
-
-require "./v1.13/kubernetes"
 require "./v1.13/api/admissionregistration/v1alpha1/initializer.cr"
 require "./v1.13/api/admissionregistration/v1alpha1/initializer_configuration.cr"
 require "./v1.13/api/admissionregistration/v1alpha1/initializer_configuration_list.cr"

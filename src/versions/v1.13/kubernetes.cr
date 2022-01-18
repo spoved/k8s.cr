@@ -3,9 +3,7 @@ module ::K8S::Kubernetes
   VERSION_MINOR =  1
   VERSION_MAJOR = 13
 
-  abstract class Resource
-    include JSON::Serializable
-
+  module Resource
     MAPPINGS = [
       {"admissionregistration/v1alpha1", "InitializerConfiguration", K8S::Api::Admissionregistration::V1alpha1::InitializerConfiguration},
       {"admissionregistration/v1alpha1", "InitializerConfigurationList", K8S::Api::Admissionregistration::V1alpha1::InitializerConfigurationList},
@@ -173,8 +171,5 @@ module ::K8S::Kubernetes
       {"apiregistration/v1beta1", "APIServiceList", K8S::KubeAggregator::Apis::Apiregistration::V1beta1::APIServiceList},
       {"v1", "List", K8S::Api::Core::V1::List},
     ]
-
-    k8s_json_discriminator(MAPPINGS)
-    k8s_yaml_discriminator(MAPPINGS)
   end
 end

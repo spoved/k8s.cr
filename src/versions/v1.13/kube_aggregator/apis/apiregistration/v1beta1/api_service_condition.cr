@@ -2,6 +2,9 @@
 
 require "yaml"
 require "json"
+require "any_hash"
+
+module K8S::Types::KubeAggregator::Apis::Apiregistration::V1beta1::APIServiceCondition; end
 
 module K8S
   alias KubeAggregator::Apis::Apiregistration::V1beta1::APIServiceCondition = KubeAggregator::Apis::Apiregistration::V1::APIServiceCondition

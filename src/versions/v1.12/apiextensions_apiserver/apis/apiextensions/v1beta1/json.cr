@@ -2,22 +2,10 @@
 
 require "yaml"
 require "json"
+require "any_hash"
+
+module K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSON; end
 
 module K8S
-  # JSON represents any valid JSON value. These types are supported: bool, int64, float64, string, []interface{}, map[string]interface{} and nil.
-  @[::K8S::Properties]
-  class ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSON
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
-
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
-
-    def initialize
-    end
-  end
+  alias ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSON = ::AnyHash::JSON
 end

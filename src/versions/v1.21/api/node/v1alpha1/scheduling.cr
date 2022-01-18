@@ -2,6 +2,11 @@
 
 require "yaml"
 require "json"
+require "any_hash"
+
+module K8S::Types::Api::Node::V1alpha1::Scheduling; end
+
+require "../../core/v1/toleration"
 
 module K8S
   alias Api::Node::V1alpha1::Scheduling = Api::Node::V1::Scheduling

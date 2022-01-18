@@ -2,6 +2,9 @@
 
 require "yaml"
 require "json"
+require "any_hash"
+
+module K8S::Types::Api::Authorization::V1beta1::NonResourceAttributes; end
 
 module K8S
   alias Api::Authorization::V1beta1::NonResourceAttributes = Api::Authorization::V1::NonResourceAttributes

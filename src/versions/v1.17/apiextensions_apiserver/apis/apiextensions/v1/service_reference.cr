@@ -2,6 +2,9 @@
 
 require "yaml"
 require "json"
+require "any_hash"
+
+module K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1::ServiceReference; end
 
 module K8S
   alias ApiextensionsApiserver::Apis::Apiextensions::V1::ServiceReference = Api::Admissionregistration::V1::ServiceReference

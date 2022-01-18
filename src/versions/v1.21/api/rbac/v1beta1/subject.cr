@@ -2,6 +2,9 @@
 
 require "yaml"
 require "json"
+require "any_hash"
+
+module K8S::Types::Api::Rbac::V1beta1::Subject; end
 
 module K8S
   alias Api::Rbac::V1beta1::Subject = Api::Rbac::V1::Subject

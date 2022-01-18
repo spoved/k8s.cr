@@ -2,6 +2,11 @@
 
 require "yaml"
 require "json"
+require "any_hash"
+
+module K8S::Types::Api::Batch::V2alpha1::CronJobSpec; end
+
+require "./job_template_spec"
 
 module K8S
   alias Api::Batch::V2alpha1::CronJobSpec = Api::Batch::V1beta1::CronJobSpec

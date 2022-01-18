@@ -2,22 +2,10 @@
 
 require "yaml"
 require "json"
+require "any_hash"
+
+module K8S::Types::Api::Apiserverinternal::V1alpha1::StorageVersionSpec; end
 
 module K8S
-  # StorageVersionSpec is an empty spec.
-  @[::K8S::Properties]
-  class Api::Apiserverinternal::V1alpha1::StorageVersionSpec
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
-
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
-
-    def initialize
-    end
-  end
+  alias Api::Apiserverinternal::V1alpha1::StorageVersionSpec = ::AnyHash::JSON
 end

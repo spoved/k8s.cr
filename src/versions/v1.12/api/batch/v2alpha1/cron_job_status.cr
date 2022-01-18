@@ -2,6 +2,11 @@
 
 require "yaml"
 require "json"
+require "any_hash"
+
+module K8S::Types::Api::Batch::V2alpha1::CronJobStatus; end
+
+require "../../core/v1/object_reference"
 
 module K8S
   alias Api::Batch::V2alpha1::CronJobStatus = Api::Batch::V1beta1::CronJobStatus

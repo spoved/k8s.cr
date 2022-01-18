@@ -2,22 +2,10 @@
 
 require "yaml"
 require "json"
+require "any_hash"
+
+module K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSONSchemaPropsOrBool; end
 
 module K8S
-  # JSONSchemaPropsOrBool represents JSONSchemaProps or a boolean value. Defaults to true for the boolean property.
-  @[::K8S::Properties]
-  class ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSONSchemaPropsOrBool
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
-
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
-
-    def initialize
-    end
-  end
+  alias ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSONSchemaPropsOrBool = ::AnyHash::JSON
 end
