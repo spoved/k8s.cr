@@ -2,10 +2,9 @@
 
 require "yaml"
 require "json"
-require "any_hash"
 
 module K8S::Types::Apimachinery::Runtime::RawExtension; end
 
 module K8S
-  alias Apimachinery::Runtime::RawExtension = ::AnyHash::JSON
+  alias Apimachinery::Runtime::RawExtension = ::K8S::Object(::JSON::Any)
 end

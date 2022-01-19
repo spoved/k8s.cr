@@ -2,7 +2,6 @@
 
 require "yaml"
 require "json"
-require "any_hash"
 
 module K8S::Types::Api::Batch::V2alpha1::CronJobSpec; end
 

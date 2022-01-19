@@ -2,7 +2,6 @@
 
 require "yaml"
 require "json"
-require "any_hash"
 
 module K8S::Types::Api::Apps::V1beta2::DaemonSetCondition; end
 

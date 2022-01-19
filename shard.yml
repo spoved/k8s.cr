@@ -13,5 +13,3 @@ development_dependencies:
     version: ~> 0.10.1
   open-api:
     github: spoved/open-api.cr
-  any_hash:
-    github: sija/any_hash.cr

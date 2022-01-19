@@ -1,0 +1,21 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "shards",
+      "command": "crystal shards",
+      "type": "shell"
+    },
+    {
+      "label": "pre-compile",
+      "command": "mkdir -p ${workspaceFolder}/bin",
+      "type": "shell"
+    },
+    {
+      "label": "Compile",
+      "command": "crystal build --debug ${workspaceFolder}/tmp/test.cr -o ${workspaceFolder}/bin/test",
+      "type": "shell",
+      "dependsOn": ["pre-compile"]
+    }
+  ]
+}

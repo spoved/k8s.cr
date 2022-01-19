@@ -2,10 +2,9 @@
 
 require "yaml"
 require "json"
-require "any_hash"
 
 module K8S::Types::Apimachinery::Apis::Meta::V1::FieldsV1; end
 
 module K8S
-  alias Apimachinery::Apis::Meta::V1::FieldsV1 = ::AnyHash::JSON
+  alias Apimachinery::Apis::Meta::V1::FieldsV1 = ::K8S::Object(::JSON::Any)
 end

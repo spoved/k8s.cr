@@ -3,6 +3,7 @@ require "yaml"
 require "log"
 require "../ext/*"
 require "./macros"
+require "./object"
 
 annotation ::K8S::Properties; end
 annotation ::K8S::GroupVersionKind; end
@@ -10,8 +11,6 @@ annotation ::K8S::Action; end
 
 module ::K8S::Kubernetes
   REGISTRY = Array(Tuple(String, String, K8S::Kubernetes::Resource.class)).new
-
-  module Object; end
 
   # Defines a Kubernetes resource. Resources have API endpoints and are identified by a unique apiVersion and kind.
   module Resource

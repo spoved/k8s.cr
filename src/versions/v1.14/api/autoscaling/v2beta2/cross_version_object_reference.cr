@@ -2,7 +2,6 @@
 
 require "yaml"
 require "json"
-require "any_hash"
 
 module K8S::Types::Api::Autoscaling::V2beta2::CrossVersionObjectReference; end
 

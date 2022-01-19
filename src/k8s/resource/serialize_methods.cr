@@ -3,15 +3,19 @@ module ::K8S::Kubernetes::Resource
     def self.new(pull : ::JSON::PullParser)
       hash = new
       pull.read_object do |key, key_location|
-        parsed_key = K.from_json_object_key?(key)
-        raise ::JSON::ParseException.new("Can't convert #{key.inspect} into #{K}", *key_location) unless parsed_key
+        parsed_key = String.from_json_object_key?(key)
+        raise ::JSON::ParseException.new("Can't convert #{key.inspect} into String", *key_location) unless parsed_key
 
         case parsed_key
         {% for prop in props %}
         when {{prop[:key].id.stringify}} {% if prop[:key] != prop[:accessor] %}, {{prop[:accessor].id.stringify}} {% end %}
           parsed_value = {{prop[:kind].id}}.new(pull)
           Log.trace { "Setting #{parsed_key} to #{parsed_value}" }
-          hash[{{prop[:key].id.stringify}}] = parsed_value
+          {% if prop[:read_only] %}
+          hash[{{prop[:key].id.stringify}}] = parsed_value.as({{prop[:kind].id}})
+          {% else %}
+          hash.{{prop[:accessor].id}} = parsed_value.as({{prop[:kind].id}})
+          {% end %}
         {% end %}
         else
           raise ::JSON::ParseException.new("Unknown key #{parsed_key}", *key_location)
@@ -30,12 +34,6 @@ module ::K8S::Kubernetes::Resource
         {% end %}
 
         # TODO: Handle unmapped keys
-
-        # each do |key, value|
-        #   json.field key.to_json_object_key do
-        #     value.to_json(json)
-        #   end
-        # end
       end
     end
 
@@ -46,13 +44,17 @@ module ::K8S::Kubernetes::Resource
       end
 
       ::YAML::Schema::Core.each(node) do |key, value|
-        parsed_key = K.new(ctx, key)
+        parsed_key = String.new(ctx, key)
         case parsed_key
         {% for prop in props %}
         when {{prop[:key].id.stringify}} {% if prop[:key] != prop[:accessor] %}, {{prop[:accessor].id.stringify}} {% end %}
           parsed_value = {{prop[:kind].id}}.new(ctx, value)
           Log.trace { "Setting #{parsed_key} to #{parsed_value}" }
-          hash[{{prop[:key].id.stringify}}] = parsed_value
+          {% if prop[:read_only] %}
+          hash[{{prop[:key].id.stringify}}] = parsed_value.as({{prop[:kind].id}})
+          {% else %}
+          hash.{{prop[:accessor].id}} = parsed_value.as({{prop[:kind].id}})
+          {% end %}
         {% end %}
         else
           node.raise "Unknown key #{parsed_key}"

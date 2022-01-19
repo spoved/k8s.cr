@@ -19,7 +19,7 @@ Spectator.describe K8S::Kubernetes::Resource do
   {% end %}
 
   {% if (::K8S::Kubernetes::VERSION_MINOR == 1 && ::K8S::Kubernetes::VERSION_MAJOR >= 16) %}
-    it "crd list" do
+    it "crd list", focus: true do
       K8S::Resource.from_file(fixture_path("apis", "customresourcedefinitionlist.json"))
     end
   {% else %}

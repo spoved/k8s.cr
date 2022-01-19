@@ -2,10 +2,9 @@
 
 require "yaml"
 require "json"
-require "any_hash"
 
 module K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSONSchemaPropsOrArray; end
 
 module K8S
-  alias ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSONSchemaPropsOrArray = ::AnyHash::JSON
+  alias ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSONSchemaPropsOrArray = ::K8S::Object(::JSON::Any)
 end

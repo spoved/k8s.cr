@@ -8,13 +8,13 @@ struct JSON::Any
   end
 end
 
-# :nodoc:
-class ::AnyHash::JSON
-  # Convert a YAML object to a AnyHash::JSON document.
-  def self.new(ctx : YAML::ParseContext, node : YAML::Nodes::Node)
-    ::AnyHash::JSON.new(::JSON::Any.new(ctx, node).as_h)
-  end
-end
+# # :nodoc:
+# class ::AnyHash::JSON
+#   # Convert a YAML object to a AnyHash::JSON document.
+#   def self.new(ctx : YAML::ParseContext, node : YAML::Nodes::Node)
+#     ::AnyHash::JSON.new(::JSON::Any.new(ctx, node).as_h)
+#   end
+# end
 
 # :nodoc:
 struct YAML::Any
@@ -33,6 +33,12 @@ module ::K8S::Kubernetes::Resource
         {% for anno in resource.annotations(::K8S::GroupVersionKind) %}
           {% entries << {
                group:    anno[:group].gsub(/(\.authorization)?\.k8s\.io/, ""),
+               version:  anno[:version],
+               kind:     anno[:kind],
+               resource: resource,
+             } %}
+          {% entries << {
+               group:    anno[:group],
                version:  anno[:version],
                kind:     anno[:kind],
                resource: resource,
@@ -87,7 +93,7 @@ module ::K8S::Kubernetes::Resource
         {% entries << {
              group:    split.first,
              version:  split.last,
-             kind:     mapping[2],
+             kind:     mapping[2].id.split("::").last,
              resource: mapping[2].resolve,
            } %}
         {% if !others[value1] && split.first == "" %}
@@ -96,9 +102,9 @@ module ::K8S::Kubernetes::Resource
       {% end %}
     {% end %}
 
-    # :nodoc:
+
     REGISTRY = [
-      {{*entries}}
+      {{*entries.uniq}}
     ]
   end
 
@@ -108,24 +114,24 @@ module ::K8S::Kubernetes::Resource
   end
 
   private macro __from_yaml(group, ver, kind, ctx, node)
-    case { {{group}}, {{ver}}, {{kind}} }
+    case { {{group}}.sub(/^io\.k8s(\.[-a-z]+\.pkg)?\.apis?(\.core)?\./, ""), {{ver}}, {{kind}} }
     {% for entry in REGISTRY %}
     when { {{entry[:group]}}, {{entry[:version]}}, {{entry[:kind]}} }
       {{entry[:resource]}}.new({{ctx}}, {{node}}).as(::K8S::Kubernetes::Resource)
     {% end %}
     else
-      raise K8S::Error::UndefinedResource.new({{kind}})
+      raise K8S::Error::UndefinedResource.new("#{{{group}}}:#{{{ver}}}:#{{{kind}}}")
     end
   end
 
-  private macro __from_json(group, ver, kind, pull)
-    case { {{group}}, {{ver}}, {{kind}} }
+  private macro __from_json(group, ver, kind, json)
+    case { {{group}}.sub(/^io\.k8s(\.[-a-z]+\.pkg)?\.apis?(\.core)?\./, ""), {{ver}}, {{kind}} }
     {% for entry in REGISTRY %}
     when { {{entry[:group]}}, {{entry[:version]}}, {{entry[:kind]}} }
-      {{entry[:resource]}}.new({{pull}}).as(::K8S::Kubernetes::Resource)
+      {{entry[:resource]}}.from_json({{json}}).as(::K8S::Kubernetes::Resource)
     {% end %}
     else
-      raise K8S::Error::UndefinedResource.new({{kind}})
+      raise K8S::Error::UndefinedResource.new("#{{{group}}}:#{{{ver}}}:#{{{kind}}}")
     end
   end
 
@@ -182,7 +188,10 @@ module ::K8S::Kubernetes::Resource
     ver = parts.pop
     group = parts.join('/')
     # pp({group: group, ver: ver, discriminator_value: discriminator_value})
-    __from_json(group, ver, discriminator_value, pull)
+    __from_json(group, ver, discriminator_value, json)
+    # klass = resource_class(group, ver, discriminator_value)
+    # raise K8S::Error::UndefinedResource.new(discriminator_value) if klass.nil?
+    # klass.new(pull).as(::K8S::Kubernetes::Resource)
   end
 
   def self.from_json(json : String)
@@ -239,5 +248,8 @@ module ::K8S::Kubernetes::Resource
 
     # pp({group: group, ver: ver, discriminator_value: discriminator_value})
     __from_yaml(group, ver, discriminator_value, ctx, node)
+    # klass = resource_class(group, ver, discriminator_value)
+    # raise K8S::Error::UndefinedResource.new(discriminator_value) if klass.nil?
+    # klass.new(ctx, node).as(::K8S::Kubernetes::Resource)
   end
 end

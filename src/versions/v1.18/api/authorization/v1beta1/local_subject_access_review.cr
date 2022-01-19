@@ -2,7 +2,6 @@
 
 require "yaml"
 require "json"
-require "any_hash"
 
 module K8S::Types::Api::Authorization::V1beta1::LocalSubjectAccessReview; end
 

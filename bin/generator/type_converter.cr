@@ -42,7 +42,7 @@ class Generator
     t = if ref = definition_ref(property._ref)
           ref
         elsif property.x_kubernetes_preserve_unknown_fields
-          "::AnyHash::JSON"
+          "::K8S::Object(::JSON::Any::Type)"
         elsif property.x_kubernetes_int_or_string
           "::Int32 | ::String"
         elsif property.type.to_s == "array"

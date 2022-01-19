@@ -1,10 +1,8 @@
 require "./resource"
 
 module ::K8S::Types::Kubernetes::ResourceList
-  alias Key = String
   alias ValueType = String | ::Array(::K8S::Kubernetes::Resource) | ::K8S::Kubernetes::Object | Nil
-  # alias Value = ValueType | Array(Value) | Set(Value) | Hash(Key, Value)
-  alias Instance = ::AnyHash(Key, ValueType)
+  alias Instance = ::K8S::Object(ValueType)
 end
 
 class ::K8S::Api::Core::V1::List < ::K8S::Types::Kubernetes::ResourceList::Instance
