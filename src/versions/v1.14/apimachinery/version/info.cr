@@ -87,15 +87,15 @@ module K8S
 
   # Info contains versioning information. how we'll want to distribute that information.
   @[::K8S::Properties(
-    build_date: {key: "buildDate", accessor: "build_date", kind: "String", nilable: false, default: nil, read_only: false, description: nil},
-    compiler: {key: "compiler", accessor: "compiler", kind: "String", nilable: false, default: nil, read_only: false, description: nil},
-    git_commit: {key: "gitCommit", accessor: "git_commit", kind: "String", nilable: false, default: nil, read_only: false, description: nil},
-    git_tree_state: {key: "gitTreeState", accessor: "git_tree_state", kind: "String", nilable: false, default: nil, read_only: false, description: nil},
-    git_version: {key: "gitVersion", accessor: "git_version", kind: "String", nilable: false, default: nil, read_only: false, description: nil},
-    go_version: {key: "goVersion", accessor: "go_version", kind: "String", nilable: false, default: nil, read_only: false, description: nil},
-    major: {key: "major", accessor: "major", kind: "String", nilable: false, default: nil, read_only: false, description: nil},
-    minor: {key: "minor", accessor: "minor", kind: "String", nilable: false, default: nil, read_only: false, description: nil},
-    platform: {key: "platform", accessor: "platform", kind: "String", nilable: false, default: nil, read_only: false, description: nil},
+    build_date: {key: "buildDate", accessor: "build_date", kind: "String", nilable: false, default: nil, read_only: false, description: nil, x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    compiler: {key: "compiler", accessor: "compiler", kind: "String", nilable: false, default: nil, read_only: false, description: nil, x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    git_commit: {key: "gitCommit", accessor: "git_commit", kind: "String", nilable: false, default: nil, read_only: false, description: nil, x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    git_tree_state: {key: "gitTreeState", accessor: "git_tree_state", kind: "String", nilable: false, default: nil, read_only: false, description: nil, x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    git_version: {key: "gitVersion", accessor: "git_version", kind: "String", nilable: false, default: nil, read_only: false, description: nil, x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    go_version: {key: "goVersion", accessor: "go_version", kind: "String", nilable: false, default: nil, read_only: false, description: nil, x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    major: {key: "major", accessor: "major", kind: "String", nilable: false, default: nil, read_only: false, description: nil, x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    minor: {key: "minor", accessor: "minor", kind: "String", nilable: false, default: nil, read_only: false, description: nil, x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    platform: {key: "platform", accessor: "platform", kind: "String", nilable: false, default: nil, read_only: false, description: nil, x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Apimachinery::Version::Info < ::K8S::Types::Apimachinery::Version::Info::Instance
     include ::K8S::Types::Apimachinery::Version::Info

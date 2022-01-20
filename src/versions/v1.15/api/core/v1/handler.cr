@@ -43,9 +43,9 @@ module K8S
 
   # Handler defines a specific action that should be taken
   @[::K8S::Properties(
-    exec: {key: "exec", accessor: "exec", kind: "::K8S::Api::Core::V1::ExecAction", nilable: true, default: nil, read_only: false, description: "One and only one of the following should be specified. Exec specifies the action to take."},
-    http_get: {key: "httpGet", accessor: "http_get", kind: "::K8S::Api::Core::V1::HTTPGetAction", nilable: true, default: nil, read_only: false, description: "HTTPGet specifies the http request to perform."},
-    tcp_socket: {key: "tcpSocket", accessor: "tcp_socket", kind: "::K8S::Api::Core::V1::TCPSocketAction", nilable: true, default: nil, read_only: false, description: "TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported"},
+    exec: {key: "exec", accessor: "exec", kind: "::K8S::Api::Core::V1::ExecAction", nilable: true, default: nil, read_only: false, description: "One and only one of the following should be specified. Exec specifies the action to take.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    http_get: {key: "httpGet", accessor: "http_get", kind: "::K8S::Api::Core::V1::HTTPGetAction", nilable: true, default: nil, read_only: false, description: "HTTPGet specifies the http request to perform.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    tcp_socket: {key: "tcpSocket", accessor: "tcp_socket", kind: "::K8S::Api::Core::V1::TCPSocketAction", nilable: true, default: nil, read_only: false, description: "TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Core::V1::Handler < ::K8S::Types::Api::Core::V1::Handler::Instance
     include ::K8S::Types::Api::Core::V1::Handler

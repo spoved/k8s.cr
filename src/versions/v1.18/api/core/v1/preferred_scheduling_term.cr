@@ -33,8 +33,8 @@ module K8S
 
   # An empty preferred scheduling term matches all objects with implicit weight 0 (i.e. it's a no-op). A null preferred scheduling term matches no objects (i.e. is also a no-op).
   @[::K8S::Properties(
-    preference: {key: "preference", accessor: "preference", kind: "::K8S::Api::Core::V1::NodeSelectorTerm", nilable: false, default: nil, read_only: false, description: "A node selector term, associated with the corresponding weight."},
-    weight: {key: "weight", accessor: "weight", kind: "Int32", nilable: false, default: nil, read_only: false, description: "Weight associated with matching the corresponding nodeSelectorTerm, in the range 1-100."},
+    preference: {key: "preference", accessor: "preference", kind: "::K8S::Api::Core::V1::NodeSelectorTerm", nilable: false, default: nil, read_only: false, description: "A node selector term, associated with the corresponding weight.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    weight: {key: "weight", accessor: "weight", kind: "Int32", nilable: false, default: nil, read_only: false, description: "Weight associated with matching the corresponding nodeSelectorTerm, in the range 1-100.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Core::V1::PreferredSchedulingTerm < ::K8S::Types::Api::Core::V1::PreferredSchedulingTerm::Instance
     include ::K8S::Types::Api::Core::V1::PreferredSchedulingTerm

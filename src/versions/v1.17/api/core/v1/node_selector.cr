@@ -25,7 +25,7 @@ module K8S
 
   # A node selector represents the union of the results of one or more label queries over a set of nodes; that is, it represents the OR of the selectors represented by the node selector terms.
   @[::K8S::Properties(
-    node_selector_terms: {key: "nodeSelectorTerms", accessor: "node_selector_terms", kind: "::Array(::K8S::Api::Core::V1::NodeSelectorTerm)", nilable: false, default: nil, read_only: false, description: "Required. A list of node selector terms. The terms are ORed."},
+    node_selector_terms: {key: "nodeSelectorTerms", accessor: "node_selector_terms", kind: "::Array(::K8S::Api::Core::V1::NodeSelectorTerm)", nilable: false, default: nil, read_only: false, description: "Required. A list of node selector terms. The terms are ORed.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Core::V1::NodeSelector < ::K8S::Types::Api::Core::V1::NodeSelector::Instance
     include ::K8S::Types::Api::Core::V1::NodeSelector

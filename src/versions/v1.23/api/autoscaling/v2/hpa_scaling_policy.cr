@@ -39,9 +39,9 @@ module K8S
 
   # HPAScalingPolicy is a single policy which must hold true for a specified past interval.
   @[::K8S::Properties(
-    period_seconds: {key: "periodSeconds", accessor: "period_seconds", kind: "Int32", nilable: false, default: nil, read_only: false, description: "PeriodSeconds specifies the window of time for which the policy should hold true. PeriodSeconds must be greater than zero and less than or equal to 1800 (30 min)."},
-    type: {key: "type", accessor: "type", kind: "String", nilable: false, default: nil, read_only: false, description: "Type is used to specify the scaling policy."},
-    value: {key: "value", accessor: "value", kind: "Int32", nilable: false, default: nil, read_only: false, description: "Value contains the amount of change which is permitted by the policy. It must be greater than zero"},
+    period_seconds: {key: "periodSeconds", accessor: "period_seconds", kind: "Int32", nilable: false, default: nil, read_only: false, description: "PeriodSeconds specifies the window of time for which the policy should hold true. PeriodSeconds must be greater than zero and less than or equal to 1800 (30 min).", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    type: {key: "type", accessor: "type", kind: "String", nilable: false, default: nil, read_only: false, description: "Type is used to specify the scaling policy.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    value: {key: "value", accessor: "value", kind: "Int32", nilable: false, default: nil, read_only: false, description: "Value contains the amount of change which is permitted by the policy. It must be greater than zero", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Autoscaling::V2::HPAScalingPolicy < ::K8S::Types::Api::Autoscaling::V2::HPAScalingPolicy::Instance
     include ::K8S::Types::Api::Autoscaling::V2::HPAScalingPolicy

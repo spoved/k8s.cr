@@ -34,8 +34,8 @@ module K8S
 
   # CustomResourceSubresources defines the status and scale subresources for CustomResources.
   @[::K8S::Properties(
-    scale: {key: "scale", accessor: "scale", kind: "::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresourceScale", nilable: true, default: nil, read_only: false, description: "Scale denotes the scale subresource for CustomResources"},
-    status: {key: "status", accessor: "status", kind: "::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresourceStatus", nilable: true, default: nil, read_only: false, description: "Status denotes the status subresource for CustomResources"},
+    scale: {key: "scale", accessor: "scale", kind: "::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresourceScale", nilable: true, default: nil, read_only: false, description: "Scale denotes the scale subresource for CustomResources", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    status: {key: "status", accessor: "status", kind: "::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresourceStatus", nilable: true, default: nil, read_only: false, description: "Status denotes the status subresource for CustomResources", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresources < ::K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresources::Instance
     include ::K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresources

@@ -31,8 +31,8 @@ module K8S
 
   # ServiceReference holds a reference to Service.legacy.k8s.io
   @[::K8S::Properties(
-    name: {key: "name", accessor: "name", kind: "String", nilable: true, default: nil, read_only: false, description: "Name is the name of the service"},
-    namespace: {key: "namespace", accessor: "namespace", kind: "String", nilable: true, default: nil, read_only: false, description: "Namespace is the namespace of the service"},
+    name: {key: "name", accessor: "name", kind: "String", nilable: true, default: nil, read_only: false, description: "Name is the name of the service", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    namespace: {key: "namespace", accessor: "namespace", kind: "String", nilable: true, default: nil, read_only: false, description: "Namespace is the namespace of the service", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class KubeAggregator::Apis::Apiregistration::V1::ServiceReference < ::K8S::Types::KubeAggregator::Apis::Apiregistration::V1::ServiceReference::Instance
     include ::K8S::Types::KubeAggregator::Apis::Apiregistration::V1::ServiceReference

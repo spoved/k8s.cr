@@ -23,7 +23,7 @@ module K8S
 
   # FlowDistinguisherMethod specifies the method of a flow distinguisher.
   @[::K8S::Properties(
-    type: {key: "type", accessor: "type", kind: "String", nilable: false, default: nil, read_only: false, description: "`type` is the type of flow distinguisher method The supported types are \"ByUser\" and \"ByNamespace\". Required."},
+    type: {key: "type", accessor: "type", kind: "String", nilable: false, default: nil, read_only: false, description: "`type` is the type of flow distinguisher method The supported types are \"ByUser\" and \"ByNamespace\". Required.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Flowcontrol::V1alpha1::FlowDistinguisherMethod < ::K8S::Types::Api::Flowcontrol::V1alpha1::FlowDistinguisherMethod::Instance
     include ::K8S::Types::Api::Flowcontrol::V1alpha1::FlowDistinguisherMethod

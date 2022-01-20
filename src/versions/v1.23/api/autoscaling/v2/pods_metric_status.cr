@@ -34,8 +34,8 @@ module K8S
 
   # PodsMetricStatus indicates the current value of a metric describing each pod in the current scale target (for example, transactions-processed-per-second).
   @[::K8S::Properties(
-    current: {key: "current", accessor: "current", kind: "::K8S::Api::Autoscaling::V2::MetricValueStatus", nilable: false, default: nil, read_only: false, description: "current contains the current value for the given metric"},
-    metric: {key: "metric", accessor: "metric", kind: "::K8S::Api::Autoscaling::V2::MetricIdentifier", nilable: false, default: nil, read_only: false, description: "metric identifies the target metric by name and selector"},
+    current: {key: "current", accessor: "current", kind: "::K8S::Api::Autoscaling::V2::MetricValueStatus", nilable: false, default: nil, read_only: false, description: "current contains the current value for the given metric", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    metric: {key: "metric", accessor: "metric", kind: "::K8S::Api::Autoscaling::V2::MetricIdentifier", nilable: false, default: nil, read_only: false, description: "metric identifies the target metric by name and selector", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Autoscaling::V2::PodsMetricStatus < ::K8S::Types::Api::Autoscaling::V2::PodsMetricStatus::Instance
     include ::K8S::Types::Api::Autoscaling::V2::PodsMetricStatus

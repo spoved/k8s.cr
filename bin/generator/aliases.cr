@@ -78,18 +78,24 @@ class Generator
   # Will return the alias if the api is an alias, otherwise nil
   def default_allias?(class_name)
     case class_name
-    # when "ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps"
-    #   %<::#{base_class}::Types::ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps>
+    when "Api::Core::V1::List"
+      # TODO: Properly handle List alias
+      class_name
     when "ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaPropsOrArray"
       %<::#{base_class}::ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps | Array(::#{base_class}::ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps)>
     when "ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaPropsOrBool"
       %<::#{base_class}::ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps | Bool>
     when "ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaPropsOrStringArray"
       %<::#{base_class}::ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps | Array(String)>
-    when "Api::Core::V1::List"
-      # TODO: Properly handle List alias
-      class_name
     when "ApiextensionsApiserver::Apis::Apiextensions::V1::JSON"
+      %<::JSON::Any::Type>
+    when "ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSONSchemaPropsOrArray"
+      %<::#{base_class}::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSONSchemaProps | Array(::#{base_class}::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSONSchemaProps)>
+    when "ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSONSchemaPropsOrBool"
+      %<::#{base_class}::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSONSchemaProps | Bool>
+    when "ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSONSchemaPropsOrStringArray"
+      %<::#{base_class}::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSONSchemaProps | Array(String)>
+    when "ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSON"
       %<::JSON::Any::Type>
     else
       nil

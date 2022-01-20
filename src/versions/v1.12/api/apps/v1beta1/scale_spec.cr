@@ -23,7 +23,7 @@ module K8S
 
   # ScaleSpec describes the attributes of a scale subresource
   @[::K8S::Properties(
-    replicas: {key: "replicas", accessor: "replicas", kind: "Int32", nilable: true, default: nil, read_only: false, description: "desired number of instances for the scaled object."},
+    replicas: {key: "replicas", accessor: "replicas", kind: "Int32", nilable: true, default: nil, read_only: false, description: "desired number of instances for the scaled object.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Apps::V1beta1::ScaleSpec < ::K8S::Types::Api::Apps::V1beta1::ScaleSpec::Instance
     include ::K8S::Types::Api::Apps::V1beta1::ScaleSpec

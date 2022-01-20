@@ -41,9 +41,9 @@ module K8S
 
   # TokenReviewStatus is the result of the token authentication request.
   @[::K8S::Properties(
-    authenticated: {key: "authenticated", accessor: "authenticated", kind: "::Bool", nilable: true, default: nil, read_only: false, description: "Authenticated indicates that the token was associated with a known user."},
-    error: {key: "error", accessor: "error", kind: "String", nilable: true, default: nil, read_only: false, description: "Error indicates that the token couldn't be checked"},
-    user: {key: "user", accessor: "user", kind: "::K8S::Api::Authentication::V1::UserInfo", nilable: true, default: nil, read_only: false, description: "User is the UserInfo associated with the provided token."},
+    authenticated: {key: "authenticated", accessor: "authenticated", kind: "::Bool", nilable: true, default: nil, read_only: false, description: "Authenticated indicates that the token was associated with a known user.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    error: {key: "error", accessor: "error", kind: "String", nilable: true, default: nil, read_only: false, description: "Error indicates that the token couldn't be checked", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    user: {key: "user", accessor: "user", kind: "::K8S::Api::Authentication::V1::UserInfo", nilable: true, default: nil, read_only: false, description: "User is the UserInfo associated with the provided token.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Authentication::V1::TokenReviewStatus < ::K8S::Types::Api::Authentication::V1::TokenReviewStatus::Instance
     include ::K8S::Types::Api::Authentication::V1::TokenReviewStatus

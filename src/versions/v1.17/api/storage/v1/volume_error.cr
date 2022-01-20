@@ -31,8 +31,8 @@ module K8S
 
   # VolumeError captures an error encountered during a volume operation.
   @[::K8S::Properties(
-    message: {key: "message", accessor: "message", kind: "String", nilable: true, default: nil, read_only: false, description: "String detailing the error encountered during Attach or Detach operation. This string may be logged, so it should not contain sensitive information."},
-    time: {key: "time", accessor: "time", kind: "::Time", nilable: true, default: nil, read_only: false, description: "Time the error was encountered."},
+    message: {key: "message", accessor: "message", kind: "String", nilable: true, default: nil, read_only: false, description: "String detailing the error encountered during Attach or Detach operation. This string may be logged, so it should not contain sensitive information.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    time: {key: "time", accessor: "time", kind: "::Time", nilable: true, default: nil, read_only: false, description: "Time the error was encountered.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Storage::V1::VolumeError < ::K8S::Types::Api::Storage::V1::VolumeError::Instance
     include ::K8S::Types::Api::Storage::V1::VolumeError

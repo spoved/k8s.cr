@@ -23,7 +23,7 @@ module K8S
 
   # GroupSubject holds detailed information for group-kind subject.
   @[::K8S::Properties(
-    name: {key: "name", accessor: "name", kind: "String", nilable: false, default: nil, read_only: false, description: "name is the user group that matches, or \"*\" to match all user groups. See [https://github.com/kubernetes/apiserver/blob/master/pkg/authentication/user/user.go for some well-known group names. Required.](https://github.com/kubernetes/apiserver/blob/master/pkg/authentication/user/user.go for some well-known group names. Required.)"},
+    name: {key: "name", accessor: "name", kind: "String", nilable: false, default: nil, read_only: false, description: "name is the user group that matches, or \"*\" to match all user groups. See [https://github.com/kubernetes/apiserver/blob/master/pkg/authentication/user/user.go for some well-known group names. Required.](https://github.com/kubernetes/apiserver/blob/master/pkg/authentication/user/user.go for some well-known group names. Required.)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Flowcontrol::V1beta1::GroupSubject < ::K8S::Types::Api::Flowcontrol::V1beta1::GroupSubject::Instance
     include ::K8S::Types::Api::Flowcontrol::V1beta1::GroupSubject

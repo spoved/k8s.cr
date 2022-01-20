@@ -23,7 +23,7 @@ module K8S
 
   # UserSubject holds detailed information for user-kind subject.
   @[::K8S::Properties(
-    name: {key: "name", accessor: "name", kind: "String", nilable: false, default: nil, read_only: false, description: "`name` is the username that matches, or \"*\" to match all usernames. Required."},
+    name: {key: "name", accessor: "name", kind: "String", nilable: false, default: nil, read_only: false, description: "`name` is the username that matches, or \"*\" to match all usernames. Required.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Flowcontrol::V1beta1::UserSubject < ::K8S::Types::Api::Flowcontrol::V1beta1::UserSubject::Instance
     include ::K8S::Types::Api::Flowcontrol::V1beta1::UserSubject

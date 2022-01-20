@@ -25,7 +25,7 @@ module K8S
 
   # A scope selector represents the AND of the selectors represented by the scoped-resource selector requirements.
   @[::K8S::Properties(
-    match_expressions: {key: "matchExpressions", accessor: "match_expressions", kind: "::Array(::K8S::Api::Core::V1::ScopedResourceSelectorRequirement)", nilable: true, default: nil, read_only: false, description: "A list of scope selector requirements by scope of the resources."},
+    match_expressions: {key: "matchExpressions", accessor: "match_expressions", kind: "::Array(::K8S::Api::Core::V1::ScopedResourceSelectorRequirement)", nilable: true, default: nil, read_only: false, description: "A list of scope selector requirements by scope of the resources.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Core::V1::ScopeSelector < ::K8S::Types::Api::Core::V1::ScopeSelector::Instance
     include ::K8S::Types::Api::Core::V1::ScopeSelector

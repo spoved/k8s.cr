@@ -43,9 +43,9 @@ module K8S
 
   # ContainerState holds a possible state of container. Only one of its members may be specified. If none of them is specified, the default one is ContainerStateWaiting.
   @[::K8S::Properties(
-    running: {key: "running", accessor: "running", kind: "::K8S::Api::Core::V1::ContainerStateRunning", nilable: true, default: nil, read_only: false, description: "Details about a running container"},
-    terminated: {key: "terminated", accessor: "terminated", kind: "::K8S::Api::Core::V1::ContainerStateTerminated", nilable: true, default: nil, read_only: false, description: "Details about a terminated container"},
-    waiting: {key: "waiting", accessor: "waiting", kind: "::K8S::Api::Core::V1::ContainerStateWaiting", nilable: true, default: nil, read_only: false, description: "Details about a waiting container"},
+    running: {key: "running", accessor: "running", kind: "::K8S::Api::Core::V1::ContainerStateRunning", nilable: true, default: nil, read_only: false, description: "Details about a running container", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    terminated: {key: "terminated", accessor: "terminated", kind: "::K8S::Api::Core::V1::ContainerStateTerminated", nilable: true, default: nil, read_only: false, description: "Details about a terminated container", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    waiting: {key: "waiting", accessor: "waiting", kind: "::K8S::Api::Core::V1::ContainerStateWaiting", nilable: true, default: nil, read_only: false, description: "Details about a waiting container", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Core::V1::ContainerState < ::K8S::Types::Api::Core::V1::ContainerState::Instance
     include ::K8S::Types::Api::Core::V1::ContainerState

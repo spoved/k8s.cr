@@ -34,8 +34,8 @@ module K8S
 
   # Webhook holds the configuration of the webhook
   @[::K8S::Properties(
-    client_config: {key: "clientConfig", accessor: "client_config", kind: "::K8S::Api::Auditregistration::V1alpha1::WebhookClientConfig", nilable: false, default: nil, read_only: false, description: "ClientConfig holds the connection parameters for the webhook required"},
-    throttle: {key: "throttle", accessor: "throttle", kind: "::K8S::Api::Auditregistration::V1alpha1::WebhookThrottleConfig", nilable: true, default: nil, read_only: false, description: "Throttle holds the options for throttling the webhook"},
+    client_config: {key: "clientConfig", accessor: "client_config", kind: "::K8S::Api::Auditregistration::V1alpha1::WebhookClientConfig", nilable: false, default: nil, read_only: false, description: "ClientConfig holds the connection parameters for the webhook required", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    throttle: {key: "throttle", accessor: "throttle", kind: "::K8S::Api::Auditregistration::V1alpha1::WebhookThrottleConfig", nilable: true, default: nil, read_only: false, description: "Throttle holds the options for throttling the webhook", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Auditregistration::V1alpha1::Webhook < ::K8S::Types::Api::Auditregistration::V1alpha1::Webhook::Instance
     include ::K8S::Types::Api::Auditregistration::V1alpha1::Webhook

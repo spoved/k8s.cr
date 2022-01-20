@@ -31,8 +31,8 @@ module K8S
 
   # Sysctl defines a kernel parameter to be set
   @[::K8S::Properties(
-    name: {key: "name", accessor: "name", kind: "String", nilable: false, default: nil, read_only: false, description: "Name of a property to set"},
-    value: {key: "value", accessor: "value", kind: "String", nilable: false, default: nil, read_only: false, description: "Value of a property to set"},
+    name: {key: "name", accessor: "name", kind: "String", nilable: false, default: nil, read_only: false, description: "Name of a property to set", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    value: {key: "value", accessor: "value", kind: "String", nilable: false, default: nil, read_only: false, description: "Value of a property to set", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Core::V1::Sysctl < ::K8S::Types::Api::Core::V1::Sysctl::Instance
     include ::K8S::Types::Api::Core::V1::Sysctl

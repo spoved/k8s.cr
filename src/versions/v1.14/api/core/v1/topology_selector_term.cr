@@ -25,7 +25,7 @@ module K8S
 
   # A topology selector term represents the result of label queries. A null or empty topology selector term matches no objects. The requirements of them are ANDed. It provides a subset of functionality as NodeSelectorTerm. This is an alpha feature and may change in the future.
   @[::K8S::Properties(
-    match_label_expressions: {key: "matchLabelExpressions", accessor: "match_label_expressions", kind: "::Array(::K8S::Api::Core::V1::TopologySelectorLabelRequirement)", nilable: true, default: nil, read_only: false, description: "A list of topology selector requirements by labels."},
+    match_label_expressions: {key: "matchLabelExpressions", accessor: "match_label_expressions", kind: "::Array(::K8S::Api::Core::V1::TopologySelectorLabelRequirement)", nilable: true, default: nil, read_only: false, description: "A list of topology selector requirements by labels.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Core::V1::TopologySelectorTerm < ::K8S::Types::Api::Core::V1::TopologySelectorTerm::Instance
     include ::K8S::Types::Api::Core::V1::TopologySelectorTerm

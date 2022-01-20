@@ -25,7 +25,7 @@ module K8S
 
   # EndpointHints provides hints describing how an endpoint should be consumed.
   @[::K8S::Properties(
-    for_zones: {key: "forZones", accessor: "for_zones", kind: "::Array(::K8S::Api::Discovery::V1::ForZone)", nilable: true, default: nil, read_only: false, description: "forZones indicates the zone(s) this endpoint should be consumed by to enable topology aware routing."},
+    for_zones: {key: "forZones", accessor: "for_zones", kind: "::Array(::K8S::Api::Discovery::V1::ForZone)", nilable: true, default: nil, read_only: false, description: "forZones indicates the zone(s) this endpoint should be consumed by to enable topology aware routing.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: "atomic", x_kubernetes_map_type: nil},
   )]
   class Api::Discovery::V1::EndpointHints < ::K8S::Types::Api::Discovery::V1::EndpointHints::Instance
     include ::K8S::Types::Api::Discovery::V1::EndpointHints

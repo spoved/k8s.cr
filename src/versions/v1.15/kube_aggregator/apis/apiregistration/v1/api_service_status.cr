@@ -25,7 +25,7 @@ module K8S
 
   # APIServiceStatus contains derived information about an API server
   @[::K8S::Properties(
-    conditions: {key: "conditions", accessor: "conditions", kind: "::Array(::K8S::KubeAggregator::Apis::Apiregistration::V1::APIServiceCondition)", nilable: true, default: nil, read_only: false, description: "Current service state of apiService."},
+    conditions: {key: "conditions", accessor: "conditions", kind: "::Array(::K8S::KubeAggregator::Apis::Apiregistration::V1::APIServiceCondition)", nilable: true, default: nil, read_only: false, description: "Current service state of apiService.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class KubeAggregator::Apis::Apiregistration::V1::APIServiceStatus < ::K8S::Types::KubeAggregator::Apis::Apiregistration::V1::APIServiceStatus::Instance
     include ::K8S::Types::KubeAggregator::Apis::Apiregistration::V1::APIServiceStatus

@@ -31,8 +31,8 @@ module K8S
 
   # ServiceAccountSubject holds detailed information for service-account-kind subject.
   @[::K8S::Properties(
-    name: {key: "name", accessor: "name", kind: "String", nilable: false, default: nil, read_only: false, description: "`name` is the name of matching ServiceAccount objects, or \"*\" to match regardless of name. Required."},
-    namespace: {key: "namespace", accessor: "namespace", kind: "String", nilable: false, default: nil, read_only: false, description: "`namespace` is the namespace of matching ServiceAccount objects. Required."},
+    name: {key: "name", accessor: "name", kind: "String", nilable: false, default: nil, read_only: false, description: "`name` is the name of matching ServiceAccount objects, or \"*\" to match regardless of name. Required.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    namespace: {key: "namespace", accessor: "namespace", kind: "String", nilable: false, default: nil, read_only: false, description: "`namespace` is the namespace of matching ServiceAccount objects. Required.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Flowcontrol::V1alpha1::ServiceAccountSubject < ::K8S::Types::Api::Flowcontrol::V1alpha1::ServiceAccountSubject::Instance
     include ::K8S::Types::Api::Flowcontrol::V1alpha1::ServiceAccountSubject

@@ -31,8 +31,8 @@ module K8S
 
   # HTTPHeader describes a custom header to be used in HTTP probes
   @[::K8S::Properties(
-    name: {key: "name", accessor: "name", kind: "String", nilable: false, default: nil, read_only: false, description: "The header field name"},
-    value: {key: "value", accessor: "value", kind: "String", nilable: false, default: nil, read_only: false, description: "The header field value"},
+    name: {key: "name", accessor: "name", kind: "String", nilable: false, default: nil, read_only: false, description: "The header field name", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    value: {key: "value", accessor: "value", kind: "String", nilable: false, default: nil, read_only: false, description: "The header field value", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Core::V1::HTTPHeader < ::K8S::Types::Api::Core::V1::HTTPHeader::Instance
     include ::K8S::Types::Api::Core::V1::HTTPHeader

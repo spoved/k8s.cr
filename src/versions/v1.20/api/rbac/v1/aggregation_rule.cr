@@ -25,7 +25,7 @@ module K8S
 
   # AggregationRule describes how to locate ClusterRoles to aggregate into the ClusterRole
   @[::K8S::Properties(
-    cluster_role_selectors: {key: "clusterRoleSelectors", accessor: "cluster_role_selectors", kind: "::Array(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector)", nilable: true, default: nil, read_only: false, description: "ClusterRoleSelectors holds a list of selectors which will be used to find ClusterRoles and create the rules. If any of the selectors match, then the ClusterRole's permissions will be added"},
+    cluster_role_selectors: {key: "clusterRoleSelectors", accessor: "cluster_role_selectors", kind: "::Array(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector)", nilable: true, default: nil, read_only: false, description: "ClusterRoleSelectors holds a list of selectors which will be used to find ClusterRoles and create the rules. If any of the selectors match, then the ClusterRole's permissions will be added", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Rbac::V1::AggregationRule < ::K8S::Types::Api::Rbac::V1::AggregationRule::Instance
     include ::K8S::Types::Api::Rbac::V1::AggregationRule

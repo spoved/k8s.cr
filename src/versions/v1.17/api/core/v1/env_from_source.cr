@@ -42,9 +42,9 @@ module K8S
 
   # EnvFromSource represents the source of a set of ConfigMaps
   @[::K8S::Properties(
-    config_map_ref: {key: "configMapRef", accessor: "config_map_ref", kind: "::K8S::Api::Core::V1::ConfigMapEnvSource", nilable: true, default: nil, read_only: false, description: "The ConfigMap to select from"},
-    prefix: {key: "prefix", accessor: "prefix", kind: "String", nilable: true, default: nil, read_only: false, description: "An optional identifier to prepend to each key in the ConfigMap. Must be a C_IDENTIFIER."},
-    secret_ref: {key: "secretRef", accessor: "secret_ref", kind: "::K8S::Api::Core::V1::SecretEnvSource", nilable: true, default: nil, read_only: false, description: "The Secret to select from"},
+    config_map_ref: {key: "configMapRef", accessor: "config_map_ref", kind: "::K8S::Api::Core::V1::ConfigMapEnvSource", nilable: true, default: nil, read_only: false, description: "The ConfigMap to select from", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    prefix: {key: "prefix", accessor: "prefix", kind: "String", nilable: true, default: nil, read_only: false, description: "An optional identifier to prepend to each key in the ConfigMap. Must be a C_IDENTIFIER.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    secret_ref: {key: "secretRef", accessor: "secret_ref", kind: "::K8S::Api::Core::V1::SecretEnvSource", nilable: true, default: nil, read_only: false, description: "The Secret to select from", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Core::V1::EnvFromSource < ::K8S::Types::Api::Core::V1::EnvFromSource::Instance
     include ::K8S::Types::Api::Core::V1::EnvFromSource

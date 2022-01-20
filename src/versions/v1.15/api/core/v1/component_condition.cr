@@ -47,10 +47,10 @@ module K8S
 
   # Information about the condition of a component.
   @[::K8S::Properties(
-    error: {key: "error", accessor: "error", kind: "String", nilable: true, default: nil, read_only: false, description: "Condition error code for a component. For example, a health check error code."},
-    message: {key: "message", accessor: "message", kind: "String", nilable: true, default: nil, read_only: false, description: "Message about the condition for a component. For example, information about a health check."},
-    status: {key: "status", accessor: "status", kind: "String", nilable: false, default: nil, read_only: false, description: "Status of the condition for a component. Valid values for \"Healthy\": \"True\", \"False\", or \"Unknown\"."},
-    type: {key: "type", accessor: "type", kind: "String", nilable: false, default: nil, read_only: false, description: "Type of condition for a component. Valid value: \"Healthy\""},
+    error: {key: "error", accessor: "error", kind: "String", nilable: true, default: nil, read_only: false, description: "Condition error code for a component. For example, a health check error code.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    message: {key: "message", accessor: "message", kind: "String", nilable: true, default: nil, read_only: false, description: "Message about the condition for a component. For example, information about a health check.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    status: {key: "status", accessor: "status", kind: "String", nilable: false, default: nil, read_only: false, description: "Status of the condition for a component. Valid values for \"Healthy\": \"True\", \"False\", or \"Unknown\".", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    type: {key: "type", accessor: "type", kind: "String", nilable: false, default: nil, read_only: false, description: "Type of condition for a component. Valid value: \"Healthy\"", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Core::V1::ComponentCondition < ::K8S::Types::Api::Core::V1::ComponentCondition::Instance
     include ::K8S::Types::Api::Core::V1::ComponentCondition

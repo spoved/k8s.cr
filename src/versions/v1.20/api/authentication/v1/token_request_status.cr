@@ -31,8 +31,8 @@ module K8S
 
   # TokenRequestStatus is the result of a token request.
   @[::K8S::Properties(
-    expiration_timestamp: {key: "expirationTimestamp", accessor: "expiration_timestamp", kind: "::Time", nilable: false, default: nil, read_only: false, description: "ExpirationTimestamp is the time of expiration of the returned token."},
-    token: {key: "token", accessor: "token", kind: "String", nilable: false, default: nil, read_only: false, description: "Token is the opaque bearer token."},
+    expiration_timestamp: {key: "expirationTimestamp", accessor: "expiration_timestamp", kind: "::Time", nilable: false, default: nil, read_only: false, description: "ExpirationTimestamp is the time of expiration of the returned token.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    token: {key: "token", accessor: "token", kind: "String", nilable: false, default: nil, read_only: false, description: "Token is the opaque bearer token.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Authentication::V1::TokenRequestStatus < ::K8S::Types::Api::Authentication::V1::TokenRequestStatus::Instance
     include ::K8S::Types::Api::Authentication::V1::TokenRequestStatus

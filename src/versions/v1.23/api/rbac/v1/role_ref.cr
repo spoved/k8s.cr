@@ -39,9 +39,9 @@ module K8S
 
   # RoleRef contains information that points to the role being used
   @[::K8S::Properties(
-    api_group: {key: "apiGroup", accessor: "api_group", kind: "String", nilable: false, default: nil, read_only: false, description: "APIGroup is the group for the resource being referenced"},
-    kind: {key: "kind", accessor: "kind", kind: "String", nilable: false, default: nil, read_only: false, description: "Kind is the type of resource being referenced"},
-    name: {key: "name", accessor: "name", kind: "String", nilable: false, default: nil, read_only: false, description: "Name is the name of resource being referenced"},
+    api_group: {key: "apiGroup", accessor: "api_group", kind: "String", nilable: false, default: nil, read_only: false, description: "APIGroup is the group for the resource being referenced", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    kind: {key: "kind", accessor: "kind", kind: "String", nilable: false, default: nil, read_only: false, description: "Kind is the type of resource being referenced", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    name: {key: "name", accessor: "name", kind: "String", nilable: false, default: nil, read_only: false, description: "Name is the name of resource being referenced", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Rbac::V1::RoleRef < ::K8S::Types::Api::Rbac::V1::RoleRef::Instance
     include ::K8S::Types::Api::Rbac::V1::RoleRef

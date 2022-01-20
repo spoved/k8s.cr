@@ -31,8 +31,8 @@ module K8S
 
   # Adds and removes POSIX capabilities from running containers.
   @[::K8S::Properties(
-    add: {key: "add", accessor: "add", kind: "::Array(String)", nilable: true, default: nil, read_only: false, description: "Added capabilities"},
-    drop: {key: "drop", accessor: "drop", kind: "::Array(String)", nilable: true, default: nil, read_only: false, description: "Removed capabilities"},
+    add: {key: "add", accessor: "add", kind: "::Array(String)", nilable: true, default: nil, read_only: false, description: "Added capabilities", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    drop: {key: "drop", accessor: "drop", kind: "::Array(String)", nilable: true, default: nil, read_only: false, description: "Removed capabilities", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Core::V1::Capabilities < ::K8S::Types::Api::Core::V1::Capabilities::Instance
     include ::K8S::Types::Api::Core::V1::Capabilities

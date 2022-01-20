@@ -34,8 +34,8 @@ module K8S
 
   # SelfSubjectAccessReviewSpec is a description of the access request.  Exactly one of ResourceAuthorizationAttributes and NonResourceAuthorizationAttributes must be set
   @[::K8S::Properties(
-    non_resource_attributes: {key: "nonResourceAttributes", accessor: "non_resource_attributes", kind: "::K8S::Api::Authorization::V1::NonResourceAttributes", nilable: true, default: nil, read_only: false, description: "NonResourceAttributes describes information for a non-resource access request"},
-    resource_attributes: {key: "resourceAttributes", accessor: "resource_attributes", kind: "::K8S::Api::Authorization::V1::ResourceAttributes", nilable: true, default: nil, read_only: false, description: "ResourceAuthorizationAttributes describes information for a resource access request"},
+    non_resource_attributes: {key: "nonResourceAttributes", accessor: "non_resource_attributes", kind: "::K8S::Api::Authorization::V1::NonResourceAttributes", nilable: true, default: nil, read_only: false, description: "NonResourceAttributes describes information for a non-resource access request", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    resource_attributes: {key: "resourceAttributes", accessor: "resource_attributes", kind: "::K8S::Api::Authorization::V1::ResourceAttributes", nilable: true, default: nil, read_only: false, description: "ResourceAuthorizationAttributes describes information for a resource access request", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Authorization::V1::SelfSubjectAccessReviewSpec < ::K8S::Types::Api::Authorization::V1::SelfSubjectAccessReviewSpec::Instance
     include ::K8S::Types::Api::Authorization::V1::SelfSubjectAccessReviewSpec

@@ -39,9 +39,9 @@ module K8S
 
   # MetricValueStatus holds the current value for a metric
   @[::K8S::Properties(
-    average_utilization: {key: "averageUtilization", accessor: "average_utilization", kind: "Int32", nilable: true, default: nil, read_only: false, description: "currentAverageUtilization is the current value of the average of the resource metric across all relevant pods, represented as a percentage of the requested value of the resource for the pods."},
-    average_value: {key: "averageValue", accessor: "average_value", kind: "::Int32 | ::String", nilable: true, default: nil, read_only: false, description: "averageValue is the current value of the average of the metric across all relevant pods (as a quantity)"},
-    value: {key: "value", accessor: "value", kind: "::Int32 | ::String", nilable: true, default: nil, read_only: false, description: "value is the current value of the metric (as a quantity)."},
+    average_utilization: {key: "averageUtilization", accessor: "average_utilization", kind: "Int32", nilable: true, default: nil, read_only: false, description: "currentAverageUtilization is the current value of the average of the resource metric across all relevant pods, represented as a percentage of the requested value of the resource for the pods.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    average_value: {key: "averageValue", accessor: "average_value", kind: "::Int32 | ::String", nilable: true, default: nil, read_only: false, description: "averageValue is the current value of the average of the metric across all relevant pods (as a quantity)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    value: {key: "value", accessor: "value", kind: "::Int32 | ::String", nilable: true, default: nil, read_only: false, description: "value is the current value of the metric (as a quantity).", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Autoscaling::V2::MetricValueStatus < ::K8S::Types::Api::Autoscaling::V2::MetricValueStatus::Instance
     include ::K8S::Types::Api::Autoscaling::V2::MetricValueStatus

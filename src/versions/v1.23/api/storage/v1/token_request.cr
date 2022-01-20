@@ -31,8 +31,8 @@ module K8S
 
   # TokenRequest contains parameters of a service account token.
   @[::K8S::Properties(
-    audience: {key: "audience", accessor: "audience", kind: "String", nilable: false, default: nil, read_only: false, description: "Audience is the intended audience of the token in \"TokenRequestSpec\". It will default to the audiences of kube apiserver."},
-    expiration_seconds: {key: "expirationSeconds", accessor: "expiration_seconds", kind: "Int32", nilable: true, default: nil, read_only: false, description: "ExpirationSeconds is the duration of validity of the token in \"TokenRequestSpec\". It has the same default value of \"ExpirationSeconds\" in \"TokenRequestSpec\"."},
+    audience: {key: "audience", accessor: "audience", kind: "String", nilable: false, default: nil, read_only: false, description: "Audience is the intended audience of the token in \"TokenRequestSpec\". It will default to the audiences of kube apiserver.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    expiration_seconds: {key: "expirationSeconds", accessor: "expiration_seconds", kind: "Int32", nilable: true, default: nil, read_only: false, description: "ExpirationSeconds is the duration of validity of the token in \"TokenRequestSpec\". It has the same default value of \"ExpirationSeconds\" in \"TokenRequestSpec\".", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Storage::V1::TokenRequest < ::K8S::Types::Api::Storage::V1::TokenRequest::Instance
     include ::K8S::Types::Api::Storage::V1::TokenRequest

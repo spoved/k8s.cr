@@ -52,10 +52,10 @@ module K8S
 
   # Projection that may be projected along with other supported volume types
   @[::K8S::Properties(
-    config_map: {key: "configMap", accessor: "config_map", kind: "::K8S::Api::Core::V1::ConfigMapProjection", nilable: true, default: nil, read_only: false, description: "information about the configMap data to project"},
-    downward_api: {key: "downwardAPI", accessor: "downward_api", kind: "::K8S::Api::Core::V1::DownwardAPIProjection", nilable: true, default: nil, read_only: false, description: "information about the downwardAPI data to project"},
-    secret: {key: "secret", accessor: "secret", kind: "::K8S::Api::Core::V1::SecretProjection", nilable: true, default: nil, read_only: false, description: "information about the secret data to project"},
-    service_account_token: {key: "serviceAccountToken", accessor: "service_account_token", kind: "::K8S::Api::Core::V1::ServiceAccountTokenProjection", nilable: true, default: nil, read_only: false, description: "information about the serviceAccountToken data to project"},
+    config_map: {key: "configMap", accessor: "config_map", kind: "::K8S::Api::Core::V1::ConfigMapProjection", nilable: true, default: nil, read_only: false, description: "information about the configMap data to project", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    downward_api: {key: "downwardAPI", accessor: "downward_api", kind: "::K8S::Api::Core::V1::DownwardAPIProjection", nilable: true, default: nil, read_only: false, description: "information about the downwardAPI data to project", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    secret: {key: "secret", accessor: "secret", kind: "::K8S::Api::Core::V1::SecretProjection", nilable: true, default: nil, read_only: false, description: "information about the secret data to project", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    service_account_token: {key: "serviceAccountToken", accessor: "service_account_token", kind: "::K8S::Api::Core::V1::ServiceAccountTokenProjection", nilable: true, default: nil, read_only: false, description: "information about the serviceAccountToken data to project", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Core::V1::VolumeProjection < ::K8S::Types::Api::Core::V1::VolumeProjection::Instance
     include ::K8S::Types::Api::Core::V1::VolumeProjection

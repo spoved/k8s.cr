@@ -85,8 +85,8 @@ module K8S
   @[::K8S::GroupVersionKind(group: "storage.k8s.io", kind: "WatchEvent", version: "v1alpha1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent")]
   @[::K8S::GroupVersionKind(group: "storage.k8s.io", kind: "WatchEvent", version: "v1beta1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent")]
   @[::K8S::Properties(
-    object: {key: "object", accessor: "object", kind: "::K8S::Apimachinery::Runtime::RawExtension", nilable: false, default: nil, read_only: false, description: "Object is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context."},
-    type: {key: "type", accessor: "type", kind: "String", nilable: false, default: nil, read_only: false, description: nil},
+    object: {key: "object", accessor: "object", kind: "::K8S::Apimachinery::Runtime::RawExtension", nilable: false, default: nil, read_only: false, description: "Object is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    type: {key: "type", accessor: "type", kind: "String", nilable: false, default: nil, read_only: false, description: nil, x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Apimachinery::Apis::Meta::V1::WatchEvent < ::K8S::Types::Apimachinery::Apis::Meta::V1::WatchEvent::Instance
     include ::K8S::Types::Apimachinery::Apis::Meta::V1::WatchEvent

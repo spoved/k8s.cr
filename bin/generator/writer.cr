@@ -138,8 +138,8 @@ class Generator::Writer
       kind
     end
 
-    if definition.class_name == "ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps"
-      val_types.map! { |kind| kind.gsub(/::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps/, "::K8S::Object(ValueType)") }
+    if definition.class_name =~ /ApiextensionsApiserver::Apis::Apiextensions::(V1|V1beta1)::JSONSchemaProps/
+      val_types.map! { |kind| kind.gsub(/::K8S::ApiextensionsApiserver::Apis::Apiextensions::(V1|V1beta1)::JSONSchemaProps/, "::K8S::Object(ValueType)") }
     end
 
     val_types << "Nil"

@@ -41,9 +41,9 @@ module K8S
   #
   # DEPRECATED: GitRepo is deprecated. To provision a container with a git repo, mount an EmptyDir into an InitContainer that clones the repo using git, then mount the EmptyDir into the Pod's container.
   @[::K8S::Properties(
-    directory: {key: "directory", accessor: "directory", kind: "String", nilable: true, default: nil, read_only: false, description: "Target directory name. Must not contain or start with '..'.  If '.' is supplied, the volume directory will be the git repository.  Otherwise, if specified, the volume will contain the git repository in the subdirectory with the given name."},
-    repository: {key: "repository", accessor: "repository", kind: "String", nilable: false, default: nil, read_only: false, description: "Repository URL"},
-    revision: {key: "revision", accessor: "revision", kind: "String", nilable: true, default: nil, read_only: false, description: "Commit hash for the specified revision."},
+    directory: {key: "directory", accessor: "directory", kind: "String", nilable: true, default: nil, read_only: false, description: "Target directory name. Must not contain or start with '..'.  If '.' is supplied, the volume directory will be the git repository.  Otherwise, if specified, the volume will contain the git repository in the subdirectory with the given name.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    repository: {key: "repository", accessor: "repository", kind: "String", nilable: false, default: nil, read_only: false, description: "Repository URL", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    revision: {key: "revision", accessor: "revision", kind: "String", nilable: true, default: nil, read_only: false, description: "Commit hash for the specified revision.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Core::V1::GitRepoVolumeSource < ::K8S::Types::Api::Core::V1::GitRepoVolumeSource::Instance
     include ::K8S::Types::Api::Core::V1::GitRepoVolumeSource

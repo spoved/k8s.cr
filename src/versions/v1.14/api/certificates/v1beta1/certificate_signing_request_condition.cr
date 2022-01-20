@@ -47,10 +47,10 @@ module K8S
 
   #
   @[::K8S::Properties(
-    last_update_time: {key: "lastUpdateTime", accessor: "last_update_time", kind: "::Time", nilable: true, default: nil, read_only: false, description: "timestamp for the last update to this condition"},
-    message: {key: "message", accessor: "message", kind: "String", nilable: true, default: nil, read_only: false, description: "human readable message with details about the request state"},
-    reason: {key: "reason", accessor: "reason", kind: "String", nilable: true, default: nil, read_only: false, description: "brief reason for the request state"},
-    type: {key: "type", accessor: "type", kind: "String", nilable: false, default: nil, read_only: false, description: "request approval state, currently Approved or Denied."},
+    last_update_time: {key: "lastUpdateTime", accessor: "last_update_time", kind: "::Time", nilable: true, default: nil, read_only: false, description: "timestamp for the last update to this condition", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    message: {key: "message", accessor: "message", kind: "String", nilable: true, default: nil, read_only: false, description: "human readable message with details about the request state", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    reason: {key: "reason", accessor: "reason", kind: "String", nilable: true, default: nil, read_only: false, description: "brief reason for the request state", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    type: {key: "type", accessor: "type", kind: "String", nilable: false, default: nil, read_only: false, description: "request approval state, currently Approved or Denied.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Certificates::V1beta1::CertificateSigningRequestCondition < ::K8S::Types::Api::Certificates::V1beta1::CertificateSigningRequestCondition::Instance
     include ::K8S::Types::Api::Certificates::V1beta1::CertificateSigningRequestCondition

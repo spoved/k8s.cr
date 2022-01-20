@@ -33,8 +33,8 @@ module K8S
 
   # The weights of all of the matched WeightedPodAffinityTerm fields are added per-node to find the most preferred node(s)
   @[::K8S::Properties(
-    pod_affinity_term: {key: "podAffinityTerm", accessor: "pod_affinity_term", kind: "::K8S::Api::Core::V1::PodAffinityTerm", nilable: false, default: nil, read_only: false, description: "Required. A pod affinity term, associated with the corresponding weight."},
-    weight: {key: "weight", accessor: "weight", kind: "Int32", nilable: false, default: nil, read_only: false, description: "weight associated with matching the corresponding podAffinityTerm, in the range 1-100."},
+    pod_affinity_term: {key: "podAffinityTerm", accessor: "pod_affinity_term", kind: "::K8S::Api::Core::V1::PodAffinityTerm", nilable: false, default: nil, read_only: false, description: "Required. A pod affinity term, associated with the corresponding weight.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    weight: {key: "weight", accessor: "weight", kind: "Int32", nilable: false, default: nil, read_only: false, description: "weight associated with matching the corresponding podAffinityTerm, in the range 1-100.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Core::V1::WeightedPodAffinityTerm < ::K8S::Types::Api::Core::V1::WeightedPodAffinityTerm::Instance
     include ::K8S::Types::Api::Core::V1::WeightedPodAffinityTerm

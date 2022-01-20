@@ -25,7 +25,7 @@ module K8S
 
   # FlowSchemaStatus represents the current state of a FlowSchema.
   @[::K8S::Properties(
-    conditions: {key: "conditions", accessor: "conditions", kind: "::Array(::K8S::Api::Flowcontrol::V1alpha1::FlowSchemaCondition)", nilable: true, default: nil, read_only: false, description: "`conditions` is a list of the current states of FlowSchema."},
+    conditions: {key: "conditions", accessor: "conditions", kind: "::Array(::K8S::Api::Flowcontrol::V1alpha1::FlowSchemaCondition)", nilable: true, default: nil, read_only: false, description: "`conditions` is a list of the current states of FlowSchema.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: ["type"], x_kubernetes_list_type: "map", x_kubernetes_map_type: nil},
   )]
   class Api::Flowcontrol::V1alpha1::FlowSchemaStatus < ::K8S::Types::Api::Flowcontrol::V1alpha1::FlowSchemaStatus::Instance
     include ::K8S::Types::Api::Flowcontrol::V1alpha1::FlowSchemaStatus

@@ -120,7 +120,7 @@ module ::K8S::Kubernetes::Resource
       {{entry[:resource]}}.new({{ctx}}, {{node}}).as(::K8S::Kubernetes::Resource)
     {% end %}
     else
-      raise K8S::Error::UndefinedResource.new("#{{{group}}}:#{{{ver}}}:#{{{kind}}}")
+      raise K8S::Error::UnknownResource.new("#{{{group}}}/#{{{ver}}}/#{{{kind}}}")
     end
   end
 
@@ -131,7 +131,7 @@ module ::K8S::Kubernetes::Resource
       {{entry[:resource]}}.from_json({{json}}).as(::K8S::Kubernetes::Resource)
     {% end %}
     else
-      raise K8S::Error::UndefinedResource.new("#{{{group}}}:#{{{ver}}}:#{{{kind}}}")
+      raise K8S::Error::UnknownResource.new("#{{{group}}}/#{{{ver}}}/#{{{kind}}}")
     end
   end
 

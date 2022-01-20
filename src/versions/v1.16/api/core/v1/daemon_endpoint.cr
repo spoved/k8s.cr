@@ -23,7 +23,7 @@ module K8S
 
   # DaemonEndpoint contains information about a single Daemon endpoint.
   @[::K8S::Properties(
-    port: {key: "Port", accessor: "port", kind: "Int32", nilable: false, default: nil, read_only: false, description: "Port number of the given endpoint."},
+    port: {key: "Port", accessor: "port", kind: "Int32", nilable: false, default: nil, read_only: false, description: "Port number of the given endpoint.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Core::V1::DaemonEndpoint < ::K8S::Types::Api::Core::V1::DaemonEndpoint::Instance
     include ::K8S::Types::Api::Core::V1::DaemonEndpoint

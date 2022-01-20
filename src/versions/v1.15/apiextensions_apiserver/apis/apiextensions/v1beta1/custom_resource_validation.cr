@@ -25,7 +25,7 @@ module K8S
 
   # CustomResourceValidation is a list of validation methods for CustomResources.
   @[::K8S::Properties(
-    open_apiv3_schema: {key: "openAPIV3Schema", accessor: "open_apiv3_schema", kind: "::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSONSchemaProps", nilable: true, default: nil, read_only: false, description: "OpenAPIV3Schema is the OpenAPI v3 schema to be validated against."},
+    open_apiv3_schema: {key: "openAPIV3Schema", accessor: "open_apiv3_schema", kind: "::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSONSchemaProps", nilable: true, default: nil, read_only: false, description: "OpenAPIV3Schema is the OpenAPI v3 schema to be validated against.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceValidation < ::K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceValidation::Instance
     include ::K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceValidation

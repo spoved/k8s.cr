@@ -41,9 +41,9 @@ module K8S
 
   # VolumeAttachmentSpec is the specification of a VolumeAttachment request.
   @[::K8S::Properties(
-    attacher: {key: "attacher", accessor: "attacher", kind: "String", nilable: false, default: nil, read_only: false, description: "Attacher indicates the name of the volume driver that MUST handle this request. This is the name returned by GetPluginName()."},
-    node_name: {key: "nodeName", accessor: "node_name", kind: "String", nilable: false, default: nil, read_only: false, description: "The node that the volume should be attached to."},
-    source: {key: "source", accessor: "source", kind: "::K8S::Api::Storage::V1alpha1::VolumeAttachmentSource", nilable: false, default: nil, read_only: false, description: "Source represents the volume that should be attached."},
+    attacher: {key: "attacher", accessor: "attacher", kind: "String", nilable: false, default: nil, read_only: false, description: "Attacher indicates the name of the volume driver that MUST handle this request. This is the name returned by GetPluginName().", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    node_name: {key: "nodeName", accessor: "node_name", kind: "String", nilable: false, default: nil, read_only: false, description: "The node that the volume should be attached to.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    source: {key: "source", accessor: "source", kind: "::K8S::Api::Storage::V1alpha1::VolumeAttachmentSource", nilable: false, default: nil, read_only: false, description: "Source represents the volume that should be attached.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Storage::V1alpha1::VolumeAttachmentSpec < ::K8S::Types::Api::Storage::V1alpha1::VolumeAttachmentSpec::Instance
     include ::K8S::Types::Api::Storage::V1alpha1::VolumeAttachmentSpec

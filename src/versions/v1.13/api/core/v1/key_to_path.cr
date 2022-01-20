@@ -39,9 +39,9 @@ module K8S
 
   # Maps a string key to a path within a volume.
   @[::K8S::Properties(
-    key: {key: "key", accessor: "key", kind: "String", nilable: false, default: nil, read_only: false, description: "The key to project."},
-    mode: {key: "mode", accessor: "mode", kind: "Int32", nilable: true, default: nil, read_only: false, description: "Optional: mode bits to use on this file, must be a value between 0 and 0777. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set."},
-    path: {key: "path", accessor: "path", kind: "String", nilable: false, default: nil, read_only: false, description: "The relative path of the file to map the key to. May not be an absolute path. May not contain the path element '..'. May not start with the string '..'."},
+    key: {key: "key", accessor: "key", kind: "String", nilable: false, default: nil, read_only: false, description: "The key to project.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    mode: {key: "mode", accessor: "mode", kind: "Int32", nilable: true, default: nil, read_only: false, description: "Optional: mode bits to use on this file, must be a value between 0 and 0777. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    path: {key: "path", accessor: "path", kind: "String", nilable: false, default: nil, read_only: false, description: "The relative path of the file to map the key to. May not be an absolute path. May not contain the path element '..'. May not start with the string '..'.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Core::V1::KeyToPath < ::K8S::Types::Api::Core::V1::KeyToPath::Instance
     include ::K8S::Types::Api::Core::V1::KeyToPath

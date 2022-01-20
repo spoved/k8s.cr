@@ -39,9 +39,9 @@ module K8S
 
   # EventSeries contain information on series of events, i.e. thing that [was/is happening continuously for some time.](was/is happening continuously for some time.)
   @[::K8S::Properties(
-    count: {key: "count", accessor: "count", kind: "Int32", nilable: false, default: nil, read_only: false, description: "Number of occurrences in this series up to the last heartbeat time"},
-    last_observed_time: {key: "lastObservedTime", accessor: "last_observed_time", kind: "::Time", nilable: false, default: nil, read_only: false, description: "Time when last Event from the series was seen before last heartbeat."},
-    state: {key: "state", accessor: "state", kind: "String", nilable: false, default: nil, read_only: false, description: "Information whether this series is ongoing or finished. Deprecated. Planned removal for 1.18"},
+    count: {key: "count", accessor: "count", kind: "Int32", nilable: false, default: nil, read_only: false, description: "Number of occurrences in this series up to the last heartbeat time", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    last_observed_time: {key: "lastObservedTime", accessor: "last_observed_time", kind: "::Time", nilable: false, default: nil, read_only: false, description: "Time when last Event from the series was seen before last heartbeat.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    state: {key: "state", accessor: "state", kind: "String", nilable: false, default: nil, read_only: false, description: "Information whether this series is ongoing or finished. Deprecated. Planned removal for 1.18", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Events::V1beta1::EventSeries < ::K8S::Types::Api::Events::V1beta1::EventSeries::Instance
     include ::K8S::Types::Api::Events::V1beta1::EventSeries

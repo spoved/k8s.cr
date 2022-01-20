@@ -47,10 +47,10 @@ module K8S
 
   # UserInfo holds the information about the user needed to implement the user.Info interface.
   @[::K8S::Properties(
-    extra: {key: "extra", accessor: "extra", kind: "::Hash(String, ::Array(String))", nilable: true, default: nil, read_only: false, description: "Any additional information provided by the authenticator."},
-    groups: {key: "groups", accessor: "groups", kind: "::Array(String)", nilable: true, default: nil, read_only: false, description: "The names of groups this user is a part of."},
-    uid: {key: "uid", accessor: "uid", kind: "String", nilable: true, default: nil, read_only: false, description: "A unique value that identifies this user across time. If this user is deleted and another user by the same name is added, they will have different UIDs."},
-    username: {key: "username", accessor: "username", kind: "String", nilable: true, default: nil, read_only: false, description: "The name that uniquely identifies this user among all active users."},
+    extra: {key: "extra", accessor: "extra", kind: "::Hash(String, ::Array(String))", nilable: true, default: nil, read_only: false, description: "Any additional information provided by the authenticator.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    groups: {key: "groups", accessor: "groups", kind: "::Array(String)", nilable: true, default: nil, read_only: false, description: "The names of groups this user is a part of.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    uid: {key: "uid", accessor: "uid", kind: "String", nilable: true, default: nil, read_only: false, description: "A unique value that identifies this user across time. If this user is deleted and another user by the same name is added, they will have different UIDs.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    username: {key: "username", accessor: "username", kind: "String", nilable: true, default: nil, read_only: false, description: "The name that uniquely identifies this user among all active users.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Authentication::V1::UserInfo < ::K8S::Types::Api::Authentication::V1::UserInfo::Instance
     include ::K8S::Types::Api::Authentication::V1::UserInfo

@@ -31,8 +31,8 @@ module K8S
 
   # IDRange provides a [min/max of an allowed range of IDs.](min/max of an allowed range of IDs.)
   @[::K8S::Properties(
-    max: {key: "max", accessor: "max", kind: "Int32", nilable: false, default: nil, read_only: false, description: "max is the end of the range, inclusive."},
-    min: {key: "min", accessor: "min", kind: "Int32", nilable: false, default: nil, read_only: false, description: "min is the start of the range, inclusive."},
+    max: {key: "max", accessor: "max", kind: "Int32", nilable: false, default: nil, read_only: false, description: "max is the end of the range, inclusive.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    min: {key: "min", accessor: "min", kind: "Int32", nilable: false, default: nil, read_only: false, description: "min is the start of the range, inclusive.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Policy::V1beta1::IDRange < ::K8S::Types::Api::Policy::V1beta1::IDRange::Instance
     include ::K8S::Types::Api::Policy::V1beta1::IDRange

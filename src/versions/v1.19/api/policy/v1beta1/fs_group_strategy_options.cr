@@ -33,8 +33,8 @@ module K8S
 
   # FSGroupStrategyOptions defines the strategy type and options used to create the strategy.
   @[::K8S::Properties(
-    ranges: {key: "ranges", accessor: "ranges", kind: "::Array(::K8S::Api::Policy::V1beta1::IDRange)", nilable: true, default: nil, read_only: false, description: "ranges are the allowed ranges of fs groups.  If you would like to force a single fs group then supply a single range with the same start and end. Required for MustRunAs."},
-    rule: {key: "rule", accessor: "rule", kind: "String", nilable: true, default: nil, read_only: false, description: "rule is the strategy that will dictate what FSGroup is used in the SecurityContext."},
+    ranges: {key: "ranges", accessor: "ranges", kind: "::Array(::K8S::Api::Policy::V1beta1::IDRange)", nilable: true, default: nil, read_only: false, description: "ranges are the allowed ranges of fs groups.  If you would like to force a single fs group then supply a single range with the same start and end. Required for MustRunAs.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    rule: {key: "rule", accessor: "rule", kind: "String", nilable: true, default: nil, read_only: false, description: "rule is the strategy that will dictate what FSGroup is used in the SecurityContext.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Policy::V1beta1::FSGroupStrategyOptions < ::K8S::Types::Api::Policy::V1beta1::FSGroupStrategyOptions::Instance
     include ::K8S::Types::Api::Policy::V1beta1::FSGroupStrategyOptions

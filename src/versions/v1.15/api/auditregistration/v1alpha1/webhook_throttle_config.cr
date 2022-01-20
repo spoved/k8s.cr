@@ -31,8 +31,8 @@ module K8S
 
   # WebhookThrottleConfig holds the configuration for throttling events
   @[::K8S::Properties(
-    burst: {key: "burst", accessor: "burst", kind: "Int32", nilable: true, default: nil, read_only: false, description: "ThrottleBurst is the maximum number of events sent at the same moment default 15 QPS"},
-    qps: {key: "qps", accessor: "qps", kind: "Int32", nilable: true, default: nil, read_only: false, description: "ThrottleQPS maximum number of batches per second default 10 QPS"},
+    burst: {key: "burst", accessor: "burst", kind: "Int32", nilable: true, default: nil, read_only: false, description: "ThrottleBurst is the maximum number of events sent at the same moment default 15 QPS", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    qps: {key: "qps", accessor: "qps", kind: "Int32", nilable: true, default: nil, read_only: false, description: "ThrottleQPS maximum number of batches per second default 10 QPS", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Auditregistration::V1alpha1::WebhookThrottleConfig < ::K8S::Types::Api::Auditregistration::V1alpha1::WebhookThrottleConfig::Instance
     include ::K8S::Types::Api::Auditregistration::V1alpha1::WebhookThrottleConfig

@@ -31,8 +31,8 @@ module K8S
 
   # Policy defines the configuration of how audit events are logged
   @[::K8S::Properties(
-    level: {key: "level", accessor: "level", kind: "String", nilable: false, default: nil, read_only: false, description: "The Level that all requests are recorded at. available options: None, Metadata, Request, RequestResponse required"},
-    stages: {key: "stages", accessor: "stages", kind: "::Array(String)", nilable: true, default: nil, read_only: false, description: "Stages is a list of stages for which events are created."},
+    level: {key: "level", accessor: "level", kind: "String", nilable: false, default: nil, read_only: false, description: "The Level that all requests are recorded at. available options: None, Metadata, Request, RequestResponse required", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    stages: {key: "stages", accessor: "stages", kind: "::Array(String)", nilable: true, default: nil, read_only: false, description: "Stages is a list of stages for which events are created.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Auditregistration::V1alpha1::Policy < ::K8S::Types::Api::Auditregistration::V1alpha1::Policy::Instance
     include ::K8S::Types::Api::Auditregistration::V1alpha1::Policy

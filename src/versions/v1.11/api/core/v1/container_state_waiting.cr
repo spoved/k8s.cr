@@ -31,8 +31,8 @@ module K8S
 
   # ContainerStateWaiting is a waiting state of a container.
   @[::K8S::Properties(
-    message: {key: "message", accessor: "message", kind: "String", nilable: true, default: nil, read_only: false, description: "Message regarding why the container is not yet running."},
-    reason: {key: "reason", accessor: "reason", kind: "String", nilable: true, default: nil, read_only: false, description: "(brief) reason the container is not yet running."},
+    message: {key: "message", accessor: "message", kind: "String", nilable: true, default: nil, read_only: false, description: "Message regarding why the container is not yet running.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    reason: {key: "reason", accessor: "reason", kind: "String", nilable: true, default: nil, read_only: false, description: "(brief) reason the container is not yet running.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Core::V1::ContainerStateWaiting < ::K8S::Types::Api::Core::V1::ContainerStateWaiting::Instance
     include ::K8S::Types::Api::Core::V1::ContainerStateWaiting

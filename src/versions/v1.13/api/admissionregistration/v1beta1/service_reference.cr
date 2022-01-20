@@ -39,9 +39,9 @@ module K8S
 
   # ServiceReference holds a reference to Service.legacy.k8s.io
   @[::K8S::Properties(
-    name: {key: "name", accessor: "name", kind: "String", nilable: false, default: nil, read_only: false, description: "`name` is the name of the service. Required"},
-    namespace: {key: "namespace", accessor: "namespace", kind: "String", nilable: false, default: nil, read_only: false, description: "`namespace` is the namespace of the service. Required"},
-    path: {key: "path", accessor: "path", kind: "String", nilable: true, default: nil, read_only: false, description: "`path` is an optional URL path which will be sent in any request to this service."},
+    name: {key: "name", accessor: "name", kind: "String", nilable: false, default: nil, read_only: false, description: "`name` is the name of the service. Required", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    namespace: {key: "namespace", accessor: "namespace", kind: "String", nilable: false, default: nil, read_only: false, description: "`namespace` is the namespace of the service. Required", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    path: {key: "path", accessor: "path", kind: "String", nilable: true, default: nil, read_only: false, description: "`path` is an optional URL path which will be sent in any request to this service.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Admissionregistration::V1beta1::ServiceReference < ::K8S::Types::Api::Admissionregistration::V1beta1::ServiceReference::Instance
     include ::K8S::Types::Api::Admissionregistration::V1beta1::ServiceReference

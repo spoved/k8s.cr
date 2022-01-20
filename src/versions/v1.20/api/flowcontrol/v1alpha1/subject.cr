@@ -51,10 +51,10 @@ module K8S
 
   # Subject matches the originator of a request, as identified by the request authentication system. There are three ways of matching an originator; by user, group, or service account.
   @[::K8S::Properties(
-    group: {key: "group", accessor: "group", kind: "::K8S::Api::Flowcontrol::V1alpha1::GroupSubject", nilable: true, default: nil, read_only: false, description: nil},
-    kind: {key: "kind", accessor: "kind", kind: "String", nilable: false, default: nil, read_only: false, description: "Required"},
-    service_account: {key: "serviceAccount", accessor: "service_account", kind: "::K8S::Api::Flowcontrol::V1alpha1::ServiceAccountSubject", nilable: true, default: nil, read_only: false, description: nil},
-    user: {key: "user", accessor: "user", kind: "::K8S::Api::Flowcontrol::V1alpha1::UserSubject", nilable: true, default: nil, read_only: false, description: nil},
+    group: {key: "group", accessor: "group", kind: "::K8S::Api::Flowcontrol::V1alpha1::GroupSubject", nilable: true, default: nil, read_only: false, description: nil, x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    kind: {key: "kind", accessor: "kind", kind: "String", nilable: false, default: nil, read_only: false, description: "Required", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    service_account: {key: "serviceAccount", accessor: "service_account", kind: "::K8S::Api::Flowcontrol::V1alpha1::ServiceAccountSubject", nilable: true, default: nil, read_only: false, description: nil, x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    user: {key: "user", accessor: "user", kind: "::K8S::Api::Flowcontrol::V1alpha1::UserSubject", nilable: true, default: nil, read_only: false, description: nil, x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Flowcontrol::V1alpha1::Subject < ::K8S::Types::Api::Flowcontrol::V1alpha1::Subject::Instance
     include ::K8S::Types::Api::Flowcontrol::V1alpha1::Subject

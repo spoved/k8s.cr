@@ -43,9 +43,9 @@ module K8S
 
   # Affinity is a group of affinity scheduling rules.
   @[::K8S::Properties(
-    node_affinity: {key: "nodeAffinity", accessor: "node_affinity", kind: "::K8S::Api::Core::V1::NodeAffinity", nilable: true, default: nil, read_only: false, description: "Describes node affinity scheduling rules for the pod."},
-    pod_affinity: {key: "podAffinity", accessor: "pod_affinity", kind: "::K8S::Api::Core::V1::PodAffinity", nilable: true, default: nil, read_only: false, description: "Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s))."},
-    pod_anti_affinity: {key: "podAntiAffinity", accessor: "pod_anti_affinity", kind: "::K8S::Api::Core::V1::PodAntiAffinity", nilable: true, default: nil, read_only: false, description: "Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s))."},
+    node_affinity: {key: "nodeAffinity", accessor: "node_affinity", kind: "::K8S::Api::Core::V1::NodeAffinity", nilable: true, default: nil, read_only: false, description: "Describes node affinity scheduling rules for the pod.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    pod_affinity: {key: "podAffinity", accessor: "pod_affinity", kind: "::K8S::Api::Core::V1::PodAffinity", nilable: true, default: nil, read_only: false, description: "Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    pod_anti_affinity: {key: "podAntiAffinity", accessor: "pod_anti_affinity", kind: "::K8S::Api::Core::V1::PodAntiAffinity", nilable: true, default: nil, read_only: false, description: "Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Core::V1::Affinity < ::K8S::Types::Api::Core::V1::Affinity::Instance
     include ::K8S::Types::Api::Core::V1::Affinity

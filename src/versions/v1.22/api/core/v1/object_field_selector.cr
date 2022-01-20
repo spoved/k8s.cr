@@ -31,8 +31,8 @@ module K8S
 
   # ObjectFieldSelector selects an APIVersioned field of an object.
   @[::K8S::Properties(
-    api_version: {key: "apiVersion", accessor: "api_version", kind: "String", nilable: true, default: nil, read_only: false, description: "Version of the schema the FieldPath is written in terms of, defaults to \"v1\"."},
-    field_path: {key: "fieldPath", accessor: "field_path", kind: "String", nilable: false, default: nil, read_only: false, description: "Path of the field to select in the specified API version."},
+    api_version: {key: "apiVersion", accessor: "api_version", kind: "String", nilable: true, default: nil, read_only: false, description: "Version of the schema the FieldPath is written in terms of, defaults to \"v1\".", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    field_path: {key: "fieldPath", accessor: "field_path", kind: "String", nilable: false, default: nil, read_only: false, description: "Path of the field to select in the specified API version.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Core::V1::ObjectFieldSelector < ::K8S::Types::Api::Core::V1::ObjectFieldSelector::Instance
     include ::K8S::Types::Api::Core::V1::ObjectFieldSelector

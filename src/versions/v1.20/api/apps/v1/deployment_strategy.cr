@@ -33,8 +33,8 @@ module K8S
 
   # DeploymentStrategy describes how to replace existing pods with new ones.
   @[::K8S::Properties(
-    rolling_update: {key: "rollingUpdate", accessor: "rolling_update", kind: "::K8S::Api::Apps::V1::RollingUpdateDeployment", nilable: true, default: nil, read_only: false, description: "Rolling update config params. Present only if DeploymentStrategyType = RollingUpdate."},
-    type: {key: "type", accessor: "type", kind: "String", nilable: true, default: nil, read_only: false, description: "Type of deployment. Can be \"Recreate\" or \"RollingUpdate\". Default is RollingUpdate."},
+    rolling_update: {key: "rollingUpdate", accessor: "rolling_update", kind: "::K8S::Api::Apps::V1::RollingUpdateDeployment", nilable: true, default: nil, read_only: false, description: "Rolling update config params. Present only if DeploymentStrategyType = RollingUpdate.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    type: {key: "type", accessor: "type", kind: "String", nilable: true, default: nil, read_only: false, description: "Type of deployment. Can be \"Recreate\" or \"RollingUpdate\". Default is RollingUpdate.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Apps::V1::DeploymentStrategy < ::K8S::Types::Api::Apps::V1::DeploymentStrategy::Instance
     include ::K8S::Types::Api::Apps::V1::DeploymentStrategy

@@ -41,12 +41,19 @@ class Generator
     # debugger
     t = if ref = definition_ref(property._ref)
           ref
+        elsif property.x_kubernetes_embedded_resource
+          "::K8S::Kubernetes::Resource"
         elsif property.x_kubernetes_preserve_unknown_fields
-          "::K8S::Object(::JSON::Any::Type)"
+          "::Hash(String, ::JSON::Any::Type)"
         elsif property.x_kubernetes_int_or_string
           "::Int32 | ::String"
         elsif property.type.to_s == "array"
-          "::Array(#{convert_type(property.items.as(Swagger::Definition::Property))})"
+          case property.x_kubernetes_list_type
+          when "set"
+            "::Set(#{convert_type(property.items.as(Swagger::Definition::Property))})"
+          else
+            "::Array(#{convert_type(property.items.as(Swagger::Definition::Property))})"
+          end
         elsif property.type.to_s == "object"
           types = Array(String).new
           types.concat property.properties.values.map { |x| convert_type(x.as(Swagger::Definition::Property)).as(String) }

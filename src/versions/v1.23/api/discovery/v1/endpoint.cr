@@ -12,17 +12,17 @@ require "../../core/v1/object_reference"
 module K8S
   # Namespace holding the types for `Api::Discovery::V1::Endpoint`.
   module Types::Api::Discovery::V1::Endpoint
-    alias ValueType = ::Array(String) | ::K8S::Api::Discovery::V1::EndpointConditions | ::Hash(String, String) | ::K8S::Api::Discovery::V1::EndpointHints | String | ::K8S::Api::Core::V1::ObjectReference | Nil
+    alias ValueType = ::Set(String) | ::K8S::Api::Discovery::V1::EndpointConditions | ::Hash(String, String) | ::K8S::Api::Discovery::V1::EndpointHints | String | ::K8S::Api::Core::V1::ObjectReference | Nil
     alias Instance = ::K8S::Object(ValueType)
 
     # addresses of this endpoint. The contents of this field are interpreted according to the corresponding EndpointSlice addressType field. Consumers must handle different types of addresses in the context of their own capabilities. This must contain at least one address but no more than 100.
-    abstract def addresses : ::Array(String)
+    abstract def addresses : ::Set(String)
     # :ditto:
-    abstract def addresses! : ::Array(String)
+    abstract def addresses! : ::Set(String)
     # :ditto:
-    abstract def addresses? : ::Array(String)?
+    abstract def addresses? : ::Set(String)?
     # :ditto:
-    abstract def addresses=(value : ::Array(String))
+    abstract def addresses=(value : ::Set(String))
     # conditions contains information about the current status of the endpoint.
     abstract def conditions : ::K8S::Api::Discovery::V1::EndpointConditions?
     # :ditto:
@@ -83,36 +83,36 @@ module K8S
 
   # Endpoint represents a single logical "backend" implementing a service.
   @[::K8S::Properties(
-    addresses: {key: "addresses", accessor: "addresses", kind: "::Array(String)", nilable: false, default: nil, read_only: false, description: "addresses of this endpoint. The contents of this field are interpreted according to the corresponding EndpointSlice addressType field. Consumers must handle different types of addresses in the context of their own capabilities. This must contain at least one address but no more than 100."},
-    conditions: {key: "conditions", accessor: "conditions", kind: "::K8S::Api::Discovery::V1::EndpointConditions", nilable: true, default: nil, read_only: false, description: "conditions contains information about the current status of the endpoint."},
-    deprecated_topology: {key: "deprecatedTopology", accessor: "deprecated_topology", kind: "::Hash(String, String)", nilable: true, default: nil, read_only: false, description: "deprecatedTopology contains topology information part of the v1beta1 API. This field is deprecated, and will be removed when the v1beta1 API is removed (no sooner than kubernetes v1.24).  While this field can hold values, it is not writable through the v1 API, and any attempts to write to it will be silently ignored. Topology information can be found in the zone and nodeName fields instead."},
-    hints: {key: "hints", accessor: "hints", kind: "::K8S::Api::Discovery::V1::EndpointHints", nilable: true, default: nil, read_only: false, description: "hints contains information associated with how an endpoint should be consumed."},
-    hostname: {key: "hostname", accessor: "hostname", kind: "String", nilable: true, default: nil, read_only: false, description: "hostname of this endpoint. This field may be used by consumers of endpoints to distinguish endpoints from each other (e.g. in DNS names). Multiple endpoints which use the same hostname should be considered fungible (e.g. multiple A values in DNS). Must be lowercase and pass DNS Label (RFC 1123) validation."},
-    node_name: {key: "nodeName", accessor: "node_name", kind: "String", nilable: true, default: nil, read_only: false, description: "nodeName represents the name of the Node hosting this endpoint. This can be used to determine endpoints local to a Node. This field can be enabled with the EndpointSliceNodeName feature gate."},
-    target_ref: {key: "targetRef", accessor: "target_ref", kind: "::K8S::Api::Core::V1::ObjectReference", nilable: true, default: nil, read_only: false, description: "targetRef is a reference to a Kubernetes object that represents this endpoint."},
-    zone: {key: "zone", accessor: "zone", kind: "String", nilable: true, default: nil, read_only: false, description: "zone is the name of the Zone this endpoint exists in."},
+    addresses: {key: "addresses", accessor: "addresses", kind: "::Set(String)", nilable: false, default: nil, read_only: false, description: "addresses of this endpoint. The contents of this field are interpreted according to the corresponding EndpointSlice addressType field. Consumers must handle different types of addresses in the context of their own capabilities. This must contain at least one address but no more than 100.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: "set", x_kubernetes_map_type: nil},
+    conditions: {key: "conditions", accessor: "conditions", kind: "::K8S::Api::Discovery::V1::EndpointConditions", nilable: true, default: nil, read_only: false, description: "conditions contains information about the current status of the endpoint.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    deprecated_topology: {key: "deprecatedTopology", accessor: "deprecated_topology", kind: "::Hash(String, String)", nilable: true, default: nil, read_only: false, description: "deprecatedTopology contains topology information part of the v1beta1 API. This field is deprecated, and will be removed when the v1beta1 API is removed (no sooner than kubernetes v1.24).  While this field can hold values, it is not writable through the v1 API, and any attempts to write to it will be silently ignored. Topology information can be found in the zone and nodeName fields instead.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    hints: {key: "hints", accessor: "hints", kind: "::K8S::Api::Discovery::V1::EndpointHints", nilable: true, default: nil, read_only: false, description: "hints contains information associated with how an endpoint should be consumed.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    hostname: {key: "hostname", accessor: "hostname", kind: "String", nilable: true, default: nil, read_only: false, description: "hostname of this endpoint. This field may be used by consumers of endpoints to distinguish endpoints from each other (e.g. in DNS names). Multiple endpoints which use the same hostname should be considered fungible (e.g. multiple A values in DNS). Must be lowercase and pass DNS Label (RFC 1123) validation.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    node_name: {key: "nodeName", accessor: "node_name", kind: "String", nilable: true, default: nil, read_only: false, description: "nodeName represents the name of the Node hosting this endpoint. This can be used to determine endpoints local to a Node. This field can be enabled with the EndpointSliceNodeName feature gate.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    target_ref: {key: "targetRef", accessor: "target_ref", kind: "::K8S::Api::Core::V1::ObjectReference", nilable: true, default: nil, read_only: false, description: "targetRef is a reference to a Kubernetes object that represents this endpoint.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    zone: {key: "zone", accessor: "zone", kind: "String", nilable: true, default: nil, read_only: false, description: "zone is the name of the Zone this endpoint exists in.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Discovery::V1::Endpoint < ::K8S::Types::Api::Discovery::V1::Endpoint::Instance
     include ::K8S::Types::Api::Discovery::V1::Endpoint
     include ::K8S::Kubernetes::Object
 
     # addresses of this endpoint. The contents of this field are interpreted according to the corresponding EndpointSlice addressType field. Consumers must handle different types of addresses in the context of their own capabilities. This must contain at least one address but no more than 100.
-    def addresses : ::Array(String)
-      self.["addresses"].as(::Array(String))
+    def addresses : ::Set(String)
+      self.["addresses"].as(::Set(String))
     end
 
     # :ditto:
-    def addresses! : ::Array(String)
-      self.["addresses"].as(::Array(String)).not_nil!
+    def addresses! : ::Set(String)
+      self.["addresses"].as(::Set(String)).not_nil!
     end
 
     # :ditto:
-    def addresses? : ::Array(String)?
-      self.["addresses"]?.as(::Array(String)?)
+    def addresses? : ::Set(String)?
+      self.["addresses"]?.as(::Set(String)?)
     end
 
     # :ditto:
-    def addresses=(value : ::Array(String))
+    def addresses=(value : ::Set(String))
       self.["addresses"] = value
     end
 
@@ -258,7 +258,7 @@ module K8S
 
     macro finished
       ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "addresses", accessor: "addresses", nilable: false, read_only: false, default: nil, kind: ::Array(String) },
+        { key: "addresses", accessor: "addresses", nilable: false, read_only: false, default: nil, kind: ::Set(String) },
         { key: "conditions", accessor: "conditions", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Discovery::V1::EndpointConditions },
         { key: "deprecatedTopology", accessor: "deprecated_topology", nilable: true, read_only: false, default: nil, kind: ::Hash(String, String) },
         { key: "hints", accessor: "hints", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Discovery::V1::EndpointHints },

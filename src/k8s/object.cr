@@ -77,7 +77,7 @@ class K8S::Object(V)
   end
 
   # Initializes `K8S::Object` with the given *hash* object.
-  def initialize(hash : Iterable({H, J})? = nil) forall H, J
+  def initialize(hash : Enumerable | Iterable | NamedTuple | Nil = nil)
     @__hash__ = Hash(String, V).new
 
     if hash
@@ -131,7 +131,7 @@ class K8S::Object(V)
   # if any intermediate step is `nil`.
   def dig?(keys : Enumerable)
     keys.reduce(@__hash__) do |memo, key|
-      memo.as?(Hash(String, V)).try(&.[]?(key)) || break
+      memo.as?(Hash(String, V)).try(&.[]?(key.to_s)) || break
     end
   end
 
@@ -145,88 +145,13 @@ class K8S::Object(V)
   # if any intermediate step is `nil`.
   def dig(keys : Enumerable)
     keys.reduce(@__hash__) do |memo, key|
-      memo.as(Hash(String, V))[key]
+      memo.as(Hash(String, V))[key.to_s]
     end
   end
 
   # ditto
   def dig(*keys)
     dig(keys)
-  end
-
-  # Performs deep merge of `self` with given other *values*
-  # and returns copy of `self`.
-  #
-  # See `Hash#merge`.
-  def merge(*values, **options)
-    dup.merge!(*values, **options)
-  end
-
-  # ditto
-  def merge(*values, **options, &block)
-    dup.merge!(*values, **options) { |*args| yield *args }
-  end
-
-  # Destructive version of `#merge`.
-  def merge!(*values, **options)
-    self.class.deep_merge!(@__hash__, *values, **options)
-    self
-  end
-
-  # ditto
-  def merge!(*values, **options, &block)
-    self.class.deep_merge!(@__hash__, *values, **options) { |*args| yield *args }
-    self
-  end
-
-  # Merges the caller into *other*. For example,
-  #
-  # ```
-  # options = options.reverse_merge(size: 25, velocity: 10)
-  # ```
-  #
-  # is equivalent to
-  #
-  # ```
-  # options = { size: 25, velocity: 10 }.merge(options)
-  # ```
-  #
-  # This is particularly useful for initializing an options hash with default values.
-  def reverse_merge(other = nil, *values, **options)
-    dup.reverse_merge!(other, *values, **options)
-  end
-
-  # ditto
-  def reverse_merge(other = nil, *values, **options, &block)
-    dup.reverse_merge!(other, *values, **options) { |*args| yield *args }
-  end
-
-  # Destructive version of `#reverse_merge`.
-  def reverse_merge!(other = nil, *values, **options)
-    values = {self, other} + values + {options}
-    hash = self.class.new.merge!(*values.reverse)
-    replace(hash)
-  end
-
-  # ditto
-  def reverse_merge!(other = nil, *values, **options, &block)
-    values = {self, other} + values + {options}
-    hash = self.class.new.merge!(*values.reverse) { |*args| yield *args }
-    replace(hash)
-  end
-
-  # Replaces underlying `Hash` with given *other*.
-  #
-  # Returns `self`.
-  def replace(other)
-    case other
-    when K8S::Object(String, V) then @__hash__ = other.to_h
-    when Hash(String, V)        then @__hash__ = other
-    else
-      clear
-      merge!(other)
-    end
-    self
   end
 
   def self.new(ctx : ::YAML::ParseContext, node : ::YAML::Nodes::Node)

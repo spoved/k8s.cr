@@ -39,9 +39,9 @@ module K8S
 
   # AzureFile represents an Azure File Service mount on the host and bind mount to the pod.
   @[::K8S::Properties(
-    read_only: {key: "readOnly", accessor: "read_only", kind: "::Bool", nilable: true, default: nil, read_only: false, description: "Defaults to false [(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.)"},
-    secret_name: {key: "secretName", accessor: "secret_name", kind: "String", nilable: false, default: nil, read_only: false, description: "the name of secret that contains Azure Storage Account Name and Key"},
-    share_name: {key: "shareName", accessor: "share_name", kind: "String", nilable: false, default: nil, read_only: false, description: "Share Name"},
+    read_only: {key: "readOnly", accessor: "read_only", kind: "::Bool", nilable: true, default: nil, read_only: false, description: "Defaults to false [(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    secret_name: {key: "secretName", accessor: "secret_name", kind: "String", nilable: false, default: nil, read_only: false, description: "the name of secret that contains Azure Storage Account Name and Key", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    share_name: {key: "shareName", accessor: "share_name", kind: "String", nilable: false, default: nil, read_only: false, description: "Share Name", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Core::V1::AzureFileVolumeSource < ::K8S::Types::Api::Core::V1::AzureFileVolumeSource::Instance
     include ::K8S::Types::Api::Core::V1::AzureFileVolumeSource

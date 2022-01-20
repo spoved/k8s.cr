@@ -5,7 +5,6 @@ module ::K8S::Kubernetes::Resource
       pull.read_object do |key, key_location|
         parsed_key = String.from_json_object_key?(key)
         raise ::JSON::ParseException.new("Can't convert #{key.inspect} into String", *key_location) unless parsed_key
-
         case parsed_key
         {% for prop in props %}
         when {{prop[:key].id.stringify}} {% if prop[:key] != prop[:accessor] %}, {{prop[:accessor].id.stringify}} {% end %}
@@ -18,7 +17,9 @@ module ::K8S::Kubernetes::Resource
           {% end %}
         {% end %}
         else
-          raise ::JSON::ParseException.new("Unknown key #{parsed_key}", *key_location)
+          # raise ::JSON::ParseException.new("Unknown key #{parsed_key}", *key_location)
+          Log.trace { "JSON::ParseException - Unknown key #{parsed_key} for #{self}" }
+          pull.skip
         end
       end
 
@@ -57,7 +58,8 @@ module ::K8S::Kubernetes::Resource
           {% end %}
         {% end %}
         else
-          node.raise "Unknown key #{parsed_key}"
+          # node.raise "Unknown key #{parsed_key}"
+          Log.trace { "YAML::ParseException - Unknown key #{parsed_key} for #{self}" }
         end
       end
       hash

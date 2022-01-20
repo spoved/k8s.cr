@@ -25,7 +25,7 @@ module K8S
 
   # VolumeNodeAffinity defines constraints that limit what nodes this volume can be accessed from.
   @[::K8S::Properties(
-    required: {key: "required", accessor: "required", kind: "::K8S::Api::Core::V1::NodeSelector", nilable: true, default: nil, read_only: false, description: "Required specifies hard node constraints that must be met."},
+    required: {key: "required", accessor: "required", kind: "::K8S::Api::Core::V1::NodeSelector", nilable: true, default: nil, read_only: false, description: "Required specifies hard node constraints that must be met.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Core::V1::VolumeNodeAffinity < ::K8S::Types::Api::Core::V1::VolumeNodeAffinity::Instance
     include ::K8S::Types::Api::Core::V1::VolumeNodeAffinity

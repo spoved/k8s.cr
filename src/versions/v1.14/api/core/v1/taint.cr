@@ -47,10 +47,10 @@ module K8S
 
   # The node this Taint is attached to has the "effect" on any pod that does not tolerate the Taint.
   @[::K8S::Properties(
-    effect: {key: "effect", accessor: "effect", kind: "String", nilable: false, default: nil, read_only: false, description: "Required. The effect of the taint on pods that do not tolerate the taint. Valid effects are NoSchedule, PreferNoSchedule and NoExecute."},
-    key: {key: "key", accessor: "key", kind: "String", nilable: false, default: nil, read_only: false, description: "Required. The taint key to be applied to a node."},
-    time_added: {key: "timeAdded", accessor: "time_added", kind: "::Time", nilable: true, default: nil, read_only: false, description: "TimeAdded represents the time at which the taint was added. It is only written for NoExecute taints."},
-    value: {key: "value", accessor: "value", kind: "String", nilable: true, default: nil, read_only: false, description: "Required. The taint value corresponding to the taint key."},
+    effect: {key: "effect", accessor: "effect", kind: "String", nilable: false, default: nil, read_only: false, description: "Required. The effect of the taint on pods that do not tolerate the taint. Valid effects are NoSchedule, PreferNoSchedule and NoExecute.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    key: {key: "key", accessor: "key", kind: "String", nilable: false, default: nil, read_only: false, description: "Required. The taint key to be applied to a node.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    time_added: {key: "timeAdded", accessor: "time_added", kind: "::Time", nilable: true, default: nil, read_only: false, description: "TimeAdded represents the time at which the taint was added. It is only written for NoExecute taints.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    value: {key: "value", accessor: "value", kind: "String", nilable: true, default: nil, read_only: false, description: "Required. The taint value corresponding to the taint key.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Core::V1::Taint < ::K8S::Types::Api::Core::V1::Taint::Instance
     include ::K8S::Types::Api::Core::V1::Taint

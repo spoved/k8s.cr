@@ -39,9 +39,9 @@ module K8S
 
   # ResourceFieldSelector represents container resources (cpu, memory) and their output format
   @[::K8S::Properties(
-    container_name: {key: "containerName", accessor: "container_name", kind: "String", nilable: true, default: nil, read_only: false, description: "Container name: required for volumes, optional for env vars"},
-    divisor: {key: "divisor", accessor: "divisor", kind: "::Int32 | ::String", nilable: true, default: nil, read_only: false, description: "Specifies the output format of the exposed resources, defaults to \"1\""},
-    resource: {key: "resource", accessor: "resource", kind: "String", nilable: false, default: nil, read_only: false, description: "Required: resource to select"},
+    container_name: {key: "containerName", accessor: "container_name", kind: "String", nilable: true, default: nil, read_only: false, description: "Container name: required for volumes, optional for env vars", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    divisor: {key: "divisor", accessor: "divisor", kind: "::Int32 | ::String", nilable: true, default: nil, read_only: false, description: "Specifies the output format of the exposed resources, defaults to \"1\"", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    resource: {key: "resource", accessor: "resource", kind: "String", nilable: false, default: nil, read_only: false, description: "Required: resource to select", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Core::V1::ResourceFieldSelector < ::K8S::Types::Api::Core::V1::ResourceFieldSelector::Instance
     include ::K8S::Types::Api::Core::V1::ResourceFieldSelector

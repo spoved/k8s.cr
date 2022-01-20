@@ -23,7 +23,7 @@ module K8S
 
   # Initializer is information about an initializer that has not yet completed.
   @[::K8S::Properties(
-    name: {key: "name", accessor: "name", kind: "String", nilable: false, default: nil, read_only: false, description: "name of the process that is responsible for initializing this object."},
+    name: {key: "name", accessor: "name", kind: "String", nilable: false, default: nil, read_only: false, description: "name of the process that is responsible for initializing this object.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Apimachinery::Apis::Meta::V1::Initializer < ::K8S::Types::Apimachinery::Apis::Meta::V1::Initializer::Instance
     include ::K8S::Types::Apimachinery::Apis::Meta::V1::Initializer

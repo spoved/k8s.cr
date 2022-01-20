@@ -31,8 +31,8 @@ module K8S
 
   # Local represents directly-attached storage with node affinity (Beta feature)
   @[::K8S::Properties(
-    fs_type: {key: "fsType", accessor: "fs_type", kind: "String", nilable: true, default: nil, read_only: false, description: "Filesystem type to mount. It applies only when the Path is a block device. Must be a filesystem type supported by the host operating system. Ex. \"ext4\", \"xfs\", \"ntfs\". The default value is to auto-select a filesystem if unspecified."},
-    path: {key: "path", accessor: "path", kind: "String", nilable: false, default: nil, read_only: false, description: "The full path to the volume on the node. It can be either a directory or block device (disk, partition, ...)."},
+    fs_type: {key: "fsType", accessor: "fs_type", kind: "String", nilable: true, default: nil, read_only: false, description: "Filesystem type to mount. It applies only when the Path is a block device. Must be a filesystem type supported by the host operating system. Ex. \"ext4\", \"xfs\", \"ntfs\". The default value is to auto-select a filesystem if unspecified.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    path: {key: "path", accessor: "path", kind: "String", nilable: false, default: nil, read_only: false, description: "The full path to the volume on the node. It can be either a directory or block device (disk, partition, ...).", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Core::V1::LocalVolumeSource < ::K8S::Types::Api::Core::V1::LocalVolumeSource::Instance
     include ::K8S::Types::Api::Core::V1::LocalVolumeSource

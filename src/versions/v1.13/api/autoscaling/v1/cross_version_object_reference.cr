@@ -39,9 +39,9 @@ module K8S
 
   # CrossVersionObjectReference contains enough information to let you identify the referred resource.
   @[::K8S::Properties(
-    api_version: {key: "apiVersion", accessor: "api_version", kind: "String", nilable: true, default: nil, read_only: false, description: "API version of the referent"},
-    kind: {key: "kind", accessor: "kind", kind: "String", nilable: false, default: nil, read_only: false, description: "Kind of the referent; More info: [https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds\"](https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds\")"},
-    name: {key: "name", accessor: "name", kind: "String", nilable: false, default: nil, read_only: false, description: "Name of the referent; More info: [http://kubernetes.io/docs/user-guide/identifiers#names](http://kubernetes.io/docs/user-guide/identifiers#names)"},
+    api_version: {key: "apiVersion", accessor: "api_version", kind: "String", nilable: true, default: nil, read_only: false, description: "API version of the referent", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    kind: {key: "kind", accessor: "kind", kind: "String", nilable: false, default: nil, read_only: false, description: "Kind of the referent; More info: [https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds\"](https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds\")", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    name: {key: "name", accessor: "name", kind: "String", nilable: false, default: nil, read_only: false, description: "Name of the referent; More info: [http://kubernetes.io/docs/user-guide/identifiers#names](http://kubernetes.io/docs/user-guide/identifiers#names)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Autoscaling::V1::CrossVersionObjectReference < ::K8S::Types::Api::Autoscaling::V1::CrossVersionObjectReference::Instance
     include ::K8S::Types::Api::Autoscaling::V1::CrossVersionObjectReference

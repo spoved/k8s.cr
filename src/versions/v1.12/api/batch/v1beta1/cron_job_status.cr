@@ -33,8 +33,8 @@ module K8S
 
   # CronJobStatus represents the current state of a cron job.
   @[::K8S::Properties(
-    active: {key: "active", accessor: "active", kind: "::Array(::K8S::Api::Core::V1::ObjectReference)", nilable: true, default: nil, read_only: false, description: "A list of pointers to currently running jobs."},
-    last_schedule_time: {key: "lastScheduleTime", accessor: "last_schedule_time", kind: "::Time", nilable: true, default: nil, read_only: false, description: "Information when was the last time the job was successfully scheduled."},
+    active: {key: "active", accessor: "active", kind: "::Array(::K8S::Api::Core::V1::ObjectReference)", nilable: true, default: nil, read_only: false, description: "A list of pointers to currently running jobs.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    last_schedule_time: {key: "lastScheduleTime", accessor: "last_schedule_time", kind: "::Time", nilable: true, default: nil, read_only: false, description: "Information when was the last time the job was successfully scheduled.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Batch::V1beta1::CronJobStatus < ::K8S::Types::Api::Batch::V1beta1::CronJobStatus::Instance
     include ::K8S::Types::Api::Batch::V1beta1::CronJobStatus

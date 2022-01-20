@@ -31,8 +31,8 @@ module K8S
 
   # HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
   @[::K8S::Properties(
-    hostnames: {key: "hostnames", accessor: "hostnames", kind: "::Array(String)", nilable: true, default: nil, read_only: false, description: "Hostnames for the above IP address."},
-    ip: {key: "ip", accessor: "ip", kind: "String", nilable: true, default: nil, read_only: false, description: "IP address of the host file entry."},
+    hostnames: {key: "hostnames", accessor: "hostnames", kind: "::Array(String)", nilable: true, default: nil, read_only: false, description: "Hostnames for the above IP address.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    ip: {key: "ip", accessor: "ip", kind: "String", nilable: true, default: nil, read_only: false, description: "IP address of the host file entry.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Core::V1::HostAlias < ::K8S::Types::Api::Core::V1::HostAlias::Instance
     include ::K8S::Types::Api::Core::V1::HostAlias

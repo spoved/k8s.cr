@@ -23,7 +23,7 @@ module K8S
 
   # EndpointConditions represents the current condition of an endpoint.
   @[::K8S::Properties(
-    ready: {key: "ready", accessor: "ready", kind: "::Bool", nilable: true, default: nil, read_only: false, description: "ready indicates that this endpoint is prepared to receive traffic, according to whatever system is managing the endpoint. A nil value indicates an unknown state. In most cases consumers should interpret this unknown state as ready."},
+    ready: {key: "ready", accessor: "ready", kind: "::Bool", nilable: true, default: nil, read_only: false, description: "ready indicates that this endpoint is prepared to receive traffic, according to whatever system is managing the endpoint. A nil value indicates an unknown state. In most cases consumers should interpret this unknown state as ready.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Discovery::V1beta1::EndpointConditions < ::K8S::Types::Api::Discovery::V1beta1::EndpointConditions::Instance
     include ::K8S::Types::Api::Discovery::V1beta1::EndpointConditions

@@ -23,7 +23,7 @@ module K8S
 
   # Preconditions must be fulfilled before an operation (update, delete, etc.) is carried out.
   @[::K8S::Properties(
-    uid: {key: "uid", accessor: "uid", kind: "String", nilable: true, default: nil, read_only: false, description: "Specifies the target UID."},
+    uid: {key: "uid", accessor: "uid", kind: "String", nilable: true, default: nil, read_only: false, description: "Specifies the target UID.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Apimachinery::Apis::Meta::V1::Preconditions < ::K8S::Types::Apimachinery::Apis::Meta::V1::Preconditions::Instance
     include ::K8S::Types::Apimachinery::Apis::Meta::V1::Preconditions

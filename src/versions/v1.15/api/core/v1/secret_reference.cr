@@ -31,8 +31,8 @@ module K8S
 
   # SecretReference represents a Secret Reference. It has enough information to retrieve secret in any namespace
   @[::K8S::Properties(
-    name: {key: "name", accessor: "name", kind: "String", nilable: true, default: nil, read_only: false, description: "Name is unique within a namespace to reference a secret resource."},
-    namespace: {key: "namespace", accessor: "namespace", kind: "String", nilable: true, default: nil, read_only: false, description: "Namespace defines the space within which the secret name must be unique."},
+    name: {key: "name", accessor: "name", kind: "String", nilable: true, default: nil, read_only: false, description: "Name is unique within a namespace to reference a secret resource.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    namespace: {key: "namespace", accessor: "namespace", kind: "String", nilable: true, default: nil, read_only: false, description: "Namespace defines the space within which the secret name must be unique.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Core::V1::SecretReference < ::K8S::Types::Api::Core::V1::SecretReference::Instance
     include ::K8S::Types::Api::Core::V1::SecretReference

@@ -23,7 +23,7 @@ module K8S
 
   # ForZone provides information about which zones should consume this endpoint.
   @[::K8S::Properties(
-    name: {key: "name", accessor: "name", kind: "String", nilable: false, default: nil, read_only: false, description: "name represents the name of the zone."},
+    name: {key: "name", accessor: "name", kind: "String", nilable: false, default: nil, read_only: false, description: "name represents the name of the zone.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Discovery::V1::ForZone < ::K8S::Types::Api::Discovery::V1::ForZone::Instance
     include ::K8S::Types::Api::Discovery::V1::ForZone

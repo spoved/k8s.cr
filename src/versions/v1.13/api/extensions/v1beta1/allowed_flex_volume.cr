@@ -23,7 +23,7 @@ module K8S
 
   # AllowedFlexVolume represents a single Flexvolume that is allowed to be used. Deprecated: use AllowedFlexVolume from policy API Group instead.
   @[::K8S::Properties(
-    driver: {key: "driver", accessor: "driver", kind: "String", nilable: false, default: nil, read_only: false, description: "driver is the name of the Flexvolume driver."},
+    driver: {key: "driver", accessor: "driver", kind: "String", nilable: false, default: nil, read_only: false, description: "driver is the name of the Flexvolume driver.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Extensions::V1beta1::AllowedFlexVolume < ::K8S::Types::Api::Extensions::V1beta1::AllowedFlexVolume::Instance
     include ::K8S::Types::Api::Extensions::V1beta1::AllowedFlexVolume

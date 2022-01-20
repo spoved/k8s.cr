@@ -23,7 +23,7 @@ module K8S
 
   # Overhead structure represents the resource overhead associated with running a pod.
   @[::K8S::Properties(
-    pod_fixed: {key: "podFixed", accessor: "pod_fixed", kind: "::Hash(String, ::Int32 | ::String)", nilable: true, default: nil, read_only: false, description: "PodFixed represents the fixed resource overhead associated with running a pod."},
+    pod_fixed: {key: "podFixed", accessor: "pod_fixed", kind: "::Hash(String, ::Int32 | ::String)", nilable: true, default: nil, read_only: false, description: "PodFixed represents the fixed resource overhead associated with running a pod.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Node::V1::Overhead < ::K8S::Types::Api::Node::V1::Overhead::Instance
     include ::K8S::Types::Api::Node::V1::Overhead

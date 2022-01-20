@@ -47,10 +47,10 @@ module K8S
 
   # SELinuxOptions are the labels to be applied to the container
   @[::K8S::Properties(
-    level: {key: "level", accessor: "level", kind: "String", nilable: true, default: nil, read_only: false, description: "Level is SELinux level label that applies to the container."},
-    role: {key: "role", accessor: "role", kind: "String", nilable: true, default: nil, read_only: false, description: "Role is a SELinux role label that applies to the container."},
-    type: {key: "type", accessor: "type", kind: "String", nilable: true, default: nil, read_only: false, description: "Type is a SELinux type label that applies to the container."},
-    user: {key: "user", accessor: "user", kind: "String", nilable: true, default: nil, read_only: false, description: "User is a SELinux user label that applies to the container."},
+    level: {key: "level", accessor: "level", kind: "String", nilable: true, default: nil, read_only: false, description: "Level is SELinux level label that applies to the container.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    role: {key: "role", accessor: "role", kind: "String", nilable: true, default: nil, read_only: false, description: "Role is a SELinux role label that applies to the container.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    type: {key: "type", accessor: "type", kind: "String", nilable: true, default: nil, read_only: false, description: "Type is a SELinux type label that applies to the container.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
+    user: {key: "user", accessor: "user", kind: "String", nilable: true, default: nil, read_only: false, description: "User is a SELinux user label that applies to the container.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Core::V1::SELinuxOptions < ::K8S::Types::Api::Core::V1::SELinuxOptions::Instance
     include ::K8S::Types::Api::Core::V1::SELinuxOptions

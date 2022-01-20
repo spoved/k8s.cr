@@ -25,7 +25,7 @@ module K8S
 
   # IngressStatus describe the current state of the Ingress.
   @[::K8S::Properties(
-    load_balancer: {key: "loadBalancer", accessor: "load_balancer", kind: "::K8S::Api::Core::V1::LoadBalancerStatus", nilable: true, default: nil, read_only: false, description: "LoadBalancer contains the current status of the load-balancer."},
+    load_balancer: {key: "loadBalancer", accessor: "load_balancer", kind: "::K8S::Api::Core::V1::LoadBalancerStatus", nilable: true, default: nil, read_only: false, description: "LoadBalancer contains the current status of the load-balancer.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Extensions::V1beta1::IngressStatus < ::K8S::Types::Api::Extensions::V1beta1::IngressStatus::Instance
     include ::K8S::Types::Api::Extensions::V1beta1::IngressStatus

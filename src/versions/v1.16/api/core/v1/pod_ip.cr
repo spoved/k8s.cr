@@ -24,7 +24,7 @@ module K8S
   # IP address information for entries in the (plural) PodIPs field. Each entry includes:
   #    IP: An IP address allocated to the pod. Routable at least within the cluster.
   @[::K8S::Properties(
-    ip: {key: "ip", accessor: "ip", kind: "String", nilable: true, default: nil, read_only: false, description: "ip is an IP address (IPv4 or IPv6) assigned to the pod"},
+    ip: {key: "ip", accessor: "ip", kind: "String", nilable: true, default: nil, read_only: false, description: "ip is an IP address (IPv4 or IPv6) assigned to the pod", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
   class Api::Core::V1::PodIP < ::K8S::Types::Api::Core::V1::PodIP::Instance
     include ::K8S::Types::Api::Core::V1::PodIP

@@ -190,40 +190,64 @@ class Generator::Definition
     end
   end
 
+  alias PropDef = NamedTuple(
+    key: String, accessor: String, kind: String, nilable: Bool, default: String?, read_only: Bool, description: String?,
+    x_kubernetes_embedded_resource: Bool?, x_kubernetes_int_or_string: Bool?, x_kubernetes_preserve_unknown_fields: Bool?,
+    x_kubernetes_list_map_keys: Array(String)?, x_kubernetes_list_type: String?, x_kubernetes_map_type: String?,
+  )
+
   # ameba:disable Metrics/CyclomaticComplexity
-  def parse_properties : Array(NamedTuple(key: String, accessor: String, kind: String, nilable: Bool, default: String?, read_only: Bool, description: String?))?
+  def parse_properties : Array(PropDef)?
     return nil if properties.empty?
-    props = Array(NamedTuple(key: String, accessor: String, kind: String, nilable: Bool, default: String?, read_only: Bool, description: String?)).new
+    props = Array(PropDef).new
 
     if (is_list? || is_resource?) || name.ends_with?("APIResourceList")
       props << {
-        key:         "apiVersion",
-        accessor:    "api_version",
-        kind:        "String",
-        nilable:     false,
-        default:     api_version_name,
-        read_only:   true,
-        description: "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources))",
+        key:                                  "apiVersion",
+        accessor:                             "api_version",
+        kind:                                 "String",
+        nilable:                              false,
+        default:                              api_version_name,
+        read_only:                            true,
+        description:                          "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources))",
+        x_kubernetes_embedded_resource:       nil,
+        x_kubernetes_int_or_string:           nil,
+        x_kubernetes_preserve_unknown_fields: nil,
+        x_kubernetes_list_map_keys:           nil,
+        x_kubernetes_list_type:               nil,
+        x_kubernetes_map_type:                nil,
       }
 
       props << {
-        key:         "kind",
-        accessor:    "kind",
-        kind:        "String",
-        nilable:     false,
-        default:     kind,
-        read_only:   true,
-        description: "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds))",
+        key:                                  "kind",
+        accessor:                             "kind",
+        kind:                                 "String",
+        nilable:                              false,
+        default:                              kind,
+        read_only:                            true,
+        description:                          "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds))",
+        x_kubernetes_embedded_resource:       nil,
+        x_kubernetes_int_or_string:           nil,
+        x_kubernetes_preserve_unknown_fields: nil,
+        x_kubernetes_list_map_keys:           nil,
+        x_kubernetes_list_type:               nil,
+        x_kubernetes_map_type:                nil,
       }
 
       props << {
-        key:         "metadata",
-        accessor:    "metadata",
-        kind:        is_list? ? "::K8S::Apimachinery::Apis::Meta::V1::ListMeta" : "::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta",
-        nilable:     true,
-        default:     nil,
-        read_only:   false,
-        description: "Standard object's metadata. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata))",
+        key:                                  "metadata",
+        accessor:                             "metadata",
+        kind:                                 is_list? ? "::K8S::Apimachinery::Apis::Meta::V1::ListMeta" : "::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta",
+        nilable:                              true,
+        default:                              nil,
+        read_only:                            false,
+        description:                          "Standard object's metadata. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata))",
+        x_kubernetes_embedded_resource:       nil,
+        x_kubernetes_int_or_string:           nil,
+        x_kubernetes_preserve_unknown_fields: nil,
+        x_kubernetes_list_map_keys:           nil,
+        x_kubernetes_list_type:               nil,
+        x_kubernetes_map_type:                nil,
       } if properties["metadata"]?
     end
 
@@ -237,25 +261,37 @@ class Generator::Definition
 
       if is_list? && name == "items"
         props << {
-          key:         "items",
-          accessor:    "items",
-          kind:        "Array(::#{base_class}::#{list_kind})",
-          nilable:     !required.includes?(name),
-          default:     nil,
-          read_only:   false,
-          description: description,
+          key:                                  "items",
+          accessor:                             "items",
+          kind:                                 "Array(::#{base_class}::#{list_kind})",
+          nilable:                              !required.includes?(name),
+          default:                              nil,
+          read_only:                            false,
+          description:                          description,
+          x_kubernetes_embedded_resource:       property.x_kubernetes_embedded_resource,
+          x_kubernetes_int_or_string:           property.x_kubernetes_int_or_string,
+          x_kubernetes_preserve_unknown_fields: property.x_kubernetes_preserve_unknown_fields,
+          x_kubernetes_list_map_keys:           property.x_kubernetes_list_map_keys,
+          x_kubernetes_list_type:               property.x_kubernetes_list_type,
+          x_kubernetes_map_type:                property.x_kubernetes_map_type,
         }
         next
       end
 
       props << {
-        key:         name,
-        accessor:    crystal_name,
-        kind:        convert_type(property),
-        nilable:     !required.includes?(name),
-        default:     nil,
-        read_only:   false,
-        description: description,
+        key:                                  name,
+        accessor:                             crystal_name,
+        kind:                                 convert_type(property),
+        nilable:                              !required.includes?(name),
+        default:                              nil,
+        read_only:                            false,
+        description:                          description,
+        x_kubernetes_embedded_resource:       property.x_kubernetes_embedded_resource,
+        x_kubernetes_int_or_string:           property.x_kubernetes_int_or_string,
+        x_kubernetes_preserve_unknown_fields: property.x_kubernetes_preserve_unknown_fields,
+        x_kubernetes_list_map_keys:           property.x_kubernetes_list_map_keys,
+        x_kubernetes_list_type:               property.x_kubernetes_list_type,
+        x_kubernetes_map_type:                property.x_kubernetes_map_type,
       }
     end
     props
