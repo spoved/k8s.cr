@@ -8,9 +8,6 @@ module K8S::Types::Api::Core::V1::GitRepoVolumeSource; end
 module K8S
   # Namespace holding the types for `Api::Core::V1::GitRepoVolumeSource`.
   module Types::Api::Core::V1::GitRepoVolumeSource
-    alias ValueType = String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Target directory name. Must not contain or start with '..'.  If '.' is supplied, the volume directory will be the git repository.  Otherwise, if specified, the volume will contain the git repository in the subdirectory with the given name.
     abstract def directory : String?
     # :ditto:
@@ -45,9 +42,8 @@ module K8S
     repository: {key: "repository", accessor: "repository", kind: "String", nilable: false, default: nil, read_only: false, description: "Repository URL", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     revision: {key: "revision", accessor: "revision", kind: "String", nilable: true, default: nil, read_only: false, description: "Commit hash for the specified revision.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::GitRepoVolumeSource < ::K8S::Types::Api::Core::V1::GitRepoVolumeSource::Instance
+  class Api::Core::V1::GitRepoVolumeSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::GitRepoVolumeSource
-    include ::K8S::Kubernetes::Object
 
     # Target directory name. Must not contain or start with '..'.  If '.' is supplied, the volume directory will be the git repository.  Otherwise, if specified, the volume will contain the git repository in the subdirectory with the given name.
     def directory : String?

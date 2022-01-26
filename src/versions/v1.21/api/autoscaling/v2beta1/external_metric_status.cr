@@ -10,9 +10,6 @@ require "../../../apimachinery/apis/meta/v1/label_selector"
 module K8S
   # Namespace holding the types for `Api::Autoscaling::V2beta1::ExternalMetricStatus`.
   module Types::Api::Autoscaling::V2beta1::ExternalMetricStatus
-    alias ValueType = ::Int32 | ::String | String | ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # currentAverageValue is the current value of metric averaged over autoscaled pods.
     abstract def current_average_value : ::Int32 | ::String?
     # :ditto:
@@ -54,9 +51,8 @@ module K8S
     metric_name: {key: "metricName", accessor: "metric_name", kind: "String", nilable: false, default: nil, read_only: false, description: "metricName is the name of a metric used for autoscaling in metric system.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     metric_selector: {key: "metricSelector", accessor: "metric_selector", kind: "::K8S::Apimachinery::Apis::Meta::V1::LabelSelector", nilable: true, default: nil, read_only: false, description: "metricSelector is used to identify a specific time series within a given metric.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Autoscaling::V2beta1::ExternalMetricStatus < ::K8S::Types::Api::Autoscaling::V2beta1::ExternalMetricStatus::Instance
+  class Api::Autoscaling::V2beta1::ExternalMetricStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Autoscaling::V2beta1::ExternalMetricStatus
-    include ::K8S::Kubernetes::Object
 
     # currentAverageValue is the current value of metric averaged over autoscaled pods.
     def current_average_value : ::Int32 | ::String?

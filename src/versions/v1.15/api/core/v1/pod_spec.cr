@@ -18,9 +18,6 @@ require "./volume"
 module K8S
   # Namespace holding the types for `Api::Core::V1::PodSpec`.
   module Types::Api::Core::V1::PodSpec
-    alias ValueType = Int32 | ::K8S::Api::Core::V1::Affinity | ::Bool | ::Array(::K8S::Api::Core::V1::Container) | ::K8S::Api::Core::V1::PodDNSConfig | String | ::Array(::K8S::Api::Core::V1::HostAlias) | ::Array(::K8S::Api::Core::V1::LocalObjectReference) | ::Hash(String, String) | ::Array(::K8S::Api::Core::V1::PodReadinessGate) | ::K8S::Api::Core::V1::PodSecurityContext | ::Array(::K8S::Api::Core::V1::Toleration) | ::Array(::K8S::Api::Core::V1::Volume) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Optional duration in seconds the pod may be active on the node relative to StartTime before the system will actively try to mark it failed and kill associated containers. Value must be a positive integer.
     abstract def active_deadline_seconds : Int32?
     # :ditto:
@@ -305,9 +302,8 @@ module K8S
     tolerations: {key: "tolerations", accessor: "tolerations", kind: "::Array(::K8S::Api::Core::V1::Toleration)", nilable: true, default: nil, read_only: false, description: "If specified, the pod's tolerations.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     volumes: {key: "volumes", accessor: "volumes", kind: "::Array(::K8S::Api::Core::V1::Volume)", nilable: true, default: nil, read_only: false, description: "List of volumes that can be mounted by containers belonging to the pod. More info: [https://kubernetes.io/docs/concepts/storage/volumes](https://kubernetes.io/docs/concepts/storage/volumes)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::PodSpec < ::K8S::Types::Api::Core::V1::PodSpec::Instance
+  class Api::Core::V1::PodSpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::PodSpec
-    include ::K8S::Kubernetes::Object
 
     # Optional duration in seconds the pod may be active on the node relative to StartTime before the system will actively try to mark it failed and kill associated containers. Value must be a positive integer.
     def active_deadline_seconds : Int32?

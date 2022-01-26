@@ -8,9 +8,6 @@ module K8S::Types::Api::Discovery::V1::ForZone; end
 module K8S
   # Namespace holding the types for `Api::Discovery::V1::ForZone`.
   module Types::Api::Discovery::V1::ForZone
-    alias ValueType = String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # name represents the name of the zone.
     abstract def name : String
     # :ditto:
@@ -25,9 +22,8 @@ module K8S
   @[::K8S::Properties(
     name: {key: "name", accessor: "name", kind: "String", nilable: false, default: nil, read_only: false, description: "name represents the name of the zone.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Discovery::V1::ForZone < ::K8S::Types::Api::Discovery::V1::ForZone::Instance
+  class Api::Discovery::V1::ForZone < ::K8S::GenericObject
     include ::K8S::Types::Api::Discovery::V1::ForZone
-    include ::K8S::Kubernetes::Object
 
     # name represents the name of the zone.
     def name : String

@@ -11,9 +11,6 @@ require "./load_balancer_status"
 module K8S
   # Namespace holding the types for `Api::Core::V1::ServiceStatus`.
   module Types::Api::Core::V1::ServiceStatus
-    alias ValueType = ::Array(::K8S::Apimachinery::Apis::Meta::V1::Condition) | ::K8S::Api::Core::V1::LoadBalancerStatus | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Current service state
     abstract def conditions : ::Array(::K8S::Apimachinery::Apis::Meta::V1::Condition)?
     # :ditto:
@@ -37,9 +34,8 @@ module K8S
     conditions: {key: "conditions", accessor: "conditions", kind: "::Array(::K8S::Apimachinery::Apis::Meta::V1::Condition)", nilable: true, default: nil, read_only: false, description: "Current service state", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: ["type"], x_kubernetes_list_type: "map", x_kubernetes_map_type: nil},
     load_balancer: {key: "loadBalancer", accessor: "load_balancer", kind: "::K8S::Api::Core::V1::LoadBalancerStatus", nilable: true, default: nil, read_only: false, description: "LoadBalancer contains the current status of the load-balancer, if one is present.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::ServiceStatus < ::K8S::Types::Api::Core::V1::ServiceStatus::Instance
+  class Api::Core::V1::ServiceStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::ServiceStatus
-    include ::K8S::Kubernetes::Object
 
     # Current service state
     def conditions : ::Array(::K8S::Apimachinery::Apis::Meta::V1::Condition)?

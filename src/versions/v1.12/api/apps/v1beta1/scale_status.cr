@@ -8,9 +8,6 @@ module K8S::Types::Api::Apps::V1beta1::ScaleStatus; end
 module K8S
   # Namespace holding the types for `Api::Apps::V1beta1::ScaleStatus`.
   module Types::Api::Apps::V1beta1::ScaleStatus
-    alias ValueType = Int32 | ::Hash(String, String) | String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # actual number of observed instances of the scaled object.
     abstract def replicas : Int32
     # :ditto:
@@ -43,9 +40,8 @@ module K8S
     selector: {key: "selector", accessor: "selector", kind: "::Hash(String, String)", nilable: true, default: nil, read_only: false, description: "label query over pods that should match the replicas count. More info: [http://kubernetes.io/docs/user-guide/labels#label-selectors](http://kubernetes.io/docs/user-guide/labels#label-selectors)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     target_selector: {key: "targetSelector", accessor: "target_selector", kind: "String", nilable: true, default: nil, read_only: false, description: "label selector for pods that should match the replicas count. This is a serializated version of both map-based and more expressive set-based selectors. This is done to avoid introspection in the clients. The string will be in the same format as the query-param syntax. If the target type only supports map-based selectors, both this field and map-based selector field are populated. More info: [https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Apps::V1beta1::ScaleStatus < ::K8S::Types::Api::Apps::V1beta1::ScaleStatus::Instance
+  class Api::Apps::V1beta1::ScaleStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Apps::V1beta1::ScaleStatus
-    include ::K8S::Kubernetes::Object
 
     # actual number of observed instances of the scaled object.
     def replicas : Int32

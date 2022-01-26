@@ -10,9 +10,6 @@ require "./hpa_scaling_policy"
 module K8S
   # Namespace holding the types for `Api::Autoscaling::V2beta2::HPAScalingRules`.
   module Types::Api::Autoscaling::V2beta2::HPAScalingRules
-    alias ValueType = ::Array(::K8S::Api::Autoscaling::V2beta2::HPAScalingPolicy) | String | Int32 | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # policies is a list of potential scaling polices which can be used during scaling. At least one policy must be specified, otherwise the HPAScalingRules will be discarded as invalid
     abstract def policies : ::Array(::K8S::Api::Autoscaling::V2beta2::HPAScalingPolicy)?
     # :ditto:
@@ -45,9 +42,8 @@ module K8S
     select_policy: {key: "selectPolicy", accessor: "select_policy", kind: "String", nilable: true, default: nil, read_only: false, description: "selectPolicy is used to specify which policy should be used. If not set, the default value MaxPolicySelect is used.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     stabilization_window_seconds: {key: "stabilizationWindowSeconds", accessor: "stabilization_window_seconds", kind: "Int32", nilable: true, default: nil, read_only: false, description: "StabilizationWindowSeconds is the number of seconds for which past recommendations should be considered while scaling up or scaling down. StabilizationWindowSeconds must be greater than or equal to zero and less than or equal to 3600 (one hour). If not set, use the default values: - For scale up: 0 (i.e. no stabilization is done). - For scale down: 300 (i.e. the stabilization window is 300 seconds long).", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Autoscaling::V2beta2::HPAScalingRules < ::K8S::Types::Api::Autoscaling::V2beta2::HPAScalingRules::Instance
+  class Api::Autoscaling::V2beta2::HPAScalingRules < ::K8S::GenericObject
     include ::K8S::Types::Api::Autoscaling::V2beta2::HPAScalingRules
-    include ::K8S::Kubernetes::Object
 
     # policies is a list of potential scaling polices which can be used during scaling. At least one policy must be specified, otherwise the HPAScalingRules will be discarded as invalid
     def policies : ::Array(::K8S::Api::Autoscaling::V2beta2::HPAScalingPolicy)?

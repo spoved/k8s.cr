@@ -6,5 +6,5 @@ require "json"
 module K8S::Types::Api::Apiserverinternal::V1alpha1::StorageVersionSpec; end
 
 module K8S
-  alias Api::Apiserverinternal::V1alpha1::StorageVersionSpec = ::K8S::Object(::JSON::Any)
+  alias Api::Apiserverinternal::V1alpha1::StorageVersionSpec = ::K8S::GenericObject
 end

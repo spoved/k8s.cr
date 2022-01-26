@@ -11,9 +11,6 @@ require "./persistent_volume_claim_spec"
 module K8S
   # Namespace holding the types for `Api::Core::V1::PersistentVolumeClaimTemplate`.
   module Types::Api::Core::V1::PersistentVolumeClaimTemplate
-    alias ValueType = ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta | ::K8S::Api::Core::V1::PersistentVolumeClaimSpec | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # May contain labels and annotations that will be copied into the PVC when creating it. No other fields are allowed and will be rejected during validation.
     abstract def metadata : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?
     # :ditto:
@@ -37,9 +34,8 @@ module K8S
     metadata: {key: "metadata", accessor: "metadata", kind: "::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta", nilable: true, default: nil, read_only: false, description: "May contain labels and annotations that will be copied into the PVC when creating it. No other fields are allowed and will be rejected during validation.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     spec: {key: "spec", accessor: "spec", kind: "::K8S::Api::Core::V1::PersistentVolumeClaimSpec", nilable: false, default: nil, read_only: false, description: "The specification for the PersistentVolumeClaim. The entire content is copied unchanged into the PVC that gets created from this template. The same fields as in a PersistentVolumeClaim are also valid here.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::PersistentVolumeClaimTemplate < ::K8S::Types::Api::Core::V1::PersistentVolumeClaimTemplate::Instance
+  class Api::Core::V1::PersistentVolumeClaimTemplate < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::PersistentVolumeClaimTemplate
-    include ::K8S::Kubernetes::Object
 
     # May contain labels and annotations that will be copied into the PVC when creating it. No other fields are allowed and will be rejected during validation.
     def metadata : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?

@@ -8,9 +8,6 @@ module K8S::Types::Api::Core::V1::ContainerPort; end
 module K8S
   # Namespace holding the types for `Api::Core::V1::ContainerPort`.
   module Types::Api::Core::V1::ContainerPort
-    alias ValueType = Int32 | String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Number of port to expose on the pod's IP address. This must be a valid port number, 0 < x < 65536.
     abstract def container_port : Int32
     # :ditto:
@@ -61,9 +58,8 @@ module K8S
     name: {key: "name", accessor: "name", kind: "String", nilable: true, default: nil, read_only: false, description: "If specified, this must be an IANA_SVC_NAME and unique within the pod. Each named port in a pod must have a unique name. Name for the port that can be referred to by services.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     protocol: {key: "protocol", accessor: "protocol", kind: "String", nilable: true, default: nil, read_only: false, description: "Protocol for port. Must be UDP or TCP. Defaults to \"TCP\".", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::ContainerPort < ::K8S::Types::Api::Core::V1::ContainerPort::Instance
+  class Api::Core::V1::ContainerPort < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::ContainerPort
-    include ::K8S::Kubernetes::Object
 
     # Number of port to expose on the pod's IP address. This must be a valid port number, 0 < x < 65536.
     def container_port : Int32

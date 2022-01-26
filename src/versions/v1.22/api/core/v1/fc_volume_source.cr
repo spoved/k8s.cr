@@ -8,9 +8,6 @@ module K8S::Types::Api::Core::V1::FCVolumeSource; end
 module K8S
   # Namespace holding the types for `Api::Core::V1::FCVolumeSource`.
   module Types::Api::Core::V1::FCVolumeSource
-    alias ValueType = String | Int32 | ::Bool | ::Array(String) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified.
     abstract def fs_type : String?
     # :ditto:
@@ -61,9 +58,8 @@ module K8S
     target_wwns: {key: "targetWWNs", accessor: "target_wwns", kind: "::Array(String)", nilable: true, default: nil, read_only: false, description: "Optional: FC target worldwide names (WWNs)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     wwids: {key: "wwids", accessor: "wwids", kind: "::Array(String)", nilable: true, default: nil, read_only: false, description: "Optional: FC volume world wide identifiers (wwids) Either wwids or combination of targetWWNs and lun must be set, but not both simultaneously.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::FCVolumeSource < ::K8S::Types::Api::Core::V1::FCVolumeSource::Instance
+  class Api::Core::V1::FCVolumeSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::FCVolumeSource
-    include ::K8S::Kubernetes::Object
 
     # Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified.
     def fs_type : String?

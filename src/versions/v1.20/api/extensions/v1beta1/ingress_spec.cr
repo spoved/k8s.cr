@@ -12,9 +12,6 @@ require "./ingress_tls"
 module K8S
   # Namespace holding the types for `Api::Extensions::V1beta1::IngressSpec`.
   module Types::Api::Extensions::V1beta1::IngressSpec
-    alias ValueType = ::K8S::Api::Extensions::V1beta1::IngressBackend | String | ::Array(::K8S::Api::Extensions::V1beta1::IngressRule) | ::Array(::K8S::Api::Extensions::V1beta1::IngressTLS) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # A default backend capable of servicing requests that don't match any rule. At least one of 'backend' or 'rules' must be specified. This field is optional to allow the loadbalancer controller or defaulting logic to specify a global default.
     abstract def backend : ::K8S::Api::Extensions::V1beta1::IngressBackend?
     # :ditto:
@@ -56,9 +53,8 @@ module K8S
     rules: {key: "rules", accessor: "rules", kind: "::Array(::K8S::Api::Extensions::V1beta1::IngressRule)", nilable: true, default: nil, read_only: false, description: "A list of host rules used to configure the Ingress. If unspecified, or no rule matches, all traffic is sent to the default backend.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     tls: {key: "tls", accessor: "tls", kind: "::Array(::K8S::Api::Extensions::V1beta1::IngressTLS)", nilable: true, default: nil, read_only: false, description: "TLS configuration. Currently the Ingress only supports a single TLS port, 443. If multiple members of this list specify different hosts, they will be multiplexed on the same port according to the hostname specified through the SNI TLS extension, if the ingress controller fulfilling the ingress supports SNI.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Extensions::V1beta1::IngressSpec < ::K8S::Types::Api::Extensions::V1beta1::IngressSpec::Instance
+  class Api::Extensions::V1beta1::IngressSpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Extensions::V1beta1::IngressSpec
-    include ::K8S::Kubernetes::Object
 
     # A default backend capable of servicing requests that don't match any rule. At least one of 'backend' or 'rules' must be specified. This field is optional to allow the loadbalancer controller or defaulting logic to specify a global default.
     def backend : ::K8S::Api::Extensions::V1beta1::IngressBackend?

@@ -8,9 +8,6 @@ module K8S::Types::Api::Rbac::V1::Subject; end
 module K8S
   # Namespace holding the types for `Api::Rbac::V1::Subject`.
   module Types::Api::Rbac::V1::Subject
-    alias ValueType = String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # APIGroup holds the API group of the referenced subject. Defaults to "" for ServiceAccount subjects. Defaults to "rbac.authorization.k8s.io" for User and Group subjects.
     abstract def api_group : String?
     # :ditto:
@@ -52,9 +49,8 @@ module K8S
     name: {key: "name", accessor: "name", kind: "String", nilable: false, default: nil, read_only: false, description: "Name of the object being referenced.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     namespace: {key: "namespace", accessor: "namespace", kind: "String", nilable: true, default: nil, read_only: false, description: "Namespace of the referenced object.  If the object kind is non-namespace, such as \"User\" or \"Group\", and this value is not empty the Authorizer should report an error.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Rbac::V1::Subject < ::K8S::Types::Api::Rbac::V1::Subject::Instance
+  class Api::Rbac::V1::Subject < ::K8S::GenericObject
     include ::K8S::Types::Api::Rbac::V1::Subject
-    include ::K8S::Kubernetes::Object
 
     # APIGroup holds the API group of the referenced subject. Defaults to "" for ServiceAccount subjects. Defaults to "rbac.authorization.k8s.io" for User and Group subjects.
     def api_group : String?

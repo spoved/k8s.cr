@@ -16,9 +16,6 @@ require "./supplemental_groups_strategy_options"
 module K8S
   # Namespace holding the types for `Api::Extensions::V1beta1::PodSecurityPolicySpec`.
   module Types::Api::Extensions::V1beta1::PodSecurityPolicySpec
-    alias ValueType = ::Bool | ::Array(String) | ::Array(::K8S::Api::Extensions::V1beta1::AllowedFlexVolume) | ::Array(::K8S::Api::Extensions::V1beta1::AllowedHostPath) | ::K8S::Api::Extensions::V1beta1::FSGroupStrategyOptions | ::Array(::K8S::Api::Extensions::V1beta1::HostPortRange) | ::K8S::Api::Extensions::V1beta1::RunAsUserStrategyOptions | ::K8S::Api::Extensions::V1beta1::SELinuxStrategyOptions | ::K8S::Api::Extensions::V1beta1::SupplementalGroupsStrategyOptions | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # allowPrivilegeEscalation determines if a pod can request to allow privilege escalation. If unspecified, defaults to true.
     abstract def allow_privilege_escalation : ::Bool?
     # :ditto:
@@ -217,9 +214,8 @@ module K8S
     supplemental_groups: {key: "supplementalGroups", accessor: "supplemental_groups", kind: "::K8S::Api::Extensions::V1beta1::SupplementalGroupsStrategyOptions", nilable: false, default: nil, read_only: false, description: "supplementalGroups is the strategy that will dictate what supplemental groups are used by the SecurityContext.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     volumes: {key: "volumes", accessor: "volumes", kind: "::Array(String)", nilable: true, default: nil, read_only: false, description: "volumes is a white list of allowed volume plugins. Empty indicates that no volumes may be used. To allow all volumes you may use '*'.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Extensions::V1beta1::PodSecurityPolicySpec < ::K8S::Types::Api::Extensions::V1beta1::PodSecurityPolicySpec::Instance
+  class Api::Extensions::V1beta1::PodSecurityPolicySpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Extensions::V1beta1::PodSecurityPolicySpec
-    include ::K8S::Kubernetes::Object
 
     # allowPrivilegeEscalation determines if a pod can request to allow privilege escalation. If unspecified, defaults to true.
     def allow_privilege_escalation : ::Bool?

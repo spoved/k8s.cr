@@ -11,9 +11,6 @@ require "./custom_resource_definition_condition"
 module K8S
   # Namespace holding the types for `ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionStatus`.
   module Types::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionStatus
-    alias ValueType = ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionNames | ::Array(::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionCondition) | ::Array(String) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # acceptedNames are the names that are actually being used to serve discovery. They may be different than the names in spec.
     abstract def accepted_names : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionNames?
     # :ditto:
@@ -46,9 +43,8 @@ module K8S
     conditions: {key: "conditions", accessor: "conditions", kind: "::Array(::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionCondition)", nilable: true, default: nil, read_only: false, description: "conditions indicate state for particular aspects of a CustomResourceDefinition", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: ["type"], x_kubernetes_list_type: "map", x_kubernetes_map_type: nil},
     stored_versions: {key: "storedVersions", accessor: "stored_versions", kind: "::Array(String)", nilable: true, default: nil, read_only: false, description: "storedVersions lists all versions of CustomResources that were ever persisted. Tracking these versions allows a migration path for stored versions in etcd. The field is mutable so a migration controller can finish a migration to another version (ensuring no old objects are left in storage), and then remove the rest of the versions from this list. Versions may not be removed from `spec.versions` while they exist in this list.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionStatus < ::K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionStatus::Instance
+  class ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionStatus < ::K8S::GenericObject
     include ::K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionStatus
-    include ::K8S::Kubernetes::Object
 
     # acceptedNames are the names that are actually being used to serve discovery. They may be different than the names in spec.
     def accepted_names : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionNames?

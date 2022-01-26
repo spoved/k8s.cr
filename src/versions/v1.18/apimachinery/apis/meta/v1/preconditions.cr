@@ -8,9 +8,6 @@ module K8S::Types::Apimachinery::Apis::Meta::V1::Preconditions; end
 module K8S
   # Namespace holding the types for `Apimachinery::Apis::Meta::V1::Preconditions`.
   module Types::Apimachinery::Apis::Meta::V1::Preconditions
-    alias ValueType = String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Specifies the target ResourceVersion
     abstract def resource_version : String?
     # :ditto:
@@ -34,9 +31,8 @@ module K8S
     resource_version: {key: "resourceVersion", accessor: "resource_version", kind: "String", nilable: true, default: nil, read_only: false, description: "Specifies the target ResourceVersion", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     uid: {key: "uid", accessor: "uid", kind: "String", nilable: true, default: nil, read_only: false, description: "Specifies the target UID.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Apimachinery::Apis::Meta::V1::Preconditions < ::K8S::Types::Apimachinery::Apis::Meta::V1::Preconditions::Instance
+  class Apimachinery::Apis::Meta::V1::Preconditions < ::K8S::GenericObject
     include ::K8S::Types::Apimachinery::Apis::Meta::V1::Preconditions
-    include ::K8S::Kubernetes::Object
 
     # Specifies the target ResourceVersion
     def resource_version : String?

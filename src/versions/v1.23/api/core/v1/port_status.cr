@@ -8,9 +8,6 @@ module K8S::Types::Api::Core::V1::PortStatus; end
 module K8S
   # Namespace holding the types for `Api::Core::V1::PortStatus`.
   module Types::Api::Core::V1::PortStatus
-    alias ValueType = String | Int32 | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Error is to record the problem with the service port The format of the error shall comply with the following rules: - built-in error values shall be specified in this file and those shall use
     #   CamelCase names
     # - cloud provider specific error values must have names that comply with the
@@ -51,9 +48,8 @@ module K8S
     port: {key: "port", accessor: "port", kind: "Int32", nilable: false, default: nil, read_only: false, description: "Port is the port number of the service port of which status is recorded here", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     protocol: {key: "protocol", accessor: "protocol", kind: "String", nilable: false, default: nil, read_only: false, description: "Protocol is the protocol of the service port of which status is recorded here The supported values are: \"TCP\", \"UDP\", \"SCTP\"\n\nPossible enum values:\n - `\"SCTP\"` is the SCTP protocol.\n - `\"TCP\"` is the TCP protocol.\n - `\"UDP\"` is the UDP protocol.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::PortStatus < ::K8S::Types::Api::Core::V1::PortStatus::Instance
+  class Api::Core::V1::PortStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::PortStatus
-    include ::K8S::Kubernetes::Object
 
     # Error is to record the problem with the service port The format of the error shall comply with the following rules: - built-in error values shall be specified in this file and those shall use
     #   CamelCase names

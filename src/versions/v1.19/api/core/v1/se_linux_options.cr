@@ -8,9 +8,6 @@ module K8S::Types::Api::Core::V1::SELinuxOptions; end
 module K8S
   # Namespace holding the types for `Api::Core::V1::SELinuxOptions`.
   module Types::Api::Core::V1::SELinuxOptions
-    alias ValueType = String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Level is SELinux level label that applies to the container.
     abstract def level : String?
     # :ditto:
@@ -52,9 +49,8 @@ module K8S
     type: {key: "type", accessor: "type", kind: "String", nilable: true, default: nil, read_only: false, description: "Type is a SELinux type label that applies to the container.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     user: {key: "user", accessor: "user", kind: "String", nilable: true, default: nil, read_only: false, description: "User is a SELinux user label that applies to the container.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::SELinuxOptions < ::K8S::Types::Api::Core::V1::SELinuxOptions::Instance
+  class Api::Core::V1::SELinuxOptions < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::SELinuxOptions
-    include ::K8S::Kubernetes::Object
 
     # Level is SELinux level label that applies to the container.
     def level : String?

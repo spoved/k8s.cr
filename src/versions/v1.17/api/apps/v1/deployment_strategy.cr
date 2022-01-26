@@ -10,9 +10,6 @@ require "./rolling_update_deployment"
 module K8S
   # Namespace holding the types for `Api::Apps::V1::DeploymentStrategy`.
   module Types::Api::Apps::V1::DeploymentStrategy
-    alias ValueType = ::K8S::Api::Apps::V1::RollingUpdateDeployment | String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Rolling update config params. Present only if DeploymentStrategyType = RollingUpdate.
     abstract def rolling_update : ::K8S::Api::Apps::V1::RollingUpdateDeployment?
     # :ditto:
@@ -36,9 +33,8 @@ module K8S
     rolling_update: {key: "rollingUpdate", accessor: "rolling_update", kind: "::K8S::Api::Apps::V1::RollingUpdateDeployment", nilable: true, default: nil, read_only: false, description: "Rolling update config params. Present only if DeploymentStrategyType = RollingUpdate.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     type: {key: "type", accessor: "type", kind: "String", nilable: true, default: nil, read_only: false, description: "Type of deployment. Can be \"Recreate\" or \"RollingUpdate\". Default is RollingUpdate.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Apps::V1::DeploymentStrategy < ::K8S::Types::Api::Apps::V1::DeploymentStrategy::Instance
+  class Api::Apps::V1::DeploymentStrategy < ::K8S::GenericObject
     include ::K8S::Types::Api::Apps::V1::DeploymentStrategy
-    include ::K8S::Kubernetes::Object
 
     # Rolling update config params. Present only if DeploymentStrategyType = RollingUpdate.
     def rolling_update : ::K8S::Api::Apps::V1::RollingUpdateDeployment?

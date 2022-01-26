@@ -10,9 +10,6 @@ require "./env_var_source"
 module K8S
   # Namespace holding the types for `Api::Core::V1::EnvVar`.
   module Types::Api::Core::V1::EnvVar
-    alias ValueType = String | ::K8S::Api::Core::V1::EnvVarSource | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Name of the environment variable. Must be a C_IDENTIFIER.
     abstract def name : String
     # :ditto:
@@ -45,9 +42,8 @@ module K8S
     value: {key: "value", accessor: "value", kind: "String", nilable: true, default: nil, read_only: false, description: "Variable references $(VAR_NAME) are expanded using the previous defined environment variables in the container and any service environment variables. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not. Defaults to \"\".", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     value_from: {key: "valueFrom", accessor: "value_from", kind: "::K8S::Api::Core::V1::EnvVarSource", nilable: true, default: nil, read_only: false, description: "Source for the environment variable's value. Cannot be used if value is not empty.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::EnvVar < ::K8S::Types::Api::Core::V1::EnvVar::Instance
+  class Api::Core::V1::EnvVar < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::EnvVar
-    include ::K8S::Kubernetes::Object
 
     # Name of the environment variable. Must be a C_IDENTIFIER.
     def name : String

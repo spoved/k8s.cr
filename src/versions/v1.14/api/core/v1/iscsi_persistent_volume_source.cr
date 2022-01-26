@@ -10,9 +10,6 @@ require "./secret_reference"
 module K8S
   # Namespace holding the types for `Api::Core::V1::ISCSIPersistentVolumeSource`.
   module Types::Api::Core::V1::ISCSIPersistentVolumeSource
-    alias ValueType = ::Bool | String | Int32 | ::Array(String) | ::K8S::Api::Core::V1::SecretReference | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # whether support iSCSI Discovery CHAP authentication
     abstract def chap_auth_discovery : ::Bool?
     # :ditto:
@@ -117,9 +114,8 @@ module K8S
     secret_ref: {key: "secretRef", accessor: "secret_ref", kind: "::K8S::Api::Core::V1::SecretReference", nilable: true, default: nil, read_only: false, description: "CHAP Secret for iSCSI target and initiator authentication", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     target_portal: {key: "targetPortal", accessor: "target_portal", kind: "String", nilable: false, default: nil, read_only: false, description: "iSCSI Target Portal. The Portal is either an IP or ip_addr:port if the port is other than default (typically TCP ports 860 and 3260).", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::ISCSIPersistentVolumeSource < ::K8S::Types::Api::Core::V1::ISCSIPersistentVolumeSource::Instance
+  class Api::Core::V1::ISCSIPersistentVolumeSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::ISCSIPersistentVolumeSource
-    include ::K8S::Kubernetes::Object
 
     # whether support iSCSI Discovery CHAP authentication
     def chap_auth_discovery : ::Bool?

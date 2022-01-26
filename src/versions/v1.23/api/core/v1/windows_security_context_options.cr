@@ -8,9 +8,6 @@ module K8S::Types::Api::Core::V1::WindowsSecurityContextOptions; end
 module K8S
   # Namespace holding the types for `Api::Core::V1::WindowsSecurityContextOptions`.
   module Types::Api::Core::V1::WindowsSecurityContextOptions
-    alias ValueType = String | ::Bool | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # GMSACredentialSpec is where the GMSA admission webhook ([[https://github.com/kubernetes-sigs/windows-gmsa) inlines the contents of the GMSA credential spec named by the GMSACredentialSpecName field.](https://github.com/kubernetes-sigs/windows-gmsa) inlines the contents of the GMSA credential spec named by the GMSACredentialSpecName field.)](https://github.com/kubernetes-sigs/windows-gmsa) inlines the contents of the GMSA credential spec named by the GMSACredentialSpecName field.](https://github.com/kubernetes-sigs/windows-gmsa) inlines the contents of the GMSA credential spec named by the GMSACredentialSpecName field.))
     abstract def gmsa_credential_spec : String?
     # :ditto:
@@ -52,9 +49,8 @@ module K8S
     host_process: {key: "hostProcess", accessor: "host_process", kind: "::Bool", nilable: true, default: nil, read_only: false, description: "HostProcess determines if a container should be run as a 'Host Process' container. This field is alpha-level and will only be honored by components that enable the WindowsHostProcessContainers feature flag. Setting this field without the feature flag will result in errors when validating the Pod. All of a Pod's containers must have the same effective HostProcess value (it is not allowed to have a mix of HostProcess containers and non-HostProcess containers).  In addition, if HostProcess is true then HostNetwork must also be set to true.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     run_as_user_name: {key: "runAsUserName", accessor: "run_as_user_name", kind: "String", nilable: true, default: nil, read_only: false, description: "The UserName in Windows to run the entrypoint of the container process. Defaults to the user specified in image metadata if unspecified. May also be set in PodSecurityContext. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::WindowsSecurityContextOptions < ::K8S::Types::Api::Core::V1::WindowsSecurityContextOptions::Instance
+  class Api::Core::V1::WindowsSecurityContextOptions < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::WindowsSecurityContextOptions
-    include ::K8S::Kubernetes::Object
 
     # GMSACredentialSpec is where the GMSA admission webhook ([[https://github.com/kubernetes-sigs/windows-gmsa) inlines the contents of the GMSA credential spec named by the GMSACredentialSpecName field.](https://github.com/kubernetes-sigs/windows-gmsa) inlines the contents of the GMSA credential spec named by the GMSACredentialSpecName field.)](https://github.com/kubernetes-sigs/windows-gmsa) inlines the contents of the GMSA credential spec named by the GMSACredentialSpecName field.](https://github.com/kubernetes-sigs/windows-gmsa) inlines the contents of the GMSA credential spec named by the GMSACredentialSpecName field.))
     def gmsa_credential_spec : String?

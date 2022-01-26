@@ -11,9 +11,6 @@ require "./server_storage_version"
 module K8S
   # Namespace holding the types for `Api::Apiserverinternal::V1alpha1::StorageVersionStatus`.
   module Types::Api::Apiserverinternal::V1alpha1::StorageVersionStatus
-    alias ValueType = String | ::Array(::K8S::Api::Apiserverinternal::V1alpha1::StorageVersionCondition) | ::Array(::K8S::Api::Apiserverinternal::V1alpha1::ServerStorageVersion) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # If all API server instances agree on the same encoding storage version, then this field is set to that version. Otherwise this field is left empty. API servers should finish updating its storageVersionStatus entry before serving write operations, so that this field will be in sync with the reality.
     abstract def common_encoding_version : String?
     # :ditto:
@@ -46,9 +43,8 @@ module K8S
     conditions: {key: "conditions", accessor: "conditions", kind: "::Array(::K8S::Api::Apiserverinternal::V1alpha1::StorageVersionCondition)", nilable: true, default: nil, read_only: false, description: "The latest available observations of the storageVersion's state.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: ["type"], x_kubernetes_list_type: "map", x_kubernetes_map_type: nil},
     storage_versions: {key: "storageVersions", accessor: "storage_versions", kind: "::Array(::K8S::Api::Apiserverinternal::V1alpha1::ServerStorageVersion)", nilable: true, default: nil, read_only: false, description: "The reported versions per API server instance.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: ["apiServerID"], x_kubernetes_list_type: "map", x_kubernetes_map_type: nil},
   )]
-  class Api::Apiserverinternal::V1alpha1::StorageVersionStatus < ::K8S::Types::Api::Apiserverinternal::V1alpha1::StorageVersionStatus::Instance
+  class Api::Apiserverinternal::V1alpha1::StorageVersionStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Apiserverinternal::V1alpha1::StorageVersionStatus
-    include ::K8S::Kubernetes::Object
 
     # If all API server instances agree on the same encoding storage version, then this field is set to that version. Otherwise this field is left empty. API servers should finish updating its storageVersionStatus entry before serving write operations, so that this field will be in sync with the reality.
     def common_encoding_version : String?

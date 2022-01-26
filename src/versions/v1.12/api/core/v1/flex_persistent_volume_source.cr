@@ -10,9 +10,6 @@ require "./secret_reference"
 module K8S
   # Namespace holding the types for `Api::Core::V1::FlexPersistentVolumeSource`.
   module Types::Api::Core::V1::FlexPersistentVolumeSource
-    alias ValueType = String | ::Hash(String, String) | ::Bool | ::K8S::Api::Core::V1::SecretReference | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Driver is the name of the driver to use for this volume.
     abstract def driver : String
     # :ditto:
@@ -63,9 +60,8 @@ module K8S
     read_only: {key: "readOnly", accessor: "read_only", kind: "::Bool", nilable: true, default: nil, read_only: false, description: "Optional: Defaults to false [(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     secret_ref: {key: "secretRef", accessor: "secret_ref", kind: "::K8S::Api::Core::V1::SecretReference", nilable: true, default: nil, read_only: false, description: "Optional: SecretRef is reference to the secret object containing sensitive information to pass to the plugin scripts. This may be empty if no secret object is specified. If the secret object contains more than one secret, all secrets are passed to the plugin scripts.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::FlexPersistentVolumeSource < ::K8S::Types::Api::Core::V1::FlexPersistentVolumeSource::Instance
+  class Api::Core::V1::FlexPersistentVolumeSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::FlexPersistentVolumeSource
-    include ::K8S::Kubernetes::Object
 
     # Driver is the name of the driver to use for this volume.
     def driver : String

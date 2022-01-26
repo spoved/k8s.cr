@@ -11,9 +11,6 @@ require "./scheduling"
 module K8S
   # Namespace holding the types for `Api::Node::V1alpha1::RuntimeClassSpec`.
   module Types::Api::Node::V1alpha1::RuntimeClassSpec
-    alias ValueType = ::K8S::Api::Node::V1alpha1::Overhead | String | ::K8S::Api::Node::V1alpha1::Scheduling | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Overhead represents the resource overhead associated with running a pod for a given RuntimeClass. For more details, see [[https://git.k8s.io/enhancements/keps/sig-node/688-pod-overhead/README.md This field is beta-level as of Kubernetes v1.18, and is only honored by servers that enable the PodOverhead feature.](https://git.k8s.io/enhancements/keps/sig-node/688-pod-overhead/README.md This field is beta-level as of Kubernetes v1.18, and is only honored by servers that enable the PodOverhead feature.)](https://git.k8s.io/enhancements/keps/sig-node/688-pod-overhead/README.md This field is beta-level as of Kubernetes v1.18, and is only honored by servers that enable the PodOverhead feature.](https://git.k8s.io/enhancements/keps/sig-node/688-pod-overhead/README.md This field is beta-level as of Kubernetes v1.18, and is only honored by servers that enable the PodOverhead feature.))
     abstract def overhead : ::K8S::Api::Node::V1alpha1::Overhead?
     # :ditto:
@@ -46,9 +43,8 @@ module K8S
     runtime_handler: {key: "runtimeHandler", accessor: "runtime_handler", kind: "String", nilable: false, default: nil, read_only: false, description: "RuntimeHandler specifies the underlying runtime and configuration that the CRI implementation will use to handle pods of this class. The possible values are specific to the node & CRI configuration.  It is assumed that all handlers are available on every node, and handlers of the same name are equivalent on every node. For example, a handler called \"runc\" might specify that the runc OCI runtime (using native Linux containers) will be used to run the containers in a pod. The RuntimeHandler must be lowercase, conform to the DNS Label (RFC 1123) requirements, and is immutable.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     scheduling: {key: "scheduling", accessor: "scheduling", kind: "::K8S::Api::Node::V1alpha1::Scheduling", nilable: true, default: nil, read_only: false, description: "Scheduling holds the scheduling constraints to ensure that pods running with this RuntimeClass are scheduled to nodes that support it. If scheduling is nil, this RuntimeClass is assumed to be supported by all nodes.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Node::V1alpha1::RuntimeClassSpec < ::K8S::Types::Api::Node::V1alpha1::RuntimeClassSpec::Instance
+  class Api::Node::V1alpha1::RuntimeClassSpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Node::V1alpha1::RuntimeClassSpec
-    include ::K8S::Kubernetes::Object
 
     # Overhead represents the resource overhead associated with running a pod for a given RuntimeClass. For more details, see [[https://git.k8s.io/enhancements/keps/sig-node/688-pod-overhead/README.md This field is beta-level as of Kubernetes v1.18, and is only honored by servers that enable the PodOverhead feature.](https://git.k8s.io/enhancements/keps/sig-node/688-pod-overhead/README.md This field is beta-level as of Kubernetes v1.18, and is only honored by servers that enable the PodOverhead feature.)](https://git.k8s.io/enhancements/keps/sig-node/688-pod-overhead/README.md This field is beta-level as of Kubernetes v1.18, and is only honored by servers that enable the PodOverhead feature.](https://git.k8s.io/enhancements/keps/sig-node/688-pod-overhead/README.md This field is beta-level as of Kubernetes v1.18, and is only honored by servers that enable the PodOverhead feature.))
     def overhead : ::K8S::Api::Node::V1alpha1::Overhead?

@@ -8,9 +8,6 @@ module K8S::Types::Api::Core::V1::KeyToPath; end
 module K8S
   # Namespace holding the types for `Api::Core::V1::KeyToPath`.
   module Types::Api::Core::V1::KeyToPath
-    alias ValueType = String | Int32 | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # The key to project.
     abstract def key : String
     # :ditto:
@@ -43,9 +40,8 @@ module K8S
     mode: {key: "mode", accessor: "mode", kind: "Int32", nilable: true, default: nil, read_only: false, description: "Optional: mode bits used to set permissions on this file. Must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     path: {key: "path", accessor: "path", kind: "String", nilable: false, default: nil, read_only: false, description: "The relative path of the file to map the key to. May not be an absolute path. May not contain the path element '..'. May not start with the string '..'.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::KeyToPath < ::K8S::Types::Api::Core::V1::KeyToPath::Instance
+  class Api::Core::V1::KeyToPath < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::KeyToPath
-    include ::K8S::Kubernetes::Object
 
     # The key to project.
     def key : String

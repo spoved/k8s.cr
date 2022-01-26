@@ -12,9 +12,6 @@ require "./storage_version_status"
 module K8S
   # Namespace holding the types for `Api::Apiserverinternal::V1alpha1::StorageVersion`.
   module Types::Api::Apiserverinternal::V1alpha1::StorageVersion
-    alias ValueType = String | ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta | ::K8S::Api::Apiserverinternal::V1alpha1::StorageVersionSpec | ::K8S::Api::Apiserverinternal::V1alpha1::StorageVersionStatus | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)))
     abstract def api_version : String
     # :ditto:
@@ -63,12 +60,12 @@ module K8S
     spec: {key: "spec", accessor: "spec", kind: "::K8S::Api::Apiserverinternal::V1alpha1::StorageVersionSpec", nilable: false, default: nil, read_only: false, description: "Spec is an empty spec. It is here to comply with Kubernetes API style.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     status: {key: "status", accessor: "status", kind: "::K8S::Api::Apiserverinternal::V1alpha1::StorageVersionStatus", nilable: false, default: nil, read_only: false, description: "API server instances report the version they can decode and the version they encode objects to when persisting objects in the backend.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Apiserverinternal::V1alpha1::StorageVersion < ::K8S::Types::Api::Apiserverinternal::V1alpha1::StorageVersion::Instance
+  class Api::Apiserverinternal::V1alpha1::StorageVersion < ::K8S::Kubernetes::Resource::Object
     include ::K8S::Types::Api::Apiserverinternal::V1alpha1::StorageVersion
-    include ::K8S::Kubernetes::Resource::Object
 
     # APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)))
     def api_version : String
+      self.["apiVersion"] = "apiserverinternal/v1alpha1" unless self.["apiVersion"]?
       self.["apiVersion"].as(String)
     end
 
@@ -84,6 +81,7 @@ module K8S
 
     # Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)))
     def kind : String
+      self.["kind"] = "StorageVersion" unless self.["kind"]?
       self.["kind"].as(String)
     end
 

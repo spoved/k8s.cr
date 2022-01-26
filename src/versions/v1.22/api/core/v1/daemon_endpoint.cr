@@ -8,9 +8,6 @@ module K8S::Types::Api::Core::V1::DaemonEndpoint; end
 module K8S
   # Namespace holding the types for `Api::Core::V1::DaemonEndpoint`.
   module Types::Api::Core::V1::DaemonEndpoint
-    alias ValueType = Int32 | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Port number of the given endpoint.
     abstract def port : Int32
     # :ditto:
@@ -25,9 +22,8 @@ module K8S
   @[::K8S::Properties(
     port: {key: "Port", accessor: "port", kind: "Int32", nilable: false, default: nil, read_only: false, description: "Port number of the given endpoint.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::DaemonEndpoint < ::K8S::Types::Api::Core::V1::DaemonEndpoint::Instance
+  class Api::Core::V1::DaemonEndpoint < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::DaemonEndpoint
-    include ::K8S::Kubernetes::Object
 
     # Port number of the given endpoint.
     def port : Int32

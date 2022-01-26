@@ -11,9 +11,6 @@ require "../../core/v1/pod_template_spec"
 module K8S
   # Namespace holding the types for `Api::Batch::V1::JobSpec`.
   module Types::Api::Batch::V1::JobSpec
-    alias ValueType = Int32 | String | ::Bool | ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector | ::K8S::Api::Core::V1::PodTemplateSpec | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Specifies the duration in seconds relative to the startTime that the job may be continuously active before the system tries to terminate it; value must be positive integer. If a Job is suspended (at creation or through an update), this timer will effectively be stopped and reset when the Job is resumed again.
     abstract def active_deadline_seconds : Int32?
     # :ditto:
@@ -117,9 +114,8 @@ module K8S
     template: {key: "template", accessor: "template", kind: "::K8S::Api::Core::V1::PodTemplateSpec", nilable: false, default: nil, read_only: false, description: "Describes the pod that will be created when executing a job. More info: [https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     ttl_seconds_after_finished: {key: "ttlSecondsAfterFinished", accessor: "ttl_seconds_after_finished", kind: "Int32", nilable: true, default: nil, read_only: false, description: "ttlSecondsAfterFinished limits the lifetime of a Job that has finished execution (either Complete or Failed). If this field is set, ttlSecondsAfterFinished after the Job finishes, it is eligible to be automatically deleted. When the Job is being deleted, its lifecycle guarantees (e.g. finalizers) will be honored. If this field is unset, the Job won't be automatically deleted. If this field is set to zero, the Job becomes eligible to be deleted immediately after it finishes. This field is alpha-level and is only honored by servers that enable the TTLAfterFinished feature.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Batch::V1::JobSpec < ::K8S::Types::Api::Batch::V1::JobSpec::Instance
+  class Api::Batch::V1::JobSpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Batch::V1::JobSpec
-    include ::K8S::Kubernetes::Object
 
     # Specifies the duration in seconds relative to the startTime that the job may be continuously active before the system tries to terminate it; value must be positive integer. If a Job is suspended (at creation or through an update), this timer will effectively be stopped and reset when the Job is resumed again.
     def active_deadline_seconds : Int32?

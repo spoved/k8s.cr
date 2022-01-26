@@ -8,9 +8,6 @@ module K8S::Types::Apimachinery::Runtime::RawExtension; end
 module K8S
   # Namespace holding the types for `Apimachinery::Runtime::RawExtension`.
   module Types::Apimachinery::Runtime::RawExtension
-    alias ValueType = String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Raw is the underlying serialization of this object.
     abstract def raw : String
     # :ditto:
@@ -52,9 +49,8 @@ module K8S
   @[::K8S::Properties(
     raw: {key: "Raw", accessor: "raw", kind: "String", nilable: false, default: nil, read_only: false, description: "Raw is the underlying serialization of this object.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Apimachinery::Runtime::RawExtension < ::K8S::Types::Apimachinery::Runtime::RawExtension::Instance
+  class Apimachinery::Runtime::RawExtension < ::K8S::GenericObject
     include ::K8S::Types::Apimachinery::Runtime::RawExtension
-    include ::K8S::Kubernetes::Object
 
     # Raw is the underlying serialization of this object.
     def raw : String

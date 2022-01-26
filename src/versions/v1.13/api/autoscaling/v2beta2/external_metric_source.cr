@@ -11,9 +11,6 @@ require "./metric_target"
 module K8S
   # Namespace holding the types for `Api::Autoscaling::V2beta2::ExternalMetricSource`.
   module Types::Api::Autoscaling::V2beta2::ExternalMetricSource
-    alias ValueType = ::K8S::Api::Autoscaling::V2beta2::MetricIdentifier | ::K8S::Api::Autoscaling::V2beta2::MetricTarget | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # metric identifies the target metric by name and selector
     abstract def metric : ::K8S::Api::Autoscaling::V2beta2::MetricIdentifier
     # :ditto:
@@ -37,9 +34,8 @@ module K8S
     metric: {key: "metric", accessor: "metric", kind: "::K8S::Api::Autoscaling::V2beta2::MetricIdentifier", nilable: false, default: nil, read_only: false, description: "metric identifies the target metric by name and selector", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     target: {key: "target", accessor: "target", kind: "::K8S::Api::Autoscaling::V2beta2::MetricTarget", nilable: false, default: nil, read_only: false, description: "target specifies the target value for the given metric", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Autoscaling::V2beta2::ExternalMetricSource < ::K8S::Types::Api::Autoscaling::V2beta2::ExternalMetricSource::Instance
+  class Api::Autoscaling::V2beta2::ExternalMetricSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Autoscaling::V2beta2::ExternalMetricSource
-    include ::K8S::Kubernetes::Object
 
     # metric identifies the target metric by name and selector
     def metric : ::K8S::Api::Autoscaling::V2beta2::MetricIdentifier

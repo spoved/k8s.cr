@@ -10,9 +10,6 @@ require "./node_selector_requirement"
 module K8S
   # Namespace holding the types for `Api::Core::V1::NodeSelectorTerm`.
   module Types::Api::Core::V1::NodeSelectorTerm
-    alias ValueType = ::Array(::K8S::Api::Core::V1::NodeSelectorRequirement) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # A list of node selector requirements by node's labels.
     abstract def match_expressions : ::Array(::K8S::Api::Core::V1::NodeSelectorRequirement)?
     # :ditto:
@@ -36,9 +33,8 @@ module K8S
     match_expressions: {key: "matchExpressions", accessor: "match_expressions", kind: "::Array(::K8S::Api::Core::V1::NodeSelectorRequirement)", nilable: true, default: nil, read_only: false, description: "A list of node selector requirements by node's labels.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     match_fields: {key: "matchFields", accessor: "match_fields", kind: "::Array(::K8S::Api::Core::V1::NodeSelectorRequirement)", nilable: true, default: nil, read_only: false, description: "A list of node selector requirements by node's fields.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::NodeSelectorTerm < ::K8S::Types::Api::Core::V1::NodeSelectorTerm::Instance
+  class Api::Core::V1::NodeSelectorTerm < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::NodeSelectorTerm
-    include ::K8S::Kubernetes::Object
 
     # A list of node selector requirements by node's labels.
     def match_expressions : ::Array(::K8S::Api::Core::V1::NodeSelectorRequirement)?

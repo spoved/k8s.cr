@@ -8,9 +8,6 @@ module K8S::Types::Apimachinery::Apis::Meta::V1::LabelSelectorRequirement; end
 module K8S
   # Namespace holding the types for `Apimachinery::Apis::Meta::V1::LabelSelectorRequirement`.
   module Types::Apimachinery::Apis::Meta::V1::LabelSelectorRequirement
-    alias ValueType = String | ::Array(String) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # key is the label key that the selector applies to.
     abstract def key : String
     # :ditto:
@@ -43,9 +40,8 @@ module K8S
     operator: {key: "operator", accessor: "operator", kind: "String", nilable: false, default: nil, read_only: false, description: "operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     values: {key: "values", accessor: "values", kind: "::Array(String)", nilable: true, default: nil, read_only: false, description: "values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Apimachinery::Apis::Meta::V1::LabelSelectorRequirement < ::K8S::Types::Apimachinery::Apis::Meta::V1::LabelSelectorRequirement::Instance
+  class Apimachinery::Apis::Meta::V1::LabelSelectorRequirement < ::K8S::GenericObject
     include ::K8S::Types::Apimachinery::Apis::Meta::V1::LabelSelectorRequirement
-    include ::K8S::Kubernetes::Object
 
     # key is the label key that the selector applies to.
     def key : String

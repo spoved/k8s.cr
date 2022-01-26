@@ -12,9 +12,6 @@ require "./tcp_socket_action"
 module K8S
   # Namespace holding the types for `Api::Core::V1::Probe`.
   module Types::Api::Core::V1::Probe
-    alias ValueType = ::K8S::Api::Core::V1::ExecAction | Int32 | ::K8S::Api::Core::V1::HTTPGetAction | ::K8S::Api::Core::V1::TCPSocketAction | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # One and only one of the following should be specified. Exec specifies the action to take.
     abstract def exec : ::K8S::Api::Core::V1::ExecAction?
     # :ditto:
@@ -92,9 +89,8 @@ module K8S
     tcp_socket: {key: "tcpSocket", accessor: "tcp_socket", kind: "::K8S::Api::Core::V1::TCPSocketAction", nilable: true, default: nil, read_only: false, description: "TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     timeout_seconds: {key: "timeoutSeconds", accessor: "timeout_seconds", kind: "Int32", nilable: true, default: nil, read_only: false, description: "Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. More info: [https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::Probe < ::K8S::Types::Api::Core::V1::Probe::Instance
+  class Api::Core::V1::Probe < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::Probe
-    include ::K8S::Kubernetes::Object
 
     # One and only one of the following should be specified. Exec specifies the action to take.
     def exec : ::K8S::Api::Core::V1::ExecAction?

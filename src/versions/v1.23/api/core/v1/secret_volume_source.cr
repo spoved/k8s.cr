@@ -10,9 +10,6 @@ require "./key_to_path"
 module K8S
   # Namespace holding the types for `Api::Core::V1::SecretVolumeSource`.
   module Types::Api::Core::V1::SecretVolumeSource
-    alias ValueType = Int32 | ::Array(::K8S::Api::Core::V1::KeyToPath) | ::Bool | String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Optional: mode bits used to set permissions on created files by default. Must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. Defaults to 0644. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
     abstract def default_mode : Int32?
     # :ditto:
@@ -56,9 +53,8 @@ module K8S
     optional: {key: "optional", accessor: "optional", kind: "::Bool", nilable: true, default: nil, read_only: false, description: "Specify whether the Secret or its keys must be defined", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     secret_name: {key: "secretName", accessor: "secret_name", kind: "String", nilable: true, default: nil, read_only: false, description: "Name of the secret in the pod's namespace to use. More info: [https://kubernetes.io/docs/concepts/storage/volumes#secret](https://kubernetes.io/docs/concepts/storage/volumes#secret)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::SecretVolumeSource < ::K8S::Types::Api::Core::V1::SecretVolumeSource::Instance
+  class Api::Core::V1::SecretVolumeSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::SecretVolumeSource
-    include ::K8S::Kubernetes::Object
 
     # Optional: mode bits used to set permissions on created files by default. Must be an octal value between 0000 and 0777 or a decimal value between 0 and 511. YAML accepts both octal and decimal values, JSON requires decimal values for mode bits. Defaults to 0644. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
     def default_mode : Int32?

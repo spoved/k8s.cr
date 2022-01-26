@@ -10,9 +10,6 @@ require "./fields_v1"
 module K8S
   # Namespace holding the types for `Apimachinery::Apis::Meta::V1::ManagedFieldsEntry`.
   module Types::Apimachinery::Apis::Meta::V1::ManagedFieldsEntry
-    alias ValueType = String | ::K8S::Apimachinery::Apis::Meta::V1::FieldsV1 | ::Time | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # APIVersion defines the version of this resource that this field set applies to. The format is [["group/version" just like the top-level APIVersion field. It is necessary to track the version of a field set because it cannot be automatically converted.]("group/version" just like the top-level APIVersion field. It is necessary to track the version of a field set because it cannot be automatically converted.)](["group/version" just like the top-level APIVersion field. It is necessary to track the version of a field set because it cannot be automatically converted.]("group/version" just like the top-level APIVersion field. It is necessary to track the version of a field set because it cannot be automatically converted.))
     abstract def api_version : String?
     # :ditto:
@@ -81,9 +78,8 @@ module K8S
     subresource: {key: "subresource", accessor: "subresource", kind: "String", nilable: true, default: nil, read_only: false, description: "Subresource is the name of the subresource used to update that object, or empty string if the object was updated through the main resource. The value of this field is used to distinguish between managers, even if they share the same name. For example, a status update will be distinct from a regular update using the same manager name. Note that the APIVersion field is not related to the Subresource field and it always corresponds to the version of the main resource.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     time: {key: "time", accessor: "time", kind: "::Time", nilable: true, default: nil, read_only: false, description: "Time is timestamp of when these fields were set. It should always be empty if Operation is 'Apply'", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Apimachinery::Apis::Meta::V1::ManagedFieldsEntry < ::K8S::Types::Apimachinery::Apis::Meta::V1::ManagedFieldsEntry::Instance
+  class Apimachinery::Apis::Meta::V1::ManagedFieldsEntry < ::K8S::GenericObject
     include ::K8S::Types::Apimachinery::Apis::Meta::V1::ManagedFieldsEntry
-    include ::K8S::Kubernetes::Object
 
     # APIVersion defines the version of this resource that this field set applies to. The format is [["group/version" just like the top-level APIVersion field. It is necessary to track the version of a field set because it cannot be automatically converted.]("group/version" just like the top-level APIVersion field. It is necessary to track the version of a field set because it cannot be automatically converted.)](["group/version" just like the top-level APIVersion field. It is necessary to track the version of a field set because it cannot be automatically converted.]("group/version" just like the top-level APIVersion field. It is necessary to track the version of a field set because it cannot be automatically converted.))
     def api_version : String?

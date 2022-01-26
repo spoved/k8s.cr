@@ -8,9 +8,6 @@ module K8S::Types::Api::Core::V1::ResourceRequirements; end
 module K8S
   # Namespace holding the types for `Api::Core::V1::ResourceRequirements`.
   module Types::Api::Core::V1::ResourceRequirements
-    alias ValueType = ::Hash(String, ::Int32 | ::String) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Limits describes the maximum amount of compute resources allowed. More info: [[https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/)](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/))
     abstract def limits : ::Hash(String, ::Int32 | ::String)?
     # :ditto:
@@ -34,9 +31,8 @@ module K8S
     limits: {key: "limits", accessor: "limits", kind: "::Hash(String, ::Int32 | ::String)", nilable: true, default: nil, read_only: false, description: "Limits describes the maximum amount of compute resources allowed. More info: [https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     requests: {key: "requests", accessor: "requests", kind: "::Hash(String, ::Int32 | ::String)", nilable: true, default: nil, read_only: false, description: "Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: [https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::ResourceRequirements < ::K8S::Types::Api::Core::V1::ResourceRequirements::Instance
+  class Api::Core::V1::ResourceRequirements < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::ResourceRequirements
-    include ::K8S::Kubernetes::Object
 
     # Limits describes the maximum amount of compute resources allowed. More info: [[https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/)](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/))
     def limits : ::Hash(String, ::Int32 | ::String)?

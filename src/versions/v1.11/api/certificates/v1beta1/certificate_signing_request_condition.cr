@@ -8,9 +8,6 @@ module K8S::Types::Api::Certificates::V1beta1::CertificateSigningRequestConditio
 module K8S
   # Namespace holding the types for `Api::Certificates::V1beta1::CertificateSigningRequestCondition`.
   module Types::Api::Certificates::V1beta1::CertificateSigningRequestCondition
-    alias ValueType = ::Time | String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # timestamp for the last update to this condition
     abstract def last_update_time : ::Time?
     # :ditto:
@@ -52,9 +49,8 @@ module K8S
     reason: {key: "reason", accessor: "reason", kind: "String", nilable: true, default: nil, read_only: false, description: "brief reason for the request state", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     type: {key: "type", accessor: "type", kind: "String", nilable: false, default: nil, read_only: false, description: "request approval state, currently Approved or Denied.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Certificates::V1beta1::CertificateSigningRequestCondition < ::K8S::Types::Api::Certificates::V1beta1::CertificateSigningRequestCondition::Instance
+  class Api::Certificates::V1beta1::CertificateSigningRequestCondition < ::K8S::GenericObject
     include ::K8S::Types::Api::Certificates::V1beta1::CertificateSigningRequestCondition
-    include ::K8S::Kubernetes::Object
 
     # timestamp for the last update to this condition
     def last_update_time : ::Time?

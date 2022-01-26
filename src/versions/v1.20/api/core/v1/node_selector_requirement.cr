@@ -8,9 +8,6 @@ module K8S::Types::Api::Core::V1::NodeSelectorRequirement; end
 module K8S
   # Namespace holding the types for `Api::Core::V1::NodeSelectorRequirement`.
   module Types::Api::Core::V1::NodeSelectorRequirement
-    alias ValueType = String | ::Array(String) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # The label key that the selector applies to.
     abstract def key : String
     # :ditto:
@@ -43,9 +40,8 @@ module K8S
     operator: {key: "operator", accessor: "operator", kind: "String", nilable: false, default: nil, read_only: false, description: "Represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     values: {key: "values", accessor: "values", kind: "::Array(String)", nilable: true, default: nil, read_only: false, description: "An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::NodeSelectorRequirement < ::K8S::Types::Api::Core::V1::NodeSelectorRequirement::Instance
+  class Api::Core::V1::NodeSelectorRequirement < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::NodeSelectorRequirement
-    include ::K8S::Kubernetes::Object
 
     # The label key that the selector applies to.
     def key : String

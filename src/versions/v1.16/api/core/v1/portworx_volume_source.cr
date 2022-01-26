@@ -8,9 +8,6 @@ module K8S::Types::Api::Core::V1::PortworxVolumeSource; end
 module K8S
   # Namespace holding the types for `Api::Core::V1::PortworxVolumeSource`.
   module Types::Api::Core::V1::PortworxVolumeSource
-    alias ValueType = String | ::Bool | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # FSType represents the filesystem type to mount Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs". Implicitly inferred to be "ext4" if unspecified.
     abstract def fs_type : String?
     # :ditto:
@@ -43,9 +40,8 @@ module K8S
     read_only: {key: "readOnly", accessor: "read_only", kind: "::Bool", nilable: true, default: nil, read_only: false, description: "Defaults to false [(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     volume_id: {key: "volumeID", accessor: "volume_id", kind: "String", nilable: false, default: nil, read_only: false, description: "VolumeID uniquely identifies a Portworx volume", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::PortworxVolumeSource < ::K8S::Types::Api::Core::V1::PortworxVolumeSource::Instance
+  class Api::Core::V1::PortworxVolumeSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::PortworxVolumeSource
-    include ::K8S::Kubernetes::Object
 
     # FSType represents the filesystem type to mount Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs". Implicitly inferred to be "ext4" if unspecified.
     def fs_type : String?

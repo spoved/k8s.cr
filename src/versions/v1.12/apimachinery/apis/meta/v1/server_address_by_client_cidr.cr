@@ -8,9 +8,6 @@ module K8S::Types::Apimachinery::Apis::Meta::V1::ServerAddressByClientCIDR; end
 module K8S
   # Namespace holding the types for `Apimachinery::Apis::Meta::V1::ServerAddressByClientCIDR`.
   module Types::Apimachinery::Apis::Meta::V1::ServerAddressByClientCIDR
-    alias ValueType = String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # The CIDR with which clients can match their IP to figure out the server address that they should use.
     abstract def client_cidr : String
     # :ditto:
@@ -34,9 +31,8 @@ module K8S
     client_cidr: {key: "clientCIDR", accessor: "client_cidr", kind: "String", nilable: false, default: nil, read_only: false, description: "The CIDR with which clients can match their IP to figure out the server address that they should use.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     server_address: {key: "serverAddress", accessor: "server_address", kind: "String", nilable: false, default: nil, read_only: false, description: "Address of this server, suitable for a client that matches the above CIDR. This can be a hostname, hostname:port, IP or IP:port.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Apimachinery::Apis::Meta::V1::ServerAddressByClientCIDR < ::K8S::Types::Apimachinery::Apis::Meta::V1::ServerAddressByClientCIDR::Instance
+  class Apimachinery::Apis::Meta::V1::ServerAddressByClientCIDR < ::K8S::GenericObject
     include ::K8S::Types::Apimachinery::Apis::Meta::V1::ServerAddressByClientCIDR
-    include ::K8S::Kubernetes::Object
 
     # The CIDR with which clients can match their IP to figure out the server address that they should use.
     def client_cidr : String

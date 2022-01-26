@@ -10,9 +10,6 @@ require "./local_object_reference"
 module K8S
   # Namespace holding the types for `Api::Core::V1::CephFSVolumeSource`.
   module Types::Api::Core::V1::CephFSVolumeSource
-    alias ValueType = ::Array(String) | String | ::Bool | ::K8S::Api::Core::V1::LocalObjectReference | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Required: Monitors is a collection of Ceph monitors More info: [[https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it](https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it)](https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it](https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it))
     abstract def monitors : ::Array(String)
     # :ditto:
@@ -72,9 +69,8 @@ module K8S
     secret_ref: {key: "secretRef", accessor: "secret_ref", kind: "::K8S::Api::Core::V1::LocalObjectReference", nilable: true, default: nil, read_only: false, description: "Optional: SecretRef is reference to the authentication secret for User, default is empty. More info: [https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it](https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     user: {key: "user", accessor: "user", kind: "String", nilable: true, default: nil, read_only: false, description: "Optional: User is the rados user name, default is admin More info: [https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it](https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::CephFSVolumeSource < ::K8S::Types::Api::Core::V1::CephFSVolumeSource::Instance
+  class Api::Core::V1::CephFSVolumeSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::CephFSVolumeSource
-    include ::K8S::Kubernetes::Object
 
     # Required: Monitors is a collection of Ceph monitors More info: [[https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it](https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it)](https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it](https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it))
     def monitors : ::Array(String)

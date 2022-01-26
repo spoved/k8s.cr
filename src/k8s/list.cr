@@ -1,22 +1,16 @@
 require "./resource"
 
-module ::K8S::Types::Kubernetes::ResourceList
-  alias ValueType = String | ::Array(::K8S::Kubernetes::Resource) | ::K8S::Kubernetes::Object | Nil
-  alias Instance = ::K8S::Object(ValueType)
-end
-
-class ::K8S::Api::Core::V1::List < ::K8S::Types::Kubernetes::ResourceList::Instance
-  include ::K8S::Types::Kubernetes::ResourceList
-  include ::K8S::Kubernetes::Resource::List(::K8S::Kubernetes::Resource)
-
+class ::K8S::Api::Core::V1::List < ::K8S::Kubernetes::Resource::List(::K8S::GenericObject)
   # APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)))
   def api_version : String
-    "v1"
+    self.["apiVersion"] = "v1" unless self.["apiVersion"]?
+    self.["apiVersion"].as(String)
   end
 
   # Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)))
   def kind : String
-    "List"
+    self.["kind"] = "List" unless self.["kind"]?
+    self.["kind"].as(String)
   end
 
   # Standard object's metadata. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)))
@@ -57,6 +51,14 @@ class ::K8S::Api::Core::V1::List < ::K8S::Types::Kubernetes::ResourceList::Insta
   # :ditto:
   def items=(value : Array(::K8S::Kubernetes::Resource))
     self.["items"] = value
+  end
+
+  def initialize(metadata, items)
+    super()
+    self.["kind"] = "WatchEvent"
+    self.["apiVersion"] = "v1"
+    self.["metadata"] = type
+    self.["items"] = type
   end
 
   macro finished

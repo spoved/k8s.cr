@@ -10,9 +10,6 @@ require "./service_reference"
 module K8S
   # Namespace holding the types for `KubeAggregator::Apis::Apiregistration::V1::APIServiceSpec`.
   module Types::KubeAggregator::Apis::Apiregistration::V1::APIServiceSpec
-    alias ValueType = String | Int32 | ::Bool | ::K8S::KubeAggregator::Apis::Apiregistration::V1::ServiceReference | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # CABundle is a PEM encoded CA bundle which will be used to validate an API server's serving certificate.
     abstract def ca_bundle : String?
     # :ditto:
@@ -81,9 +78,8 @@ module K8S
     version: {key: "version", accessor: "version", kind: "String", nilable: true, default: nil, read_only: false, description: "Version is the API version this server hosts.  For example, \"v1\"", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     version_priority: {key: "versionPriority", accessor: "version_priority", kind: "Int32", nilable: false, default: nil, read_only: false, description: "VersionPriority controls the ordering of this API version inside of its group.  Must be greater than zero. The primary sort is based on VersionPriority, ordered highest to lowest (20 before 10). Since it's inside of a group, the number can be small, probably in the 10s. In case of equal version priorities, the version string will be used to compute the order inside a group. If the version string is \"kube-like\", it will sort above non \"kube-like\" version strings, which are ordered lexicographically. \"Kube-like\" versions start with a \"v\", then are followed by a number (the major version), then optionally the string \"alpha\" or \"beta\" and another number (the minor version). These are sorted first by GA > beta > alpha (where GA is a version with no suffix such as beta or alpha), and then by comparing major version, then minor version. An example sorted list of versions: v10, v2, v1, v11beta2, v10beta3, v3beta1, v12alpha1, v11alpha2, foo1, foo10.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class KubeAggregator::Apis::Apiregistration::V1::APIServiceSpec < ::K8S::Types::KubeAggregator::Apis::Apiregistration::V1::APIServiceSpec::Instance
+  class KubeAggregator::Apis::Apiregistration::V1::APIServiceSpec < ::K8S::GenericObject
     include ::K8S::Types::KubeAggregator::Apis::Apiregistration::V1::APIServiceSpec
-    include ::K8S::Kubernetes::Object
 
     # CABundle is a PEM encoded CA bundle which will be used to validate an API server's serving certificate.
     def ca_bundle : String?

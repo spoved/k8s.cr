@@ -10,9 +10,6 @@ require "./pod_template_spec"
 module K8S
   # Namespace holding the types for `Api::Core::V1::ReplicationControllerSpec`.
   module Types::Api::Core::V1::ReplicationControllerSpec
-    alias ValueType = Int32 | ::Hash(String, String) | ::K8S::Api::Core::V1::PodTemplateSpec | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Minimum number of seconds for which a newly created pod should be ready without any of its container crashing, for it to be considered available. Defaults to 0 (pod will be considered available as soon as it is ready)
     abstract def min_ready_seconds : Int32?
     # :ditto:
@@ -54,9 +51,8 @@ module K8S
     selector: {key: "selector", accessor: "selector", kind: "::Hash(String, String)", nilable: true, default: nil, read_only: false, description: "Selector is a label query over pods that should match the Replicas count. If Selector is empty, it is defaulted to the labels present on the Pod template. Label keys and values that must match in order to be controlled by this replication controller, if empty defaulted to labels on Pod template. More info: [https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: "atomic"},
     template: {key: "template", accessor: "template", kind: "::K8S::Api::Core::V1::PodTemplateSpec", nilable: true, default: nil, read_only: false, description: "Template is the object that describes the pod that will be created if insufficient replicas are detected. This takes precedence over a TemplateRef. More info: [https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#pod-template](https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#pod-template)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::ReplicationControllerSpec < ::K8S::Types::Api::Core::V1::ReplicationControllerSpec::Instance
+  class Api::Core::V1::ReplicationControllerSpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::ReplicationControllerSpec
-    include ::K8S::Kubernetes::Object
 
     # Minimum number of seconds for which a newly created pod should be ready without any of its container crashing, for it to be considered available. Defaults to 0 (pod will be considered available as soon as it is ready)
     def min_ready_seconds : Int32?

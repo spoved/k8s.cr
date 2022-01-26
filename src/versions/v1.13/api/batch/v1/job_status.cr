@@ -10,9 +10,6 @@ require "./job_condition"
 module K8S
   # Namespace holding the types for `Api::Batch::V1::JobStatus`.
   module Types::Api::Batch::V1::JobStatus
-    alias ValueType = Int32 | ::Time | ::Array(::K8S::Api::Batch::V1::JobCondition) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # The number of actively running pods.
     abstract def active : Int32?
     # :ditto:
@@ -72,9 +69,8 @@ module K8S
     start_time: {key: "startTime", accessor: "start_time", kind: "::Time", nilable: true, default: nil, read_only: false, description: "Represents time when the job was acknowledged by the job controller. It is not guaranteed to be set in happens-before order across separate operations. It is represented in RFC3339 form and is in UTC.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     succeeded: {key: "succeeded", accessor: "succeeded", kind: "Int32", nilable: true, default: nil, read_only: false, description: "The number of pods which reached phase Succeeded.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Batch::V1::JobStatus < ::K8S::Types::Api::Batch::V1::JobStatus::Instance
+  class Api::Batch::V1::JobStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Batch::V1::JobStatus
-    include ::K8S::Kubernetes::Object
 
     # The number of actively running pods.
     def active : Int32?

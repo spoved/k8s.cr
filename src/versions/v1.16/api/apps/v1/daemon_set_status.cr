@@ -10,9 +10,6 @@ require "./daemon_set_condition"
 module K8S
   # Namespace holding the types for `Api::Apps::V1::DaemonSetStatus`.
   module Types::Api::Apps::V1::DaemonSetStatus
-    alias ValueType = Int32 | ::Array(::K8S::Api::Apps::V1::DaemonSetCondition) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Count of hash collisions for the DaemonSet. The DaemonSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision.
     abstract def collision_count : Int32?
     # :ditto:
@@ -108,9 +105,8 @@ module K8S
     observed_generation: {key: "observedGeneration", accessor: "observed_generation", kind: "Int32", nilable: true, default: nil, read_only: false, description: "The most recent generation observed by the daemon set controller.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     updated_number_scheduled: {key: "updatedNumberScheduled", accessor: "updated_number_scheduled", kind: "Int32", nilable: true, default: nil, read_only: false, description: "The total number of nodes that are running updated daemon pod", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Apps::V1::DaemonSetStatus < ::K8S::Types::Api::Apps::V1::DaemonSetStatus::Instance
+  class Api::Apps::V1::DaemonSetStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Apps::V1::DaemonSetStatus
-    include ::K8S::Kubernetes::Object
 
     # Count of hash collisions for the DaemonSet. The DaemonSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision.
     def collision_count : Int32?

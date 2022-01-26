@@ -15,9 +15,6 @@ require "./json_schema_props_or_array"
 module K8S
   # Namespace holding the types for `ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps`.
   module Types::ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps
-    alias ValueType = String | ::K8S::Object(ValueType) | Bool | ::Array(::K8S::Object(ValueType)) | ::JSON::Any::Type | ::Hash(String, ::K8S::Object(ValueType)) | ::Hash(String, ::K8S::Object(ValueType) | Array(String)) | ::Array(::JSON::Any::Type) | ::Bool | ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::ExternalDocumentation | ::K8S::Object(ValueType) | Array(::K8S::Object(ValueType)) | Int32 | ::K8S::Object(ValueType) | ::Array(String) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     #
     abstract def ref : String?
     # :ditto:
@@ -445,9 +442,8 @@ module K8S
     x_kubernetes_map_type: {key: "x-kubernetes-map-type", accessor: "x_kubernetes_map_type", kind: "String", nilable: true, default: nil, read_only: false, description: "x-kubernetes-map-type annotates an object to further describe its topology. This extension must only be used when type is object and may have 2 possible values:\n\n1) `granular`:\n     These maps are actual maps (key-value pairs) and each fields are independent\n     from each other (they can each be manipulated by separate actors). This is\n     the default behaviour for all maps.\n2) `atomic`: the list is treated as a single entity, like a scalar.\n     Atomic maps will be entirely replaced when updated.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     x_kubernetes_preserve_unknown_fields: {key: "x-kubernetes-preserve-unknown-fields", accessor: "x_kubernetes_preserve_unknown_fields", kind: "::Bool", nilable: true, default: nil, read_only: false, description: "x-kubernetes-preserve-unknown-fields stops the API server decoding step from pruning fields which are not specified in the validation schema. This affects fields recursively, but switches back to normal pruning behaviour if nested properties or additionalProperties are specified in the schema. This can either be true or undefined. False is forbidden.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps < ::K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps::Instance
+  class ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps < ::K8S::GenericObject
     include ::K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps
-    include ::K8S::Kubernetes::Object
 
     #
     def ref : String?

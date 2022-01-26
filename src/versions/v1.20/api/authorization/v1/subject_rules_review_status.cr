@@ -11,9 +11,6 @@ require "./resource_rule"
 module K8S
   # Namespace holding the types for `Api::Authorization::V1::SubjectRulesReviewStatus`.
   module Types::Api::Authorization::V1::SubjectRulesReviewStatus
-    alias ValueType = String | ::Bool | ::Array(::K8S::Api::Authorization::V1::NonResourceRule) | ::Array(::K8S::Api::Authorization::V1::ResourceRule) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # EvaluationError can appear in combination with Rules. It indicates an error occurred during rule evaluation, such as an authorizer that doesn't support rule evaluation, and that ResourceRules [[and/or NonResourceRules may be incomplete.](and/or NonResourceRules may be incomplete.)]([and/or NonResourceRules may be incomplete.](and/or NonResourceRules may be incomplete.))
     abstract def evaluation_error : String?
     # :ditto:
@@ -55,9 +52,8 @@ module K8S
     non_resource_rules: {key: "nonResourceRules", accessor: "non_resource_rules", kind: "::Array(::K8S::Api::Authorization::V1::NonResourceRule)", nilable: false, default: nil, read_only: false, description: "NonResourceRules is the list of actions the subject is allowed to perform on non-resources. The list ordering isn't significant, may contain duplicates, and possibly be incomplete.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     resource_rules: {key: "resourceRules", accessor: "resource_rules", kind: "::Array(::K8S::Api::Authorization::V1::ResourceRule)", nilable: false, default: nil, read_only: false, description: "ResourceRules is the list of actions the subject is allowed to perform on resources. The list ordering isn't significant, may contain duplicates, and possibly be incomplete.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Authorization::V1::SubjectRulesReviewStatus < ::K8S::Types::Api::Authorization::V1::SubjectRulesReviewStatus::Instance
+  class Api::Authorization::V1::SubjectRulesReviewStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Authorization::V1::SubjectRulesReviewStatus
-    include ::K8S::Kubernetes::Object
 
     # EvaluationError can appear in combination with Rules. It indicates an error occurred during rule evaluation, such as an authorizer that doesn't support rule evaluation, and that ResourceRules [[and/or NonResourceRules may be incomplete.](and/or NonResourceRules may be incomplete.)]([and/or NonResourceRules may be incomplete.](and/or NonResourceRules may be incomplete.))
     def evaluation_error : String?

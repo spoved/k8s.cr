@@ -8,9 +8,6 @@ module K8S::Types::Apimachinery::Version::Info; end
 module K8S
   # Namespace holding the types for `Apimachinery::Version::Info`.
   module Types::Apimachinery::Version::Info
-    alias ValueType = String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     #
     abstract def build_date : String
     # :ditto:
@@ -97,9 +94,8 @@ module K8S
     minor: {key: "minor", accessor: "minor", kind: "String", nilable: false, default: nil, read_only: false, description: nil, x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     platform: {key: "platform", accessor: "platform", kind: "String", nilable: false, default: nil, read_only: false, description: nil, x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Apimachinery::Version::Info < ::K8S::Types::Apimachinery::Version::Info::Instance
+  class Apimachinery::Version::Info < ::K8S::GenericObject
     include ::K8S::Types::Apimachinery::Version::Info
-    include ::K8S::Kubernetes::Object
 
     #
     def build_date : String

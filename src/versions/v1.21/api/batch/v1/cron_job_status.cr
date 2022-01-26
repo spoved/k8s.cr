@@ -10,9 +10,6 @@ require "../../core/v1/object_reference"
 module K8S
   # Namespace holding the types for `Api::Batch::V1::CronJobStatus`.
   module Types::Api::Batch::V1::CronJobStatus
-    alias ValueType = ::Array(::K8S::Api::Core::V1::ObjectReference) | ::Time | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # A list of pointers to currently running jobs.
     abstract def active : ::Array(::K8S::Api::Core::V1::ObjectReference)?
     # :ditto:
@@ -45,9 +42,8 @@ module K8S
     last_schedule_time: {key: "lastScheduleTime", accessor: "last_schedule_time", kind: "::Time", nilable: true, default: nil, read_only: false, description: "Information when was the last time the job was successfully scheduled.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     last_successful_time: {key: "lastSuccessfulTime", accessor: "last_successful_time", kind: "::Time", nilable: true, default: nil, read_only: false, description: "Information when was the last time the job successfully completed.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Batch::V1::CronJobStatus < ::K8S::Types::Api::Batch::V1::CronJobStatus::Instance
+  class Api::Batch::V1::CronJobStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Batch::V1::CronJobStatus
-    include ::K8S::Kubernetes::Object
 
     # A list of pointers to currently running jobs.
     def active : ::Array(::K8S::Api::Core::V1::ObjectReference)?

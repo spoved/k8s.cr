@@ -8,9 +8,6 @@ module K8S::Types::Apimachinery::Apis::Meta::V1::Condition; end
 module K8S
   # Namespace holding the types for `Apimachinery::Apis::Meta::V1::Condition`.
   module Types::Apimachinery::Apis::Meta::V1::Condition
-    alias ValueType = ::Time | String | Int32 | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # lastTransitionTime is the last time the condition transitioned from one status to another. This should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.
     abstract def last_transition_time : ::Time
     # :ditto:
@@ -70,9 +67,8 @@ module K8S
     status: {key: "status", accessor: "status", kind: "String", nilable: false, default: nil, read_only: false, description: "status of the condition, one of True, False, Unknown.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     type: {key: "type", accessor: "type", kind: "String", nilable: false, default: nil, read_only: false, description: "type of condition in CamelCase or in [foo.example.com/CamelCase.](foo.example.com/CamelCase.)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Apimachinery::Apis::Meta::V1::Condition < ::K8S::Types::Apimachinery::Apis::Meta::V1::Condition::Instance
+  class Apimachinery::Apis::Meta::V1::Condition < ::K8S::GenericObject
     include ::K8S::Types::Apimachinery::Apis::Meta::V1::Condition
-    include ::K8S::Kubernetes::Object
 
     # lastTransitionTime is the last time the condition transitioned from one status to another. This should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.
     def last_transition_time : ::Time

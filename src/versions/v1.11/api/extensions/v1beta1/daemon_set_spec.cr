@@ -12,9 +12,6 @@ require "./daemon_set_update_strategy"
 module K8S
   # Namespace holding the types for `Api::Extensions::V1beta1::DaemonSetSpec`.
   module Types::Api::Extensions::V1beta1::DaemonSetSpec
-    alias ValueType = Int32 | ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector | ::K8S::Api::Core::V1::PodTemplateSpec | ::K8S::Api::Extensions::V1beta1::DaemonSetUpdateStrategy | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # The minimum number of seconds for which a newly created DaemonSet pod should be ready without any of its container crashing, for it to be considered available. Defaults to 0 (pod will be considered available as soon as it is ready).
     abstract def min_ready_seconds : Int32?
     # :ditto:
@@ -74,9 +71,8 @@ module K8S
     template_generation: {key: "templateGeneration", accessor: "template_generation", kind: "Int32", nilable: true, default: nil, read_only: false, description: "DEPRECATED. A sequence number representing a specific generation of the template. Populated by the system. It can be set only during the creation.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     update_strategy: {key: "updateStrategy", accessor: "update_strategy", kind: "::K8S::Api::Extensions::V1beta1::DaemonSetUpdateStrategy", nilable: true, default: nil, read_only: false, description: "An update strategy to replace existing DaemonSet pods with new pods.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Extensions::V1beta1::DaemonSetSpec < ::K8S::Types::Api::Extensions::V1beta1::DaemonSetSpec::Instance
+  class Api::Extensions::V1beta1::DaemonSetSpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Extensions::V1beta1::DaemonSetSpec
-    include ::K8S::Kubernetes::Object
 
     # The minimum number of seconds for which a newly created DaemonSet pod should be ready without any of its container crashing, for it to be considered available. Defaults to 0 (pod will be considered available as soon as it is ready).
     def min_ready_seconds : Int32?

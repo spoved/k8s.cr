@@ -12,9 +12,6 @@ require "./rule_with_operations"
 module K8S
   # Namespace holding the types for `Api::Admissionregistration::V1beta1::ValidatingWebhook`.
   module Types::Api::Admissionregistration::V1beta1::ValidatingWebhook
-    alias ValueType = ::Array(String) | ::K8S::Api::Admissionregistration::V1beta1::WebhookClientConfig | String | ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector | ::Array(::K8S::Api::Admissionregistration::V1beta1::RuleWithOperations) | Int32 | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # AdmissionReviewVersions is an ordered list of preferred `AdmissionReview` versions the Webhook expects. API server will try to use first version in the list which it supports. If none of the versions specified in this list supported by API server, validation will fail for this object. If a persisted webhook configuration specifies allowed versions and does not include any versions known to the API Server, calls to the webhook will fail and be subject to the failure policy. Default to `['v1beta1']`.
     abstract def admission_review_versions : ::Array(String)?
     # :ditto:
@@ -146,9 +143,8 @@ module K8S
     side_effects: {key: "sideEffects", accessor: "side_effects", kind: "String", nilable: true, default: nil, read_only: false, description: "SideEffects states whether this webhookk has side effects. Acceptable values are: Unknown, None, Some, NoneOnDryRun Webhooks with side effects MUST implement a reconciliation system, since a request may be rejected by a future step in the admission change and the side effects therefore need to be undone. Requests with the dryRun attribute will be auto-rejected if they match a webhook with sideEffects == Unknown or Some. Defaults to Unknown.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     timeout_seconds: {key: "timeoutSeconds", accessor: "timeout_seconds", kind: "Int32", nilable: true, default: nil, read_only: false, description: "TimeoutSeconds specifies the timeout for this webhook. After the timeout passes, the webhook call will be ignored or the API call will fail based on the failure policy. The timeout value must be between 1 and 30 seconds. Default to 30 seconds.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Admissionregistration::V1beta1::ValidatingWebhook < ::K8S::Types::Api::Admissionregistration::V1beta1::ValidatingWebhook::Instance
+  class Api::Admissionregistration::V1beta1::ValidatingWebhook < ::K8S::GenericObject
     include ::K8S::Types::Api::Admissionregistration::V1beta1::ValidatingWebhook
-    include ::K8S::Kubernetes::Object
 
     # AdmissionReviewVersions is an ordered list of preferred `AdmissionReview` versions the Webhook expects. API server will try to use first version in the list which it supports. If none of the versions specified in this list supported by API server, validation will fail for this object. If a persisted webhook configuration specifies allowed versions and does not include any versions known to the API Server, calls to the webhook will fail and be subject to the failure policy. Default to `['v1beta1']`.
     def admission_review_versions : ::Array(String)?

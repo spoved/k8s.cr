@@ -1,36 +1,46 @@
-require "../spec_helper"
+require "spectator"
+require "log"
+require "../../src/k8s/resource"
 
 Spectator.describe K8S::Kubernetes::Resource do
-  it "#from_json" do
-    r = K8S::Kubernetes::Resource.from_json(fixture("apis", "namespace-v1.json"))
-    expect(r).to be_a(K8S::Api::Core::V1::Namespace)
+  context "#initialize" do
+    it "takes another K8S::GenericObject, Hash or NamedTuple as an initial value" do
+      expect_raises KeyError, %<Missing hash key: "apiVersion"> do
+        K8S::Kubernetes::Resource::Object.new(K8S::GenericObject.new({foo: {bar: true}}))
+      end
+
+      expect_raises KeyError, %<Missing hash key: "kind"> do
+        K8S::Kubernetes::Resource::Object.new(K8S::GenericObject.new({apiVersion: "v1", foo: {bar: true}}))
+      end
+
+      expect(K8S::Kubernetes::Resource::Object.new(K8S::GenericObject.new({
+        apiVersion: "v1",
+        kind:       "Foo",
+        foo:        {bar: true},
+      })).to_h).to eq({"apiVersion" => "v1", "kind" => "Foo", "foo" => {"bar" => true}})
+
+      expect(K8S::Kubernetes::Resource::Object.new(
+        {
+          apiVersion: "v1",
+          kind:       "Foo",
+          foo:        {bar: true},
+        }).to_h).to eq({"apiVersion" => "v1", "kind" => "Foo", "foo" => {"bar" => true}})
+
+      expect(K8S::Kubernetes::Resource::Object.new({
+        :apiVersion => "v1",
+        :kind       => "Foo",
+        :foo        => {:bar => true},
+      }).to_h).to eq({"apiVersion" => "v1", "kind" => "Foo", "foo" => {"bar" => true}})
+    end
   end
 
-  {% if (::K8S::Kubernetes::VERSION_MINOR == 1 && ::K8S::Kubernetes::VERSION_MAJOR >= 22) %}
-    context "when 1.22 or higher" do
-      it "#from_file" do
-        r = K8S::Resource.from_file(fixture_path("stacks", "whoami.yaml"))
-        expect(r.size).to eq(3)
-        expect(r[0]).to be_a(K8S::Api::Apps::V1::Deployment)
-        expect(r[1]).to be_a(K8S::Api::Core::V1::Service)
-        expect(r[2]).to be_a(K8S::Api::Networking::V1::Ingress)
-      end
+  context "serialization" do
+    it "serializes to JSON" do
+      expect(K8S::Kubernetes::Resource::Object.new({
+        apiVersion: "v1",
+        kind:       "Foo",
+        foo:        {bar: true},
+      }).to_json).to eq(%<{"apiVersion":"v1","kind":"Foo","foo":{"bar":true}}>)
     end
-  {% end %}
-
-  {% if (::K8S::Kubernetes::VERSION_MINOR == 1 && ::K8S::Kubernetes::VERSION_MAJOR >= 16) %}
-    it "crd list", focus: true do
-      K8S::Resource.from_file(fixture_path("apis", "customresourcedefinitionlist.json"))
-    end
-  {% else %}
-    it "#from_file" do
-      expect_raises(K8S::Error::UnknownResource, "Unknown resource: networking/v1/Ingress") do
-        K8S::Resource.from_file(fixture_path("stacks", "whoami.yaml"))
-      end
-
-      expect_raises(K8S::Error::UnknownResource, "Unknown resource: apiextensions/v1/CustomResourceDefinitionList") do
-        K8S::Resource.from_file(fixture_path("apis", "customresourcedefinitionlist.json"))
-      end
-    end
-  {% end %}
+  end
 end

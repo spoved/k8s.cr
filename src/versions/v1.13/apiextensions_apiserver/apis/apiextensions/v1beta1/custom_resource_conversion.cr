@@ -10,9 +10,6 @@ require "./webhook_client_config"
 module K8S
   # Namespace holding the types for `ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceConversion`.
   module Types::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceConversion
-    alias ValueType = String | ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::WebhookClientConfig | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # `strategy` specifies the conversion strategy. Allowed values are: - `None`: The converter only change the apiVersion and would not touch any other field in the CR. - `Webhook`: API Server will call to an external webhook to do the conversion. Additional information is needed for this option.
     abstract def strategy : String
     # :ditto:
@@ -36,9 +33,8 @@ module K8S
     strategy: {key: "strategy", accessor: "strategy", kind: "String", nilable: false, default: nil, read_only: false, description: "`strategy` specifies the conversion strategy. Allowed values are: - `None`: The converter only change the apiVersion and would not touch any other field in the CR. - `Webhook`: API Server will call to an external webhook to do the conversion. Additional information is needed for this option.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     webhook_client_config: {key: "webhookClientConfig", accessor: "webhook_client_config", kind: "::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::WebhookClientConfig", nilable: true, default: nil, read_only: false, description: "`webhookClientConfig` is the instructions for how to call the webhook if strategy is `Webhook`. This field is alpha-level and is only honored by servers that enable the CustomResourceWebhookConversion feature.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceConversion < ::K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceConversion::Instance
+  class ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceConversion < ::K8S::GenericObject
     include ::K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceConversion
-    include ::K8S::Kubernetes::Object
 
     # `strategy` specifies the conversion strategy. Allowed values are: - `None`: The converter only change the apiVersion and would not touch any other field in the CR. - `Webhook`: API Server will call to an external webhook to do the conversion. Additional information is needed for this option.
     def strategy : String

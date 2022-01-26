@@ -11,9 +11,6 @@ require "./resource_field_selector"
 module K8S
   # Namespace holding the types for `Api::Core::V1::DownwardAPIVolumeFile`.
   module Types::Api::Core::V1::DownwardAPIVolumeFile
-    alias ValueType = ::K8S::Api::Core::V1::ObjectFieldSelector | Int32 | String | ::K8S::Api::Core::V1::ResourceFieldSelector | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Required: Selects a field of the pod: only annotations, labels, name and namespace are supported.
     abstract def field_ref : ::K8S::Api::Core::V1::ObjectFieldSelector?
     # :ditto:
@@ -55,9 +52,8 @@ module K8S
     path: {key: "path", accessor: "path", kind: "String", nilable: false, default: nil, read_only: false, description: "Required: Path is  the relative path name of the file to be created. Must not be absolute or contain the '..' path. Must be utf-8 encoded. The first item of the relative path must not start with '..'", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     resource_field_ref: {key: "resourceFieldRef", accessor: "resource_field_ref", kind: "::K8S::Api::Core::V1::ResourceFieldSelector", nilable: true, default: nil, read_only: false, description: "Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, requests.cpu and requests.memory) are currently supported.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::DownwardAPIVolumeFile < ::K8S::Types::Api::Core::V1::DownwardAPIVolumeFile::Instance
+  class Api::Core::V1::DownwardAPIVolumeFile < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::DownwardAPIVolumeFile
-    include ::K8S::Kubernetes::Object
 
     # Required: Selects a field of the pod: only annotations, labels, name and namespace are supported.
     def field_ref : ::K8S::Api::Core::V1::ObjectFieldSelector?

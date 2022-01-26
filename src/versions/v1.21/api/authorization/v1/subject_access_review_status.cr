@@ -8,9 +8,6 @@ module K8S::Types::Api::Authorization::V1::SubjectAccessReviewStatus; end
 module K8S
   # Namespace holding the types for `Api::Authorization::V1::SubjectAccessReviewStatus`.
   module Types::Api::Authorization::V1::SubjectAccessReviewStatus
-    alias ValueType = ::Bool | String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Allowed is required. True if the action would be allowed, false otherwise.
     abstract def allowed : ::Bool
     # :ditto:
@@ -52,9 +49,8 @@ module K8S
     evaluation_error: {key: "evaluationError", accessor: "evaluation_error", kind: "String", nilable: true, default: nil, read_only: false, description: "EvaluationError is an indication that some error occurred during the authorization check. It is entirely possible to get an error and be able to continue determine authorization status in spite of it. For instance, RBAC can be missing a role, but enough roles are still present and bound to reason about the request.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     reason: {key: "reason", accessor: "reason", kind: "String", nilable: true, default: nil, read_only: false, description: "Reason is optional.  It indicates why a request was allowed or denied.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Authorization::V1::SubjectAccessReviewStatus < ::K8S::Types::Api::Authorization::V1::SubjectAccessReviewStatus::Instance
+  class Api::Authorization::V1::SubjectAccessReviewStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Authorization::V1::SubjectAccessReviewStatus
-    include ::K8S::Kubernetes::Object
 
     # Allowed is required. True if the action would be allowed, false otherwise.
     def allowed : ::Bool

@@ -10,9 +10,6 @@ require "./load_balancer_status"
 module K8S
   # Namespace holding the types for `Api::Core::V1::ServiceStatus`.
   module Types::Api::Core::V1::ServiceStatus
-    alias ValueType = ::K8S::Api::Core::V1::LoadBalancerStatus | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # LoadBalancer contains the current status of the load-balancer, if one is present.
     abstract def load_balancer : ::K8S::Api::Core::V1::LoadBalancerStatus?
     # :ditto:
@@ -27,9 +24,8 @@ module K8S
   @[::K8S::Properties(
     load_balancer: {key: "loadBalancer", accessor: "load_balancer", kind: "::K8S::Api::Core::V1::LoadBalancerStatus", nilable: true, default: nil, read_only: false, description: "LoadBalancer contains the current status of the load-balancer, if one is present.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::ServiceStatus < ::K8S::Types::Api::Core::V1::ServiceStatus::Instance
+  class Api::Core::V1::ServiceStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::ServiceStatus
-    include ::K8S::Kubernetes::Object
 
     # LoadBalancer contains the current status of the load-balancer, if one is present.
     def load_balancer : ::K8S::Api::Core::V1::LoadBalancerStatus?

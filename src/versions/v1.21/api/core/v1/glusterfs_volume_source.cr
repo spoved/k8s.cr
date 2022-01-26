@@ -8,9 +8,6 @@ module K8S::Types::Api::Core::V1::GlusterfsVolumeSource; end
 module K8S
   # Namespace holding the types for `Api::Core::V1::GlusterfsVolumeSource`.
   module Types::Api::Core::V1::GlusterfsVolumeSource
-    alias ValueType = String | ::Bool | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # EndpointsName is the endpoint name that details Glusterfs topology. More info: [[https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod](https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod)](https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod](https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod))
     abstract def endpoints : String
     # :ditto:
@@ -43,9 +40,8 @@ module K8S
     path: {key: "path", accessor: "path", kind: "String", nilable: false, default: nil, read_only: false, description: "Path is the Glusterfs volume path. More info: [https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod](https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     read_only: {key: "readOnly", accessor: "read_only", kind: "::Bool", nilable: true, default: nil, read_only: false, description: "ReadOnly here will force the Glusterfs volume to be mounted with read-only permissions. Defaults to false. More info: [https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod](https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::GlusterfsVolumeSource < ::K8S::Types::Api::Core::V1::GlusterfsVolumeSource::Instance
+  class Api::Core::V1::GlusterfsVolumeSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::GlusterfsVolumeSource
-    include ::K8S::Kubernetes::Object
 
     # EndpointsName is the endpoint name that details Glusterfs topology. More info: [[https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod](https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod)](https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod](https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod))
     def endpoints : String

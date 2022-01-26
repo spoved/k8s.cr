@@ -8,9 +8,6 @@ module K8S::Types::Api::Core::V1::Capabilities; end
 module K8S
   # Namespace holding the types for `Api::Core::V1::Capabilities`.
   module Types::Api::Core::V1::Capabilities
-    alias ValueType = ::Array(String) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Added capabilities
     abstract def add : ::Array(String)?
     # :ditto:
@@ -34,9 +31,8 @@ module K8S
     add: {key: "add", accessor: "add", kind: "::Array(String)", nilable: true, default: nil, read_only: false, description: "Added capabilities", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     drop: {key: "drop", accessor: "drop", kind: "::Array(String)", nilable: true, default: nil, read_only: false, description: "Removed capabilities", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::Capabilities < ::K8S::Types::Api::Core::V1::Capabilities::Instance
+  class Api::Core::V1::Capabilities < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::Capabilities
-    include ::K8S::Kubernetes::Object
 
     # Added capabilities
     def add : ::Array(String)?

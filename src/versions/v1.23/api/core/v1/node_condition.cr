@@ -8,9 +8,6 @@ module K8S::Types::Api::Core::V1::NodeCondition; end
 module K8S
   # Namespace holding the types for `Api::Core::V1::NodeCondition`.
   module Types::Api::Core::V1::NodeCondition
-    alias ValueType = ::Time | String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Last time we got an update on a given condition.
     abstract def last_heartbeat_time : ::Time?
     # :ditto:
@@ -77,9 +74,8 @@ module K8S
     status: {key: "status", accessor: "status", kind: "String", nilable: false, default: nil, read_only: false, description: "Status of the condition, one of True, False, Unknown.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     type: {key: "type", accessor: "type", kind: "String", nilable: false, default: nil, read_only: false, description: "Type of node condition.\n\nPossible enum values:\n - `\"DiskPressure\"` means the kubelet is under pressure due to insufficient available disk.\n - `\"MemoryPressure\"` means the kubelet is under pressure due to insufficient available memory.\n - `\"NetworkUnavailable\"` means that network for the node is not correctly configured.\n - `\"PIDPressure\"` means the kubelet is under pressure due to insufficient available PID.\n - `\"Ready\"` means kubelet is healthy and ready to accept pods.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::NodeCondition < ::K8S::Types::Api::Core::V1::NodeCondition::Instance
+  class Api::Core::V1::NodeCondition < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::NodeCondition
-    include ::K8S::Kubernetes::Object
 
     # Last time we got an update on a given condition.
     def last_heartbeat_time : ::Time?

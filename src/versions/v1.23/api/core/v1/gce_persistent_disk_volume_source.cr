@@ -8,9 +8,6 @@ module K8S::Types::Api::Core::V1::GCEPersistentDiskVolumeSource; end
 module K8S
   # Namespace holding the types for `Api::Core::V1::GCEPersistentDiskVolumeSource`.
   module Types::Api::Core::V1::GCEPersistentDiskVolumeSource
-    alias ValueType = String | Int32 | ::Bool | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Filesystem type of the volume that you want to mount. Tip: Ensure that the filesystem type is supported by the host operating system. Examples: "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified. More info: [[https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk](https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk)](https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk](https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk))
     abstract def fs_type : String?
     # :ditto:
@@ -54,9 +51,8 @@ module K8S
     pd_name: {key: "pdName", accessor: "pd_name", kind: "String", nilable: false, default: nil, read_only: false, description: "Unique name of the PD resource in GCE. Used to identify the disk in GCE. More info: [https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk](https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     read_only: {key: "readOnly", accessor: "read_only", kind: "::Bool", nilable: true, default: nil, read_only: false, description: "ReadOnly here will force the ReadOnly setting in VolumeMounts. Defaults to false. More info: [https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk](https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::GCEPersistentDiskVolumeSource < ::K8S::Types::Api::Core::V1::GCEPersistentDiskVolumeSource::Instance
+  class Api::Core::V1::GCEPersistentDiskVolumeSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::GCEPersistentDiskVolumeSource
-    include ::K8S::Kubernetes::Object
 
     # Filesystem type of the volume that you want to mount. Tip: Ensure that the filesystem type is supported by the host operating system. Examples: "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified. More info: [[https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk](https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk)](https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk](https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk))
     def fs_type : String?

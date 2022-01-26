@@ -10,9 +10,6 @@ require "./pod_dns_config_option"
 module K8S
   # Namespace holding the types for `Api::Core::V1::PodDNSConfig`.
   module Types::Api::Core::V1::PodDNSConfig
-    alias ValueType = ::Array(String) | ::Array(::K8S::Api::Core::V1::PodDNSConfigOption) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # A list of DNS name server IP addresses. This will be appended to the base nameservers generated from DNSPolicy. Duplicated nameservers will be removed.
     abstract def nameservers : ::Array(String)?
     # :ditto:
@@ -45,9 +42,8 @@ module K8S
     options: {key: "options", accessor: "options", kind: "::Array(::K8S::Api::Core::V1::PodDNSConfigOption)", nilable: true, default: nil, read_only: false, description: "A list of DNS resolver options. This will be merged with the base options generated from DNSPolicy. Duplicated entries will be removed. Resolution options given in Options will override those that appear in the base DNSPolicy.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     searches: {key: "searches", accessor: "searches", kind: "::Array(String)", nilable: true, default: nil, read_only: false, description: "A list of DNS search domains for host-name lookup. This will be appended to the base search paths generated from DNSPolicy. Duplicated search paths will be removed.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::PodDNSConfig < ::K8S::Types::Api::Core::V1::PodDNSConfig::Instance
+  class Api::Core::V1::PodDNSConfig < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::PodDNSConfig
-    include ::K8S::Kubernetes::Object
 
     # A list of DNS name server IP addresses. This will be appended to the base nameservers generated from DNSPolicy. Duplicated nameservers will be removed.
     def nameservers : ::Array(String)?

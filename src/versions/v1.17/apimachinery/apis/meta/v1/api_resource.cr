@@ -8,9 +8,6 @@ module K8S::Types::Apimachinery::Apis::Meta::V1::APIResource; end
 module K8S
   # Namespace holding the types for `Apimachinery::Apis::Meta::V1::APIResource`.
   module Types::Apimachinery::Apis::Meta::V1::APIResource
-    alias ValueType = ::Array(String) | String | ::Bool | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # categories is a list of the grouped resources this resource belongs to (e.g. 'all')
     abstract def categories : ::Array(String)?
     # :ditto:
@@ -106,9 +103,8 @@ module K8S
     verbs: {key: "verbs", accessor: "verbs", kind: "::Array(String)", nilable: false, default: nil, read_only: false, description: "verbs is a list of supported kube verbs (this includes get, list, watch, create, update, patch, delete, deletecollection, and proxy)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     version: {key: "version", accessor: "version", kind: "String", nilable: true, default: nil, read_only: false, description: "version is the preferred version of the resource.  Empty implies the version of the containing resource list For subresources, this may have a different value, for example: v1 (while inside a v1beta1 version of the core resource's group)\".", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Apimachinery::Apis::Meta::V1::APIResource < ::K8S::Types::Apimachinery::Apis::Meta::V1::APIResource::Instance
+  class Apimachinery::Apis::Meta::V1::APIResource < ::K8S::GenericObject
     include ::K8S::Types::Apimachinery::Apis::Meta::V1::APIResource
-    include ::K8S::Kubernetes::Object
 
     # categories is a list of the grouped resources this resource belongs to (e.g. 'all')
     def categories : ::Array(String)?

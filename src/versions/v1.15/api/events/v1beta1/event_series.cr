@@ -8,9 +8,6 @@ module K8S::Types::Api::Events::V1beta1::EventSeries; end
 module K8S
   # Namespace holding the types for `Api::Events::V1beta1::EventSeries`.
   module Types::Api::Events::V1beta1::EventSeries
-    alias ValueType = Int32 | ::Time | String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Number of occurrences in this series up to the last heartbeat time
     abstract def count : Int32
     # :ditto:
@@ -43,9 +40,8 @@ module K8S
     last_observed_time: {key: "lastObservedTime", accessor: "last_observed_time", kind: "::Time", nilable: false, default: nil, read_only: false, description: "Time when last Event from the series was seen before last heartbeat.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     state: {key: "state", accessor: "state", kind: "String", nilable: false, default: nil, read_only: false, description: "Information whether this series is ongoing or finished. Deprecated. Planned removal for 1.18", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Events::V1beta1::EventSeries < ::K8S::Types::Api::Events::V1beta1::EventSeries::Instance
+  class Api::Events::V1beta1::EventSeries < ::K8S::GenericObject
     include ::K8S::Types::Api::Events::V1beta1::EventSeries
-    include ::K8S::Kubernetes::Object
 
     # Number of occurrences in this series up to the last heartbeat time
     def count : Int32

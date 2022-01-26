@@ -10,9 +10,6 @@ require "../../../apimachinery/apis/meta/v1/label_selector"
 module K8S
   # Namespace holding the types for `Api::Autoscaling::V2beta1::PodsMetricSource`.
   module Types::Api::Autoscaling::V2beta1::PodsMetricSource
-    alias ValueType = String | ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector | ::Int32 | ::String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # metricName is the name of the metric in question
     abstract def metric_name : String
     # :ditto:
@@ -45,9 +42,8 @@ module K8S
     selector: {key: "selector", accessor: "selector", kind: "::K8S::Apimachinery::Apis::Meta::V1::LabelSelector", nilable: true, default: nil, read_only: false, description: "selector is the string-encoded form of a standard kubernetes label selector for the given metric When set, it is passed as an additional parameter to the metrics server for more specific metrics scoping When unset, just the metricName will be used to gather metrics.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     target_average_value: {key: "targetAverageValue", accessor: "target_average_value", kind: "::Int32 | ::String", nilable: false, default: nil, read_only: false, description: "targetAverageValue is the target value of the average of the metric across all relevant pods (as a quantity)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Autoscaling::V2beta1::PodsMetricSource < ::K8S::Types::Api::Autoscaling::V2beta1::PodsMetricSource::Instance
+  class Api::Autoscaling::V2beta1::PodsMetricSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Autoscaling::V2beta1::PodsMetricSource
-    include ::K8S::Kubernetes::Object
 
     # metricName is the name of the metric in question
     def metric_name : String

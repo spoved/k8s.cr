@@ -8,9 +8,6 @@ module K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomR
 module K8S
   # Namespace holding the types for `ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceDefinitionCondition`.
   module Types::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceDefinitionCondition
-    alias ValueType = ::Time | String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Last time the condition transitioned from one status to another.
     abstract def last_transition_time : ::Time?
     # :ditto:
@@ -61,9 +58,8 @@ module K8S
     status: {key: "status", accessor: "status", kind: "String", nilable: false, default: nil, read_only: false, description: "Status is the status of the condition. Can be True, False, Unknown.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     type: {key: "type", accessor: "type", kind: "String", nilable: false, default: nil, read_only: false, description: "Type is the type of the condition. Types include Established, NamesAccepted and Terminating.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceDefinitionCondition < ::K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceDefinitionCondition::Instance
+  class ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceDefinitionCondition < ::K8S::GenericObject
     include ::K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceDefinitionCondition
-    include ::K8S::Kubernetes::Object
 
     # Last time the condition transitioned from one status to another.
     def last_transition_time : ::Time?

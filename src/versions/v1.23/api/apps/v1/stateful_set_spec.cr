@@ -14,9 +14,6 @@ require "../../core/v1/persistent_volume_claim"
 module K8S
   # Namespace holding the types for `Api::Apps::V1::StatefulSetSpec`.
   module Types::Api::Apps::V1::StatefulSetSpec
-    alias ValueType = Int32 | ::K8S::Api::Apps::V1::StatefulSetPersistentVolumeClaimRetentionPolicy | String | ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector | ::K8S::Api::Core::V1::PodTemplateSpec | ::K8S::Api::Apps::V1::StatefulSetUpdateStrategy | ::Array(::K8S::Api::Core::V1::PersistentVolumeClaim) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Minimum number of seconds for which a newly created pod should be ready without any of its container crashing for it to be considered available. Defaults to 0 (pod will be considered available as soon as it is ready) This is an alpha field and requires enabling StatefulSetMinReadySeconds feature gate.
     abstract def min_ready_seconds : Int32?
     # :ditto:
@@ -116,9 +113,8 @@ module K8S
     update_strategy: {key: "updateStrategy", accessor: "update_strategy", kind: "::K8S::Api::Apps::V1::StatefulSetUpdateStrategy", nilable: true, default: nil, read_only: false, description: "updateStrategy indicates the StatefulSetUpdateStrategy that will be employed to update Pods in the StatefulSet when a revision is made to Template.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     volume_claim_templates: {key: "volumeClaimTemplates", accessor: "volume_claim_templates", kind: "::Array(::K8S::Api::Core::V1::PersistentVolumeClaim)", nilable: true, default: nil, read_only: false, description: "volumeClaimTemplates is a list of claims that pods are allowed to reference. The StatefulSet controller is responsible for mapping network identities to claims in a way that maintains the identity of a pod. Every claim in this list must have at least one matching (by name) volumeMount in one container in the template. A claim in this list takes precedence over any volumes in the template, with the same name.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Apps::V1::StatefulSetSpec < ::K8S::Types::Api::Apps::V1::StatefulSetSpec::Instance
+  class Api::Apps::V1::StatefulSetSpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Apps::V1::StatefulSetSpec
-    include ::K8S::Kubernetes::Object
 
     # Minimum number of seconds for which a newly created pod should be ready without any of its container crashing for it to be considered available. Defaults to 0 (pod will be considered available as soon as it is ready) This is an alpha field and requires enabling StatefulSetMinReadySeconds feature gate.
     def min_ready_seconds : Int32?

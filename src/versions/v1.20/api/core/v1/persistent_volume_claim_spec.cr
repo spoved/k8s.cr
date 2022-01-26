@@ -12,9 +12,6 @@ require "../../../apimachinery/apis/meta/v1/label_selector"
 module K8S
   # Namespace holding the types for `Api::Core::V1::PersistentVolumeClaimSpec`.
   module Types::Api::Core::V1::PersistentVolumeClaimSpec
-    alias ValueType = ::Array(String) | ::K8S::Api::Core::V1::TypedLocalObjectReference | ::K8S::Api::Core::V1::ResourceRequirements | ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector | String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # AccessModes contains the desired access modes the volume should have. More info: [[https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1](https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1)](https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1](https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1))
     abstract def access_modes : ::Array(String)?
     # :ditto:
@@ -83,9 +80,8 @@ module K8S
     volume_mode: {key: "volumeMode", accessor: "volume_mode", kind: "String", nilable: true, default: nil, read_only: false, description: "volumeMode defines what type of volume is required by the claim. Value of Filesystem is implied when not included in claim spec.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     volume_name: {key: "volumeName", accessor: "volume_name", kind: "String", nilable: true, default: nil, read_only: false, description: "VolumeName is the binding reference to the PersistentVolume backing this claim.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::PersistentVolumeClaimSpec < ::K8S::Types::Api::Core::V1::PersistentVolumeClaimSpec::Instance
+  class Api::Core::V1::PersistentVolumeClaimSpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::PersistentVolumeClaimSpec
-    include ::K8S::Kubernetes::Object
 
     # AccessModes contains the desired access modes the volume should have. More info: [[https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1](https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1)](https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1](https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1))
     def access_modes : ::Array(String)?

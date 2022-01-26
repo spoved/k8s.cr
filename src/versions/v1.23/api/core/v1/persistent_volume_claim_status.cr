@@ -10,9 +10,6 @@ require "./persistent_volume_claim_condition"
 module K8S
   # Namespace holding the types for `Api::Core::V1::PersistentVolumeClaimStatus`.
   module Types::Api::Core::V1::PersistentVolumeClaimStatus
-    alias ValueType = ::Array(String) | ::Hash(String, ::Int32 | ::String) | ::Array(::K8S::Api::Core::V1::PersistentVolumeClaimCondition) | String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # AccessModes contains the actual access modes the volume backing the PVC has. More info: [[https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1](https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1)](https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1](https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1))
     abstract def access_modes : ::Array(String)?
     # :ditto:
@@ -77,9 +74,8 @@ module K8S
     phase: {key: "phase", accessor: "phase", kind: "String", nilable: true, default: nil, read_only: false, description: "Phase represents the current phase of PersistentVolumeClaim.\n\nPossible enum values:\n - `\"Bound\"` used for PersistentVolumeClaims that are bound\n - `\"Lost\"` used for PersistentVolumeClaims that lost their underlying PersistentVolume. The claim was bound to a PersistentVolume and this volume does not exist any longer and all data on it was lost.\n - `\"Pending\"` used for PersistentVolumeClaims that are not yet bound", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     resize_status: {key: "resizeStatus", accessor: "resize_status", kind: "String", nilable: true, default: nil, read_only: false, description: "ResizeStatus stores status of resize operation. ResizeStatus is not set by default but when expansion is complete resizeStatus is set to empty string by resize controller or kubelet. This is an alpha field and requires enabling RecoverVolumeExpansionFailure feature.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::PersistentVolumeClaimStatus < ::K8S::Types::Api::Core::V1::PersistentVolumeClaimStatus::Instance
+  class Api::Core::V1::PersistentVolumeClaimStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::PersistentVolumeClaimStatus
-    include ::K8S::Kubernetes::Object
 
     # AccessModes contains the actual access modes the volume backing the PVC has. More info: [[https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1](https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1)](https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1](https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1))
     def access_modes : ::Array(String)?

@@ -16,9 +16,6 @@ require "./attached_volume"
 module K8S
   # Namespace holding the types for `Api::Core::V1::NodeStatus`.
   module Types::Api::Core::V1::NodeStatus
-    alias ValueType = ::Array(::K8S::Api::Core::V1::NodeAddress) | ::Hash(String, ::Int32 | ::String) | ::Array(::K8S::Api::Core::V1::NodeCondition) | ::K8S::Api::Core::V1::NodeConfigStatus | ::K8S::Api::Core::V1::NodeDaemonEndpoints | ::Array(::K8S::Api::Core::V1::ContainerImage) | ::K8S::Api::Core::V1::NodeSystemInfo | String | ::Array(::K8S::Api::Core::V1::AttachedVolume) | ::Array(String) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # List of addresses reachable to the node. Queried from cloud provider, if available. More info: [[https://kubernetes.io/docs/concepts/nodes/node/#addresses](https://kubernetes.io/docs/concepts/nodes/node/#addresses)](https://kubernetes.io/docs/concepts/nodes/node/#addresses](https://kubernetes.io/docs/concepts/nodes/node/#addresses))
     abstract def addresses : ::Array(::K8S::Api::Core::V1::NodeAddress)?
     # :ditto:
@@ -123,9 +120,8 @@ module K8S
     volumes_attached: {key: "volumesAttached", accessor: "volumes_attached", kind: "::Array(::K8S::Api::Core::V1::AttachedVolume)", nilable: true, default: nil, read_only: false, description: "List of volumes that are attached to the node.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     volumes_in_use: {key: "volumesInUse", accessor: "volumes_in_use", kind: "::Array(String)", nilable: true, default: nil, read_only: false, description: "List of attachable volumes in use (mounted) by the node.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::NodeStatus < ::K8S::Types::Api::Core::V1::NodeStatus::Instance
+  class Api::Core::V1::NodeStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::NodeStatus
-    include ::K8S::Kubernetes::Object
 
     # List of addresses reachable to the node. Queried from cloud provider, if available. More info: [[https://kubernetes.io/docs/concepts/nodes/node/#addresses](https://kubernetes.io/docs/concepts/nodes/node/#addresses)](https://kubernetes.io/docs/concepts/nodes/node/#addresses](https://kubernetes.io/docs/concepts/nodes/node/#addresses))
     def addresses : ::Array(::K8S::Api::Core::V1::NodeAddress)?

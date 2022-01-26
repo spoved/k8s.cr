@@ -12,9 +12,6 @@ require "./container_state_waiting"
 module K8S
   # Namespace holding the types for `Api::Core::V1::ContainerState`.
   module Types::Api::Core::V1::ContainerState
-    alias ValueType = ::K8S::Api::Core::V1::ContainerStateRunning | ::K8S::Api::Core::V1::ContainerStateTerminated | ::K8S::Api::Core::V1::ContainerStateWaiting | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Details about a running container
     abstract def running : ::K8S::Api::Core::V1::ContainerStateRunning?
     # :ditto:
@@ -47,9 +44,8 @@ module K8S
     terminated: {key: "terminated", accessor: "terminated", kind: "::K8S::Api::Core::V1::ContainerStateTerminated", nilable: true, default: nil, read_only: false, description: "Details about a terminated container", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     waiting: {key: "waiting", accessor: "waiting", kind: "::K8S::Api::Core::V1::ContainerStateWaiting", nilable: true, default: nil, read_only: false, description: "Details about a waiting container", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::ContainerState < ::K8S::Types::Api::Core::V1::ContainerState::Instance
+  class Api::Core::V1::ContainerState < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::ContainerState
-    include ::K8S::Kubernetes::Object
 
     # Details about a running container
     def running : ::K8S::Api::Core::V1::ContainerStateRunning?

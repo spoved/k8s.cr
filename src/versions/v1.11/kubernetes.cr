@@ -3,7 +3,7 @@ module ::K8S::Kubernetes
   VERSION_MINOR =  1
   VERSION_MAJOR = 11
 
-  module Resource
+  abstract class Resource
     MAPPINGS = [
       {"admissionregistration/v1alpha1", "InitializerConfiguration", K8S::Api::Admissionregistration::V1alpha1::InitializerConfiguration},
       {"admissionregistration/v1alpha1", "InitializerConfigurationList", K8S::Api::Admissionregistration::V1alpha1::InitializerConfigurationList},

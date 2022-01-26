@@ -8,9 +8,6 @@ module K8S::Types::Api::Apiserverinternal::V1alpha1::StorageVersionCondition; en
 module K8S
   # Namespace holding the types for `Api::Apiserverinternal::V1alpha1::StorageVersionCondition`.
   module Types::Api::Apiserverinternal::V1alpha1::StorageVersionCondition
-    alias ValueType = ::Time | String | Int32 | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Last time the condition transitioned from one status to another.
     abstract def last_transition_time : ::Time?
     # :ditto:
@@ -70,9 +67,8 @@ module K8S
     status: {key: "status", accessor: "status", kind: "String", nilable: false, default: nil, read_only: false, description: "Status of the condition, one of True, False, Unknown.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     type: {key: "type", accessor: "type", kind: "String", nilable: false, default: nil, read_only: false, description: "Type of the condition.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Apiserverinternal::V1alpha1::StorageVersionCondition < ::K8S::Types::Api::Apiserverinternal::V1alpha1::StorageVersionCondition::Instance
+  class Api::Apiserverinternal::V1alpha1::StorageVersionCondition < ::K8S::GenericObject
     include ::K8S::Types::Api::Apiserverinternal::V1alpha1::StorageVersionCondition
-    include ::K8S::Kubernetes::Object
 
     # Last time the condition transitioned from one status to another.
     def last_transition_time : ::Time?

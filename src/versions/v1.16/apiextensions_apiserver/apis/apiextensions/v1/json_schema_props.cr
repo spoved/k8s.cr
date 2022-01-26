@@ -15,9 +15,6 @@ require "./json_schema_props_or_array"
 module K8S
   # Namespace holding the types for `ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps`.
   module Types::ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps
-    alias ValueType = String | ::K8S::Object(ValueType) | Bool | ::Array(::K8S::Object(ValueType)) | ::JSON::Any::Type | ::Hash(String, ::K8S::Object(ValueType)) | ::Hash(String, ::K8S::Object(ValueType) | Array(String)) | ::Array(::JSON::Any::Type) | ::Bool | ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::ExternalDocumentation | ::K8S::Object(ValueType) | Array(::K8S::Object(ValueType)) | Int32 | ::K8S::Object(ValueType) | ::Array(String) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     #
     abstract def ref : String?
     # :ditto:
@@ -425,9 +422,8 @@ module K8S
     x_kubernetes_list_type: {key: "x-kubernetes-list-type", accessor: "x_kubernetes_list_type", kind: "String", nilable: true, default: nil, read_only: false, description: "x-kubernetes-list-type annotates an array to further describe its topology. This extension must only be used on lists and may have 3 possible values:\n\n1) `atomic`: the list is treated as a single entity, like a scalar.\n     Atomic lists will be entirely replaced when updated. This extension\n     may be used on any type of list (struct, scalar, ...).\n2) `set`:\n     Sets are lists that must not have multiple items with the same value. Each\n     value must be a scalar, an object with x-kubernetes-map-type `atomic` or an\n     array with x-kubernetes-list-type `atomic`.\n3) `map`:\n     These lists are like maps in that their elements have a non-index key\n     used to identify them. Order is preserved upon merge. The map tag\n     must only be used on a list with elements of type object.\nDefaults to atomic for arrays.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     x_kubernetes_preserve_unknown_fields: {key: "x-kubernetes-preserve-unknown-fields", accessor: "x_kubernetes_preserve_unknown_fields", kind: "::Bool", nilable: true, default: nil, read_only: false, description: "x-kubernetes-preserve-unknown-fields stops the API server decoding step from pruning fields which are not specified in the validation schema. This affects fields recursively, but switches back to normal pruning behaviour if nested properties or additionalProperties are specified in the schema. This can either be true or undefined. False is forbidden.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps < ::K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps::Instance
+  class ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps < ::K8S::GenericObject
     include ::K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps
-    include ::K8S::Kubernetes::Object
 
     #
     def ref : String?

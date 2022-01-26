@@ -8,9 +8,6 @@ module K8S::Types::Api::Autoscaling::V2beta1::HorizontalPodAutoscalerCondition; 
 module K8S
   # Namespace holding the types for `Api::Autoscaling::V2beta1::HorizontalPodAutoscalerCondition`.
   module Types::Api::Autoscaling::V2beta1::HorizontalPodAutoscalerCondition
-    alias ValueType = ::Time | String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # lastTransitionTime is the last time the condition transitioned from one status to another
     abstract def last_transition_time : ::Time?
     # :ditto:
@@ -61,9 +58,8 @@ module K8S
     status: {key: "status", accessor: "status", kind: "String", nilable: false, default: nil, read_only: false, description: "status is the status of the condition (True, False, Unknown)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     type: {key: "type", accessor: "type", kind: "String", nilable: false, default: nil, read_only: false, description: "type describes the current condition", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Autoscaling::V2beta1::HorizontalPodAutoscalerCondition < ::K8S::Types::Api::Autoscaling::V2beta1::HorizontalPodAutoscalerCondition::Instance
+  class Api::Autoscaling::V2beta1::HorizontalPodAutoscalerCondition < ::K8S::GenericObject
     include ::K8S::Types::Api::Autoscaling::V2beta1::HorizontalPodAutoscalerCondition
-    include ::K8S::Kubernetes::Object
 
     # lastTransitionTime is the last time the condition transitioned from one status to another
     def last_transition_time : ::Time?

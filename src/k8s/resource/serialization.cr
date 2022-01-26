@@ -1,20 +1,12 @@
-require "./serialize_methods"
+# require "./serialize_methods"
 
 # :nodoc:
 struct JSON::Any
   # Convert a YAML object to a JSON document.
   def self.new(ctx : YAML::ParseContext, node : YAML::Nodes::Node)
-    JSON::Any.from_json YAML::Any.new(ctx, node).to_json
+    JSON::Any.from_json(YAML::Any.new(ctx, node).to_json)
   end
 end
-
-# # :nodoc:
-# class ::AnyHash::JSON
-#   # Convert a YAML object to a AnyHash::JSON document.
-#   def self.new(ctx : YAML::ParseContext, node : YAML::Nodes::Node)
-#     ::AnyHash::JSON.new(::JSON::Any.new(ctx, node).as_h)
-#   end
-# end
 
 # :nodoc:
 struct YAML::Any
@@ -24,7 +16,7 @@ struct YAML::Any
   end
 end
 
-module ::K8S::Kubernetes::Resource
+class ::K8S::Kubernetes::Resource
   macro finished
     {% entries = [] of NamedTuple %}
     {% others = {} of StringLiteral => TypeNode %}
@@ -102,7 +94,6 @@ module ::K8S::Kubernetes::Resource
       {% end %}
     {% end %}
 
-
     REGISTRY = [
       {{*entries.uniq}}
     ]
@@ -114,26 +105,32 @@ module ::K8S::Kubernetes::Resource
   end
 
   private macro __from_yaml(group, ver, kind, ctx, node)
-    case { {{group}}.sub(/^io\.k8s(\.[-a-z]+\.pkg)?\.apis?(\.core)?\./, ""), {{ver}}, {{kind}} }
-    {% for entry in REGISTRY %}
-    when { {{entry[:group]}}, {{entry[:version]}}, {{entry[:kind]}} }
-      {{entry[:resource]}}.new({{ctx}}, {{node}}).as(::K8S::Kubernetes::Resource)
-    {% end %}
-    else
-      raise K8S::Error::UnknownResource.new("#{{{group}}}/#{{{ver}}}/#{{{kind}}}")
+      case { {{group}}.sub(/^io\.k8s(\.[-a-z]+\.pkg)?\.apis?(\.core)?\./, ""), {{ver}}, {{kind}} }
+      {% for entry in REGISTRY %}
+      when { {{entry[:group]}}, {{entry[:version]}}, {{entry[:kind]}} }
+        {{entry[:resource]}}.new({{ctx}}, {{node}}).as(::K8S::Kubernetes::Resource)
+      {% end %}
+      else
+        Log.warn { "Unknown resource: #{{{group}}}/#{{{ver}}}/#{{{kind}}}" }
+        ::K8S::Kubernetes::Resource::Object.new(Hash(String, JSON::Any).new({{ctx}}, {{node}}))
+        # raise K8S::Error::UnknownResource.new("#{{{group}}}/#{{{ver}}}/#{{{kind}}}")
+
+
+
+      end
     end
-  end
 
   private macro __from_json(group, ver, kind, json)
-    case { {{group}}.sub(/^io\.k8s(\.[-a-z]+\.pkg)?\.apis?(\.core)?\./, ""), {{ver}}, {{kind}} }
-    {% for entry in REGISTRY %}
-    when { {{entry[:group]}}, {{entry[:version]}}, {{entry[:kind]}} }
-      {{entry[:resource]}}.from_json({{json}}).as(::K8S::Kubernetes::Resource)
-    {% end %}
-    else
-      raise K8S::Error::UnknownResource.new("#{{{group}}}/#{{{ver}}}/#{{{kind}}}")
+      case { {{group}}.sub(/^io\.k8s(\.[-a-z]+\.pkg)?\.apis?(\.core)?\./, ""), {{ver}}, {{kind}} }
+      {% for entry in REGISTRY %}
+      when { {{entry[:group]}}, {{entry[:version]}}, {{entry[:kind]}} }
+        {{entry[:resource]}}.from_json({{json}}).as(::K8S::Kubernetes::Resource)
+      {% end %}
+      else
+        # raise K8S::Error::UnknownResource.new("#{{{group}}}/#{{{ver}}}/#{{{kind}}}")
+        ::K8S::Kubernetes::Resource::Object.new(Hash(String, JSON::Any).from_json({{json}}))
+      end
     end
-  end
 
   def self.new(pull : ::JSON::PullParser)
     location = pull.location

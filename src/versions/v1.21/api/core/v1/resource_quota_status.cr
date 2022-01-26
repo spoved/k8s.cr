@@ -8,9 +8,6 @@ module K8S::Types::Api::Core::V1::ResourceQuotaStatus; end
 module K8S
   # Namespace holding the types for `Api::Core::V1::ResourceQuotaStatus`.
   module Types::Api::Core::V1::ResourceQuotaStatus
-    alias ValueType = ::Hash(String, ::Int32 | ::String) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Hard is the set of enforced hard limits for each named resource. More info: [[https://kubernetes.io/docs/concepts/policy/resource-quotas/](https://kubernetes.io/docs/concepts/policy/resource-quotas/)](https://kubernetes.io/docs/concepts/policy/resource-quotas/](https://kubernetes.io/docs/concepts/policy/resource-quotas/))
     abstract def hard : ::Hash(String, ::Int32 | ::String)?
     # :ditto:
@@ -34,9 +31,8 @@ module K8S
     hard: {key: "hard", accessor: "hard", kind: "::Hash(String, ::Int32 | ::String)", nilable: true, default: nil, read_only: false, description: "Hard is the set of enforced hard limits for each named resource. More info: [https://kubernetes.io/docs/concepts/policy/resource-quotas/](https://kubernetes.io/docs/concepts/policy/resource-quotas/)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     used: {key: "used", accessor: "used", kind: "::Hash(String, ::Int32 | ::String)", nilable: true, default: nil, read_only: false, description: "Used is the current observed total usage of the resource in the namespace.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::ResourceQuotaStatus < ::K8S::Types::Api::Core::V1::ResourceQuotaStatus::Instance
+  class Api::Core::V1::ResourceQuotaStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::ResourceQuotaStatus
-    include ::K8S::Kubernetes::Object
 
     # Hard is the set of enforced hard limits for each named resource. More info: [[https://kubernetes.io/docs/concepts/policy/resource-quotas/](https://kubernetes.io/docs/concepts/policy/resource-quotas/)](https://kubernetes.io/docs/concepts/policy/resource-quotas/](https://kubernetes.io/docs/concepts/policy/resource-quotas/))
     def hard : ::Hash(String, ::Int32 | ::String)?

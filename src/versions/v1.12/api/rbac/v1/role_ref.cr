@@ -8,9 +8,6 @@ module K8S::Types::Api::Rbac::V1::RoleRef; end
 module K8S
   # Namespace holding the types for `Api::Rbac::V1::RoleRef`.
   module Types::Api::Rbac::V1::RoleRef
-    alias ValueType = String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # APIGroup is the group for the resource being referenced
     abstract def api_group : String
     # :ditto:
@@ -43,9 +40,8 @@ module K8S
     kind: {key: "kind", accessor: "kind", kind: "String", nilable: false, default: nil, read_only: false, description: "Kind is the type of resource being referenced", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     name: {key: "name", accessor: "name", kind: "String", nilable: false, default: nil, read_only: false, description: "Name is the name of resource being referenced", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Rbac::V1::RoleRef < ::K8S::Types::Api::Rbac::V1::RoleRef::Instance
+  class Api::Rbac::V1::RoleRef < ::K8S::GenericObject
     include ::K8S::Types::Api::Rbac::V1::RoleRef
-    include ::K8S::Kubernetes::Object
 
     # APIGroup is the group for the resource being referenced
     def api_group : String

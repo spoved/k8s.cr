@@ -12,9 +12,6 @@ require "./cross_version_object_reference"
 module K8S
   # Namespace holding the types for `Api::Autoscaling::V2beta2::HorizontalPodAutoscalerSpec`.
   module Types::Api::Autoscaling::V2beta2::HorizontalPodAutoscalerSpec
-    alias ValueType = ::K8S::Api::Autoscaling::V2beta2::HorizontalPodAutoscalerBehavior | Int32 | ::Array(::K8S::Api::Autoscaling::V2beta2::MetricSpec) | ::K8S::Api::Autoscaling::V2beta2::CrossVersionObjectReference | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # behavior configures the scaling behavior of the target in both Up and Down directions (scaleUp and scaleDown fields respectively). If not set, the default HPAScalingRules for scale up and scale down are used.
     abstract def behavior : ::K8S::Api::Autoscaling::V2beta2::HorizontalPodAutoscalerBehavior?
     # :ditto:
@@ -65,9 +62,8 @@ module K8S
     min_replicas: {key: "minReplicas", accessor: "min_replicas", kind: "Int32", nilable: true, default: nil, read_only: false, description: "minReplicas is the lower limit for the number of replicas to which the autoscaler can scale down.  It defaults to 1 pod.  minReplicas is allowed to be 0 if the alpha feature gate HPAScaleToZero is enabled and at least one Object or External metric is configured.  Scaling is active as long as at least one metric value is available.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     scale_target_ref: {key: "scaleTargetRef", accessor: "scale_target_ref", kind: "::K8S::Api::Autoscaling::V2beta2::CrossVersionObjectReference", nilable: false, default: nil, read_only: false, description: "scaleTargetRef points to the target resource to scale, and is used to the pods for which metrics should be collected, as well as to actually change the replica count.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Autoscaling::V2beta2::HorizontalPodAutoscalerSpec < ::K8S::Types::Api::Autoscaling::V2beta2::HorizontalPodAutoscalerSpec::Instance
+  class Api::Autoscaling::V2beta2::HorizontalPodAutoscalerSpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Autoscaling::V2beta2::HorizontalPodAutoscalerSpec
-    include ::K8S::Kubernetes::Object
 
     # behavior configures the scaling behavior of the target in both Up and Down directions (scaleUp and scaleDown fields respectively). If not set, the default HPAScalingRules for scale up and scale down are used.
     def behavior : ::K8S::Api::Autoscaling::V2beta2::HorizontalPodAutoscalerBehavior?

@@ -8,9 +8,6 @@ module K8S::Types::Api::Node::V1::Overhead; end
 module K8S
   # Namespace holding the types for `Api::Node::V1::Overhead`.
   module Types::Api::Node::V1::Overhead
-    alias ValueType = ::Hash(String, ::Int32 | ::String) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # PodFixed represents the fixed resource overhead associated with running a pod.
     abstract def pod_fixed : ::Hash(String, ::Int32 | ::String)?
     # :ditto:
@@ -25,9 +22,8 @@ module K8S
   @[::K8S::Properties(
     pod_fixed: {key: "podFixed", accessor: "pod_fixed", kind: "::Hash(String, ::Int32 | ::String)", nilable: true, default: nil, read_only: false, description: "PodFixed represents the fixed resource overhead associated with running a pod.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Node::V1::Overhead < ::K8S::Types::Api::Node::V1::Overhead::Instance
+  class Api::Node::V1::Overhead < ::K8S::GenericObject
     include ::K8S::Types::Api::Node::V1::Overhead
-    include ::K8S::Kubernetes::Object
 
     # PodFixed represents the fixed resource overhead associated with running a pod.
     def pod_fixed : ::Hash(String, ::Int32 | ::String)?

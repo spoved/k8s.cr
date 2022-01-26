@@ -18,9 +18,6 @@ require "./volume_mount"
 module K8S
   # Namespace holding the types for `Api::Core::V1::Container`.
   module Types::Api::Core::V1::Container
-    alias ValueType = ::Array(String) | ::Array(::K8S::Api::Core::V1::EnvVar) | ::Array(::K8S::Api::Core::V1::EnvFromSource) | String | ::K8S::Api::Core::V1::Lifecycle | ::K8S::Api::Core::V1::Probe | ::Array(::K8S::Api::Core::V1::ContainerPort) | ::K8S::Api::Core::V1::ResourceRequirements | ::K8S::Api::Core::V1::SecurityContext | ::Bool | ::Array(::K8S::Api::Core::V1::VolumeDevice) | ::Array(::K8S::Api::Core::V1::VolumeMount) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Arguments to the entrypoint. The docker image's CMD is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated. More info: [[https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell](https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell)](https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell](https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell))
     abstract def args : ::Array(String)?
     # :ditto:
@@ -215,9 +212,8 @@ module K8S
     volume_mounts: {key: "volumeMounts", accessor: "volume_mounts", kind: "::Array(::K8S::Api::Core::V1::VolumeMount)", nilable: true, default: nil, read_only: false, description: "Pod volumes to mount into the container's filesystem. Cannot be updated.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     working_dir: {key: "workingDir", accessor: "working_dir", kind: "String", nilable: true, default: nil, read_only: false, description: "Container's working directory. If not specified, the container runtime's default will be used, which might be configured in the container image. Cannot be updated.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::Container < ::K8S::Types::Api::Core::V1::Container::Instance
+  class Api::Core::V1::Container < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::Container
-    include ::K8S::Kubernetes::Object
 
     # Arguments to the entrypoint. The docker image's CMD is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated. More info: [[https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell](https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell)](https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell](https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell))
     def args : ::Array(String)?

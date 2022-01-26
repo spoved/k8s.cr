@@ -10,9 +10,6 @@ require "./csi_node_driver"
 module K8S
   # Namespace holding the types for `Api::Storage::V1::CSINodeSpec`.
   module Types::Api::Storage::V1::CSINodeSpec
-    alias ValueType = ::Array(::K8S::Api::Storage::V1::CSINodeDriver) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # drivers is a list of information of all CSI Drivers existing on a node. If all drivers in the list are uninstalled, this can become empty.
     abstract def drivers : ::Array(::K8S::Api::Storage::V1::CSINodeDriver)?
     # :ditto:
@@ -27,9 +24,8 @@ module K8S
   @[::K8S::Properties(
     drivers: {key: "drivers", accessor: "drivers", kind: "::Array(::K8S::Api::Storage::V1::CSINodeDriver)", nilable: true, default: nil, read_only: false, description: "drivers is a list of information of all CSI Drivers existing on a node. If all drivers in the list are uninstalled, this can become empty.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Storage::V1::CSINodeSpec < ::K8S::Types::Api::Storage::V1::CSINodeSpec::Instance
+  class Api::Storage::V1::CSINodeSpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Storage::V1::CSINodeSpec
-    include ::K8S::Kubernetes::Object
 
     # drivers is a list of information of all CSI Drivers existing on a node. If all drivers in the list are uninstalled, this can become empty.
     def drivers : ::Array(::K8S::Api::Storage::V1::CSINodeDriver)?

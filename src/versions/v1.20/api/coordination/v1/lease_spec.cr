@@ -8,9 +8,6 @@ module K8S::Types::Api::Coordination::V1::LeaseSpec; end
 module K8S
   # Namespace holding the types for `Api::Coordination::V1::LeaseSpec`.
   module Types::Api::Coordination::V1::LeaseSpec
-    alias ValueType = ::Time | String | Int32 | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # acquireTime is a time when the current lease was acquired.
     abstract def acquire_time : ::Time?
     # :ditto:
@@ -61,9 +58,8 @@ module K8S
     lease_transitions: {key: "leaseTransitions", accessor: "lease_transitions", kind: "Int32", nilable: true, default: nil, read_only: false, description: "leaseTransitions is the number of transitions of a lease between holders.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     renew_time: {key: "renewTime", accessor: "renew_time", kind: "::Time", nilable: true, default: nil, read_only: false, description: "renewTime is a time when the current holder of a lease has last updated the lease.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Coordination::V1::LeaseSpec < ::K8S::Types::Api::Coordination::V1::LeaseSpec::Instance
+  class Api::Coordination::V1::LeaseSpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Coordination::V1::LeaseSpec
-    include ::K8S::Kubernetes::Object
 
     # acquireTime is a time when the current lease was acquired.
     def acquire_time : ::Time?

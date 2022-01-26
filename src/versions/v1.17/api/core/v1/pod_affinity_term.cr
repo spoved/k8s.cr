@@ -10,9 +10,6 @@ require "../../../apimachinery/apis/meta/v1/label_selector"
 module K8S
   # Namespace holding the types for `Api::Core::V1::PodAffinityTerm`.
   module Types::Api::Core::V1::PodAffinityTerm
-    alias ValueType = ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector | ::Array(String) | String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # A label query over a set of resources, in this case pods.
     abstract def label_selector : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?
     # :ditto:
@@ -45,9 +42,8 @@ module K8S
     namespaces: {key: "namespaces", accessor: "namespaces", kind: "::Array(String)", nilable: true, default: nil, read_only: false, description: "namespaces specifies which namespaces the labelSelector applies to (matches against); null or empty list means \"this pod's namespace\"", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     topology_key: {key: "topologyKey", accessor: "topology_key", kind: "String", nilable: false, default: nil, read_only: false, description: "This pod should be co-located (affinity) or not co-located (anti-affinity) with the pods matching the labelSelector in the specified namespaces, where co-located is defined as running on a node whose value of the label with key topologyKey matches that of any node on which any of the selected pods is running. Empty topologyKey is not allowed.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::PodAffinityTerm < ::K8S::Types::Api::Core::V1::PodAffinityTerm::Instance
+  class Api::Core::V1::PodAffinityTerm < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::PodAffinityTerm
-    include ::K8S::Kubernetes::Object
 
     # A label query over a set of resources, in this case pods.
     def label_selector : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?

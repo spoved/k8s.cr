@@ -10,9 +10,6 @@ require "./limited_priority_level_configuration"
 module K8S
   # Namespace holding the types for `Api::Flowcontrol::V1alpha1::PriorityLevelConfigurationSpec`.
   module Types::Api::Flowcontrol::V1alpha1::PriorityLevelConfigurationSpec
-    alias ValueType = ::K8S::Api::Flowcontrol::V1alpha1::LimitedPriorityLevelConfiguration | String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # `limited` specifies how requests are handled for a Limited priority level. This field must be non-empty if and only if `type` is `"Limited"`.
     abstract def limited : ::K8S::Api::Flowcontrol::V1alpha1::LimitedPriorityLevelConfiguration?
     # :ditto:
@@ -36,9 +33,8 @@ module K8S
     limited: {key: "limited", accessor: "limited", kind: "::K8S::Api::Flowcontrol::V1alpha1::LimitedPriorityLevelConfiguration", nilable: true, default: nil, read_only: false, description: "`limited` specifies how requests are handled for a Limited priority level. This field must be non-empty if and only if `type` is `\"Limited\"`.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     type: {key: "type", accessor: "type", kind: "String", nilable: false, default: nil, read_only: false, description: "`type` indicates whether this priority level is subject to limitation on request execution.  A value of `\"Exempt\"` means that requests of this priority level are not subject to a limit (and thus are never queued) and do not detract from the capacity made available to other priority levels.  A value of `\"Limited\"` means that (a) requests of this priority level _are_ subject to limits and (b) some of the server's limited capacity is made available exclusively to this priority level. Required.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Flowcontrol::V1alpha1::PriorityLevelConfigurationSpec < ::K8S::Types::Api::Flowcontrol::V1alpha1::PriorityLevelConfigurationSpec::Instance
+  class Api::Flowcontrol::V1alpha1::PriorityLevelConfigurationSpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Flowcontrol::V1alpha1::PriorityLevelConfigurationSpec
-    include ::K8S::Kubernetes::Object
 
     # `limited` specifies how requests are handled for a Limited priority level. This field must be non-empty if and only if `type` is `"Limited"`.
     def limited : ::K8S::Api::Flowcontrol::V1alpha1::LimitedPriorityLevelConfiguration?

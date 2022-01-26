@@ -10,9 +10,6 @@ require "./api_group"
 module K8S
   # Namespace holding the types for `Apimachinery::Apis::Meta::V1::APIGroupList`.
   module Types::Apimachinery::Apis::Meta::V1::APIGroupList
-    alias ValueType = String | ::Array(::K8S::Apimachinery::Apis::Meta::V1::APIGroup) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[https://git.k8s.io/community/contributors/devel/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/api-conventions.md#resources))
     abstract def api_version : String?
     # :ditto:
@@ -46,9 +43,8 @@ module K8S
     groups: {key: "groups", accessor: "groups", kind: "::Array(::K8S::Apimachinery::Apis::Meta::V1::APIGroup)", nilable: false, default: nil, read_only: false, description: "groups is a list of APIGroup.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     kind: {key: "kind", accessor: "kind", kind: "String", nilable: true, default: nil, read_only: false, description: "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Apimachinery::Apis::Meta::V1::APIGroupList < ::K8S::Types::Apimachinery::Apis::Meta::V1::APIGroupList::Instance
+  class Apimachinery::Apis::Meta::V1::APIGroupList < ::K8S::GenericObject
     include ::K8S::Types::Apimachinery::Apis::Meta::V1::APIGroupList
-    include ::K8S::Kubernetes::Object
 
     # APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[https://git.k8s.io/community/contributors/devel/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/api-conventions.md#resources))
     def api_version : String?

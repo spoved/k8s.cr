@@ -8,9 +8,6 @@ module K8S::Types::Api::Certificates::V1beta1::CertificateSigningRequestSpec; en
 module K8S
   # Namespace holding the types for `Api::Certificates::V1beta1::CertificateSigningRequestSpec`.
   module Types::Api::Certificates::V1beta1::CertificateSigningRequestSpec
-    alias ValueType = ::Hash(String, ::Array(String)) | ::Array(String) | String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Extra information about the requesting user. See user.Info interface for details.
     abstract def extra : ::Hash(String, ::Array(String))?
     # :ditto:
@@ -71,9 +68,8 @@ module K8S
     usages: {key: "usages", accessor: "usages", kind: "::Array(String)", nilable: true, default: nil, read_only: false, description: "allowedUsages specifies a set of usage contexts the key will be valid for. See: [https://tools.ietf.org/html/rfc5280#section-4.2.1.3](https://tools.ietf.org/html/rfc5280#section-4.2.1.3)\n     [https://tools.ietf.org/html/rfc5280#section-4.2.1.12](https://tools.ietf.org/html/rfc5280#section-4.2.1.12)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     username: {key: "username", accessor: "username", kind: "String", nilable: true, default: nil, read_only: false, description: "Information about the requesting user. See user.Info interface for details.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Certificates::V1beta1::CertificateSigningRequestSpec < ::K8S::Types::Api::Certificates::V1beta1::CertificateSigningRequestSpec::Instance
+  class Api::Certificates::V1beta1::CertificateSigningRequestSpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Certificates::V1beta1::CertificateSigningRequestSpec
-    include ::K8S::Kubernetes::Object
 
     # Extra information about the requesting user. See user.Info interface for details.
     def extra : ::Hash(String, ::Array(String))?

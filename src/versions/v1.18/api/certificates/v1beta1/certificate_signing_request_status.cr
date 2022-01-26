@@ -10,9 +10,6 @@ require "./certificate_signing_request_condition"
 module K8S
   # Namespace holding the types for `Api::Certificates::V1beta1::CertificateSigningRequestStatus`.
   module Types::Api::Certificates::V1beta1::CertificateSigningRequestStatus
-    alias ValueType = String | ::Array(::K8S::Api::Certificates::V1beta1::CertificateSigningRequestCondition) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # If request was approved, the controller will place the issued certificate here.
     abstract def certificate : String?
     # :ditto:
@@ -36,9 +33,8 @@ module K8S
     certificate: {key: "certificate", accessor: "certificate", kind: "String", nilable: true, default: nil, read_only: false, description: "If request was approved, the controller will place the issued certificate here.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     conditions: {key: "conditions", accessor: "conditions", kind: "::Array(::K8S::Api::Certificates::V1beta1::CertificateSigningRequestCondition)", nilable: true, default: nil, read_only: false, description: "Conditions applied to the request, such as approval or denial.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Certificates::V1beta1::CertificateSigningRequestStatus < ::K8S::Types::Api::Certificates::V1beta1::CertificateSigningRequestStatus::Instance
+  class Api::Certificates::V1beta1::CertificateSigningRequestStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Certificates::V1beta1::CertificateSigningRequestStatus
-    include ::K8S::Kubernetes::Object
 
     # If request was approved, the controller will place the issued certificate here.
     def certificate : String?

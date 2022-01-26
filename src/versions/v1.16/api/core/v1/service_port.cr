@@ -8,9 +8,6 @@ module K8S::Types::Api::Core::V1::ServicePort; end
 module K8S
   # Namespace holding the types for `Api::Core::V1::ServicePort`.
   module Types::Api::Core::V1::ServicePort
-    alias ValueType = String | Int32 | ::Int32 | ::String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # The name of this port within the service. This must be a DNS_LABEL. All ports within a ServiceSpec must have unique names. When considering the endpoints for a Service, this must match the 'name' field in the EndpointPort. Optional if only one ServicePort is defined on this service.
     abstract def name : String?
     # :ditto:
@@ -61,9 +58,8 @@ module K8S
     protocol: {key: "protocol", accessor: "protocol", kind: "String", nilable: true, default: nil, read_only: false, description: "The IP protocol for this port. Supports \"TCP\", \"UDP\", and \"SCTP\". Default is TCP.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     target_port: {key: "targetPort", accessor: "target_port", kind: "::Int32 | ::String", nilable: true, default: nil, read_only: false, description: "Number or name of the port to access on the pods targeted by the service. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME. If this is a string, it will be looked up as a named port in the target Pod's container ports. If this is not specified, the value of the 'port' field is used (an identity map). This field is ignored for services with clusterIP=None, and should be omitted or set equal to the 'port' field. More info: [https://kubernetes.io/docs/concepts/services-networking/service/#defining-a-service](https://kubernetes.io/docs/concepts/services-networking/service/#defining-a-service)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::ServicePort < ::K8S::Types::Api::Core::V1::ServicePort::Instance
+  class Api::Core::V1::ServicePort < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::ServicePort
-    include ::K8S::Kubernetes::Object
 
     # The name of this port within the service. This must be a DNS_LABEL. All ports within a ServiceSpec must have unique names. When considering the endpoints for a Service, this must match the 'name' field in the EndpointPort. Optional if only one ServicePort is defined on this service.
     def name : String?

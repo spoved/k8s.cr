@@ -10,9 +10,6 @@ require "./user_info"
 module K8S
   # Namespace holding the types for `Api::Authentication::V1::TokenReviewStatus`.
   module Types::Api::Authentication::V1::TokenReviewStatus
-    alias ValueType = ::Array(String) | ::Bool | String | ::K8S::Api::Authentication::V1::UserInfo | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Audiences are audience identifiers chosen by the authenticator that are compatible with both the TokenReview and token. An identifier is any identifier in the intersection of the TokenReviewSpec audiences and the token's audiences. A client of the TokenReview API that sets the spec.audiences field should validate that a compatible audience identifier is returned in the status.audiences field to ensure that the TokenReview server is audience aware. If a TokenReview returns an empty status.audience field where status.authenticated is "true", the token is valid against the audience of the Kubernetes API server.
     abstract def audiences : ::Array(String)?
     # :ditto:
@@ -54,9 +51,8 @@ module K8S
     error: {key: "error", accessor: "error", kind: "String", nilable: true, default: nil, read_only: false, description: "Error indicates that the token couldn't be checked", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     user: {key: "user", accessor: "user", kind: "::K8S::Api::Authentication::V1::UserInfo", nilable: true, default: nil, read_only: false, description: "User is the UserInfo associated with the provided token.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Authentication::V1::TokenReviewStatus < ::K8S::Types::Api::Authentication::V1::TokenReviewStatus::Instance
+  class Api::Authentication::V1::TokenReviewStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Authentication::V1::TokenReviewStatus
-    include ::K8S::Kubernetes::Object
 
     # Audiences are audience identifiers chosen by the authenticator that are compatible with both the TokenReview and token. An identifier is any identifier in the intersection of the TokenReviewSpec audiences and the token's audiences. A client of the TokenReview API that sets the spec.audiences field should validate that a compatible audience identifier is returned in the status.audiences field to ensure that the TokenReview server is audience aware. If a TokenReview returns an empty status.audience field where status.authenticated is "true", the token is valid against the audience of the Kubernetes API server.
     def audiences : ::Array(String)?

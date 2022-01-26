@@ -10,9 +10,6 @@ require "./replica_set_condition"
 module K8S
   # Namespace holding the types for `Api::Apps::V1::ReplicaSetStatus`.
   module Types::Api::Apps::V1::ReplicaSetStatus
-    alias ValueType = Int32 | ::Array(::K8S::Api::Apps::V1::ReplicaSetCondition) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # The number of available replicas (ready for at least minReadySeconds) for this replica set.
     abstract def available_replicas : Int32?
     # :ditto:
@@ -72,9 +69,8 @@ module K8S
     ready_replicas: {key: "readyReplicas", accessor: "ready_replicas", kind: "Int32", nilable: true, default: nil, read_only: false, description: "readyReplicas is the number of pods targeted by this ReplicaSet with a Ready Condition.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     replicas: {key: "replicas", accessor: "replicas", kind: "Int32", nilable: false, default: nil, read_only: false, description: "Replicas is the most recently oberved number of replicas. More info: [https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller/#what-is-a-replicationcontroller](https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller/#what-is-a-replicationcontroller)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Apps::V1::ReplicaSetStatus < ::K8S::Types::Api::Apps::V1::ReplicaSetStatus::Instance
+  class Api::Apps::V1::ReplicaSetStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Apps::V1::ReplicaSetStatus
-    include ::K8S::Kubernetes::Object
 
     # The number of available replicas (ready for at least minReadySeconds) for this replica set.
     def available_replicas : Int32?

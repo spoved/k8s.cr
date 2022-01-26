@@ -12,9 +12,6 @@ require "./rule_with_operations"
 module K8S
   # Namespace holding the types for `Api::Admissionregistration::V1beta1::Webhook`.
   module Types::Api::Admissionregistration::V1beta1::Webhook
-    alias ValueType = ::K8S::Api::Admissionregistration::V1beta1::WebhookClientConfig | String | ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector | ::Array(::K8S::Api::Admissionregistration::V1beta1::RuleWithOperations) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # ClientConfig defines how to communicate with the hook. Required
     abstract def client_config : ::K8S::Api::Admissionregistration::V1beta1::WebhookClientConfig
     # :ditto:
@@ -104,9 +101,8 @@ module K8S
     rules: {key: "rules", accessor: "rules", kind: "::Array(::K8S::Api::Admissionregistration::V1beta1::RuleWithOperations)", nilable: true, default: nil, read_only: false, description: "Rules describes what operations on what [resources/subresources the webhook cares about. The webhook cares about an operation if it matches _any_ Rule. However, in order to prevent ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks from putting the cluster in a state which cannot be recovered from without completely disabling the plugin, ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks are never called on admission requests for ValidatingWebhookConfiguration and MutatingWebhookConfiguration objects.](resources/subresources the webhook cares about. The webhook cares about an operation if it matches _any_ Rule. However, in order to prevent ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks from putting the cluster in a state which cannot be recovered from without completely disabling the plugin, ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks are never called on admission requests for ValidatingWebhookConfiguration and MutatingWebhookConfiguration objects.)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     side_effects: {key: "sideEffects", accessor: "side_effects", kind: "String", nilable: true, default: nil, read_only: false, description: "SideEffects states whether this webhookk has side effects. Acceptable values are: Unknown, None, Some, NoneOnDryRun Webhooks with side effects MUST implement a reconciliation system, since a request may be rejected by a future step in the admission change and the side effects therefore need to be undone. Requests with the dryRun attribute will be auto-rejected if they match a webhook with sideEffects == Unknown or Some. Defaults to Unknown.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Admissionregistration::V1beta1::Webhook < ::K8S::Types::Api::Admissionregistration::V1beta1::Webhook::Instance
+  class Api::Admissionregistration::V1beta1::Webhook < ::K8S::GenericObject
     include ::K8S::Types::Api::Admissionregistration::V1beta1::Webhook
-    include ::K8S::Kubernetes::Object
 
     # ClientConfig defines how to communicate with the hook. Required
     def client_config : ::K8S::Api::Admissionregistration::V1beta1::WebhookClientConfig

@@ -11,9 +11,6 @@ require "../v1/job_spec"
 module K8S
   # Namespace holding the types for `Api::Batch::V1beta1::JobTemplateSpec`.
   module Types::Api::Batch::V1beta1::JobTemplateSpec
-    alias ValueType = ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta | ::K8S::Api::Batch::V1::JobSpec | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Standard object's metadata of the jobs created from this template. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata))
     abstract def metadata : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?
     # :ditto:
@@ -37,9 +34,8 @@ module K8S
     metadata: {key: "metadata", accessor: "metadata", kind: "::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta", nilable: true, default: nil, read_only: false, description: "Standard object's metadata of the jobs created from this template. More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     spec: {key: "spec", accessor: "spec", kind: "::K8S::Api::Batch::V1::JobSpec", nilable: true, default: nil, read_only: false, description: "Specification of the desired behavior of the job. More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Batch::V1beta1::JobTemplateSpec < ::K8S::Types::Api::Batch::V1beta1::JobTemplateSpec::Instance
+  class Api::Batch::V1beta1::JobTemplateSpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Batch::V1beta1::JobTemplateSpec
-    include ::K8S::Kubernetes::Object
 
     # Standard object's metadata of the jobs created from this template. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata))
     def metadata : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?

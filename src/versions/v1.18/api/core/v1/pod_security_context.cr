@@ -12,9 +12,6 @@ require "./windows_security_context_options"
 module K8S
   # Namespace holding the types for `Api::Core::V1::PodSecurityContext`.
   module Types::Api::Core::V1::PodSecurityContext
-    alias ValueType = Int32 | String | ::Bool | ::K8S::Api::Core::V1::SELinuxOptions | ::Array(Int32) | ::Array(::K8S::Api::Core::V1::Sysctl) | ::K8S::Api::Core::V1::WindowsSecurityContextOptions | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # A special supplemental group that applies to all containers in a pod. Some volume types allow the Kubelet to change the ownership of that volume to be owned by the pod:
     #
     # 1. The owning GID will be the FSGroup 2. The setgid bit is set (new files created in the volume will be owned by FSGroup) 3. The permission bits are OR'd with rw-rw----
@@ -105,9 +102,8 @@ module K8S
     sysctls: {key: "sysctls", accessor: "sysctls", kind: "::Array(::K8S::Api::Core::V1::Sysctl)", nilable: true, default: nil, read_only: false, description: "Sysctls hold a list of namespaced sysctls used for the pod. Pods with unsupported sysctls (by the container runtime) might fail to launch.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     windows_options: {key: "windowsOptions", accessor: "windows_options", kind: "::K8S::Api::Core::V1::WindowsSecurityContextOptions", nilable: true, default: nil, read_only: false, description: "The Windows specific settings applied to all containers. If unspecified, the options within a container's SecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::PodSecurityContext < ::K8S::Types::Api::Core::V1::PodSecurityContext::Instance
+  class Api::Core::V1::PodSecurityContext < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::PodSecurityContext
-    include ::K8S::Kubernetes::Object
 
     # A special supplemental group that applies to all containers in a pod. Some volume types allow the Kubelet to change the ownership of that volume to be owned by the pod:
     #

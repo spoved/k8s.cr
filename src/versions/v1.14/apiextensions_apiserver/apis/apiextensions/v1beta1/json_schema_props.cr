@@ -15,9 +15,6 @@ require "./json_schema_props_or_array"
 module K8S
   # Namespace holding the types for `ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSONSchemaProps`.
   module Types::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSONSchemaProps
-    alias ValueType = String | ::K8S::Object(ValueType) | Bool | ::Array(::K8S::Object(ValueType)) | ::JSON::Any::Type | ::Hash(String, ::K8S::Object(ValueType)) | ::Hash(String, ::K8S::Object(ValueType) | Array(String)) | ::Array(::JSON::Any::Type) | ::Bool | ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::ExternalDocumentation | ::K8S::Object(ValueType) | Array(::K8S::Object(ValueType)) | Int32 | ::K8S::Object(ValueType) | ::Array(String) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     #
     abstract def ref : String?
     # :ditto:
@@ -356,9 +353,8 @@ module K8S
     type: {key: "type", accessor: "type", kind: "String", nilable: true, default: nil, read_only: false, description: nil, x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     unique_items: {key: "uniqueItems", accessor: "unique_items", kind: "::Bool", nilable: true, default: nil, read_only: false, description: nil, x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSONSchemaProps < ::K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSONSchemaProps::Instance
+  class ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSONSchemaProps < ::K8S::GenericObject
     include ::K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSONSchemaProps
-    include ::K8S::Kubernetes::Object
 
     #
     def ref : String?

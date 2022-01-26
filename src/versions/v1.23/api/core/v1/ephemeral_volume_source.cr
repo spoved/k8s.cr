@@ -10,9 +10,6 @@ require "./persistent_volume_claim_template"
 module K8S
   # Namespace holding the types for `Api::Core::V1::EphemeralVolumeSource`.
   module Types::Api::Core::V1::EphemeralVolumeSource
-    alias ValueType = ::K8S::Api::Core::V1::PersistentVolumeClaimTemplate | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Will be used to create a stand-alone PVC to provision the volume. The pod in which this EphemeralVolumeSource is embedded will be the owner of the PVC, i.e. the PVC will be deleted together with the pod.  The name of the PVC will be `<pod name>-<volume name>` where `<volume name>` is the name from the `PodSpec.Volumes` array entry. Pod validation will reject the pod if the concatenated name is not valid for a PVC (for example, too long).
     #
     # An existing PVC with that name that is not owned by the pod will *not* be used for the pod to avoid using an unrelated volume by mistake. Starting the pod is then blocked until the unrelated PVC is removed. If such a pre-created PVC is meant to be used by the pod, the PVC has to updated with an owner reference to the pod once the pod exists. Normally this should not be necessary, but it may be useful when manually reconstructing a broken cluster.
@@ -33,9 +30,8 @@ module K8S
   @[::K8S::Properties(
     volume_claim_template: {key: "volumeClaimTemplate", accessor: "volume_claim_template", kind: "::K8S::Api::Core::V1::PersistentVolumeClaimTemplate", nilable: true, default: nil, read_only: false, description: "Will be used to create a stand-alone PVC to provision the volume. The pod in which this EphemeralVolumeSource is embedded will be the owner of the PVC, i.e. the PVC will be deleted together with the pod.  The name of the PVC will be `<pod name>-<volume name>` where `<volume name>` is the name from the `PodSpec.Volumes` array entry. Pod validation will reject the pod if the concatenated name is not valid for a PVC (for example, too long).\n\nAn existing PVC with that name that is not owned by the pod will *not* be used for the pod to avoid using an unrelated volume by mistake. Starting the pod is then blocked until the unrelated PVC is removed. If such a pre-created PVC is meant to be used by the pod, the PVC has to updated with an owner reference to the pod once the pod exists. Normally this should not be necessary, but it may be useful when manually reconstructing a broken cluster.\n\nThis field is read-only and no changes will be made by Kubernetes to the PVC after it has been created.\n\nRequired, must not be nil.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::EphemeralVolumeSource < ::K8S::Types::Api::Core::V1::EphemeralVolumeSource::Instance
+  class Api::Core::V1::EphemeralVolumeSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::EphemeralVolumeSource
-    include ::K8S::Kubernetes::Object
 
     # Will be used to create a stand-alone PVC to provision the volume. The pod in which this EphemeralVolumeSource is embedded will be the owner of the PVC, i.e. the PVC will be deleted together with the pod.  The name of the PVC will be `<pod name>-<volume name>` where `<volume name>` is the name from the `PodSpec.Volumes` array entry. Pod validation will reject the pod if the concatenated name is not valid for a PVC (for example, too long).
     #

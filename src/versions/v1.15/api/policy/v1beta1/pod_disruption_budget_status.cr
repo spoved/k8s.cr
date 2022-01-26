@@ -8,9 +8,6 @@ module K8S::Types::Api::Policy::V1beta1::PodDisruptionBudgetStatus; end
 module K8S
   # Namespace holding the types for `Api::Policy::V1beta1::PodDisruptionBudgetStatus`.
   module Types::Api::Policy::V1beta1::PodDisruptionBudgetStatus
-    alias ValueType = Int32 | ::Hash(String, ::Time) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # current number of healthy pods
     abstract def current_healthy : Int32
     # :ditto:
@@ -70,9 +67,8 @@ module K8S
     expected_pods: {key: "expectedPods", accessor: "expected_pods", kind: "Int32", nilable: false, default: nil, read_only: false, description: "total number of pods counted by this disruption budget", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     observed_generation: {key: "observedGeneration", accessor: "observed_generation", kind: "Int32", nilable: true, default: nil, read_only: false, description: "Most recent generation observed when updating this PDB status. PodDisruptionsAllowed and other status informatio is valid only if observedGeneration equals to PDB's object generation.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Policy::V1beta1::PodDisruptionBudgetStatus < ::K8S::Types::Api::Policy::V1beta1::PodDisruptionBudgetStatus::Instance
+  class Api::Policy::V1beta1::PodDisruptionBudgetStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Policy::V1beta1::PodDisruptionBudgetStatus
-    include ::K8S::Kubernetes::Object
 
     # current number of healthy pods
     def current_healthy : Int32

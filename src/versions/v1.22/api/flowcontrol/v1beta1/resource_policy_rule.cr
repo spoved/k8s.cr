@@ -8,9 +8,6 @@ module K8S::Types::Api::Flowcontrol::V1beta1::ResourcePolicyRule; end
 module K8S
   # Namespace holding the types for `Api::Flowcontrol::V1beta1::ResourcePolicyRule`.
   module Types::Api::Flowcontrol::V1beta1::ResourcePolicyRule
-    alias ValueType = ::Set(String) | ::Bool | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # `apiGroups` is a list of matching API groups and may not be empty. "*" matches all API groups and, if present, must be the only entry. Required.
     abstract def api_groups : ::Set(String)
     # :ditto:
@@ -61,9 +58,8 @@ module K8S
     resources: {key: "resources", accessor: "resources", kind: "::Set(String)", nilable: false, default: nil, read_only: false, description: "`resources` is a list of matching resources (i.e., lowercase and plural) with, if desired, subresource.  For example, [ \"services\", [\"nodes/status\" ].  This list may not be empty. \"*\" matches all resources and, if present, must be the only entry. Required.](\"nodes/status\" ].  This list may not be empty. \"*\" matches all resources and, if present, must be the only entry. Required.)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: "set", x_kubernetes_map_type: nil},
     verbs: {key: "verbs", accessor: "verbs", kind: "::Set(String)", nilable: false, default: nil, read_only: false, description: "`verbs` is a list of matching verbs and may not be empty. \"*\" matches all verbs and, if present, must be the only entry. Required.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: "set", x_kubernetes_map_type: nil},
   )]
-  class Api::Flowcontrol::V1beta1::ResourcePolicyRule < ::K8S::Types::Api::Flowcontrol::V1beta1::ResourcePolicyRule::Instance
+  class Api::Flowcontrol::V1beta1::ResourcePolicyRule < ::K8S::GenericObject
     include ::K8S::Types::Api::Flowcontrol::V1beta1::ResourcePolicyRule
-    include ::K8S::Kubernetes::Object
 
     # `apiGroups` is a list of matching API groups and may not be empty. "*" matches all API groups and, if present, must be the only entry. Required.
     def api_groups : ::Set(String)

@@ -10,9 +10,6 @@ require "./secret_reference"
 module K8S
   # Namespace holding the types for `Api::Core::V1::RBDPersistentVolumeSource`.
   module Types::Api::Core::V1::RBDPersistentVolumeSource
-    alias ValueType = String | ::Array(String) | ::Bool | ::K8S::Api::Core::V1::SecretReference | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Filesystem type of the volume that you want to mount. Tip: Ensure that the filesystem type is supported by the host operating system. Examples: "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified. More info: [[https://kubernetes.io/docs/concepts/storage/volumes#rbd](https://kubernetes.io/docs/concepts/storage/volumes#rbd)](https://kubernetes.io/docs/concepts/storage/volumes#rbd](https://kubernetes.io/docs/concepts/storage/volumes#rbd))
     abstract def fs_type : String?
     # :ditto:
@@ -90,9 +87,8 @@ module K8S
     secret_ref: {key: "secretRef", accessor: "secret_ref", kind: "::K8S::Api::Core::V1::SecretReference", nilable: true, default: nil, read_only: false, description: "SecretRef is name of the authentication secret for RBDUser. If provided overrides keyring. Default is nil. More info: [https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it](https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     user: {key: "user", accessor: "user", kind: "String", nilable: true, default: nil, read_only: false, description: "The rados user name. Default is admin. More info: [https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it](https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::RBDPersistentVolumeSource < ::K8S::Types::Api::Core::V1::RBDPersistentVolumeSource::Instance
+  class Api::Core::V1::RBDPersistentVolumeSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::RBDPersistentVolumeSource
-    include ::K8S::Kubernetes::Object
 
     # Filesystem type of the volume that you want to mount. Tip: Ensure that the filesystem type is supported by the host operating system. Examples: "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified. More info: [[https://kubernetes.io/docs/concepts/storage/volumes#rbd](https://kubernetes.io/docs/concepts/storage/volumes#rbd)](https://kubernetes.io/docs/concepts/storage/volumes#rbd](https://kubernetes.io/docs/concepts/storage/volumes#rbd))
     def fs_type : String?

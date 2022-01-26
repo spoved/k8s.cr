@@ -10,9 +10,6 @@ require "./key_to_path"
 module K8S
   # Namespace holding the types for `Api::Core::V1::ConfigMapVolumeSource`.
   module Types::Api::Core::V1::ConfigMapVolumeSource
-    alias ValueType = Int32 | ::Array(::K8S::Api::Core::V1::KeyToPath) | String | ::Bool | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Optional: mode bits to use on created files by default. Must be a value between 0 and 0777. Defaults to 0644. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
     abstract def default_mode : Int32?
     # :ditto:
@@ -56,9 +53,8 @@ module K8S
     name: {key: "name", accessor: "name", kind: "String", nilable: true, default: nil, read_only: false, description: "Name of the referent. More info: [https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     optional: {key: "optional", accessor: "optional", kind: "::Bool", nilable: true, default: nil, read_only: false, description: "Specify whether the ConfigMap or its keys must be defined", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::ConfigMapVolumeSource < ::K8S::Types::Api::Core::V1::ConfigMapVolumeSource::Instance
+  class Api::Core::V1::ConfigMapVolumeSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::ConfigMapVolumeSource
-    include ::K8S::Kubernetes::Object
 
     # Optional: mode bits to use on created files by default. Must be a value between 0 and 0777. Defaults to 0644. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
     def default_mode : Int32?

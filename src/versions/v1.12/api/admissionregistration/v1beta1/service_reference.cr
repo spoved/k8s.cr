@@ -8,9 +8,6 @@ module K8S::Types::Api::Admissionregistration::V1beta1::ServiceReference; end
 module K8S
   # Namespace holding the types for `Api::Admissionregistration::V1beta1::ServiceReference`.
   module Types::Api::Admissionregistration::V1beta1::ServiceReference
-    alias ValueType = String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # `name` is the name of the service. Required
     abstract def name : String
     # :ditto:
@@ -43,9 +40,8 @@ module K8S
     namespace: {key: "namespace", accessor: "namespace", kind: "String", nilable: false, default: nil, read_only: false, description: "`namespace` is the namespace of the service. Required", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     path: {key: "path", accessor: "path", kind: "String", nilable: true, default: nil, read_only: false, description: "`path` is an optional URL path which will be sent in any request to this service.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Admissionregistration::V1beta1::ServiceReference < ::K8S::Types::Api::Admissionregistration::V1beta1::ServiceReference::Instance
+  class Api::Admissionregistration::V1beta1::ServiceReference < ::K8S::GenericObject
     include ::K8S::Types::Api::Admissionregistration::V1beta1::ServiceReference
-    include ::K8S::Kubernetes::Object
 
     # `name` is the name of the service. Required
     def name : String

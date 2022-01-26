@@ -8,9 +8,6 @@ module K8S::Types::Api::Core::V1::NodeSystemInfo; end
 module K8S
   # Namespace holding the types for `Api::Core::V1::NodeSystemInfo`.
   module Types::Api::Core::V1::NodeSystemInfo
-    alias ValueType = String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # The Architecture reported by the node
     abstract def architecture : String
     # :ditto:
@@ -106,9 +103,8 @@ module K8S
     os_image: {key: "osImage", accessor: "os_image", kind: "String", nilable: false, default: nil, read_only: false, description: "OS Image reported by the node from [/etc/os-release (e.g. Debian GNU/Linux 7 (wheezy)).](/etc/os-release (e.g. Debian GNU/Linux 7 (wheezy)).)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     system_uuid: {key: "systemUUID", accessor: "system_uuid", kind: "String", nilable: false, default: nil, read_only: false, description: "SystemUUID reported by the node. For unique machine identification MachineID is preferred. This field is specific to Red Hat hosts [https://access.redhat.com/documentation/en-US/Red_Hat_Subscription_Management/1/html/RHSM/getting-system-uuid.html](https://access.redhat.com/documentation/en-US/Red_Hat_Subscription_Management/1/html/RHSM/getting-system-uuid.html)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::NodeSystemInfo < ::K8S::Types::Api::Core::V1::NodeSystemInfo::Instance
+  class Api::Core::V1::NodeSystemInfo < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::NodeSystemInfo
-    include ::K8S::Kubernetes::Object
 
     # The Architecture reported by the node
     def architecture : String

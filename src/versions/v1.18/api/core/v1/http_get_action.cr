@@ -10,9 +10,6 @@ require "./http_header"
 module K8S
   # Namespace holding the types for `Api::Core::V1::HTTPGetAction`.
   module Types::Api::Core::V1::HTTPGetAction
-    alias ValueType = String | ::Array(::K8S::Api::Core::V1::HTTPHeader) | ::Int32 | ::String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Host name to connect to, defaults to the pod IP. You probably want to set "Host" in httpHeaders instead.
     abstract def host : String?
     # :ditto:
@@ -63,9 +60,8 @@ module K8S
     port: {key: "port", accessor: "port", kind: "::Int32 | ::String", nilable: false, default: nil, read_only: false, description: "Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     scheme: {key: "scheme", accessor: "scheme", kind: "String", nilable: true, default: nil, read_only: false, description: "Scheme to use for connecting to the host. Defaults to HTTP.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::HTTPGetAction < ::K8S::Types::Api::Core::V1::HTTPGetAction::Instance
+  class Api::Core::V1::HTTPGetAction < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::HTTPGetAction
-    include ::K8S::Kubernetes::Object
 
     # Host name to connect to, defaults to the pod IP. You probably want to set "Host" in httpHeaders instead.
     def host : String?

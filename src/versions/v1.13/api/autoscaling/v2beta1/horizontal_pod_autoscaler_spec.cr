@@ -11,9 +11,6 @@ require "./cross_version_object_reference"
 module K8S
   # Namespace holding the types for `Api::Autoscaling::V2beta1::HorizontalPodAutoscalerSpec`.
   module Types::Api::Autoscaling::V2beta1::HorizontalPodAutoscalerSpec
-    alias ValueType = Int32 | ::Array(::K8S::Api::Autoscaling::V2beta1::MetricSpec) | ::K8S::Api::Autoscaling::V2beta1::CrossVersionObjectReference | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # maxReplicas is the upper limit for the number of replicas to which the autoscaler can scale up. It cannot be less that minReplicas.
     abstract def max_replicas : Int32
     # :ditto:
@@ -55,9 +52,8 @@ module K8S
     min_replicas: {key: "minReplicas", accessor: "min_replicas", kind: "Int32", nilable: true, default: nil, read_only: false, description: "minReplicas is the lower limit for the number of replicas to which the autoscaler can scale down. It defaults to 1 pod.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     scale_target_ref: {key: "scaleTargetRef", accessor: "scale_target_ref", kind: "::K8S::Api::Autoscaling::V2beta1::CrossVersionObjectReference", nilable: false, default: nil, read_only: false, description: "scaleTargetRef points to the target resource to scale, and is used to the pods for which metrics should be collected, as well as to actually change the replica count.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Autoscaling::V2beta1::HorizontalPodAutoscalerSpec < ::K8S::Types::Api::Autoscaling::V2beta1::HorizontalPodAutoscalerSpec::Instance
+  class Api::Autoscaling::V2beta1::HorizontalPodAutoscalerSpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Autoscaling::V2beta1::HorizontalPodAutoscalerSpec
-    include ::K8S::Kubernetes::Object
 
     # maxReplicas is the upper limit for the number of replicas to which the autoscaler can scale up. It cannot be less that minReplicas.
     def max_replicas : Int32

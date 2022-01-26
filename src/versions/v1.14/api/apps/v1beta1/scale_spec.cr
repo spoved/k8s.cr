@@ -8,9 +8,6 @@ module K8S::Types::Api::Apps::V1beta1::ScaleSpec; end
 module K8S
   # Namespace holding the types for `Api::Apps::V1beta1::ScaleSpec`.
   module Types::Api::Apps::V1beta1::ScaleSpec
-    alias ValueType = Int32 | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # desired number of instances for the scaled object.
     abstract def replicas : Int32?
     # :ditto:
@@ -25,9 +22,8 @@ module K8S
   @[::K8S::Properties(
     replicas: {key: "replicas", accessor: "replicas", kind: "Int32", nilable: true, default: nil, read_only: false, description: "desired number of instances for the scaled object.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Apps::V1beta1::ScaleSpec < ::K8S::Types::Api::Apps::V1beta1::ScaleSpec::Instance
+  class Api::Apps::V1beta1::ScaleSpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Apps::V1beta1::ScaleSpec
-    include ::K8S::Kubernetes::Object
 
     # desired number of instances for the scaled object.
     def replicas : Int32?

@@ -8,9 +8,6 @@ module K8S::Types::Api::Core::V1::ContainerStateRunning; end
 module K8S
   # Namespace holding the types for `Api::Core::V1::ContainerStateRunning`.
   module Types::Api::Core::V1::ContainerStateRunning
-    alias ValueType = ::Time | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Time at which the container was last (re-)started
     abstract def started_at : ::Time?
     # :ditto:
@@ -25,9 +22,8 @@ module K8S
   @[::K8S::Properties(
     started_at: {key: "startedAt", accessor: "started_at", kind: "::Time", nilable: true, default: nil, read_only: false, description: "Time at which the container was last (re-)started", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::ContainerStateRunning < ::K8S::Types::Api::Core::V1::ContainerStateRunning::Instance
+  class Api::Core::V1::ContainerStateRunning < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::ContainerStateRunning
-    include ::K8S::Kubernetes::Object
 
     # Time at which the container was last (re-)started
     def started_at : ::Time?

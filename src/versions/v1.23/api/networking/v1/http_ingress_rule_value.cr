@@ -10,9 +10,6 @@ require "./http_ingress_path"
 module K8S
   # Namespace holding the types for `Api::Networking::V1::HTTPIngressRuleValue`.
   module Types::Api::Networking::V1::HTTPIngressRuleValue
-    alias ValueType = ::Array(::K8S::Api::Networking::V1::HTTPIngressPath) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # A collection of paths that map requests to backends.
     abstract def paths : ::Array(::K8S::Api::Networking::V1::HTTPIngressPath)
     # :ditto:
@@ -27,9 +24,8 @@ module K8S
   @[::K8S::Properties(
     paths: {key: "paths", accessor: "paths", kind: "::Array(::K8S::Api::Networking::V1::HTTPIngressPath)", nilable: false, default: nil, read_only: false, description: "A collection of paths that map requests to backends.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: "atomic", x_kubernetes_map_type: nil},
   )]
-  class Api::Networking::V1::HTTPIngressRuleValue < ::K8S::Types::Api::Networking::V1::HTTPIngressRuleValue::Instance
+  class Api::Networking::V1::HTTPIngressRuleValue < ::K8S::GenericObject
     include ::K8S::Types::Api::Networking::V1::HTTPIngressRuleValue
-    include ::K8S::Kubernetes::Object
 
     # A collection of paths that map requests to backends.
     def paths : ::Array(::K8S::Api::Networking::V1::HTTPIngressPath)

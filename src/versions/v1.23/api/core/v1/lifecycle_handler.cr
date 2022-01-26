@@ -12,9 +12,6 @@ require "./tcp_socket_action"
 module K8S
   # Namespace holding the types for `Api::Core::V1::LifecycleHandler`.
   module Types::Api::Core::V1::LifecycleHandler
-    alias ValueType = ::K8S::Api::Core::V1::ExecAction | ::K8S::Api::Core::V1::HTTPGetAction | ::K8S::Api::Core::V1::TCPSocketAction | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Exec specifies the action to take.
     abstract def exec : ::K8S::Api::Core::V1::ExecAction?
     # :ditto:
@@ -47,9 +44,8 @@ module K8S
     http_get: {key: "httpGet", accessor: "http_get", kind: "::K8S::Api::Core::V1::HTTPGetAction", nilable: true, default: nil, read_only: false, description: "HTTPGet specifies the http request to perform.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     tcp_socket: {key: "tcpSocket", accessor: "tcp_socket", kind: "::K8S::Api::Core::V1::TCPSocketAction", nilable: true, default: nil, read_only: false, description: "Deprecated. TCPSocket is NOT supported as a LifecycleHandler and kept for the backward compatibility. There are no validation of this field and lifecycle hooks will fail in runtime when tcp handler is specified.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::LifecycleHandler < ::K8S::Types::Api::Core::V1::LifecycleHandler::Instance
+  class Api::Core::V1::LifecycleHandler < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::LifecycleHandler
-    include ::K8S::Kubernetes::Object
 
     # Exec specifies the action to take.
     def exec : ::K8S::Api::Core::V1::ExecAction?

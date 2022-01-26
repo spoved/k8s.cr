@@ -10,9 +10,6 @@ require "./rolling_update_daemon_set"
 module K8S
   # Namespace holding the types for `Api::Apps::V1::DaemonSetUpdateStrategy`.
   module Types::Api::Apps::V1::DaemonSetUpdateStrategy
-    alias ValueType = ::K8S::Api::Apps::V1::RollingUpdateDaemonSet | String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Rolling update config params. Present only if type = "RollingUpdate".
     abstract def rolling_update : ::K8S::Api::Apps::V1::RollingUpdateDaemonSet?
     # :ditto:
@@ -40,9 +37,8 @@ module K8S
     rolling_update: {key: "rollingUpdate", accessor: "rolling_update", kind: "::K8S::Api::Apps::V1::RollingUpdateDaemonSet", nilable: true, default: nil, read_only: false, description: "Rolling update config params. Present only if type = \"RollingUpdate\".", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     type: {key: "type", accessor: "type", kind: "String", nilable: true, default: nil, read_only: false, description: "Type of daemon set update. Can be \"RollingUpdate\" or \"OnDelete\". Default is RollingUpdate.\n\nPossible enum values:\n - `\"OnDelete\"` Replace the old daemons only when it's killed\n - `\"RollingUpdate\"` Replace the old daemons by new ones using rolling update i.e replace them on each node one after the other.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Apps::V1::DaemonSetUpdateStrategy < ::K8S::Types::Api::Apps::V1::DaemonSetUpdateStrategy::Instance
+  class Api::Apps::V1::DaemonSetUpdateStrategy < ::K8S::GenericObject
     include ::K8S::Types::Api::Apps::V1::DaemonSetUpdateStrategy
-    include ::K8S::Kubernetes::Object
 
     # Rolling update config params. Present only if type = "RollingUpdate".
     def rolling_update : ::K8S::Api::Apps::V1::RollingUpdateDaemonSet?

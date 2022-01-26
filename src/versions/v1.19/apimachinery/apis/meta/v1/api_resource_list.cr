@@ -10,9 +10,6 @@ require "./api_resource"
 module K8S
   # Namespace holding the types for `Apimachinery::Apis::Meta::V1::APIResourceList`.
   module Types::Apimachinery::Apis::Meta::V1::APIResourceList
-    alias ValueType = String | ::Array(::K8S::Apimachinery::Apis::Meta::V1::APIResource) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)))
     abstract def api_version : String
     # :ditto:
@@ -51,12 +48,12 @@ module K8S
     group_version: {key: "groupVersion", accessor: "group_version", kind: "String", nilable: false, default: nil, read_only: false, description: "groupVersion is the group and version this APIResourceList is for.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     resources: {key: "resources", accessor: "resources", kind: "::Array(::K8S::Apimachinery::Apis::Meta::V1::APIResource)", nilable: false, default: nil, read_only: false, description: "resources contains the name of the resources and if they are namespaced.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Apimachinery::Apis::Meta::V1::APIResourceList < ::K8S::Types::Apimachinery::Apis::Meta::V1::APIResourceList::Instance
+  class Apimachinery::Apis::Meta::V1::APIResourceList < ::K8S::GenericObject
     include ::K8S::Types::Apimachinery::Apis::Meta::V1::APIResourceList
-    include ::K8S::Kubernetes::Object
 
     # APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)))
     def api_version : String
+      self.["apiVersion"] = "meta/v1" unless self.["apiVersion"]?
       self.["apiVersion"].as(String)
     end
 
@@ -72,6 +69,7 @@ module K8S
 
     # Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)))
     def kind : String
+      self.["kind"] = "APIResourceList" unless self.["kind"]?
       self.["kind"].as(String)
     end
 

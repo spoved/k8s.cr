@@ -8,9 +8,6 @@ module K8S::Types::Api::Apps::V1::StatefulSetPersistentVolumeClaimRetentionPolic
 module K8S
   # Namespace holding the types for `Api::Apps::V1::StatefulSetPersistentVolumeClaimRetentionPolicy`.
   module Types::Api::Apps::V1::StatefulSetPersistentVolumeClaimRetentionPolicy
-    alias ValueType = String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # WhenDeleted specifies what happens to PVCs created from StatefulSet VolumeClaimTemplates when the StatefulSet is deleted. The default policy of `Retain` causes PVCs to not be affected by StatefulSet deletion. The `Delete` policy causes those PVCs to be deleted.
     abstract def when_deleted : String?
     # :ditto:
@@ -34,9 +31,8 @@ module K8S
     when_deleted: {key: "whenDeleted", accessor: "when_deleted", kind: "String", nilable: true, default: nil, read_only: false, description: "WhenDeleted specifies what happens to PVCs created from StatefulSet VolumeClaimTemplates when the StatefulSet is deleted. The default policy of `Retain` causes PVCs to not be affected by StatefulSet deletion. The `Delete` policy causes those PVCs to be deleted.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     when_scaled: {key: "whenScaled", accessor: "when_scaled", kind: "String", nilable: true, default: nil, read_only: false, description: "WhenScaled specifies what happens to PVCs created from StatefulSet VolumeClaimTemplates when the StatefulSet is scaled down. The default policy of `Retain` causes PVCs to not be affected by a scaledown. The `Delete` policy causes the associated PVCs for any excess pods above the replica count to be deleted.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Apps::V1::StatefulSetPersistentVolumeClaimRetentionPolicy < ::K8S::Types::Api::Apps::V1::StatefulSetPersistentVolumeClaimRetentionPolicy::Instance
+  class Api::Apps::V1::StatefulSetPersistentVolumeClaimRetentionPolicy < ::K8S::GenericObject
     include ::K8S::Types::Api::Apps::V1::StatefulSetPersistentVolumeClaimRetentionPolicy
-    include ::K8S::Kubernetes::Object
 
     # WhenDeleted specifies what happens to PVCs created from StatefulSet VolumeClaimTemplates when the StatefulSet is deleted. The default policy of `Retain` causes PVCs to not be affected by StatefulSet deletion. The `Delete` policy causes those PVCs to be deleted.
     def when_deleted : String?

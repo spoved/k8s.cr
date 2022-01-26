@@ -8,9 +8,6 @@ module K8S::Types::Api::Core::V1::AzureDiskVolumeSource; end
 module K8S
   # Namespace holding the types for `Api::Core::V1::AzureDiskVolumeSource`.
   module Types::Api::Core::V1::AzureDiskVolumeSource
-    alias ValueType = String | ::Bool | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Host Caching mode: None, Read Only, Read Write.
     abstract def caching_mode : String?
     # :ditto:
@@ -70,9 +67,8 @@ module K8S
     kind: {key: "kind", accessor: "kind", kind: "String", nilable: true, default: nil, read_only: false, description: "Expected values Shared: multiple blob disks per storage account  Dedicated: single blob disk per storage account  Managed: azure managed data disk (only in managed availability set). defaults to shared", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     read_only: {key: "readOnly", accessor: "read_only", kind: "::Bool", nilable: true, default: nil, read_only: false, description: "Defaults to false [(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::AzureDiskVolumeSource < ::K8S::Types::Api::Core::V1::AzureDiskVolumeSource::Instance
+  class Api::Core::V1::AzureDiskVolumeSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::AzureDiskVolumeSource
-    include ::K8S::Kubernetes::Object
 
     # Host Caching mode: None, Read Only, Read Write.
     def caching_mode : String?

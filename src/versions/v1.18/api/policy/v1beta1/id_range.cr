@@ -8,9 +8,6 @@ module K8S::Types::Api::Policy::V1beta1::IDRange; end
 module K8S
   # Namespace holding the types for `Api::Policy::V1beta1::IDRange`.
   module Types::Api::Policy::V1beta1::IDRange
-    alias ValueType = Int32 | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # max is the end of the range, inclusive.
     abstract def max : Int32
     # :ditto:
@@ -34,9 +31,8 @@ module K8S
     max: {key: "max", accessor: "max", kind: "Int32", nilable: false, default: nil, read_only: false, description: "max is the end of the range, inclusive.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     min: {key: "min", accessor: "min", kind: "Int32", nilable: false, default: nil, read_only: false, description: "min is the start of the range, inclusive.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Policy::V1beta1::IDRange < ::K8S::Types::Api::Policy::V1beta1::IDRange::Instance
+  class Api::Policy::V1beta1::IDRange < ::K8S::GenericObject
     include ::K8S::Types::Api::Policy::V1beta1::IDRange
-    include ::K8S::Kubernetes::Object
 
     # max is the end of the range, inclusive.
     def max : Int32

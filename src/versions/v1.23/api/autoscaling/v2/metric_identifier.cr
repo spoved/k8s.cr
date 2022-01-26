@@ -10,9 +10,6 @@ require "../../../apimachinery/apis/meta/v1/label_selector"
 module K8S
   # Namespace holding the types for `Api::Autoscaling::V2::MetricIdentifier`.
   module Types::Api::Autoscaling::V2::MetricIdentifier
-    alias ValueType = String | ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # name is the name of the given metric
     abstract def name : String
     # :ditto:
@@ -36,9 +33,8 @@ module K8S
     name: {key: "name", accessor: "name", kind: "String", nilable: false, default: nil, read_only: false, description: "name is the name of the given metric", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     selector: {key: "selector", accessor: "selector", kind: "::K8S::Apimachinery::Apis::Meta::V1::LabelSelector", nilable: true, default: nil, read_only: false, description: "selector is the string-encoded form of a standard kubernetes label selector for the given metric When set, it is passed as an additional parameter to the metrics server for more specific metrics scoping. When unset, just the metricName will be used to gather metrics.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Autoscaling::V2::MetricIdentifier < ::K8S::Types::Api::Autoscaling::V2::MetricIdentifier::Instance
+  class Api::Autoscaling::V2::MetricIdentifier < ::K8S::GenericObject
     include ::K8S::Types::Api::Autoscaling::V2::MetricIdentifier
-    include ::K8S::Kubernetes::Object
 
     # name is the name of the given metric
     def name : String

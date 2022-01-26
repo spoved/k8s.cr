@@ -6,5 +6,5 @@ require "json"
 module K8S::Types::Apimachinery::Apis::Meta::V1::Fields; end
 
 module K8S
-  alias Apimachinery::Apis::Meta::V1::Fields = ::K8S::Object(::JSON::Any)
+  alias Apimachinery::Apis::Meta::V1::Fields = ::K8S::GenericObject
 end

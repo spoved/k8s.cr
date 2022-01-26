@@ -8,9 +8,6 @@ module K8S::Types::Api::Autoscaling::V1::HorizontalPodAutoscalerStatus; end
 module K8S
   # Namespace holding the types for `Api::Autoscaling::V1::HorizontalPodAutoscalerStatus`.
   module Types::Api::Autoscaling::V1::HorizontalPodAutoscalerStatus
-    alias ValueType = Int32 | ::Time | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # current average CPU utilization over all pods, represented as a percentage of requested CPU, e.g. 70 means that an average pod is using now 70% of its requested CPU.
     abstract def current_cpu_utilization_percentage : Int32?
     # :ditto:
@@ -61,9 +58,8 @@ module K8S
     last_scale_time: {key: "lastScaleTime", accessor: "last_scale_time", kind: "::Time", nilable: true, default: nil, read_only: false, description: "last time the HorizontalPodAutoscaler scaled the number of pods; used by the autoscaler to control how often the number of pods is changed.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     observed_generation: {key: "observedGeneration", accessor: "observed_generation", kind: "Int32", nilable: true, default: nil, read_only: false, description: "most recent generation observed by this autoscaler.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Autoscaling::V1::HorizontalPodAutoscalerStatus < ::K8S::Types::Api::Autoscaling::V1::HorizontalPodAutoscalerStatus::Instance
+  class Api::Autoscaling::V1::HorizontalPodAutoscalerStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Autoscaling::V1::HorizontalPodAutoscalerStatus
-    include ::K8S::Kubernetes::Object
 
     # current average CPU utilization over all pods, represented as a percentage of requested CPU, e.g. 70 means that an average pod is using now 70% of its requested CPU.
     def current_cpu_utilization_percentage : Int32?

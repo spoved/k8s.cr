@@ -10,9 +10,6 @@ require "./status_cause"
 module K8S
   # Namespace holding the types for `Apimachinery::Apis::Meta::V1::StatusDetails`.
   module Types::Apimachinery::Apis::Meta::V1::StatusDetails
-    alias ValueType = ::Array(::K8S::Apimachinery::Apis::Meta::V1::StatusCause) | String | Int32 | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # The Causes array includes more details associated with the StatusReason failure. Not all StatusReasons may provide detailed causes.
     abstract def causes : ::Array(::K8S::Apimachinery::Apis::Meta::V1::StatusCause)?
     # :ditto:
@@ -72,9 +69,8 @@ module K8S
     retry_after_seconds: {key: "retryAfterSeconds", accessor: "retry_after_seconds", kind: "Int32", nilable: true, default: nil, read_only: false, description: "If specified, the time in seconds before the operation should be retried. Some errors may indicate the client must take an alternate action - for those errors this field may indicate how long to wait before taking the alternate action.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     uid: {key: "uid", accessor: "uid", kind: "String", nilable: true, default: nil, read_only: false, description: "UID of the resource. (when there is a single resource which can be described). More info: [http://kubernetes.io/docs/user-guide/identifiers#uids](http://kubernetes.io/docs/user-guide/identifiers#uids)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Apimachinery::Apis::Meta::V1::StatusDetails < ::K8S::Types::Apimachinery::Apis::Meta::V1::StatusDetails::Instance
+  class Apimachinery::Apis::Meta::V1::StatusDetails < ::K8S::GenericObject
     include ::K8S::Types::Apimachinery::Apis::Meta::V1::StatusDetails
-    include ::K8S::Kubernetes::Object
 
     # The Causes array includes more details associated with the StatusReason failure. Not all StatusReasons may provide detailed causes.
     def causes : ::Array(::K8S::Apimachinery::Apis::Meta::V1::StatusCause)?

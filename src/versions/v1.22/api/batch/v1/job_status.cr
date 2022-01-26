@@ -11,9 +11,6 @@ require "./uncounted_terminated_pods"
 module K8S
   # Namespace holding the types for `Api::Batch::V1::JobStatus`.
   module Types::Api::Batch::V1::JobStatus
-    alias ValueType = Int32 | String | ::Time | ::Array(::K8S::Api::Batch::V1::JobCondition) | ::K8S::Api::Batch::V1::UncountedTerminatedPods | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # The number of actively running pods.
     abstract def active : Int32?
     # :ditto:
@@ -96,9 +93,8 @@ module K8S
     succeeded: {key: "succeeded", accessor: "succeeded", kind: "Int32", nilable: true, default: nil, read_only: false, description: "The number of pods which reached phase Succeeded.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     uncounted_terminated_pods: {key: "uncountedTerminatedPods", accessor: "uncounted_terminated_pods", kind: "::K8S::Api::Batch::V1::UncountedTerminatedPods", nilable: true, default: nil, read_only: false, description: "UncountedTerminatedPods holds the UIDs of Pods that have terminated but the job controller hasn't yet accounted for in the status counters.\n\nThe job controller creates pods with a finalizer. When a pod terminates (succeeded or failed), the controller does three steps to account for it in the job status: (1) Add the pod UID to the arrays in this field. (2) Remove the pod finalizer. (3) Remove the pod UID from the arrays while increasing the corresponding\n    counter.\n\nThis field is alpha-level. The job controller only makes use of this field when the feature gate PodTrackingWithFinalizers is enabled. Old jobs might not be tracked using this field, in which case the field remains null.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Batch::V1::JobStatus < ::K8S::Types::Api::Batch::V1::JobStatus::Instance
+  class Api::Batch::V1::JobStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Batch::V1::JobStatus
-    include ::K8S::Kubernetes::Object
 
     # The number of actively running pods.
     def active : Int32?

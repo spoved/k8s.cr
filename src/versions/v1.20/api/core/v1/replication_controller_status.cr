@@ -10,9 +10,6 @@ require "./replication_controller_condition"
 module K8S
   # Namespace holding the types for `Api::Core::V1::ReplicationControllerStatus`.
   module Types::Api::Core::V1::ReplicationControllerStatus
-    alias ValueType = Int32 | ::Array(::K8S::Api::Core::V1::ReplicationControllerCondition) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # The number of available replicas (ready for at least minReadySeconds) for this replication controller.
     abstract def available_replicas : Int32?
     # :ditto:
@@ -72,9 +69,8 @@ module K8S
     ready_replicas: {key: "readyReplicas", accessor: "ready_replicas", kind: "Int32", nilable: true, default: nil, read_only: false, description: "The number of ready replicas for this replication controller.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     replicas: {key: "replicas", accessor: "replicas", kind: "Int32", nilable: false, default: nil, read_only: false, description: "Replicas is the most recently oberved number of replicas. More info: [https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#what-is-a-replicationcontroller](https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#what-is-a-replicationcontroller)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::ReplicationControllerStatus < ::K8S::Types::Api::Core::V1::ReplicationControllerStatus::Instance
+  class Api::Core::V1::ReplicationControllerStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::ReplicationControllerStatus
-    include ::K8S::Kubernetes::Object
 
     # The number of available replicas (ready for at least minReadySeconds) for this replication controller.
     def available_replicas : Int32?

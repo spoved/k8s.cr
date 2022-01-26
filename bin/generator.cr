@@ -108,9 +108,9 @@ class Generator
     puts "Writing: #{filename}"
     File.open(filename, "w+") do |file|
       file.puts "# THIS FILE WAS AUTO GENERATED FROM THE K8S SWAGGER SPEC", "",
-        %<require "../k8s/*">, "",
+        %<require "../k8s/*">, ""
 
-        file.puts "require \"./#{version}/kubernetes\""
+      file.puts "require \"./#{version}/kubernetes\""
       definitions.map(&.filename).each { |r| file.puts "require \"#{r.sub(base_dir, "./#{version}")}\"" }
     end
     system "crystal tool format #{filename}"
@@ -126,7 +126,7 @@ class Generator
         " VERSION_MINOR = #{version.lchop("v").split(".").first}",
         " VERSION_MAJOR = #{version.lchop("v").split(".").last}",
         ""
-      file.puts "module Resource"
+      file.puts "abstract class Resource"
       write_mappings(file, definitions)
       file.puts "end", "", "end"
     end

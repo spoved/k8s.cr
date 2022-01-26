@@ -8,9 +8,6 @@ module K8S::Types::Api::Apiserverinternal::V1alpha1::ServerStorageVersion; end
 module K8S
   # Namespace holding the types for `Api::Apiserverinternal::V1alpha1::ServerStorageVersion`.
   module Types::Api::Apiserverinternal::V1alpha1::ServerStorageVersion
-    alias ValueType = String | ::Set(String) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # The ID of the reporting API server.
     abstract def api_server_id : String?
     # :ditto:
@@ -43,9 +40,8 @@ module K8S
     decodable_versions: {key: "decodableVersions", accessor: "decodable_versions", kind: "::Set(String)", nilable: true, default: nil, read_only: false, description: "The API server can decode objects encoded in these versions. The encodingVersion must be included in the decodableVersions.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: "set", x_kubernetes_map_type: nil},
     encoding_version: {key: "encodingVersion", accessor: "encoding_version", kind: "String", nilable: true, default: nil, read_only: false, description: "The API server encodes the object to this version when persisting it in the backend (e.g., etcd).", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Apiserverinternal::V1alpha1::ServerStorageVersion < ::K8S::Types::Api::Apiserverinternal::V1alpha1::ServerStorageVersion::Instance
+  class Api::Apiserverinternal::V1alpha1::ServerStorageVersion < ::K8S::GenericObject
     include ::K8S::Types::Api::Apiserverinternal::V1alpha1::ServerStorageVersion
-    include ::K8S::Kubernetes::Object
 
     # The ID of the reporting API server.
     def api_server_id : String?

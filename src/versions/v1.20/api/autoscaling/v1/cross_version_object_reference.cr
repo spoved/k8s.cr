@@ -8,9 +8,6 @@ module K8S::Types::Api::Autoscaling::V1::CrossVersionObjectReference; end
 module K8S
   # Namespace holding the types for `Api::Autoscaling::V1::CrossVersionObjectReference`.
   module Types::Api::Autoscaling::V1::CrossVersionObjectReference
-    alias ValueType = String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # API version of the referent
     abstract def api_version : String?
     # :ditto:
@@ -43,9 +40,8 @@ module K8S
     kind: {key: "kind", accessor: "kind", kind: "String", nilable: false, default: nil, read_only: false, description: "Kind of the referent; More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds\"](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds\")", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     name: {key: "name", accessor: "name", kind: "String", nilable: false, default: nil, read_only: false, description: "Name of the referent; More info: [http://kubernetes.io/docs/user-guide/identifiers#names](http://kubernetes.io/docs/user-guide/identifiers#names)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Autoscaling::V1::CrossVersionObjectReference < ::K8S::Types::Api::Autoscaling::V1::CrossVersionObjectReference::Instance
+  class Api::Autoscaling::V1::CrossVersionObjectReference < ::K8S::GenericObject
     include ::K8S::Types::Api::Autoscaling::V1::CrossVersionObjectReference
-    include ::K8S::Kubernetes::Object
 
     # API version of the referent
     def api_version : String?

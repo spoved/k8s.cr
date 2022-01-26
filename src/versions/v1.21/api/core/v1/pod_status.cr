@@ -12,9 +12,6 @@ require "./pod_ip"
 module K8S
   # Namespace holding the types for `Api::Core::V1::PodStatus`.
   module Types::Api::Core::V1::PodStatus
-    alias ValueType = ::Array(::K8S::Api::Core::V1::PodCondition) | ::Array(::K8S::Api::Core::V1::ContainerStatus) | String | ::Array(::K8S::Api::Core::V1::PodIP) | ::Time | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Current service state of pod. More info: [[https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-conditions](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-conditions)](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-conditions](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-conditions))
     abstract def conditions : ::Array(::K8S::Api::Core::V1::PodCondition)?
     # :ditto:
@@ -141,9 +138,8 @@ module K8S
     reason: {key: "reason", accessor: "reason", kind: "String", nilable: true, default: nil, read_only: false, description: "A brief CamelCase message indicating details about why the pod is in this state. e.g. 'Evicted'", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     start_time: {key: "startTime", accessor: "start_time", kind: "::Time", nilable: true, default: nil, read_only: false, description: "RFC 3339 date and time at which the object was acknowledged by the Kubelet. This is before the Kubelet pulled the container image(s) for the pod.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::PodStatus < ::K8S::Types::Api::Core::V1::PodStatus::Instance
+  class Api::Core::V1::PodStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::PodStatus
-    include ::K8S::Kubernetes::Object
 
     # Current service state of pod. More info: [[https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-conditions](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-conditions)](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-conditions](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-conditions))
     def conditions : ::Array(::K8S::Api::Core::V1::PodCondition)?

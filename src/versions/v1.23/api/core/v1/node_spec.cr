@@ -11,9 +11,6 @@ require "./taint"
 module K8S
   # Namespace holding the types for `Api::Core::V1::NodeSpec`.
   module Types::Api::Core::V1::NodeSpec
-    alias ValueType = ::K8S::Api::Core::V1::NodeConfigSource | String | ::Array(String) | ::Array(::K8S::Api::Core::V1::Taint) | ::Bool | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Deprecated. If specified, the source of the node's configuration. The DynamicKubeletConfig feature gate must be enabled for the Kubelet to use this field. This field is deprecated as of 1.22: [[https://git.k8s.io/enhancements/keps/sig-node/281-dynamic-kubelet-configuration](https://git.k8s.io/enhancements/keps/sig-node/281-dynamic-kubelet-configuration)](https://git.k8s.io/enhancements/keps/sig-node/281-dynamic-kubelet-configuration](https://git.k8s.io/enhancements/keps/sig-node/281-dynamic-kubelet-configuration))
     abstract def config_source : ::K8S::Api::Core::V1::NodeConfigSource?
     # :ditto:
@@ -82,9 +79,8 @@ module K8S
     taints: {key: "taints", accessor: "taints", kind: "::Array(::K8S::Api::Core::V1::Taint)", nilable: true, default: nil, read_only: false, description: "If specified, the node's taints.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     unschedulable: {key: "unschedulable", accessor: "unschedulable", kind: "::Bool", nilable: true, default: nil, read_only: false, description: "Unschedulable controls node schedulability of new pods. By default, node is schedulable. More info: [https://kubernetes.io/docs/concepts/nodes/node/#manual-node-administration](https://kubernetes.io/docs/concepts/nodes/node/#manual-node-administration)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::NodeSpec < ::K8S::Types::Api::Core::V1::NodeSpec::Instance
+  class Api::Core::V1::NodeSpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::NodeSpec
-    include ::K8S::Kubernetes::Object
 
     # Deprecated. If specified, the source of the node's configuration. The DynamicKubeletConfig feature gate must be enabled for the Kubelet to use this field. This field is deprecated as of 1.22: [[https://git.k8s.io/enhancements/keps/sig-node/281-dynamic-kubelet-configuration](https://git.k8s.io/enhancements/keps/sig-node/281-dynamic-kubelet-configuration)](https://git.k8s.io/enhancements/keps/sig-node/281-dynamic-kubelet-configuration](https://git.k8s.io/enhancements/keps/sig-node/281-dynamic-kubelet-configuration))
     def config_source : ::K8S::Api::Core::V1::NodeConfigSource?

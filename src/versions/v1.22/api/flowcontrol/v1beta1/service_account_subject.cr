@@ -8,9 +8,6 @@ module K8S::Types::Api::Flowcontrol::V1beta1::ServiceAccountSubject; end
 module K8S
   # Namespace holding the types for `Api::Flowcontrol::V1beta1::ServiceAccountSubject`.
   module Types::Api::Flowcontrol::V1beta1::ServiceAccountSubject
-    alias ValueType = String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # `name` is the name of matching ServiceAccount objects, or "*" to match regardless of name. Required.
     abstract def name : String
     # :ditto:
@@ -34,9 +31,8 @@ module K8S
     name: {key: "name", accessor: "name", kind: "String", nilable: false, default: nil, read_only: false, description: "`name` is the name of matching ServiceAccount objects, or \"*\" to match regardless of name. Required.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     namespace: {key: "namespace", accessor: "namespace", kind: "String", nilable: false, default: nil, read_only: false, description: "`namespace` is the namespace of matching ServiceAccount objects. Required.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Flowcontrol::V1beta1::ServiceAccountSubject < ::K8S::Types::Api::Flowcontrol::V1beta1::ServiceAccountSubject::Instance
+  class Api::Flowcontrol::V1beta1::ServiceAccountSubject < ::K8S::GenericObject
     include ::K8S::Types::Api::Flowcontrol::V1beta1::ServiceAccountSubject
-    include ::K8S::Kubernetes::Object
 
     # `name` is the name of matching ServiceAccount objects, or "*" to match regardless of name. Required.
     def name : String

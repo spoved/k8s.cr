@@ -11,9 +11,6 @@ require "./custom_resource_subresource_status"
 module K8S
   # Namespace holding the types for `ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresources`.
   module Types::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresources
-    alias ValueType = ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresourceScale | ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresourceStatus | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Scale denotes the scale subresource for CustomResources
     abstract def scale : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresourceScale?
     # :ditto:
@@ -37,9 +34,8 @@ module K8S
     scale: {key: "scale", accessor: "scale", kind: "::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresourceScale", nilable: true, default: nil, read_only: false, description: "Scale denotes the scale subresource for CustomResources", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     status: {key: "status", accessor: "status", kind: "::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresourceStatus", nilable: true, default: nil, read_only: false, description: "Status denotes the status subresource for CustomResources", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresources < ::K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresources::Instance
+  class ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresources < ::K8S::GenericObject
     include ::K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresources
-    include ::K8S::Kubernetes::Object
 
     # Scale denotes the scale subresource for CustomResources
     def scale : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresourceScale?

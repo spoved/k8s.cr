@@ -11,9 +11,6 @@ require "./server_address_by_client_cidr"
 module K8S
   # Namespace holding the types for `Apimachinery::Apis::Meta::V1::APIGroup`.
   module Types::Apimachinery::Apis::Meta::V1::APIGroup
-    alias ValueType = String | ::K8S::Apimachinery::Apis::Meta::V1::GroupVersionForDiscovery | ::Array(::K8S::Apimachinery::Apis::Meta::V1::ServerAddressByClientCIDR) | ::Array(::K8S::Apimachinery::Apis::Meta::V1::GroupVersionForDiscovery) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources))
     abstract def api_version : String?
     # :ditto:
@@ -74,9 +71,8 @@ module K8S
     server_address_by_client_cidrs: {key: "serverAddressByClientCIDRs", accessor: "server_address_by_client_cidrs", kind: "::Array(::K8S::Apimachinery::Apis::Meta::V1::ServerAddressByClientCIDR)", nilable: true, default: nil, read_only: false, description: "a map of client CIDR to server address that is serving this group. This is to help clients reach servers in the most network-efficient way possible. Clients can use the appropriate server address as per the CIDR that they match. In case of multiple matches, clients should use the longest matching CIDR. The server returns only those CIDRs that it thinks that the client can match. For example: the master will return an internal IP CIDR only, if the client reaches the server using an internal IP. Server looks at X-Forwarded-For header or X-Real-Ip header or request.RemoteAddr (in that order) to get the client IP.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     versions: {key: "versions", accessor: "versions", kind: "::Array(::K8S::Apimachinery::Apis::Meta::V1::GroupVersionForDiscovery)", nilable: false, default: nil, read_only: false, description: "versions are the versions supported in this group.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Apimachinery::Apis::Meta::V1::APIGroup < ::K8S::Types::Apimachinery::Apis::Meta::V1::APIGroup::Instance
+  class Apimachinery::Apis::Meta::V1::APIGroup < ::K8S::GenericObject
     include ::K8S::Types::Apimachinery::Apis::Meta::V1::APIGroup
-    include ::K8S::Kubernetes::Object
 
     # APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources))
     def api_version : String?

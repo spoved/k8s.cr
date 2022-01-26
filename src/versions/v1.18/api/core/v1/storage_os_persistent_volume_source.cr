@@ -10,9 +10,6 @@ require "./object_reference"
 module K8S
   # Namespace holding the types for `Api::Core::V1::StorageOSPersistentVolumeSource`.
   module Types::Api::Core::V1::StorageOSPersistentVolumeSource
-    alias ValueType = String | ::Bool | ::K8S::Api::Core::V1::ObjectReference | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified.
     abstract def fs_type : String?
     # :ditto:
@@ -63,9 +60,8 @@ module K8S
     volume_name: {key: "volumeName", accessor: "volume_name", kind: "String", nilable: true, default: nil, read_only: false, description: "VolumeName is the human-readable name of the StorageOS volume.  Volume names are only unique within a namespace.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     volume_namespace: {key: "volumeNamespace", accessor: "volume_namespace", kind: "String", nilable: true, default: nil, read_only: false, description: "VolumeNamespace specifies the scope of the volume within StorageOS.  If no namespace is specified then the Pod's namespace will be used.  This allows the Kubernetes name scoping to be mirrored within StorageOS for tighter integration. Set VolumeName to any name to override the default behaviour. Set to \"default\" if you are not using namespaces within StorageOS. Namespaces that do not pre-exist within StorageOS will be created.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::StorageOSPersistentVolumeSource < ::K8S::Types::Api::Core::V1::StorageOSPersistentVolumeSource::Instance
+  class Api::Core::V1::StorageOSPersistentVolumeSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::StorageOSPersistentVolumeSource
-    include ::K8S::Kubernetes::Object
 
     # Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified.
     def fs_type : String?

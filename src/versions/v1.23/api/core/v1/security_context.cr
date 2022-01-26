@@ -13,9 +13,6 @@ require "./windows_security_context_options"
 module K8S
   # Namespace holding the types for `Api::Core::V1::SecurityContext`.
   module Types::Api::Core::V1::SecurityContext
-    alias ValueType = ::Bool | ::K8S::Api::Core::V1::Capabilities | String | Int32 | ::K8S::Api::Core::V1::SELinuxOptions | ::K8S::Api::Core::V1::SeccompProfile | ::K8S::Api::Core::V1::WindowsSecurityContextOptions | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # AllowPrivilegeEscalation controls whether a process can gain more privileges than its parent process. This bool directly controls if the no_new_privs flag will be set on the container process. AllowPrivilegeEscalation is true always when the container is: 1) run as Privileged 2) has CAP_SYS_ADMIN Note that this field cannot be set when spec.os.name is windows.
     abstract def allow_privilege_escalation : ::Bool?
     # :ditto:
@@ -120,9 +117,8 @@ module K8S
     seccomp_profile: {key: "seccompProfile", accessor: "seccomp_profile", kind: "::K8S::Api::Core::V1::SeccompProfile", nilable: true, default: nil, read_only: false, description: "The seccomp options to use by this container. If seccomp options are provided at both the pod & container level, the container options override the pod options. Note that this field cannot be set when spec.os.name is windows.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     windows_options: {key: "windowsOptions", accessor: "windows_options", kind: "::K8S::Api::Core::V1::WindowsSecurityContextOptions", nilable: true, default: nil, read_only: false, description: "The Windows specific settings applied to all containers. If unspecified, the options from the PodSecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence. Note that this field cannot be set when spec.os.name is linux.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::SecurityContext < ::K8S::Types::Api::Core::V1::SecurityContext::Instance
+  class Api::Core::V1::SecurityContext < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::SecurityContext
-    include ::K8S::Kubernetes::Object
 
     # AllowPrivilegeEscalation controls whether a process can gain more privileges than its parent process. This bool directly controls if the no_new_privs flag will be set on the container process. AllowPrivilegeEscalation is true always when the container is: 1) run as Privileged 2) has CAP_SYS_ADMIN Note that this field cannot be set when spec.os.name is windows.
     def allow_privilege_escalation : ::Bool?

@@ -8,9 +8,6 @@ module K8S::Types::Apimachinery::Apis::Meta::V1::StatusCause; end
 module K8S
   # Namespace holding the types for `Apimachinery::Apis::Meta::V1::StatusCause`.
   module Types::Apimachinery::Apis::Meta::V1::StatusCause
-    alias ValueType = String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # The field of the resource that has caused this error, as named by its JSON serialization. May include dot and postfix notation for nested attributes. Arrays are zero-indexed.  Fields may appear more than once in an array of causes due to fields having multiple errors. Optional.
     #
     # Examples:
@@ -47,9 +44,8 @@ module K8S
     message: {key: "message", accessor: "message", kind: "String", nilable: true, default: nil, read_only: false, description: "A human-readable description of the cause of the error.  This field may be presented as-is to a reader.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     reason: {key: "reason", accessor: "reason", kind: "String", nilable: true, default: nil, read_only: false, description: "A machine-readable description of the cause of the error. If this value is empty there is no information available.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Apimachinery::Apis::Meta::V1::StatusCause < ::K8S::Types::Apimachinery::Apis::Meta::V1::StatusCause::Instance
+  class Apimachinery::Apis::Meta::V1::StatusCause < ::K8S::GenericObject
     include ::K8S::Types::Apimachinery::Apis::Meta::V1::StatusCause
-    include ::K8S::Kubernetes::Object
 
     # The field of the resource that has caused this error, as named by its JSON serialization. May include dot and postfix notation for nested attributes. Arrays are zero-indexed.  Fields may appear more than once in an array of causes due to fields having multiple errors. Optional.
     #

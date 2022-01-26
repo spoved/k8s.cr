@@ -8,9 +8,6 @@ module K8S::Types::Api::Flowcontrol::V1alpha1::FlowDistinguisherMethod; end
 module K8S
   # Namespace holding the types for `Api::Flowcontrol::V1alpha1::FlowDistinguisherMethod`.
   module Types::Api::Flowcontrol::V1alpha1::FlowDistinguisherMethod
-    alias ValueType = String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # `type` is the type of flow distinguisher method The supported types are "ByUser" and "ByNamespace". Required.
     abstract def type : String
     # :ditto:
@@ -25,9 +22,8 @@ module K8S
   @[::K8S::Properties(
     type: {key: "type", accessor: "type", kind: "String", nilable: false, default: nil, read_only: false, description: "`type` is the type of flow distinguisher method The supported types are \"ByUser\" and \"ByNamespace\". Required.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Flowcontrol::V1alpha1::FlowDistinguisherMethod < ::K8S::Types::Api::Flowcontrol::V1alpha1::FlowDistinguisherMethod::Instance
+  class Api::Flowcontrol::V1alpha1::FlowDistinguisherMethod < ::K8S::GenericObject
     include ::K8S::Types::Api::Flowcontrol::V1alpha1::FlowDistinguisherMethod
-    include ::K8S::Kubernetes::Object
 
     # `type` is the type of flow distinguisher method The supported types are "ByUser" and "ByNamespace". Required.
     def type : String

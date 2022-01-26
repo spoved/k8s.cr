@@ -8,9 +8,6 @@ module K8S::Types::Api::Core::V1::PersistentVolumeStatus; end
 module K8S
   # Namespace holding the types for `Api::Core::V1::PersistentVolumeStatus`.
   module Types::Api::Core::V1::PersistentVolumeStatus
-    alias ValueType = String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # A human-readable message indicating details about why the volume is in this state.
     abstract def message : String?
     # :ditto:
@@ -50,9 +47,8 @@ module K8S
     phase: {key: "phase", accessor: "phase", kind: "String", nilable: true, default: nil, read_only: false, description: "Phase indicates if a volume is available, bound to a claim, or released by a claim. More info: [https://kubernetes.io/docs/concepts/storage/persistent-volumes#phase](https://kubernetes.io/docs/concepts/storage/persistent-volumes#phase)\n\nPossible enum values:\n - `\"Available\"` used for PersistentVolumes that are not yet bound Available volumes are held by the binder and matched to PersistentVolumeClaims\n - `\"Bound\"` used for PersistentVolumes that are bound\n - `\"Failed\"` used for PersistentVolumes that failed to be correctly recycled or deleted after being released from a claim\n - `\"Pending\"` used for PersistentVolumes that are not available\n - `\"Released\"` used for PersistentVolumes where the bound PersistentVolumeClaim was deleted released volumes must be recycled before becoming available again this phase is used by the persistent volume claim binder to signal to another process to reclaim the resource", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     reason: {key: "reason", accessor: "reason", kind: "String", nilable: true, default: nil, read_only: false, description: "Reason is a brief CamelCase string that describes any failure and is meant for machine parsing and tidy display in the CLI.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::PersistentVolumeStatus < ::K8S::Types::Api::Core::V1::PersistentVolumeStatus::Instance
+  class Api::Core::V1::PersistentVolumeStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::PersistentVolumeStatus
-    include ::K8S::Kubernetes::Object
 
     # A human-readable message indicating details about why the volume is in this state.
     def message : String?

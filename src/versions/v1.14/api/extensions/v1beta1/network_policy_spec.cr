@@ -12,9 +12,6 @@ require "../../../apimachinery/apis/meta/v1/label_selector"
 module K8S
   # Namespace holding the types for `Api::Extensions::V1beta1::NetworkPolicySpec`.
   module Types::Api::Extensions::V1beta1::NetworkPolicySpec
-    alias ValueType = ::Array(::K8S::Api::Extensions::V1beta1::NetworkPolicyEgressRule) | ::Array(::K8S::Api::Extensions::V1beta1::NetworkPolicyIngressRule) | ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector | ::Array(String) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # List of egress rules to be applied to the selected pods. Outgoing traffic is allowed if there are no NetworkPolicies selecting the pod (and cluster policy otherwise allows the traffic), OR if the traffic matches at least one egress rule across all of the NetworkPolicy objects whose podSelector matches the pod. If this field is empty then this NetworkPolicy limits all outgoing traffic (and serves solely to ensure that the pods it selects are isolated by default). This field is beta-level in 1.8
     abstract def egress : ::Array(::K8S::Api::Extensions::V1beta1::NetworkPolicyEgressRule)?
     # :ditto:
@@ -56,9 +53,8 @@ module K8S
     pod_selector: {key: "podSelector", accessor: "pod_selector", kind: "::K8S::Apimachinery::Apis::Meta::V1::LabelSelector", nilable: false, default: nil, read_only: false, description: "Selects the pods to which this NetworkPolicy object applies.  The array of ingress rules is applied to any pods selected by this field. Multiple network policies can select the same set of pods.  In this case, the ingress rules for each are combined additively. This field is NOT optional and follows standard label selector semantics. An empty podSelector matches all pods in this namespace.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     policy_types: {key: "policyTypes", accessor: "policy_types", kind: "::Array(String)", nilable: true, default: nil, read_only: false, description: "List of rule types that the NetworkPolicy relates to. Valid options are \"Ingress\", \"Egress\", or \"Ingress,Egress\". If this field is not specified, it will default based on the existence of Ingress or Egress rules; policies that contain an Egress section are assumed to affect Egress, and all policies (whether or not they contain an Ingress section) are assumed to affect Ingress. If you want to write an egress-only policy, you must explicitly specify policyTypes [ \"Egress\" ]. Likewise, if you want to write a policy that specifies that no egress is allowed, you must specify a policyTypes value that include \"Egress\" (since such a policy would not include an Egress section and would otherwise default to just [ \"Ingress\" ]). This field is beta-level in 1.8", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Extensions::V1beta1::NetworkPolicySpec < ::K8S::Types::Api::Extensions::V1beta1::NetworkPolicySpec::Instance
+  class Api::Extensions::V1beta1::NetworkPolicySpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Extensions::V1beta1::NetworkPolicySpec
-    include ::K8S::Kubernetes::Object
 
     # List of egress rules to be applied to the selected pods. Outgoing traffic is allowed if there are no NetworkPolicies selecting the pod (and cluster policy otherwise allows the traffic), OR if the traffic matches at least one egress rule across all of the NetworkPolicy objects whose podSelector matches the pod. If this field is empty then this NetworkPolicy limits all outgoing traffic (and serves solely to ensure that the pods it selects are isolated by default). This field is beta-level in 1.8
     def egress : ::Array(::K8S::Api::Extensions::V1beta1::NetworkPolicyEgressRule)?

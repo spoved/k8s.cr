@@ -44,7 +44,7 @@ class Generator
         elsif property.x_kubernetes_embedded_resource
           "::K8S::Kubernetes::Resource"
         elsif property.x_kubernetes_preserve_unknown_fields
-          "::Hash(String, ::JSON::Any::Type)"
+          "::K8S::GenericObject"
         elsif property.x_kubernetes_int_or_string
           "::Int32 | ::String"
         elsif property.type.to_s == "array"
@@ -72,7 +72,7 @@ class Generator
           types.uniq!.reject!(&.empty?)
 
           if types.empty?
-            pp property
+            # pp property
             raise "No types found for property"
           end
 

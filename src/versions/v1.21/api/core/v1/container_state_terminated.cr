@@ -8,9 +8,6 @@ module K8S::Types::Api::Core::V1::ContainerStateTerminated; end
 module K8S
   # Namespace holding the types for `Api::Core::V1::ContainerStateTerminated`.
   module Types::Api::Core::V1::ContainerStateTerminated
-    alias ValueType = String | Int32 | ::Time | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Container's ID in the format 'docker://<container_id>'
     abstract def container_id : String?
     # :ditto:
@@ -79,9 +76,8 @@ module K8S
     signal: {key: "signal", accessor: "signal", kind: "Int32", nilable: true, default: nil, read_only: false, description: "Signal from the last termination of the container", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     started_at: {key: "startedAt", accessor: "started_at", kind: "::Time", nilable: true, default: nil, read_only: false, description: "Time at which previous execution of the container started", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::ContainerStateTerminated < ::K8S::Types::Api::Core::V1::ContainerStateTerminated::Instance
+  class Api::Core::V1::ContainerStateTerminated < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::ContainerStateTerminated
-    include ::K8S::Kubernetes::Object
 
     # Container's ID in the format 'docker://<container_id>'
     def container_id : String?

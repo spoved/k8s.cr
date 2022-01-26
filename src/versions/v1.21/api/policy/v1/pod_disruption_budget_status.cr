@@ -10,9 +10,6 @@ require "../../../apimachinery/apis/meta/v1/condition"
 module K8S
   # Namespace holding the types for `Api::Policy::V1::PodDisruptionBudgetStatus`.
   module Types::Api::Policy::V1::PodDisruptionBudgetStatus
-    alias ValueType = ::Array(::K8S::Apimachinery::Apis::Meta::V1::Condition) | Int32 | ::Hash(String, ::Time) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Conditions contain conditions for PDB. The disruption controller sets the DisruptionAllowed condition. The following are known values for the reason field (additional reasons could be added in the future): - SyncFailed: The controller encountered an error and wasn't able to compute
     #               the number of allowed disruptions. Therefore no disruptions are
     #               allowed and the status of the condition will be False.
@@ -89,9 +86,8 @@ module K8S
     expected_pods: {key: "expectedPods", accessor: "expected_pods", kind: "Int32", nilable: false, default: nil, read_only: false, description: "total number of pods counted by this disruption budget", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     observed_generation: {key: "observedGeneration", accessor: "observed_generation", kind: "Int32", nilable: true, default: nil, read_only: false, description: "Most recent generation observed when updating this PDB status. DisruptionsAllowed and other status information is valid only if observedGeneration equals to PDB's object generation.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Policy::V1::PodDisruptionBudgetStatus < ::K8S::Types::Api::Policy::V1::PodDisruptionBudgetStatus::Instance
+  class Api::Policy::V1::PodDisruptionBudgetStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Policy::V1::PodDisruptionBudgetStatus
-    include ::K8S::Kubernetes::Object
 
     # Conditions contain conditions for PDB. The disruption controller sets the DisruptionAllowed condition. The following are known values for the reason field (additional reasons could be added in the future): - SyncFailed: The controller encountered an error and wasn't able to compute
     #               the number of allowed disruptions. Therefore no disruptions are

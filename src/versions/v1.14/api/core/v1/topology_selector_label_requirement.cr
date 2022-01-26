@@ -8,9 +8,6 @@ module K8S::Types::Api::Core::V1::TopologySelectorLabelRequirement; end
 module K8S
   # Namespace holding the types for `Api::Core::V1::TopologySelectorLabelRequirement`.
   module Types::Api::Core::V1::TopologySelectorLabelRequirement
-    alias ValueType = String | ::Array(String) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # The label key that the selector applies to.
     abstract def key : String
     # :ditto:
@@ -34,9 +31,8 @@ module K8S
     key: {key: "key", accessor: "key", kind: "String", nilable: false, default: nil, read_only: false, description: "The label key that the selector applies to.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     values: {key: "values", accessor: "values", kind: "::Array(String)", nilable: false, default: nil, read_only: false, description: "An array of string values. One value must match the label to be selected. Each entry in Values is ORed.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::TopologySelectorLabelRequirement < ::K8S::Types::Api::Core::V1::TopologySelectorLabelRequirement::Instance
+  class Api::Core::V1::TopologySelectorLabelRequirement < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::TopologySelectorLabelRequirement
-    include ::K8S::Kubernetes::Object
 
     # The label key that the selector applies to.
     def key : String

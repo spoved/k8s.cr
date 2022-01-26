@@ -11,9 +11,6 @@ require "../../../apimachinery/apis/meta/v1/label_selector"
 module K8S
   # Namespace holding the types for `Api::Extensions::V1beta1::NetworkPolicyPeer`.
   module Types::Api::Extensions::V1beta1::NetworkPolicyPeer
-    alias ValueType = ::K8S::Api::Extensions::V1beta1::IPBlock | ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # IPBlock defines policy on a particular IPBlock. If this field is set then neither of the other fields can be.
     abstract def ip_block : ::K8S::Api::Extensions::V1beta1::IPBlock?
     # :ditto:
@@ -50,9 +47,8 @@ module K8S
     namespace_selector: {key: "namespaceSelector", accessor: "namespace_selector", kind: "::K8S::Apimachinery::Apis::Meta::V1::LabelSelector", nilable: true, default: nil, read_only: false, description: "Selects Namespaces using cluster-scoped labels. This field follows standard label selector semantics; if present but empty, it selects all namespaces.\n\nIf PodSelector is also set, then the NetworkPolicyPeer as a whole selects the Pods matching PodSelector in the Namespaces selected by NamespaceSelector. Otherwise it selects all Pods in the Namespaces selected by NamespaceSelector.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     pod_selector: {key: "podSelector", accessor: "pod_selector", kind: "::K8S::Apimachinery::Apis::Meta::V1::LabelSelector", nilable: true, default: nil, read_only: false, description: "This is a label selector which selects Pods. This field follows standard label selector semantics; if present but empty, it selects all pods.\n\nIf NamespaceSelector is also set, then the NetworkPolicyPeer as a whole selects the Pods matching PodSelector in the Namespaces selected by NamespaceSelector. Otherwise it selects the Pods matching PodSelector in the policy's own Namespace.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Extensions::V1beta1::NetworkPolicyPeer < ::K8S::Types::Api::Extensions::V1beta1::NetworkPolicyPeer::Instance
+  class Api::Extensions::V1beta1::NetworkPolicyPeer < ::K8S::GenericObject
     include ::K8S::Types::Api::Extensions::V1beta1::NetworkPolicyPeer
-    include ::K8S::Kubernetes::Object
 
     # IPBlock defines policy on a particular IPBlock. If this field is set then neither of the other fields can be.
     def ip_block : ::K8S::Api::Extensions::V1beta1::IPBlock?

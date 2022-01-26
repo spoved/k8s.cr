@@ -10,9 +10,6 @@ require "./preconditions"
 module K8S
   # Namespace holding the types for `Apimachinery::Apis::Meta::V1::DeleteOptions`.
   module Types::Apimachinery::Apis::Meta::V1::DeleteOptions
-    alias ValueType = String | ::Array(String) | Int32 | ::Bool | ::K8S::Apimachinery::Apis::Meta::V1::Preconditions | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources))
     abstract def api_version : String?
     # :ditto:
@@ -128,9 +125,8 @@ module K8S
     preconditions: {key: "preconditions", accessor: "preconditions", kind: "::K8S::Apimachinery::Apis::Meta::V1::Preconditions", nilable: true, default: nil, read_only: false, description: "Must be fulfilled before a deletion is carried out. If not possible, a 409 Conflict status will be returned.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     propagation_policy: {key: "propagationPolicy", accessor: "propagation_policy", kind: "String", nilable: true, default: nil, read_only: false, description: "Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: 'Orphan' - orphan the dependents; 'Background' - allow the garbage collector to delete the dependents in the background; 'Foreground' - a cascading policy that deletes all dependents in the foreground.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Apimachinery::Apis::Meta::V1::DeleteOptions < ::K8S::Types::Apimachinery::Apis::Meta::V1::DeleteOptions::Instance
+  class Apimachinery::Apis::Meta::V1::DeleteOptions < ::K8S::GenericObject
     include ::K8S::Types::Apimachinery::Apis::Meta::V1::DeleteOptions
-    include ::K8S::Kubernetes::Object
 
     # APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources))
     def api_version : String?

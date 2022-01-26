@@ -8,9 +8,6 @@ module K8S::Types::Api::Flowcontrol::V1alpha1::PriorityLevelConfigurationConditi
 module K8S
   # Namespace holding the types for `Api::Flowcontrol::V1alpha1::PriorityLevelConfigurationCondition`.
   module Types::Api::Flowcontrol::V1alpha1::PriorityLevelConfigurationCondition
-    alias ValueType = ::Time | String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # `lastTransitionTime` is the last time the condition transitioned from one status to another.
     abstract def last_transition_time : ::Time?
     # :ditto:
@@ -61,9 +58,8 @@ module K8S
     status: {key: "status", accessor: "status", kind: "String", nilable: true, default: nil, read_only: false, description: "`status` is the status of the condition. Can be True, False, Unknown. Required.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     type: {key: "type", accessor: "type", kind: "String", nilable: true, default: nil, read_only: false, description: "`type` is the type of the condition. Required.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Flowcontrol::V1alpha1::PriorityLevelConfigurationCondition < ::K8S::Types::Api::Flowcontrol::V1alpha1::PriorityLevelConfigurationCondition::Instance
+  class Api::Flowcontrol::V1alpha1::PriorityLevelConfigurationCondition < ::K8S::GenericObject
     include ::K8S::Types::Api::Flowcontrol::V1alpha1::PriorityLevelConfigurationCondition
-    include ::K8S::Kubernetes::Object
 
     # `lastTransitionTime` is the last time the condition transitioned from one status to another.
     def last_transition_time : ::Time?

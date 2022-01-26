@@ -10,9 +10,6 @@ require "./job_template_spec"
 module K8S
   # Namespace holding the types for `Api::Batch::V1::CronJobSpec`.
   module Types::Api::Batch::V1::CronJobSpec
-    alias ValueType = String | Int32 | ::K8S::Api::Batch::V1::JobTemplateSpec | ::Bool | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Specifies how to treat concurrent executions of a Job. Valid values are: - "Allow" (default): allows CronJobs to run concurrently; - "Forbid": forbids concurrent runs, skipping next run if previous run hasn't finished yet; - "Replace": cancels currently running job and replaces it with a new one
     abstract def concurrency_policy : String?
     # :ditto:
@@ -81,9 +78,8 @@ module K8S
     successful_jobs_history_limit: {key: "successfulJobsHistoryLimit", accessor: "successful_jobs_history_limit", kind: "Int32", nilable: true, default: nil, read_only: false, description: "The number of successful finished jobs to retain. Value must be non-negative integer. Defaults to 3.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     suspend: {key: "suspend", accessor: "suspend", kind: "::Bool", nilable: true, default: nil, read_only: false, description: "This flag tells the controller to suspend subsequent executions, it does not apply to already started executions.  Defaults to false.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Batch::V1::CronJobSpec < ::K8S::Types::Api::Batch::V1::CronJobSpec::Instance
+  class Api::Batch::V1::CronJobSpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Batch::V1::CronJobSpec
-    include ::K8S::Kubernetes::Object
 
     # Specifies how to treat concurrent executions of a Job. Valid values are: - "Allow" (default): allows CronJobs to run concurrently; - "Forbid": forbids concurrent runs, skipping next run if previous run hasn't finished yet; - "Replace": cancels currently running job and replaces it with a new one
     def concurrency_policy : String?

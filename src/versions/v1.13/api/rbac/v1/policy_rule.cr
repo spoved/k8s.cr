@@ -8,9 +8,6 @@ module K8S::Types::Api::Rbac::V1::PolicyRule; end
 module K8S
   # Namespace holding the types for `Api::Rbac::V1::PolicyRule`.
   module Types::Api::Rbac::V1::PolicyRule
-    alias ValueType = ::Array(String) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # APIGroups is the name of the APIGroup that contains the resources.  If multiple API groups are specified, any action requested against one of the enumerated resources in any API group will be allowed.
     abstract def api_groups : ::Array(String)?
     # :ditto:
@@ -61,9 +58,8 @@ module K8S
     resources: {key: "resources", accessor: "resources", kind: "::Array(String)", nilable: true, default: nil, read_only: false, description: "Resources is a list of resources this rule applies to.  ResourceAll represents all resources.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     verbs: {key: "verbs", accessor: "verbs", kind: "::Array(String)", nilable: false, default: nil, read_only: false, description: "Verbs is a list of Verbs that apply to ALL the ResourceKinds and AttributeRestrictions contained in this rule.  VerbAll represents all kinds.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Rbac::V1::PolicyRule < ::K8S::Types::Api::Rbac::V1::PolicyRule::Instance
+  class Api::Rbac::V1::PolicyRule < ::K8S::GenericObject
     include ::K8S::Types::Api::Rbac::V1::PolicyRule
-    include ::K8S::Kubernetes::Object
 
     # APIGroups is the name of the APIGroup that contains the resources.  If multiple API groups are specified, any action requested against one of the enumerated resources in any API group will be allowed.
     def api_groups : ::Array(String)?

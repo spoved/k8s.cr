@@ -8,9 +8,6 @@ module K8S::Types::Api::Core::V1::SecretKeySelector; end
 module K8S
   # Namespace holding the types for `Api::Core::V1::SecretKeySelector`.
   module Types::Api::Core::V1::SecretKeySelector
-    alias ValueType = String | ::Bool | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # The key of the secret to select from.  Must be a valid secret key.
     abstract def key : String
     # :ditto:
@@ -43,9 +40,8 @@ module K8S
     name: {key: "name", accessor: "name", kind: "String", nilable: true, default: nil, read_only: false, description: "Name of the referent. More info: [https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     optional: {key: "optional", accessor: "optional", kind: "::Bool", nilable: true, default: nil, read_only: false, description: "Specify whether the Secret or it's key must be defined", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::SecretKeySelector < ::K8S::Types::Api::Core::V1::SecretKeySelector::Instance
+  class Api::Core::V1::SecretKeySelector < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::SecretKeySelector
-    include ::K8S::Kubernetes::Object
 
     # The key of the secret to select from.  Must be a valid secret key.
     def key : String

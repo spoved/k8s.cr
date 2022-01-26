@@ -8,9 +8,6 @@ module K8S::Types::Apimachinery::Apis::Meta::V1::GroupVersionForDiscovery; end
 module K8S
   # Namespace holding the types for `Apimachinery::Apis::Meta::V1::GroupVersionForDiscovery`.
   module Types::Apimachinery::Apis::Meta::V1::GroupVersionForDiscovery
-    alias ValueType = String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # groupVersion specifies the API group and version in the form [["group/version"]("group/version")](["group/version"]("group/version"))
     abstract def group_version : String
     # :ditto:
@@ -34,9 +31,8 @@ module K8S
     group_version: {key: "groupVersion", accessor: "group_version", kind: "String", nilable: false, default: nil, read_only: false, description: "groupVersion specifies the API group and version in the form [\"group/version\"](\"group/version\")", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     version: {key: "version", accessor: "version", kind: "String", nilable: false, default: nil, read_only: false, description: "version specifies the version in the form of \"version\". This is to save the clients the trouble of splitting the GroupVersion.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Apimachinery::Apis::Meta::V1::GroupVersionForDiscovery < ::K8S::Types::Apimachinery::Apis::Meta::V1::GroupVersionForDiscovery::Instance
+  class Apimachinery::Apis::Meta::V1::GroupVersionForDiscovery < ::K8S::GenericObject
     include ::K8S::Types::Apimachinery::Apis::Meta::V1::GroupVersionForDiscovery
-    include ::K8S::Kubernetes::Object
 
     # groupVersion specifies the API group and version in the form [["group/version"]("group/version")](["group/version"]("group/version"))
     def group_version : String

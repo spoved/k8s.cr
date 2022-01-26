@@ -12,9 +12,6 @@ require "./custom_resource_definition_version"
 module K8S
   # Namespace holding the types for `ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionSpec`.
   module Types::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionSpec
-    alias ValueType = ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceConversion | String | ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionNames | ::Bool | ::Array(::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionVersion) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # conversion defines conversion settings for the CRD.
     abstract def conversion : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceConversion?
     # :ditto:
@@ -74,9 +71,8 @@ module K8S
     scope: {key: "scope", accessor: "scope", kind: "String", nilable: false, default: nil, read_only: false, description: "scope indicates whether the defined custom resource is cluster- or namespace-scoped. Allowed values are `Cluster` and `Namespaced`.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     versions: {key: "versions", accessor: "versions", kind: "::Array(::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionVersion)", nilable: false, default: nil, read_only: false, description: "versions is the list of all API versions of the defined custom resource. Version names are used to compute the order in which served versions are listed in API discovery. If the version string is \"kube-like\", it will sort above non \"kube-like\" version strings, which are ordered lexicographically. \"Kube-like\" versions start with a \"v\", then are followed by a number (the major version), then optionally the string \"alpha\" or \"beta\" and another number (the minor version). These are sorted first by GA > beta > alpha (where GA is a version with no suffix such as beta or alpha), and then by comparing major version, then minor version. An example sorted list of versions: v10, v2, v1, v11beta2, v10beta3, v3beta1, v12alpha1, v11alpha2, foo1, foo10.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionSpec < ::K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionSpec::Instance
+  class ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionSpec < ::K8S::GenericObject
     include ::K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionSpec
-    include ::K8S::Kubernetes::Object
 
     # conversion defines conversion settings for the CRD.
     def conversion : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceConversion?

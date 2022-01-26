@@ -10,9 +10,6 @@ require "./scope_selector"
 module K8S
   # Namespace holding the types for `Api::Core::V1::ResourceQuotaSpec`.
   module Types::Api::Core::V1::ResourceQuotaSpec
-    alias ValueType = ::Hash(String, ::Int32 | ::String) | ::K8S::Api::Core::V1::ScopeSelector | ::Array(String) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # hard is the set of desired hard limits for each named resource. More info: [[https://kubernetes.io/docs/concepts/policy/resource-quotas/](https://kubernetes.io/docs/concepts/policy/resource-quotas/)](https://kubernetes.io/docs/concepts/policy/resource-quotas/](https://kubernetes.io/docs/concepts/policy/resource-quotas/))
     abstract def hard : ::Hash(String, ::Int32 | ::String)?
     # :ditto:
@@ -45,9 +42,8 @@ module K8S
     scope_selector: {key: "scopeSelector", accessor: "scope_selector", kind: "::K8S::Api::Core::V1::ScopeSelector", nilable: true, default: nil, read_only: false, description: "scopeSelector is also a collection of filters like scopes that must match each object tracked by a quota but expressed using ScopeSelectorOperator in combination with possible values. For a resource to match, both scopes AND scopeSelector (if specified in spec), must be matched.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     scopes: {key: "scopes", accessor: "scopes", kind: "::Array(String)", nilable: true, default: nil, read_only: false, description: "A collection of filters that must match each object tracked by a quota. If not specified, the quota matches all objects.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::ResourceQuotaSpec < ::K8S::Types::Api::Core::V1::ResourceQuotaSpec::Instance
+  class Api::Core::V1::ResourceQuotaSpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::ResourceQuotaSpec
-    include ::K8S::Kubernetes::Object
 
     # hard is the set of desired hard limits for each named resource. More info: [[https://kubernetes.io/docs/concepts/policy/resource-quotas/](https://kubernetes.io/docs/concepts/policy/resource-quotas/)](https://kubernetes.io/docs/concepts/policy/resource-quotas/](https://kubernetes.io/docs/concepts/policy/resource-quotas/))
     def hard : ::Hash(String, ::Int32 | ::String)?

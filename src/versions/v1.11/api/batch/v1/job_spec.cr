@@ -11,9 +11,6 @@ require "../../core/v1/pod_template_spec"
 module K8S
   # Namespace holding the types for `Api::Batch::V1::JobSpec`.
   module Types::Api::Batch::V1::JobSpec
-    alias ValueType = Int32 | ::Bool | ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector | ::K8S::Api::Core::V1::PodTemplateSpec | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Specifies the duration in seconds relative to the startTime that the job may be active before the system tries to terminate it; value must be positive integer
     abstract def active_deadline_seconds : Int32?
     # :ditto:
@@ -82,9 +79,8 @@ module K8S
     selector: {key: "selector", accessor: "selector", kind: "::K8S::Apimachinery::Apis::Meta::V1::LabelSelector", nilable: true, default: nil, read_only: false, description: "A label query over pods that should match the pod count. Normally, the system sets this field for you. More info: [https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     template: {key: "template", accessor: "template", kind: "::K8S::Api::Core::V1::PodTemplateSpec", nilable: false, default: nil, read_only: false, description: "Describes the pod that will be created when executing a job. More info: [https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Batch::V1::JobSpec < ::K8S::Types::Api::Batch::V1::JobSpec::Instance
+  class Api::Batch::V1::JobSpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Batch::V1::JobSpec
-    include ::K8S::Kubernetes::Object
 
     # Specifies the duration in seconds relative to the startTime that the job may be active before the system tries to terminate it; value must be positive integer
     def active_deadline_seconds : Int32?

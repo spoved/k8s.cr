@@ -11,9 +11,6 @@ require "./endpoint_port"
 module K8S
   # Namespace holding the types for `Api::Core::V1::EndpointSubset`.
   module Types::Api::Core::V1::EndpointSubset
-    alias ValueType = ::Array(::K8S::Api::Core::V1::EndpointAddress) | ::Array(::K8S::Api::Core::V1::EndpointPort) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # IP addresses which offer the related ports that are marked as ready. These endpoints should be considered safe for load balancers and clients to utilize.
     abstract def addresses : ::Array(::K8S::Api::Core::V1::EndpointAddress)?
     # :ditto:
@@ -53,9 +50,8 @@ module K8S
     not_ready_addresses: {key: "notReadyAddresses", accessor: "not_ready_addresses", kind: "::Array(::K8S::Api::Core::V1::EndpointAddress)", nilable: true, default: nil, read_only: false, description: "IP addresses which offer the related ports but are not currently marked as ready because they have not yet finished starting, have recently failed a readiness check, or have recently failed a liveness check.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     ports: {key: "ports", accessor: "ports", kind: "::Array(::K8S::Api::Core::V1::EndpointPort)", nilable: true, default: nil, read_only: false, description: "Port numbers available on the related IP addresses.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::EndpointSubset < ::K8S::Types::Api::Core::V1::EndpointSubset::Instance
+  class Api::Core::V1::EndpointSubset < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::EndpointSubset
-    include ::K8S::Kubernetes::Object
 
     # IP addresses which offer the related ports that are marked as ready. These endpoints should be considered safe for load balancers and clients to utilize.
     def addresses : ::Array(::K8S::Api::Core::V1::EndpointAddress)?

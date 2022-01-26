@@ -10,9 +10,6 @@ require "./rollback_config"
 module K8S
   # Namespace holding the types for `Api::Apps::V1beta1::DeploymentRollback`.
   module Types::Api::Apps::V1beta1::DeploymentRollback
-    alias ValueType = String | ::K8S::Api::Apps::V1beta1::RollbackConfig | ::Hash(String, String) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[https://git.k8s.io/community/contributors/devel/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/api-conventions.md#resources))
     abstract def api_version : String?
     # :ditto:
@@ -64,9 +61,8 @@ module K8S
     rollback_to: {key: "rollbackTo", accessor: "rollback_to", kind: "::K8S::Api::Apps::V1beta1::RollbackConfig", nilable: false, default: nil, read_only: false, description: "The config of this deployment rollback.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     updated_annotations: {key: "updatedAnnotations", accessor: "updated_annotations", kind: "::Hash(String, String)", nilable: true, default: nil, read_only: false, description: "The annotations to be updated to a deployment", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Apps::V1beta1::DeploymentRollback < ::K8S::Types::Api::Apps::V1beta1::DeploymentRollback::Instance
+  class Api::Apps::V1beta1::DeploymentRollback < ::K8S::GenericObject
     include ::K8S::Types::Api::Apps::V1beta1::DeploymentRollback
-    include ::K8S::Kubernetes::Object
 
     # APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[https://git.k8s.io/community/contributors/devel/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/api-conventions.md#resources))
     def api_version : String?

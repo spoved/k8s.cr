@@ -10,9 +10,6 @@ require "./local_object_reference"
 module K8S
   # Namespace holding the types for `Api::Core::V1::ScaleIOVolumeSource`.
   module Types::Api::Core::V1::ScaleIOVolumeSource
-    alias ValueType = String | ::Bool | ::K8S::Api::Core::V1::LocalObjectReference | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified.
     abstract def fs_type : String?
     # :ditto:
@@ -108,9 +105,8 @@ module K8S
     system: {key: "system", accessor: "system", kind: "String", nilable: false, default: nil, read_only: false, description: "The name of the storage system as configured in ScaleIO.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     volume_name: {key: "volumeName", accessor: "volume_name", kind: "String", nilable: true, default: nil, read_only: false, description: "The name of a volume already created in the ScaleIO system that is associated with this volume source.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::ScaleIOVolumeSource < ::K8S::Types::Api::Core::V1::ScaleIOVolumeSource::Instance
+  class Api::Core::V1::ScaleIOVolumeSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::ScaleIOVolumeSource
-    include ::K8S::Kubernetes::Object
 
     # Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified.
     def fs_type : String?

@@ -10,9 +10,6 @@ require "./deployment_condition"
 module K8S
   # Namespace holding the types for `Api::Apps::V1::DeploymentStatus`.
   module Types::Api::Apps::V1::DeploymentStatus
-    alias ValueType = Int32 | ::Array(::K8S::Api::Apps::V1::DeploymentCondition) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Total number of available pods (ready for at least minReadySeconds) targeted by this deployment.
     abstract def available_replicas : Int32?
     # :ditto:
@@ -90,9 +87,8 @@ module K8S
     unavailable_replicas: {key: "unavailableReplicas", accessor: "unavailable_replicas", kind: "Int32", nilable: true, default: nil, read_only: false, description: "Total number of unavailable pods targeted by this deployment. This is the total number of pods that are still required for the deployment to have 100% available capacity. They may either be pods that are running but not yet available or pods that still have not been created.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     updated_replicas: {key: "updatedReplicas", accessor: "updated_replicas", kind: "Int32", nilable: true, default: nil, read_only: false, description: "Total number of non-terminated pods targeted by this deployment that have the desired template spec.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Apps::V1::DeploymentStatus < ::K8S::Types::Api::Apps::V1::DeploymentStatus::Instance
+  class Api::Apps::V1::DeploymentStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Apps::V1::DeploymentStatus
-    include ::K8S::Kubernetes::Object
 
     # Total number of available pods (ready for at least minReadySeconds) targeted by this deployment.
     def available_replicas : Int32?

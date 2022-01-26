@@ -10,9 +10,6 @@ require "../../../runtime/raw_extension"
 module K8S
   # Namespace holding the types for `Apimachinery::Apis::Meta::V1::WatchEvent`.
   module Types::Apimachinery::Apis::Meta::V1::WatchEvent
-    alias ValueType = ::K8S::Apimachinery::Runtime::RawExtension | String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Object is:
     #  * If Type is Added or Modified: the new state of the object.
     #  * If Type is Deleted: the state of the object immediately before deletion.
@@ -92,9 +89,8 @@ module K8S
     object: {key: "object", accessor: "object", kind: "::K8S::Apimachinery::Runtime::RawExtension", nilable: false, default: nil, read_only: false, description: "Object is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     type: {key: "type", accessor: "type", kind: "String", nilable: false, default: nil, read_only: false, description: nil, x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Apimachinery::Apis::Meta::V1::WatchEvent < ::K8S::Types::Apimachinery::Apis::Meta::V1::WatchEvent::Instance
+  class Apimachinery::Apis::Meta::V1::WatchEvent < ::K8S::GenericObject
     include ::K8S::Types::Apimachinery::Apis::Meta::V1::WatchEvent
-    include ::K8S::Kubernetes::Object
 
     # Object is:
     #  * If Type is Added or Modified: the new state of the object.

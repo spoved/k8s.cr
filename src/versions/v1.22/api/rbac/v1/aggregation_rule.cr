@@ -10,9 +10,6 @@ require "../../../apimachinery/apis/meta/v1/label_selector"
 module K8S
   # Namespace holding the types for `Api::Rbac::V1::AggregationRule`.
   module Types::Api::Rbac::V1::AggregationRule
-    alias ValueType = ::Array(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # ClusterRoleSelectors holds a list of selectors which will be used to find ClusterRoles and create the rules. If any of the selectors match, then the ClusterRole's permissions will be added
     abstract def cluster_role_selectors : ::Array(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector)?
     # :ditto:
@@ -27,9 +24,8 @@ module K8S
   @[::K8S::Properties(
     cluster_role_selectors: {key: "clusterRoleSelectors", accessor: "cluster_role_selectors", kind: "::Array(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector)", nilable: true, default: nil, read_only: false, description: "ClusterRoleSelectors holds a list of selectors which will be used to find ClusterRoles and create the rules. If any of the selectors match, then the ClusterRole's permissions will be added", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Rbac::V1::AggregationRule < ::K8S::Types::Api::Rbac::V1::AggregationRule::Instance
+  class Api::Rbac::V1::AggregationRule < ::K8S::GenericObject
     include ::K8S::Types::Api::Rbac::V1::AggregationRule
-    include ::K8S::Kubernetes::Object
 
     # ClusterRoleSelectors holds a list of selectors which will be used to find ClusterRoles and create the rules. If any of the selectors match, then the ClusterRole's permissions will be added
     def cluster_role_selectors : ::Array(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector)?

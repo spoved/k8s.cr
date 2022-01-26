@@ -10,9 +10,6 @@ require "./label_selector_requirement"
 module K8S
   # Namespace holding the types for `Apimachinery::Apis::Meta::V1::LabelSelector`.
   module Types::Apimachinery::Apis::Meta::V1::LabelSelector
-    alias ValueType = ::Array(::K8S::Apimachinery::Apis::Meta::V1::LabelSelectorRequirement) | ::Hash(String, String) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # matchExpressions is a list of label selector requirements. The requirements are ANDed.
     abstract def match_expressions : ::Array(::K8S::Apimachinery::Apis::Meta::V1::LabelSelectorRequirement)?
     # :ditto:
@@ -36,9 +33,8 @@ module K8S
     match_expressions: {key: "matchExpressions", accessor: "match_expressions", kind: "::Array(::K8S::Apimachinery::Apis::Meta::V1::LabelSelectorRequirement)", nilable: true, default: nil, read_only: false, description: "matchExpressions is a list of label selector requirements. The requirements are ANDed.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     match_labels: {key: "matchLabels", accessor: "match_labels", kind: "::Hash(String, String)", nilable: true, default: nil, read_only: false, description: "matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is \"key\", the operator is \"In\", and the values array contains only \"value\". The requirements are ANDed.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Apimachinery::Apis::Meta::V1::LabelSelector < ::K8S::Types::Apimachinery::Apis::Meta::V1::LabelSelector::Instance
+  class Apimachinery::Apis::Meta::V1::LabelSelector < ::K8S::GenericObject
     include ::K8S::Types::Apimachinery::Apis::Meta::V1::LabelSelector
-    include ::K8S::Kubernetes::Object
 
     # matchExpressions is a list of label selector requirements. The requirements are ANDed.
     def match_expressions : ::Array(::K8S::Apimachinery::Apis::Meta::V1::LabelSelectorRequirement)?

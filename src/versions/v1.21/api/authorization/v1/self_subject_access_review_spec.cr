@@ -11,9 +11,6 @@ require "./resource_attributes"
 module K8S
   # Namespace holding the types for `Api::Authorization::V1::SelfSubjectAccessReviewSpec`.
   module Types::Api::Authorization::V1::SelfSubjectAccessReviewSpec
-    alias ValueType = ::K8S::Api::Authorization::V1::NonResourceAttributes | ::K8S::Api::Authorization::V1::ResourceAttributes | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # NonResourceAttributes describes information for a non-resource access request
     abstract def non_resource_attributes : ::K8S::Api::Authorization::V1::NonResourceAttributes?
     # :ditto:
@@ -37,9 +34,8 @@ module K8S
     non_resource_attributes: {key: "nonResourceAttributes", accessor: "non_resource_attributes", kind: "::K8S::Api::Authorization::V1::NonResourceAttributes", nilable: true, default: nil, read_only: false, description: "NonResourceAttributes describes information for a non-resource access request", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     resource_attributes: {key: "resourceAttributes", accessor: "resource_attributes", kind: "::K8S::Api::Authorization::V1::ResourceAttributes", nilable: true, default: nil, read_only: false, description: "ResourceAuthorizationAttributes describes information for a resource access request", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Authorization::V1::SelfSubjectAccessReviewSpec < ::K8S::Types::Api::Authorization::V1::SelfSubjectAccessReviewSpec::Instance
+  class Api::Authorization::V1::SelfSubjectAccessReviewSpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Authorization::V1::SelfSubjectAccessReviewSpec
-    include ::K8S::Kubernetes::Object
 
     # NonResourceAttributes describes information for a non-resource access request
     def non_resource_attributes : ::K8S::Api::Authorization::V1::NonResourceAttributes?

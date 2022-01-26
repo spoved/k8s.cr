@@ -10,9 +10,6 @@ require "./persistent_volume_claim_condition"
 module K8S
   # Namespace holding the types for `Api::Core::V1::PersistentVolumeClaimStatus`.
   module Types::Api::Core::V1::PersistentVolumeClaimStatus
-    alias ValueType = ::Array(String) | ::Hash(String, ::Int32 | ::String) | ::Array(::K8S::Api::Core::V1::PersistentVolumeClaimCondition) | String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # AccessModes contains the actual access modes the volume backing the PVC has. More info: [[https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1](https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1)](https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1](https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1))
     abstract def access_modes : ::Array(String)?
     # :ditto:
@@ -54,9 +51,8 @@ module K8S
     conditions: {key: "conditions", accessor: "conditions", kind: "::Array(::K8S::Api::Core::V1::PersistentVolumeClaimCondition)", nilable: true, default: nil, read_only: false, description: "Current Condition of persistent volume claim. If underlying persistent volume is being resized then the Condition will be set to 'ResizeStarted'.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     phase: {key: "phase", accessor: "phase", kind: "String", nilable: true, default: nil, read_only: false, description: "Phase represents the current phase of PersistentVolumeClaim.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::PersistentVolumeClaimStatus < ::K8S::Types::Api::Core::V1::PersistentVolumeClaimStatus::Instance
+  class Api::Core::V1::PersistentVolumeClaimStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::PersistentVolumeClaimStatus
-    include ::K8S::Kubernetes::Object
 
     # AccessModes contains the actual access modes the volume backing the PVC has. More info: [[https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1](https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1)](https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1](https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1))
     def access_modes : ::Array(String)?

@@ -8,9 +8,6 @@ module K8S::Types::Api::Networking::V1::ServiceBackendPort; end
 module K8S
   # Namespace holding the types for `Api::Networking::V1::ServiceBackendPort`.
   module Types::Api::Networking::V1::ServiceBackendPort
-    alias ValueType = String | Int32 | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Name is the name of the port on the Service. This is a mutually exclusive setting with "Number".
     abstract def name : String?
     # :ditto:
@@ -34,9 +31,8 @@ module K8S
     name: {key: "name", accessor: "name", kind: "String", nilable: true, default: nil, read_only: false, description: "Name is the name of the port on the Service. This is a mutually exclusive setting with \"Number\".", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     number: {key: "number", accessor: "number", kind: "Int32", nilable: true, default: nil, read_only: false, description: "Number is the numerical port number (e.g. 80) on the Service. This is a mutually exclusive setting with \"Name\".", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Networking::V1::ServiceBackendPort < ::K8S::Types::Api::Networking::V1::ServiceBackendPort::Instance
+  class Api::Networking::V1::ServiceBackendPort < ::K8S::GenericObject
     include ::K8S::Types::Api::Networking::V1::ServiceBackendPort
-    include ::K8S::Kubernetes::Object
 
     # Name is the name of the port on the Service. This is a mutually exclusive setting with "Number".
     def name : String?

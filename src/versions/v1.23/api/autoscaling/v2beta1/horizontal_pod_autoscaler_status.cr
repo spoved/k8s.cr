@@ -11,9 +11,6 @@ require "./metric_status"
 module K8S
   # Namespace holding the types for `Api::Autoscaling::V2beta1::HorizontalPodAutoscalerStatus`.
   module Types::Api::Autoscaling::V2beta1::HorizontalPodAutoscalerStatus
-    alias ValueType = ::Array(::K8S::Api::Autoscaling::V2beta1::HorizontalPodAutoscalerCondition) | ::Array(::K8S::Api::Autoscaling::V2beta1::MetricStatus) | Int32 | ::Time | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # conditions is the set of conditions required for this autoscaler to scale its target, and indicates whether or not those conditions are met.
     abstract def conditions : ::Array(::K8S::Api::Autoscaling::V2beta1::HorizontalPodAutoscalerCondition)?
     # :ditto:
@@ -73,9 +70,8 @@ module K8S
     last_scale_time: {key: "lastScaleTime", accessor: "last_scale_time", kind: "::Time", nilable: true, default: nil, read_only: false, description: "lastScaleTime is the last time the HorizontalPodAutoscaler scaled the number of pods, used by the autoscaler to control how often the number of pods is changed.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     observed_generation: {key: "observedGeneration", accessor: "observed_generation", kind: "Int32", nilable: true, default: nil, read_only: false, description: "observedGeneration is the most recent generation observed by this autoscaler.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Autoscaling::V2beta1::HorizontalPodAutoscalerStatus < ::K8S::Types::Api::Autoscaling::V2beta1::HorizontalPodAutoscalerStatus::Instance
+  class Api::Autoscaling::V2beta1::HorizontalPodAutoscalerStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Autoscaling::V2beta1::HorizontalPodAutoscalerStatus
-    include ::K8S::Kubernetes::Object
 
     # conditions is the set of conditions required for this autoscaler to scale its target, and indicates whether or not those conditions are met.
     def conditions : ::Array(::K8S::Api::Autoscaling::V2beta1::HorizontalPodAutoscalerCondition)?

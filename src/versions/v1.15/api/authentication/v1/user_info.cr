@@ -8,9 +8,6 @@ module K8S::Types::Api::Authentication::V1::UserInfo; end
 module K8S
   # Namespace holding the types for `Api::Authentication::V1::UserInfo`.
   module Types::Api::Authentication::V1::UserInfo
-    alias ValueType = ::Hash(String, ::Array(String)) | ::Array(String) | String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Any additional information provided by the authenticator.
     abstract def extra : ::Hash(String, ::Array(String))?
     # :ditto:
@@ -52,9 +49,8 @@ module K8S
     uid: {key: "uid", accessor: "uid", kind: "String", nilable: true, default: nil, read_only: false, description: "A unique value that identifies this user across time. If this user is deleted and another user by the same name is added, they will have different UIDs.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     username: {key: "username", accessor: "username", kind: "String", nilable: true, default: nil, read_only: false, description: "The name that uniquely identifies this user among all active users.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Authentication::V1::UserInfo < ::K8S::Types::Api::Authentication::V1::UserInfo::Instance
+  class Api::Authentication::V1::UserInfo < ::K8S::GenericObject
     include ::K8S::Types::Api::Authentication::V1::UserInfo
-    include ::K8S::Kubernetes::Object
 
     # Any additional information provided by the authenticator.
     def extra : ::Hash(String, ::Array(String))?

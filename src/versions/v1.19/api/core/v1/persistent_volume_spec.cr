@@ -33,9 +33,6 @@ require "./vsphere_virtual_disk_volume_source"
 module K8S
   # Namespace holding the types for `Api::Core::V1::PersistentVolumeSpec`.
   module Types::Api::Core::V1::PersistentVolumeSpec
-    alias ValueType = ::Array(String) | ::K8S::Api::Core::V1::AWSElasticBlockStoreVolumeSource | ::K8S::Api::Core::V1::AzureDiskVolumeSource | ::K8S::Api::Core::V1::AzureFilePersistentVolumeSource | ::Hash(String, ::Int32 | ::String) | ::K8S::Api::Core::V1::CephFSPersistentVolumeSource | ::K8S::Api::Core::V1::CinderPersistentVolumeSource | ::K8S::Api::Core::V1::ObjectReference | ::K8S::Api::Core::V1::CSIPersistentVolumeSource | ::K8S::Api::Core::V1::FCVolumeSource | ::K8S::Api::Core::V1::FlexPersistentVolumeSource | ::K8S::Api::Core::V1::FlockerVolumeSource | ::K8S::Api::Core::V1::GCEPersistentDiskVolumeSource | ::K8S::Api::Core::V1::GlusterfsPersistentVolumeSource | ::K8S::Api::Core::V1::HostPathVolumeSource | ::K8S::Api::Core::V1::ISCSIPersistentVolumeSource | ::K8S::Api::Core::V1::LocalVolumeSource | ::K8S::Api::Core::V1::NFSVolumeSource | ::K8S::Api::Core::V1::VolumeNodeAffinity | String | ::K8S::Api::Core::V1::PhotonPersistentDiskVolumeSource | ::K8S::Api::Core::V1::PortworxVolumeSource | ::K8S::Api::Core::V1::QuobyteVolumeSource | ::K8S::Api::Core::V1::RBDPersistentVolumeSource | ::K8S::Api::Core::V1::ScaleIOPersistentVolumeSource | ::K8S::Api::Core::V1::StorageOSPersistentVolumeSource | ::K8S::Api::Core::V1::VsphereVirtualDiskVolumeSource | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # AccessModes contains all ways the volume can be mounted. More info: [[https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes](https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes)](https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes](https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes))
     abstract def access_modes : ::Array(String)?
     # :ditto:
@@ -311,9 +308,8 @@ module K8S
     volume_mode: {key: "volumeMode", accessor: "volume_mode", kind: "String", nilable: true, default: nil, read_only: false, description: "volumeMode defines if a volume is intended to be used with a formatted filesystem or to remain in raw block state. Value of Filesystem is implied when not included in spec.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     vsphere_volume: {key: "vsphereVolume", accessor: "vsphere_volume", kind: "::K8S::Api::Core::V1::VsphereVirtualDiskVolumeSource", nilable: true, default: nil, read_only: false, description: "VsphereVolume represents a vSphere volume attached and mounted on kubelets host machine", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::PersistentVolumeSpec < ::K8S::Types::Api::Core::V1::PersistentVolumeSpec::Instance
+  class Api::Core::V1::PersistentVolumeSpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::PersistentVolumeSpec
-    include ::K8S::Kubernetes::Object
 
     # AccessModes contains all ways the volume can be mounted. More info: [[https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes](https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes)](https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes](https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes))
     def access_modes : ::Array(String)?

@@ -8,9 +8,6 @@ module K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResour
 module K8S
   # Namespace holding the types for `ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceColumnDefinition`.
   module Types::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceColumnDefinition
-    alias ValueType = String | Int32 | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # description is a human readable description of this column.
     abstract def description : String?
     # :ditto:
@@ -70,9 +67,8 @@ module K8S
     priority: {key: "priority", accessor: "priority", kind: "Int32", nilable: true, default: nil, read_only: false, description: "priority is an integer defining the relative importance of this column compared to others. Lower numbers are considered higher priority. Columns that may be omitted in limited space scenarios should be given a priority greater than 0.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     type: {key: "type", accessor: "type", kind: "String", nilable: false, default: nil, read_only: false, description: "type is an OpenAPI type definition for this column. See [https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types for details.](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types for details.)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceColumnDefinition < ::K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceColumnDefinition::Instance
+  class ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceColumnDefinition < ::K8S::GenericObject
     include ::K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceColumnDefinition
-    include ::K8S::Kubernetes::Object
 
     # description is a human readable description of this column.
     def description : String?

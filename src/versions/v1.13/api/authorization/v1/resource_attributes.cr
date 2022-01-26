@@ -8,9 +8,6 @@ module K8S::Types::Api::Authorization::V1::ResourceAttributes; end
 module K8S
   # Namespace holding the types for `Api::Authorization::V1::ResourceAttributes`.
   module Types::Api::Authorization::V1::ResourceAttributes
-    alias ValueType = String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Group is the API Group of the Resource.  "*" means all.
     abstract def group : String?
     # :ditto:
@@ -79,9 +76,8 @@ module K8S
     verb: {key: "verb", accessor: "verb", kind: "String", nilable: true, default: nil, read_only: false, description: "Verb is a kubernetes resource API verb, like: get, list, watch, create, update, delete, proxy.  \"*\" means all.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     version: {key: "version", accessor: "version", kind: "String", nilable: true, default: nil, read_only: false, description: "Version is the API Version of the Resource.  \"*\" means all.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Authorization::V1::ResourceAttributes < ::K8S::Types::Api::Authorization::V1::ResourceAttributes::Instance
+  class Api::Authorization::V1::ResourceAttributes < ::K8S::GenericObject
     include ::K8S::Types::Api::Authorization::V1::ResourceAttributes
-    include ::K8S::Kubernetes::Object
 
     # Group is the API Group of the Resource.  "*" means all.
     def group : String?

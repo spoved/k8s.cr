@@ -8,9 +8,6 @@ module K8S::Types::Api::Core::V1::PersistentVolumeClaimVolumeSource; end
 module K8S
   # Namespace holding the types for `Api::Core::V1::PersistentVolumeClaimVolumeSource`.
   module Types::Api::Core::V1::PersistentVolumeClaimVolumeSource
-    alias ValueType = String | ::Bool | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # ClaimName is the name of a PersistentVolumeClaim in the same namespace as the pod using this volume. More info: [[https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims](https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims)](https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims](https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims))
     abstract def claim_name : String
     # :ditto:
@@ -34,9 +31,8 @@ module K8S
     claim_name: {key: "claimName", accessor: "claim_name", kind: "String", nilable: false, default: nil, read_only: false, description: "ClaimName is the name of a PersistentVolumeClaim in the same namespace as the pod using this volume. More info: [https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims](https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     read_only: {key: "readOnly", accessor: "read_only", kind: "::Bool", nilable: true, default: nil, read_only: false, description: "Will force the ReadOnly setting in VolumeMounts. Default false.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::PersistentVolumeClaimVolumeSource < ::K8S::Types::Api::Core::V1::PersistentVolumeClaimVolumeSource::Instance
+  class Api::Core::V1::PersistentVolumeClaimVolumeSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::PersistentVolumeClaimVolumeSource
-    include ::K8S::Kubernetes::Object
 
     # ClaimName is the name of a PersistentVolumeClaim in the same namespace as the pod using this volume. More info: [[https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims](https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims)](https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims](https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims))
     def claim_name : String

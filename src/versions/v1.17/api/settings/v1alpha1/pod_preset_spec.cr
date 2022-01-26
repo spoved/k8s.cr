@@ -14,9 +14,6 @@ require "../../core/v1/volume"
 module K8S
   # Namespace holding the types for `Api::Settings::V1alpha1::PodPresetSpec`.
   module Types::Api::Settings::V1alpha1::PodPresetSpec
-    alias ValueType = ::Array(::K8S::Api::Core::V1::EnvVar) | ::Array(::K8S::Api::Core::V1::EnvFromSource) | ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector | ::Array(::K8S::Api::Core::V1::VolumeMount) | ::Array(::K8S::Api::Core::V1::Volume) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Env defines the collection of EnvVar to inject into containers.
     abstract def env : ::Array(::K8S::Api::Core::V1::EnvVar)?
     # :ditto:
@@ -67,9 +64,8 @@ module K8S
     volume_mounts: {key: "volumeMounts", accessor: "volume_mounts", kind: "::Array(::K8S::Api::Core::V1::VolumeMount)", nilable: true, default: nil, read_only: false, description: "VolumeMounts defines the collection of VolumeMount to inject into containers.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     volumes: {key: "volumes", accessor: "volumes", kind: "::Array(::K8S::Api::Core::V1::Volume)", nilable: true, default: nil, read_only: false, description: "Volumes defines the collection of Volume to inject into the pod.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Settings::V1alpha1::PodPresetSpec < ::K8S::Types::Api::Settings::V1alpha1::PodPresetSpec::Instance
+  class Api::Settings::V1alpha1::PodPresetSpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Settings::V1alpha1::PodPresetSpec
-    include ::K8S::Kubernetes::Object
 
     # Env defines the collection of EnvVar to inject into containers.
     def env : ::Array(::K8S::Api::Core::V1::EnvVar)?

@@ -8,9 +8,6 @@ module K8S::Types::Api::Certificates::V1::CertificateSigningRequestSpec; end
 module K8S
   # Namespace holding the types for `Api::Certificates::V1::CertificateSigningRequestSpec`.
   module Types::Api::Certificates::V1::CertificateSigningRequestSpec
-    alias ValueType = ::Hash(String, ::Array(String)) | ::Array(String) | String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # extra contains extra attributes of the user that created the CertificateSigningRequest. Populated by the API server on creation and immutable.
     abstract def extra : ::Hash(String, ::Array(String))?
     # :ditto:
@@ -112,9 +109,8 @@ module K8S
     usages: {key: "usages", accessor: "usages", kind: "::Array(String)", nilable: true, default: nil, read_only: false, description: "usages specifies a set of key usages requested in the issued certificate.\n\nRequests for TLS client certificates typically request: \"digital signature\", \"key encipherment\", \"client auth\".\n\nRequests for TLS serving certificates typically request: \"key encipherment\", \"digital signature\", \"server auth\".\n\nValid values are:\n \"signing\", \"digital signature\", \"content commitment\",\n \"key encipherment\", \"key agreement\", \"data encipherment\",\n \"cert sign\", \"crl sign\", \"encipher only\", \"decipher only\", \"any\",\n \"server auth\", \"client auth\",\n \"code signing\", \"email protection\", [\"s/mime\",](\"s/mime\",)\n \"ipsec end system\", \"ipsec tunnel\", \"ipsec user\",\n \"timestamping\", \"ocsp signing\", \"microsoft sgc\", \"netscape sgc\"", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: "atomic", x_kubernetes_map_type: nil},
     username: {key: "username", accessor: "username", kind: "String", nilable: true, default: nil, read_only: false, description: "username contains the name of the user that created the CertificateSigningRequest. Populated by the API server on creation and immutable.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Certificates::V1::CertificateSigningRequestSpec < ::K8S::Types::Api::Certificates::V1::CertificateSigningRequestSpec::Instance
+  class Api::Certificates::V1::CertificateSigningRequestSpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Certificates::V1::CertificateSigningRequestSpec
-    include ::K8S::Kubernetes::Object
 
     # extra contains extra attributes of the user that created the CertificateSigningRequest. Populated by the API server on creation and immutable.
     def extra : ::Hash(String, ::Array(String))?

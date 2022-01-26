@@ -3,7 +3,7 @@ module ::K8S::Kubernetes
   VERSION_MINOR =  1
   VERSION_MAJOR = 18
 
-  module Resource
+  abstract class Resource
     MAPPINGS = [
       {"admissionregistration/v1", "MutatingWebhookConfiguration", K8S::Api::Admissionregistration::V1::MutatingWebhookConfiguration},
       {"admissionregistration/v1", "MutatingWebhookConfigurationList", K8S::Api::Admissionregistration::V1::MutatingWebhookConfigurationList},

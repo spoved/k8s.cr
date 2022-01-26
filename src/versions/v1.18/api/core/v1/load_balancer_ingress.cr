@@ -8,9 +8,6 @@ module K8S::Types::Api::Core::V1::LoadBalancerIngress; end
 module K8S
   # Namespace holding the types for `Api::Core::V1::LoadBalancerIngress`.
   module Types::Api::Core::V1::LoadBalancerIngress
-    alias ValueType = String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Hostname is set for load-balancer ingress points that are DNS based (typically AWS load-balancers)
     abstract def hostname : String?
     # :ditto:
@@ -34,9 +31,8 @@ module K8S
     hostname: {key: "hostname", accessor: "hostname", kind: "String", nilable: true, default: nil, read_only: false, description: "Hostname is set for load-balancer ingress points that are DNS based (typically AWS load-balancers)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     ip: {key: "ip", accessor: "ip", kind: "String", nilable: true, default: nil, read_only: false, description: "IP is set for load-balancer ingress points that are IP based (typically GCE or OpenStack load-balancers)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::LoadBalancerIngress < ::K8S::Types::Api::Core::V1::LoadBalancerIngress::Instance
+  class Api::Core::V1::LoadBalancerIngress < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::LoadBalancerIngress
-    include ::K8S::Kubernetes::Object
 
     # Hostname is set for load-balancer ingress points that are DNS based (typically AWS load-balancers)
     def hostname : String?

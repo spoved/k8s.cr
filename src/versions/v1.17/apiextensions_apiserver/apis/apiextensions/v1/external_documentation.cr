@@ -8,9 +8,6 @@ module K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1::ExternalDocu
 module K8S
   # Namespace holding the types for `ApiextensionsApiserver::Apis::Apiextensions::V1::ExternalDocumentation`.
   module Types::ApiextensionsApiserver::Apis::Apiextensions::V1::ExternalDocumentation
-    alias ValueType = String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     #
     abstract def description : String?
     # :ditto:
@@ -34,9 +31,8 @@ module K8S
     description: {key: "description", accessor: "description", kind: "String", nilable: true, default: nil, read_only: false, description: nil, x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     url: {key: "url", accessor: "url", kind: "String", nilable: true, default: nil, read_only: false, description: nil, x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class ApiextensionsApiserver::Apis::Apiextensions::V1::ExternalDocumentation < ::K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1::ExternalDocumentation::Instance
+  class ApiextensionsApiserver::Apis::Apiextensions::V1::ExternalDocumentation < ::K8S::GenericObject
     include ::K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1::ExternalDocumentation
-    include ::K8S::Kubernetes::Object
 
     #
     def description : String?

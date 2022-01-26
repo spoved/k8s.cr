@@ -8,9 +8,6 @@ module K8S::Types::Api::Core::V1::ReplicationControllerCondition; end
 module K8S
   # Namespace holding the types for `Api::Core::V1::ReplicationControllerCondition`.
   module Types::Api::Core::V1::ReplicationControllerCondition
-    alias ValueType = ::Time | String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # The last time the condition transitioned from one status to another.
     abstract def last_transition_time : ::Time?
     # :ditto:
@@ -61,9 +58,8 @@ module K8S
     status: {key: "status", accessor: "status", kind: "String", nilable: false, default: nil, read_only: false, description: "Status of the condition, one of True, False, Unknown.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     type: {key: "type", accessor: "type", kind: "String", nilable: false, default: nil, read_only: false, description: "Type of replication controller condition.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::ReplicationControllerCondition < ::K8S::Types::Api::Core::V1::ReplicationControllerCondition::Instance
+  class Api::Core::V1::ReplicationControllerCondition < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::ReplicationControllerCondition
-    include ::K8S::Kubernetes::Object
 
     # The last time the condition transitioned from one status to another.
     def last_transition_time : ::Time?

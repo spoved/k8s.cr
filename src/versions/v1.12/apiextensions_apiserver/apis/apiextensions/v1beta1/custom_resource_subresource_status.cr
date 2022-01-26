@@ -6,5 +6,5 @@ require "json"
 module K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresourceStatus; end
 
 module K8S
-  alias ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresourceStatus = ::K8S::Object(::JSON::Any)
+  alias ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresourceStatus = ::K8S::GenericObject
 end

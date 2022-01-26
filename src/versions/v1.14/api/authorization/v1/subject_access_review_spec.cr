@@ -11,9 +11,6 @@ require "./resource_attributes"
 module K8S
   # Namespace holding the types for `Api::Authorization::V1::SubjectAccessReviewSpec`.
   module Types::Api::Authorization::V1::SubjectAccessReviewSpec
-    alias ValueType = ::Hash(String, ::Array(String)) | ::Array(String) | ::K8S::Api::Authorization::V1::NonResourceAttributes | ::K8S::Api::Authorization::V1::ResourceAttributes | String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Extra corresponds to the user.Info.GetExtra() method from the authenticator.  Since that is input to the authorizer it needs a reflection here.
     abstract def extra : ::Hash(String, ::Array(String))?
     # :ditto:
@@ -73,9 +70,8 @@ module K8S
     uid: {key: "uid", accessor: "uid", kind: "String", nilable: true, default: nil, read_only: false, description: "UID information about the requesting user.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     user: {key: "user", accessor: "user", kind: "String", nilable: true, default: nil, read_only: false, description: "User is the user you're testing for. If you specify \"User\" but not \"Groups\", then is it interpreted as \"What if User were not a member of any groups", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Authorization::V1::SubjectAccessReviewSpec < ::K8S::Types::Api::Authorization::V1::SubjectAccessReviewSpec::Instance
+  class Api::Authorization::V1::SubjectAccessReviewSpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Authorization::V1::SubjectAccessReviewSpec
-    include ::K8S::Kubernetes::Object
 
     # Extra corresponds to the user.Info.GetExtra() method from the authenticator.  Since that is input to the authorizer it needs a reflection here.
     def extra : ::Hash(String, ::Array(String))?

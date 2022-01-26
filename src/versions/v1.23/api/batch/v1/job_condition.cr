@@ -8,9 +8,6 @@ module K8S::Types::Api::Batch::V1::JobCondition; end
 module K8S
   # Namespace holding the types for `Api::Batch::V1::JobCondition`.
   module Types::Api::Batch::V1::JobCondition
-    alias ValueType = ::Time | String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Last time the condition was checked.
     abstract def last_probe_time : ::Time?
     # :ditto:
@@ -75,9 +72,8 @@ module K8S
     status: {key: "status", accessor: "status", kind: "String", nilable: false, default: nil, read_only: false, description: "Status of the condition, one of True, False, Unknown.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     type: {key: "type", accessor: "type", kind: "String", nilable: false, default: nil, read_only: false, description: "Type of job condition, Complete or Failed.\n\nPossible enum values:\n - `\"Complete\"` means the job has completed its execution.\n - `\"Failed\"` means the job has failed its execution.\n - `\"Suspended\"` means the job has been suspended.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Batch::V1::JobCondition < ::K8S::Types::Api::Batch::V1::JobCondition::Instance
+  class Api::Batch::V1::JobCondition < ::K8S::GenericObject
     include ::K8S::Types::Api::Batch::V1::JobCondition
-    include ::K8S::Kubernetes::Object
 
     # Last time the condition was checked.
     def last_probe_time : ::Time?

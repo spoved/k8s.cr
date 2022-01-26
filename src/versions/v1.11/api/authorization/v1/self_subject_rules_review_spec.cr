@@ -8,9 +8,6 @@ module K8S::Types::Api::Authorization::V1::SelfSubjectRulesReviewSpec; end
 module K8S
   # Namespace holding the types for `Api::Authorization::V1::SelfSubjectRulesReviewSpec`.
   module Types::Api::Authorization::V1::SelfSubjectRulesReviewSpec
-    alias ValueType = String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Namespace to evaluate rules for. Required.
     abstract def namespace : String?
     # :ditto:
@@ -25,9 +22,8 @@ module K8S
   @[::K8S::Properties(
     namespace: {key: "namespace", accessor: "namespace", kind: "String", nilable: true, default: nil, read_only: false, description: "Namespace to evaluate rules for. Required.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Authorization::V1::SelfSubjectRulesReviewSpec < ::K8S::Types::Api::Authorization::V1::SelfSubjectRulesReviewSpec::Instance
+  class Api::Authorization::V1::SelfSubjectRulesReviewSpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Authorization::V1::SelfSubjectRulesReviewSpec
-    include ::K8S::Kubernetes::Object
 
     # Namespace to evaluate rules for. Required.
     def namespace : String?

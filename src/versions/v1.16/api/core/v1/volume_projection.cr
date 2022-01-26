@@ -13,9 +13,6 @@ require "./service_account_token_projection"
 module K8S
   # Namespace holding the types for `Api::Core::V1::VolumeProjection`.
   module Types::Api::Core::V1::VolumeProjection
-    alias ValueType = ::K8S::Api::Core::V1::ConfigMapProjection | ::K8S::Api::Core::V1::DownwardAPIProjection | ::K8S::Api::Core::V1::SecretProjection | ::K8S::Api::Core::V1::ServiceAccountTokenProjection | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # information about the configMap data to project
     abstract def config_map : ::K8S::Api::Core::V1::ConfigMapProjection?
     # :ditto:
@@ -57,9 +54,8 @@ module K8S
     secret: {key: "secret", accessor: "secret", kind: "::K8S::Api::Core::V1::SecretProjection", nilable: true, default: nil, read_only: false, description: "information about the secret data to project", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     service_account_token: {key: "serviceAccountToken", accessor: "service_account_token", kind: "::K8S::Api::Core::V1::ServiceAccountTokenProjection", nilable: true, default: nil, read_only: false, description: "information about the serviceAccountToken data to project", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::VolumeProjection < ::K8S::Types::Api::Core::V1::VolumeProjection::Instance
+  class Api::Core::V1::VolumeProjection < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::VolumeProjection
-    include ::K8S::Kubernetes::Object
 
     # information about the configMap data to project
     def config_map : ::K8S::Api::Core::V1::ConfigMapProjection?

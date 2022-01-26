@@ -10,9 +10,6 @@ require "./volume_error"
 module K8S
   # Namespace holding the types for `Api::Storage::V1alpha1::VolumeAttachmentStatus`.
   module Types::Api::Storage::V1alpha1::VolumeAttachmentStatus
-    alias ValueType = ::K8S::Api::Storage::V1alpha1::VolumeError | ::Bool | ::Hash(String, String) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # The last error encountered during attach operation, if any. This field must only be set by the entity completing the attach operation, i.e. the external-attacher.
     abstract def attach_error : ::K8S::Api::Storage::V1alpha1::VolumeError?
     # :ditto:
@@ -54,9 +51,8 @@ module K8S
     attachment_metadata: {key: "attachmentMetadata", accessor: "attachment_metadata", kind: "::Hash(String, String)", nilable: true, default: nil, read_only: false, description: "Upon successful attach, this field is populated with any information returned by the attach operation that must be passed into subsequent WaitForAttach or Mount calls. This field must only be set by the entity completing the attach operation, i.e. the external-attacher.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     detach_error: {key: "detachError", accessor: "detach_error", kind: "::K8S::Api::Storage::V1alpha1::VolumeError", nilable: true, default: nil, read_only: false, description: "The last error encountered during detach operation, if any. This field must only be set by the entity completing the detach operation, i.e. the external-attacher.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Storage::V1alpha1::VolumeAttachmentStatus < ::K8S::Types::Api::Storage::V1alpha1::VolumeAttachmentStatus::Instance
+  class Api::Storage::V1alpha1::VolumeAttachmentStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Storage::V1alpha1::VolumeAttachmentStatus
-    include ::K8S::Kubernetes::Object
 
     # The last error encountered during attach operation, if any. This field must only be set by the entity completing the attach operation, i.e. the external-attacher.
     def attach_error : ::K8S::Api::Storage::V1alpha1::VolumeError?

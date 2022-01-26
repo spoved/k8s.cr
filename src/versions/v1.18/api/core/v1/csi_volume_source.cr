@@ -10,9 +10,6 @@ require "./local_object_reference"
 module K8S
   # Namespace holding the types for `Api::Core::V1::CSIVolumeSource`.
   module Types::Api::Core::V1::CSIVolumeSource
-    alias ValueType = String | ::K8S::Api::Core::V1::LocalObjectReference | ::Bool | ::Hash(String, String) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Driver is the name of the CSI driver that handles this volume. Consult with your admin for the correct name as registered in the cluster.
     abstract def driver : String
     # :ditto:
@@ -63,9 +60,8 @@ module K8S
     read_only: {key: "readOnly", accessor: "read_only", kind: "::Bool", nilable: true, default: nil, read_only: false, description: "Specifies a read-only configuration for the volume. Defaults to false [(read/write).]((read/write).)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     volume_attributes: {key: "volumeAttributes", accessor: "volume_attributes", kind: "::Hash(String, String)", nilable: true, default: nil, read_only: false, description: "VolumeAttributes stores driver-specific properties that are passed to the CSI driver. Consult your driver's documentation for supported values.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::CSIVolumeSource < ::K8S::Types::Api::Core::V1::CSIVolumeSource::Instance
+  class Api::Core::V1::CSIVolumeSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::CSIVolumeSource
-    include ::K8S::Kubernetes::Object
 
     # Driver is the name of the CSI driver that handles this volume. Consult with your admin for the correct name as registered in the cluster.
     def driver : String

@@ -8,9 +8,6 @@ module K8S::Types::Api::Core::V1::ConfigMapNodeConfigSource; end
 module K8S
   # Namespace holding the types for `Api::Core::V1::ConfigMapNodeConfigSource`.
   module Types::Api::Core::V1::ConfigMapNodeConfigSource
-    alias ValueType = String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # KubeletConfigKey declares which key of the referenced ConfigMap corresponds to the KubeletConfiguration structure This field is required in all cases.
     abstract def kubelet_config_key : String
     # :ditto:
@@ -61,9 +58,8 @@ module K8S
     resource_version: {key: "resourceVersion", accessor: "resource_version", kind: "String", nilable: true, default: nil, read_only: false, description: "ResourceVersion is the metadata.ResourceVersion of the referenced ConfigMap. This field is forbidden in Node.Spec, and required in Node.Status.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     uid: {key: "uid", accessor: "uid", kind: "String", nilable: true, default: nil, read_only: false, description: "UID is the metadata.UID of the referenced ConfigMap. This field is forbidden in Node.Spec, and required in Node.Status.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::ConfigMapNodeConfigSource < ::K8S::Types::Api::Core::V1::ConfigMapNodeConfigSource::Instance
+  class Api::Core::V1::ConfigMapNodeConfigSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::ConfigMapNodeConfigSource
-    include ::K8S::Kubernetes::Object
 
     # KubeletConfigKey declares which key of the referenced ConfigMap corresponds to the KubeletConfiguration structure This field is required in all cases.
     def kubelet_config_key : String

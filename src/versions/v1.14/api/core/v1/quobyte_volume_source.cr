@@ -8,9 +8,6 @@ module K8S::Types::Api::Core::V1::QuobyteVolumeSource; end
 module K8S
   # Namespace holding the types for `Api::Core::V1::QuobyteVolumeSource`.
   module Types::Api::Core::V1::QuobyteVolumeSource
-    alias ValueType = String | ::Bool | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Group to map volume access to Default is no group
     abstract def group : String?
     # :ditto:
@@ -70,9 +67,8 @@ module K8S
     user: {key: "user", accessor: "user", kind: "String", nilable: true, default: nil, read_only: false, description: "User to map volume access to Defaults to serivceaccount user", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     volume: {key: "volume", accessor: "volume", kind: "String", nilable: false, default: nil, read_only: false, description: "Volume is a string that references an already created Quobyte volume by name.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::QuobyteVolumeSource < ::K8S::Types::Api::Core::V1::QuobyteVolumeSource::Instance
+  class Api::Core::V1::QuobyteVolumeSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::QuobyteVolumeSource
-    include ::K8S::Kubernetes::Object
 
     # Group to map volume access to Default is no group
     def group : String?

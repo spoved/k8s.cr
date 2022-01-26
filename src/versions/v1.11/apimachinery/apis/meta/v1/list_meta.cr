@@ -8,9 +8,6 @@ module K8S::Types::Apimachinery::Apis::Meta::V1::ListMeta; end
 module K8S
   # Namespace holding the types for `Apimachinery::Apis::Meta::V1::ListMeta`.
   module Types::Apimachinery::Apis::Meta::V1::ListMeta
-    alias ValueType = String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # continue may be set if the user set a limit on the number of items returned, and indicates that the server has more data available. The value is opaque and may be used to issue another request to the endpoint that served this list to retrieve the next set of available objects. Continuing a list may not be possible if the server configuration has changed or more than a few minutes have passed. The resourceVersion field returned when using this continue value will be identical to the value in the first response.
     abstract def continue : String?
     # :ditto:
@@ -43,9 +40,8 @@ module K8S
     resource_version: {key: "resourceVersion", accessor: "resource_version", kind: "String", nilable: true, default: nil, read_only: false, description: "String that identifies the server's internal version of this object that can be used by clients to determine when objects have changed. Value must be treated as opaque by clients and passed unmodified back to the server. Populated by the system. Read-only. More info: [https://git.k8s.io/community/contributors/devel/api-conventions.md#concurrency-control-and-consistency](https://git.k8s.io/community/contributors/devel/api-conventions.md#concurrency-control-and-consistency)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     self_link: {key: "selfLink", accessor: "self_link", kind: "String", nilable: true, default: nil, read_only: false, description: "selfLink is a URL representing this object. Populated by the system. Read-only.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Apimachinery::Apis::Meta::V1::ListMeta < ::K8S::Types::Apimachinery::Apis::Meta::V1::ListMeta::Instance
+  class Apimachinery::Apis::Meta::V1::ListMeta < ::K8S::GenericObject
     include ::K8S::Types::Apimachinery::Apis::Meta::V1::ListMeta
-    include ::K8S::Kubernetes::Object
 
     # continue may be set if the user set a limit on the number of items returned, and indicates that the server has more data available. The value is opaque and may be used to issue another request to the endpoint that served this list to retrieve the next set of available objects. Continuing a list may not be possible if the server configuration has changed or more than a few minutes have passed. The resourceVersion field returned when using this continue value will be identical to the value in the first response.
     def continue : String?

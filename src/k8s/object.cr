@@ -7,37 +7,32 @@ class K8S::Object(V)
 end
 
 require "./object/*"
+require "hashdiff"
 
 module ::K8S::Kubernetes::Object
-  # TODO: Define abstract methods.
-  # abstract def to_h
-  # abstract def each
-  # abstract def ==(value)
-  # abstract def ===(value)
+  abstract def to_h
+  abstract def each
+  abstract def ==(value)
+  abstract def ===(value)
 
-  # abstract def dup
-  # abstract def clone
-  # abstract def []=(*args)
-  # abstract def []=(key, value)
-  # abstract def []?(*keys)
-  # abstract def [](*keys)
+  abstract def dup
+  abstract def clone
+  abstract def []=(*args)
+  abstract def []=(key, value)
+  abstract def []?(*keys)
+  abstract def [](*keys)
 
-  # abstract def dig?(keys : Enumerable)
-  # abstract def dig?(*keys)
-  # abstract def dig(keys : Enumerable)
-  # abstract def dig(*keys)
+  abstract def dig?(keys : Enumerable)
+  abstract def dig?(*keys)
+  abstract def dig(keys : Enumerable)
+  abstract def dig(*keys)
 
-  # abstract def merge(*values, **options)
-  # abstract def merge(*values, **options, &block)
-  # abstract def merge!(*values, **options)
-  # abstract def merge!(*values, **options, &block)
+  abstract def merge(*values, **options)
+  abstract def merge!(*values, **options)
+  abstract def reverse_merge(other = nil, *values, **options)
+  abstract def reverse_merge!(other = nil, *values, **options)
 
-  # abstract def reverse_merge(other = nil, *values, **options)
-  # abstract def reverse_merge(other = nil, *values, **options, &block)
-  # abstract def reverse_merge!(other = nil, *values, **options)
-  # abstract def reverse_merge!(other = nil, *values, **options, &block)
-
-  # abstract def replace(other)
+  abstract def replace(other)
 end
 
 class K8S::Object(V)
@@ -81,10 +76,16 @@ class K8S::Object(V)
     @__hash__ = Hash(String, V).new
 
     if hash
-      hash.each do |key, value|
-        @__hash__[key.to_s] = self.class.deep_cast_value(value)
-      end
+      @__hash__ = self.class.deep_cast_value(hash).as(Hash(String, V))
     end
+  end
+
+  def diff(other : K8S::Object)
+    ::HashDiff.diff(@__hash__, other.to_h)
+  end
+
+  def diff(other)
+    ::HashDiff.diff(@__hash__, other)
   end
 
   # Returns a new `K8S::Object`, with a shallow copy of the underlying `Hash`.
@@ -101,6 +102,22 @@ class K8S::Object(V)
     self.class.new.merge! @__hash__
   end
 
+  def [](key : Symbol)
+    self.[key.to_s]
+  end
+
+  def []?(key : Symbol)
+    self.[key.to_s]?
+  end
+
+  def []=(key : Symbol, value : T) forall T
+    self.[key.to_s] = value
+  end
+
+  def dig(key : Symbol)
+    self.dig(key.to_s)
+  end
+
   # See `Hash#[]=`.
   def []=(*args)
     args = args.to_a
@@ -108,7 +125,8 @@ class K8S::Object(V)
     # lies the *value* we overwrite.
     path, key, value = args[0...-2], args[args.size - 2], args[args.size - 1]
     # dig 'em hash
-    dig(path).as(Hash(String, V))[key.as(String)] = self.class.deep_cast_value(value)
+    key = key.to_s unless key.is_a?(String)
+    dig(path).as(Hash(String, V))[key] = self.class.deep_cast_value(value)
   end
 
   # See `Hash#[]=`.
@@ -131,7 +149,8 @@ class K8S::Object(V)
   # if any intermediate step is `nil`.
   def dig?(keys : Enumerable)
     keys.reduce(@__hash__) do |memo, key|
-      memo.as?(Hash(String, V)).try(&.[]?(key.to_s)) || break
+      key = key.to_s unless key.is_a?(String)
+      memo.as?(Hash(String, V)).try(&.[]?(key)) || break
     end
   end
 
@@ -145,7 +164,8 @@ class K8S::Object(V)
   # if any intermediate step is `nil`.
   def dig(keys : Enumerable)
     keys.reduce(@__hash__) do |memo, key|
-      memo.as(Hash(String, V))[key.to_s]
+      key = key.to_s unless key.is_a?(String)
+      memo.as(Hash(String, V))[key]
     end
   end
 
@@ -154,11 +174,86 @@ class K8S::Object(V)
     dig(keys)
   end
 
-  def self.new(ctx : ::YAML::ParseContext, node : ::YAML::Nodes::Node)
-    new(Hash(String, V).new(ctx, node))
+  # Performs deep merge of `self` with given other *values*
+  # and returns copy of `self`.
+  #
+  # See `Hash#merge`.
+  def merge(*values, **options)
+    dup.merge!(*values, **options)
+  end
+
+  # ditto
+  def merge(*values, **options, &block)
+    dup.merge!(*values, **options) { |*args| yield *args }
+  end
+
+  # Destructive version of `#merge`.
+  def merge!(*values, **options)
+    self.class.deep_merge!(@__hash__, *values, **options)
+    self
+  end
+
+  # ditto
+  def merge!(*values, **options, &block)
+    self.class.deep_merge!(@__hash__, *values, **options) { |*args| yield *args }
+    self
+  end
+
+  # Merges the caller into *other*. For example,
+  #
+  # ```
+  # options = options.reverse_merge(size: 25, velocity: 10)
+  # ```
+  #
+  # is equivalent to
+  #
+  # ```
+  # options = { size: 25, velocity: 10 }.merge(options)
+  # ```
+  #
+  # This is particularly useful for initializing an options hash with default values.
+  def reverse_merge(other = nil, *values, **options)
+    dup.reverse_merge!(other, *values, **options)
+  end
+
+  # ditto
+  def reverse_merge(other = nil, *values, **options, &block)
+    dup.reverse_merge!(other, *values, **options) { |*args| yield *args }
+  end
+
+  # Destructive version of `#reverse_merge`.
+  def reverse_merge!(other = nil, *values, **options)
+    values = {self, other} + values + {options}
+    hash = self.class.new.merge!(*values.reverse)
+    replace(hash)
+  end
+
+  # ditto
+  def reverse_merge!(other = nil, *values, **options, &block)
+    values = {self, other} + values + {options}
+    hash = self.class.new.merge!(*values.reverse) { |*args| yield *args }
+    replace(hash)
+  end
+
+  # Replaces underlying `Hash` with given *other*.
+  #
+  # Returns `self`.
+  def replace(other)
+    case other
+    when K8S::Object(V)  then @__hash__ = other.to_h
+    when Hash(String, V) then @__hash__ = other
+    else
+      clear
+      merge!(other)
+    end
+    self
   end
 
   def self.new(pull : ::JSON::PullParser)
-    new(Hash(String, V).new(pull))
+    self.new(Hash(String, JSON::Any).new(pull))
+  end
+
+  def self.new(ctx : ::YAML::ParseContext, node : ::YAML::Nodes::Node)
+    self.new(Hash(String, JSON::Any).new(ctx, node))
   end
 end

@@ -8,9 +8,6 @@ module K8S::Types::Api::Autoscaling::V2beta2::MetricValueStatus; end
 module K8S
   # Namespace holding the types for `Api::Autoscaling::V2beta2::MetricValueStatus`.
   module Types::Api::Autoscaling::V2beta2::MetricValueStatus
-    alias ValueType = Int32 | ::Int32 | ::String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # currentAverageUtilization is the current value of the average of the resource metric across all relevant pods, represented as a percentage of the requested value of the resource for the pods.
     abstract def average_utilization : Int32?
     # :ditto:
@@ -43,9 +40,8 @@ module K8S
     average_value: {key: "averageValue", accessor: "average_value", kind: "::Int32 | ::String", nilable: true, default: nil, read_only: false, description: "averageValue is the current value of the average of the metric across all relevant pods (as a quantity)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     value: {key: "value", accessor: "value", kind: "::Int32 | ::String", nilable: true, default: nil, read_only: false, description: "value is the current value of the metric (as a quantity).", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Autoscaling::V2beta2::MetricValueStatus < ::K8S::Types::Api::Autoscaling::V2beta2::MetricValueStatus::Instance
+  class Api::Autoscaling::V2beta2::MetricValueStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Autoscaling::V2beta2::MetricValueStatus
-    include ::K8S::Kubernetes::Object
 
     # currentAverageUtilization is the current value of the average of the resource metric across all relevant pods, represented as a percentage of the requested value of the resource for the pods.
     def average_utilization : Int32?

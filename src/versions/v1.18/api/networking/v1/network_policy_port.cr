@@ -8,9 +8,6 @@ module K8S::Types::Api::Networking::V1::NetworkPolicyPort; end
 module K8S
   # Namespace holding the types for `Api::Networking::V1::NetworkPolicyPort`.
   module Types::Api::Networking::V1::NetworkPolicyPort
-    alias ValueType = ::Int32 | ::String | String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # The port on the given protocol. This can either be a numerical or named port on a pod. If this field is not provided, this matches all port names and numbers.
     abstract def port : ::Int32 | ::String?
     # :ditto:
@@ -34,9 +31,8 @@ module K8S
     port: {key: "port", accessor: "port", kind: "::Int32 | ::String", nilable: true, default: nil, read_only: false, description: "The port on the given protocol. This can either be a numerical or named port on a pod. If this field is not provided, this matches all port names and numbers.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     protocol: {key: "protocol", accessor: "protocol", kind: "String", nilable: true, default: nil, read_only: false, description: "The protocol (TCP, UDP, or SCTP) which traffic must match. If not specified, this field defaults to TCP.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Networking::V1::NetworkPolicyPort < ::K8S::Types::Api::Networking::V1::NetworkPolicyPort::Instance
+  class Api::Networking::V1::NetworkPolicyPort < ::K8S::GenericObject
     include ::K8S::Types::Api::Networking::V1::NetworkPolicyPort
-    include ::K8S::Kubernetes::Object
 
     # The port on the given protocol. This can either be a numerical or named port on a pod. If this field is not provided, this matches all port names and numbers.
     def port : ::Int32 | ::String?

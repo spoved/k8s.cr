@@ -10,9 +10,6 @@ require "./cross_version_object_reference"
 module K8S
   # Namespace holding the types for `Api::Autoscaling::V2beta1::ObjectMetricSource`.
   module Types::Api::Autoscaling::V2beta1::ObjectMetricSource
-    alias ValueType = String | ::K8S::Api::Autoscaling::V2beta1::CrossVersionObjectReference | ::Int32 | ::String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # metricName is the name of the metric in question.
     abstract def metric_name : String
     # :ditto:
@@ -45,9 +42,8 @@ module K8S
     target: {key: "target", accessor: "target", kind: "::K8S::Api::Autoscaling::V2beta1::CrossVersionObjectReference", nilable: false, default: nil, read_only: false, description: "target is the described Kubernetes object.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     target_value: {key: "targetValue", accessor: "target_value", kind: "::Int32 | ::String", nilable: false, default: nil, read_only: false, description: "targetValue is the target value of the metric (as a quantity).", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Autoscaling::V2beta1::ObjectMetricSource < ::K8S::Types::Api::Autoscaling::V2beta1::ObjectMetricSource::Instance
+  class Api::Autoscaling::V2beta1::ObjectMetricSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Autoscaling::V2beta1::ObjectMetricSource
-    include ::K8S::Kubernetes::Object
 
     # metricName is the name of the metric in question.
     def metric_name : String

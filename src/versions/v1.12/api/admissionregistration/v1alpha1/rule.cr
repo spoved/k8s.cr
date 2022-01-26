@@ -8,9 +8,6 @@ module K8S::Types::Api::Admissionregistration::V1alpha1::Rule; end
 module K8S
   # Namespace holding the types for `Api::Admissionregistration::V1alpha1::Rule`.
   module Types::Api::Admissionregistration::V1alpha1::Rule
-    alias ValueType = ::Array(String) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # APIGroups is the API groups the resources belong to. '*' is all groups. If '*' is present, the length of the slice must be one. Required.
     abstract def api_groups : ::Array(String)?
     # :ditto:
@@ -49,9 +46,8 @@ module K8S
     api_versions: {key: "apiVersions", accessor: "api_versions", kind: "::Array(String)", nilable: true, default: nil, read_only: false, description: "APIVersions is the API versions the resources belong to. '*' is all versions. If '*' is present, the length of the slice must be one. Required.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     resources: {key: "resources", accessor: "resources", kind: "::Array(String)", nilable: true, default: nil, read_only: false, description: "Resources is a list of resources this rule applies to.\n\nFor example: 'pods' means pods. ['pods/log' means the log subresource of pods. '*' means all resources, but not subresources. 'pods/*' means all subresources of pods. '*/scale' means all scale subresources. '*/*' means all resources and their subresources.]('pods/log' means the log subresource of pods. '*' means all resources, but not subresources. 'pods/*' means all subresources of pods. '*/scale' means all scale subresources. '*/*' means all resources and their subresources.)\n\nIf wildcard is present, the validation rule will ensure resources do not overlap with each other.\n\nDepending on the enclosing object, subresources might not be allowed. Required.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Admissionregistration::V1alpha1::Rule < ::K8S::Types::Api::Admissionregistration::V1alpha1::Rule::Instance
+  class Api::Admissionregistration::V1alpha1::Rule < ::K8S::GenericObject
     include ::K8S::Types::Api::Admissionregistration::V1alpha1::Rule
-    include ::K8S::Kubernetes::Object
 
     # APIGroups is the API groups the resources belong to. '*' is all groups. If '*' is present, the length of the slice must be one. Required.
     def api_groups : ::Array(String)?

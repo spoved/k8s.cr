@@ -10,9 +10,6 @@ require "./service_backend_port"
 module K8S
   # Namespace holding the types for `Api::Networking::V1::IngressServiceBackend`.
   module Types::Api::Networking::V1::IngressServiceBackend
-    alias ValueType = String | ::K8S::Api::Networking::V1::ServiceBackendPort | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Name is the referenced service. The service must exist in the same namespace as the Ingress object.
     abstract def name : String
     # :ditto:
@@ -36,9 +33,8 @@ module K8S
     name: {key: "name", accessor: "name", kind: "String", nilable: false, default: nil, read_only: false, description: "Name is the referenced service. The service must exist in the same namespace as the Ingress object.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     port: {key: "port", accessor: "port", kind: "::K8S::Api::Networking::V1::ServiceBackendPort", nilable: true, default: nil, read_only: false, description: "Port of the referenced service. A port name or port number is required for a IngressServiceBackend.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Networking::V1::IngressServiceBackend < ::K8S::Types::Api::Networking::V1::IngressServiceBackend::Instance
+  class Api::Networking::V1::IngressServiceBackend < ::K8S::GenericObject
     include ::K8S::Types::Api::Networking::V1::IngressServiceBackend
-    include ::K8S::Kubernetes::Object
 
     # Name is the referenced service. The service must exist in the same namespace as the Ingress object.
     def name : String

@@ -10,9 +10,6 @@ require "./container_state"
 module K8S
   # Namespace holding the types for `Api::Core::V1::ContainerStatus`.
   module Types::Api::Core::V1::ContainerStatus
-    alias ValueType = String | ::K8S::Api::Core::V1::ContainerState | ::Bool | Int32 | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Container's ID in the format 'docker://<container_id>'.
     abstract def container_id : String?
     # :ditto:
@@ -90,9 +87,8 @@ module K8S
     restart_count: {key: "restartCount", accessor: "restart_count", kind: "Int32", nilable: false, default: nil, read_only: false, description: "The number of times the container has been restarted, currently based on the number of dead containers that have not yet been removed. Note that this is calculated from dead containers. But those containers are subject to garbage collection. This value will get capped at 5 by GC.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     state: {key: "state", accessor: "state", kind: "::K8S::Api::Core::V1::ContainerState", nilable: true, default: nil, read_only: false, description: "Details about the container's current condition.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::ContainerStatus < ::K8S::Types::Api::Core::V1::ContainerStatus::Instance
+  class Api::Core::V1::ContainerStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::ContainerStatus
-    include ::K8S::Kubernetes::Object
 
     # Container's ID in the format 'docker://<container_id>'.
     def container_id : String?

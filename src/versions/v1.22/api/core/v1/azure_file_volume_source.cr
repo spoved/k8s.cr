@@ -8,9 +8,6 @@ module K8S::Types::Api::Core::V1::AzureFileVolumeSource; end
 module K8S
   # Namespace holding the types for `Api::Core::V1::AzureFileVolumeSource`.
   module Types::Api::Core::V1::AzureFileVolumeSource
-    alias ValueType = ::Bool | String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Defaults to false [[(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.)]([(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.))
     abstract def read_only : ::Bool?
     # :ditto:
@@ -43,9 +40,8 @@ module K8S
     secret_name: {key: "secretName", accessor: "secret_name", kind: "String", nilable: false, default: nil, read_only: false, description: "the name of secret that contains Azure Storage Account Name and Key", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     share_name: {key: "shareName", accessor: "share_name", kind: "String", nilable: false, default: nil, read_only: false, description: "Share Name", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::AzureFileVolumeSource < ::K8S::Types::Api::Core::V1::AzureFileVolumeSource::Instance
+  class Api::Core::V1::AzureFileVolumeSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::AzureFileVolumeSource
-    include ::K8S::Kubernetes::Object
 
     # Defaults to false [[(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.)]([(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.))
     def read_only : ::Bool?

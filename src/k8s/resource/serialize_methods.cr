@@ -1,4 +1,4 @@
-module ::K8S::Kubernetes::Resource
+abstract class ::K8S::Kubernetes::Resource
   macro define_serialize_methods(props)
     def self.new(pull : ::JSON::PullParser)
       hash = new
@@ -8,13 +8,23 @@ module ::K8S::Kubernetes::Resource
         case parsed_key
         {% for prop in props %}
         when {{prop[:key].id.stringify}} {% if prop[:key] != prop[:accessor] %}, {{prop[:accessor].id.stringify}} {% end %}
-          parsed_value = {{prop[:kind].id}}.new(pull)
-          Log.trace { "Setting #{parsed_key} to #{parsed_value}" }
-          {% if prop[:read_only] %}
-          hash[{{prop[:key].id.stringify}}] = parsed_value.as({{prop[:kind].id}})
-          {% else %}
-          hash.{{prop[:accessor].id}} = parsed_value.as({{prop[:kind].id}})
-          {% end %}
+
+          parsed_value = if {{prop[:kind].id}} >= Time
+              K8S::TimeFormat.new.from_json(pull)
+            else
+              {{prop[:kind].id}}.new(pull)
+            end
+
+          if parsed_value.nil?
+            hash[{{prop[:key].id.stringify}}] = nil
+          else
+            Log.trace { "Setting #{parsed_key} to #{parsed_value.inspect}" }
+            {% if prop[:read_only] %}
+            hash[{{prop[:key].id.stringify}}] = parsed_value.as({{prop[:kind].id}})
+            {% else %}
+            hash.{{prop[:accessor].id}} = parsed_value.as({{prop[:kind].id}}{% if prop[:nilable] %} | Nil{% end %})
+            {% end %}
+          end
         {% end %}
         else
           # raise ::JSON::ParseException.new("Unknown key #{parsed_key}", *key_location)
@@ -49,13 +59,26 @@ module ::K8S::Kubernetes::Resource
         case parsed_key
         {% for prop in props %}
         when {{prop[:key].id.stringify}} {% if prop[:key] != prop[:accessor] %}, {{prop[:accessor].id.stringify}} {% end %}
-          parsed_value = {{prop[:kind].id}}.new(ctx, value)
-          Log.trace { "Setting #{parsed_key} to #{parsed_value}" }
-          {% if prop[:read_only] %}
-          hash[{{prop[:key].id.stringify}}] = parsed_value.as({{prop[:kind].id}})
-          {% else %}
-          hash.{{prop[:accessor].id}} = parsed_value.as({{prop[:kind].id}})
-          {% end %}
+          parsed_value = if {{prop[:kind].id}} >= Time
+              if value.is_a?(YAML::Nodes::Scalar) && value.value == "null"
+                nil
+              else
+                K8S::TimeFormat.new.from_yaml(ctx, value)
+              end
+            else
+              {{prop[:kind].id}}.new(ctx, value)
+            end
+
+            if parsed_value.nil?
+              hash[{{prop[:key].id.stringify}}] = nil
+            else
+              Log.trace { "Setting #{parsed_key} to #{parsed_value.inspect}" }
+              {% if prop[:read_only] %}
+              hash[{{prop[:key].id.stringify}}] = parsed_value.as({{prop[:kind].id}})
+              {% else %}
+              hash.{{prop[:accessor].id}} = parsed_value.as({{prop[:kind].id}}{% if prop[:nilable] %} | Nil{% end %})
+              {% end %}
+            end
         {% end %}
         else
           # node.raise "Unknown key #{parsed_key}"

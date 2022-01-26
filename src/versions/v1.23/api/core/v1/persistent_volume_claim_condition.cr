@@ -8,9 +8,6 @@ module K8S::Types::Api::Core::V1::PersistentVolumeClaimCondition; end
 module K8S
   # Namespace holding the types for `Api::Core::V1::PersistentVolumeClaimCondition`.
   module Types::Api::Core::V1::PersistentVolumeClaimCondition
-    alias ValueType = ::Time | String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Last time we probed the condition.
     abstract def last_probe_time : ::Time?
     # :ditto:
@@ -75,9 +72,8 @@ module K8S
     status: {key: "status", accessor: "status", kind: "String", nilable: false, default: nil, read_only: false, description: nil, x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     type: {key: "type", accessor: "type", kind: "String", nilable: false, default: nil, read_only: false, description: "\n\n\nPossible enum values:\n - `\"FileSystemResizePending\"` - controller resize is finished and a file system resize is pending on node\n - `\"Resizing\"` - a user trigger resize of pvc has been started", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::PersistentVolumeClaimCondition < ::K8S::Types::Api::Core::V1::PersistentVolumeClaimCondition::Instance
+  class Api::Core::V1::PersistentVolumeClaimCondition < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::PersistentVolumeClaimCondition
-    include ::K8S::Kubernetes::Object
 
     # Last time we probed the condition.
     def last_probe_time : ::Time?

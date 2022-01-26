@@ -10,9 +10,6 @@ require "./config_map_node_config_source"
 module K8S
   # Namespace holding the types for `Api::Core::V1::NodeConfigSource`.
   module Types::Api::Core::V1::NodeConfigSource
-    alias ValueType = ::K8S::Api::Core::V1::ConfigMapNodeConfigSource | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # ConfigMap is a reference to a Node's ConfigMap
     abstract def config_map : ::K8S::Api::Core::V1::ConfigMapNodeConfigSource?
     # :ditto:
@@ -27,9 +24,8 @@ module K8S
   @[::K8S::Properties(
     config_map: {key: "configMap", accessor: "config_map", kind: "::K8S::Api::Core::V1::ConfigMapNodeConfigSource", nilable: true, default: nil, read_only: false, description: "ConfigMap is a reference to a Node's ConfigMap", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::NodeConfigSource < ::K8S::Types::Api::Core::V1::NodeConfigSource::Instance
+  class Api::Core::V1::NodeConfigSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::NodeConfigSource
-    include ::K8S::Kubernetes::Object
 
     # ConfigMap is a reference to a Node's ConfigMap
     def config_map : ::K8S::Api::Core::V1::ConfigMapNodeConfigSource?

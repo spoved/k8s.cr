@@ -8,9 +8,6 @@ module K8S::Types::Api::Core::V1::NFSVolumeSource; end
 module K8S
   # Namespace holding the types for `Api::Core::V1::NFSVolumeSource`.
   module Types::Api::Core::V1::NFSVolumeSource
-    alias ValueType = String | ::Bool | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Path that is exported by the NFS server. More info: [[https://kubernetes.io/docs/concepts/storage/volumes#nfs](https://kubernetes.io/docs/concepts/storage/volumes#nfs)](https://kubernetes.io/docs/concepts/storage/volumes#nfs](https://kubernetes.io/docs/concepts/storage/volumes#nfs))
     abstract def path : String
     # :ditto:
@@ -43,9 +40,8 @@ module K8S
     read_only: {key: "readOnly", accessor: "read_only", kind: "::Bool", nilable: true, default: nil, read_only: false, description: "ReadOnly here will force the NFS export to be mounted with read-only permissions. Defaults to false. More info: [https://kubernetes.io/docs/concepts/storage/volumes#nfs](https://kubernetes.io/docs/concepts/storage/volumes#nfs)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     server: {key: "server", accessor: "server", kind: "String", nilable: false, default: nil, read_only: false, description: "Server is the hostname or IP address of the NFS server. More info: [https://kubernetes.io/docs/concepts/storage/volumes#nfs](https://kubernetes.io/docs/concepts/storage/volumes#nfs)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::NFSVolumeSource < ::K8S::Types::Api::Core::V1::NFSVolumeSource::Instance
+  class Api::Core::V1::NFSVolumeSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::NFSVolumeSource
-    include ::K8S::Kubernetes::Object
 
     # Path that is exported by the NFS server. More info: [[https://kubernetes.io/docs/concepts/storage/volumes#nfs](https://kubernetes.io/docs/concepts/storage/volumes#nfs)](https://kubernetes.io/docs/concepts/storage/volumes#nfs](https://kubernetes.io/docs/concepts/storage/volumes#nfs))
     def path : String

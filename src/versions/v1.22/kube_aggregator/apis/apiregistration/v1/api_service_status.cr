@@ -10,9 +10,6 @@ require "./api_service_condition"
 module K8S
   # Namespace holding the types for `KubeAggregator::Apis::Apiregistration::V1::APIServiceStatus`.
   module Types::KubeAggregator::Apis::Apiregistration::V1::APIServiceStatus
-    alias ValueType = ::Array(::K8S::KubeAggregator::Apis::Apiregistration::V1::APIServiceCondition) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Current service state of apiService.
     abstract def conditions : ::Array(::K8S::KubeAggregator::Apis::Apiregistration::V1::APIServiceCondition)?
     # :ditto:
@@ -27,9 +24,8 @@ module K8S
   @[::K8S::Properties(
     conditions: {key: "conditions", accessor: "conditions", kind: "::Array(::K8S::KubeAggregator::Apis::Apiregistration::V1::APIServiceCondition)", nilable: true, default: nil, read_only: false, description: "Current service state of apiService.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: ["type"], x_kubernetes_list_type: "map", x_kubernetes_map_type: nil},
   )]
-  class KubeAggregator::Apis::Apiregistration::V1::APIServiceStatus < ::K8S::Types::KubeAggregator::Apis::Apiregistration::V1::APIServiceStatus::Instance
+  class KubeAggregator::Apis::Apiregistration::V1::APIServiceStatus < ::K8S::GenericObject
     include ::K8S::Types::KubeAggregator::Apis::Apiregistration::V1::APIServiceStatus
-    include ::K8S::Kubernetes::Object
 
     # Current service state of apiService.
     def conditions : ::Array(::K8S::KubeAggregator::Apis::Apiregistration::V1::APIServiceCondition)?

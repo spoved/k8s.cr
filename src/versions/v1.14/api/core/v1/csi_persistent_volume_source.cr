@@ -10,9 +10,6 @@ require "./secret_reference"
 module K8S
   # Namespace holding the types for `Api::Core::V1::CSIPersistentVolumeSource`.
   module Types::Api::Core::V1::CSIPersistentVolumeSource
-    alias ValueType = ::K8S::Api::Core::V1::SecretReference | String | ::Bool | ::Hash(String, String) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # ControllerPublishSecretRef is a reference to the secret object containing sensitive information to pass to the CSI driver to complete the CSI ControllerPublishVolume and ControllerUnpublishVolume calls. This field is optional, and may be empty if no secret is required. If the secret object contains more than one secret, all secrets are passed.
     abstract def controller_publish_secret_ref : ::K8S::Api::Core::V1::SecretReference?
     # :ditto:
@@ -90,9 +87,8 @@ module K8S
     volume_attributes: {key: "volumeAttributes", accessor: "volume_attributes", kind: "::Hash(String, String)", nilable: true, default: nil, read_only: false, description: "Attributes of the volume to publish.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     volume_handle: {key: "volumeHandle", accessor: "volume_handle", kind: "String", nilable: false, default: nil, read_only: false, description: "VolumeHandle is the unique volume name returned by the CSI volume plugin’s CreateVolume to refer to the volume on all subsequent calls. Required.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::CSIPersistentVolumeSource < ::K8S::Types::Api::Core::V1::CSIPersistentVolumeSource::Instance
+  class Api::Core::V1::CSIPersistentVolumeSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::CSIPersistentVolumeSource
-    include ::K8S::Kubernetes::Object
 
     # ControllerPublishSecretRef is a reference to the secret object containing sensitive information to pass to the CSI driver to complete the CSI ControllerPublishVolume and ControllerUnpublishVolume calls. This field is optional, and may be empty if no secret is required. If the secret object contains more than one secret, all secrets are passed.
     def controller_publish_secret_ref : ::K8S::Api::Core::V1::SecretReference?

@@ -8,9 +8,6 @@ module K8S::Types::Api::Core::V1::EventSource; end
 module K8S
   # Namespace holding the types for `Api::Core::V1::EventSource`.
   module Types::Api::Core::V1::EventSource
-    alias ValueType = String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Component from which the event is generated.
     abstract def component : String?
     # :ditto:
@@ -34,9 +31,8 @@ module K8S
     component: {key: "component", accessor: "component", kind: "String", nilable: true, default: nil, read_only: false, description: "Component from which the event is generated.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     host: {key: "host", accessor: "host", kind: "String", nilable: true, default: nil, read_only: false, description: "Node name on which the event is generated.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::EventSource < ::K8S::Types::Api::Core::V1::EventSource::Instance
+  class Api::Core::V1::EventSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::EventSource
-    include ::K8S::Kubernetes::Object
 
     # Component from which the event is generated.
     def component : String?

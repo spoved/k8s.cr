@@ -8,9 +8,6 @@ module K8S::Types::Api::Autoscaling::V2beta1::ContainerResourceMetricSource; end
 module K8S
   # Namespace holding the types for `Api::Autoscaling::V2beta1::ContainerResourceMetricSource`.
   module Types::Api::Autoscaling::V2beta1::ContainerResourceMetricSource
-    alias ValueType = String | Int32 | ::Int32 | ::String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # container is the name of the container in the pods of the scaling target
     abstract def container : String
     # :ditto:
@@ -52,9 +49,8 @@ module K8S
     target_average_utilization: {key: "targetAverageUtilization", accessor: "target_average_utilization", kind: "Int32", nilable: true, default: nil, read_only: false, description: "targetAverageUtilization is the target value of the average of the resource metric across all relevant pods, represented as a percentage of the requested value of the resource for the pods.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     target_average_value: {key: "targetAverageValue", accessor: "target_average_value", kind: "::Int32 | ::String", nilable: true, default: nil, read_only: false, description: "targetAverageValue is the target value of the average of the resource metric across all relevant pods, as a raw value (instead of as a percentage of the request), similar to the \"pods\" metric source type.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Autoscaling::V2beta1::ContainerResourceMetricSource < ::K8S::Types::Api::Autoscaling::V2beta1::ContainerResourceMetricSource::Instance
+  class Api::Autoscaling::V2beta1::ContainerResourceMetricSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Autoscaling::V2beta1::ContainerResourceMetricSource
-    include ::K8S::Kubernetes::Object
 
     # container is the name of the container in the pods of the scaling target
     def container : String

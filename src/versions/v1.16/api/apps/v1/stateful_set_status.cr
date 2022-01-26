@@ -10,9 +10,6 @@ require "./stateful_set_condition"
 module K8S
   # Namespace holding the types for `Api::Apps::V1::StatefulSetStatus`.
   module Types::Api::Apps::V1::StatefulSetStatus
-    alias ValueType = Int32 | ::Array(::K8S::Api::Apps::V1::StatefulSetCondition) | String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # collisionCount is the count of hash collisions for the StatefulSet. The StatefulSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision.
     abstract def collision_count : Int32?
     # :ditto:
@@ -99,9 +96,8 @@ module K8S
     update_revision: {key: "updateRevision", accessor: "update_revision", kind: "String", nilable: true, default: nil, read_only: false, description: "updateRevision, if not empty, indicates the version of the StatefulSet used to generate Pods in the sequence [replicas-updatedReplicas,replicas)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     updated_replicas: {key: "updatedReplicas", accessor: "updated_replicas", kind: "Int32", nilable: true, default: nil, read_only: false, description: "updatedReplicas is the number of Pods created by the StatefulSet controller from the StatefulSet version indicated by updateRevision.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Apps::V1::StatefulSetStatus < ::K8S::Types::Api::Apps::V1::StatefulSetStatus::Instance
+  class Api::Apps::V1::StatefulSetStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Apps::V1::StatefulSetStatus
-    include ::K8S::Kubernetes::Object
 
     # collisionCount is the count of hash collisions for the StatefulSet. The StatefulSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision.
     def collision_count : Int32?

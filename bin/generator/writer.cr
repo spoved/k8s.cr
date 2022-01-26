@@ -124,7 +124,7 @@ class Generator::Writer
       # return if definition.description =~ /empty spec/
       # puts definition.description
       Log.warn { "No properties found for #{definition.class_name}" }
-      file.puts "alias #{definition.class_name} = ::K8S::Object(::JSON::Any)"
+      file.puts "alias #{definition.class_name} = ::K8S::GenericObject"
       return
     end
 
@@ -139,7 +139,7 @@ class Generator::Writer
     end
 
     if definition.class_name =~ /ApiextensionsApiserver::Apis::Apiextensions::(V1|V1beta1)::JSONSchemaProps/
-      val_types.map! { |kind| kind.gsub(/::K8S::ApiextensionsApiserver::Apis::Apiextensions::(V1|V1beta1)::JSONSchemaProps/, "::K8S::Object(ValueType)") }
+      val_types.map! { |kind| kind.gsub(/::K8S::ApiextensionsApiserver::Apis::Apiextensions::(V1|V1beta1)::JSONSchemaProps/, "::K8S::GenericObject") }
     end
 
     val_types << "Nil"
@@ -150,8 +150,6 @@ class Generator::Writer
     mod = <<-END
       # Namespace holding the types for `#{definition.class_name}`.
       module Types::#{definition.class_name}
-        alias ValueType = #{_v_types}
-        alias Instance = ::K8S::Object(ValueType)
     END
 
     write_block(mod) do
@@ -161,16 +159,17 @@ class Generator::Writer
     write_description(definition.description)
     write_annotations(definition, properties)
 
-    write_block "class #{definition.class_name} < ::#{base_class}::Types::#{definition.class_name}::Instance" do
-      file.puts "include ::#{base_class}::Types::#{definition.class_name}"
-
+    parent =
       if definition.is_list?
-        file.puts "include ::K8S::Kubernetes::Resource::List(::#{base_class}::#{definition.list_kind})"
+        "::K8S::Kubernetes::Resource::List(::#{base_class}::#{definition.list_kind})"
       elsif definition.is_resource?
-        file.puts "include ::K8S::Kubernetes::Resource::Object"
+        "::K8S::Kubernetes::Resource::Object"
       else
-        file.puts "include ::K8S::Kubernetes::Object"
+        "::K8S::GenericObject"
       end
+
+    write_block "class #{definition.class_name} < #{parent}" do
+      file.puts "include ::#{base_class}::Types::#{definition.class_name}"
 
       write_properties(properties)
 
@@ -264,6 +263,9 @@ class Generator::Writer
 
     write_description(prop[:description])
     write_block "def #{prop[:accessor]} : #{_kind}" do
+      if !prop[:nilable] && !prop[:default].nil?
+        file.puts %<self.["#{key}"] = #{prop[:default].inspect} unless self.["#{key}"]?>
+      end
       file.puts %<self.["#{key}"].as(#{_kind})>
     end
 

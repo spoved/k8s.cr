@@ -8,9 +8,6 @@ module K8S::Types::Api::Extensions::V1beta1::IngressTLS; end
 module K8S
   # Namespace holding the types for `Api::Extensions::V1beta1::IngressTLS`.
   module Types::Api::Extensions::V1beta1::IngressTLS
-    alias ValueType = ::Array(String) | String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Hosts are a list of hosts included in the TLS certificate. The values in this list must match the name/s used in the tlsSecret. Defaults to the wildcard host setting for the loadbalancer controller fulfilling this Ingress, if left unspecified.
     abstract def hosts : ::Array(String)?
     # :ditto:
@@ -34,9 +31,8 @@ module K8S
     hosts: {key: "hosts", accessor: "hosts", kind: "::Array(String)", nilable: true, default: nil, read_only: false, description: "Hosts are a list of hosts included in the TLS certificate. The values in this list must match the name/s used in the tlsSecret. Defaults to the wildcard host setting for the loadbalancer controller fulfilling this Ingress, if left unspecified.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     secret_name: {key: "secretName", accessor: "secret_name", kind: "String", nilable: true, default: nil, read_only: false, description: "SecretName is the name of the secret used to terminate SSL traffic on 443. Field is left optional to allow SSL routing based on SNI hostname alone. If the SNI host in a listener conflicts with the \"Host\" header field used by an IngressRule, the SNI host is used for termination and value of the Host header is used for routing.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Extensions::V1beta1::IngressTLS < ::K8S::Types::Api::Extensions::V1beta1::IngressTLS::Instance
+  class Api::Extensions::V1beta1::IngressTLS < ::K8S::GenericObject
     include ::K8S::Types::Api::Extensions::V1beta1::IngressTLS
-    include ::K8S::Kubernetes::Object
 
     # Hosts are a list of hosts included in the TLS certificate. The values in this list must match the name/s used in the tlsSecret. Defaults to the wildcard host setting for the loadbalancer controller fulfilling this Ingress, if left unspecified.
     def hosts : ::Array(String)?

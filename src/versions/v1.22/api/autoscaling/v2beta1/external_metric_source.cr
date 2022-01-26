@@ -10,9 +10,6 @@ require "../../../apimachinery/apis/meta/v1/label_selector"
 module K8S
   # Namespace holding the types for `Api::Autoscaling::V2beta1::ExternalMetricSource`.
   module Types::Api::Autoscaling::V2beta1::ExternalMetricSource
-    alias ValueType = String | ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector | ::Int32 | ::String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # metricName is the name of the metric in question.
     abstract def metric_name : String
     # :ditto:
@@ -54,9 +51,8 @@ module K8S
     target_average_value: {key: "targetAverageValue", accessor: "target_average_value", kind: "::Int32 | ::String", nilable: true, default: nil, read_only: false, description: "targetAverageValue is the target per-pod value of global metric (as a quantity). Mutually exclusive with TargetValue.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     target_value: {key: "targetValue", accessor: "target_value", kind: "::Int32 | ::String", nilable: true, default: nil, read_only: false, description: "targetValue is the target value of the metric (as a quantity). Mutually exclusive with TargetAverageValue.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Autoscaling::V2beta1::ExternalMetricSource < ::K8S::Types::Api::Autoscaling::V2beta1::ExternalMetricSource::Instance
+  class Api::Autoscaling::V2beta1::ExternalMetricSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Autoscaling::V2beta1::ExternalMetricSource
-    include ::K8S::Kubernetes::Object
 
     # metricName is the name of the metric in question.
     def metric_name : String

@@ -8,9 +8,6 @@ module K8S::Types::Api::Core::V1::FlockerVolumeSource; end
 module K8S
   # Namespace holding the types for `Api::Core::V1::FlockerVolumeSource`.
   module Types::Api::Core::V1::FlockerVolumeSource
-    alias ValueType = String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Name of the dataset stored as metadata -> name on the dataset for Flocker should be considered as deprecated
     abstract def dataset_name : String?
     # :ditto:
@@ -34,9 +31,8 @@ module K8S
     dataset_name: {key: "datasetName", accessor: "dataset_name", kind: "String", nilable: true, default: nil, read_only: false, description: "Name of the dataset stored as metadata -> name on the dataset for Flocker should be considered as deprecated", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     dataset_uuid: {key: "datasetUUID", accessor: "dataset_uuid", kind: "String", nilable: true, default: nil, read_only: false, description: "UUID of the dataset. This is unique identifier of a Flocker dataset", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::FlockerVolumeSource < ::K8S::Types::Api::Core::V1::FlockerVolumeSource::Instance
+  class Api::Core::V1::FlockerVolumeSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::FlockerVolumeSource
-    include ::K8S::Kubernetes::Object
 
     # Name of the dataset stored as metadata -> name on the dataset for Flocker should be considered as deprecated
     def dataset_name : String?

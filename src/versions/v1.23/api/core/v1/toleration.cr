@@ -8,9 +8,6 @@ module K8S::Types::Api::Core::V1::Toleration; end
 module K8S
   # Namespace holding the types for `Api::Core::V1::Toleration`.
   module Types::Api::Core::V1::Toleration
-    alias ValueType = String | Int32 | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
     #
     # Possible enum values:
@@ -70,9 +67,8 @@ module K8S
     toleration_seconds: {key: "tolerationSeconds", accessor: "toleration_seconds", kind: "Int32", nilable: true, default: nil, read_only: false, description: "TolerationSeconds represents the period of time the toleration (which must be of effect NoExecute, otherwise this field is ignored) tolerates the taint. By default, it is not set, which means tolerate the taint forever (do not evict). Zero and negative values will be treated as 0 (evict immediately) by the system.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     value: {key: "value", accessor: "value", kind: "String", nilable: true, default: nil, read_only: false, description: "Value is the taint value the toleration matches to. If the operator is Exists, the value should be empty, otherwise just a regular string.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::Toleration < ::K8S::Types::Api::Core::V1::Toleration::Instance
+  class Api::Core::V1::Toleration < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::Toleration
-    include ::K8S::Kubernetes::Object
 
     # Effect indicates the taint effect to match. Empty means match all taint effects. When specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.
     #

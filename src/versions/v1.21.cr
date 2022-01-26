@@ -1,8 +1,8 @@
-require "./v1.21/kubernetes"
 # THIS FILE WAS AUTO GENERATED FROM THE K8S SWAGGER SPEC
 
 require "../k8s/*"
 
+require "./v1.21/kubernetes"
 require "./v1.21/api/admissionregistration/v1/mutating_webhook.cr"
 require "./v1.21/api/admissionregistration/v1/mutating_webhook_configuration.cr"
 require "./v1.21/api/admissionregistration/v1/mutating_webhook_configuration_list.cr"

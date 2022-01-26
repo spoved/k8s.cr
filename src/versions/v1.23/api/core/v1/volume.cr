@@ -38,9 +38,6 @@ require "./vsphere_virtual_disk_volume_source"
 module K8S
   # Namespace holding the types for `Api::Core::V1::Volume`.
   module Types::Api::Core::V1::Volume
-    alias ValueType = ::K8S::Api::Core::V1::AWSElasticBlockStoreVolumeSource | ::K8S::Api::Core::V1::AzureDiskVolumeSource | ::K8S::Api::Core::V1::AzureFileVolumeSource | ::K8S::Api::Core::V1::CephFSVolumeSource | ::K8S::Api::Core::V1::CinderVolumeSource | ::K8S::Api::Core::V1::ConfigMapVolumeSource | ::K8S::Api::Core::V1::CSIVolumeSource | ::K8S::Api::Core::V1::DownwardAPIVolumeSource | ::K8S::Api::Core::V1::EmptyDirVolumeSource | ::K8S::Api::Core::V1::EphemeralVolumeSource | ::K8S::Api::Core::V1::FCVolumeSource | ::K8S::Api::Core::V1::FlexVolumeSource | ::K8S::Api::Core::V1::FlockerVolumeSource | ::K8S::Api::Core::V1::GCEPersistentDiskVolumeSource | ::K8S::Api::Core::V1::GitRepoVolumeSource | ::K8S::Api::Core::V1::GlusterfsVolumeSource | ::K8S::Api::Core::V1::HostPathVolumeSource | ::K8S::Api::Core::V1::ISCSIVolumeSource | String | ::K8S::Api::Core::V1::NFSVolumeSource | ::K8S::Api::Core::V1::PersistentVolumeClaimVolumeSource | ::K8S::Api::Core::V1::PhotonPersistentDiskVolumeSource | ::K8S::Api::Core::V1::PortworxVolumeSource | ::K8S::Api::Core::V1::ProjectedVolumeSource | ::K8S::Api::Core::V1::QuobyteVolumeSource | ::K8S::Api::Core::V1::RBDVolumeSource | ::K8S::Api::Core::V1::ScaleIOVolumeSource | ::K8S::Api::Core::V1::SecretVolumeSource | ::K8S::Api::Core::V1::StorageOSVolumeSource | ::K8S::Api::Core::V1::VsphereVirtualDiskVolumeSource | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # AWSElasticBlockStore represents an AWS Disk resource that is attached to a kubelet's host machine and then exposed to the pod. More info: [[https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore](https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore)](https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore](https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore))
     abstract def aws_elastic_block_store : ::K8S::Api::Core::V1::AWSElasticBlockStoreVolumeSource?
     # :ditto:
@@ -329,9 +326,8 @@ module K8S
     storageos: {key: "storageos", accessor: "storageos", kind: "::K8S::Api::Core::V1::StorageOSVolumeSource", nilable: true, default: nil, read_only: false, description: "StorageOS represents a StorageOS volume attached and mounted on Kubernetes nodes.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     vsphere_volume: {key: "vsphereVolume", accessor: "vsphere_volume", kind: "::K8S::Api::Core::V1::VsphereVirtualDiskVolumeSource", nilable: true, default: nil, read_only: false, description: "VsphereVolume represents a vSphere volume attached and mounted on kubelets host machine", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::Volume < ::K8S::Types::Api::Core::V1::Volume::Instance
+  class Api::Core::V1::Volume < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::Volume
-    include ::K8S::Kubernetes::Object
 
     # AWSElasticBlockStore represents an AWS Disk resource that is attached to a kubelet's host machine and then exposed to the pod. More info: [[https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore](https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore)](https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore](https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore))
     def aws_elastic_block_store : ::K8S::Api::Core::V1::AWSElasticBlockStoreVolumeSource?

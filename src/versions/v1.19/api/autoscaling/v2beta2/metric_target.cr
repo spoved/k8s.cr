@@ -8,9 +8,6 @@ module K8S::Types::Api::Autoscaling::V2beta2::MetricTarget; end
 module K8S
   # Namespace holding the types for `Api::Autoscaling::V2beta2::MetricTarget`.
   module Types::Api::Autoscaling::V2beta2::MetricTarget
-    alias ValueType = Int32 | ::Int32 | ::String | String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # averageUtilization is the target value of the average of the resource metric across all relevant pods, represented as a percentage of the requested value of the resource for the pods. Currently only valid for Resource metric source type
     abstract def average_utilization : Int32?
     # :ditto:
@@ -52,9 +49,8 @@ module K8S
     type: {key: "type", accessor: "type", kind: "String", nilable: false, default: nil, read_only: false, description: "type represents whether the metric type is Utilization, Value, or AverageValue", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     value: {key: "value", accessor: "value", kind: "::Int32 | ::String", nilable: true, default: nil, read_only: false, description: "value is the target value of the metric (as a quantity).", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Autoscaling::V2beta2::MetricTarget < ::K8S::Types::Api::Autoscaling::V2beta2::MetricTarget::Instance
+  class Api::Autoscaling::V2beta2::MetricTarget < ::K8S::GenericObject
     include ::K8S::Types::Api::Autoscaling::V2beta2::MetricTarget
-    include ::K8S::Kubernetes::Object
 
     # averageUtilization is the target value of the average of the resource metric across all relevant pods, represented as a percentage of the requested value of the resource for the pods. Currently only valid for Resource metric source type
     def average_utilization : Int32?

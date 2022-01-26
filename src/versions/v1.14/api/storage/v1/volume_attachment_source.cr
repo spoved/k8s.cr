@@ -8,9 +8,6 @@ module K8S::Types::Api::Storage::V1::VolumeAttachmentSource; end
 module K8S
   # Namespace holding the types for `Api::Storage::V1::VolumeAttachmentSource`.
   module Types::Api::Storage::V1::VolumeAttachmentSource
-    alias ValueType = String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Name of the persistent volume to attach.
     abstract def persistent_volume_name : String?
     # :ditto:
@@ -25,9 +22,8 @@ module K8S
   @[::K8S::Properties(
     persistent_volume_name: {key: "persistentVolumeName", accessor: "persistent_volume_name", kind: "String", nilable: true, default: nil, read_only: false, description: "Name of the persistent volume to attach.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Storage::V1::VolumeAttachmentSource < ::K8S::Types::Api::Storage::V1::VolumeAttachmentSource::Instance
+  class Api::Storage::V1::VolumeAttachmentSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Storage::V1::VolumeAttachmentSource
-    include ::K8S::Kubernetes::Object
 
     # Name of the persistent volume to attach.
     def persistent_volume_name : String?

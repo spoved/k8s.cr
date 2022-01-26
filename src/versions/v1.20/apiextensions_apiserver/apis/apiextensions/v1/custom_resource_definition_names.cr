@@ -8,9 +8,6 @@ module K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResour
 module K8S
   # Namespace holding the types for `ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionNames`.
   module Types::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionNames
-    alias ValueType = ::Array(String) | String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # categories is a list of grouped resources this custom resource belongs to (e.g. 'all'). This is published in API discovery documents, and used by clients to support invocations like `kubectl get all`.
     abstract def categories : ::Array(String)?
     # :ditto:
@@ -70,9 +67,8 @@ module K8S
     short_names: {key: "shortNames", accessor: "short_names", kind: "::Array(String)", nilable: true, default: nil, read_only: false, description: "shortNames are short names for the resource, exposed in API discovery documents, and used by clients to support invocations like `kubectl get <shortname>`. It must be all lowercase.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     singular: {key: "singular", accessor: "singular", kind: "String", nilable: true, default: nil, read_only: false, description: "singular is the singular name of the resource. It must be all lowercase. Defaults to lowercased `kind`.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionNames < ::K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionNames::Instance
+  class ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionNames < ::K8S::GenericObject
     include ::K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionNames
-    include ::K8S::Kubernetes::Object
 
     # categories is a list of grouped resources this custom resource belongs to (e.g. 'all'). This is published in API discovery documents, and used by clients to support invocations like `kubectl get all`.
     def categories : ::Array(String)?

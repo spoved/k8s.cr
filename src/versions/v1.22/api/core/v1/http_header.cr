@@ -8,9 +8,6 @@ module K8S::Types::Api::Core::V1::HTTPHeader; end
 module K8S
   # Namespace holding the types for `Api::Core::V1::HTTPHeader`.
   module Types::Api::Core::V1::HTTPHeader
-    alias ValueType = String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # The header field name
     abstract def name : String
     # :ditto:
@@ -34,9 +31,8 @@ module K8S
     name: {key: "name", accessor: "name", kind: "String", nilable: false, default: nil, read_only: false, description: "The header field name", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     value: {key: "value", accessor: "value", kind: "String", nilable: false, default: nil, read_only: false, description: "The header field value", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::HTTPHeader < ::K8S::Types::Api::Core::V1::HTTPHeader::Instance
+  class Api::Core::V1::HTTPHeader < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::HTTPHeader
-    include ::K8S::Kubernetes::Object
 
     # The header field name
     def name : String

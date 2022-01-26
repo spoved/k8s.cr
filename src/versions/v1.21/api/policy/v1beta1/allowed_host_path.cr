@@ -8,9 +8,6 @@ module K8S::Types::Api::Policy::V1beta1::AllowedHostPath; end
 module K8S
   # Namespace holding the types for `Api::Policy::V1beta1::AllowedHostPath`.
   module Types::Api::Policy::V1beta1::AllowedHostPath
-    alias ValueType = String | ::Bool | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # pathPrefix is the path prefix that the host volume must match. It does not support `*`. Trailing slashes are trimmed when validating the path prefix with a host path.
     #
     # Examples: [[`/foo` would allow `/foo`, `/foo/` and `/foo/bar` `/foo` would not allow `/food` or `/etc/foo`](`/foo` would allow `/foo`, `/foo/` and `/foo/bar` `/foo` would not allow `/food` or `/etc/foo`)]([`/foo` would allow `/foo`, `/foo/` and `/foo/bar` `/foo` would not allow `/food` or `/etc/foo`](`/foo` would allow `/foo`, `/foo/` and `/foo/bar` `/foo` would not allow `/food` or `/etc/foo`))
@@ -36,9 +33,8 @@ module K8S
     path_prefix: {key: "pathPrefix", accessor: "path_prefix", kind: "String", nilable: true, default: nil, read_only: false, description: "pathPrefix is the path prefix that the host volume must match. It does not support `*`. Trailing slashes are trimmed when validating the path prefix with a host path.\n\nExamples: [`/foo` would allow `/foo`, `/foo/` and `/foo/bar` `/foo` would not allow `/food` or `/etc/foo`](`/foo` would allow `/foo`, `/foo/` and `/foo/bar` `/foo` would not allow `/food` or `/etc/foo`)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     read_only: {key: "readOnly", accessor: "read_only", kind: "::Bool", nilable: true, default: nil, read_only: false, description: "when set to true, will allow host volumes matching the pathPrefix only if all volume mounts are readOnly.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Policy::V1beta1::AllowedHostPath < ::K8S::Types::Api::Policy::V1beta1::AllowedHostPath::Instance
+  class Api::Policy::V1beta1::AllowedHostPath < ::K8S::GenericObject
     include ::K8S::Types::Api::Policy::V1beta1::AllowedHostPath
-    include ::K8S::Kubernetes::Object
 
     # pathPrefix is the path prefix that the host volume must match. It does not support `*`. Trailing slashes are trimmed when validating the path prefix with a host path.
     #

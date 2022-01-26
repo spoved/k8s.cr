@@ -12,9 +12,6 @@ require "./pod_anti_affinity"
 module K8S
   # Namespace holding the types for `Api::Core::V1::Affinity`.
   module Types::Api::Core::V1::Affinity
-    alias ValueType = ::K8S::Api::Core::V1::NodeAffinity | ::K8S::Api::Core::V1::PodAffinity | ::K8S::Api::Core::V1::PodAntiAffinity | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Describes node affinity scheduling rules for the pod.
     abstract def node_affinity : ::K8S::Api::Core::V1::NodeAffinity?
     # :ditto:
@@ -47,9 +44,8 @@ module K8S
     pod_affinity: {key: "podAffinity", accessor: "pod_affinity", kind: "::K8S::Api::Core::V1::PodAffinity", nilable: true, default: nil, read_only: false, description: "Describes pod affinity scheduling rules (e.g. co-locate this pod in the same node, zone, etc. as some other pod(s)).", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     pod_anti_affinity: {key: "podAntiAffinity", accessor: "pod_anti_affinity", kind: "::K8S::Api::Core::V1::PodAntiAffinity", nilable: true, default: nil, read_only: false, description: "Describes pod anti-affinity scheduling rules (e.g. avoid putting this pod in the same node, zone, etc. as some other pod(s)).", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::Affinity < ::K8S::Types::Api::Core::V1::Affinity::Instance
+  class Api::Core::V1::Affinity < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::Affinity
-    include ::K8S::Kubernetes::Object
 
     # Describes node affinity scheduling rules for the pod.
     def node_affinity : ::K8S::Api::Core::V1::NodeAffinity?

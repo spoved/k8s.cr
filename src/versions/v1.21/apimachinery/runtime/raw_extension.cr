@@ -6,5 +6,5 @@ require "json"
 module K8S::Types::Apimachinery::Runtime::RawExtension; end
 
 module K8S
-  alias Apimachinery::Runtime::RawExtension = ::K8S::Object(::JSON::Any)
+  alias Apimachinery::Runtime::RawExtension = ::K8S::GenericObject
 end

@@ -13,9 +13,6 @@ require "../../core/v1/persistent_volume_claim"
 module K8S
   # Namespace holding the types for `Api::Apps::V1::StatefulSetSpec`.
   module Types::Api::Apps::V1::StatefulSetSpec
-    alias ValueType = String | Int32 | ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector | ::K8S::Api::Core::V1::PodTemplateSpec | ::K8S::Api::Apps::V1::StatefulSetUpdateStrategy | ::Array(::K8S::Api::Core::V1::PersistentVolumeClaim) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # podManagementPolicy controls how pods are created during initial scale up, when replacing pods on nodes, or when scaling down. The default policy is `OrderedReady`, where pods are created in increasing order (pod-0, then pod-1, etc) and the controller will wait until each pod is ready before continuing. When scaling down, the pods are removed in the opposite order. The alternative policy is `Parallel` which will create pods in parallel to match the desired scale without waiting, and on scale down will delete all pods at once.
     abstract def pod_management_policy : String?
     # :ditto:
@@ -93,9 +90,8 @@ module K8S
     update_strategy: {key: "updateStrategy", accessor: "update_strategy", kind: "::K8S::Api::Apps::V1::StatefulSetUpdateStrategy", nilable: true, default: nil, read_only: false, description: "updateStrategy indicates the StatefulSetUpdateStrategy that will be employed to update Pods in the StatefulSet when a revision is made to Template.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     volume_claim_templates: {key: "volumeClaimTemplates", accessor: "volume_claim_templates", kind: "::Array(::K8S::Api::Core::V1::PersistentVolumeClaim)", nilable: true, default: nil, read_only: false, description: "volumeClaimTemplates is a list of claims that pods are allowed to reference. The StatefulSet controller is responsible for mapping network identities to claims in a way that maintains the identity of a pod. Every claim in this list must have at least one matching (by name) volumeMount in one container in the template. A claim in this list takes precedence over any volumes in the template, with the same name.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Apps::V1::StatefulSetSpec < ::K8S::Types::Api::Apps::V1::StatefulSetSpec::Instance
+  class Api::Apps::V1::StatefulSetSpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Apps::V1::StatefulSetSpec
-    include ::K8S::Kubernetes::Object
 
     # podManagementPolicy controls how pods are created during initial scale up, when replacing pods on nodes, or when scaling down. The default policy is `OrderedReady`, where pods are created in increasing order (pod-0, then pod-1, etc) and the controller will wait until each pod is ready before continuing. When scaling down, the pods are removed in the opposite order. The alternative policy is `Parallel` which will create pods in parallel to match the desired scale without waiting, and on scale down will delete all pods at once.
     def pod_management_policy : String?

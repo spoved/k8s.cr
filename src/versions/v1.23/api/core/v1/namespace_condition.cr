@@ -8,9 +8,6 @@ module K8S::Types::Api::Core::V1::NamespaceCondition; end
 module K8S
   # Namespace holding the types for `Api::Core::V1::NamespaceCondition`.
   module Types::Api::Core::V1::NamespaceCondition
-    alias ValueType = ::Time | String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     #
     abstract def last_transition_time : ::Time?
     # :ditto:
@@ -68,9 +65,8 @@ module K8S
     status: {key: "status", accessor: "status", kind: "String", nilable: false, default: nil, read_only: false, description: "Status of the condition, one of True, False, Unknown.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     type: {key: "type", accessor: "type", kind: "String", nilable: false, default: nil, read_only: false, description: "Type of namespace controller condition.\n\nPossible enum values:\n - `\"NamespaceContentRemaining\"` contains information about resources remaining in a namespace.\n - `\"NamespaceDeletionContentFailure\"` contains information about namespace deleter errors during deletion of resources.\n - `\"NamespaceDeletionDiscoveryFailure\"` contains information about namespace deleter errors during resource discovery.\n - `\"NamespaceDeletionGroupVersionParsingFailure\"` contains information about namespace deleter errors parsing GV for legacy types.\n - `\"NamespaceFinalizersRemaining\"` contains information about which finalizers are on resources remaining in a namespace.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::NamespaceCondition < ::K8S::Types::Api::Core::V1::NamespaceCondition::Instance
+  class Api::Core::V1::NamespaceCondition < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::NamespaceCondition
-    include ::K8S::Kubernetes::Object
 
     #
     def last_transition_time : ::Time?

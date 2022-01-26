@@ -10,9 +10,6 @@ require "./topology_selector_label_requirement"
 module K8S
   # Namespace holding the types for `Api::Core::V1::TopologySelectorTerm`.
   module Types::Api::Core::V1::TopologySelectorTerm
-    alias ValueType = ::Array(::K8S::Api::Core::V1::TopologySelectorLabelRequirement) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # A list of topology selector requirements by labels.
     abstract def match_label_expressions : ::Array(::K8S::Api::Core::V1::TopologySelectorLabelRequirement)?
     # :ditto:
@@ -27,9 +24,8 @@ module K8S
   @[::K8S::Properties(
     match_label_expressions: {key: "matchLabelExpressions", accessor: "match_label_expressions", kind: "::Array(::K8S::Api::Core::V1::TopologySelectorLabelRequirement)", nilable: true, default: nil, read_only: false, description: "A list of topology selector requirements by labels.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::TopologySelectorTerm < ::K8S::Types::Api::Core::V1::TopologySelectorTerm::Instance
+  class Api::Core::V1::TopologySelectorTerm < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::TopologySelectorTerm
-    include ::K8S::Kubernetes::Object
 
     # A list of topology selector requirements by labels.
     def match_label_expressions : ::Array(::K8S::Api::Core::V1::TopologySelectorLabelRequirement)?

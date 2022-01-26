@@ -8,9 +8,6 @@ module K8S::Types::Api::Policy::V1beta1::AllowedCSIDriver; end
 module K8S
   # Namespace holding the types for `Api::Policy::V1beta1::AllowedCSIDriver`.
   module Types::Api::Policy::V1beta1::AllowedCSIDriver
-    alias ValueType = String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Name is the registered name of the CSI driver
     abstract def name : String
     # :ditto:
@@ -25,9 +22,8 @@ module K8S
   @[::K8S::Properties(
     name: {key: "name", accessor: "name", kind: "String", nilable: false, default: nil, read_only: false, description: "Name is the registered name of the CSI driver", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Policy::V1beta1::AllowedCSIDriver < ::K8S::Types::Api::Policy::V1beta1::AllowedCSIDriver::Instance
+  class Api::Policy::V1beta1::AllowedCSIDriver < ::K8S::GenericObject
     include ::K8S::Types::Api::Policy::V1beta1::AllowedCSIDriver
-    include ::K8S::Kubernetes::Object
 
     # Name is the registered name of the CSI driver
     def name : String

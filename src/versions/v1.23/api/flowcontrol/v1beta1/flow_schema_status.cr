@@ -10,9 +10,6 @@ require "./flow_schema_condition"
 module K8S
   # Namespace holding the types for `Api::Flowcontrol::V1beta1::FlowSchemaStatus`.
   module Types::Api::Flowcontrol::V1beta1::FlowSchemaStatus
-    alias ValueType = ::Array(::K8S::Api::Flowcontrol::V1beta1::FlowSchemaCondition) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # `conditions` is a list of the current states of FlowSchema.
     abstract def conditions : ::Array(::K8S::Api::Flowcontrol::V1beta1::FlowSchemaCondition)?
     # :ditto:
@@ -27,9 +24,8 @@ module K8S
   @[::K8S::Properties(
     conditions: {key: "conditions", accessor: "conditions", kind: "::Array(::K8S::Api::Flowcontrol::V1beta1::FlowSchemaCondition)", nilable: true, default: nil, read_only: false, description: "`conditions` is a list of the current states of FlowSchema.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: ["type"], x_kubernetes_list_type: "map", x_kubernetes_map_type: nil},
   )]
-  class Api::Flowcontrol::V1beta1::FlowSchemaStatus < ::K8S::Types::Api::Flowcontrol::V1beta1::FlowSchemaStatus::Instance
+  class Api::Flowcontrol::V1beta1::FlowSchemaStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Flowcontrol::V1beta1::FlowSchemaStatus
-    include ::K8S::Kubernetes::Object
 
     # `conditions` is a list of the current states of FlowSchema.
     def conditions : ::Array(::K8S::Api::Flowcontrol::V1beta1::FlowSchemaCondition)?

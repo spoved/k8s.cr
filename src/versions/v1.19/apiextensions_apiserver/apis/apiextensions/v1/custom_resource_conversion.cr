@@ -10,9 +10,6 @@ require "./webhook_conversion"
 module K8S
   # Namespace holding the types for `ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceConversion`.
   module Types::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceConversion
-    alias ValueType = String | ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::WebhookConversion | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # strategy specifies how custom resources are converted between versions. Allowed values are: - `None`: The converter only change the apiVersion and would not touch any other field in the custom resource. - `Webhook`: API Server will call to an external webhook to do the conversion. Additional information
     #   is needed for this option. This requires spec.preserveUnknownFields to be false, and spec.conversion.webhook to be set.
     abstract def strategy : String
@@ -37,9 +34,8 @@ module K8S
     strategy: {key: "strategy", accessor: "strategy", kind: "String", nilable: false, default: nil, read_only: false, description: "strategy specifies how custom resources are converted between versions. Allowed values are: - `None`: The converter only change the apiVersion and would not touch any other field in the custom resource. - `Webhook`: API Server will call to an external webhook to do the conversion. Additional information\n  is needed for this option. This requires spec.preserveUnknownFields to be false, and spec.conversion.webhook to be set.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     webhook: {key: "webhook", accessor: "webhook", kind: "::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::WebhookConversion", nilable: true, default: nil, read_only: false, description: "webhook describes how to call the conversion webhook. Required when `strategy` is set to `Webhook`.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceConversion < ::K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceConversion::Instance
+  class ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceConversion < ::K8S::GenericObject
     include ::K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceConversion
-    include ::K8S::Kubernetes::Object
 
     # strategy specifies how custom resources are converted between versions. Allowed values are: - `None`: The converter only change the apiVersion and would not touch any other field in the custom resource. - `Webhook`: API Server will call to an external webhook to do the conversion. Additional information
     #   is needed for this option. This requires spec.preserveUnknownFields to be false, and spec.conversion.webhook to be set.

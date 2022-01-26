@@ -8,9 +8,6 @@ module K8S::Types::Api::Authorization::V1::ResourceRule; end
 module K8S
   # Namespace holding the types for `Api::Authorization::V1::ResourceRule`.
   module Types::Api::Authorization::V1::ResourceRule
-    alias ValueType = ::Array(String) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # APIGroups is the name of the APIGroup that contains the resources.  If multiple API groups are specified, any action requested against one of the enumerated resources in any API group will be allowed.  "*" means all.
     abstract def api_groups : ::Array(String)?
     # :ditto:
@@ -53,9 +50,8 @@ module K8S
     resources: {key: "resources", accessor: "resources", kind: "::Array(String)", nilable: true, default: nil, read_only: false, description: "Resources is a list of resources this rule applies to.  \"*\" means all in the specified apiGroups.\n [\"*/foo\" represents the subresource 'foo' for all resources in the specified apiGroups.](\"*/foo\" represents the subresource 'foo' for all resources in the specified apiGroups.)", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     verbs: {key: "verbs", accessor: "verbs", kind: "::Array(String)", nilable: false, default: nil, read_only: false, description: "Verb is a list of kubernetes resource API verbs, like: get, list, watch, create, update, delete, proxy.  \"*\" means all.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Authorization::V1::ResourceRule < ::K8S::Types::Api::Authorization::V1::ResourceRule::Instance
+  class Api::Authorization::V1::ResourceRule < ::K8S::GenericObject
     include ::K8S::Types::Api::Authorization::V1::ResourceRule
-    include ::K8S::Kubernetes::Object
 
     # APIGroups is the name of the APIGroup that contains the resources.  If multiple API groups are specified, any action requested against one of the enumerated resources in any API group will be allowed.  "*" means all.
     def api_groups : ::Array(String)?

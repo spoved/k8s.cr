@@ -8,9 +8,6 @@ module K8S::Types::Api::Core::V1::ScopedResourceSelectorRequirement; end
 module K8S
   # Namespace holding the types for `Api::Core::V1::ScopedResourceSelectorRequirement`.
   module Types::Api::Core::V1::ScopedResourceSelectorRequirement
-    alias ValueType = String | ::Array(String) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Represents a scope's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist.
     abstract def operator : String
     # :ditto:
@@ -43,9 +40,8 @@ module K8S
     scope_name: {key: "scopeName", accessor: "scope_name", kind: "String", nilable: false, default: nil, read_only: false, description: "The name of the scope that the selector applies to.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     values: {key: "values", accessor: "values", kind: "::Array(String)", nilable: true, default: nil, read_only: false, description: "An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::ScopedResourceSelectorRequirement < ::K8S::Types::Api::Core::V1::ScopedResourceSelectorRequirement::Instance
+  class Api::Core::V1::ScopedResourceSelectorRequirement < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::ScopedResourceSelectorRequirement
-    include ::K8S::Kubernetes::Object
 
     # Represents a scope's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist.
     def operator : String

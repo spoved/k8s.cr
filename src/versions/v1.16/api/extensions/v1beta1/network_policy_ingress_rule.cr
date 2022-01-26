@@ -11,9 +11,6 @@ require "./network_policy_port"
 module K8S
   # Namespace holding the types for `Api::Extensions::V1beta1::NetworkPolicyIngressRule`.
   module Types::Api::Extensions::V1beta1::NetworkPolicyIngressRule
-    alias ValueType = ::Array(::K8S::Api::Extensions::V1beta1::NetworkPolicyPeer) | ::Array(::K8S::Api::Extensions::V1beta1::NetworkPolicyPort) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # List of sources which should be able to access the pods selected for this rule. Items in this list are combined using a logical OR operation. If this field is empty or missing, this rule matches all sources (traffic not restricted by source). If this field is present and contains at least one item, this rule allows traffic only if the traffic matches at least one item in the from list.
     abstract def from : ::Array(::K8S::Api::Extensions::V1beta1::NetworkPolicyPeer)?
     # :ditto:
@@ -37,9 +34,8 @@ module K8S
     from: {key: "from", accessor: "from", kind: "::Array(::K8S::Api::Extensions::V1beta1::NetworkPolicyPeer)", nilable: true, default: nil, read_only: false, description: "List of sources which should be able to access the pods selected for this rule. Items in this list are combined using a logical OR operation. If this field is empty or missing, this rule matches all sources (traffic not restricted by source). If this field is present and contains at least one item, this rule allows traffic only if the traffic matches at least one item in the from list.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     ports: {key: "ports", accessor: "ports", kind: "::Array(::K8S::Api::Extensions::V1beta1::NetworkPolicyPort)", nilable: true, default: nil, read_only: false, description: "List of ports which should be made accessible on the pods selected for this rule. Each item in this list is combined using a logical OR. If this field is empty or missing, this rule matches all ports (traffic not restricted by port). If this field is present and contains at least one item, then this rule allows traffic only if the traffic matches at least one port in the list.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Extensions::V1beta1::NetworkPolicyIngressRule < ::K8S::Types::Api::Extensions::V1beta1::NetworkPolicyIngressRule::Instance
+  class Api::Extensions::V1beta1::NetworkPolicyIngressRule < ::K8S::GenericObject
     include ::K8S::Types::Api::Extensions::V1beta1::NetworkPolicyIngressRule
-    include ::K8S::Kubernetes::Object
 
     # List of sources which should be able to access the pods selected for this rule. Items in this list are combined using a logical OR operation. If this field is empty or missing, this rule matches all sources (traffic not restricted by source). If this field is present and contains at least one item, this rule allows traffic only if the traffic matches at least one item in the from list.
     def from : ::Array(::K8S::Api::Extensions::V1beta1::NetworkPolicyPeer)?

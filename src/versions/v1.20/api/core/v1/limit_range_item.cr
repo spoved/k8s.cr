@@ -8,9 +8,6 @@ module K8S::Types::Api::Core::V1::LimitRangeItem; end
 module K8S
   # Namespace holding the types for `Api::Core::V1::LimitRangeItem`.
   module Types::Api::Core::V1::LimitRangeItem
-    alias ValueType = ::Hash(String, ::Int32 | ::String) | String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Default resource requirement limit value by resource name if resource limit is omitted.
     abstract def default : ::Hash(String, ::Int32 | ::String)?
     # :ditto:
@@ -70,9 +67,8 @@ module K8S
     min: {key: "min", accessor: "min", kind: "::Hash(String, ::Int32 | ::String)", nilable: true, default: nil, read_only: false, description: "Min usage constraints on this kind by resource name.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     type: {key: "type", accessor: "type", kind: "String", nilable: false, default: nil, read_only: false, description: "Type of resource that this limit applies to.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::LimitRangeItem < ::K8S::Types::Api::Core::V1::LimitRangeItem::Instance
+  class Api::Core::V1::LimitRangeItem < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::LimitRangeItem
-    include ::K8S::Kubernetes::Object
 
     # Default resource requirement limit value by resource name if resource limit is omitted.
     def default : ::Hash(String, ::Int32 | ::String)?

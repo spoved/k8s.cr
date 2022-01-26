@@ -8,9 +8,6 @@ module K8S::Types::Api::Core::V1::PodDNSConfigOption; end
 module K8S
   # Namespace holding the types for `Api::Core::V1::PodDNSConfigOption`.
   module Types::Api::Core::V1::PodDNSConfigOption
-    alias ValueType = String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Required.
     abstract def name : String?
     # :ditto:
@@ -34,9 +31,8 @@ module K8S
     name: {key: "name", accessor: "name", kind: "String", nilable: true, default: nil, read_only: false, description: "Required.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     value: {key: "value", accessor: "value", kind: "String", nilable: true, default: nil, read_only: false, description: nil, x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::PodDNSConfigOption < ::K8S::Types::Api::Core::V1::PodDNSConfigOption::Instance
+  class Api::Core::V1::PodDNSConfigOption < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::PodDNSConfigOption
-    include ::K8S::Kubernetes::Object
 
     # Required.
     def name : String?

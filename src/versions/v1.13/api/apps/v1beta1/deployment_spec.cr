@@ -13,9 +13,6 @@ require "../../core/v1/pod_template_spec"
 module K8S
   # Namespace holding the types for `Api::Apps::V1beta1::DeploymentSpec`.
   module Types::Api::Apps::V1beta1::DeploymentSpec
-    alias ValueType = Int32 | ::Bool | ::K8S::Api::Apps::V1beta1::RollbackConfig | ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector | ::K8S::Api::Apps::V1beta1::DeploymentStrategy | ::K8S::Api::Core::V1::PodTemplateSpec | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Minimum number of seconds for which a newly created pod should be ready without any of its container crashing, for it to be considered available. Defaults to 0 (pod will be considered available as soon as it is ready)
     abstract def min_ready_seconds : Int32?
     # :ditto:
@@ -102,9 +99,8 @@ module K8S
     strategy: {key: "strategy", accessor: "strategy", kind: "::K8S::Api::Apps::V1beta1::DeploymentStrategy", nilable: true, default: nil, read_only: false, description: "The deployment strategy to use to replace existing pods with new ones.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     template: {key: "template", accessor: "template", kind: "::K8S::Api::Core::V1::PodTemplateSpec", nilable: false, default: nil, read_only: false, description: "Template describes the pods that will be created.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Apps::V1beta1::DeploymentSpec < ::K8S::Types::Api::Apps::V1beta1::DeploymentSpec::Instance
+  class Api::Apps::V1beta1::DeploymentSpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Apps::V1beta1::DeploymentSpec
-    include ::K8S::Kubernetes::Object
 
     # Minimum number of seconds for which a newly created pod should be ready without any of its container crashing, for it to be considered available. Defaults to 0 (pod will be considered available as soon as it is ready)
     def min_ready_seconds : Int32?

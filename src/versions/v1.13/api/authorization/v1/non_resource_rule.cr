@@ -8,9 +8,6 @@ module K8S::Types::Api::Authorization::V1::NonResourceRule; end
 module K8S
   # Namespace holding the types for `Api::Authorization::V1::NonResourceRule`.
   module Types::Api::Authorization::V1::NonResourceRule
-    alias ValueType = ::Array(String) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # NonResourceURLs is a set of partial urls that a user should have access to.  *s are allowed, but only as the full, final step in the path.  "*" means all.
     abstract def non_resource_urls : ::Array(String)?
     # :ditto:
@@ -34,9 +31,8 @@ module K8S
     non_resource_urls: {key: "nonResourceURLs", accessor: "non_resource_urls", kind: "::Array(String)", nilable: true, default: nil, read_only: false, description: "NonResourceURLs is a set of partial urls that a user should have access to.  *s are allowed, but only as the full, final step in the path.  \"*\" means all.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     verbs: {key: "verbs", accessor: "verbs", kind: "::Array(String)", nilable: false, default: nil, read_only: false, description: "Verb is a list of kubernetes non-resource API verbs, like: get, post, put, delete, patch, head, options.  \"*\" means all.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Authorization::V1::NonResourceRule < ::K8S::Types::Api::Authorization::V1::NonResourceRule::Instance
+  class Api::Authorization::V1::NonResourceRule < ::K8S::GenericObject
     include ::K8S::Types::Api::Authorization::V1::NonResourceRule
-    include ::K8S::Kubernetes::Object
 
     # NonResourceURLs is a set of partial urls that a user should have access to.  *s are allowed, but only as the full, final step in the path.  "*" means all.
     def non_resource_urls : ::Array(String)?

@@ -8,9 +8,6 @@ module K8S::Types::Api::Core::V1::VolumeMount; end
 module K8S
   # Namespace holding the types for `Api::Core::V1::VolumeMount`.
   module Types::Api::Core::V1::VolumeMount
-    alias ValueType = String | ::Bool | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Path within the container at which the volume should be mounted.  Must not contain ':'.
     abstract def mount_path : String
     # :ditto:
@@ -61,9 +58,8 @@ module K8S
     read_only: {key: "readOnly", accessor: "read_only", kind: "::Bool", nilable: true, default: nil, read_only: false, description: "Mounted read-only if true, read-write otherwise (false or unspecified). Defaults to false.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     sub_path: {key: "subPath", accessor: "sub_path", kind: "String", nilable: true, default: nil, read_only: false, description: "Path within the volume from which the container's volume should be mounted. Defaults to \"\" (volume's root).", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Core::V1::VolumeMount < ::K8S::Types::Api::Core::V1::VolumeMount::Instance
+  class Api::Core::V1::VolumeMount < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::VolumeMount
-    include ::K8S::Kubernetes::Object
 
     # Path within the container at which the volume should be mounted.  Must not contain ':'.
     def mount_path : String

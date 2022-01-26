@@ -8,9 +8,6 @@ module K8S::Types::KubeAggregator::Apis::Apiregistration::V1::ServiceReference; 
 module K8S
   # Namespace holding the types for `KubeAggregator::Apis::Apiregistration::V1::ServiceReference`.
   module Types::KubeAggregator::Apis::Apiregistration::V1::ServiceReference
-    alias ValueType = String | Int32 | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # Name is the name of the service
     abstract def name : String?
     # :ditto:
@@ -43,9 +40,8 @@ module K8S
     namespace: {key: "namespace", accessor: "namespace", kind: "String", nilable: true, default: nil, read_only: false, description: "Namespace is the namespace of the service", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     port: {key: "port", accessor: "port", kind: "Int32", nilable: true, default: nil, read_only: false, description: "If specified, the port on the service that hosting webhook. Default to 443 for backward compatibility. `port` should be a valid port number (1-65535, inclusive).", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class KubeAggregator::Apis::Apiregistration::V1::ServiceReference < ::K8S::Types::KubeAggregator::Apis::Apiregistration::V1::ServiceReference::Instance
+  class KubeAggregator::Apis::Apiregistration::V1::ServiceReference < ::K8S::GenericObject
     include ::K8S::Types::KubeAggregator::Apis::Apiregistration::V1::ServiceReference
-    include ::K8S::Kubernetes::Object
 
     # Name is the name of the service
     def name : String?

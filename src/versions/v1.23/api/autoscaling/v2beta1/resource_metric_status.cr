@@ -8,9 +8,6 @@ module K8S::Types::Api::Autoscaling::V2beta1::ResourceMetricStatus; end
 module K8S
   # Namespace holding the types for `Api::Autoscaling::V2beta1::ResourceMetricStatus`.
   module Types::Api::Autoscaling::V2beta1::ResourceMetricStatus
-    alias ValueType = Int32 | ::Int32 | ::String | String | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # currentAverageUtilization is the current value of the average of the resource metric across all relevant pods, represented as a percentage of the requested value of the resource for the pods.  It will only be present if `targetAverageValue` was set in the corresponding metric specification.
     abstract def current_average_utilization : Int32?
     # :ditto:
@@ -43,9 +40,8 @@ module K8S
     current_average_value: {key: "currentAverageValue", accessor: "current_average_value", kind: "::Int32 | ::String", nilable: false, default: nil, read_only: false, description: "currentAverageValue is the current value of the average of the resource metric across all relevant pods, as a raw value (instead of as a percentage of the request), similar to the \"pods\" metric source type. It will always be set, regardless of the corresponding metric specification.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     name: {key: "name", accessor: "name", kind: "String", nilable: false, default: nil, read_only: false, description: "name is the name of the resource in question.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Autoscaling::V2beta1::ResourceMetricStatus < ::K8S::Types::Api::Autoscaling::V2beta1::ResourceMetricStatus::Instance
+  class Api::Autoscaling::V2beta1::ResourceMetricStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Autoscaling::V2beta1::ResourceMetricStatus
-    include ::K8S::Kubernetes::Object
 
     # currentAverageUtilization is the current value of the average of the resource metric across all relevant pods, represented as a percentage of the requested value of the resource for the pods.  It will only be present if `targetAverageValue` was set in the corresponding metric specification.
     def current_average_utilization : Int32?

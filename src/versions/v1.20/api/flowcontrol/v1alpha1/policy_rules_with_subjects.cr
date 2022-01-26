@@ -12,9 +12,6 @@ require "./subject"
 module K8S
   # Namespace holding the types for `Api::Flowcontrol::V1alpha1::PolicyRulesWithSubjects`.
   module Types::Api::Flowcontrol::V1alpha1::PolicyRulesWithSubjects
-    alias ValueType = ::Array(::K8S::Api::Flowcontrol::V1alpha1::NonResourcePolicyRule) | ::Array(::K8S::Api::Flowcontrol::V1alpha1::ResourcePolicyRule) | ::Array(::K8S::Api::Flowcontrol::V1alpha1::Subject) | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     # `nonResourceRules` is a list of NonResourcePolicyRules that identify matching requests according to their verb and the target non-resource URL.
     abstract def non_resource_rules : ::Array(::K8S::Api::Flowcontrol::V1alpha1::NonResourcePolicyRule)?
     # :ditto:
@@ -47,9 +44,8 @@ module K8S
     resource_rules: {key: "resourceRules", accessor: "resource_rules", kind: "::Array(::K8S::Api::Flowcontrol::V1alpha1::ResourcePolicyRule)", nilable: true, default: nil, read_only: false, description: "`resourceRules` is a slice of ResourcePolicyRules that identify matching requests according to their verb and the target resource. At least one of `resourceRules` and `nonResourceRules` has to be non-empty.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: "atomic", x_kubernetes_map_type: nil},
     subjects: {key: "subjects", accessor: "subjects", kind: "::Array(::K8S::Api::Flowcontrol::V1alpha1::Subject)", nilable: false, default: nil, read_only: false, description: "subjects is the list of normal user, serviceaccount, or group that this rule cares about. There must be at least one member in this slice. A slice that includes both the system:authenticated and system:unauthenticated user groups matches every request. Required.", x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: "atomic", x_kubernetes_map_type: nil},
   )]
-  class Api::Flowcontrol::V1alpha1::PolicyRulesWithSubjects < ::K8S::Types::Api::Flowcontrol::V1alpha1::PolicyRulesWithSubjects::Instance
+  class Api::Flowcontrol::V1alpha1::PolicyRulesWithSubjects < ::K8S::GenericObject
     include ::K8S::Types::Api::Flowcontrol::V1alpha1::PolicyRulesWithSubjects
-    include ::K8S::Kubernetes::Object
 
     # `nonResourceRules` is a list of NonResourcePolicyRules that identify matching requests according to their verb and the target non-resource URL.
     def non_resource_rules : ::Array(::K8S::Api::Flowcontrol::V1alpha1::NonResourcePolicyRule)?

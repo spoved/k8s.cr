@@ -12,9 +12,6 @@ require "./user_subject"
 module K8S
   # Namespace holding the types for `Api::Flowcontrol::V1beta1::Subject`.
   module Types::Api::Flowcontrol::V1beta1::Subject
-    alias ValueType = ::K8S::Api::Flowcontrol::V1beta1::GroupSubject | String | ::K8S::Api::Flowcontrol::V1beta1::ServiceAccountSubject | ::K8S::Api::Flowcontrol::V1beta1::UserSubject | Nil
-    alias Instance = ::K8S::Object(ValueType)
-
     #
     abstract def group : ::K8S::Api::Flowcontrol::V1beta1::GroupSubject?
     # :ditto:
@@ -56,9 +53,8 @@ module K8S
     service_account: {key: "serviceAccount", accessor: "service_account", kind: "::K8S::Api::Flowcontrol::V1beta1::ServiceAccountSubject", nilable: true, default: nil, read_only: false, description: nil, x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
     user: {key: "user", accessor: "user", kind: "::K8S::Api::Flowcontrol::V1beta1::UserSubject", nilable: true, default: nil, read_only: false, description: nil, x_kubernetes_embedded_resource: nil, x_kubernetes_int_or_string: nil, x_kubernetes_preserve_unknown_fields: nil, x_kubernetes_list_map_keys: nil, x_kubernetes_list_type: nil, x_kubernetes_map_type: nil},
   )]
-  class Api::Flowcontrol::V1beta1::Subject < ::K8S::Types::Api::Flowcontrol::V1beta1::Subject::Instance
+  class Api::Flowcontrol::V1beta1::Subject < ::K8S::GenericObject
     include ::K8S::Types::Api::Flowcontrol::V1beta1::Subject
-    include ::K8S::Kubernetes::Object
 
     #
     def group : ::K8S::Api::Flowcontrol::V1beta1::GroupSubject?
