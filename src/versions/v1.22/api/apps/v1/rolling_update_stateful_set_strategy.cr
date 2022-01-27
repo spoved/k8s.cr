@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def partition? : Int32?
     # :ditto:
-    abstract def partition=(value : Int32?)
+    abstract def partition=(value : Int32)
   end
 
   # RollingUpdateStatefulSetStrategy is used to communicate parameter for RollingUpdateStatefulSetStrategyType.
@@ -24,31 +24,15 @@ module K8S
   )]
   class Api::Apps::V1::RollingUpdateStatefulSetStrategy < ::K8S::GenericObject
     include ::K8S::Types::Api::Apps::V1::RollingUpdateStatefulSetStrategy
+    k8s_object_accessor("partition", partition : Int32, true, false, "Partition indicates the ordinal at which the StatefulSet should be partitioned. Default value is 0.")
 
-    # Partition indicates the ordinal at which the StatefulSet should be partitioned. Default value is 0.
-    def partition : Int32?
-      self.["partition"].as(Int32?)
+    def initialize(*, partition : Int32? = nil)
+      super()
+      self.["partition"] = partition
     end
 
-    # :ditto:
-    def partition! : Int32
-      self.["partition"].as(Int32?).not_nil!
-    end
-
-    # :ditto:
-    def partition? : Int32?
-      self.["partition"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def partition=(value : Int32?)
-      self.["partition"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "partition", accessor: "partition", nilable: true, read_only: false, default: nil, kind: Int32 },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "partition", accessor: "partition", nilable: true, read_only: false, default: nil, kind: Int32},
+    ])
   end
 end

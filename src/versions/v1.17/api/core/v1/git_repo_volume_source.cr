@@ -15,9 +15,9 @@ module K8S
     # :ditto:
     abstract def directory? : String?
     # :ditto:
-    abstract def directory=(value : String?)
+    abstract def directory=(value : String)
     # Repository URL
-    abstract def repository : String
+    abstract def repository : String?
     # :ditto:
     abstract def repository! : String
     # :ditto:
@@ -31,7 +31,7 @@ module K8S
     # :ditto:
     abstract def revision? : String?
     # :ditto:
-    abstract def revision=(value : String?)
+    abstract def revision=(value : String)
   end
 
   # Represents a volume that is populated with the contents of a git repository. Git repo volumes do not support ownership management. Git repo volumes support SELinux relabeling.
@@ -44,73 +44,21 @@ module K8S
   )]
   class Api::Core::V1::GitRepoVolumeSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::GitRepoVolumeSource
+    k8s_object_accessor("directory", directory : String, true, false, "Target directory name. Must not contain or start with '..'.  If '.' is supplied, the volume directory will be the git repository.  Otherwise, if specified, the volume will contain the git repository in the subdirectory with the given name.")
+    k8s_object_accessor("repository", repository : String, false, false, "Repository URL")
+    k8s_object_accessor("revision", revision : String, true, false, "Commit hash for the specified revision.")
 
-    # Target directory name. Must not contain or start with '..'.  If '.' is supplied, the volume directory will be the git repository.  Otherwise, if specified, the volume will contain the git repository in the subdirectory with the given name.
-    def directory : String?
-      self.["directory"].as(String?)
+    def initialize(*, directory : String? = nil, repository : String? = nil, revision : String? = nil)
+      super()
+      self.["directory"] = directory
+      self.["repository"] = repository
+      self.["revision"] = revision
     end
 
-    # :ditto:
-    def directory! : String
-      self.["directory"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def directory? : String?
-      self.["directory"]?.as(String?)
-    end
-
-    # :ditto:
-    def directory=(value : String?)
-      self.["directory"] = value
-    end
-
-    # Repository URL
-    def repository : String
-      self.["repository"].as(String)
-    end
-
-    # :ditto:
-    def repository! : String
-      self.["repository"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def repository? : String?
-      self.["repository"]?.as(String?)
-    end
-
-    # :ditto:
-    def repository=(value : String)
-      self.["repository"] = value
-    end
-
-    # Commit hash for the specified revision.
-    def revision : String?
-      self.["revision"].as(String?)
-    end
-
-    # :ditto:
-    def revision! : String
-      self.["revision"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def revision? : String?
-      self.["revision"]?.as(String?)
-    end
-
-    # :ditto:
-    def revision=(value : String?)
-      self.["revision"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "directory", accessor: "directory", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "repository", accessor: "repository", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "revision", accessor: "revision", nilable: true, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "directory", accessor: "directory", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "repository", accessor: "repository", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "revision", accessor: "revision", nilable: true, read_only: false, default: nil, kind: String},
+    ])
   end
 end

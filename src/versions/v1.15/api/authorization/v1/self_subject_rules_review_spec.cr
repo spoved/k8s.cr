@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def namespace? : String?
     # :ditto:
-    abstract def namespace=(value : String?)
+    abstract def namespace=(value : String)
   end
 
   #
@@ -24,31 +24,15 @@ module K8S
   )]
   class Api::Authorization::V1::SelfSubjectRulesReviewSpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Authorization::V1::SelfSubjectRulesReviewSpec
+    k8s_object_accessor("namespace", namespace : String, true, false, "Namespace to evaluate rules for. Required.")
 
-    # Namespace to evaluate rules for. Required.
-    def namespace : String?
-      self.["namespace"].as(String?)
+    def initialize(*, namespace : String? = nil)
+      super()
+      self.["namespace"] = namespace
     end
 
-    # :ditto:
-    def namespace! : String
-      self.["namespace"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def namespace? : String?
-      self.["namespace"]?.as(String?)
-    end
-
-    # :ditto:
-    def namespace=(value : String?)
-      self.["namespace"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "namespace", accessor: "namespace", nilable: true, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "namespace", accessor: "namespace", nilable: true, read_only: false, default: nil, kind: String},
+    ])
   end
 end

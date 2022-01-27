@@ -19,9 +19,9 @@ module K8S
     # :ditto:
     abstract def additional_printer_columns? : ::Array(::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceColumnDefinition)?
     # :ditto:
-    abstract def additional_printer_columns=(value : ::Array(::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceColumnDefinition)?)
+    abstract def additional_printer_columns=(value : ::Array(::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceColumnDefinition))
     # name is the version name, e.g. “v1”, “v2beta1”, etc. The custom resources are served under this version at [[`/apis/<group>/<version>/...` if `served` is true.](`/apis/<group>/<version>/...` if `served` is true.)]([`/apis/<group>/<version>/...` if `served` is true.](`/apis/<group>/<version>/...` if `served` is true.))
-    abstract def name : String
+    abstract def name : String?
     # :ditto:
     abstract def name! : String
     # :ditto:
@@ -35,9 +35,9 @@ module K8S
     # :ditto:
     abstract def schema? : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceValidation?
     # :ditto:
-    abstract def schema=(value : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceValidation?)
+    abstract def schema=(value : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceValidation)
     # served is a flag [[enabling/disabling this version from being served via REST APIs](enabling/disabling this version from being served via REST APIs)]([enabling/disabling this version from being served via REST APIs](enabling/disabling this version from being served via REST APIs))
-    abstract def served : ::Bool
+    abstract def served : ::Bool?
     # :ditto:
     abstract def served! : ::Bool
     # :ditto:
@@ -45,7 +45,7 @@ module K8S
     # :ditto:
     abstract def served=(value : ::Bool)
     # storage indicates this version should be used when persisting custom resources to storage. There must be exactly one version with storage=true.
-    abstract def storage : ::Bool
+    abstract def storage : ::Bool?
     # :ditto:
     abstract def storage! : ::Bool
     # :ditto:
@@ -59,7 +59,7 @@ module K8S
     # :ditto:
     abstract def subresources? : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresources?
     # :ditto:
-    abstract def subresources=(value : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresources?)
+    abstract def subresources=(value : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresources)
   end
 
   # CustomResourceDefinitionVersion describes a version for CRD.
@@ -73,136 +73,30 @@ module K8S
   )]
   class ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionVersion < ::K8S::GenericObject
     include ::K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionVersion
+    k8s_object_accessor("additionalPrinterColumns", additional_printer_columns : ::Array(::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceColumnDefinition), true, false, "additionalPrinterColumns specifies additional columns returned in Table output. See [https://kubernetes.io/docs/reference/using-api/api-concepts/#receiving-resources-as-tables for details. If no columns are specified, a single column displaying the age of the custom resource is used.](https://kubernetes.io/docs/reference/using-api/api-concepts/#receiving-resources-as-tables for details. If no columns are specified, a single column displaying the age of the custom resource is used.)")
+    k8s_object_accessor("name", name : String, false, false, "name is the version name, e.g. “v1”, “v2beta1”, etc. The custom resources are served under this version at [`/apis/<group>/<version>/...` if `served` is true.](`/apis/<group>/<version>/...` if `served` is true.)")
+    k8s_object_accessor("schema", schema : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceValidation, true, false, "schema describes the schema used for validation, pruning, and defaulting of this version of the custom resource.")
+    k8s_object_accessor("served", served : ::Bool, false, false, "served is a flag [enabling/disabling this version from being served via REST APIs](enabling/disabling this version from being served via REST APIs)")
+    k8s_object_accessor("storage", storage : ::Bool, false, false, "storage indicates this version should be used when persisting custom resources to storage. There must be exactly one version with storage=true.")
+    k8s_object_accessor("subresources", subresources : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresources, true, false, "subresources specify what subresources this version of the defined custom resource have.")
 
-    # additionalPrinterColumns specifies additional columns returned in Table output. See [[https://kubernetes.io/docs/reference/using-api/api-concepts/#receiving-resources-as-tables for details. If no columns are specified, a single column displaying the age of the custom resource is used.](https://kubernetes.io/docs/reference/using-api/api-concepts/#receiving-resources-as-tables for details. If no columns are specified, a single column displaying the age of the custom resource is used.)](https://kubernetes.io/docs/reference/using-api/api-concepts/#receiving-resources-as-tables for details. If no columns are specified, a single column displaying the age of the custom resource is used.](https://kubernetes.io/docs/reference/using-api/api-concepts/#receiving-resources-as-tables for details. If no columns are specified, a single column displaying the age of the custom resource is used.))
-    def additional_printer_columns : ::Array(::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceColumnDefinition)?
-      self.["additionalPrinterColumns"].as(::Array(::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceColumnDefinition)?)
+    def initialize(*, additional_printer_columns : ::Array(::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceColumnDefinition)? = nil, name : String? = nil, schema : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceValidation? = nil, served : ::Bool? = nil, storage : ::Bool? = nil, subresources : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresources? = nil)
+      super()
+      self.["additionalPrinterColumns"] = additional_printer_columns
+      self.["name"] = name
+      self.["schema"] = schema
+      self.["served"] = served
+      self.["storage"] = storage
+      self.["subresources"] = subresources
     end
 
-    # :ditto:
-    def additional_printer_columns! : ::Array(::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceColumnDefinition)
-      self.["additionalPrinterColumns"].as(::Array(::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceColumnDefinition)?).not_nil!
-    end
-
-    # :ditto:
-    def additional_printer_columns? : ::Array(::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceColumnDefinition)?
-      self.["additionalPrinterColumns"]?.as(::Array(::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceColumnDefinition)?)
-    end
-
-    # :ditto:
-    def additional_printer_columns=(value : ::Array(::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceColumnDefinition)?)
-      self.["additionalPrinterColumns"] = value
-    end
-
-    # name is the version name, e.g. “v1”, “v2beta1”, etc. The custom resources are served under this version at [[`/apis/<group>/<version>/...` if `served` is true.](`/apis/<group>/<version>/...` if `served` is true.)]([`/apis/<group>/<version>/...` if `served` is true.](`/apis/<group>/<version>/...` if `served` is true.))
-    def name : String
-      self.["name"].as(String)
-    end
-
-    # :ditto:
-    def name! : String
-      self.["name"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def name? : String?
-      self.["name"]?.as(String?)
-    end
-
-    # :ditto:
-    def name=(value : String)
-      self.["name"] = value
-    end
-
-    # schema describes the schema used for validation, pruning, and defaulting of this version of the custom resource.
-    def schema : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceValidation?
-      self.["schema"].as(::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceValidation?)
-    end
-
-    # :ditto:
-    def schema! : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceValidation
-      self.["schema"].as(::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceValidation?).not_nil!
-    end
-
-    # :ditto:
-    def schema? : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceValidation?
-      self.["schema"]?.as(::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceValidation?)
-    end
-
-    # :ditto:
-    def schema=(value : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceValidation?)
-      self.["schema"] = value
-    end
-
-    # served is a flag [[enabling/disabling this version from being served via REST APIs](enabling/disabling this version from being served via REST APIs)]([enabling/disabling this version from being served via REST APIs](enabling/disabling this version from being served via REST APIs))
-    def served : ::Bool
-      self.["served"].as(::Bool)
-    end
-
-    # :ditto:
-    def served! : ::Bool
-      self.["served"].as(::Bool).not_nil!
-    end
-
-    # :ditto:
-    def served? : ::Bool?
-      self.["served"]?.as(::Bool?)
-    end
-
-    # :ditto:
-    def served=(value : ::Bool)
-      self.["served"] = value
-    end
-
-    # storage indicates this version should be used when persisting custom resources to storage. There must be exactly one version with storage=true.
-    def storage : ::Bool
-      self.["storage"].as(::Bool)
-    end
-
-    # :ditto:
-    def storage! : ::Bool
-      self.["storage"].as(::Bool).not_nil!
-    end
-
-    # :ditto:
-    def storage? : ::Bool?
-      self.["storage"]?.as(::Bool?)
-    end
-
-    # :ditto:
-    def storage=(value : ::Bool)
-      self.["storage"] = value
-    end
-
-    # subresources specify what subresources this version of the defined custom resource have.
-    def subresources : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresources?
-      self.["subresources"].as(::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresources?)
-    end
-
-    # :ditto:
-    def subresources! : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresources
-      self.["subresources"].as(::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresources?).not_nil!
-    end
-
-    # :ditto:
-    def subresources? : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresources?
-      self.["subresources"]?.as(::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresources?)
-    end
-
-    # :ditto:
-    def subresources=(value : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresources?)
-      self.["subresources"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "additionalPrinterColumns", accessor: "additional_printer_columns", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceColumnDefinition) },
-        { key: "name", accessor: "name", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "schema", accessor: "schema", nilable: true, read_only: false, default: nil, kind: ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceValidation },
-        { key: "served", accessor: "served", nilable: false, read_only: false, default: nil, kind: ::Bool },
-        { key: "storage", accessor: "storage", nilable: false, read_only: false, default: nil, kind: ::Bool },
-        { key: "subresources", accessor: "subresources", nilable: true, read_only: false, default: nil, kind: ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresources },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "additionalPrinterColumns", accessor: "additional_printer_columns", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceColumnDefinition)},
+      {key: "name", accessor: "name", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "schema", accessor: "schema", nilable: true, read_only: false, default: nil, kind: ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceValidation},
+      {key: "served", accessor: "served", nilable: false, read_only: false, default: nil, kind: ::Bool},
+      {key: "storage", accessor: "storage", nilable: false, read_only: false, default: nil, kind: ::Bool},
+      {key: "subresources", accessor: "subresources", nilable: true, read_only: false, default: nil, kind: ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresources},
+    ])
   end
 end

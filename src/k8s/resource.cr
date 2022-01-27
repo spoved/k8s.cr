@@ -1,11 +1,17 @@
 require "json"
 require "yaml"
 require "log"
+require "./macros"
 require "./object"
 
 annotation ::K8S::Properties; end
 annotation ::K8S::GroupVersionKind; end
 annotation ::K8S::Action; end
+
+# Pre-declare some comon types
+class ::K8S::Apimachinery::Apis::Meta::V1::ListMeta < ::K8S::GenericObject; end
+
+class ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta < ::K8S::GenericObject; end
 
 module ::K8S::Kubernetes
   REGISTRY = Array(Tuple(String, String, K8S::Kubernetes::Resource.class)).new
@@ -16,43 +22,23 @@ module ::K8S::Kubernetes
 
     class Error < Exception; end
 
-    macro inherited
-      def initialize(hash = nil)
-        super(hash)
-        raise Error.new("apiVersion must be defined") unless api_version
-        raise Error.new("kind must be defined") unless kind
-      end
-    end
-
     # APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)))
-    def api_version : String
-      self.["apiVersion"].as(String)
-    end
+    abstract def api_version : String?
 
     # :ditto:
-    def api_version! : String
-      self.["apiVersion"].as(String).not_nil!
-    end
+    abstract def api_version! : String
 
     # :ditto:
-    def api_version? : String?
-      self.["apiVersion"]?.as(String?)
-    end
+    abstract def api_version? : String?
 
     # Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)))
-    def kind : String
-      self.["kind"].as(String)
-    end
+    abstract def kind : String?
 
     # :ditto:
-    def kind! : String
-      self.["kind"].as(String).not_nil!
-    end
+    abstract def kind! : String
 
     # :ditto:
-    def kind? : String?
-      self.["kind"]?.as(String?)
-    end
+    abstract def kind? : String?
 
     def self.from_file(file)
       Log.trace { "K8S::Resource: Loading: #{file}" }
@@ -80,3 +66,9 @@ module ::K8S::Kubernetes
 end
 
 require "./resource/*"
+
+alias ::K8S::Resource = ::K8S::Kubernetes::Resource
+alias ::K8S::ObjectMeta = ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta
+alias ::K8S::ListMeta = ::K8S::Apimachinery::Apis::Meta::V1::ListMeta
+alias ::K8S::APIResource = ::K8S::Apimachinery::Apis::Meta::V1::APIResource
+alias ::K8S::APIResourceList = ::K8S::Apimachinery::Apis::Meta::V1::APIResourceList

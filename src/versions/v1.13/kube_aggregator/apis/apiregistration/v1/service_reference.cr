@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def name? : String?
     # :ditto:
-    abstract def name=(value : String?)
+    abstract def name=(value : String)
     # Namespace is the namespace of the service
     abstract def namespace : String?
     # :ditto:
@@ -23,7 +23,7 @@ module K8S
     # :ditto:
     abstract def namespace? : String?
     # :ditto:
-    abstract def namespace=(value : String?)
+    abstract def namespace=(value : String)
   end
 
   # ServiceReference holds a reference to Service.legacy.k8s.io
@@ -33,52 +33,18 @@ module K8S
   )]
   class KubeAggregator::Apis::Apiregistration::V1::ServiceReference < ::K8S::GenericObject
     include ::K8S::Types::KubeAggregator::Apis::Apiregistration::V1::ServiceReference
+    k8s_object_accessor("name", name : String, true, false, "Name is the name of the service")
+    k8s_object_accessor("namespace", namespace : String, true, false, "Namespace is the namespace of the service")
 
-    # Name is the name of the service
-    def name : String?
-      self.["name"].as(String?)
+    def initialize(*, name : String? = nil, namespace : String? = nil)
+      super()
+      self.["name"] = name
+      self.["namespace"] = namespace
     end
 
-    # :ditto:
-    def name! : String
-      self.["name"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def name? : String?
-      self.["name"]?.as(String?)
-    end
-
-    # :ditto:
-    def name=(value : String?)
-      self.["name"] = value
-    end
-
-    # Namespace is the namespace of the service
-    def namespace : String?
-      self.["namespace"].as(String?)
-    end
-
-    # :ditto:
-    def namespace! : String
-      self.["namespace"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def namespace? : String?
-      self.["namespace"]?.as(String?)
-    end
-
-    # :ditto:
-    def namespace=(value : String?)
-      self.["namespace"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "name", accessor: "name", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "namespace", accessor: "namespace", nilable: true, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "name", accessor: "name", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "namespace", accessor: "namespace", nilable: true, read_only: false, default: nil, kind: String},
+    ])
   end
 end

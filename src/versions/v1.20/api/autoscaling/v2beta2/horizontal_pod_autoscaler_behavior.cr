@@ -17,7 +17,7 @@ module K8S
     # :ditto:
     abstract def scale_down? : ::K8S::Api::Autoscaling::V2beta2::HPAScalingRules?
     # :ditto:
-    abstract def scale_down=(value : ::K8S::Api::Autoscaling::V2beta2::HPAScalingRules?)
+    abstract def scale_down=(value : ::K8S::Api::Autoscaling::V2beta2::HPAScalingRules)
     # scaleUp is scaling policy for scaling Up. If not set, the default value is the higher of:
     #   * increase no more than 4 pods per 60 seconds
     #   * double the number of pods per 60 seconds
@@ -28,7 +28,7 @@ module K8S
     # :ditto:
     abstract def scale_up? : ::K8S::Api::Autoscaling::V2beta2::HPAScalingRules?
     # :ditto:
-    abstract def scale_up=(value : ::K8S::Api::Autoscaling::V2beta2::HPAScalingRules?)
+    abstract def scale_up=(value : ::K8S::Api::Autoscaling::V2beta2::HPAScalingRules)
   end
 
   # HorizontalPodAutoscalerBehavior configures the scaling behavior of the target in both Up and Down directions (scaleUp and scaleDown fields respectively).
@@ -38,55 +38,18 @@ module K8S
   )]
   class Api::Autoscaling::V2beta2::HorizontalPodAutoscalerBehavior < ::K8S::GenericObject
     include ::K8S::Types::Api::Autoscaling::V2beta2::HorizontalPodAutoscalerBehavior
+    k8s_object_accessor("scaleDown", scale_down : ::K8S::Api::Autoscaling::V2beta2::HPAScalingRules, true, false, "scaleDown is scaling policy for scaling Down. If not set, the default value is to allow to scale down to minReplicas pods, with a 300 second stabilization window (i.e., the highest recommendation for the last 300sec is used).")
+    k8s_object_accessor("scaleUp", scale_up : ::K8S::Api::Autoscaling::V2beta2::HPAScalingRules, true, false, "scaleUp is scaling policy for scaling Up. If not set, the default value is the higher of:\n  * increase no more than 4 pods per 60 seconds\n  * double the number of pods per 60 seconds\nNo stabilization is used.")
 
-    # scaleDown is scaling policy for scaling Down. If not set, the default value is to allow to scale down to minReplicas pods, with a 300 second stabilization window (i.e., the highest recommendation for the last 300sec is used).
-    def scale_down : ::K8S::Api::Autoscaling::V2beta2::HPAScalingRules?
-      self.["scaleDown"].as(::K8S::Api::Autoscaling::V2beta2::HPAScalingRules?)
+    def initialize(*, scale_down : ::K8S::Api::Autoscaling::V2beta2::HPAScalingRules? = nil, scale_up : ::K8S::Api::Autoscaling::V2beta2::HPAScalingRules? = nil)
+      super()
+      self.["scaleDown"] = scale_down
+      self.["scaleUp"] = scale_up
     end
 
-    # :ditto:
-    def scale_down! : ::K8S::Api::Autoscaling::V2beta2::HPAScalingRules
-      self.["scaleDown"].as(::K8S::Api::Autoscaling::V2beta2::HPAScalingRules?).not_nil!
-    end
-
-    # :ditto:
-    def scale_down? : ::K8S::Api::Autoscaling::V2beta2::HPAScalingRules?
-      self.["scaleDown"]?.as(::K8S::Api::Autoscaling::V2beta2::HPAScalingRules?)
-    end
-
-    # :ditto:
-    def scale_down=(value : ::K8S::Api::Autoscaling::V2beta2::HPAScalingRules?)
-      self.["scaleDown"] = value
-    end
-
-    # scaleUp is scaling policy for scaling Up. If not set, the default value is the higher of:
-    #   * increase no more than 4 pods per 60 seconds
-    #   * double the number of pods per 60 seconds
-    # No stabilization is used.
-    def scale_up : ::K8S::Api::Autoscaling::V2beta2::HPAScalingRules?
-      self.["scaleUp"].as(::K8S::Api::Autoscaling::V2beta2::HPAScalingRules?)
-    end
-
-    # :ditto:
-    def scale_up! : ::K8S::Api::Autoscaling::V2beta2::HPAScalingRules
-      self.["scaleUp"].as(::K8S::Api::Autoscaling::V2beta2::HPAScalingRules?).not_nil!
-    end
-
-    # :ditto:
-    def scale_up? : ::K8S::Api::Autoscaling::V2beta2::HPAScalingRules?
-      self.["scaleUp"]?.as(::K8S::Api::Autoscaling::V2beta2::HPAScalingRules?)
-    end
-
-    # :ditto:
-    def scale_up=(value : ::K8S::Api::Autoscaling::V2beta2::HPAScalingRules?)
-      self.["scaleUp"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "scaleDown", accessor: "scale_down", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Autoscaling::V2beta2::HPAScalingRules },
-        { key: "scaleUp", accessor: "scale_up", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Autoscaling::V2beta2::HPAScalingRules },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "scaleDown", accessor: "scale_down", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Autoscaling::V2beta2::HPAScalingRules},
+      {key: "scaleUp", accessor: "scale_up", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Autoscaling::V2beta2::HPAScalingRules},
+    ])
   end
 end

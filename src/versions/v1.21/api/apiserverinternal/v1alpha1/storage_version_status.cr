@@ -18,7 +18,7 @@ module K8S
     # :ditto:
     abstract def common_encoding_version? : String?
     # :ditto:
-    abstract def common_encoding_version=(value : String?)
+    abstract def common_encoding_version=(value : String)
     # The latest available observations of the storageVersion's state.
     abstract def conditions : ::Array(::K8S::Api::Apiserverinternal::V1alpha1::StorageVersionCondition)?
     # :ditto:
@@ -26,7 +26,7 @@ module K8S
     # :ditto:
     abstract def conditions? : ::Array(::K8S::Api::Apiserverinternal::V1alpha1::StorageVersionCondition)?
     # :ditto:
-    abstract def conditions=(value : ::Array(::K8S::Api::Apiserverinternal::V1alpha1::StorageVersionCondition)?)
+    abstract def conditions=(value : ::Array(::K8S::Api::Apiserverinternal::V1alpha1::StorageVersionCondition))
     # The reported versions per API server instance.
     abstract def storage_versions : ::Array(::K8S::Api::Apiserverinternal::V1alpha1::ServerStorageVersion)?
     # :ditto:
@@ -34,7 +34,7 @@ module K8S
     # :ditto:
     abstract def storage_versions? : ::Array(::K8S::Api::Apiserverinternal::V1alpha1::ServerStorageVersion)?
     # :ditto:
-    abstract def storage_versions=(value : ::Array(::K8S::Api::Apiserverinternal::V1alpha1::ServerStorageVersion)?)
+    abstract def storage_versions=(value : ::Array(::K8S::Api::Apiserverinternal::V1alpha1::ServerStorageVersion))
   end
 
   # API server instances report the versions they can decode and the version they encode objects to when persisting objects in the backend.
@@ -45,73 +45,21 @@ module K8S
   )]
   class Api::Apiserverinternal::V1alpha1::StorageVersionStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Apiserverinternal::V1alpha1::StorageVersionStatus
+    k8s_object_accessor("commonEncodingVersion", common_encoding_version : String, true, false, "If all API server instances agree on the same encoding storage version, then this field is set to that version. Otherwise this field is left empty. API servers should finish updating its storageVersionStatus entry before serving write operations, so that this field will be in sync with the reality.")
+    k8s_object_accessor("conditions", conditions : ::Array(::K8S::Api::Apiserverinternal::V1alpha1::StorageVersionCondition), true, false, "The latest available observations of the storageVersion's state.")
+    k8s_object_accessor("storageVersions", storage_versions : ::Array(::K8S::Api::Apiserverinternal::V1alpha1::ServerStorageVersion), true, false, "The reported versions per API server instance.")
 
-    # If all API server instances agree on the same encoding storage version, then this field is set to that version. Otherwise this field is left empty. API servers should finish updating its storageVersionStatus entry before serving write operations, so that this field will be in sync with the reality.
-    def common_encoding_version : String?
-      self.["commonEncodingVersion"].as(String?)
+    def initialize(*, common_encoding_version : String? = nil, conditions : ::Array(::K8S::Api::Apiserverinternal::V1alpha1::StorageVersionCondition)? = nil, storage_versions : ::Array(::K8S::Api::Apiserverinternal::V1alpha1::ServerStorageVersion)? = nil)
+      super()
+      self.["commonEncodingVersion"] = common_encoding_version
+      self.["conditions"] = conditions
+      self.["storageVersions"] = storage_versions
     end
 
-    # :ditto:
-    def common_encoding_version! : String
-      self.["commonEncodingVersion"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def common_encoding_version? : String?
-      self.["commonEncodingVersion"]?.as(String?)
-    end
-
-    # :ditto:
-    def common_encoding_version=(value : String?)
-      self.["commonEncodingVersion"] = value
-    end
-
-    # The latest available observations of the storageVersion's state.
-    def conditions : ::Array(::K8S::Api::Apiserverinternal::V1alpha1::StorageVersionCondition)?
-      self.["conditions"].as(::Array(::K8S::Api::Apiserverinternal::V1alpha1::StorageVersionCondition)?)
-    end
-
-    # :ditto:
-    def conditions! : ::Array(::K8S::Api::Apiserverinternal::V1alpha1::StorageVersionCondition)
-      self.["conditions"].as(::Array(::K8S::Api::Apiserverinternal::V1alpha1::StorageVersionCondition)?).not_nil!
-    end
-
-    # :ditto:
-    def conditions? : ::Array(::K8S::Api::Apiserverinternal::V1alpha1::StorageVersionCondition)?
-      self.["conditions"]?.as(::Array(::K8S::Api::Apiserverinternal::V1alpha1::StorageVersionCondition)?)
-    end
-
-    # :ditto:
-    def conditions=(value : ::Array(::K8S::Api::Apiserverinternal::V1alpha1::StorageVersionCondition)?)
-      self.["conditions"] = value
-    end
-
-    # The reported versions per API server instance.
-    def storage_versions : ::Array(::K8S::Api::Apiserverinternal::V1alpha1::ServerStorageVersion)?
-      self.["storageVersions"].as(::Array(::K8S::Api::Apiserverinternal::V1alpha1::ServerStorageVersion)?)
-    end
-
-    # :ditto:
-    def storage_versions! : ::Array(::K8S::Api::Apiserverinternal::V1alpha1::ServerStorageVersion)
-      self.["storageVersions"].as(::Array(::K8S::Api::Apiserverinternal::V1alpha1::ServerStorageVersion)?).not_nil!
-    end
-
-    # :ditto:
-    def storage_versions? : ::Array(::K8S::Api::Apiserverinternal::V1alpha1::ServerStorageVersion)?
-      self.["storageVersions"]?.as(::Array(::K8S::Api::Apiserverinternal::V1alpha1::ServerStorageVersion)?)
-    end
-
-    # :ditto:
-    def storage_versions=(value : ::Array(::K8S::Api::Apiserverinternal::V1alpha1::ServerStorageVersion)?)
-      self.["storageVersions"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "commonEncodingVersion", accessor: "common_encoding_version", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "conditions", accessor: "conditions", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Apiserverinternal::V1alpha1::StorageVersionCondition) },
-        { key: "storageVersions", accessor: "storage_versions", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Apiserverinternal::V1alpha1::ServerStorageVersion) },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "commonEncodingVersion", accessor: "common_encoding_version", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "conditions", accessor: "conditions", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Apiserverinternal::V1alpha1::StorageVersionCondition)},
+      {key: "storageVersions", accessor: "storage_versions", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Apiserverinternal::V1alpha1::ServerStorageVersion)},
+    ])
   end
 end

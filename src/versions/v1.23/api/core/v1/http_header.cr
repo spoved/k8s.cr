@@ -9,7 +9,7 @@ module K8S
   # Namespace holding the types for `Api::Core::V1::HTTPHeader`.
   module Types::Api::Core::V1::HTTPHeader
     # The header field name
-    abstract def name : String
+    abstract def name : String?
     # :ditto:
     abstract def name! : String
     # :ditto:
@@ -17,7 +17,7 @@ module K8S
     # :ditto:
     abstract def name=(value : String)
     # The header field value
-    abstract def value : String
+    abstract def value : String?
     # :ditto:
     abstract def value! : String
     # :ditto:
@@ -33,52 +33,18 @@ module K8S
   )]
   class Api::Core::V1::HTTPHeader < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::HTTPHeader
+    k8s_object_accessor("name", name : String, false, false, "The header field name")
+    k8s_object_accessor("value", value : String, false, false, "The header field value")
 
-    # The header field name
-    def name : String
-      self.["name"].as(String)
-    end
-
-    # :ditto:
-    def name! : String
-      self.["name"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def name? : String?
-      self.["name"]?.as(String?)
-    end
-
-    # :ditto:
-    def name=(value : String)
-      self.["name"] = value
-    end
-
-    # The header field value
-    def value : String
-      self.["value"].as(String)
-    end
-
-    # :ditto:
-    def value! : String
-      self.["value"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def value? : String?
-      self.["value"]?.as(String?)
-    end
-
-    # :ditto:
-    def value=(value : String)
+    def initialize(*, name : String? = nil, value : String? = nil)
+      super()
+      self.["name"] = name
       self.["value"] = value
     end
 
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "name", accessor: "name", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "value", accessor: "value", nilable: false, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "name", accessor: "name", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "value", accessor: "value", nilable: false, read_only: false, default: nil, kind: String},
+    ])
   end
 end

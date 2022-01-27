@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def message? : String?
     # :ditto:
-    abstract def message=(value : String?)
+    abstract def message=(value : String)
     # Time the error was encountered.
     abstract def time : ::Time?
     # :ditto:
@@ -23,7 +23,7 @@ module K8S
     # :ditto:
     abstract def time? : ::Time?
     # :ditto:
-    abstract def time=(value : ::Time?)
+    abstract def time=(value : ::Time)
   end
 
   # VolumeError captures an error encountered during a volume operation.
@@ -33,52 +33,18 @@ module K8S
   )]
   class Api::Storage::V1::VolumeError < ::K8S::GenericObject
     include ::K8S::Types::Api::Storage::V1::VolumeError
+    k8s_object_accessor("message", message : String, true, false, "String detailing the error encountered during Attach or Detach operation. This string maybe logged, so it should not contain sensitive information.")
+    k8s_object_accessor("time", time : ::Time, true, false, "Time the error was encountered.")
 
-    # String detailing the error encountered during Attach or Detach operation. This string maybe logged, so it should not contain sensitive information.
-    def message : String?
-      self.["message"].as(String?)
+    def initialize(*, message : String? = nil, time : ::Time? = nil)
+      super()
+      self.["message"] = message
+      self.["time"] = time
     end
 
-    # :ditto:
-    def message! : String
-      self.["message"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def message? : String?
-      self.["message"]?.as(String?)
-    end
-
-    # :ditto:
-    def message=(value : String?)
-      self.["message"] = value
-    end
-
-    # Time the error was encountered.
-    def time : ::Time?
-      self.["time"].as(::Time?)
-    end
-
-    # :ditto:
-    def time! : ::Time
-      self.["time"].as(::Time?).not_nil!
-    end
-
-    # :ditto:
-    def time? : ::Time?
-      self.["time"]?.as(::Time?)
-    end
-
-    # :ditto:
-    def time=(value : ::Time?)
-      self.["time"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "message", accessor: "message", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "time", accessor: "time", nilable: true, read_only: false, default: nil, kind: ::Time },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "message", accessor: "message", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "time", accessor: "time", nilable: true, read_only: false, default: nil, kind: ::Time},
+    ])
   end
 end

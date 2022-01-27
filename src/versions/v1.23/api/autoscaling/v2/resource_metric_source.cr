@@ -11,7 +11,7 @@ module K8S
   # Namespace holding the types for `Api::Autoscaling::V2::ResourceMetricSource`.
   module Types::Api::Autoscaling::V2::ResourceMetricSource
     # name is the name of the resource in question.
-    abstract def name : String
+    abstract def name : String?
     # :ditto:
     abstract def name! : String
     # :ditto:
@@ -19,7 +19,7 @@ module K8S
     # :ditto:
     abstract def name=(value : String)
     # target specifies the target value for the given metric
-    abstract def target : ::K8S::Api::Autoscaling::V2::MetricTarget
+    abstract def target : ::K8S::Api::Autoscaling::V2::MetricTarget?
     # :ditto:
     abstract def target! : ::K8S::Api::Autoscaling::V2::MetricTarget
     # :ditto:
@@ -35,52 +35,18 @@ module K8S
   )]
   class Api::Autoscaling::V2::ResourceMetricSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Autoscaling::V2::ResourceMetricSource
+    k8s_object_accessor("name", name : String, false, false, "name is the name of the resource in question.")
+    k8s_object_accessor("target", target : ::K8S::Api::Autoscaling::V2::MetricTarget, false, false, "target specifies the target value for the given metric")
 
-    # name is the name of the resource in question.
-    def name : String
-      self.["name"].as(String)
+    def initialize(*, name : String? = nil, target : ::K8S::Api::Autoscaling::V2::MetricTarget? = nil)
+      super()
+      self.["name"] = name
+      self.["target"] = target
     end
 
-    # :ditto:
-    def name! : String
-      self.["name"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def name? : String?
-      self.["name"]?.as(String?)
-    end
-
-    # :ditto:
-    def name=(value : String)
-      self.["name"] = value
-    end
-
-    # target specifies the target value for the given metric
-    def target : ::K8S::Api::Autoscaling::V2::MetricTarget
-      self.["target"].as(::K8S::Api::Autoscaling::V2::MetricTarget)
-    end
-
-    # :ditto:
-    def target! : ::K8S::Api::Autoscaling::V2::MetricTarget
-      self.["target"].as(::K8S::Api::Autoscaling::V2::MetricTarget).not_nil!
-    end
-
-    # :ditto:
-    def target? : ::K8S::Api::Autoscaling::V2::MetricTarget?
-      self.["target"]?.as(::K8S::Api::Autoscaling::V2::MetricTarget?)
-    end
-
-    # :ditto:
-    def target=(value : ::K8S::Api::Autoscaling::V2::MetricTarget)
-      self.["target"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "name", accessor: "name", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "target", accessor: "target", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Autoscaling::V2::MetricTarget },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "name", accessor: "name", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "target", accessor: "target", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Autoscaling::V2::MetricTarget},
+    ])
   end
 end

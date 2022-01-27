@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def audiences? : ::Array(String)?
     # :ditto:
-    abstract def audiences=(value : ::Array(String)?)
+    abstract def audiences=(value : ::Array(String))
     # Token is the opaque bearer token.
     abstract def token : String?
     # :ditto:
@@ -23,7 +23,7 @@ module K8S
     # :ditto:
     abstract def token? : String?
     # :ditto:
-    abstract def token=(value : String?)
+    abstract def token=(value : String)
   end
 
   # TokenReviewSpec is a description of the token authentication request.
@@ -33,52 +33,18 @@ module K8S
   )]
   class Api::Authentication::V1::TokenReviewSpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Authentication::V1::TokenReviewSpec
+    k8s_object_accessor("audiences", audiences : ::Array(String), true, false, "Audiences is a list of the identifiers that the resource server presented with the token identifies as. Audience-aware token authenticators will verify that the token was intended for at least one of the audiences in this list. If no audiences are provided, the audience will default to the audience of the Kubernetes apiserver.")
+    k8s_object_accessor("token", token : String, true, false, "Token is the opaque bearer token.")
 
-    # Audiences is a list of the identifiers that the resource server presented with the token identifies as. Audience-aware token authenticators will verify that the token was intended for at least one of the audiences in this list. If no audiences are provided, the audience will default to the audience of the Kubernetes apiserver.
-    def audiences : ::Array(String)?
-      self.["audiences"].as(::Array(String)?)
+    def initialize(*, audiences : ::Array(String)? = nil, token : String? = nil)
+      super()
+      self.["audiences"] = audiences
+      self.["token"] = token
     end
 
-    # :ditto:
-    def audiences! : ::Array(String)
-      self.["audiences"].as(::Array(String)?).not_nil!
-    end
-
-    # :ditto:
-    def audiences? : ::Array(String)?
-      self.["audiences"]?.as(::Array(String)?)
-    end
-
-    # :ditto:
-    def audiences=(value : ::Array(String)?)
-      self.["audiences"] = value
-    end
-
-    # Token is the opaque bearer token.
-    def token : String?
-      self.["token"].as(String?)
-    end
-
-    # :ditto:
-    def token! : String
-      self.["token"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def token? : String?
-      self.["token"]?.as(String?)
-    end
-
-    # :ditto:
-    def token=(value : String?)
-      self.["token"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "audiences", accessor: "audiences", nilable: true, read_only: false, default: nil, kind: ::Array(String) },
-        { key: "token", accessor: "token", nilable: true, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "audiences", accessor: "audiences", nilable: true, read_only: false, default: nil, kind: ::Array(String)},
+      {key: "token", accessor: "token", nilable: true, read_only: false, default: nil, kind: String},
+    ])
   end
 end

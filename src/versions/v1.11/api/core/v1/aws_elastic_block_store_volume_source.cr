@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def fs_type? : String?
     # :ditto:
-    abstract def fs_type=(value : String?)
+    abstract def fs_type=(value : String)
     # The partition in the volume that you want to mount. If omitted, the default is to mount by volume name. Examples: For volume [[/dev/sda1, you specify the partition as "1". Similarly, the volume partition for /dev/sda is "0" (or you can leave the property empty).](/dev/sda1, you specify the partition as "1". Similarly, the volume partition for /dev/sda is "0" (or you can leave the property empty).)]([/dev/sda1, you specify the partition as "1". Similarly, the volume partition for /dev/sda is "0" (or you can leave the property empty).](/dev/sda1, you specify the partition as "1". Similarly, the volume partition for /dev/sda is "0" (or you can leave the property empty).))
     abstract def partition : Int32?
     # :ditto:
@@ -23,7 +23,7 @@ module K8S
     # :ditto:
     abstract def partition? : Int32?
     # :ditto:
-    abstract def partition=(value : Int32?)
+    abstract def partition=(value : Int32)
     # Specify "true" to force and set the ReadOnly property in VolumeMounts to "true". If omitted, the default is "false". More info: [[https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore](https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore)](https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore](https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore))
     abstract def read_only : ::Bool?
     # :ditto:
@@ -31,9 +31,9 @@ module K8S
     # :ditto:
     abstract def read_only? : ::Bool?
     # :ditto:
-    abstract def read_only=(value : ::Bool?)
+    abstract def read_only=(value : ::Bool)
     # Unique ID of the persistent disk resource in AWS (Amazon EBS volume). More info: [[https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore](https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore)](https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore](https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore))
-    abstract def volume_id : String
+    abstract def volume_id : String?
     # :ditto:
     abstract def volume_id! : String
     # :ditto:
@@ -53,94 +53,24 @@ module K8S
   )]
   class Api::Core::V1::AWSElasticBlockStoreVolumeSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::AWSElasticBlockStoreVolumeSource
+    k8s_object_accessor("fsType", fs_type : String, true, false, "Filesystem type of the volume that you want to mount. Tip: Ensure that the filesystem type is supported by the host operating system. Examples: \"ext4\", \"xfs\", \"ntfs\". Implicitly inferred to be \"ext4\" if unspecified. More info: [https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore](https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore)")
+    k8s_object_accessor("partition", partition : Int32, true, false, "The partition in the volume that you want to mount. If omitted, the default is to mount by volume name. Examples: For volume [/dev/sda1, you specify the partition as \"1\". Similarly, the volume partition for /dev/sda is \"0\" (or you can leave the property empty).](/dev/sda1, you specify the partition as \"1\". Similarly, the volume partition for /dev/sda is \"0\" (or you can leave the property empty).)")
+    k8s_object_accessor("readOnly", read_only : ::Bool, true, false, "Specify \"true\" to force and set the ReadOnly property in VolumeMounts to \"true\". If omitted, the default is \"false\". More info: [https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore](https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore)")
+    k8s_object_accessor("volumeID", volume_id : String, false, false, "Unique ID of the persistent disk resource in AWS (Amazon EBS volume). More info: [https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore](https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore)")
 
-    # Filesystem type of the volume that you want to mount. Tip: Ensure that the filesystem type is supported by the host operating system. Examples: "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified. More info: [[https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore](https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore)](https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore](https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore))
-    def fs_type : String?
-      self.["fsType"].as(String?)
+    def initialize(*, fs_type : String? = nil, partition : Int32? = nil, read_only : ::Bool? = nil, volume_id : String? = nil)
+      super()
+      self.["fsType"] = fs_type
+      self.["partition"] = partition
+      self.["readOnly"] = read_only
+      self.["volumeID"] = volume_id
     end
 
-    # :ditto:
-    def fs_type! : String
-      self.["fsType"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def fs_type? : String?
-      self.["fsType"]?.as(String?)
-    end
-
-    # :ditto:
-    def fs_type=(value : String?)
-      self.["fsType"] = value
-    end
-
-    # The partition in the volume that you want to mount. If omitted, the default is to mount by volume name. Examples: For volume [[/dev/sda1, you specify the partition as "1". Similarly, the volume partition for /dev/sda is "0" (or you can leave the property empty).](/dev/sda1, you specify the partition as "1". Similarly, the volume partition for /dev/sda is "0" (or you can leave the property empty).)]([/dev/sda1, you specify the partition as "1". Similarly, the volume partition for /dev/sda is "0" (or you can leave the property empty).](/dev/sda1, you specify the partition as "1". Similarly, the volume partition for /dev/sda is "0" (or you can leave the property empty).))
-    def partition : Int32?
-      self.["partition"].as(Int32?)
-    end
-
-    # :ditto:
-    def partition! : Int32
-      self.["partition"].as(Int32?).not_nil!
-    end
-
-    # :ditto:
-    def partition? : Int32?
-      self.["partition"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def partition=(value : Int32?)
-      self.["partition"] = value
-    end
-
-    # Specify "true" to force and set the ReadOnly property in VolumeMounts to "true". If omitted, the default is "false". More info: [[https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore](https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore)](https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore](https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore))
-    def read_only : ::Bool?
-      self.["readOnly"].as(::Bool?)
-    end
-
-    # :ditto:
-    def read_only! : ::Bool
-      self.["readOnly"].as(::Bool?).not_nil!
-    end
-
-    # :ditto:
-    def read_only? : ::Bool?
-      self.["readOnly"]?.as(::Bool?)
-    end
-
-    # :ditto:
-    def read_only=(value : ::Bool?)
-      self.["readOnly"] = value
-    end
-
-    # Unique ID of the persistent disk resource in AWS (Amazon EBS volume). More info: [[https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore](https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore)](https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore](https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore))
-    def volume_id : String
-      self.["volumeID"].as(String)
-    end
-
-    # :ditto:
-    def volume_id! : String
-      self.["volumeID"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def volume_id? : String?
-      self.["volumeID"]?.as(String?)
-    end
-
-    # :ditto:
-    def volume_id=(value : String)
-      self.["volumeID"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "fsType", accessor: "fs_type", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "partition", accessor: "partition", nilable: true, read_only: false, default: nil, kind: Int32 },
-        { key: "readOnly", accessor: "read_only", nilable: true, read_only: false, default: nil, kind: ::Bool },
-        { key: "volumeID", accessor: "volume_id", nilable: false, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "fsType", accessor: "fs_type", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "partition", accessor: "partition", nilable: true, read_only: false, default: nil, kind: Int32},
+      {key: "readOnly", accessor: "read_only", nilable: true, read_only: false, default: nil, kind: ::Bool},
+      {key: "volumeID", accessor: "volume_id", nilable: false, read_only: false, default: nil, kind: String},
+    ])
   end
 end

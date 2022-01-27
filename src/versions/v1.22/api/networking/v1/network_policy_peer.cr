@@ -18,7 +18,7 @@ module K8S
     # :ditto:
     abstract def ip_block? : ::K8S::Api::Networking::V1::IPBlock?
     # :ditto:
-    abstract def ip_block=(value : ::K8S::Api::Networking::V1::IPBlock?)
+    abstract def ip_block=(value : ::K8S::Api::Networking::V1::IPBlock)
     # Selects Namespaces using cluster-scoped labels. This field follows standard label selector semantics; if present but empty, it selects all namespaces.
     #
     # If PodSelector is also set, then the NetworkPolicyPeer as a whole selects the Pods matching PodSelector in the Namespaces selected by NamespaceSelector. Otherwise it selects all Pods in the Namespaces selected by NamespaceSelector.
@@ -28,7 +28,7 @@ module K8S
     # :ditto:
     abstract def namespace_selector? : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?
     # :ditto:
-    abstract def namespace_selector=(value : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?)
+    abstract def namespace_selector=(value : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector)
     # This is a label selector which selects Pods. This field follows standard label selector semantics; if present but empty, it selects all pods.
     #
     # If NamespaceSelector is also set, then the NetworkPolicyPeer as a whole selects the Pods matching PodSelector in the Namespaces selected by NamespaceSelector. Otherwise it selects the Pods matching PodSelector in the policy's own Namespace.
@@ -38,7 +38,7 @@ module K8S
     # :ditto:
     abstract def pod_selector? : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?
     # :ditto:
-    abstract def pod_selector=(value : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?)
+    abstract def pod_selector=(value : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector)
   end
 
   # NetworkPolicyPeer describes a peer to allow traffic [to/from. Only certain combinations of fields are allowed](to/from. Only certain combinations of fields are allowed)
@@ -49,77 +49,21 @@ module K8S
   )]
   class Api::Networking::V1::NetworkPolicyPeer < ::K8S::GenericObject
     include ::K8S::Types::Api::Networking::V1::NetworkPolicyPeer
+    k8s_object_accessor("ipBlock", ip_block : ::K8S::Api::Networking::V1::IPBlock, true, false, "IPBlock defines policy on a particular IPBlock. If this field is set then neither of the other fields can be.")
+    k8s_object_accessor("namespaceSelector", namespace_selector : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector, true, false, "Selects Namespaces using cluster-scoped labels. This field follows standard label selector semantics; if present but empty, it selects all namespaces.\n\nIf PodSelector is also set, then the NetworkPolicyPeer as a whole selects the Pods matching PodSelector in the Namespaces selected by NamespaceSelector. Otherwise it selects all Pods in the Namespaces selected by NamespaceSelector.")
+    k8s_object_accessor("podSelector", pod_selector : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector, true, false, "This is a label selector which selects Pods. This field follows standard label selector semantics; if present but empty, it selects all pods.\n\nIf NamespaceSelector is also set, then the NetworkPolicyPeer as a whole selects the Pods matching PodSelector in the Namespaces selected by NamespaceSelector. Otherwise it selects the Pods matching PodSelector in the policy's own Namespace.")
 
-    # IPBlock defines policy on a particular IPBlock. If this field is set then neither of the other fields can be.
-    def ip_block : ::K8S::Api::Networking::V1::IPBlock?
-      self.["ipBlock"].as(::K8S::Api::Networking::V1::IPBlock?)
+    def initialize(*, ip_block : ::K8S::Api::Networking::V1::IPBlock? = nil, namespace_selector : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector? = nil, pod_selector : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector? = nil)
+      super()
+      self.["ipBlock"] = ip_block
+      self.["namespaceSelector"] = namespace_selector
+      self.["podSelector"] = pod_selector
     end
 
-    # :ditto:
-    def ip_block! : ::K8S::Api::Networking::V1::IPBlock
-      self.["ipBlock"].as(::K8S::Api::Networking::V1::IPBlock?).not_nil!
-    end
-
-    # :ditto:
-    def ip_block? : ::K8S::Api::Networking::V1::IPBlock?
-      self.["ipBlock"]?.as(::K8S::Api::Networking::V1::IPBlock?)
-    end
-
-    # :ditto:
-    def ip_block=(value : ::K8S::Api::Networking::V1::IPBlock?)
-      self.["ipBlock"] = value
-    end
-
-    # Selects Namespaces using cluster-scoped labels. This field follows standard label selector semantics; if present but empty, it selects all namespaces.
-    #
-    # If PodSelector is also set, then the NetworkPolicyPeer as a whole selects the Pods matching PodSelector in the Namespaces selected by NamespaceSelector. Otherwise it selects all Pods in the Namespaces selected by NamespaceSelector.
-    def namespace_selector : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?
-      self.["namespaceSelector"].as(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?)
-    end
-
-    # :ditto:
-    def namespace_selector! : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector
-      self.["namespaceSelector"].as(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?).not_nil!
-    end
-
-    # :ditto:
-    def namespace_selector? : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?
-      self.["namespaceSelector"]?.as(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?)
-    end
-
-    # :ditto:
-    def namespace_selector=(value : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?)
-      self.["namespaceSelector"] = value
-    end
-
-    # This is a label selector which selects Pods. This field follows standard label selector semantics; if present but empty, it selects all pods.
-    #
-    # If NamespaceSelector is also set, then the NetworkPolicyPeer as a whole selects the Pods matching PodSelector in the Namespaces selected by NamespaceSelector. Otherwise it selects the Pods matching PodSelector in the policy's own Namespace.
-    def pod_selector : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?
-      self.["podSelector"].as(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?)
-    end
-
-    # :ditto:
-    def pod_selector! : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector
-      self.["podSelector"].as(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?).not_nil!
-    end
-
-    # :ditto:
-    def pod_selector? : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?
-      self.["podSelector"]?.as(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?)
-    end
-
-    # :ditto:
-    def pod_selector=(value : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?)
-      self.["podSelector"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "ipBlock", accessor: "ip_block", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Networking::V1::IPBlock },
-        { key: "namespaceSelector", accessor: "namespace_selector", nilable: true, read_only: false, default: nil, kind: ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector },
-        { key: "podSelector", accessor: "pod_selector", nilable: true, read_only: false, default: nil, kind: ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "ipBlock", accessor: "ip_block", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Networking::V1::IPBlock},
+      {key: "namespaceSelector", accessor: "namespace_selector", nilable: true, read_only: false, default: nil, kind: ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector},
+      {key: "podSelector", accessor: "pod_selector", nilable: true, read_only: false, default: nil, kind: ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector},
+    ])
   end
 end

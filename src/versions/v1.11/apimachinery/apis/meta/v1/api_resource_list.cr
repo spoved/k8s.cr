@@ -11,19 +11,19 @@ module K8S
   # Namespace holding the types for `Apimachinery::Apis::Meta::V1::APIResourceList`.
   module Types::Apimachinery::Apis::Meta::V1::APIResourceList
     # APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)))
-    abstract def api_version : String
+    abstract def api_version : String?
     # :ditto:
     abstract def api_version! : String
     # :ditto:
     abstract def api_version? : String?
     # Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)))
-    abstract def kind : String
+    abstract def kind : String?
     # :ditto:
     abstract def kind! : String
     # :ditto:
     abstract def kind? : String?
     # groupVersion is the group and version this APIResourceList is for.
-    abstract def group_version : String
+    abstract def group_version : String?
     # :ditto:
     abstract def group_version! : String
     # :ditto:
@@ -31,7 +31,7 @@ module K8S
     # :ditto:
     abstract def group_version=(value : String)
     # resources contains the name of the resources and if they are namespaced.
-    abstract def resources : ::Array(::K8S::Apimachinery::Apis::Meta::V1::APIResource)
+    abstract def resources : ::Array(::K8S::Apimachinery::Apis::Meta::V1::APIResource)?
     # :ditto:
     abstract def resources! : ::Array(::K8S::Apimachinery::Apis::Meta::V1::APIResource)
     # :ditto:
@@ -50,86 +50,26 @@ module K8S
   )]
   class Apimachinery::Apis::Meta::V1::APIResourceList < ::K8S::GenericObject
     include ::K8S::Types::Apimachinery::Apis::Meta::V1::APIResourceList
+    k8s_object_accessor("apiVersion", api_version : String = "meta/v1", false, true, "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources))")
+    k8s_object_accessor("kind", kind : String = "APIResourceList", false, true, "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds))")
+    k8s_object_accessor("groupVersion", group_version : String, false, false, "groupVersion is the group and version this APIResourceList is for.")
+    k8s_object_accessor("resources", resources : ::Array(::K8S::Apimachinery::Apis::Meta::V1::APIResource), false, false, "resources contains the name of the resources and if they are namespaced.")
 
-    # APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)))
-    def api_version : String
-      self.["apiVersion"] = "meta/v1" unless self.["apiVersion"]?
-      self.["apiVersion"].as(String)
+    def initialize(*, api_version : String? = "meta/v1", kind : String? = "APIResourceList", group_version : String? = nil, resources : ::Array(::K8S::Apimachinery::Apis::Meta::V1::APIResource)? = nil)
+      super()
+      raise "api_version cannot be nil" if api_version.nil?
+      self.["apiVersion"] = api_version
+      raise "kind cannot be nil" if kind.nil?
+      self.["kind"] = kind
+      self.["groupVersion"] = group_version
+      self.["resources"] = resources
     end
 
-    # :ditto:
-    def api_version! : String
-      self.["apiVersion"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def api_version? : String?
-      self.["apiVersion"]?.as(String?)
-    end
-
-    # Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)))
-    def kind : String
-      self.["kind"] = "APIResourceList" unless self.["kind"]?
-      self.["kind"].as(String)
-    end
-
-    # :ditto:
-    def kind! : String
-      self.["kind"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def kind? : String?
-      self.["kind"]?.as(String?)
-    end
-
-    # groupVersion is the group and version this APIResourceList is for.
-    def group_version : String
-      self.["groupVersion"].as(String)
-    end
-
-    # :ditto:
-    def group_version! : String
-      self.["groupVersion"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def group_version? : String?
-      self.["groupVersion"]?.as(String?)
-    end
-
-    # :ditto:
-    def group_version=(value : String)
-      self.["groupVersion"] = value
-    end
-
-    # resources contains the name of the resources and if they are namespaced.
-    def resources : ::Array(::K8S::Apimachinery::Apis::Meta::V1::APIResource)
-      self.["resources"].as(::Array(::K8S::Apimachinery::Apis::Meta::V1::APIResource))
-    end
-
-    # :ditto:
-    def resources! : ::Array(::K8S::Apimachinery::Apis::Meta::V1::APIResource)
-      self.["resources"].as(::Array(::K8S::Apimachinery::Apis::Meta::V1::APIResource)).not_nil!
-    end
-
-    # :ditto:
-    def resources? : ::Array(::K8S::Apimachinery::Apis::Meta::V1::APIResource)?
-      self.["resources"]?.as(::Array(::K8S::Apimachinery::Apis::Meta::V1::APIResource)?)
-    end
-
-    # :ditto:
-    def resources=(value : ::Array(::K8S::Apimachinery::Apis::Meta::V1::APIResource))
-      self.["resources"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "apiVersion", accessor: "api_version", nilable: false, read_only: true, default: "meta/v1", kind: String },
-        { key: "kind", accessor: "kind", nilable: false, read_only: true, default: "APIResourceList", kind: String },
-        { key: "groupVersion", accessor: "group_version", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "resources", accessor: "resources", nilable: false, read_only: false, default: nil, kind: ::Array(::K8S::Apimachinery::Apis::Meta::V1::APIResource) },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "apiVersion", accessor: "api_version", nilable: false, read_only: true, default: "meta/v1", kind: String},
+      {key: "kind", accessor: "kind", nilable: false, read_only: true, default: "APIResourceList", kind: String},
+      {key: "groupVersion", accessor: "group_version", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "resources", accessor: "resources", nilable: false, read_only: false, default: nil, kind: ::Array(::K8S::Apimachinery::Apis::Meta::V1::APIResource)},
+    ])
   end
 end

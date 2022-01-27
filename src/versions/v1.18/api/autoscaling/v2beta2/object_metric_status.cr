@@ -13,7 +13,7 @@ module K8S
   # Namespace holding the types for `Api::Autoscaling::V2beta2::ObjectMetricStatus`.
   module Types::Api::Autoscaling::V2beta2::ObjectMetricStatus
     # current contains the current value for the given metric
-    abstract def current : ::K8S::Api::Autoscaling::V2beta2::MetricValueStatus
+    abstract def current : ::K8S::Api::Autoscaling::V2beta2::MetricValueStatus?
     # :ditto:
     abstract def current! : ::K8S::Api::Autoscaling::V2beta2::MetricValueStatus
     # :ditto:
@@ -21,7 +21,7 @@ module K8S
     # :ditto:
     abstract def current=(value : ::K8S::Api::Autoscaling::V2beta2::MetricValueStatus)
     #
-    abstract def described_object : ::K8S::Api::Autoscaling::V2beta2::CrossVersionObjectReference
+    abstract def described_object : ::K8S::Api::Autoscaling::V2beta2::CrossVersionObjectReference?
     # :ditto:
     abstract def described_object! : ::K8S::Api::Autoscaling::V2beta2::CrossVersionObjectReference
     # :ditto:
@@ -29,7 +29,7 @@ module K8S
     # :ditto:
     abstract def described_object=(value : ::K8S::Api::Autoscaling::V2beta2::CrossVersionObjectReference)
     # metric identifies the target metric by name and selector
-    abstract def metric : ::K8S::Api::Autoscaling::V2beta2::MetricIdentifier
+    abstract def metric : ::K8S::Api::Autoscaling::V2beta2::MetricIdentifier?
     # :ditto:
     abstract def metric! : ::K8S::Api::Autoscaling::V2beta2::MetricIdentifier
     # :ditto:
@@ -46,73 +46,21 @@ module K8S
   )]
   class Api::Autoscaling::V2beta2::ObjectMetricStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Autoscaling::V2beta2::ObjectMetricStatus
+    k8s_object_accessor("current", current : ::K8S::Api::Autoscaling::V2beta2::MetricValueStatus, false, false, "current contains the current value for the given metric")
+    k8s_object_accessor("describedObject", described_object : ::K8S::Api::Autoscaling::V2beta2::CrossVersionObjectReference, false, false, nil)
+    k8s_object_accessor("metric", metric : ::K8S::Api::Autoscaling::V2beta2::MetricIdentifier, false, false, "metric identifies the target metric by name and selector")
 
-    # current contains the current value for the given metric
-    def current : ::K8S::Api::Autoscaling::V2beta2::MetricValueStatus
-      self.["current"].as(::K8S::Api::Autoscaling::V2beta2::MetricValueStatus)
+    def initialize(*, current : ::K8S::Api::Autoscaling::V2beta2::MetricValueStatus? = nil, described_object : ::K8S::Api::Autoscaling::V2beta2::CrossVersionObjectReference? = nil, metric : ::K8S::Api::Autoscaling::V2beta2::MetricIdentifier? = nil)
+      super()
+      self.["current"] = current
+      self.["describedObject"] = described_object
+      self.["metric"] = metric
     end
 
-    # :ditto:
-    def current! : ::K8S::Api::Autoscaling::V2beta2::MetricValueStatus
-      self.["current"].as(::K8S::Api::Autoscaling::V2beta2::MetricValueStatus).not_nil!
-    end
-
-    # :ditto:
-    def current? : ::K8S::Api::Autoscaling::V2beta2::MetricValueStatus?
-      self.["current"]?.as(::K8S::Api::Autoscaling::V2beta2::MetricValueStatus?)
-    end
-
-    # :ditto:
-    def current=(value : ::K8S::Api::Autoscaling::V2beta2::MetricValueStatus)
-      self.["current"] = value
-    end
-
-    #
-    def described_object : ::K8S::Api::Autoscaling::V2beta2::CrossVersionObjectReference
-      self.["describedObject"].as(::K8S::Api::Autoscaling::V2beta2::CrossVersionObjectReference)
-    end
-
-    # :ditto:
-    def described_object! : ::K8S::Api::Autoscaling::V2beta2::CrossVersionObjectReference
-      self.["describedObject"].as(::K8S::Api::Autoscaling::V2beta2::CrossVersionObjectReference).not_nil!
-    end
-
-    # :ditto:
-    def described_object? : ::K8S::Api::Autoscaling::V2beta2::CrossVersionObjectReference?
-      self.["describedObject"]?.as(::K8S::Api::Autoscaling::V2beta2::CrossVersionObjectReference?)
-    end
-
-    # :ditto:
-    def described_object=(value : ::K8S::Api::Autoscaling::V2beta2::CrossVersionObjectReference)
-      self.["describedObject"] = value
-    end
-
-    # metric identifies the target metric by name and selector
-    def metric : ::K8S::Api::Autoscaling::V2beta2::MetricIdentifier
-      self.["metric"].as(::K8S::Api::Autoscaling::V2beta2::MetricIdentifier)
-    end
-
-    # :ditto:
-    def metric! : ::K8S::Api::Autoscaling::V2beta2::MetricIdentifier
-      self.["metric"].as(::K8S::Api::Autoscaling::V2beta2::MetricIdentifier).not_nil!
-    end
-
-    # :ditto:
-    def metric? : ::K8S::Api::Autoscaling::V2beta2::MetricIdentifier?
-      self.["metric"]?.as(::K8S::Api::Autoscaling::V2beta2::MetricIdentifier?)
-    end
-
-    # :ditto:
-    def metric=(value : ::K8S::Api::Autoscaling::V2beta2::MetricIdentifier)
-      self.["metric"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "current", accessor: "current", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Autoscaling::V2beta2::MetricValueStatus },
-        { key: "describedObject", accessor: "described_object", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Autoscaling::V2beta2::CrossVersionObjectReference },
-        { key: "metric", accessor: "metric", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Autoscaling::V2beta2::MetricIdentifier },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "current", accessor: "current", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Autoscaling::V2beta2::MetricValueStatus},
+      {key: "describedObject", accessor: "described_object", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Autoscaling::V2beta2::CrossVersionObjectReference},
+      {key: "metric", accessor: "metric", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Autoscaling::V2beta2::MetricIdentifier},
+    ])
   end
 end

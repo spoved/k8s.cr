@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def app_protocol? : String?
     # :ditto:
-    abstract def app_protocol=(value : String?)
+    abstract def app_protocol=(value : String)
     # The name of this port within the service. This must be a DNS_LABEL. All ports within a ServiceSpec must have unique names. When considering the endpoints for a Service, this must match the 'name' field in the EndpointPort. Optional if only one ServicePort is defined on this service.
     abstract def name : String?
     # :ditto:
@@ -23,7 +23,7 @@ module K8S
     # :ditto:
     abstract def name? : String?
     # :ditto:
-    abstract def name=(value : String?)
+    abstract def name=(value : String)
     # The port on each node on which this service is exposed when type=NodePort or LoadBalancer. Usually assigned by the system. If specified, it will be allocated to the service if unused or else creation of the service will fail. Default is to auto-allocate a port if the ServiceType of this Service requires one. More info: [[https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport](https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport)](https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport](https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport))
     abstract def node_port : Int32?
     # :ditto:
@@ -31,9 +31,9 @@ module K8S
     # :ditto:
     abstract def node_port? : Int32?
     # :ditto:
-    abstract def node_port=(value : Int32?)
+    abstract def node_port=(value : Int32)
     # The port that will be exposed by this service.
-    abstract def port : Int32
+    abstract def port : Int32?
     # :ditto:
     abstract def port! : Int32
     # :ditto:
@@ -47,7 +47,7 @@ module K8S
     # :ditto:
     abstract def protocol? : String?
     # :ditto:
-    abstract def protocol=(value : String?)
+    abstract def protocol=(value : String)
     # Number or name of the port to access on the pods targeted by the service. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME. If this is a string, it will be looked up as a named port in the target Pod's container ports. If this is not specified, the value of the 'port' field is used (an identity map). This field is ignored for services with clusterIP=None, and should be omitted or set equal to the 'port' field. More info: [[https://kubernetes.io/docs/concepts/services-networking/service/#defining-a-service](https://kubernetes.io/docs/concepts/services-networking/service/#defining-a-service)](https://kubernetes.io/docs/concepts/services-networking/service/#defining-a-service](https://kubernetes.io/docs/concepts/services-networking/service/#defining-a-service))
     abstract def target_port : ::Int32 | ::String?
     # :ditto:
@@ -55,7 +55,7 @@ module K8S
     # :ditto:
     abstract def target_port? : ::Int32 | ::String?
     # :ditto:
-    abstract def target_port=(value : ::Int32 | ::String?)
+    abstract def target_port=(value : ::Int32 | ::String)
   end
 
   # ServicePort contains information on service's port.
@@ -69,136 +69,30 @@ module K8S
   )]
   class Api::Core::V1::ServicePort < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::ServicePort
+    k8s_object_accessor("appProtocol", app_protocol : String, true, false, "The application protocol for this port. This field follows standard Kubernetes label syntax. Un-prefixed names are reserved for IANA standard service names (as per RFC-6335 and [http://www.iana.org/assignments/service-names). Non-standard protocols should use prefixed names such as mycompany.com/my-custom-protocol. This is a beta field that is guarded by the ServiceAppProtocol feature gate and enabled by default.](http://www.iana.org/assignments/service-names). Non-standard protocols should use prefixed names such as mycompany.com/my-custom-protocol. This is a beta field that is guarded by the ServiceAppProtocol feature gate and enabled by default.)")
+    k8s_object_accessor("name", name : String, true, false, "The name of this port within the service. This must be a DNS_LABEL. All ports within a ServiceSpec must have unique names. When considering the endpoints for a Service, this must match the 'name' field in the EndpointPort. Optional if only one ServicePort is defined on this service.")
+    k8s_object_accessor("nodePort", node_port : Int32, true, false, "The port on each node on which this service is exposed when type=NodePort or LoadBalancer. Usually assigned by the system. If specified, it will be allocated to the service if unused or else creation of the service will fail. Default is to auto-allocate a port if the ServiceType of this Service requires one. More info: [https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport](https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport)")
+    k8s_object_accessor("port", port : Int32, false, false, "The port that will be exposed by this service.")
+    k8s_object_accessor("protocol", protocol : String, true, false, "The IP protocol for this port. Supports \"TCP\", \"UDP\", and \"SCTP\". Default is TCP.")
+    k8s_object_accessor("targetPort", target_port : ::Int32 | ::String, true, false, "Number or name of the port to access on the pods targeted by the service. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME. If this is a string, it will be looked up as a named port in the target Pod's container ports. If this is not specified, the value of the 'port' field is used (an identity map). This field is ignored for services with clusterIP=None, and should be omitted or set equal to the 'port' field. More info: [https://kubernetes.io/docs/concepts/services-networking/service/#defining-a-service](https://kubernetes.io/docs/concepts/services-networking/service/#defining-a-service)")
 
-    # The application protocol for this port. This field follows standard Kubernetes label syntax. Un-prefixed names are reserved for IANA standard service names (as per RFC-6335 and [[http://www.iana.org/assignments/service-names). Non-standard protocols should use prefixed names such as mycompany.com/my-custom-protocol. This is a beta field that is guarded by the ServiceAppProtocol feature gate and enabled by default.](http://www.iana.org/assignments/service-names). Non-standard protocols should use prefixed names such as mycompany.com/my-custom-protocol. This is a beta field that is guarded by the ServiceAppProtocol feature gate and enabled by default.)](http://www.iana.org/assignments/service-names). Non-standard protocols should use prefixed names such as mycompany.com/my-custom-protocol. This is a beta field that is guarded by the ServiceAppProtocol feature gate and enabled by default.](http://www.iana.org/assignments/service-names). Non-standard protocols should use prefixed names such as mycompany.com/my-custom-protocol. This is a beta field that is guarded by the ServiceAppProtocol feature gate and enabled by default.))
-    def app_protocol : String?
-      self.["appProtocol"].as(String?)
+    def initialize(*, app_protocol : String? = nil, name : String? = nil, node_port : Int32? = nil, port : Int32? = nil, protocol : String? = nil, target_port : ::Int32 | ::String? = nil)
+      super()
+      self.["appProtocol"] = app_protocol
+      self.["name"] = name
+      self.["nodePort"] = node_port
+      self.["port"] = port
+      self.["protocol"] = protocol
+      self.["targetPort"] = target_port
     end
 
-    # :ditto:
-    def app_protocol! : String
-      self.["appProtocol"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def app_protocol? : String?
-      self.["appProtocol"]?.as(String?)
-    end
-
-    # :ditto:
-    def app_protocol=(value : String?)
-      self.["appProtocol"] = value
-    end
-
-    # The name of this port within the service. This must be a DNS_LABEL. All ports within a ServiceSpec must have unique names. When considering the endpoints for a Service, this must match the 'name' field in the EndpointPort. Optional if only one ServicePort is defined on this service.
-    def name : String?
-      self.["name"].as(String?)
-    end
-
-    # :ditto:
-    def name! : String
-      self.["name"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def name? : String?
-      self.["name"]?.as(String?)
-    end
-
-    # :ditto:
-    def name=(value : String?)
-      self.["name"] = value
-    end
-
-    # The port on each node on which this service is exposed when type=NodePort or LoadBalancer. Usually assigned by the system. If specified, it will be allocated to the service if unused or else creation of the service will fail. Default is to auto-allocate a port if the ServiceType of this Service requires one. More info: [[https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport](https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport)](https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport](https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport))
-    def node_port : Int32?
-      self.["nodePort"].as(Int32?)
-    end
-
-    # :ditto:
-    def node_port! : Int32
-      self.["nodePort"].as(Int32?).not_nil!
-    end
-
-    # :ditto:
-    def node_port? : Int32?
-      self.["nodePort"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def node_port=(value : Int32?)
-      self.["nodePort"] = value
-    end
-
-    # The port that will be exposed by this service.
-    def port : Int32
-      self.["port"].as(Int32)
-    end
-
-    # :ditto:
-    def port! : Int32
-      self.["port"].as(Int32).not_nil!
-    end
-
-    # :ditto:
-    def port? : Int32?
-      self.["port"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def port=(value : Int32)
-      self.["port"] = value
-    end
-
-    # The IP protocol for this port. Supports "TCP", "UDP", and "SCTP". Default is TCP.
-    def protocol : String?
-      self.["protocol"].as(String?)
-    end
-
-    # :ditto:
-    def protocol! : String
-      self.["protocol"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def protocol? : String?
-      self.["protocol"]?.as(String?)
-    end
-
-    # :ditto:
-    def protocol=(value : String?)
-      self.["protocol"] = value
-    end
-
-    # Number or name of the port to access on the pods targeted by the service. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME. If this is a string, it will be looked up as a named port in the target Pod's container ports. If this is not specified, the value of the 'port' field is used (an identity map). This field is ignored for services with clusterIP=None, and should be omitted or set equal to the 'port' field. More info: [[https://kubernetes.io/docs/concepts/services-networking/service/#defining-a-service](https://kubernetes.io/docs/concepts/services-networking/service/#defining-a-service)](https://kubernetes.io/docs/concepts/services-networking/service/#defining-a-service](https://kubernetes.io/docs/concepts/services-networking/service/#defining-a-service))
-    def target_port : ::Int32 | ::String?
-      self.["targetPort"].as(::Int32 | ::String?)
-    end
-
-    # :ditto:
-    def target_port! : ::Int32 | ::String
-      self.["targetPort"].as(::Int32 | ::String?).not_nil!
-    end
-
-    # :ditto:
-    def target_port? : ::Int32 | ::String?
-      self.["targetPort"]?.as(::Int32 | ::String?)
-    end
-
-    # :ditto:
-    def target_port=(value : ::Int32 | ::String?)
-      self.["targetPort"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "appProtocol", accessor: "app_protocol", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "name", accessor: "name", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "nodePort", accessor: "node_port", nilable: true, read_only: false, default: nil, kind: Int32 },
-        { key: "port", accessor: "port", nilable: false, read_only: false, default: nil, kind: Int32 },
-        { key: "protocol", accessor: "protocol", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "targetPort", accessor: "target_port", nilable: true, read_only: false, default: nil, kind: ::Union(::Int32 | ::String) },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "appProtocol", accessor: "app_protocol", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "name", accessor: "name", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "nodePort", accessor: "node_port", nilable: true, read_only: false, default: nil, kind: Int32},
+      {key: "port", accessor: "port", nilable: false, read_only: false, default: nil, kind: Int32},
+      {key: "protocol", accessor: "protocol", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "targetPort", accessor: "target_port", nilable: true, read_only: false, default: nil, kind: ::Union(::Int32 | ::String)},
+    ])
   end
 end

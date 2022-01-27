@@ -17,7 +17,7 @@ module K8S
     # :ditto:
     abstract def resource? : ::K8S::Api::Core::V1::TypedLocalObjectReference?
     # :ditto:
-    abstract def resource=(value : ::K8S::Api::Core::V1::TypedLocalObjectReference?)
+    abstract def resource=(value : ::K8S::Api::Core::V1::TypedLocalObjectReference)
     # Specifies the name of the referenced service.
     abstract def service_name : String?
     # :ditto:
@@ -25,7 +25,7 @@ module K8S
     # :ditto:
     abstract def service_name? : String?
     # :ditto:
-    abstract def service_name=(value : String?)
+    abstract def service_name=(value : String)
     # Specifies the port of the referenced service.
     abstract def service_port : ::Int32 | ::String?
     # :ditto:
@@ -33,7 +33,7 @@ module K8S
     # :ditto:
     abstract def service_port? : ::Int32 | ::String?
     # :ditto:
-    abstract def service_port=(value : ::Int32 | ::String?)
+    abstract def service_port=(value : ::Int32 | ::String)
   end
 
   # IngressBackend describes all endpoints for a given service and port.
@@ -44,73 +44,21 @@ module K8S
   )]
   class Api::Extensions::V1beta1::IngressBackend < ::K8S::GenericObject
     include ::K8S::Types::Api::Extensions::V1beta1::IngressBackend
+    k8s_object_accessor("resource", resource : ::K8S::Api::Core::V1::TypedLocalObjectReference, true, false, "Resource is an ObjectRef to another Kubernetes resource in the namespace of the Ingress object. If resource is specified, serviceName and servicePort must not be specified.")
+    k8s_object_accessor("serviceName", service_name : String, true, false, "Specifies the name of the referenced service.")
+    k8s_object_accessor("servicePort", service_port : ::Int32 | ::String, true, false, "Specifies the port of the referenced service.")
 
-    # Resource is an ObjectRef to another Kubernetes resource in the namespace of the Ingress object. If resource is specified, serviceName and servicePort must not be specified.
-    def resource : ::K8S::Api::Core::V1::TypedLocalObjectReference?
-      self.["resource"].as(::K8S::Api::Core::V1::TypedLocalObjectReference?)
+    def initialize(*, resource : ::K8S::Api::Core::V1::TypedLocalObjectReference? = nil, service_name : String? = nil, service_port : ::Int32 | ::String? = nil)
+      super()
+      self.["resource"] = resource
+      self.["serviceName"] = service_name
+      self.["servicePort"] = service_port
     end
 
-    # :ditto:
-    def resource! : ::K8S::Api::Core::V1::TypedLocalObjectReference
-      self.["resource"].as(::K8S::Api::Core::V1::TypedLocalObjectReference?).not_nil!
-    end
-
-    # :ditto:
-    def resource? : ::K8S::Api::Core::V1::TypedLocalObjectReference?
-      self.["resource"]?.as(::K8S::Api::Core::V1::TypedLocalObjectReference?)
-    end
-
-    # :ditto:
-    def resource=(value : ::K8S::Api::Core::V1::TypedLocalObjectReference?)
-      self.["resource"] = value
-    end
-
-    # Specifies the name of the referenced service.
-    def service_name : String?
-      self.["serviceName"].as(String?)
-    end
-
-    # :ditto:
-    def service_name! : String
-      self.["serviceName"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def service_name? : String?
-      self.["serviceName"]?.as(String?)
-    end
-
-    # :ditto:
-    def service_name=(value : String?)
-      self.["serviceName"] = value
-    end
-
-    # Specifies the port of the referenced service.
-    def service_port : ::Int32 | ::String?
-      self.["servicePort"].as(::Int32 | ::String?)
-    end
-
-    # :ditto:
-    def service_port! : ::Int32 | ::String
-      self.["servicePort"].as(::Int32 | ::String?).not_nil!
-    end
-
-    # :ditto:
-    def service_port? : ::Int32 | ::String?
-      self.["servicePort"]?.as(::Int32 | ::String?)
-    end
-
-    # :ditto:
-    def service_port=(value : ::Int32 | ::String?)
-      self.["servicePort"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "resource", accessor: "resource", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::TypedLocalObjectReference },
-        { key: "serviceName", accessor: "service_name", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "servicePort", accessor: "service_port", nilable: true, read_only: false, default: nil, kind: ::Union(::Int32 | ::String) },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "resource", accessor: "resource", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::TypedLocalObjectReference},
+      {key: "serviceName", accessor: "service_name", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "servicePort", accessor: "service_port", nilable: true, read_only: false, default: nil, kind: ::Union(::Int32 | ::String)},
+    ])
   end
 end

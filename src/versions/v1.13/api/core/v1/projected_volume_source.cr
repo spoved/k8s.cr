@@ -17,9 +17,9 @@ module K8S
     # :ditto:
     abstract def default_mode? : Int32?
     # :ditto:
-    abstract def default_mode=(value : Int32?)
+    abstract def default_mode=(value : Int32)
     # list of volume projections
-    abstract def sources : ::Array(::K8S::Api::Core::V1::VolumeProjection)
+    abstract def sources : ::Array(::K8S::Api::Core::V1::VolumeProjection)?
     # :ditto:
     abstract def sources! : ::Array(::K8S::Api::Core::V1::VolumeProjection)
     # :ditto:
@@ -35,52 +35,18 @@ module K8S
   )]
   class Api::Core::V1::ProjectedVolumeSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::ProjectedVolumeSource
+    k8s_object_accessor("defaultMode", default_mode : Int32, true, false, "Mode bits to use on created files by default. Must be a value between 0 and 0777. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.")
+    k8s_object_accessor("sources", sources : ::Array(::K8S::Api::Core::V1::VolumeProjection), false, false, "list of volume projections")
 
-    # Mode bits to use on created files by default. Must be a value between 0 and 0777. Directories within the path are not affected by this setting. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
-    def default_mode : Int32?
-      self.["defaultMode"].as(Int32?)
+    def initialize(*, default_mode : Int32? = nil, sources : ::Array(::K8S::Api::Core::V1::VolumeProjection)? = nil)
+      super()
+      self.["defaultMode"] = default_mode
+      self.["sources"] = sources
     end
 
-    # :ditto:
-    def default_mode! : Int32
-      self.["defaultMode"].as(Int32?).not_nil!
-    end
-
-    # :ditto:
-    def default_mode? : Int32?
-      self.["defaultMode"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def default_mode=(value : Int32?)
-      self.["defaultMode"] = value
-    end
-
-    # list of volume projections
-    def sources : ::Array(::K8S::Api::Core::V1::VolumeProjection)
-      self.["sources"].as(::Array(::K8S::Api::Core::V1::VolumeProjection))
-    end
-
-    # :ditto:
-    def sources! : ::Array(::K8S::Api::Core::V1::VolumeProjection)
-      self.["sources"].as(::Array(::K8S::Api::Core::V1::VolumeProjection)).not_nil!
-    end
-
-    # :ditto:
-    def sources? : ::Array(::K8S::Api::Core::V1::VolumeProjection)?
-      self.["sources"]?.as(::Array(::K8S::Api::Core::V1::VolumeProjection)?)
-    end
-
-    # :ditto:
-    def sources=(value : ::Array(::K8S::Api::Core::V1::VolumeProjection))
-      self.["sources"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "defaultMode", accessor: "default_mode", nilable: true, read_only: false, default: nil, kind: Int32 },
-        { key: "sources", accessor: "sources", nilable: false, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::VolumeProjection) },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "defaultMode", accessor: "default_mode", nilable: true, read_only: false, default: nil, kind: Int32},
+      {key: "sources", accessor: "sources", nilable: false, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::VolumeProjection)},
+    ])
   end
 end

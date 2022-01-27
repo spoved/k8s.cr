@@ -9,7 +9,7 @@ module K8S
   # Namespace holding the types for `Apimachinery::Version::Info`.
   module Types::Apimachinery::Version::Info
     #
-    abstract def build_date : String
+    abstract def build_date : String?
     # :ditto:
     abstract def build_date! : String
     # :ditto:
@@ -17,7 +17,7 @@ module K8S
     # :ditto:
     abstract def build_date=(value : String)
     #
-    abstract def compiler : String
+    abstract def compiler : String?
     # :ditto:
     abstract def compiler! : String
     # :ditto:
@@ -25,7 +25,7 @@ module K8S
     # :ditto:
     abstract def compiler=(value : String)
     #
-    abstract def git_commit : String
+    abstract def git_commit : String?
     # :ditto:
     abstract def git_commit! : String
     # :ditto:
@@ -33,7 +33,7 @@ module K8S
     # :ditto:
     abstract def git_commit=(value : String)
     #
-    abstract def git_tree_state : String
+    abstract def git_tree_state : String?
     # :ditto:
     abstract def git_tree_state! : String
     # :ditto:
@@ -41,7 +41,7 @@ module K8S
     # :ditto:
     abstract def git_tree_state=(value : String)
     #
-    abstract def git_version : String
+    abstract def git_version : String?
     # :ditto:
     abstract def git_version! : String
     # :ditto:
@@ -49,7 +49,7 @@ module K8S
     # :ditto:
     abstract def git_version=(value : String)
     #
-    abstract def go_version : String
+    abstract def go_version : String?
     # :ditto:
     abstract def go_version! : String
     # :ditto:
@@ -57,7 +57,7 @@ module K8S
     # :ditto:
     abstract def go_version=(value : String)
     #
-    abstract def major : String
+    abstract def major : String?
     # :ditto:
     abstract def major! : String
     # :ditto:
@@ -65,7 +65,7 @@ module K8S
     # :ditto:
     abstract def major=(value : String)
     #
-    abstract def minor : String
+    abstract def minor : String?
     # :ditto:
     abstract def minor! : String
     # :ditto:
@@ -73,7 +73,7 @@ module K8S
     # :ditto:
     abstract def minor=(value : String)
     #
-    abstract def platform : String
+    abstract def platform : String?
     # :ditto:
     abstract def platform! : String
     # :ditto:
@@ -96,199 +96,39 @@ module K8S
   )]
   class Apimachinery::Version::Info < ::K8S::GenericObject
     include ::K8S::Types::Apimachinery::Version::Info
+    k8s_object_accessor("buildDate", build_date : String, false, false, nil)
+    k8s_object_accessor("compiler", compiler : String, false, false, nil)
+    k8s_object_accessor("gitCommit", git_commit : String, false, false, nil)
+    k8s_object_accessor("gitTreeState", git_tree_state : String, false, false, nil)
+    k8s_object_accessor("gitVersion", git_version : String, false, false, nil)
+    k8s_object_accessor("goVersion", go_version : String, false, false, nil)
+    k8s_object_accessor("major", major : String, false, false, nil)
+    k8s_object_accessor("minor", minor : String, false, false, nil)
+    k8s_object_accessor("platform", platform : String, false, false, nil)
 
-    #
-    def build_date : String
-      self.["buildDate"].as(String)
+    def initialize(*, build_date : String? = nil, compiler : String? = nil, git_commit : String? = nil, git_tree_state : String? = nil, git_version : String? = nil, go_version : String? = nil, major : String? = nil, minor : String? = nil, platform : String? = nil)
+      super()
+      self.["buildDate"] = build_date
+      self.["compiler"] = compiler
+      self.["gitCommit"] = git_commit
+      self.["gitTreeState"] = git_tree_state
+      self.["gitVersion"] = git_version
+      self.["goVersion"] = go_version
+      self.["major"] = major
+      self.["minor"] = minor
+      self.["platform"] = platform
     end
 
-    # :ditto:
-    def build_date! : String
-      self.["buildDate"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def build_date? : String?
-      self.["buildDate"]?.as(String?)
-    end
-
-    # :ditto:
-    def build_date=(value : String)
-      self.["buildDate"] = value
-    end
-
-    #
-    def compiler : String
-      self.["compiler"].as(String)
-    end
-
-    # :ditto:
-    def compiler! : String
-      self.["compiler"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def compiler? : String?
-      self.["compiler"]?.as(String?)
-    end
-
-    # :ditto:
-    def compiler=(value : String)
-      self.["compiler"] = value
-    end
-
-    #
-    def git_commit : String
-      self.["gitCommit"].as(String)
-    end
-
-    # :ditto:
-    def git_commit! : String
-      self.["gitCommit"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def git_commit? : String?
-      self.["gitCommit"]?.as(String?)
-    end
-
-    # :ditto:
-    def git_commit=(value : String)
-      self.["gitCommit"] = value
-    end
-
-    #
-    def git_tree_state : String
-      self.["gitTreeState"].as(String)
-    end
-
-    # :ditto:
-    def git_tree_state! : String
-      self.["gitTreeState"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def git_tree_state? : String?
-      self.["gitTreeState"]?.as(String?)
-    end
-
-    # :ditto:
-    def git_tree_state=(value : String)
-      self.["gitTreeState"] = value
-    end
-
-    #
-    def git_version : String
-      self.["gitVersion"].as(String)
-    end
-
-    # :ditto:
-    def git_version! : String
-      self.["gitVersion"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def git_version? : String?
-      self.["gitVersion"]?.as(String?)
-    end
-
-    # :ditto:
-    def git_version=(value : String)
-      self.["gitVersion"] = value
-    end
-
-    #
-    def go_version : String
-      self.["goVersion"].as(String)
-    end
-
-    # :ditto:
-    def go_version! : String
-      self.["goVersion"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def go_version? : String?
-      self.["goVersion"]?.as(String?)
-    end
-
-    # :ditto:
-    def go_version=(value : String)
-      self.["goVersion"] = value
-    end
-
-    #
-    def major : String
-      self.["major"].as(String)
-    end
-
-    # :ditto:
-    def major! : String
-      self.["major"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def major? : String?
-      self.["major"]?.as(String?)
-    end
-
-    # :ditto:
-    def major=(value : String)
-      self.["major"] = value
-    end
-
-    #
-    def minor : String
-      self.["minor"].as(String)
-    end
-
-    # :ditto:
-    def minor! : String
-      self.["minor"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def minor? : String?
-      self.["minor"]?.as(String?)
-    end
-
-    # :ditto:
-    def minor=(value : String)
-      self.["minor"] = value
-    end
-
-    #
-    def platform : String
-      self.["platform"].as(String)
-    end
-
-    # :ditto:
-    def platform! : String
-      self.["platform"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def platform? : String?
-      self.["platform"]?.as(String?)
-    end
-
-    # :ditto:
-    def platform=(value : String)
-      self.["platform"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "buildDate", accessor: "build_date", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "compiler", accessor: "compiler", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "gitCommit", accessor: "git_commit", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "gitTreeState", accessor: "git_tree_state", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "gitVersion", accessor: "git_version", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "goVersion", accessor: "go_version", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "major", accessor: "major", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "minor", accessor: "minor", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "platform", accessor: "platform", nilable: false, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "buildDate", accessor: "build_date", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "compiler", accessor: "compiler", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "gitCommit", accessor: "git_commit", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "gitTreeState", accessor: "git_tree_state", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "gitVersion", accessor: "git_version", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "goVersion", accessor: "go_version", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "major", accessor: "major", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "minor", accessor: "minor", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "platform", accessor: "platform", nilable: false, read_only: false, default: nil, kind: String},
+    ])
   end
 end

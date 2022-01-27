@@ -19,7 +19,7 @@ module K8S
     # :ditto:
     abstract def running? : ::K8S::Api::Core::V1::ContainerStateRunning?
     # :ditto:
-    abstract def running=(value : ::K8S::Api::Core::V1::ContainerStateRunning?)
+    abstract def running=(value : ::K8S::Api::Core::V1::ContainerStateRunning)
     # Details about a terminated container
     abstract def terminated : ::K8S::Api::Core::V1::ContainerStateTerminated?
     # :ditto:
@@ -27,7 +27,7 @@ module K8S
     # :ditto:
     abstract def terminated? : ::K8S::Api::Core::V1::ContainerStateTerminated?
     # :ditto:
-    abstract def terminated=(value : ::K8S::Api::Core::V1::ContainerStateTerminated?)
+    abstract def terminated=(value : ::K8S::Api::Core::V1::ContainerStateTerminated)
     # Details about a waiting container
     abstract def waiting : ::K8S::Api::Core::V1::ContainerStateWaiting?
     # :ditto:
@@ -35,7 +35,7 @@ module K8S
     # :ditto:
     abstract def waiting? : ::K8S::Api::Core::V1::ContainerStateWaiting?
     # :ditto:
-    abstract def waiting=(value : ::K8S::Api::Core::V1::ContainerStateWaiting?)
+    abstract def waiting=(value : ::K8S::Api::Core::V1::ContainerStateWaiting)
   end
 
   # ContainerState holds a possible state of container. Only one of its members may be specified. If none of them is specified, the default one is ContainerStateWaiting.
@@ -46,73 +46,21 @@ module K8S
   )]
   class Api::Core::V1::ContainerState < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::ContainerState
+    k8s_object_accessor("running", running : ::K8S::Api::Core::V1::ContainerStateRunning, true, false, "Details about a running container")
+    k8s_object_accessor("terminated", terminated : ::K8S::Api::Core::V1::ContainerStateTerminated, true, false, "Details about a terminated container")
+    k8s_object_accessor("waiting", waiting : ::K8S::Api::Core::V1::ContainerStateWaiting, true, false, "Details about a waiting container")
 
-    # Details about a running container
-    def running : ::K8S::Api::Core::V1::ContainerStateRunning?
-      self.["running"].as(::K8S::Api::Core::V1::ContainerStateRunning?)
+    def initialize(*, running : ::K8S::Api::Core::V1::ContainerStateRunning? = nil, terminated : ::K8S::Api::Core::V1::ContainerStateTerminated? = nil, waiting : ::K8S::Api::Core::V1::ContainerStateWaiting? = nil)
+      super()
+      self.["running"] = running
+      self.["terminated"] = terminated
+      self.["waiting"] = waiting
     end
 
-    # :ditto:
-    def running! : ::K8S::Api::Core::V1::ContainerStateRunning
-      self.["running"].as(::K8S::Api::Core::V1::ContainerStateRunning?).not_nil!
-    end
-
-    # :ditto:
-    def running? : ::K8S::Api::Core::V1::ContainerStateRunning?
-      self.["running"]?.as(::K8S::Api::Core::V1::ContainerStateRunning?)
-    end
-
-    # :ditto:
-    def running=(value : ::K8S::Api::Core::V1::ContainerStateRunning?)
-      self.["running"] = value
-    end
-
-    # Details about a terminated container
-    def terminated : ::K8S::Api::Core::V1::ContainerStateTerminated?
-      self.["terminated"].as(::K8S::Api::Core::V1::ContainerStateTerminated?)
-    end
-
-    # :ditto:
-    def terminated! : ::K8S::Api::Core::V1::ContainerStateTerminated
-      self.["terminated"].as(::K8S::Api::Core::V1::ContainerStateTerminated?).not_nil!
-    end
-
-    # :ditto:
-    def terminated? : ::K8S::Api::Core::V1::ContainerStateTerminated?
-      self.["terminated"]?.as(::K8S::Api::Core::V1::ContainerStateTerminated?)
-    end
-
-    # :ditto:
-    def terminated=(value : ::K8S::Api::Core::V1::ContainerStateTerminated?)
-      self.["terminated"] = value
-    end
-
-    # Details about a waiting container
-    def waiting : ::K8S::Api::Core::V1::ContainerStateWaiting?
-      self.["waiting"].as(::K8S::Api::Core::V1::ContainerStateWaiting?)
-    end
-
-    # :ditto:
-    def waiting! : ::K8S::Api::Core::V1::ContainerStateWaiting
-      self.["waiting"].as(::K8S::Api::Core::V1::ContainerStateWaiting?).not_nil!
-    end
-
-    # :ditto:
-    def waiting? : ::K8S::Api::Core::V1::ContainerStateWaiting?
-      self.["waiting"]?.as(::K8S::Api::Core::V1::ContainerStateWaiting?)
-    end
-
-    # :ditto:
-    def waiting=(value : ::K8S::Api::Core::V1::ContainerStateWaiting?)
-      self.["waiting"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "running", accessor: "running", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::ContainerStateRunning },
-        { key: "terminated", accessor: "terminated", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::ContainerStateTerminated },
-        { key: "waiting", accessor: "waiting", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::ContainerStateWaiting },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "running", accessor: "running", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::ContainerStateRunning},
+      {key: "terminated", accessor: "terminated", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::ContainerStateTerminated},
+      {key: "waiting", accessor: "waiting", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::ContainerStateWaiting},
+    ])
   end
 end

@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def component? : String?
     # :ditto:
-    abstract def component=(value : String?)
+    abstract def component=(value : String)
     # Node name on which the event is generated.
     abstract def host : String?
     # :ditto:
@@ -23,7 +23,7 @@ module K8S
     # :ditto:
     abstract def host? : String?
     # :ditto:
-    abstract def host=(value : String?)
+    abstract def host=(value : String)
   end
 
   # EventSource contains information for an event.
@@ -33,52 +33,18 @@ module K8S
   )]
   class Api::Core::V1::EventSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::EventSource
+    k8s_object_accessor("component", component : String, true, false, "Component from which the event is generated.")
+    k8s_object_accessor("host", host : String, true, false, "Node name on which the event is generated.")
 
-    # Component from which the event is generated.
-    def component : String?
-      self.["component"].as(String?)
+    def initialize(*, component : String? = nil, host : String? = nil)
+      super()
+      self.["component"] = component
+      self.["host"] = host
     end
 
-    # :ditto:
-    def component! : String
-      self.["component"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def component? : String?
-      self.["component"]?.as(String?)
-    end
-
-    # :ditto:
-    def component=(value : String?)
-      self.["component"] = value
-    end
-
-    # Node name on which the event is generated.
-    def host : String?
-      self.["host"].as(String?)
-    end
-
-    # :ditto:
-    def host! : String
-      self.["host"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def host? : String?
-      self.["host"]?.as(String?)
-    end
-
-    # :ditto:
-    def host=(value : String?)
-      self.["host"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "component", accessor: "component", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "host", accessor: "host", nilable: true, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "component", accessor: "component", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "host", accessor: "host", nilable: true, read_only: false, default: nil, kind: String},
+    ])
   end
 end

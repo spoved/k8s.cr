@@ -18,7 +18,7 @@ module K8S
     # :ditto:
     abstract def metadata? : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?
     # :ditto:
-    abstract def metadata=(value : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?)
+    abstract def metadata=(value : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta)
     # Specification of the desired behavior of the pod. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status))
     abstract def spec : ::K8S::Api::Core::V1::PodSpec?
     # :ditto:
@@ -26,7 +26,7 @@ module K8S
     # :ditto:
     abstract def spec? : ::K8S::Api::Core::V1::PodSpec?
     # :ditto:
-    abstract def spec=(value : ::K8S::Api::Core::V1::PodSpec?)
+    abstract def spec=(value : ::K8S::Api::Core::V1::PodSpec)
   end
 
   # PodTemplateSpec describes the data a pod should have when created from a template
@@ -36,52 +36,18 @@ module K8S
   )]
   class Api::Core::V1::PodTemplateSpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::PodTemplateSpec
+    k8s_object_accessor("metadata", metadata : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta, true, false, "Standard object's metadata. More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)")
+    k8s_object_accessor("spec", spec : ::K8S::Api::Core::V1::PodSpec, true, false, "Specification of the desired behavior of the pod. More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status)")
 
-    # Standard object's metadata. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata))
-    def metadata : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?
-      self.["metadata"].as(::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?)
+    def initialize(*, metadata : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta? = nil, spec : ::K8S::Api::Core::V1::PodSpec? = nil)
+      super()
+      self.["metadata"] = metadata
+      self.["spec"] = spec
     end
 
-    # :ditto:
-    def metadata! : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta
-      self.["metadata"].as(::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?).not_nil!
-    end
-
-    # :ditto:
-    def metadata? : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?
-      self.["metadata"]?.as(::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?)
-    end
-
-    # :ditto:
-    def metadata=(value : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?)
-      self.["metadata"] = value
-    end
-
-    # Specification of the desired behavior of the pod. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status))
-    def spec : ::K8S::Api::Core::V1::PodSpec?
-      self.["spec"].as(::K8S::Api::Core::V1::PodSpec?)
-    end
-
-    # :ditto:
-    def spec! : ::K8S::Api::Core::V1::PodSpec
-      self.["spec"].as(::K8S::Api::Core::V1::PodSpec?).not_nil!
-    end
-
-    # :ditto:
-    def spec? : ::K8S::Api::Core::V1::PodSpec?
-      self.["spec"]?.as(::K8S::Api::Core::V1::PodSpec?)
-    end
-
-    # :ditto:
-    def spec=(value : ::K8S::Api::Core::V1::PodSpec?)
-      self.["spec"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "metadata", accessor: "metadata", nilable: true, read_only: false, default: nil, kind: ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta },
-        { key: "spec", accessor: "spec", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::PodSpec },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "metadata", accessor: "metadata", nilable: true, read_only: false, default: nil, kind: ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta},
+      {key: "spec", accessor: "spec", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::PodSpec},
+    ])
   end
 end

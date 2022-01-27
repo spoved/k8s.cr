@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def burst? : Int32?
     # :ditto:
-    abstract def burst=(value : Int32?)
+    abstract def burst=(value : Int32)
     # ThrottleQPS maximum number of batches per second default 10 QPS
     abstract def qps : Int32?
     # :ditto:
@@ -23,7 +23,7 @@ module K8S
     # :ditto:
     abstract def qps? : Int32?
     # :ditto:
-    abstract def qps=(value : Int32?)
+    abstract def qps=(value : Int32)
   end
 
   # WebhookThrottleConfig holds the configuration for throttling events
@@ -33,52 +33,18 @@ module K8S
   )]
   class Api::Auditregistration::V1alpha1::WebhookThrottleConfig < ::K8S::GenericObject
     include ::K8S::Types::Api::Auditregistration::V1alpha1::WebhookThrottleConfig
+    k8s_object_accessor("burst", burst : Int32, true, false, "ThrottleBurst is the maximum number of events sent at the same moment default 15 QPS")
+    k8s_object_accessor("qps", qps : Int32, true, false, "ThrottleQPS maximum number of batches per second default 10 QPS")
 
-    # ThrottleBurst is the maximum number of events sent at the same moment default 15 QPS
-    def burst : Int32?
-      self.["burst"].as(Int32?)
+    def initialize(*, burst : Int32? = nil, qps : Int32? = nil)
+      super()
+      self.["burst"] = burst
+      self.["qps"] = qps
     end
 
-    # :ditto:
-    def burst! : Int32
-      self.["burst"].as(Int32?).not_nil!
-    end
-
-    # :ditto:
-    def burst? : Int32?
-      self.["burst"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def burst=(value : Int32?)
-      self.["burst"] = value
-    end
-
-    # ThrottleQPS maximum number of batches per second default 10 QPS
-    def qps : Int32?
-      self.["qps"].as(Int32?)
-    end
-
-    # :ditto:
-    def qps! : Int32
-      self.["qps"].as(Int32?).not_nil!
-    end
-
-    # :ditto:
-    def qps? : Int32?
-      self.["qps"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def qps=(value : Int32?)
-      self.["qps"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "burst", accessor: "burst", nilable: true, read_only: false, default: nil, kind: Int32 },
-        { key: "qps", accessor: "qps", nilable: true, read_only: false, default: nil, kind: Int32 },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "burst", accessor: "burst", nilable: true, read_only: false, default: nil, kind: Int32},
+      {key: "qps", accessor: "qps", nilable: true, read_only: false, default: nil, kind: Int32},
+    ])
   end
 end

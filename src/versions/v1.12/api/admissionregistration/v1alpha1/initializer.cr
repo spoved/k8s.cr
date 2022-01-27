@@ -11,7 +11,7 @@ module K8S
   # Namespace holding the types for `Api::Admissionregistration::V1alpha1::Initializer`.
   module Types::Api::Admissionregistration::V1alpha1::Initializer
     # Name is the identifier of the initializer. It will be added to the object that needs to be initialized. Name should be fully qualified, e.g., alwayspullimages.kubernetes.io, where "alwayspullimages" is the name of the webhook, and kubernetes.io is the name of the organization. Required
-    abstract def name : String
+    abstract def name : String?
     # :ditto:
     abstract def name! : String
     # :ditto:
@@ -25,7 +25,7 @@ module K8S
     # :ditto:
     abstract def rules? : ::Array(::K8S::Api::Admissionregistration::V1alpha1::Rule)?
     # :ditto:
-    abstract def rules=(value : ::Array(::K8S::Api::Admissionregistration::V1alpha1::Rule)?)
+    abstract def rules=(value : ::Array(::K8S::Api::Admissionregistration::V1alpha1::Rule))
   end
 
   # Initializer describes the name and the failure policy of an initializer, and what resources it applies to.
@@ -35,52 +35,18 @@ module K8S
   )]
   class Api::Admissionregistration::V1alpha1::Initializer < ::K8S::GenericObject
     include ::K8S::Types::Api::Admissionregistration::V1alpha1::Initializer
+    k8s_object_accessor("name", name : String, false, false, "Name is the identifier of the initializer. It will be added to the object that needs to be initialized. Name should be fully qualified, e.g., alwayspullimages.kubernetes.io, where \"alwayspullimages\" is the name of the webhook, and kubernetes.io is the name of the organization. Required")
+    k8s_object_accessor("rules", rules : ::Array(::K8S::Api::Admissionregistration::V1alpha1::Rule), true, false, "Rules describes what [resources/subresources the initializer cares about. The initializer cares about an operation if it matches _any_ Rule. Rule.Resources must not include subresources.](resources/subresources the initializer cares about. The initializer cares about an operation if it matches _any_ Rule. Rule.Resources must not include subresources.)")
 
-    # Name is the identifier of the initializer. It will be added to the object that needs to be initialized. Name should be fully qualified, e.g., alwayspullimages.kubernetes.io, where "alwayspullimages" is the name of the webhook, and kubernetes.io is the name of the organization. Required
-    def name : String
-      self.["name"].as(String)
+    def initialize(*, name : String? = nil, rules : ::Array(::K8S::Api::Admissionregistration::V1alpha1::Rule)? = nil)
+      super()
+      self.["name"] = name
+      self.["rules"] = rules
     end
 
-    # :ditto:
-    def name! : String
-      self.["name"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def name? : String?
-      self.["name"]?.as(String?)
-    end
-
-    # :ditto:
-    def name=(value : String)
-      self.["name"] = value
-    end
-
-    # Rules describes what [[resources/subresources the initializer cares about. The initializer cares about an operation if it matches _any_ Rule. Rule.Resources must not include subresources.](resources/subresources the initializer cares about. The initializer cares about an operation if it matches _any_ Rule. Rule.Resources must not include subresources.)]([resources/subresources the initializer cares about. The initializer cares about an operation if it matches _any_ Rule. Rule.Resources must not include subresources.](resources/subresources the initializer cares about. The initializer cares about an operation if it matches _any_ Rule. Rule.Resources must not include subresources.))
-    def rules : ::Array(::K8S::Api::Admissionregistration::V1alpha1::Rule)?
-      self.["rules"].as(::Array(::K8S::Api::Admissionregistration::V1alpha1::Rule)?)
-    end
-
-    # :ditto:
-    def rules! : ::Array(::K8S::Api::Admissionregistration::V1alpha1::Rule)
-      self.["rules"].as(::Array(::K8S::Api::Admissionregistration::V1alpha1::Rule)?).not_nil!
-    end
-
-    # :ditto:
-    def rules? : ::Array(::K8S::Api::Admissionregistration::V1alpha1::Rule)?
-      self.["rules"]?.as(::Array(::K8S::Api::Admissionregistration::V1alpha1::Rule)?)
-    end
-
-    # :ditto:
-    def rules=(value : ::Array(::K8S::Api::Admissionregistration::V1alpha1::Rule)?)
-      self.["rules"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "name", accessor: "name", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "rules", accessor: "rules", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Admissionregistration::V1alpha1::Rule) },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "name", accessor: "name", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "rules", accessor: "rules", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Admissionregistration::V1alpha1::Rule)},
+    ])
   end
 end

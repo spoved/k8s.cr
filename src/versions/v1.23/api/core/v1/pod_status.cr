@@ -19,7 +19,7 @@ module K8S
     # :ditto:
     abstract def conditions? : ::Array(::K8S::Api::Core::V1::PodCondition)?
     # :ditto:
-    abstract def conditions=(value : ::Array(::K8S::Api::Core::V1::PodCondition)?)
+    abstract def conditions=(value : ::Array(::K8S::Api::Core::V1::PodCondition))
     # The list has one entry per container in the manifest. Each entry is currently the output of `docker inspect`. More info: [[https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-and-container-status](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-and-container-status)](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-and-container-status](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-and-container-status))
     abstract def container_statuses : ::Array(::K8S::Api::Core::V1::ContainerStatus)?
     # :ditto:
@@ -27,7 +27,7 @@ module K8S
     # :ditto:
     abstract def container_statuses? : ::Array(::K8S::Api::Core::V1::ContainerStatus)?
     # :ditto:
-    abstract def container_statuses=(value : ::Array(::K8S::Api::Core::V1::ContainerStatus)?)
+    abstract def container_statuses=(value : ::Array(::K8S::Api::Core::V1::ContainerStatus))
     # Status for any ephemeral containers that have run in this pod. This field is beta-level and available on clusters that haven't disabled the EphemeralContainers feature gate.
     abstract def ephemeral_container_statuses : ::Array(::K8S::Api::Core::V1::ContainerStatus)?
     # :ditto:
@@ -35,7 +35,7 @@ module K8S
     # :ditto:
     abstract def ephemeral_container_statuses? : ::Array(::K8S::Api::Core::V1::ContainerStatus)?
     # :ditto:
-    abstract def ephemeral_container_statuses=(value : ::Array(::K8S::Api::Core::V1::ContainerStatus)?)
+    abstract def ephemeral_container_statuses=(value : ::Array(::K8S::Api::Core::V1::ContainerStatus))
     # IP address of the host to which the pod is assigned. Empty if not yet scheduled.
     abstract def host_ip : String?
     # :ditto:
@@ -43,7 +43,7 @@ module K8S
     # :ditto:
     abstract def host_ip? : String?
     # :ditto:
-    abstract def host_ip=(value : String?)
+    abstract def host_ip=(value : String)
     # The list has one entry per init container in the manifest. The most recent successful init container will have ready = true, the most recently started container will have startTime set. More info: [[https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-and-container-status](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-and-container-status)](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-and-container-status](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-and-container-status))
     abstract def init_container_statuses : ::Array(::K8S::Api::Core::V1::ContainerStatus)?
     # :ditto:
@@ -51,7 +51,7 @@ module K8S
     # :ditto:
     abstract def init_container_statuses? : ::Array(::K8S::Api::Core::V1::ContainerStatus)?
     # :ditto:
-    abstract def init_container_statuses=(value : ::Array(::K8S::Api::Core::V1::ContainerStatus)?)
+    abstract def init_container_statuses=(value : ::Array(::K8S::Api::Core::V1::ContainerStatus))
     # A human readable message indicating details about why the pod is in this condition.
     abstract def message : String?
     # :ditto:
@@ -59,7 +59,7 @@ module K8S
     # :ditto:
     abstract def message? : String?
     # :ditto:
-    abstract def message=(value : String?)
+    abstract def message=(value : String)
     # nominatedNodeName is set only when this pod preempts other pods on the node, but it cannot be scheduled right away as preemption victims receive their graceful termination periods. This field does not guarantee that the pod will be scheduled on this node. Scheduler may decide to place the pod elsewhere if other nodes become available sooner. Scheduler may also decide to give the resources on this node to a higher priority pod that is created after preemption. As a result, this field may be different than PodSpec.nodeName when the pod is scheduled.
     abstract def nominated_node_name : String?
     # :ditto:
@@ -67,7 +67,7 @@ module K8S
     # :ditto:
     abstract def nominated_node_name? : String?
     # :ditto:
-    abstract def nominated_node_name=(value : String?)
+    abstract def nominated_node_name=(value : String)
     # The phase of a Pod is a simple, high-level summary of where the Pod is in its lifecycle. The conditions array, the reason and message fields, and the individual container status arrays contain more detail about the pod's status. There are five possible phase values:
     #
     # Pending: The pod has been accepted by the Kubernetes system, but one or more of the container images has not been created. This includes time before being scheduled as well as time spent downloading images over the network, which could take a while. Running: The pod has been bound to a node, and all of the containers have been created. At least one container is still running, or is in the process of starting or restarting. Succeeded: All containers in the pod have terminated in success, and will not be restarted. Failed: All containers in the pod have terminated, and at least one container has terminated in failure. The container either exited with non-zero status or was terminated by the system. Unknown: For some reason the state of the pod could not be obtained, typically due to an error in communicating with the host of the pod.
@@ -86,7 +86,7 @@ module K8S
     # :ditto:
     abstract def phase? : String?
     # :ditto:
-    abstract def phase=(value : String?)
+    abstract def phase=(value : String)
     # IP address allocated to the pod. Routable at least within the cluster. Empty if not yet allocated.
     abstract def pod_ip : String?
     # :ditto:
@@ -94,7 +94,7 @@ module K8S
     # :ditto:
     abstract def pod_ip? : String?
     # :ditto:
-    abstract def pod_ip=(value : String?)
+    abstract def pod_ip=(value : String)
     # podIPs holds the IP addresses allocated to the pod. If this field is specified, the 0th entry must match the podIP field. Pods may be allocated at most 1 value for each of IPv4 and IPv6. This list is empty if no IPs have been allocated yet.
     abstract def pod_ips : ::Array(::K8S::Api::Core::V1::PodIP)?
     # :ditto:
@@ -102,7 +102,7 @@ module K8S
     # :ditto:
     abstract def pod_ips? : ::Array(::K8S::Api::Core::V1::PodIP)?
     # :ditto:
-    abstract def pod_ips=(value : ::Array(::K8S::Api::Core::V1::PodIP)?)
+    abstract def pod_ips=(value : ::Array(::K8S::Api::Core::V1::PodIP))
     # The Quality of Service (QOS) classification assigned to the pod based on resource requirements See PodQOSClass type for available QOS classes More info: [[https://git.k8s.io/community/contributors/design-proposals/node/resource-qos.md](https://git.k8s.io/community/contributors/design-proposals/node/resource-qos.md)](https://git.k8s.io/community/contributors/design-proposals/node/resource-qos.md](https://git.k8s.io/community/contributors/design-proposals/node/resource-qos.md))
     #
     # Possible enum values:
@@ -115,7 +115,7 @@ module K8S
     # :ditto:
     abstract def qos_class? : String?
     # :ditto:
-    abstract def qos_class=(value : String?)
+    abstract def qos_class=(value : String)
     # A brief CamelCase message indicating details about why the pod is in this state. e.g. 'Evicted'
     abstract def reason : String?
     # :ditto:
@@ -123,7 +123,7 @@ module K8S
     # :ditto:
     abstract def reason? : String?
     # :ditto:
-    abstract def reason=(value : String?)
+    abstract def reason=(value : String)
     # RFC 3339 date and time at which the object was acknowledged by the Kubelet. This is before the Kubelet pulled the container image(s) for the pod.
     abstract def start_time : ::Time?
     # :ditto:
@@ -131,7 +131,7 @@ module K8S
     # :ditto:
     abstract def start_time? : ::Time?
     # :ditto:
-    abstract def start_time=(value : ::Time?)
+    abstract def start_time=(value : ::Time)
   end
 
   # PodStatus represents information about the status of a pod. Status may trail the actual state of a system, especially if the node that hosts the pod cannot contact the control plane.
@@ -152,299 +152,51 @@ module K8S
   )]
   class Api::Core::V1::PodStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::PodStatus
+    k8s_object_accessor("conditions", conditions : ::Array(::K8S::Api::Core::V1::PodCondition), true, false, "Current service state of pod. More info: [https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-conditions](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-conditions)")
+    k8s_object_accessor("containerStatuses", container_statuses : ::Array(::K8S::Api::Core::V1::ContainerStatus), true, false, "The list has one entry per container in the manifest. Each entry is currently the output of `docker inspect`. More info: [https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-and-container-status](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-and-container-status)")
+    k8s_object_accessor("ephemeralContainerStatuses", ephemeral_container_statuses : ::Array(::K8S::Api::Core::V1::ContainerStatus), true, false, "Status for any ephemeral containers that have run in this pod. This field is beta-level and available on clusters that haven't disabled the EphemeralContainers feature gate.")
+    k8s_object_accessor("hostIP", host_ip : String, true, false, "IP address of the host to which the pod is assigned. Empty if not yet scheduled.")
+    k8s_object_accessor("initContainerStatuses", init_container_statuses : ::Array(::K8S::Api::Core::V1::ContainerStatus), true, false, "The list has one entry per init container in the manifest. The most recent successful init container will have ready = true, the most recently started container will have startTime set. More info: [https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-and-container-status](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-and-container-status)")
+    k8s_object_accessor("message", message : String, true, false, "A human readable message indicating details about why the pod is in this condition.")
+    k8s_object_accessor("nominatedNodeName", nominated_node_name : String, true, false, "nominatedNodeName is set only when this pod preempts other pods on the node, but it cannot be scheduled right away as preemption victims receive their graceful termination periods. This field does not guarantee that the pod will be scheduled on this node. Scheduler may decide to place the pod elsewhere if other nodes become available sooner. Scheduler may also decide to give the resources on this node to a higher priority pod that is created after preemption. As a result, this field may be different than PodSpec.nodeName when the pod is scheduled.")
+    k8s_object_accessor("phase", phase : String, true, false, "The phase of a Pod is a simple, high-level summary of where the Pod is in its lifecycle. The conditions array, the reason and message fields, and the individual container status arrays contain more detail about the pod's status. There are five possible phase values:\n\nPending: The pod has been accepted by the Kubernetes system, but one or more of the container images has not been created. This includes time before being scheduled as well as time spent downloading images over the network, which could take a while. Running: The pod has been bound to a node, and all of the containers have been created. At least one container is still running, or is in the process of starting or restarting. Succeeded: All containers in the pod have terminated in success, and will not be restarted. Failed: All containers in the pod have terminated, and at least one container has terminated in failure. The container either exited with non-zero status or was terminated by the system. Unknown: For some reason the state of the pod could not be obtained, typically due to an error in communicating with the host of the pod.\n\nMore info: [https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-phase](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-phase)\n\nPossible enum values:\n - `\"Failed\"` means that all containers in the pod have terminated, and at least one container has terminated in a failure (exited with a non-zero exit code or was stopped by the system).\n - `\"Pending\"` means the pod has been accepted by the system, but one or more of the containers has not been started. This includes time before being bound to a node, as well as time spent pulling images onto the host.\n - `\"Running\"` means the pod has been bound to a node and all of the containers have been started. At least one container is still running or is in the process of being restarted.\n - `\"Succeeded\"` means that all containers in the pod have voluntarily terminated with a container exit code of 0, and the system is not going to restart any of these containers.\n - `\"Unknown\"` means that for some reason the state of the pod could not be obtained, typically due to an error in communicating with the host of the pod. Deprecated: It isn't being set since 2015 (74da3b14b0c0f658b3bb8d2def5094686d0e9095)")
+    k8s_object_accessor("podIP", pod_ip : String, true, false, "IP address allocated to the pod. Routable at least within the cluster. Empty if not yet allocated.")
+    k8s_object_accessor("podIPs", pod_ips : ::Array(::K8S::Api::Core::V1::PodIP), true, false, "podIPs holds the IP addresses allocated to the pod. If this field is specified, the 0th entry must match the podIP field. Pods may be allocated at most 1 value for each of IPv4 and IPv6. This list is empty if no IPs have been allocated yet.")
+    k8s_object_accessor("qosClass", qos_class : String, true, false, "The Quality of Service (QOS) classification assigned to the pod based on resource requirements See PodQOSClass type for available QOS classes More info: [https://git.k8s.io/community/contributors/design-proposals/node/resource-qos.md](https://git.k8s.io/community/contributors/design-proposals/node/resource-qos.md)\n\nPossible enum values:\n - `\"BestEffort\"` is the BestEffort qos class.\n - `\"Burstable\"` is the Burstable qos class.\n - `\"Guaranteed\"` is the Guaranteed qos class.")
+    k8s_object_accessor("reason", reason : String, true, false, "A brief CamelCase message indicating details about why the pod is in this state. e.g. 'Evicted'")
+    k8s_object_accessor("startTime", start_time : ::Time, true, false, "RFC 3339 date and time at which the object was acknowledged by the Kubelet. This is before the Kubelet pulled the container image(s) for the pod.")
 
-    # Current service state of pod. More info: [[https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-conditions](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-conditions)](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-conditions](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-conditions))
-    def conditions : ::Array(::K8S::Api::Core::V1::PodCondition)?
-      self.["conditions"].as(::Array(::K8S::Api::Core::V1::PodCondition)?)
+    def initialize(*, conditions : ::Array(::K8S::Api::Core::V1::PodCondition)? = nil, container_statuses : ::Array(::K8S::Api::Core::V1::ContainerStatus)? = nil, ephemeral_container_statuses : ::Array(::K8S::Api::Core::V1::ContainerStatus)? = nil, host_ip : String? = nil, init_container_statuses : ::Array(::K8S::Api::Core::V1::ContainerStatus)? = nil, message : String? = nil, nominated_node_name : String? = nil, phase : String? = nil, pod_ip : String? = nil, pod_ips : ::Array(::K8S::Api::Core::V1::PodIP)? = nil, qos_class : String? = nil, reason : String? = nil, start_time : ::Time? = nil)
+      super()
+      self.["conditions"] = conditions
+      self.["containerStatuses"] = container_statuses
+      self.["ephemeralContainerStatuses"] = ephemeral_container_statuses
+      self.["hostIP"] = host_ip
+      self.["initContainerStatuses"] = init_container_statuses
+      self.["message"] = message
+      self.["nominatedNodeName"] = nominated_node_name
+      self.["phase"] = phase
+      self.["podIP"] = pod_ip
+      self.["podIPs"] = pod_ips
+      self.["qosClass"] = qos_class
+      self.["reason"] = reason
+      self.["startTime"] = start_time
     end
 
-    # :ditto:
-    def conditions! : ::Array(::K8S::Api::Core::V1::PodCondition)
-      self.["conditions"].as(::Array(::K8S::Api::Core::V1::PodCondition)?).not_nil!
-    end
-
-    # :ditto:
-    def conditions? : ::Array(::K8S::Api::Core::V1::PodCondition)?
-      self.["conditions"]?.as(::Array(::K8S::Api::Core::V1::PodCondition)?)
-    end
-
-    # :ditto:
-    def conditions=(value : ::Array(::K8S::Api::Core::V1::PodCondition)?)
-      self.["conditions"] = value
-    end
-
-    # The list has one entry per container in the manifest. Each entry is currently the output of `docker inspect`. More info: [[https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-and-container-status](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-and-container-status)](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-and-container-status](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-and-container-status))
-    def container_statuses : ::Array(::K8S::Api::Core::V1::ContainerStatus)?
-      self.["containerStatuses"].as(::Array(::K8S::Api::Core::V1::ContainerStatus)?)
-    end
-
-    # :ditto:
-    def container_statuses! : ::Array(::K8S::Api::Core::V1::ContainerStatus)
-      self.["containerStatuses"].as(::Array(::K8S::Api::Core::V1::ContainerStatus)?).not_nil!
-    end
-
-    # :ditto:
-    def container_statuses? : ::Array(::K8S::Api::Core::V1::ContainerStatus)?
-      self.["containerStatuses"]?.as(::Array(::K8S::Api::Core::V1::ContainerStatus)?)
-    end
-
-    # :ditto:
-    def container_statuses=(value : ::Array(::K8S::Api::Core::V1::ContainerStatus)?)
-      self.["containerStatuses"] = value
-    end
-
-    # Status for any ephemeral containers that have run in this pod. This field is beta-level and available on clusters that haven't disabled the EphemeralContainers feature gate.
-    def ephemeral_container_statuses : ::Array(::K8S::Api::Core::V1::ContainerStatus)?
-      self.["ephemeralContainerStatuses"].as(::Array(::K8S::Api::Core::V1::ContainerStatus)?)
-    end
-
-    # :ditto:
-    def ephemeral_container_statuses! : ::Array(::K8S::Api::Core::V1::ContainerStatus)
-      self.["ephemeralContainerStatuses"].as(::Array(::K8S::Api::Core::V1::ContainerStatus)?).not_nil!
-    end
-
-    # :ditto:
-    def ephemeral_container_statuses? : ::Array(::K8S::Api::Core::V1::ContainerStatus)?
-      self.["ephemeralContainerStatuses"]?.as(::Array(::K8S::Api::Core::V1::ContainerStatus)?)
-    end
-
-    # :ditto:
-    def ephemeral_container_statuses=(value : ::Array(::K8S::Api::Core::V1::ContainerStatus)?)
-      self.["ephemeralContainerStatuses"] = value
-    end
-
-    # IP address of the host to which the pod is assigned. Empty if not yet scheduled.
-    def host_ip : String?
-      self.["hostIP"].as(String?)
-    end
-
-    # :ditto:
-    def host_ip! : String
-      self.["hostIP"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def host_ip? : String?
-      self.["hostIP"]?.as(String?)
-    end
-
-    # :ditto:
-    def host_ip=(value : String?)
-      self.["hostIP"] = value
-    end
-
-    # The list has one entry per init container in the manifest. The most recent successful init container will have ready = true, the most recently started container will have startTime set. More info: [[https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-and-container-status](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-and-container-status)](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-and-container-status](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-and-container-status))
-    def init_container_statuses : ::Array(::K8S::Api::Core::V1::ContainerStatus)?
-      self.["initContainerStatuses"].as(::Array(::K8S::Api::Core::V1::ContainerStatus)?)
-    end
-
-    # :ditto:
-    def init_container_statuses! : ::Array(::K8S::Api::Core::V1::ContainerStatus)
-      self.["initContainerStatuses"].as(::Array(::K8S::Api::Core::V1::ContainerStatus)?).not_nil!
-    end
-
-    # :ditto:
-    def init_container_statuses? : ::Array(::K8S::Api::Core::V1::ContainerStatus)?
-      self.["initContainerStatuses"]?.as(::Array(::K8S::Api::Core::V1::ContainerStatus)?)
-    end
-
-    # :ditto:
-    def init_container_statuses=(value : ::Array(::K8S::Api::Core::V1::ContainerStatus)?)
-      self.["initContainerStatuses"] = value
-    end
-
-    # A human readable message indicating details about why the pod is in this condition.
-    def message : String?
-      self.["message"].as(String?)
-    end
-
-    # :ditto:
-    def message! : String
-      self.["message"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def message? : String?
-      self.["message"]?.as(String?)
-    end
-
-    # :ditto:
-    def message=(value : String?)
-      self.["message"] = value
-    end
-
-    # nominatedNodeName is set only when this pod preempts other pods on the node, but it cannot be scheduled right away as preemption victims receive their graceful termination periods. This field does not guarantee that the pod will be scheduled on this node. Scheduler may decide to place the pod elsewhere if other nodes become available sooner. Scheduler may also decide to give the resources on this node to a higher priority pod that is created after preemption. As a result, this field may be different than PodSpec.nodeName when the pod is scheduled.
-    def nominated_node_name : String?
-      self.["nominatedNodeName"].as(String?)
-    end
-
-    # :ditto:
-    def nominated_node_name! : String
-      self.["nominatedNodeName"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def nominated_node_name? : String?
-      self.["nominatedNodeName"]?.as(String?)
-    end
-
-    # :ditto:
-    def nominated_node_name=(value : String?)
-      self.["nominatedNodeName"] = value
-    end
-
-    # The phase of a Pod is a simple, high-level summary of where the Pod is in its lifecycle. The conditions array, the reason and message fields, and the individual container status arrays contain more detail about the pod's status. There are five possible phase values:
-    #
-    # Pending: The pod has been accepted by the Kubernetes system, but one or more of the container images has not been created. This includes time before being scheduled as well as time spent downloading images over the network, which could take a while. Running: The pod has been bound to a node, and all of the containers have been created. At least one container is still running, or is in the process of starting or restarting. Succeeded: All containers in the pod have terminated in success, and will not be restarted. Failed: All containers in the pod have terminated, and at least one container has terminated in failure. The container either exited with non-zero status or was terminated by the system. Unknown: For some reason the state of the pod could not be obtained, typically due to an error in communicating with the host of the pod.
-    #
-    # More info: [[https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-phase](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-phase)](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-phase](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-phase))
-    #
-    # Possible enum values:
-    #  - `"Failed"` means that all containers in the pod have terminated, and at least one container has terminated in a failure (exited with a non-zero exit code or was stopped by the system).
-    #  - `"Pending"` means the pod has been accepted by the system, but one or more of the containers has not been started. This includes time before being bound to a node, as well as time spent pulling images onto the host.
-    #  - `"Running"` means the pod has been bound to a node and all of the containers have been started. At least one container is still running or is in the process of being restarted.
-    #  - `"Succeeded"` means that all containers in the pod have voluntarily terminated with a container exit code of 0, and the system is not going to restart any of these containers.
-    #  - `"Unknown"` means that for some reason the state of the pod could not be obtained, typically due to an error in communicating with the host of the pod. Deprecated: It isn't being set since 2015 (74da3b14b0c0f658b3bb8d2def5094686d0e9095)
-    def phase : String?
-      self.["phase"].as(String?)
-    end
-
-    # :ditto:
-    def phase! : String
-      self.["phase"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def phase? : String?
-      self.["phase"]?.as(String?)
-    end
-
-    # :ditto:
-    def phase=(value : String?)
-      self.["phase"] = value
-    end
-
-    # IP address allocated to the pod. Routable at least within the cluster. Empty if not yet allocated.
-    def pod_ip : String?
-      self.["podIP"].as(String?)
-    end
-
-    # :ditto:
-    def pod_ip! : String
-      self.["podIP"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def pod_ip? : String?
-      self.["podIP"]?.as(String?)
-    end
-
-    # :ditto:
-    def pod_ip=(value : String?)
-      self.["podIP"] = value
-    end
-
-    # podIPs holds the IP addresses allocated to the pod. If this field is specified, the 0th entry must match the podIP field. Pods may be allocated at most 1 value for each of IPv4 and IPv6. This list is empty if no IPs have been allocated yet.
-    def pod_ips : ::Array(::K8S::Api::Core::V1::PodIP)?
-      self.["podIPs"].as(::Array(::K8S::Api::Core::V1::PodIP)?)
-    end
-
-    # :ditto:
-    def pod_ips! : ::Array(::K8S::Api::Core::V1::PodIP)
-      self.["podIPs"].as(::Array(::K8S::Api::Core::V1::PodIP)?).not_nil!
-    end
-
-    # :ditto:
-    def pod_ips? : ::Array(::K8S::Api::Core::V1::PodIP)?
-      self.["podIPs"]?.as(::Array(::K8S::Api::Core::V1::PodIP)?)
-    end
-
-    # :ditto:
-    def pod_ips=(value : ::Array(::K8S::Api::Core::V1::PodIP)?)
-      self.["podIPs"] = value
-    end
-
-    # The Quality of Service (QOS) classification assigned to the pod based on resource requirements See PodQOSClass type for available QOS classes More info: [[https://git.k8s.io/community/contributors/design-proposals/node/resource-qos.md](https://git.k8s.io/community/contributors/design-proposals/node/resource-qos.md)](https://git.k8s.io/community/contributors/design-proposals/node/resource-qos.md](https://git.k8s.io/community/contributors/design-proposals/node/resource-qos.md))
-    #
-    # Possible enum values:
-    #  - `"BestEffort"` is the BestEffort qos class.
-    #  - `"Burstable"` is the Burstable qos class.
-    #  - `"Guaranteed"` is the Guaranteed qos class.
-    def qos_class : String?
-      self.["qosClass"].as(String?)
-    end
-
-    # :ditto:
-    def qos_class! : String
-      self.["qosClass"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def qos_class? : String?
-      self.["qosClass"]?.as(String?)
-    end
-
-    # :ditto:
-    def qos_class=(value : String?)
-      self.["qosClass"] = value
-    end
-
-    # A brief CamelCase message indicating details about why the pod is in this state. e.g. 'Evicted'
-    def reason : String?
-      self.["reason"].as(String?)
-    end
-
-    # :ditto:
-    def reason! : String
-      self.["reason"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def reason? : String?
-      self.["reason"]?.as(String?)
-    end
-
-    # :ditto:
-    def reason=(value : String?)
-      self.["reason"] = value
-    end
-
-    # RFC 3339 date and time at which the object was acknowledged by the Kubelet. This is before the Kubelet pulled the container image(s) for the pod.
-    def start_time : ::Time?
-      self.["startTime"].as(::Time?)
-    end
-
-    # :ditto:
-    def start_time! : ::Time
-      self.["startTime"].as(::Time?).not_nil!
-    end
-
-    # :ditto:
-    def start_time? : ::Time?
-      self.["startTime"]?.as(::Time?)
-    end
-
-    # :ditto:
-    def start_time=(value : ::Time?)
-      self.["startTime"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "conditions", accessor: "conditions", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::PodCondition) },
-        { key: "containerStatuses", accessor: "container_statuses", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::ContainerStatus) },
-        { key: "ephemeralContainerStatuses", accessor: "ephemeral_container_statuses", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::ContainerStatus) },
-        { key: "hostIP", accessor: "host_ip", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "initContainerStatuses", accessor: "init_container_statuses", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::ContainerStatus) },
-        { key: "message", accessor: "message", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "nominatedNodeName", accessor: "nominated_node_name", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "phase", accessor: "phase", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "podIP", accessor: "pod_ip", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "podIPs", accessor: "pod_ips", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::PodIP) },
-        { key: "qosClass", accessor: "qos_class", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "reason", accessor: "reason", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "startTime", accessor: "start_time", nilable: true, read_only: false, default: nil, kind: ::Time },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "conditions", accessor: "conditions", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::PodCondition)},
+      {key: "containerStatuses", accessor: "container_statuses", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::ContainerStatus)},
+      {key: "ephemeralContainerStatuses", accessor: "ephemeral_container_statuses", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::ContainerStatus)},
+      {key: "hostIP", accessor: "host_ip", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "initContainerStatuses", accessor: "init_container_statuses", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::ContainerStatus)},
+      {key: "message", accessor: "message", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "nominatedNodeName", accessor: "nominated_node_name", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "phase", accessor: "phase", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "podIP", accessor: "pod_ip", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "podIPs", accessor: "pod_ips", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::PodIP)},
+      {key: "qosClass", accessor: "qos_class", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "reason", accessor: "reason", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "startTime", accessor: "start_time", nilable: true, read_only: false, default: nil, kind: ::Time},
+    ])
   end
 end

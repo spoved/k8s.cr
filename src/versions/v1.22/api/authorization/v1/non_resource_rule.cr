@@ -15,9 +15,9 @@ module K8S
     # :ditto:
     abstract def non_resource_urls? : ::Array(String)?
     # :ditto:
-    abstract def non_resource_urls=(value : ::Array(String)?)
+    abstract def non_resource_urls=(value : ::Array(String))
     # Verb is a list of kubernetes non-resource API verbs, like: get, post, put, delete, patch, head, options.  "*" means all.
-    abstract def verbs : ::Array(String)
+    abstract def verbs : ::Array(String)?
     # :ditto:
     abstract def verbs! : ::Array(String)
     # :ditto:
@@ -33,52 +33,18 @@ module K8S
   )]
   class Api::Authorization::V1::NonResourceRule < ::K8S::GenericObject
     include ::K8S::Types::Api::Authorization::V1::NonResourceRule
+    k8s_object_accessor("nonResourceURLs", non_resource_urls : ::Array(String), true, false, "NonResourceURLs is a set of partial urls that a user should have access to.  *s are allowed, but only as the full, final step in the path.  \"*\" means all.")
+    k8s_object_accessor("verbs", verbs : ::Array(String), false, false, "Verb is a list of kubernetes non-resource API verbs, like: get, post, put, delete, patch, head, options.  \"*\" means all.")
 
-    # NonResourceURLs is a set of partial urls that a user should have access to.  *s are allowed, but only as the full, final step in the path.  "*" means all.
-    def non_resource_urls : ::Array(String)?
-      self.["nonResourceURLs"].as(::Array(String)?)
+    def initialize(*, non_resource_urls : ::Array(String)? = nil, verbs : ::Array(String)? = nil)
+      super()
+      self.["nonResourceURLs"] = non_resource_urls
+      self.["verbs"] = verbs
     end
 
-    # :ditto:
-    def non_resource_urls! : ::Array(String)
-      self.["nonResourceURLs"].as(::Array(String)?).not_nil!
-    end
-
-    # :ditto:
-    def non_resource_urls? : ::Array(String)?
-      self.["nonResourceURLs"]?.as(::Array(String)?)
-    end
-
-    # :ditto:
-    def non_resource_urls=(value : ::Array(String)?)
-      self.["nonResourceURLs"] = value
-    end
-
-    # Verb is a list of kubernetes non-resource API verbs, like: get, post, put, delete, patch, head, options.  "*" means all.
-    def verbs : ::Array(String)
-      self.["verbs"].as(::Array(String))
-    end
-
-    # :ditto:
-    def verbs! : ::Array(String)
-      self.["verbs"].as(::Array(String)).not_nil!
-    end
-
-    # :ditto:
-    def verbs? : ::Array(String)?
-      self.["verbs"]?.as(::Array(String)?)
-    end
-
-    # :ditto:
-    def verbs=(value : ::Array(String))
-      self.["verbs"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "nonResourceURLs", accessor: "non_resource_urls", nilable: true, read_only: false, default: nil, kind: ::Array(String) },
-        { key: "verbs", accessor: "verbs", nilable: false, read_only: false, default: nil, kind: ::Array(String) },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "nonResourceURLs", accessor: "non_resource_urls", nilable: true, read_only: false, default: nil, kind: ::Array(String)},
+      {key: "verbs", accessor: "verbs", nilable: false, read_only: false, default: nil, kind: ::Array(String)},
+    ])
   end
 end

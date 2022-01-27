@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def description? : String?
     # :ditto:
-    abstract def description=(value : String?)
+    abstract def description=(value : String)
     # format is an optional OpenAPI type definition for this column. The 'name' format is applied to the primary identifier column to assist in clients identifying column is the resource name. See [[https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types for details.](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types for details.)](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types for details.](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types for details.))
     abstract def format : String?
     # :ditto:
@@ -23,9 +23,9 @@ module K8S
     # :ditto:
     abstract def format? : String?
     # :ditto:
-    abstract def format=(value : String?)
+    abstract def format=(value : String)
     # jsonPath is a simple JSON path (i.e. with array notation) which is evaluated against each custom resource to produce the value for this column.
-    abstract def json_path : String
+    abstract def json_path : String?
     # :ditto:
     abstract def json_path! : String
     # :ditto:
@@ -33,7 +33,7 @@ module K8S
     # :ditto:
     abstract def json_path=(value : String)
     # name is a human readable name for the column.
-    abstract def name : String
+    abstract def name : String?
     # :ditto:
     abstract def name! : String
     # :ditto:
@@ -47,9 +47,9 @@ module K8S
     # :ditto:
     abstract def priority? : Int32?
     # :ditto:
-    abstract def priority=(value : Int32?)
+    abstract def priority=(value : Int32)
     # type is an OpenAPI type definition for this column. See [[https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types for details.](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types for details.)](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types for details.](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types for details.))
-    abstract def type : String
+    abstract def type : String?
     # :ditto:
     abstract def type! : String
     # :ditto:
@@ -69,136 +69,30 @@ module K8S
   )]
   class ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceColumnDefinition < ::K8S::GenericObject
     include ::K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceColumnDefinition
+    k8s_object_accessor("description", description : String, true, false, "description is a human readable description of this column.")
+    k8s_object_accessor("format", format : String, true, false, "format is an optional OpenAPI type definition for this column. The 'name' format is applied to the primary identifier column to assist in clients identifying column is the resource name. See [https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types for details.](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types for details.)")
+    k8s_object_accessor("jsonPath", json_path : String, false, false, "jsonPath is a simple JSON path (i.e. with array notation) which is evaluated against each custom resource to produce the value for this column.")
+    k8s_object_accessor("name", name : String, false, false, "name is a human readable name for the column.")
+    k8s_object_accessor("priority", priority : Int32, true, false, "priority is an integer defining the relative importance of this column compared to others. Lower numbers are considered higher priority. Columns that may be omitted in limited space scenarios should be given a priority greater than 0.")
+    k8s_object_accessor("type", type : String, false, false, "type is an OpenAPI type definition for this column. See [https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types for details.](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types for details.)")
 
-    # description is a human readable description of this column.
-    def description : String?
-      self.["description"].as(String?)
+    def initialize(*, description : String? = nil, format : String? = nil, json_path : String? = nil, name : String? = nil, priority : Int32? = nil, type : String? = nil)
+      super()
+      self.["description"] = description
+      self.["format"] = format
+      self.["jsonPath"] = json_path
+      self.["name"] = name
+      self.["priority"] = priority
+      self.["type"] = type
     end
 
-    # :ditto:
-    def description! : String
-      self.["description"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def description? : String?
-      self.["description"]?.as(String?)
-    end
-
-    # :ditto:
-    def description=(value : String?)
-      self.["description"] = value
-    end
-
-    # format is an optional OpenAPI type definition for this column. The 'name' format is applied to the primary identifier column to assist in clients identifying column is the resource name. See [[https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types for details.](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types for details.)](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types for details.](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types for details.))
-    def format : String?
-      self.["format"].as(String?)
-    end
-
-    # :ditto:
-    def format! : String
-      self.["format"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def format? : String?
-      self.["format"]?.as(String?)
-    end
-
-    # :ditto:
-    def format=(value : String?)
-      self.["format"] = value
-    end
-
-    # jsonPath is a simple JSON path (i.e. with array notation) which is evaluated against each custom resource to produce the value for this column.
-    def json_path : String
-      self.["jsonPath"].as(String)
-    end
-
-    # :ditto:
-    def json_path! : String
-      self.["jsonPath"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def json_path? : String?
-      self.["jsonPath"]?.as(String?)
-    end
-
-    # :ditto:
-    def json_path=(value : String)
-      self.["jsonPath"] = value
-    end
-
-    # name is a human readable name for the column.
-    def name : String
-      self.["name"].as(String)
-    end
-
-    # :ditto:
-    def name! : String
-      self.["name"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def name? : String?
-      self.["name"]?.as(String?)
-    end
-
-    # :ditto:
-    def name=(value : String)
-      self.["name"] = value
-    end
-
-    # priority is an integer defining the relative importance of this column compared to others. Lower numbers are considered higher priority. Columns that may be omitted in limited space scenarios should be given a priority greater than 0.
-    def priority : Int32?
-      self.["priority"].as(Int32?)
-    end
-
-    # :ditto:
-    def priority! : Int32
-      self.["priority"].as(Int32?).not_nil!
-    end
-
-    # :ditto:
-    def priority? : Int32?
-      self.["priority"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def priority=(value : Int32?)
-      self.["priority"] = value
-    end
-
-    # type is an OpenAPI type definition for this column. See [[https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types for details.](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types for details.)](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types for details.](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#data-types for details.))
-    def type : String
-      self.["type"].as(String)
-    end
-
-    # :ditto:
-    def type! : String
-      self.["type"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def type? : String?
-      self.["type"]?.as(String?)
-    end
-
-    # :ditto:
-    def type=(value : String)
-      self.["type"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "description", accessor: "description", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "format", accessor: "format", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "jsonPath", accessor: "json_path", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "name", accessor: "name", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "priority", accessor: "priority", nilable: true, read_only: false, default: nil, kind: Int32 },
-        { key: "type", accessor: "type", nilable: false, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "description", accessor: "description", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "format", accessor: "format", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "jsonPath", accessor: "json_path", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "name", accessor: "name", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "priority", accessor: "priority", nilable: true, read_only: false, default: nil, kind: Int32},
+      {key: "type", accessor: "type", nilable: false, read_only: false, default: nil, kind: String},
+    ])
   end
 end

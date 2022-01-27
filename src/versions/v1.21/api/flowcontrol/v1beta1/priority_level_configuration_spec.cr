@@ -17,9 +17,9 @@ module K8S
     # :ditto:
     abstract def limited? : ::K8S::Api::Flowcontrol::V1beta1::LimitedPriorityLevelConfiguration?
     # :ditto:
-    abstract def limited=(value : ::K8S::Api::Flowcontrol::V1beta1::LimitedPriorityLevelConfiguration?)
+    abstract def limited=(value : ::K8S::Api::Flowcontrol::V1beta1::LimitedPriorityLevelConfiguration)
     # `type` indicates whether this priority level is subject to limitation on request execution.  A value of `"Exempt"` means that requests of this priority level are not subject to a limit (and thus are never queued) and do not detract from the capacity made available to other priority levels.  A value of `"Limited"` means that (a) requests of this priority level _are_ subject to limits and (b) some of the server's limited capacity is made available exclusively to this priority level. Required.
-    abstract def type : String
+    abstract def type : String?
     # :ditto:
     abstract def type! : String
     # :ditto:
@@ -35,52 +35,18 @@ module K8S
   )]
   class Api::Flowcontrol::V1beta1::PriorityLevelConfigurationSpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Flowcontrol::V1beta1::PriorityLevelConfigurationSpec
+    k8s_object_accessor("limited", limited : ::K8S::Api::Flowcontrol::V1beta1::LimitedPriorityLevelConfiguration, true, false, "`limited` specifies how requests are handled for a Limited priority level. This field must be non-empty if and only if `type` is `\"Limited\"`.")
+    k8s_object_accessor("type", type : String, false, false, "`type` indicates whether this priority level is subject to limitation on request execution.  A value of `\"Exempt\"` means that requests of this priority level are not subject to a limit (and thus are never queued) and do not detract from the capacity made available to other priority levels.  A value of `\"Limited\"` means that (a) requests of this priority level _are_ subject to limits and (b) some of the server's limited capacity is made available exclusively to this priority level. Required.")
 
-    # `limited` specifies how requests are handled for a Limited priority level. This field must be non-empty if and only if `type` is `"Limited"`.
-    def limited : ::K8S::Api::Flowcontrol::V1beta1::LimitedPriorityLevelConfiguration?
-      self.["limited"].as(::K8S::Api::Flowcontrol::V1beta1::LimitedPriorityLevelConfiguration?)
+    def initialize(*, limited : ::K8S::Api::Flowcontrol::V1beta1::LimitedPriorityLevelConfiguration? = nil, type : String? = nil)
+      super()
+      self.["limited"] = limited
+      self.["type"] = type
     end
 
-    # :ditto:
-    def limited! : ::K8S::Api::Flowcontrol::V1beta1::LimitedPriorityLevelConfiguration
-      self.["limited"].as(::K8S::Api::Flowcontrol::V1beta1::LimitedPriorityLevelConfiguration?).not_nil!
-    end
-
-    # :ditto:
-    def limited? : ::K8S::Api::Flowcontrol::V1beta1::LimitedPriorityLevelConfiguration?
-      self.["limited"]?.as(::K8S::Api::Flowcontrol::V1beta1::LimitedPriorityLevelConfiguration?)
-    end
-
-    # :ditto:
-    def limited=(value : ::K8S::Api::Flowcontrol::V1beta1::LimitedPriorityLevelConfiguration?)
-      self.["limited"] = value
-    end
-
-    # `type` indicates whether this priority level is subject to limitation on request execution.  A value of `"Exempt"` means that requests of this priority level are not subject to a limit (and thus are never queued) and do not detract from the capacity made available to other priority levels.  A value of `"Limited"` means that (a) requests of this priority level _are_ subject to limits and (b) some of the server's limited capacity is made available exclusively to this priority level. Required.
-    def type : String
-      self.["type"].as(String)
-    end
-
-    # :ditto:
-    def type! : String
-      self.["type"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def type? : String?
-      self.["type"]?.as(String?)
-    end
-
-    # :ditto:
-    def type=(value : String)
-      self.["type"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "limited", accessor: "limited", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Flowcontrol::V1beta1::LimitedPriorityLevelConfiguration },
-        { key: "type", accessor: "type", nilable: false, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "limited", accessor: "limited", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Flowcontrol::V1beta1::LimitedPriorityLevelConfiguration},
+      {key: "type", accessor: "type", nilable: false, read_only: false, default: nil, kind: String},
+    ])
   end
 end

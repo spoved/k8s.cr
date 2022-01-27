@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def container_name? : String?
     # :ditto:
-    abstract def container_name=(value : String?)
+    abstract def container_name=(value : String)
     # Specifies the output format of the exposed resources, defaults to "1"
     abstract def divisor : ::Int32 | ::String?
     # :ditto:
@@ -23,9 +23,9 @@ module K8S
     # :ditto:
     abstract def divisor? : ::Int32 | ::String?
     # :ditto:
-    abstract def divisor=(value : ::Int32 | ::String?)
+    abstract def divisor=(value : ::Int32 | ::String)
     # Required: resource to select
-    abstract def resource : String
+    abstract def resource : String?
     # :ditto:
     abstract def resource! : String
     # :ditto:
@@ -42,73 +42,21 @@ module K8S
   )]
   class Api::Core::V1::ResourceFieldSelector < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::ResourceFieldSelector
+    k8s_object_accessor("containerName", container_name : String, true, false, "Container name: required for volumes, optional for env vars")
+    k8s_object_accessor("divisor", divisor : ::Int32 | ::String, true, false, "Specifies the output format of the exposed resources, defaults to \"1\"")
+    k8s_object_accessor("resource", resource : String, false, false, "Required: resource to select")
 
-    # Container name: required for volumes, optional for env vars
-    def container_name : String?
-      self.["containerName"].as(String?)
+    def initialize(*, container_name : String? = nil, divisor : ::Int32 | ::String? = nil, resource : String? = nil)
+      super()
+      self.["containerName"] = container_name
+      self.["divisor"] = divisor
+      self.["resource"] = resource
     end
 
-    # :ditto:
-    def container_name! : String
-      self.["containerName"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def container_name? : String?
-      self.["containerName"]?.as(String?)
-    end
-
-    # :ditto:
-    def container_name=(value : String?)
-      self.["containerName"] = value
-    end
-
-    # Specifies the output format of the exposed resources, defaults to "1"
-    def divisor : ::Int32 | ::String?
-      self.["divisor"].as(::Int32 | ::String?)
-    end
-
-    # :ditto:
-    def divisor! : ::Int32 | ::String
-      self.["divisor"].as(::Int32 | ::String?).not_nil!
-    end
-
-    # :ditto:
-    def divisor? : ::Int32 | ::String?
-      self.["divisor"]?.as(::Int32 | ::String?)
-    end
-
-    # :ditto:
-    def divisor=(value : ::Int32 | ::String?)
-      self.["divisor"] = value
-    end
-
-    # Required: resource to select
-    def resource : String
-      self.["resource"].as(String)
-    end
-
-    # :ditto:
-    def resource! : String
-      self.["resource"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def resource? : String?
-      self.["resource"]?.as(String?)
-    end
-
-    # :ditto:
-    def resource=(value : String)
-      self.["resource"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "containerName", accessor: "container_name", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "divisor", accessor: "divisor", nilable: true, read_only: false, default: nil, kind: ::Union(::Int32 | ::String) },
-        { key: "resource", accessor: "resource", nilable: false, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "containerName", accessor: "container_name", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "divisor", accessor: "divisor", nilable: true, read_only: false, default: nil, kind: ::Union(::Int32 | ::String)},
+      {key: "resource", accessor: "resource", nilable: false, read_only: false, default: nil, kind: String},
+    ])
   end
 end

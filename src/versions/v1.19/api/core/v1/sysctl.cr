@@ -9,7 +9,7 @@ module K8S
   # Namespace holding the types for `Api::Core::V1::Sysctl`.
   module Types::Api::Core::V1::Sysctl
     # Name of a property to set
-    abstract def name : String
+    abstract def name : String?
     # :ditto:
     abstract def name! : String
     # :ditto:
@@ -17,7 +17,7 @@ module K8S
     # :ditto:
     abstract def name=(value : String)
     # Value of a property to set
-    abstract def value : String
+    abstract def value : String?
     # :ditto:
     abstract def value! : String
     # :ditto:
@@ -33,52 +33,18 @@ module K8S
   )]
   class Api::Core::V1::Sysctl < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::Sysctl
+    k8s_object_accessor("name", name : String, false, false, "Name of a property to set")
+    k8s_object_accessor("value", value : String, false, false, "Value of a property to set")
 
-    # Name of a property to set
-    def name : String
-      self.["name"].as(String)
-    end
-
-    # :ditto:
-    def name! : String
-      self.["name"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def name? : String?
-      self.["name"]?.as(String?)
-    end
-
-    # :ditto:
-    def name=(value : String)
-      self.["name"] = value
-    end
-
-    # Value of a property to set
-    def value : String
-      self.["value"].as(String)
-    end
-
-    # :ditto:
-    def value! : String
-      self.["value"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def value? : String?
-      self.["value"]?.as(String?)
-    end
-
-    # :ditto:
-    def value=(value : String)
+    def initialize(*, name : String? = nil, value : String? = nil)
+      super()
+      self.["name"] = name
       self.["value"] = value
     end
 
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "name", accessor: "name", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "value", accessor: "value", nilable: false, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "name", accessor: "name", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "value", accessor: "value", nilable: false, read_only: false, default: nil, kind: String},
+    ])
   end
 end

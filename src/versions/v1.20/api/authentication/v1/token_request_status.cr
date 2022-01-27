@@ -9,7 +9,7 @@ module K8S
   # Namespace holding the types for `Api::Authentication::V1::TokenRequestStatus`.
   module Types::Api::Authentication::V1::TokenRequestStatus
     # ExpirationTimestamp is the time of expiration of the returned token.
-    abstract def expiration_timestamp : ::Time
+    abstract def expiration_timestamp : ::Time?
     # :ditto:
     abstract def expiration_timestamp! : ::Time
     # :ditto:
@@ -17,7 +17,7 @@ module K8S
     # :ditto:
     abstract def expiration_timestamp=(value : ::Time)
     # Token is the opaque bearer token.
-    abstract def token : String
+    abstract def token : String?
     # :ditto:
     abstract def token! : String
     # :ditto:
@@ -33,52 +33,18 @@ module K8S
   )]
   class Api::Authentication::V1::TokenRequestStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Authentication::V1::TokenRequestStatus
+    k8s_object_accessor("expirationTimestamp", expiration_timestamp : ::Time, false, false, "ExpirationTimestamp is the time of expiration of the returned token.")
+    k8s_object_accessor("token", token : String, false, false, "Token is the opaque bearer token.")
 
-    # ExpirationTimestamp is the time of expiration of the returned token.
-    def expiration_timestamp : ::Time
-      self.["expirationTimestamp"].as(::Time)
+    def initialize(*, expiration_timestamp : ::Time? = nil, token : String? = nil)
+      super()
+      self.["expirationTimestamp"] = expiration_timestamp
+      self.["token"] = token
     end
 
-    # :ditto:
-    def expiration_timestamp! : ::Time
-      self.["expirationTimestamp"].as(::Time).not_nil!
-    end
-
-    # :ditto:
-    def expiration_timestamp? : ::Time?
-      self.["expirationTimestamp"]?.as(::Time?)
-    end
-
-    # :ditto:
-    def expiration_timestamp=(value : ::Time)
-      self.["expirationTimestamp"] = value
-    end
-
-    # Token is the opaque bearer token.
-    def token : String
-      self.["token"].as(String)
-    end
-
-    # :ditto:
-    def token! : String
-      self.["token"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def token? : String?
-      self.["token"]?.as(String?)
-    end
-
-    # :ditto:
-    def token=(value : String)
-      self.["token"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "expirationTimestamp", accessor: "expiration_timestamp", nilable: false, read_only: false, default: nil, kind: ::Time },
-        { key: "token", accessor: "token", nilable: false, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "expirationTimestamp", accessor: "expiration_timestamp", nilable: false, read_only: false, default: nil, kind: ::Time},
+      {key: "token", accessor: "token", nilable: false, read_only: false, default: nil, kind: String},
+    ])
   end
 end

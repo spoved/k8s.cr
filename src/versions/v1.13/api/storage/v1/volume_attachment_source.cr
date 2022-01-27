@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def persistent_volume_name? : String?
     # :ditto:
-    abstract def persistent_volume_name=(value : String?)
+    abstract def persistent_volume_name=(value : String)
   end
 
   # VolumeAttachmentSource represents a volume that should be attached. Right now only PersistenVolumes can be attached via external attacher, in future we may allow also inline volumes in pods. Exactly one member can be set.
@@ -24,31 +24,15 @@ module K8S
   )]
   class Api::Storage::V1::VolumeAttachmentSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Storage::V1::VolumeAttachmentSource
+    k8s_object_accessor("persistentVolumeName", persistent_volume_name : String, true, false, "Name of the persistent volume to attach.")
 
-    # Name of the persistent volume to attach.
-    def persistent_volume_name : String?
-      self.["persistentVolumeName"].as(String?)
+    def initialize(*, persistent_volume_name : String? = nil)
+      super()
+      self.["persistentVolumeName"] = persistent_volume_name
     end
 
-    # :ditto:
-    def persistent_volume_name! : String
-      self.["persistentVolumeName"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def persistent_volume_name? : String?
-      self.["persistentVolumeName"]?.as(String?)
-    end
-
-    # :ditto:
-    def persistent_volume_name=(value : String?)
-      self.["persistentVolumeName"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "persistentVolumeName", accessor: "persistent_volume_name", nilable: true, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "persistentVolumeName", accessor: "persistent_volume_name", nilable: true, read_only: false, default: nil, kind: String},
+    ])
   end
 end

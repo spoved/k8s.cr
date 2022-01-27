@@ -15,9 +15,9 @@ module K8S
     # :ditto:
     abstract def fs_type? : String?
     # :ditto:
-    abstract def fs_type=(value : String?)
+    abstract def fs_type=(value : String)
     # The full path to the volume on the node. It can be either a directory or block device (disk, partition, ...).
-    abstract def path : String
+    abstract def path : String?
     # :ditto:
     abstract def path! : String
     # :ditto:
@@ -33,52 +33,18 @@ module K8S
   )]
   class Api::Core::V1::LocalVolumeSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::LocalVolumeSource
+    k8s_object_accessor("fsType", fs_type : String, true, false, "Filesystem type to mount. It applies only when the Path is a block device. Must be a filesystem type supported by the host operating system. Ex. \"ext4\", \"xfs\", \"ntfs\". The default value is to auto-select a filesystem if unspecified.")
+    k8s_object_accessor("path", path : String, false, false, "The full path to the volume on the node. It can be either a directory or block device (disk, partition, ...).")
 
-    # Filesystem type to mount. It applies only when the Path is a block device. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". The default value is to auto-select a filesystem if unspecified.
-    def fs_type : String?
-      self.["fsType"].as(String?)
+    def initialize(*, fs_type : String? = nil, path : String? = nil)
+      super()
+      self.["fsType"] = fs_type
+      self.["path"] = path
     end
 
-    # :ditto:
-    def fs_type! : String
-      self.["fsType"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def fs_type? : String?
-      self.["fsType"]?.as(String?)
-    end
-
-    # :ditto:
-    def fs_type=(value : String?)
-      self.["fsType"] = value
-    end
-
-    # The full path to the volume on the node. It can be either a directory or block device (disk, partition, ...).
-    def path : String
-      self.["path"].as(String)
-    end
-
-    # :ditto:
-    def path! : String
-      self.["path"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def path? : String?
-      self.["path"]?.as(String?)
-    end
-
-    # :ditto:
-    def path=(value : String)
-      self.["path"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "fsType", accessor: "fs_type", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "path", accessor: "path", nilable: false, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "fsType", accessor: "fs_type", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "path", accessor: "path", nilable: false, read_only: false, default: nil, kind: String},
+    ])
   end
 end

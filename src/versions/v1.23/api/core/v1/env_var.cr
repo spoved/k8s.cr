@@ -11,7 +11,7 @@ module K8S
   # Namespace holding the types for `Api::Core::V1::EnvVar`.
   module Types::Api::Core::V1::EnvVar
     # Name of the environment variable. Must be a C_IDENTIFIER.
-    abstract def name : String
+    abstract def name : String?
     # :ditto:
     abstract def name! : String
     # :ditto:
@@ -25,7 +25,7 @@ module K8S
     # :ditto:
     abstract def value? : String?
     # :ditto:
-    abstract def value=(value : String?)
+    abstract def value=(value : String)
     # Source for the environment variable's value. Cannot be used if value is not empty.
     abstract def value_from : ::K8S::Api::Core::V1::EnvVarSource?
     # :ditto:
@@ -33,7 +33,7 @@ module K8S
     # :ditto:
     abstract def value_from? : ::K8S::Api::Core::V1::EnvVarSource?
     # :ditto:
-    abstract def value_from=(value : ::K8S::Api::Core::V1::EnvVarSource?)
+    abstract def value_from=(value : ::K8S::Api::Core::V1::EnvVarSource)
   end
 
   # EnvVar represents an environment variable present in a Container.
@@ -44,73 +44,21 @@ module K8S
   )]
   class Api::Core::V1::EnvVar < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::EnvVar
+    k8s_object_accessor("name", name : String, false, false, "Name of the environment variable. Must be a C_IDENTIFIER.")
+    k8s_object_accessor("value", value : String, true, false, "Variable references $(VAR_NAME) are expanded using the previously defined environment variables in the container and any service environment variables. If a variable cannot be resolved, the reference in the input string will be unchanged. Double $$ are reduced to a single $, which allows for escaping the $(VAR_NAME) syntax: i.e. \"$$(VAR_NAME)\" will produce the string literal \"$(VAR_NAME)\". Escaped references will never be expanded, regardless of whether the variable exists or not. Defaults to \"\".")
+    k8s_object_accessor("valueFrom", value_from : ::K8S::Api::Core::V1::EnvVarSource, true, false, "Source for the environment variable's value. Cannot be used if value is not empty.")
 
-    # Name of the environment variable. Must be a C_IDENTIFIER.
-    def name : String
-      self.["name"].as(String)
-    end
-
-    # :ditto:
-    def name! : String
-      self.["name"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def name? : String?
-      self.["name"]?.as(String?)
-    end
-
-    # :ditto:
-    def name=(value : String)
-      self.["name"] = value
-    end
-
-    # Variable references $(VAR_NAME) are expanded using the previously defined environment variables in the container and any service environment variables. If a variable cannot be resolved, the reference in the input string will be unchanged. Double $$ are reduced to a single $, which allows for escaping the $(VAR_NAME) syntax: i.e. "$$(VAR_NAME)" will produce the string literal "$(VAR_NAME)". Escaped references will never be expanded, regardless of whether the variable exists or not. Defaults to "".
-    def value : String?
-      self.["value"].as(String?)
-    end
-
-    # :ditto:
-    def value! : String
-      self.["value"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def value? : String?
-      self.["value"]?.as(String?)
-    end
-
-    # :ditto:
-    def value=(value : String?)
+    def initialize(*, name : String? = nil, value : String? = nil, value_from : ::K8S::Api::Core::V1::EnvVarSource? = nil)
+      super()
+      self.["name"] = name
       self.["value"] = value
+      self.["valueFrom"] = value_from
     end
 
-    # Source for the environment variable's value. Cannot be used if value is not empty.
-    def value_from : ::K8S::Api::Core::V1::EnvVarSource?
-      self.["valueFrom"].as(::K8S::Api::Core::V1::EnvVarSource?)
-    end
-
-    # :ditto:
-    def value_from! : ::K8S::Api::Core::V1::EnvVarSource
-      self.["valueFrom"].as(::K8S::Api::Core::V1::EnvVarSource?).not_nil!
-    end
-
-    # :ditto:
-    def value_from? : ::K8S::Api::Core::V1::EnvVarSource?
-      self.["valueFrom"]?.as(::K8S::Api::Core::V1::EnvVarSource?)
-    end
-
-    # :ditto:
-    def value_from=(value : ::K8S::Api::Core::V1::EnvVarSource?)
-      self.["valueFrom"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "name", accessor: "name", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "value", accessor: "value", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "valueFrom", accessor: "value_from", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::EnvVarSource },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "name", accessor: "name", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "value", accessor: "value", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "valueFrom", accessor: "value_from", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::EnvVarSource},
+    ])
   end
 end

@@ -4,5 +4,5 @@ require "yaml"
 require "json"
 
 module K8S
-  alias ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSON = ApiextensionsApiserver::Apis::Apiextensions::V1::JSON
+  alias ApiextensionsApiserver::Apis::Apiextensions::V1beta1::Json = ApiextensionsApiserver::Apis::Apiextensions::V1::Json
 end

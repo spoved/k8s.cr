@@ -22,7 +22,7 @@ module K8S
     # :ditto:
     abstract def fs_group? : Int32?
     # :ditto:
-    abstract def fs_group=(value : Int32?)
+    abstract def fs_group=(value : Int32)
     # The GID to run the entrypoint of the container process. Uses runtime default if unset. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container.
     abstract def run_as_group : Int32?
     # :ditto:
@@ -30,7 +30,7 @@ module K8S
     # :ditto:
     abstract def run_as_group? : Int32?
     # :ditto:
-    abstract def run_as_group=(value : Int32?)
+    abstract def run_as_group=(value : Int32)
     # Indicates that the container must run as a non-root user. If true, the Kubelet will validate the image at runtime to ensure that it does not run as UID 0 (root) and fail to start the container if it does. If unset or false, no such validation will be performed. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
     abstract def run_as_non_root : ::Bool?
     # :ditto:
@@ -38,7 +38,7 @@ module K8S
     # :ditto:
     abstract def run_as_non_root? : ::Bool?
     # :ditto:
-    abstract def run_as_non_root=(value : ::Bool?)
+    abstract def run_as_non_root=(value : ::Bool)
     # The UID to run the entrypoint of the container process. Defaults to user specified in image metadata if unspecified. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container.
     abstract def run_as_user : Int32?
     # :ditto:
@@ -46,7 +46,7 @@ module K8S
     # :ditto:
     abstract def run_as_user? : Int32?
     # :ditto:
-    abstract def run_as_user=(value : Int32?)
+    abstract def run_as_user=(value : Int32)
     # The SELinux context to be applied to all containers. If unspecified, the container runtime will allocate a random SELinux context for each container.  May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container.
     abstract def se_linux_options : ::K8S::Api::Core::V1::SELinuxOptions?
     # :ditto:
@@ -54,7 +54,7 @@ module K8S
     # :ditto:
     abstract def se_linux_options? : ::K8S::Api::Core::V1::SELinuxOptions?
     # :ditto:
-    abstract def se_linux_options=(value : ::K8S::Api::Core::V1::SELinuxOptions?)
+    abstract def se_linux_options=(value : ::K8S::Api::Core::V1::SELinuxOptions)
     # A list of groups applied to the first process run in each container, in addition to the container's primary GID.  If unspecified, no groups will be added to any container.
     abstract def supplemental_groups : ::Array(Int32)?
     # :ditto:
@@ -62,7 +62,7 @@ module K8S
     # :ditto:
     abstract def supplemental_groups? : ::Array(Int32)?
     # :ditto:
-    abstract def supplemental_groups=(value : ::Array(Int32)?)
+    abstract def supplemental_groups=(value : ::Array(Int32))
     # Sysctls hold a list of namespaced sysctls used for the pod. Pods with unsupported sysctls (by the container runtime) might fail to launch.
     abstract def sysctls : ::Array(::K8S::Api::Core::V1::Sysctl)?
     # :ditto:
@@ -70,7 +70,7 @@ module K8S
     # :ditto:
     abstract def sysctls? : ::Array(::K8S::Api::Core::V1::Sysctl)?
     # :ditto:
-    abstract def sysctls=(value : ::Array(::K8S::Api::Core::V1::Sysctl)?)
+    abstract def sysctls=(value : ::Array(::K8S::Api::Core::V1::Sysctl))
   end
 
   # PodSecurityContext holds pod-level security attributes and common container settings. Some fields are also present in container.securityContext.  Field values of container.securityContext take precedence over field values of PodSecurityContext.
@@ -85,161 +85,33 @@ module K8S
   )]
   class Api::Core::V1::PodSecurityContext < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::PodSecurityContext
+    k8s_object_accessor("fsGroup", fs_group : Int32, true, false, "A special supplemental group that applies to all containers in a pod. Some volume types allow the Kubelet to change the ownership of that volume to be owned by the pod:\n\n1. The owning GID will be the FSGroup 2. The setgid bit is set (new files created in the volume will be owned by FSGroup) 3. The permission bits are OR'd with rw-rw----\n\nIf unset, the Kubelet will not modify the ownership and permissions of any volume.")
+    k8s_object_accessor("runAsGroup", run_as_group : Int32, true, false, "The GID to run the entrypoint of the container process. Uses runtime default if unset. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container.")
+    k8s_object_accessor("runAsNonRoot", run_as_non_root : ::Bool, true, false, "Indicates that the container must run as a non-root user. If true, the Kubelet will validate the image at runtime to ensure that it does not run as UID 0 (root) and fail to start the container if it does. If unset or false, no such validation will be performed. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.")
+    k8s_object_accessor("runAsUser", run_as_user : Int32, true, false, "The UID to run the entrypoint of the container process. Defaults to user specified in image metadata if unspecified. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container.")
+    k8s_object_accessor("seLinuxOptions", se_linux_options : ::K8S::Api::Core::V1::SELinuxOptions, true, false, "The SELinux context to be applied to all containers. If unspecified, the container runtime will allocate a random SELinux context for each container.  May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container.")
+    k8s_object_accessor("supplementalGroups", supplemental_groups : ::Array(Int32), true, false, "A list of groups applied to the first process run in each container, in addition to the container's primary GID.  If unspecified, no groups will be added to any container.")
+    k8s_object_accessor("sysctls", sysctls : ::Array(::K8S::Api::Core::V1::Sysctl), true, false, "Sysctls hold a list of namespaced sysctls used for the pod. Pods with unsupported sysctls (by the container runtime) might fail to launch.")
 
-    # A special supplemental group that applies to all containers in a pod. Some volume types allow the Kubelet to change the ownership of that volume to be owned by the pod:
-    #
-    # 1. The owning GID will be the FSGroup 2. The setgid bit is set (new files created in the volume will be owned by FSGroup) 3. The permission bits are OR'd with rw-rw----
-    #
-    # If unset, the Kubelet will not modify the ownership and permissions of any volume.
-    def fs_group : Int32?
-      self.["fsGroup"].as(Int32?)
+    def initialize(*, fs_group : Int32? = nil, run_as_group : Int32? = nil, run_as_non_root : ::Bool? = nil, run_as_user : Int32? = nil, se_linux_options : ::K8S::Api::Core::V1::SELinuxOptions? = nil, supplemental_groups : ::Array(Int32)? = nil, sysctls : ::Array(::K8S::Api::Core::V1::Sysctl)? = nil)
+      super()
+      self.["fsGroup"] = fs_group
+      self.["runAsGroup"] = run_as_group
+      self.["runAsNonRoot"] = run_as_non_root
+      self.["runAsUser"] = run_as_user
+      self.["seLinuxOptions"] = se_linux_options
+      self.["supplementalGroups"] = supplemental_groups
+      self.["sysctls"] = sysctls
     end
 
-    # :ditto:
-    def fs_group! : Int32
-      self.["fsGroup"].as(Int32?).not_nil!
-    end
-
-    # :ditto:
-    def fs_group? : Int32?
-      self.["fsGroup"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def fs_group=(value : Int32?)
-      self.["fsGroup"] = value
-    end
-
-    # The GID to run the entrypoint of the container process. Uses runtime default if unset. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container.
-    def run_as_group : Int32?
-      self.["runAsGroup"].as(Int32?)
-    end
-
-    # :ditto:
-    def run_as_group! : Int32
-      self.["runAsGroup"].as(Int32?).not_nil!
-    end
-
-    # :ditto:
-    def run_as_group? : Int32?
-      self.["runAsGroup"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def run_as_group=(value : Int32?)
-      self.["runAsGroup"] = value
-    end
-
-    # Indicates that the container must run as a non-root user. If true, the Kubelet will validate the image at runtime to ensure that it does not run as UID 0 (root) and fail to start the container if it does. If unset or false, no such validation will be performed. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
-    def run_as_non_root : ::Bool?
-      self.["runAsNonRoot"].as(::Bool?)
-    end
-
-    # :ditto:
-    def run_as_non_root! : ::Bool
-      self.["runAsNonRoot"].as(::Bool?).not_nil!
-    end
-
-    # :ditto:
-    def run_as_non_root? : ::Bool?
-      self.["runAsNonRoot"]?.as(::Bool?)
-    end
-
-    # :ditto:
-    def run_as_non_root=(value : ::Bool?)
-      self.["runAsNonRoot"] = value
-    end
-
-    # The UID to run the entrypoint of the container process. Defaults to user specified in image metadata if unspecified. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container.
-    def run_as_user : Int32?
-      self.["runAsUser"].as(Int32?)
-    end
-
-    # :ditto:
-    def run_as_user! : Int32
-      self.["runAsUser"].as(Int32?).not_nil!
-    end
-
-    # :ditto:
-    def run_as_user? : Int32?
-      self.["runAsUser"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def run_as_user=(value : Int32?)
-      self.["runAsUser"] = value
-    end
-
-    # The SELinux context to be applied to all containers. If unspecified, the container runtime will allocate a random SELinux context for each container.  May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container.
-    def se_linux_options : ::K8S::Api::Core::V1::SELinuxOptions?
-      self.["seLinuxOptions"].as(::K8S::Api::Core::V1::SELinuxOptions?)
-    end
-
-    # :ditto:
-    def se_linux_options! : ::K8S::Api::Core::V1::SELinuxOptions
-      self.["seLinuxOptions"].as(::K8S::Api::Core::V1::SELinuxOptions?).not_nil!
-    end
-
-    # :ditto:
-    def se_linux_options? : ::K8S::Api::Core::V1::SELinuxOptions?
-      self.["seLinuxOptions"]?.as(::K8S::Api::Core::V1::SELinuxOptions?)
-    end
-
-    # :ditto:
-    def se_linux_options=(value : ::K8S::Api::Core::V1::SELinuxOptions?)
-      self.["seLinuxOptions"] = value
-    end
-
-    # A list of groups applied to the first process run in each container, in addition to the container's primary GID.  If unspecified, no groups will be added to any container.
-    def supplemental_groups : ::Array(Int32)?
-      self.["supplementalGroups"].as(::Array(Int32)?)
-    end
-
-    # :ditto:
-    def supplemental_groups! : ::Array(Int32)
-      self.["supplementalGroups"].as(::Array(Int32)?).not_nil!
-    end
-
-    # :ditto:
-    def supplemental_groups? : ::Array(Int32)?
-      self.["supplementalGroups"]?.as(::Array(Int32)?)
-    end
-
-    # :ditto:
-    def supplemental_groups=(value : ::Array(Int32)?)
-      self.["supplementalGroups"] = value
-    end
-
-    # Sysctls hold a list of namespaced sysctls used for the pod. Pods with unsupported sysctls (by the container runtime) might fail to launch.
-    def sysctls : ::Array(::K8S::Api::Core::V1::Sysctl)?
-      self.["sysctls"].as(::Array(::K8S::Api::Core::V1::Sysctl)?)
-    end
-
-    # :ditto:
-    def sysctls! : ::Array(::K8S::Api::Core::V1::Sysctl)
-      self.["sysctls"].as(::Array(::K8S::Api::Core::V1::Sysctl)?).not_nil!
-    end
-
-    # :ditto:
-    def sysctls? : ::Array(::K8S::Api::Core::V1::Sysctl)?
-      self.["sysctls"]?.as(::Array(::K8S::Api::Core::V1::Sysctl)?)
-    end
-
-    # :ditto:
-    def sysctls=(value : ::Array(::K8S::Api::Core::V1::Sysctl)?)
-      self.["sysctls"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "fsGroup", accessor: "fs_group", nilable: true, read_only: false, default: nil, kind: Int32 },
-        { key: "runAsGroup", accessor: "run_as_group", nilable: true, read_only: false, default: nil, kind: Int32 },
-        { key: "runAsNonRoot", accessor: "run_as_non_root", nilable: true, read_only: false, default: nil, kind: ::Bool },
-        { key: "runAsUser", accessor: "run_as_user", nilable: true, read_only: false, default: nil, kind: Int32 },
-        { key: "seLinuxOptions", accessor: "se_linux_options", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::SELinuxOptions },
-        { key: "supplementalGroups", accessor: "supplemental_groups", nilable: true, read_only: false, default: nil, kind: ::Array(Int32) },
-        { key: "sysctls", accessor: "sysctls", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::Sysctl) },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "fsGroup", accessor: "fs_group", nilable: true, read_only: false, default: nil, kind: Int32},
+      {key: "runAsGroup", accessor: "run_as_group", nilable: true, read_only: false, default: nil, kind: Int32},
+      {key: "runAsNonRoot", accessor: "run_as_non_root", nilable: true, read_only: false, default: nil, kind: ::Bool},
+      {key: "runAsUser", accessor: "run_as_user", nilable: true, read_only: false, default: nil, kind: Int32},
+      {key: "seLinuxOptions", accessor: "se_linux_options", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::SELinuxOptions},
+      {key: "supplementalGroups", accessor: "supplemental_groups", nilable: true, read_only: false, default: nil, kind: ::Array(Int32)},
+      {key: "sysctls", accessor: "sysctls", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::Sysctl)},
+    ])
   end
 end

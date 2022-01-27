@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def names? : ::Array(String)?
     # :ditto:
-    abstract def names=(value : ::Array(String)?)
+    abstract def names=(value : ::Array(String))
     # The size of the image in bytes.
     abstract def size_bytes : Int32?
     # :ditto:
@@ -23,7 +23,7 @@ module K8S
     # :ditto:
     abstract def size_bytes? : Int32?
     # :ditto:
-    abstract def size_bytes=(value : Int32?)
+    abstract def size_bytes=(value : Int32)
   end
 
   # Describe a container image
@@ -33,52 +33,18 @@ module K8S
   )]
   class Api::Core::V1::ContainerImage < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::ContainerImage
+    k8s_object_accessor("names", names : ::Array(String), true, false, "Names by which this image is known. e.g. [[\"k8s.gcr.io/hyperkube:v1.0.7\", \"dockerhub.io/google_containers/hyperkube:v1.0.7\"]]([\"k8s.gcr.io/hyperkube:v1.0.7\", \"dockerhub.io/google_containers/hyperkube:v1.0.7\"])")
+    k8s_object_accessor("sizeBytes", size_bytes : Int32, true, false, "The size of the image in bytes.")
 
-    # Names by which this image is known. e.g. [[["k8s.gcr.io/hyperkube:v1.0.7", "dockerhub.io/google_containers/hyperkube:v1.0.7"]](["k8s.gcr.io/hyperkube:v1.0.7", "dockerhub.io/google_containers/hyperkube:v1.0.7"])]([["k8s.gcr.io/hyperkube:v1.0.7", "dockerhub.io/google_containers/hyperkube:v1.0.7"]](["k8s.gcr.io/hyperkube:v1.0.7", "dockerhub.io/google_containers/hyperkube:v1.0.7"]))
-    def names : ::Array(String)?
-      self.["names"].as(::Array(String)?)
+    def initialize(*, names : ::Array(String)? = nil, size_bytes : Int32? = nil)
+      super()
+      self.["names"] = names
+      self.["sizeBytes"] = size_bytes
     end
 
-    # :ditto:
-    def names! : ::Array(String)
-      self.["names"].as(::Array(String)?).not_nil!
-    end
-
-    # :ditto:
-    def names? : ::Array(String)?
-      self.["names"]?.as(::Array(String)?)
-    end
-
-    # :ditto:
-    def names=(value : ::Array(String)?)
-      self.["names"] = value
-    end
-
-    # The size of the image in bytes.
-    def size_bytes : Int32?
-      self.["sizeBytes"].as(Int32?)
-    end
-
-    # :ditto:
-    def size_bytes! : Int32
-      self.["sizeBytes"].as(Int32?).not_nil!
-    end
-
-    # :ditto:
-    def size_bytes? : Int32?
-      self.["sizeBytes"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def size_bytes=(value : Int32?)
-      self.["sizeBytes"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "names", accessor: "names", nilable: true, read_only: false, default: nil, kind: ::Array(String) },
-        { key: "sizeBytes", accessor: "size_bytes", nilable: true, read_only: false, default: nil, kind: Int32 },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "names", accessor: "names", nilable: true, read_only: false, default: nil, kind: ::Array(String)},
+      {key: "sizeBytes", accessor: "size_bytes", nilable: true, read_only: false, default: nil, kind: Int32},
+    ])
   end
 end

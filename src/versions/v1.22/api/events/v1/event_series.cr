@@ -9,7 +9,7 @@ module K8S
   # Namespace holding the types for `Api::Events::V1::EventSeries`.
   module Types::Api::Events::V1::EventSeries
     # count is the number of occurrences in this series up to the last heartbeat time.
-    abstract def count : Int32
+    abstract def count : Int32?
     # :ditto:
     abstract def count! : Int32
     # :ditto:
@@ -17,7 +17,7 @@ module K8S
     # :ditto:
     abstract def count=(value : Int32)
     # lastObservedTime is the time when last Event from the series was seen before last heartbeat.
-    abstract def last_observed_time : ::Time
+    abstract def last_observed_time : ::Time?
     # :ditto:
     abstract def last_observed_time! : ::Time
     # :ditto:
@@ -33,52 +33,18 @@ module K8S
   )]
   class Api::Events::V1::EventSeries < ::K8S::GenericObject
     include ::K8S::Types::Api::Events::V1::EventSeries
+    k8s_object_accessor("count", count : Int32, false, false, "count is the number of occurrences in this series up to the last heartbeat time.")
+    k8s_object_accessor("lastObservedTime", last_observed_time : ::Time, false, false, "lastObservedTime is the time when last Event from the series was seen before last heartbeat.")
 
-    # count is the number of occurrences in this series up to the last heartbeat time.
-    def count : Int32
-      self.["count"].as(Int32)
+    def initialize(*, count : Int32? = nil, last_observed_time : ::Time? = nil)
+      super()
+      self.["count"] = count
+      self.["lastObservedTime"] = last_observed_time
     end
 
-    # :ditto:
-    def count! : Int32
-      self.["count"].as(Int32).not_nil!
-    end
-
-    # :ditto:
-    def count? : Int32?
-      self.["count"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def count=(value : Int32)
-      self.["count"] = value
-    end
-
-    # lastObservedTime is the time when last Event from the series was seen before last heartbeat.
-    def last_observed_time : ::Time
-      self.["lastObservedTime"].as(::Time)
-    end
-
-    # :ditto:
-    def last_observed_time! : ::Time
-      self.["lastObservedTime"].as(::Time).not_nil!
-    end
-
-    # :ditto:
-    def last_observed_time? : ::Time?
-      self.["lastObservedTime"]?.as(::Time?)
-    end
-
-    # :ditto:
-    def last_observed_time=(value : ::Time)
-      self.["lastObservedTime"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "count", accessor: "count", nilable: false, read_only: false, default: nil, kind: Int32 },
-        { key: "lastObservedTime", accessor: "last_observed_time", nilable: false, read_only: false, default: nil, kind: ::Time },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "count", accessor: "count", nilable: false, read_only: false, default: nil, kind: Int32},
+      {key: "lastObservedTime", accessor: "last_observed_time", nilable: false, read_only: false, default: nil, kind: ::Time},
+    ])
   end
 end

@@ -15,9 +15,9 @@ module K8S
     # :ditto:
     abstract def host? : String?
     # :ditto:
-    abstract def host=(value : String?)
+    abstract def host=(value : String)
     # Number or name of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
-    abstract def port : ::Int32 | ::String
+    abstract def port : ::Int32 | ::String?
     # :ditto:
     abstract def port! : ::Int32 | ::String
     # :ditto:
@@ -33,52 +33,18 @@ module K8S
   )]
   class Api::Core::V1::TCPSocketAction < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::TCPSocketAction
+    k8s_object_accessor("host", host : String, true, false, "Optional: Host name to connect to, defaults to the pod IP.")
+    k8s_object_accessor("port", port : ::Int32 | ::String, false, false, "Number or name of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.")
 
-    # Optional: Host name to connect to, defaults to the pod IP.
-    def host : String?
-      self.["host"].as(String?)
+    def initialize(*, host : String? = nil, port : ::Int32 | ::String? = nil)
+      super()
+      self.["host"] = host
+      self.["port"] = port
     end
 
-    # :ditto:
-    def host! : String
-      self.["host"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def host? : String?
-      self.["host"]?.as(String?)
-    end
-
-    # :ditto:
-    def host=(value : String?)
-      self.["host"] = value
-    end
-
-    # Number or name of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
-    def port : ::Int32 | ::String
-      self.["port"].as(::Int32 | ::String)
-    end
-
-    # :ditto:
-    def port! : ::Int32 | ::String
-      self.["port"].as(::Int32 | ::String).not_nil!
-    end
-
-    # :ditto:
-    def port? : ::Int32 | ::String?
-      self.["port"]?.as(::Int32 | ::String?)
-    end
-
-    # :ditto:
-    def port=(value : ::Int32 | ::String)
-      self.["port"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "host", accessor: "host", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "port", accessor: "port", nilable: false, read_only: false, default: nil, kind: ::Union(::Int32 | ::String) },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "host", accessor: "host", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "port", accessor: "port", nilable: false, read_only: false, default: nil, kind: ::Union(::Int32 | ::String)},
+    ])
   end
 end

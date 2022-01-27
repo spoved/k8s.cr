@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def app_protocol? : String?
     # :ditto:
-    abstract def app_protocol=(value : String?)
+    abstract def app_protocol=(value : String)
     # The name of this port.  This must match the 'name' field in the corresponding ServicePort. Must be a DNS_LABEL. Optional only if one port is defined.
     abstract def name : String?
     # :ditto:
@@ -23,9 +23,9 @@ module K8S
     # :ditto:
     abstract def name? : String?
     # :ditto:
-    abstract def name=(value : String?)
+    abstract def name=(value : String)
     # The port number of the endpoint.
-    abstract def port : Int32
+    abstract def port : Int32?
     # :ditto:
     abstract def port! : Int32
     # :ditto:
@@ -39,7 +39,7 @@ module K8S
     # :ditto:
     abstract def protocol? : String?
     # :ditto:
-    abstract def protocol=(value : String?)
+    abstract def protocol=(value : String)
   end
 
   # EndpointPort is a tuple that describes a single port.
@@ -51,94 +51,24 @@ module K8S
   )]
   class Api::Core::V1::EndpointPort < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::EndpointPort
+    k8s_object_accessor("appProtocol", app_protocol : String, true, false, "The application protocol for this port. This field follows standard Kubernetes label syntax. Un-prefixed names are reserved for IANA standard service names (as per RFC-6335 and [http://www.iana.org/assignments/service-names). Non-standard protocols should use prefixed names such as mycompany.com/my-custom-protocol. This is a beta field that is guarded by the ServiceAppProtocol feature gate and enabled by default.](http://www.iana.org/assignments/service-names). Non-standard protocols should use prefixed names such as mycompany.com/my-custom-protocol. This is a beta field that is guarded by the ServiceAppProtocol feature gate and enabled by default.)")
+    k8s_object_accessor("name", name : String, true, false, "The name of this port.  This must match the 'name' field in the corresponding ServicePort. Must be a DNS_LABEL. Optional only if one port is defined.")
+    k8s_object_accessor("port", port : Int32, false, false, "The port number of the endpoint.")
+    k8s_object_accessor("protocol", protocol : String, true, false, "The IP protocol for this port. Must be UDP, TCP, or SCTP. Default is TCP.")
 
-    # The application protocol for this port. This field follows standard Kubernetes label syntax. Un-prefixed names are reserved for IANA standard service names (as per RFC-6335 and [[http://www.iana.org/assignments/service-names). Non-standard protocols should use prefixed names such as mycompany.com/my-custom-protocol. This is a beta field that is guarded by the ServiceAppProtocol feature gate and enabled by default.](http://www.iana.org/assignments/service-names). Non-standard protocols should use prefixed names such as mycompany.com/my-custom-protocol. This is a beta field that is guarded by the ServiceAppProtocol feature gate and enabled by default.)](http://www.iana.org/assignments/service-names). Non-standard protocols should use prefixed names such as mycompany.com/my-custom-protocol. This is a beta field that is guarded by the ServiceAppProtocol feature gate and enabled by default.](http://www.iana.org/assignments/service-names). Non-standard protocols should use prefixed names such as mycompany.com/my-custom-protocol. This is a beta field that is guarded by the ServiceAppProtocol feature gate and enabled by default.))
-    def app_protocol : String?
-      self.["appProtocol"].as(String?)
+    def initialize(*, app_protocol : String? = nil, name : String? = nil, port : Int32? = nil, protocol : String? = nil)
+      super()
+      self.["appProtocol"] = app_protocol
+      self.["name"] = name
+      self.["port"] = port
+      self.["protocol"] = protocol
     end
 
-    # :ditto:
-    def app_protocol! : String
-      self.["appProtocol"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def app_protocol? : String?
-      self.["appProtocol"]?.as(String?)
-    end
-
-    # :ditto:
-    def app_protocol=(value : String?)
-      self.["appProtocol"] = value
-    end
-
-    # The name of this port.  This must match the 'name' field in the corresponding ServicePort. Must be a DNS_LABEL. Optional only if one port is defined.
-    def name : String?
-      self.["name"].as(String?)
-    end
-
-    # :ditto:
-    def name! : String
-      self.["name"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def name? : String?
-      self.["name"]?.as(String?)
-    end
-
-    # :ditto:
-    def name=(value : String?)
-      self.["name"] = value
-    end
-
-    # The port number of the endpoint.
-    def port : Int32
-      self.["port"].as(Int32)
-    end
-
-    # :ditto:
-    def port! : Int32
-      self.["port"].as(Int32).not_nil!
-    end
-
-    # :ditto:
-    def port? : Int32?
-      self.["port"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def port=(value : Int32)
-      self.["port"] = value
-    end
-
-    # The IP protocol for this port. Must be UDP, TCP, or SCTP. Default is TCP.
-    def protocol : String?
-      self.["protocol"].as(String?)
-    end
-
-    # :ditto:
-    def protocol! : String
-      self.["protocol"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def protocol? : String?
-      self.["protocol"]?.as(String?)
-    end
-
-    # :ditto:
-    def protocol=(value : String?)
-      self.["protocol"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "appProtocol", accessor: "app_protocol", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "name", accessor: "name", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "port", accessor: "port", nilable: false, read_only: false, default: nil, kind: Int32 },
-        { key: "protocol", accessor: "protocol", nilable: true, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "appProtocol", accessor: "app_protocol", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "name", accessor: "name", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "port", accessor: "port", nilable: false, read_only: false, default: nil, kind: Int32},
+      {key: "protocol", accessor: "protocol", nilable: true, read_only: false, default: nil, kind: String},
+    ])
   end
 end

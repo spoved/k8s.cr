@@ -19,9 +19,9 @@ module K8S
     # :ditto:
     abstract def group? : ::K8S::Api::Flowcontrol::V1beta1::GroupSubject?
     # :ditto:
-    abstract def group=(value : ::K8S::Api::Flowcontrol::V1beta1::GroupSubject?)
+    abstract def group=(value : ::K8S::Api::Flowcontrol::V1beta1::GroupSubject)
     # `kind` indicates which one of the other fields is non-empty. Required
-    abstract def kind : String
+    abstract def kind : String?
     # :ditto:
     abstract def kind! : String
     # :ditto:
@@ -35,7 +35,7 @@ module K8S
     # :ditto:
     abstract def service_account? : ::K8S::Api::Flowcontrol::V1beta1::ServiceAccountSubject?
     # :ditto:
-    abstract def service_account=(value : ::K8S::Api::Flowcontrol::V1beta1::ServiceAccountSubject?)
+    abstract def service_account=(value : ::K8S::Api::Flowcontrol::V1beta1::ServiceAccountSubject)
     # `user` matches based on username.
     abstract def user : ::K8S::Api::Flowcontrol::V1beta1::UserSubject?
     # :ditto:
@@ -43,7 +43,7 @@ module K8S
     # :ditto:
     abstract def user? : ::K8S::Api::Flowcontrol::V1beta1::UserSubject?
     # :ditto:
-    abstract def user=(value : ::K8S::Api::Flowcontrol::V1beta1::UserSubject?)
+    abstract def user=(value : ::K8S::Api::Flowcontrol::V1beta1::UserSubject)
   end
 
   # Subject matches the originator of a request, as identified by the request authentication system. There are three ways of matching an originator; by user, group, or service account.
@@ -55,94 +55,24 @@ module K8S
   )]
   class Api::Flowcontrol::V1beta1::Subject < ::K8S::GenericObject
     include ::K8S::Types::Api::Flowcontrol::V1beta1::Subject
+    k8s_object_accessor("group", group : ::K8S::Api::Flowcontrol::V1beta1::GroupSubject, true, false, "`group` matches based on user group name.")
+    k8s_object_accessor("kind", kind : String, false, false, "`kind` indicates which one of the other fields is non-empty. Required")
+    k8s_object_accessor("serviceAccount", service_account : ::K8S::Api::Flowcontrol::V1beta1::ServiceAccountSubject, true, false, "`serviceAccount` matches ServiceAccounts.")
+    k8s_object_accessor("user", user : ::K8S::Api::Flowcontrol::V1beta1::UserSubject, true, false, "`user` matches based on username.")
 
-    # `group` matches based on user group name.
-    def group : ::K8S::Api::Flowcontrol::V1beta1::GroupSubject?
-      self.["group"].as(::K8S::Api::Flowcontrol::V1beta1::GroupSubject?)
+    def initialize(*, group : ::K8S::Api::Flowcontrol::V1beta1::GroupSubject? = nil, kind : String? = nil, service_account : ::K8S::Api::Flowcontrol::V1beta1::ServiceAccountSubject? = nil, user : ::K8S::Api::Flowcontrol::V1beta1::UserSubject? = nil)
+      super()
+      self.["group"] = group
+      self.["kind"] = kind
+      self.["serviceAccount"] = service_account
+      self.["user"] = user
     end
 
-    # :ditto:
-    def group! : ::K8S::Api::Flowcontrol::V1beta1::GroupSubject
-      self.["group"].as(::K8S::Api::Flowcontrol::V1beta1::GroupSubject?).not_nil!
-    end
-
-    # :ditto:
-    def group? : ::K8S::Api::Flowcontrol::V1beta1::GroupSubject?
-      self.["group"]?.as(::K8S::Api::Flowcontrol::V1beta1::GroupSubject?)
-    end
-
-    # :ditto:
-    def group=(value : ::K8S::Api::Flowcontrol::V1beta1::GroupSubject?)
-      self.["group"] = value
-    end
-
-    # `kind` indicates which one of the other fields is non-empty. Required
-    def kind : String
-      self.["kind"].as(String)
-    end
-
-    # :ditto:
-    def kind! : String
-      self.["kind"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def kind? : String?
-      self.["kind"]?.as(String?)
-    end
-
-    # :ditto:
-    def kind=(value : String)
-      self.["kind"] = value
-    end
-
-    # `serviceAccount` matches ServiceAccounts.
-    def service_account : ::K8S::Api::Flowcontrol::V1beta1::ServiceAccountSubject?
-      self.["serviceAccount"].as(::K8S::Api::Flowcontrol::V1beta1::ServiceAccountSubject?)
-    end
-
-    # :ditto:
-    def service_account! : ::K8S::Api::Flowcontrol::V1beta1::ServiceAccountSubject
-      self.["serviceAccount"].as(::K8S::Api::Flowcontrol::V1beta1::ServiceAccountSubject?).not_nil!
-    end
-
-    # :ditto:
-    def service_account? : ::K8S::Api::Flowcontrol::V1beta1::ServiceAccountSubject?
-      self.["serviceAccount"]?.as(::K8S::Api::Flowcontrol::V1beta1::ServiceAccountSubject?)
-    end
-
-    # :ditto:
-    def service_account=(value : ::K8S::Api::Flowcontrol::V1beta1::ServiceAccountSubject?)
-      self.["serviceAccount"] = value
-    end
-
-    # `user` matches based on username.
-    def user : ::K8S::Api::Flowcontrol::V1beta1::UserSubject?
-      self.["user"].as(::K8S::Api::Flowcontrol::V1beta1::UserSubject?)
-    end
-
-    # :ditto:
-    def user! : ::K8S::Api::Flowcontrol::V1beta1::UserSubject
-      self.["user"].as(::K8S::Api::Flowcontrol::V1beta1::UserSubject?).not_nil!
-    end
-
-    # :ditto:
-    def user? : ::K8S::Api::Flowcontrol::V1beta1::UserSubject?
-      self.["user"]?.as(::K8S::Api::Flowcontrol::V1beta1::UserSubject?)
-    end
-
-    # :ditto:
-    def user=(value : ::K8S::Api::Flowcontrol::V1beta1::UserSubject?)
-      self.["user"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "group", accessor: "group", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Flowcontrol::V1beta1::GroupSubject },
-        { key: "kind", accessor: "kind", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "serviceAccount", accessor: "service_account", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Flowcontrol::V1beta1::ServiceAccountSubject },
-        { key: "user", accessor: "user", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Flowcontrol::V1beta1::UserSubject },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "group", accessor: "group", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Flowcontrol::V1beta1::GroupSubject},
+      {key: "kind", accessor: "kind", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "serviceAccount", accessor: "service_account", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Flowcontrol::V1beta1::ServiceAccountSubject},
+      {key: "user", accessor: "user", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Flowcontrol::V1beta1::UserSubject},
+    ])
   end
 end

@@ -17,9 +17,9 @@ module K8S
     # :ditto:
     abstract def ranges? : ::Array(::K8S::Api::Policy::V1beta1::IDRange)?
     # :ditto:
-    abstract def ranges=(value : ::Array(::K8S::Api::Policy::V1beta1::IDRange)?)
+    abstract def ranges=(value : ::Array(::K8S::Api::Policy::V1beta1::IDRange))
     # rule is the strategy that will dictate the allowable RunAsGroup values that may be set.
-    abstract def rule : String
+    abstract def rule : String?
     # :ditto:
     abstract def rule! : String
     # :ditto:
@@ -35,52 +35,18 @@ module K8S
   )]
   class Api::Policy::V1beta1::RunAsGroupStrategyOptions < ::K8S::GenericObject
     include ::K8S::Types::Api::Policy::V1beta1::RunAsGroupStrategyOptions
+    k8s_object_accessor("ranges", ranges : ::Array(::K8S::Api::Policy::V1beta1::IDRange), true, false, "ranges are the allowed ranges of gids that may be used. If you would like to force a single gid then supply a single range with the same start and end. Required for MustRunAs.")
+    k8s_object_accessor("rule", rule : String, false, false, "rule is the strategy that will dictate the allowable RunAsGroup values that may be set.")
 
-    # ranges are the allowed ranges of gids that may be used. If you would like to force a single gid then supply a single range with the same start and end. Required for MustRunAs.
-    def ranges : ::Array(::K8S::Api::Policy::V1beta1::IDRange)?
-      self.["ranges"].as(::Array(::K8S::Api::Policy::V1beta1::IDRange)?)
+    def initialize(*, ranges : ::Array(::K8S::Api::Policy::V1beta1::IDRange)? = nil, rule : String? = nil)
+      super()
+      self.["ranges"] = ranges
+      self.["rule"] = rule
     end
 
-    # :ditto:
-    def ranges! : ::Array(::K8S::Api::Policy::V1beta1::IDRange)
-      self.["ranges"].as(::Array(::K8S::Api::Policy::V1beta1::IDRange)?).not_nil!
-    end
-
-    # :ditto:
-    def ranges? : ::Array(::K8S::Api::Policy::V1beta1::IDRange)?
-      self.["ranges"]?.as(::Array(::K8S::Api::Policy::V1beta1::IDRange)?)
-    end
-
-    # :ditto:
-    def ranges=(value : ::Array(::K8S::Api::Policy::V1beta1::IDRange)?)
-      self.["ranges"] = value
-    end
-
-    # rule is the strategy that will dictate the allowable RunAsGroup values that may be set.
-    def rule : String
-      self.["rule"].as(String)
-    end
-
-    # :ditto:
-    def rule! : String
-      self.["rule"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def rule? : String?
-      self.["rule"]?.as(String?)
-    end
-
-    # :ditto:
-    def rule=(value : String)
-      self.["rule"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "ranges", accessor: "ranges", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Policy::V1beta1::IDRange) },
-        { key: "rule", accessor: "rule", nilable: false, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "ranges", accessor: "ranges", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Policy::V1beta1::IDRange)},
+      {key: "rule", accessor: "rule", nilable: false, read_only: false, default: nil, kind: String},
+    ])
   end
 end

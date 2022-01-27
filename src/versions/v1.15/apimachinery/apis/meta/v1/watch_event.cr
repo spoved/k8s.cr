@@ -15,7 +15,7 @@ module K8S
     #  * If Type is Deleted: the state of the object immediately before deletion.
     #  * If Type is Error: *Status is recommended; other types may make sense
     #    depending on context.
-    abstract def object : ::K8S::Apimachinery::Runtime::RawExtension
+    abstract def object : ::K8S::Apimachinery::Runtime::RawExtension?
     # :ditto:
     abstract def object! : ::K8S::Apimachinery::Runtime::RawExtension
     # :ditto:
@@ -23,7 +23,7 @@ module K8S
     # :ditto:
     abstract def object=(value : ::K8S::Apimachinery::Runtime::RawExtension)
     #
-    abstract def type : String
+    abstract def type : String?
     # :ditto:
     abstract def type! : String
     # :ditto:
@@ -80,56 +80,18 @@ module K8S
   )]
   class Apimachinery::Apis::Meta::V1::WatchEvent < ::K8S::GenericObject
     include ::K8S::Types::Apimachinery::Apis::Meta::V1::WatchEvent
+    k8s_object_accessor("object", object : ::K8S::Apimachinery::Runtime::RawExtension, false, false, "Object is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context.")
+    k8s_object_accessor("type", type : String, false, false, nil)
 
-    # Object is:
-    #  * If Type is Added or Modified: the new state of the object.
-    #  * If Type is Deleted: the state of the object immediately before deletion.
-    #  * If Type is Error: *Status is recommended; other types may make sense
-    #    depending on context.
-    def object : ::K8S::Apimachinery::Runtime::RawExtension
-      self.["object"].as(::K8S::Apimachinery::Runtime::RawExtension)
+    def initialize(*, object : ::K8S::Apimachinery::Runtime::RawExtension? = nil, type : String? = nil)
+      super()
+      self.["object"] = object
+      self.["type"] = type
     end
 
-    # :ditto:
-    def object! : ::K8S::Apimachinery::Runtime::RawExtension
-      self.["object"].as(::K8S::Apimachinery::Runtime::RawExtension).not_nil!
-    end
-
-    # :ditto:
-    def object? : ::K8S::Apimachinery::Runtime::RawExtension?
-      self.["object"]?.as(::K8S::Apimachinery::Runtime::RawExtension?)
-    end
-
-    # :ditto:
-    def object=(value : ::K8S::Apimachinery::Runtime::RawExtension)
-      self.["object"] = value
-    end
-
-    #
-    def type : String
-      self.["type"].as(String)
-    end
-
-    # :ditto:
-    def type! : String
-      self.["type"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def type? : String?
-      self.["type"]?.as(String?)
-    end
-
-    # :ditto:
-    def type=(value : String)
-      self.["type"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "object", accessor: "object", nilable: false, read_only: false, default: nil, kind: ::K8S::Apimachinery::Runtime::RawExtension },
-        { key: "type", accessor: "type", nilable: false, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "object", accessor: "object", nilable: false, read_only: false, default: nil, kind: ::K8S::Apimachinery::Runtime::RawExtension},
+      {key: "type", accessor: "type", nilable: false, read_only: false, default: nil, kind: String},
+    ])
   end
 end

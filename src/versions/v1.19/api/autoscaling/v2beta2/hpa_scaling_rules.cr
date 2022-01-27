@@ -17,7 +17,7 @@ module K8S
     # :ditto:
     abstract def policies? : ::Array(::K8S::Api::Autoscaling::V2beta2::HPAScalingPolicy)?
     # :ditto:
-    abstract def policies=(value : ::Array(::K8S::Api::Autoscaling::V2beta2::HPAScalingPolicy)?)
+    abstract def policies=(value : ::Array(::K8S::Api::Autoscaling::V2beta2::HPAScalingPolicy))
     # selectPolicy is used to specify which policy should be used. If not set, the default value MaxPolicySelect is used.
     abstract def select_policy : String?
     # :ditto:
@@ -25,7 +25,7 @@ module K8S
     # :ditto:
     abstract def select_policy? : String?
     # :ditto:
-    abstract def select_policy=(value : String?)
+    abstract def select_policy=(value : String)
     # StabilizationWindowSeconds is the number of seconds for which past recommendations should be considered while scaling up or scaling down. StabilizationWindowSeconds must be greater than or equal to zero and less than or equal to 3600 (one hour). If not set, use the default values: - For scale up: 0 (i.e. no stabilization is done). - For scale down: 300 (i.e. the stabilization window is 300 seconds long).
     abstract def stabilization_window_seconds : Int32?
     # :ditto:
@@ -33,7 +33,7 @@ module K8S
     # :ditto:
     abstract def stabilization_window_seconds? : Int32?
     # :ditto:
-    abstract def stabilization_window_seconds=(value : Int32?)
+    abstract def stabilization_window_seconds=(value : Int32)
   end
 
   # HPAScalingRules configures the scaling behavior for one direction. These Rules are applied after calculating DesiredReplicas from metrics for the HPA. They can limit the scaling velocity by specifying scaling policies. They can prevent flapping by specifying the stabilization window, so that the number of replicas is not set instantly, instead, the safest value from the stabilization window is chosen.
@@ -44,73 +44,21 @@ module K8S
   )]
   class Api::Autoscaling::V2beta2::HPAScalingRules < ::K8S::GenericObject
     include ::K8S::Types::Api::Autoscaling::V2beta2::HPAScalingRules
+    k8s_object_accessor("policies", policies : ::Array(::K8S::Api::Autoscaling::V2beta2::HPAScalingPolicy), true, false, "policies is a list of potential scaling polices which can be used during scaling. At least one policy must be specified, otherwise the HPAScalingRules will be discarded as invalid")
+    k8s_object_accessor("selectPolicy", select_policy : String, true, false, "selectPolicy is used to specify which policy should be used. If not set, the default value MaxPolicySelect is used.")
+    k8s_object_accessor("stabilizationWindowSeconds", stabilization_window_seconds : Int32, true, false, "StabilizationWindowSeconds is the number of seconds for which past recommendations should be considered while scaling up or scaling down. StabilizationWindowSeconds must be greater than or equal to zero and less than or equal to 3600 (one hour). If not set, use the default values: - For scale up: 0 (i.e. no stabilization is done). - For scale down: 300 (i.e. the stabilization window is 300 seconds long).")
 
-    # policies is a list of potential scaling polices which can be used during scaling. At least one policy must be specified, otherwise the HPAScalingRules will be discarded as invalid
-    def policies : ::Array(::K8S::Api::Autoscaling::V2beta2::HPAScalingPolicy)?
-      self.["policies"].as(::Array(::K8S::Api::Autoscaling::V2beta2::HPAScalingPolicy)?)
+    def initialize(*, policies : ::Array(::K8S::Api::Autoscaling::V2beta2::HPAScalingPolicy)? = nil, select_policy : String? = nil, stabilization_window_seconds : Int32? = nil)
+      super()
+      self.["policies"] = policies
+      self.["selectPolicy"] = select_policy
+      self.["stabilizationWindowSeconds"] = stabilization_window_seconds
     end
 
-    # :ditto:
-    def policies! : ::Array(::K8S::Api::Autoscaling::V2beta2::HPAScalingPolicy)
-      self.["policies"].as(::Array(::K8S::Api::Autoscaling::V2beta2::HPAScalingPolicy)?).not_nil!
-    end
-
-    # :ditto:
-    def policies? : ::Array(::K8S::Api::Autoscaling::V2beta2::HPAScalingPolicy)?
-      self.["policies"]?.as(::Array(::K8S::Api::Autoscaling::V2beta2::HPAScalingPolicy)?)
-    end
-
-    # :ditto:
-    def policies=(value : ::Array(::K8S::Api::Autoscaling::V2beta2::HPAScalingPolicy)?)
-      self.["policies"] = value
-    end
-
-    # selectPolicy is used to specify which policy should be used. If not set, the default value MaxPolicySelect is used.
-    def select_policy : String?
-      self.["selectPolicy"].as(String?)
-    end
-
-    # :ditto:
-    def select_policy! : String
-      self.["selectPolicy"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def select_policy? : String?
-      self.["selectPolicy"]?.as(String?)
-    end
-
-    # :ditto:
-    def select_policy=(value : String?)
-      self.["selectPolicy"] = value
-    end
-
-    # StabilizationWindowSeconds is the number of seconds for which past recommendations should be considered while scaling up or scaling down. StabilizationWindowSeconds must be greater than or equal to zero and less than or equal to 3600 (one hour). If not set, use the default values: - For scale up: 0 (i.e. no stabilization is done). - For scale down: 300 (i.e. the stabilization window is 300 seconds long).
-    def stabilization_window_seconds : Int32?
-      self.["stabilizationWindowSeconds"].as(Int32?)
-    end
-
-    # :ditto:
-    def stabilization_window_seconds! : Int32
-      self.["stabilizationWindowSeconds"].as(Int32?).not_nil!
-    end
-
-    # :ditto:
-    def stabilization_window_seconds? : Int32?
-      self.["stabilizationWindowSeconds"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def stabilization_window_seconds=(value : Int32?)
-      self.["stabilizationWindowSeconds"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "policies", accessor: "policies", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Autoscaling::V2beta2::HPAScalingPolicy) },
-        { key: "selectPolicy", accessor: "select_policy", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "stabilizationWindowSeconds", accessor: "stabilization_window_seconds", nilable: true, read_only: false, default: nil, kind: Int32 },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "policies", accessor: "policies", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Autoscaling::V2beta2::HPAScalingPolicy)},
+      {key: "selectPolicy", accessor: "select_policy", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "stabilizationWindowSeconds", accessor: "stabilization_window_seconds", nilable: true, read_only: false, default: nil, kind: Int32},
+    ])
   end
 end

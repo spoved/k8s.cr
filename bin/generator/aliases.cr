@@ -81,21 +81,21 @@ class Generator
     when "Api::Core::V1::List"
       # TODO: Properly handle List alias
       class_name
-    when "ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaPropsOrArray"
-      %<::#{base_class}::ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps | Array(::#{base_class}::ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps)>
-    when "ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaPropsOrBool"
-      %<::#{base_class}::ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps | Bool>
-    when "ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaPropsOrStringArray"
-      %<::#{base_class}::ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps | Array(String)>
-    when "ApiextensionsApiserver::Apis::Apiextensions::V1::JSON"
+    when "ApiextensionsApiserver::Apis::Apiextensions::V1::JsonSchemaPropsOrArray"
+      %<::#{base_class}::ApiextensionsApiserver::Apis::Apiextensions::V1::JsonSchemaProps | Array(::#{base_class}::ApiextensionsApiserver::Apis::Apiextensions::V1::JsonSchemaProps)>
+    when "ApiextensionsApiserver::Apis::Apiextensions::V1::JsonSchemaPropsOrBool"
+      %<::#{base_class}::ApiextensionsApiserver::Apis::Apiextensions::V1::JsonSchemaProps | Bool>
+    when "ApiextensionsApiserver::Apis::Apiextensions::V1::JsonSchemaPropsOrStringArray"
+      %<::#{base_class}::ApiextensionsApiserver::Apis::Apiextensions::V1::JsonSchemaProps | Array(String)>
+    when "ApiextensionsApiserver::Apis::Apiextensions::V1::Json"
       %<::JSON::Any::Type>
-    when "ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSONSchemaPropsOrArray"
-      %<::#{base_class}::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSONSchemaProps | Array(::#{base_class}::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSONSchemaProps)>
-    when "ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSONSchemaPropsOrBool"
-      %<::#{base_class}::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSONSchemaProps | Bool>
-    when "ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSONSchemaPropsOrStringArray"
-      %<::#{base_class}::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSONSchemaProps | Array(String)>
-    when "ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSON"
+    when "ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JsonSchemaPropsOrArray"
+      %<::#{base_class}::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JsonSchemaProps | Array(::#{base_class}::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JsonSchemaProps)>
+    when "ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JsonSchemaPropsOrBool"
+      %<::#{base_class}::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JsonSchemaProps | Bool>
+    when "ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JsonSchemaPropsOrStringArray"
+      %<::#{base_class}::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JsonSchemaProps | Array(String)>
+    when "ApiextensionsApiserver::Apis::Apiextensions::V1beta1::Json"
       %<::JSON::Any::Type>
     else
       nil

@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def pod_fixed? : ::Hash(String, ::Int32 | ::String)?
     # :ditto:
-    abstract def pod_fixed=(value : ::Hash(String, ::Int32 | ::String)?)
+    abstract def pod_fixed=(value : ::Hash(String, ::Int32 | ::String))
   end
 
   # Overhead structure represents the resource overhead associated with running a pod.
@@ -24,31 +24,15 @@ module K8S
   )]
   class Api::Node::V1alpha1::Overhead < ::K8S::GenericObject
     include ::K8S::Types::Api::Node::V1alpha1::Overhead
+    k8s_object_accessor("podFixed", pod_fixed : ::Hash(String, ::Int32 | ::String), true, false, "PodFixed represents the fixed resource overhead associated with running a pod.")
 
-    # PodFixed represents the fixed resource overhead associated with running a pod.
-    def pod_fixed : ::Hash(String, ::Int32 | ::String)?
-      self.["podFixed"].as(::Hash(String, ::Int32 | ::String)?)
+    def initialize(*, pod_fixed : ::Hash(String, ::Int32 | ::String)? = nil)
+      super()
+      self.["podFixed"] = pod_fixed
     end
 
-    # :ditto:
-    def pod_fixed! : ::Hash(String, ::Int32 | ::String)
-      self.["podFixed"].as(::Hash(String, ::Int32 | ::String)?).not_nil!
-    end
-
-    # :ditto:
-    def pod_fixed? : ::Hash(String, ::Int32 | ::String)?
-      self.["podFixed"]?.as(::Hash(String, ::Int32 | ::String)?)
-    end
-
-    # :ditto:
-    def pod_fixed=(value : ::Hash(String, ::Int32 | ::String)?)
-      self.["podFixed"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "podFixed", accessor: "pod_fixed", nilable: true, read_only: false, default: nil, kind: ::Union(::Hash(String, ::Int32 | ::String)) },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "podFixed", accessor: "pod_fixed", nilable: true, read_only: false, default: nil, kind: ::Union(::Hash(String, ::Int32 | ::String))},
+    ])
   end
 end

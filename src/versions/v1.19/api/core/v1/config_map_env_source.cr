@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def name? : String?
     # :ditto:
-    abstract def name=(value : String?)
+    abstract def name=(value : String)
     # Specify whether the ConfigMap must be defined
     abstract def optional : ::Bool?
     # :ditto:
@@ -23,7 +23,7 @@ module K8S
     # :ditto:
     abstract def optional? : ::Bool?
     # :ditto:
-    abstract def optional=(value : ::Bool?)
+    abstract def optional=(value : ::Bool)
   end
 
   # ConfigMapEnvSource selects a ConfigMap to populate the environment variables with.
@@ -35,52 +35,18 @@ module K8S
   )]
   class Api::Core::V1::ConfigMapEnvSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::ConfigMapEnvSource
+    k8s_object_accessor("name", name : String, true, false, "Name of the referent. More info: [https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names)")
+    k8s_object_accessor("optional", optional : ::Bool, true, false, "Specify whether the ConfigMap must be defined")
 
-    # Name of the referent. More info: [[https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names)](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names))
-    def name : String?
-      self.["name"].as(String?)
+    def initialize(*, name : String? = nil, optional : ::Bool? = nil)
+      super()
+      self.["name"] = name
+      self.["optional"] = optional
     end
 
-    # :ditto:
-    def name! : String
-      self.["name"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def name? : String?
-      self.["name"]?.as(String?)
-    end
-
-    # :ditto:
-    def name=(value : String?)
-      self.["name"] = value
-    end
-
-    # Specify whether the ConfigMap must be defined
-    def optional : ::Bool?
-      self.["optional"].as(::Bool?)
-    end
-
-    # :ditto:
-    def optional! : ::Bool
-      self.["optional"].as(::Bool?).not_nil!
-    end
-
-    # :ditto:
-    def optional? : ::Bool?
-      self.["optional"]?.as(::Bool?)
-    end
-
-    # :ditto:
-    def optional=(value : ::Bool?)
-      self.["optional"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "name", accessor: "name", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "optional", accessor: "optional", nilable: true, read_only: false, default: nil, kind: ::Bool },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "name", accessor: "name", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "optional", accessor: "optional", nilable: true, read_only: false, default: nil, kind: ::Bool},
+    ])
   end
 end

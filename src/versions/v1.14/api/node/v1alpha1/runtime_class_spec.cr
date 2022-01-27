@@ -9,7 +9,7 @@ module K8S
   # Namespace holding the types for `Api::Node::V1alpha1::RuntimeClassSpec`.
   module Types::Api::Node::V1alpha1::RuntimeClassSpec
     # RuntimeHandler specifies the underlying runtime and configuration that the CRI implementation will use to handle pods of this class. The possible values are specific to the node & CRI configuration.  It is assumed that all handlers are available on every node, and handlers of the same name are equivalent on every node. For example, a handler called "runc" might specify that the runc OCI runtime (using native Linux containers) will be used to run the containers in a pod. The RuntimeHandler must conform to the DNS Label (RFC 1123) requirements and is immutable.
-    abstract def runtime_handler : String
+    abstract def runtime_handler : String?
     # :ditto:
     abstract def runtime_handler! : String
     # :ditto:
@@ -24,31 +24,15 @@ module K8S
   )]
   class Api::Node::V1alpha1::RuntimeClassSpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Node::V1alpha1::RuntimeClassSpec
+    k8s_object_accessor("runtimeHandler", runtime_handler : String, false, false, "RuntimeHandler specifies the underlying runtime and configuration that the CRI implementation will use to handle pods of this class. The possible values are specific to the node & CRI configuration.  It is assumed that all handlers are available on every node, and handlers of the same name are equivalent on every node. For example, a handler called \"runc\" might specify that the runc OCI runtime (using native Linux containers) will be used to run the containers in a pod. The RuntimeHandler must conform to the DNS Label (RFC 1123) requirements and is immutable.")
 
-    # RuntimeHandler specifies the underlying runtime and configuration that the CRI implementation will use to handle pods of this class. The possible values are specific to the node & CRI configuration.  It is assumed that all handlers are available on every node, and handlers of the same name are equivalent on every node. For example, a handler called "runc" might specify that the runc OCI runtime (using native Linux containers) will be used to run the containers in a pod. The RuntimeHandler must conform to the DNS Label (RFC 1123) requirements and is immutable.
-    def runtime_handler : String
-      self.["runtimeHandler"].as(String)
+    def initialize(*, runtime_handler : String? = nil)
+      super()
+      self.["runtimeHandler"] = runtime_handler
     end
 
-    # :ditto:
-    def runtime_handler! : String
-      self.["runtimeHandler"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def runtime_handler? : String?
-      self.["runtimeHandler"]?.as(String?)
-    end
-
-    # :ditto:
-    def runtime_handler=(value : String)
-      self.["runtimeHandler"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "runtimeHandler", accessor: "runtime_handler", nilable: false, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "runtimeHandler", accessor: "runtime_handler", nilable: false, read_only: false, default: nil, kind: String},
+    ])
   end
 end

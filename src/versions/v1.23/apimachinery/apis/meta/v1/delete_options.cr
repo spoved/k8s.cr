@@ -17,7 +17,7 @@ module K8S
     # :ditto:
     abstract def api_version? : String?
     # :ditto:
-    abstract def api_version=(value : String?)
+    abstract def api_version=(value : String)
     # When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
     abstract def dry_run : ::Array(String)?
     # :ditto:
@@ -25,7 +25,7 @@ module K8S
     # :ditto:
     abstract def dry_run? : ::Array(String)?
     # :ditto:
-    abstract def dry_run=(value : ::Array(String)?)
+    abstract def dry_run=(value : ::Array(String))
     # The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
     abstract def grace_period_seconds : Int32?
     # :ditto:
@@ -33,7 +33,7 @@ module K8S
     # :ditto:
     abstract def grace_period_seconds? : Int32?
     # :ditto:
-    abstract def grace_period_seconds=(value : Int32?)
+    abstract def grace_period_seconds=(value : Int32)
     # Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds))
     abstract def kind : String?
     # :ditto:
@@ -41,7 +41,7 @@ module K8S
     # :ditto:
     abstract def kind? : String?
     # :ditto:
-    abstract def kind=(value : String?)
+    abstract def kind=(value : String)
     # Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If [[true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.](true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.)]([true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.](true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.))
     abstract def orphan_dependents : ::Bool?
     # :ditto:
@@ -49,7 +49,7 @@ module K8S
     # :ditto:
     abstract def orphan_dependents? : ::Bool?
     # :ditto:
-    abstract def orphan_dependents=(value : ::Bool?)
+    abstract def orphan_dependents=(value : ::Bool)
     # Must be fulfilled before a deletion is carried out. If not possible, a 409 Conflict status will be returned.
     abstract def preconditions : ::K8S::Apimachinery::Apis::Meta::V1::Preconditions?
     # :ditto:
@@ -57,7 +57,7 @@ module K8S
     # :ditto:
     abstract def preconditions? : ::K8S::Apimachinery::Apis::Meta::V1::Preconditions?
     # :ditto:
-    abstract def preconditions=(value : ::K8S::Apimachinery::Apis::Meta::V1::Preconditions?)
+    abstract def preconditions=(value : ::K8S::Apimachinery::Apis::Meta::V1::Preconditions)
     # Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: 'Orphan' - orphan the dependents; 'Background' - allow the garbage collector to delete the dependents in the background; 'Foreground' - a cascading policy that deletes all dependents in the foreground.
     abstract def propagation_policy : String?
     # :ditto:
@@ -65,7 +65,7 @@ module K8S
     # :ditto:
     abstract def propagation_policy? : String?
     # :ditto:
-    abstract def propagation_policy=(value : String?)
+    abstract def propagation_policy=(value : String)
   end
 
   # DeleteOptions may be provided when deleting an API object.
@@ -132,157 +132,33 @@ module K8S
   )]
   class Apimachinery::Apis::Meta::V1::DeleteOptions < ::K8S::GenericObject
     include ::K8S::Types::Apimachinery::Apis::Meta::V1::DeleteOptions
+    k8s_object_accessor("apiVersion", api_version : String, true, false, "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)")
+    k8s_object_accessor("dryRun", dry_run : ::Array(String), true, false, "When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed")
+    k8s_object_accessor("gracePeriodSeconds", grace_period_seconds : Int32, true, false, "The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.")
+    k8s_object_accessor("kind", kind : String, true, false, "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)")
+    k8s_object_accessor("orphanDependents", orphan_dependents : ::Bool, true, false, "Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If [true/false, the \"orphan\" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.](true/false, the \"orphan\" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.)")
+    k8s_object_accessor("preconditions", preconditions : ::K8S::Apimachinery::Apis::Meta::V1::Preconditions, true, false, "Must be fulfilled before a deletion is carried out. If not possible, a 409 Conflict status will be returned.")
+    k8s_object_accessor("propagationPolicy", propagation_policy : String, true, false, "Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: 'Orphan' - orphan the dependents; 'Background' - allow the garbage collector to delete the dependents in the background; 'Foreground' - a cascading policy that deletes all dependents in the foreground.")
 
-    # APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources))
-    def api_version : String?
-      self.["apiVersion"].as(String?)
+    def initialize(*, api_version : String? = nil, dry_run : ::Array(String)? = nil, grace_period_seconds : Int32? = nil, kind : String? = nil, orphan_dependents : ::Bool? = nil, preconditions : ::K8S::Apimachinery::Apis::Meta::V1::Preconditions? = nil, propagation_policy : String? = nil)
+      super()
+      self.["apiVersion"] = api_version
+      self.["dryRun"] = dry_run
+      self.["gracePeriodSeconds"] = grace_period_seconds
+      self.["kind"] = kind
+      self.["orphanDependents"] = orphan_dependents
+      self.["preconditions"] = preconditions
+      self.["propagationPolicy"] = propagation_policy
     end
 
-    # :ditto:
-    def api_version! : String
-      self.["apiVersion"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def api_version? : String?
-      self.["apiVersion"]?.as(String?)
-    end
-
-    # :ditto:
-    def api_version=(value : String?)
-      self.["apiVersion"] = value
-    end
-
-    # When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-    def dry_run : ::Array(String)?
-      self.["dryRun"].as(::Array(String)?)
-    end
-
-    # :ditto:
-    def dry_run! : ::Array(String)
-      self.["dryRun"].as(::Array(String)?).not_nil!
-    end
-
-    # :ditto:
-    def dry_run? : ::Array(String)?
-      self.["dryRun"]?.as(::Array(String)?)
-    end
-
-    # :ditto:
-    def dry_run=(value : ::Array(String)?)
-      self.["dryRun"] = value
-    end
-
-    # The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
-    def grace_period_seconds : Int32?
-      self.["gracePeriodSeconds"].as(Int32?)
-    end
-
-    # :ditto:
-    def grace_period_seconds! : Int32
-      self.["gracePeriodSeconds"].as(Int32?).not_nil!
-    end
-
-    # :ditto:
-    def grace_period_seconds? : Int32?
-      self.["gracePeriodSeconds"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def grace_period_seconds=(value : Int32?)
-      self.["gracePeriodSeconds"] = value
-    end
-
-    # Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds))
-    def kind : String?
-      self.["kind"].as(String?)
-    end
-
-    # :ditto:
-    def kind! : String
-      self.["kind"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def kind? : String?
-      self.["kind"]?.as(String?)
-    end
-
-    # :ditto:
-    def kind=(value : String?)
-      self.["kind"] = value
-    end
-
-    # Deprecated: please use the PropagationPolicy, this field will be deprecated in 1.7. Should the dependent objects be orphaned. If [[true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.](true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.)]([true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.](true/false, the "orphan" finalizer will be added to/removed from the object's finalizers list. Either this field or PropagationPolicy may be set, but not both.))
-    def orphan_dependents : ::Bool?
-      self.["orphanDependents"].as(::Bool?)
-    end
-
-    # :ditto:
-    def orphan_dependents! : ::Bool
-      self.["orphanDependents"].as(::Bool?).not_nil!
-    end
-
-    # :ditto:
-    def orphan_dependents? : ::Bool?
-      self.["orphanDependents"]?.as(::Bool?)
-    end
-
-    # :ditto:
-    def orphan_dependents=(value : ::Bool?)
-      self.["orphanDependents"] = value
-    end
-
-    # Must be fulfilled before a deletion is carried out. If not possible, a 409 Conflict status will be returned.
-    def preconditions : ::K8S::Apimachinery::Apis::Meta::V1::Preconditions?
-      self.["preconditions"].as(::K8S::Apimachinery::Apis::Meta::V1::Preconditions?)
-    end
-
-    # :ditto:
-    def preconditions! : ::K8S::Apimachinery::Apis::Meta::V1::Preconditions
-      self.["preconditions"].as(::K8S::Apimachinery::Apis::Meta::V1::Preconditions?).not_nil!
-    end
-
-    # :ditto:
-    def preconditions? : ::K8S::Apimachinery::Apis::Meta::V1::Preconditions?
-      self.["preconditions"]?.as(::K8S::Apimachinery::Apis::Meta::V1::Preconditions?)
-    end
-
-    # :ditto:
-    def preconditions=(value : ::K8S::Apimachinery::Apis::Meta::V1::Preconditions?)
-      self.["preconditions"] = value
-    end
-
-    # Whether and how garbage collection will be performed. Either this field or OrphanDependents may be set, but not both. The default policy is decided by the existing finalizer set in the metadata.finalizers and the resource-specific default policy. Acceptable values are: 'Orphan' - orphan the dependents; 'Background' - allow the garbage collector to delete the dependents in the background; 'Foreground' - a cascading policy that deletes all dependents in the foreground.
-    def propagation_policy : String?
-      self.["propagationPolicy"].as(String?)
-    end
-
-    # :ditto:
-    def propagation_policy! : String
-      self.["propagationPolicy"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def propagation_policy? : String?
-      self.["propagationPolicy"]?.as(String?)
-    end
-
-    # :ditto:
-    def propagation_policy=(value : String?)
-      self.["propagationPolicy"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "apiVersion", accessor: "api_version", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "dryRun", accessor: "dry_run", nilable: true, read_only: false, default: nil, kind: ::Array(String) },
-        { key: "gracePeriodSeconds", accessor: "grace_period_seconds", nilable: true, read_only: false, default: nil, kind: Int32 },
-        { key: "kind", accessor: "kind", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "orphanDependents", accessor: "orphan_dependents", nilable: true, read_only: false, default: nil, kind: ::Bool },
-        { key: "preconditions", accessor: "preconditions", nilable: true, read_only: false, default: nil, kind: ::K8S::Apimachinery::Apis::Meta::V1::Preconditions },
-        { key: "propagationPolicy", accessor: "propagation_policy", nilable: true, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "apiVersion", accessor: "api_version", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "dryRun", accessor: "dry_run", nilable: true, read_only: false, default: nil, kind: ::Array(String)},
+      {key: "gracePeriodSeconds", accessor: "grace_period_seconds", nilable: true, read_only: false, default: nil, kind: Int32},
+      {key: "kind", accessor: "kind", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "orphanDependents", accessor: "orphan_dependents", nilable: true, read_only: false, default: nil, kind: ::Bool},
+      {key: "preconditions", accessor: "preconditions", nilable: true, read_only: false, default: nil, kind: ::K8S::Apimachinery::Apis::Meta::V1::Preconditions},
+      {key: "propagationPolicy", accessor: "propagation_policy", nilable: true, read_only: false, default: nil, kind: String},
+    ])
   end
 end

@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def count? : Int32?
     # :ditto:
-    abstract def count=(value : Int32?)
+    abstract def count=(value : Int32)
   end
 
   # VolumeNodeResources is a set of resource limits for scheduling of volumes.
@@ -24,31 +24,15 @@ module K8S
   )]
   class Api::Storage::V1::VolumeNodeResources < ::K8S::GenericObject
     include ::K8S::Types::Api::Storage::V1::VolumeNodeResources
+    k8s_object_accessor("count", count : Int32, true, false, "Maximum number of unique volumes managed by the CSI driver that can be used on a node. A volume that is both attached and mounted on a node is considered to be used once, not twice. The same rule applies for a unique volume that is shared among multiple pods on the same node. If this field is not specified, then the supported number of volumes on this node is unbounded.")
 
-    # Maximum number of unique volumes managed by the CSI driver that can be used on a node. A volume that is both attached and mounted on a node is considered to be used once, not twice. The same rule applies for a unique volume that is shared among multiple pods on the same node. If this field is not specified, then the supported number of volumes on this node is unbounded.
-    def count : Int32?
-      self.["count"].as(Int32?)
+    def initialize(*, count : Int32? = nil)
+      super()
+      self.["count"] = count
     end
 
-    # :ditto:
-    def count! : Int32
-      self.["count"].as(Int32?).not_nil!
-    end
-
-    # :ditto:
-    def count? : Int32?
-      self.["count"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def count=(value : Int32?)
-      self.["count"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "count", accessor: "count", nilable: true, read_only: false, default: nil, kind: Int32 },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "count", accessor: "count", nilable: true, read_only: false, default: nil, kind: Int32},
+    ])
   end
 end

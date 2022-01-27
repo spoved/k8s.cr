@@ -11,7 +11,7 @@ module K8S
   # Namespace holding the types for `Api::Core::V1::CephFSVolumeSource`.
   module Types::Api::Core::V1::CephFSVolumeSource
     # Required: Monitors is a collection of Ceph monitors More info: [[https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it](https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it)](https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it](https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it))
-    abstract def monitors : ::Array(String)
+    abstract def monitors : ::Array(String)?
     # :ditto:
     abstract def monitors! : ::Array(String)
     # :ditto:
@@ -25,7 +25,7 @@ module K8S
     # :ditto:
     abstract def path? : String?
     # :ditto:
-    abstract def path=(value : String?)
+    abstract def path=(value : String)
     # Optional: Defaults to false [[(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts. More info: https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts. More info: https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it)]([(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts. More info: https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts. More info: https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it))
     abstract def read_only : ::Bool?
     # :ditto:
@@ -33,7 +33,7 @@ module K8S
     # :ditto:
     abstract def read_only? : ::Bool?
     # :ditto:
-    abstract def read_only=(value : ::Bool?)
+    abstract def read_only=(value : ::Bool)
     # Optional: SecretFile is the path to key ring for User, default is [[/etc/ceph/user.secret More info: https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it](/etc/ceph/user.secret More info: https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it)]([/etc/ceph/user.secret More info: https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it](/etc/ceph/user.secret More info: https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it))
     abstract def secret_file : String?
     # :ditto:
@@ -41,7 +41,7 @@ module K8S
     # :ditto:
     abstract def secret_file? : String?
     # :ditto:
-    abstract def secret_file=(value : String?)
+    abstract def secret_file=(value : String)
     # Optional: SecretRef is reference to the authentication secret for User, default is empty. More info: [[https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it](https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it)](https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it](https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it))
     abstract def secret_ref : ::K8S::Api::Core::V1::LocalObjectReference?
     # :ditto:
@@ -49,7 +49,7 @@ module K8S
     # :ditto:
     abstract def secret_ref? : ::K8S::Api::Core::V1::LocalObjectReference?
     # :ditto:
-    abstract def secret_ref=(value : ::K8S::Api::Core::V1::LocalObjectReference?)
+    abstract def secret_ref=(value : ::K8S::Api::Core::V1::LocalObjectReference)
     # Optional: User is the rados user name, default is admin More info: [[https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it](https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it)](https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it](https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it))
     abstract def user : String?
     # :ditto:
@@ -57,7 +57,7 @@ module K8S
     # :ditto:
     abstract def user? : String?
     # :ditto:
-    abstract def user=(value : String?)
+    abstract def user=(value : String)
   end
 
   # Represents a Ceph Filesystem mount that lasts the lifetime of a pod Cephfs volumes do not support ownership management or SELinux relabeling.
@@ -71,136 +71,30 @@ module K8S
   )]
   class Api::Core::V1::CephFSVolumeSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::CephFSVolumeSource
+    k8s_object_accessor("monitors", monitors : ::Array(String), false, false, "Required: Monitors is a collection of Ceph monitors More info: [https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it](https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it)")
+    k8s_object_accessor("path", path : String, true, false, "Optional: Used as the mounted root, rather than the full Ceph tree, default is /")
+    k8s_object_accessor("readOnly", read_only : ::Bool, true, false, "Optional: Defaults to false [(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts. More info: https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts. More info: https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it)")
+    k8s_object_accessor("secretFile", secret_file : String, true, false, "Optional: SecretFile is the path to key ring for User, default is [/etc/ceph/user.secret More info: https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it](/etc/ceph/user.secret More info: https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it)")
+    k8s_object_accessor("secretRef", secret_ref : ::K8S::Api::Core::V1::LocalObjectReference, true, false, "Optional: SecretRef is reference to the authentication secret for User, default is empty. More info: [https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it](https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it)")
+    k8s_object_accessor("user", user : String, true, false, "Optional: User is the rados user name, default is admin More info: [https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it](https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it)")
 
-    # Required: Monitors is a collection of Ceph monitors More info: [[https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it](https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it)](https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it](https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it))
-    def monitors : ::Array(String)
-      self.["monitors"].as(::Array(String))
+    def initialize(*, monitors : ::Array(String)? = nil, path : String? = nil, read_only : ::Bool? = nil, secret_file : String? = nil, secret_ref : ::K8S::Api::Core::V1::LocalObjectReference? = nil, user : String? = nil)
+      super()
+      self.["monitors"] = monitors
+      self.["path"] = path
+      self.["readOnly"] = read_only
+      self.["secretFile"] = secret_file
+      self.["secretRef"] = secret_ref
+      self.["user"] = user
     end
 
-    # :ditto:
-    def monitors! : ::Array(String)
-      self.["monitors"].as(::Array(String)).not_nil!
-    end
-
-    # :ditto:
-    def monitors? : ::Array(String)?
-      self.["monitors"]?.as(::Array(String)?)
-    end
-
-    # :ditto:
-    def monitors=(value : ::Array(String))
-      self.["monitors"] = value
-    end
-
-    # Optional: Used as the mounted root, rather than the full Ceph tree, default is /
-    def path : String?
-      self.["path"].as(String?)
-    end
-
-    # :ditto:
-    def path! : String
-      self.["path"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def path? : String?
-      self.["path"]?.as(String?)
-    end
-
-    # :ditto:
-    def path=(value : String?)
-      self.["path"] = value
-    end
-
-    # Optional: Defaults to false [[(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts. More info: https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts. More info: https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it)]([(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts. More info: https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts. More info: https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it))
-    def read_only : ::Bool?
-      self.["readOnly"].as(::Bool?)
-    end
-
-    # :ditto:
-    def read_only! : ::Bool
-      self.["readOnly"].as(::Bool?).not_nil!
-    end
-
-    # :ditto:
-    def read_only? : ::Bool?
-      self.["readOnly"]?.as(::Bool?)
-    end
-
-    # :ditto:
-    def read_only=(value : ::Bool?)
-      self.["readOnly"] = value
-    end
-
-    # Optional: SecretFile is the path to key ring for User, default is [[/etc/ceph/user.secret More info: https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it](/etc/ceph/user.secret More info: https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it)]([/etc/ceph/user.secret More info: https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it](/etc/ceph/user.secret More info: https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it))
-    def secret_file : String?
-      self.["secretFile"].as(String?)
-    end
-
-    # :ditto:
-    def secret_file! : String
-      self.["secretFile"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def secret_file? : String?
-      self.["secretFile"]?.as(String?)
-    end
-
-    # :ditto:
-    def secret_file=(value : String?)
-      self.["secretFile"] = value
-    end
-
-    # Optional: SecretRef is reference to the authentication secret for User, default is empty. More info: [[https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it](https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it)](https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it](https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it))
-    def secret_ref : ::K8S::Api::Core::V1::LocalObjectReference?
-      self.["secretRef"].as(::K8S::Api::Core::V1::LocalObjectReference?)
-    end
-
-    # :ditto:
-    def secret_ref! : ::K8S::Api::Core::V1::LocalObjectReference
-      self.["secretRef"].as(::K8S::Api::Core::V1::LocalObjectReference?).not_nil!
-    end
-
-    # :ditto:
-    def secret_ref? : ::K8S::Api::Core::V1::LocalObjectReference?
-      self.["secretRef"]?.as(::K8S::Api::Core::V1::LocalObjectReference?)
-    end
-
-    # :ditto:
-    def secret_ref=(value : ::K8S::Api::Core::V1::LocalObjectReference?)
-      self.["secretRef"] = value
-    end
-
-    # Optional: User is the rados user name, default is admin More info: [[https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it](https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it)](https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it](https://releases.k8s.io/HEAD/examples/volumes/cephfs/README.md#how-to-use-it))
-    def user : String?
-      self.["user"].as(String?)
-    end
-
-    # :ditto:
-    def user! : String
-      self.["user"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def user? : String?
-      self.["user"]?.as(String?)
-    end
-
-    # :ditto:
-    def user=(value : String?)
-      self.["user"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "monitors", accessor: "monitors", nilable: false, read_only: false, default: nil, kind: ::Array(String) },
-        { key: "path", accessor: "path", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "readOnly", accessor: "read_only", nilable: true, read_only: false, default: nil, kind: ::Bool },
-        { key: "secretFile", accessor: "secret_file", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "secretRef", accessor: "secret_ref", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::LocalObjectReference },
-        { key: "user", accessor: "user", nilable: true, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "monitors", accessor: "monitors", nilable: false, read_only: false, default: nil, kind: ::Array(String)},
+      {key: "path", accessor: "path", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "readOnly", accessor: "read_only", nilable: true, read_only: false, default: nil, kind: ::Bool},
+      {key: "secretFile", accessor: "secret_file", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "secretRef", accessor: "secret_ref", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::LocalObjectReference},
+      {key: "user", accessor: "user", nilable: true, read_only: false, default: nil, kind: String},
+    ])
   end
 end

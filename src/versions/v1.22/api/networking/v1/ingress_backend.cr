@@ -18,7 +18,7 @@ module K8S
     # :ditto:
     abstract def resource? : ::K8S::Api::Core::V1::TypedLocalObjectReference?
     # :ditto:
-    abstract def resource=(value : ::K8S::Api::Core::V1::TypedLocalObjectReference?)
+    abstract def resource=(value : ::K8S::Api::Core::V1::TypedLocalObjectReference)
     # Service references a Service as a Backend. This is a mutually exclusive setting with "Resource".
     abstract def service : ::K8S::Api::Networking::V1::IngressServiceBackend?
     # :ditto:
@@ -26,7 +26,7 @@ module K8S
     # :ditto:
     abstract def service? : ::K8S::Api::Networking::V1::IngressServiceBackend?
     # :ditto:
-    abstract def service=(value : ::K8S::Api::Networking::V1::IngressServiceBackend?)
+    abstract def service=(value : ::K8S::Api::Networking::V1::IngressServiceBackend)
   end
 
   # IngressBackend describes all endpoints for a given service and port.
@@ -36,52 +36,18 @@ module K8S
   )]
   class Api::Networking::V1::IngressBackend < ::K8S::GenericObject
     include ::K8S::Types::Api::Networking::V1::IngressBackend
+    k8s_object_accessor("resource", resource : ::K8S::Api::Core::V1::TypedLocalObjectReference, true, false, "Resource is an ObjectRef to another Kubernetes resource in the namespace of the Ingress object. If resource is specified, a service.Name and service.Port must not be specified. This is a mutually exclusive setting with \"Service\".")
+    k8s_object_accessor("service", service : ::K8S::Api::Networking::V1::IngressServiceBackend, true, false, "Service references a Service as a Backend. This is a mutually exclusive setting with \"Resource\".")
 
-    # Resource is an ObjectRef to another Kubernetes resource in the namespace of the Ingress object. If resource is specified, a service.Name and service.Port must not be specified. This is a mutually exclusive setting with "Service".
-    def resource : ::K8S::Api::Core::V1::TypedLocalObjectReference?
-      self.["resource"].as(::K8S::Api::Core::V1::TypedLocalObjectReference?)
+    def initialize(*, resource : ::K8S::Api::Core::V1::TypedLocalObjectReference? = nil, service : ::K8S::Api::Networking::V1::IngressServiceBackend? = nil)
+      super()
+      self.["resource"] = resource
+      self.["service"] = service
     end
 
-    # :ditto:
-    def resource! : ::K8S::Api::Core::V1::TypedLocalObjectReference
-      self.["resource"].as(::K8S::Api::Core::V1::TypedLocalObjectReference?).not_nil!
-    end
-
-    # :ditto:
-    def resource? : ::K8S::Api::Core::V1::TypedLocalObjectReference?
-      self.["resource"]?.as(::K8S::Api::Core::V1::TypedLocalObjectReference?)
-    end
-
-    # :ditto:
-    def resource=(value : ::K8S::Api::Core::V1::TypedLocalObjectReference?)
-      self.["resource"] = value
-    end
-
-    # Service references a Service as a Backend. This is a mutually exclusive setting with "Resource".
-    def service : ::K8S::Api::Networking::V1::IngressServiceBackend?
-      self.["service"].as(::K8S::Api::Networking::V1::IngressServiceBackend?)
-    end
-
-    # :ditto:
-    def service! : ::K8S::Api::Networking::V1::IngressServiceBackend
-      self.["service"].as(::K8S::Api::Networking::V1::IngressServiceBackend?).not_nil!
-    end
-
-    # :ditto:
-    def service? : ::K8S::Api::Networking::V1::IngressServiceBackend?
-      self.["service"]?.as(::K8S::Api::Networking::V1::IngressServiceBackend?)
-    end
-
-    # :ditto:
-    def service=(value : ::K8S::Api::Networking::V1::IngressServiceBackend?)
-      self.["service"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "resource", accessor: "resource", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::TypedLocalObjectReference },
-        { key: "service", accessor: "service", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Networking::V1::IngressServiceBackend },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "resource", accessor: "resource", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::TypedLocalObjectReference},
+      {key: "service", accessor: "service", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Networking::V1::IngressServiceBackend},
+    ])
   end
 end

@@ -17,9 +17,9 @@ module K8S
     # :ditto:
     abstract def attach_error? : ::K8S::Api::Storage::V1::VolumeError?
     # :ditto:
-    abstract def attach_error=(value : ::K8S::Api::Storage::V1::VolumeError?)
+    abstract def attach_error=(value : ::K8S::Api::Storage::V1::VolumeError)
     # Indicates the volume is successfully attached. This field must only be set by the entity completing the attach operation, i.e. the external-attacher.
-    abstract def attached : ::Bool
+    abstract def attached : ::Bool?
     # :ditto:
     abstract def attached! : ::Bool
     # :ditto:
@@ -33,7 +33,7 @@ module K8S
     # :ditto:
     abstract def attachment_metadata? : ::Hash(String, String)?
     # :ditto:
-    abstract def attachment_metadata=(value : ::Hash(String, String)?)
+    abstract def attachment_metadata=(value : ::Hash(String, String))
     # The last error encountered during detach operation, if any. This field must only be set by the entity completing the detach operation, i.e. the external-attacher.
     abstract def detach_error : ::K8S::Api::Storage::V1::VolumeError?
     # :ditto:
@@ -41,7 +41,7 @@ module K8S
     # :ditto:
     abstract def detach_error? : ::K8S::Api::Storage::V1::VolumeError?
     # :ditto:
-    abstract def detach_error=(value : ::K8S::Api::Storage::V1::VolumeError?)
+    abstract def detach_error=(value : ::K8S::Api::Storage::V1::VolumeError)
   end
 
   # VolumeAttachmentStatus is the status of a VolumeAttachment request.
@@ -53,94 +53,24 @@ module K8S
   )]
   class Api::Storage::V1::VolumeAttachmentStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Storage::V1::VolumeAttachmentStatus
+    k8s_object_accessor("attachError", attach_error : ::K8S::Api::Storage::V1::VolumeError, true, false, "The last error encountered during attach operation, if any. This field must only be set by the entity completing the attach operation, i.e. the external-attacher.")
+    k8s_object_accessor("attached", attached : ::Bool, false, false, "Indicates the volume is successfully attached. This field must only be set by the entity completing the attach operation, i.e. the external-attacher.")
+    k8s_object_accessor("attachmentMetadata", attachment_metadata : ::Hash(String, String), true, false, "Upon successful attach, this field is populated with any information returned by the attach operation that must be passed into subsequent WaitForAttach or Mount calls. This field must only be set by the entity completing the attach operation, i.e. the external-attacher.")
+    k8s_object_accessor("detachError", detach_error : ::K8S::Api::Storage::V1::VolumeError, true, false, "The last error encountered during detach operation, if any. This field must only be set by the entity completing the detach operation, i.e. the external-attacher.")
 
-    # The last error encountered during attach operation, if any. This field must only be set by the entity completing the attach operation, i.e. the external-attacher.
-    def attach_error : ::K8S::Api::Storage::V1::VolumeError?
-      self.["attachError"].as(::K8S::Api::Storage::V1::VolumeError?)
+    def initialize(*, attach_error : ::K8S::Api::Storage::V1::VolumeError? = nil, attached : ::Bool? = nil, attachment_metadata : ::Hash(String, String)? = nil, detach_error : ::K8S::Api::Storage::V1::VolumeError? = nil)
+      super()
+      self.["attachError"] = attach_error
+      self.["attached"] = attached
+      self.["attachmentMetadata"] = attachment_metadata
+      self.["detachError"] = detach_error
     end
 
-    # :ditto:
-    def attach_error! : ::K8S::Api::Storage::V1::VolumeError
-      self.["attachError"].as(::K8S::Api::Storage::V1::VolumeError?).not_nil!
-    end
-
-    # :ditto:
-    def attach_error? : ::K8S::Api::Storage::V1::VolumeError?
-      self.["attachError"]?.as(::K8S::Api::Storage::V1::VolumeError?)
-    end
-
-    # :ditto:
-    def attach_error=(value : ::K8S::Api::Storage::V1::VolumeError?)
-      self.["attachError"] = value
-    end
-
-    # Indicates the volume is successfully attached. This field must only be set by the entity completing the attach operation, i.e. the external-attacher.
-    def attached : ::Bool
-      self.["attached"].as(::Bool)
-    end
-
-    # :ditto:
-    def attached! : ::Bool
-      self.["attached"].as(::Bool).not_nil!
-    end
-
-    # :ditto:
-    def attached? : ::Bool?
-      self.["attached"]?.as(::Bool?)
-    end
-
-    # :ditto:
-    def attached=(value : ::Bool)
-      self.["attached"] = value
-    end
-
-    # Upon successful attach, this field is populated with any information returned by the attach operation that must be passed into subsequent WaitForAttach or Mount calls. This field must only be set by the entity completing the attach operation, i.e. the external-attacher.
-    def attachment_metadata : ::Hash(String, String)?
-      self.["attachmentMetadata"].as(::Hash(String, String)?)
-    end
-
-    # :ditto:
-    def attachment_metadata! : ::Hash(String, String)
-      self.["attachmentMetadata"].as(::Hash(String, String)?).not_nil!
-    end
-
-    # :ditto:
-    def attachment_metadata? : ::Hash(String, String)?
-      self.["attachmentMetadata"]?.as(::Hash(String, String)?)
-    end
-
-    # :ditto:
-    def attachment_metadata=(value : ::Hash(String, String)?)
-      self.["attachmentMetadata"] = value
-    end
-
-    # The last error encountered during detach operation, if any. This field must only be set by the entity completing the detach operation, i.e. the external-attacher.
-    def detach_error : ::K8S::Api::Storage::V1::VolumeError?
-      self.["detachError"].as(::K8S::Api::Storage::V1::VolumeError?)
-    end
-
-    # :ditto:
-    def detach_error! : ::K8S::Api::Storage::V1::VolumeError
-      self.["detachError"].as(::K8S::Api::Storage::V1::VolumeError?).not_nil!
-    end
-
-    # :ditto:
-    def detach_error? : ::K8S::Api::Storage::V1::VolumeError?
-      self.["detachError"]?.as(::K8S::Api::Storage::V1::VolumeError?)
-    end
-
-    # :ditto:
-    def detach_error=(value : ::K8S::Api::Storage::V1::VolumeError?)
-      self.["detachError"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "attachError", accessor: "attach_error", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Storage::V1::VolumeError },
-        { key: "attached", accessor: "attached", nilable: false, read_only: false, default: nil, kind: ::Bool },
-        { key: "attachmentMetadata", accessor: "attachment_metadata", nilable: true, read_only: false, default: nil, kind: ::Hash(String, String) },
-        { key: "detachError", accessor: "detach_error", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Storage::V1::VolumeError },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "attachError", accessor: "attach_error", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Storage::V1::VolumeError},
+      {key: "attached", accessor: "attached", nilable: false, read_only: false, default: nil, kind: ::Bool},
+      {key: "attachmentMetadata", accessor: "attachment_metadata", nilable: true, read_only: false, default: nil, kind: ::Hash(String, String)},
+      {key: "detachError", accessor: "detach_error", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Storage::V1::VolumeError},
+    ])
   end
 end

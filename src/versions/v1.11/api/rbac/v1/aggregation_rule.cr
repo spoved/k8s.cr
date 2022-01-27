@@ -17,7 +17,7 @@ module K8S
     # :ditto:
     abstract def cluster_role_selectors? : ::Array(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector)?
     # :ditto:
-    abstract def cluster_role_selectors=(value : ::Array(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector)?)
+    abstract def cluster_role_selectors=(value : ::Array(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector))
   end
 
   # AggregationRule describes how to locate ClusterRoles to aggregate into the ClusterRole
@@ -26,31 +26,15 @@ module K8S
   )]
   class Api::Rbac::V1::AggregationRule < ::K8S::GenericObject
     include ::K8S::Types::Api::Rbac::V1::AggregationRule
+    k8s_object_accessor("clusterRoleSelectors", cluster_role_selectors : ::Array(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector), true, false, "ClusterRoleSelectors holds a list of selectors which will be used to find ClusterRoles and create the rules. If any of the selectors match, then the ClusterRole's permissions will be added")
 
-    # ClusterRoleSelectors holds a list of selectors which will be used to find ClusterRoles and create the rules. If any of the selectors match, then the ClusterRole's permissions will be added
-    def cluster_role_selectors : ::Array(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector)?
-      self.["clusterRoleSelectors"].as(::Array(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector)?)
+    def initialize(*, cluster_role_selectors : ::Array(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector)? = nil)
+      super()
+      self.["clusterRoleSelectors"] = cluster_role_selectors
     end
 
-    # :ditto:
-    def cluster_role_selectors! : ::Array(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector)
-      self.["clusterRoleSelectors"].as(::Array(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector)?).not_nil!
-    end
-
-    # :ditto:
-    def cluster_role_selectors? : ::Array(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector)?
-      self.["clusterRoleSelectors"]?.as(::Array(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector)?)
-    end
-
-    # :ditto:
-    def cluster_role_selectors=(value : ::Array(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector)?)
-      self.["clusterRoleSelectors"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "clusterRoleSelectors", accessor: "cluster_role_selectors", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector) },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "clusterRoleSelectors", accessor: "cluster_role_selectors", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector)},
+    ])
   end
 end

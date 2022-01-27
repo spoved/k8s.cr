@@ -18,7 +18,7 @@ module K8S
     # :ditto:
     abstract def conditions? : ::Array(::K8S::Apimachinery::Apis::Meta::V1::Condition)?
     # :ditto:
-    abstract def conditions=(value : ::Array(::K8S::Apimachinery::Apis::Meta::V1::Condition)?)
+    abstract def conditions=(value : ::Array(::K8S::Apimachinery::Apis::Meta::V1::Condition))
     # LoadBalancer contains the current status of the load-balancer, if one is present.
     abstract def load_balancer : ::K8S::Api::Core::V1::LoadBalancerStatus?
     # :ditto:
@@ -26,7 +26,7 @@ module K8S
     # :ditto:
     abstract def load_balancer? : ::K8S::Api::Core::V1::LoadBalancerStatus?
     # :ditto:
-    abstract def load_balancer=(value : ::K8S::Api::Core::V1::LoadBalancerStatus?)
+    abstract def load_balancer=(value : ::K8S::Api::Core::V1::LoadBalancerStatus)
   end
 
   # ServiceStatus represents the current status of a service.
@@ -36,52 +36,18 @@ module K8S
   )]
   class Api::Core::V1::ServiceStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::ServiceStatus
+    k8s_object_accessor("conditions", conditions : ::Array(::K8S::Apimachinery::Apis::Meta::V1::Condition), true, false, "Current service state")
+    k8s_object_accessor("loadBalancer", load_balancer : ::K8S::Api::Core::V1::LoadBalancerStatus, true, false, "LoadBalancer contains the current status of the load-balancer, if one is present.")
 
-    # Current service state
-    def conditions : ::Array(::K8S::Apimachinery::Apis::Meta::V1::Condition)?
-      self.["conditions"].as(::Array(::K8S::Apimachinery::Apis::Meta::V1::Condition)?)
+    def initialize(*, conditions : ::Array(::K8S::Apimachinery::Apis::Meta::V1::Condition)? = nil, load_balancer : ::K8S::Api::Core::V1::LoadBalancerStatus? = nil)
+      super()
+      self.["conditions"] = conditions
+      self.["loadBalancer"] = load_balancer
     end
 
-    # :ditto:
-    def conditions! : ::Array(::K8S::Apimachinery::Apis::Meta::V1::Condition)
-      self.["conditions"].as(::Array(::K8S::Apimachinery::Apis::Meta::V1::Condition)?).not_nil!
-    end
-
-    # :ditto:
-    def conditions? : ::Array(::K8S::Apimachinery::Apis::Meta::V1::Condition)?
-      self.["conditions"]?.as(::Array(::K8S::Apimachinery::Apis::Meta::V1::Condition)?)
-    end
-
-    # :ditto:
-    def conditions=(value : ::Array(::K8S::Apimachinery::Apis::Meta::V1::Condition)?)
-      self.["conditions"] = value
-    end
-
-    # LoadBalancer contains the current status of the load-balancer, if one is present.
-    def load_balancer : ::K8S::Api::Core::V1::LoadBalancerStatus?
-      self.["loadBalancer"].as(::K8S::Api::Core::V1::LoadBalancerStatus?)
-    end
-
-    # :ditto:
-    def load_balancer! : ::K8S::Api::Core::V1::LoadBalancerStatus
-      self.["loadBalancer"].as(::K8S::Api::Core::V1::LoadBalancerStatus?).not_nil!
-    end
-
-    # :ditto:
-    def load_balancer? : ::K8S::Api::Core::V1::LoadBalancerStatus?
-      self.["loadBalancer"]?.as(::K8S::Api::Core::V1::LoadBalancerStatus?)
-    end
-
-    # :ditto:
-    def load_balancer=(value : ::K8S::Api::Core::V1::LoadBalancerStatus?)
-      self.["loadBalancer"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "conditions", accessor: "conditions", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Apimachinery::Apis::Meta::V1::Condition) },
-        { key: "loadBalancer", accessor: "load_balancer", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::LoadBalancerStatus },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "conditions", accessor: "conditions", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Apimachinery::Apis::Meta::V1::Condition)},
+      {key: "loadBalancer", accessor: "load_balancer", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::LoadBalancerStatus},
+    ])
   end
 end

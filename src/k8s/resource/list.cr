@@ -1,41 +1,21 @@
-class ::K8S::Kubernetes::Resource::List(T) < ::K8S::Kubernetes::Resource
-  # Standard object's metadata. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)))
-  def metadata : ::K8S::Apimachinery::Apis::Meta::V1::ListMeta?
-    self.["metadata"].as(::K8S::Apimachinery::Apis::Meta::V1::ListMeta?)
-  end
+abstract class ::K8S::Kubernetes::Resource::List(K) < ::K8S::Kubernetes::Resource
+  k8s_object_accessor "metadata", metadata : ::K8S::Apimachinery::Apis::Meta::V1::ListMeta, true, false, %<Standard object's metadata. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)))>
 
-  # :ditto:
-  def metadata! : ::K8S::Apimachinery::Apis::Meta::V1::ListMeta
-    self.["metadata"].as(::K8S::Apimachinery::Apis::Meta::V1::ListMeta?).not_nil!
-  end
+  macro inherited
+    k8s_object_accessor "items", items : Array(K), false, false, %<Items is a list of `#{K}`.>
 
-  # :ditto:
-  def metadata? : ::K8S::Apimachinery::Apis::Meta::V1::ListMeta?
-    self.["metadata"]?.as(::K8S::Apimachinery::Apis::Meta::V1::ListMeta?)
-  end
+    def initialize(hash : Enumerable | Iterable | NamedTuple | Nil = nil)
+      super(hash)
+      raise Error.new("apiVersion must be defined") if api_version!.nil?
+      raise Error.new("kind must be defined") if kind!.nil?
+    end
 
-  # :ditto:
-  def metadata=(value : ::K8S::Apimachinery::Apis::Meta::V1::ListMeta?)
-    self.["metadata"] = value
-  end
+    def self.new(pull : ::JSON::PullParser)
+      self.new(Hash(String, ::JSON::Any).new(pull))
+    end
 
-  # List of MutatingWebhookConfiguration.
-  def items : Array(::K8S::Api::Admissionregistration::V1::MutatingWebhookConfiguration)
-    self.["items"].as(Array(::K8S::Api::Admissionregistration::V1::MutatingWebhookConfiguration))
-  end
-
-  # :ditto:
-  def items! : Array(::K8S::Api::Admissionregistration::V1::MutatingWebhookConfiguration)
-    self.["items"].as(Array(::K8S::Api::Admissionregistration::V1::MutatingWebhookConfiguration)).not_nil!
-  end
-
-  # :ditto:
-  def items? : Array(::K8S::Api::Admissionregistration::V1::MutatingWebhookConfiguration)?
-    self.["items"]?.as(Array(::K8S::Api::Admissionregistration::V1::MutatingWebhookConfiguration)?)
-  end
-
-  # :ditto:
-  def items=(value : Array(::K8S::Api::Admissionregistration::V1::MutatingWebhookConfiguration))
-    self.["items"] = value
+    def self.new(ctx : ::YAML::ParseContext, node : ::YAML::Nodes::Node)
+      self.new(Hash(String, ::JSON::Any).new(ctx, node))
+    end
   end
 end

@@ -17,9 +17,9 @@ module K8S
     # :ditto:
     abstract def controller_publish_secret_ref? : ::K8S::Api::Core::V1::SecretReference?
     # :ditto:
-    abstract def controller_publish_secret_ref=(value : ::K8S::Api::Core::V1::SecretReference?)
+    abstract def controller_publish_secret_ref=(value : ::K8S::Api::Core::V1::SecretReference)
     # Driver is the name of the driver to use for this volume. Required.
-    abstract def driver : String
+    abstract def driver : String?
     # :ditto:
     abstract def driver! : String
     # :ditto:
@@ -33,7 +33,7 @@ module K8S
     # :ditto:
     abstract def fs_type? : String?
     # :ditto:
-    abstract def fs_type=(value : String?)
+    abstract def fs_type=(value : String)
     # NodePublishSecretRef is a reference to the secret object containing sensitive information to pass to the CSI driver to complete the CSI NodePublishVolume and NodeUnpublishVolume calls. This field is optional, and  may be empty if no secret is required. If the secret object contains more than one secret, all secrets are passed.
     abstract def node_publish_secret_ref : ::K8S::Api::Core::V1::SecretReference?
     # :ditto:
@@ -41,7 +41,7 @@ module K8S
     # :ditto:
     abstract def node_publish_secret_ref? : ::K8S::Api::Core::V1::SecretReference?
     # :ditto:
-    abstract def node_publish_secret_ref=(value : ::K8S::Api::Core::V1::SecretReference?)
+    abstract def node_publish_secret_ref=(value : ::K8S::Api::Core::V1::SecretReference)
     # NodeStageSecretRef is a reference to the secret object containing sensitive information to pass to the CSI driver to complete the CSI NodeStageVolume and NodeStageVolume and NodeUnstageVolume calls. This field is optional, and  may be empty if no secret is required. If the secret object contains more than one secret, all secrets are passed.
     abstract def node_stage_secret_ref : ::K8S::Api::Core::V1::SecretReference?
     # :ditto:
@@ -49,7 +49,7 @@ module K8S
     # :ditto:
     abstract def node_stage_secret_ref? : ::K8S::Api::Core::V1::SecretReference?
     # :ditto:
-    abstract def node_stage_secret_ref=(value : ::K8S::Api::Core::V1::SecretReference?)
+    abstract def node_stage_secret_ref=(value : ::K8S::Api::Core::V1::SecretReference)
     # Optional: The value to pass to ControllerPublishVolumeRequest. Defaults to false [[(read/write).]((read/write).)]([(read/write).]((read/write).))
     abstract def read_only : ::Bool?
     # :ditto:
@@ -57,7 +57,7 @@ module K8S
     # :ditto:
     abstract def read_only? : ::Bool?
     # :ditto:
-    abstract def read_only=(value : ::Bool?)
+    abstract def read_only=(value : ::Bool)
     # Attributes of the volume to publish.
     abstract def volume_attributes : ::Hash(String, String)?
     # :ditto:
@@ -65,9 +65,9 @@ module K8S
     # :ditto:
     abstract def volume_attributes? : ::Hash(String, String)?
     # :ditto:
-    abstract def volume_attributes=(value : ::Hash(String, String)?)
+    abstract def volume_attributes=(value : ::Hash(String, String))
     # VolumeHandle is the unique volume name returned by the CSI volume plugin’s CreateVolume to refer to the volume on all subsequent calls. Required.
-    abstract def volume_handle : String
+    abstract def volume_handle : String?
     # :ditto:
     abstract def volume_handle! : String
     # :ditto:
@@ -89,178 +89,36 @@ module K8S
   )]
   class Api::Core::V1::CSIPersistentVolumeSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::CSIPersistentVolumeSource
+    k8s_object_accessor("controllerPublishSecretRef", controller_publish_secret_ref : ::K8S::Api::Core::V1::SecretReference, true, false, "ControllerPublishSecretRef is a reference to the secret object containing sensitive information to pass to the CSI driver to complete the CSI ControllerPublishVolume and ControllerUnpublishVolume calls. This field is optional, and  may be empty if no secret is required. If the secret object contains more than one secret, all secrets are passed.")
+    k8s_object_accessor("driver", driver : String, false, false, "Driver is the name of the driver to use for this volume. Required.")
+    k8s_object_accessor("fsType", fs_type : String, true, false, "Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. \"ext4\", \"xfs\", \"ntfs\".")
+    k8s_object_accessor("nodePublishSecretRef", node_publish_secret_ref : ::K8S::Api::Core::V1::SecretReference, true, false, "NodePublishSecretRef is a reference to the secret object containing sensitive information to pass to the CSI driver to complete the CSI NodePublishVolume and NodeUnpublishVolume calls. This field is optional, and  may be empty if no secret is required. If the secret object contains more than one secret, all secrets are passed.")
+    k8s_object_accessor("nodeStageSecretRef", node_stage_secret_ref : ::K8S::Api::Core::V1::SecretReference, true, false, "NodeStageSecretRef is a reference to the secret object containing sensitive information to pass to the CSI driver to complete the CSI NodeStageVolume and NodeStageVolume and NodeUnstageVolume calls. This field is optional, and  may be empty if no secret is required. If the secret object contains more than one secret, all secrets are passed.")
+    k8s_object_accessor("readOnly", read_only : ::Bool, true, false, "Optional: The value to pass to ControllerPublishVolumeRequest. Defaults to false [(read/write).]((read/write).)")
+    k8s_object_accessor("volumeAttributes", volume_attributes : ::Hash(String, String), true, false, "Attributes of the volume to publish.")
+    k8s_object_accessor("volumeHandle", volume_handle : String, false, false, "VolumeHandle is the unique volume name returned by the CSI volume plugin’s CreateVolume to refer to the volume on all subsequent calls. Required.")
 
-    # ControllerPublishSecretRef is a reference to the secret object containing sensitive information to pass to the CSI driver to complete the CSI ControllerPublishVolume and ControllerUnpublishVolume calls. This field is optional, and  may be empty if no secret is required. If the secret object contains more than one secret, all secrets are passed.
-    def controller_publish_secret_ref : ::K8S::Api::Core::V1::SecretReference?
-      self.["controllerPublishSecretRef"].as(::K8S::Api::Core::V1::SecretReference?)
+    def initialize(*, controller_publish_secret_ref : ::K8S::Api::Core::V1::SecretReference? = nil, driver : String? = nil, fs_type : String? = nil, node_publish_secret_ref : ::K8S::Api::Core::V1::SecretReference? = nil, node_stage_secret_ref : ::K8S::Api::Core::V1::SecretReference? = nil, read_only : ::Bool? = nil, volume_attributes : ::Hash(String, String)? = nil, volume_handle : String? = nil)
+      super()
+      self.["controllerPublishSecretRef"] = controller_publish_secret_ref
+      self.["driver"] = driver
+      self.["fsType"] = fs_type
+      self.["nodePublishSecretRef"] = node_publish_secret_ref
+      self.["nodeStageSecretRef"] = node_stage_secret_ref
+      self.["readOnly"] = read_only
+      self.["volumeAttributes"] = volume_attributes
+      self.["volumeHandle"] = volume_handle
     end
 
-    # :ditto:
-    def controller_publish_secret_ref! : ::K8S::Api::Core::V1::SecretReference
-      self.["controllerPublishSecretRef"].as(::K8S::Api::Core::V1::SecretReference?).not_nil!
-    end
-
-    # :ditto:
-    def controller_publish_secret_ref? : ::K8S::Api::Core::V1::SecretReference?
-      self.["controllerPublishSecretRef"]?.as(::K8S::Api::Core::V1::SecretReference?)
-    end
-
-    # :ditto:
-    def controller_publish_secret_ref=(value : ::K8S::Api::Core::V1::SecretReference?)
-      self.["controllerPublishSecretRef"] = value
-    end
-
-    # Driver is the name of the driver to use for this volume. Required.
-    def driver : String
-      self.["driver"].as(String)
-    end
-
-    # :ditto:
-    def driver! : String
-      self.["driver"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def driver? : String?
-      self.["driver"]?.as(String?)
-    end
-
-    # :ditto:
-    def driver=(value : String)
-      self.["driver"] = value
-    end
-
-    # Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs".
-    def fs_type : String?
-      self.["fsType"].as(String?)
-    end
-
-    # :ditto:
-    def fs_type! : String
-      self.["fsType"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def fs_type? : String?
-      self.["fsType"]?.as(String?)
-    end
-
-    # :ditto:
-    def fs_type=(value : String?)
-      self.["fsType"] = value
-    end
-
-    # NodePublishSecretRef is a reference to the secret object containing sensitive information to pass to the CSI driver to complete the CSI NodePublishVolume and NodeUnpublishVolume calls. This field is optional, and  may be empty if no secret is required. If the secret object contains more than one secret, all secrets are passed.
-    def node_publish_secret_ref : ::K8S::Api::Core::V1::SecretReference?
-      self.["nodePublishSecretRef"].as(::K8S::Api::Core::V1::SecretReference?)
-    end
-
-    # :ditto:
-    def node_publish_secret_ref! : ::K8S::Api::Core::V1::SecretReference
-      self.["nodePublishSecretRef"].as(::K8S::Api::Core::V1::SecretReference?).not_nil!
-    end
-
-    # :ditto:
-    def node_publish_secret_ref? : ::K8S::Api::Core::V1::SecretReference?
-      self.["nodePublishSecretRef"]?.as(::K8S::Api::Core::V1::SecretReference?)
-    end
-
-    # :ditto:
-    def node_publish_secret_ref=(value : ::K8S::Api::Core::V1::SecretReference?)
-      self.["nodePublishSecretRef"] = value
-    end
-
-    # NodeStageSecretRef is a reference to the secret object containing sensitive information to pass to the CSI driver to complete the CSI NodeStageVolume and NodeStageVolume and NodeUnstageVolume calls. This field is optional, and  may be empty if no secret is required. If the secret object contains more than one secret, all secrets are passed.
-    def node_stage_secret_ref : ::K8S::Api::Core::V1::SecretReference?
-      self.["nodeStageSecretRef"].as(::K8S::Api::Core::V1::SecretReference?)
-    end
-
-    # :ditto:
-    def node_stage_secret_ref! : ::K8S::Api::Core::V1::SecretReference
-      self.["nodeStageSecretRef"].as(::K8S::Api::Core::V1::SecretReference?).not_nil!
-    end
-
-    # :ditto:
-    def node_stage_secret_ref? : ::K8S::Api::Core::V1::SecretReference?
-      self.["nodeStageSecretRef"]?.as(::K8S::Api::Core::V1::SecretReference?)
-    end
-
-    # :ditto:
-    def node_stage_secret_ref=(value : ::K8S::Api::Core::V1::SecretReference?)
-      self.["nodeStageSecretRef"] = value
-    end
-
-    # Optional: The value to pass to ControllerPublishVolumeRequest. Defaults to false [[(read/write).]((read/write).)]([(read/write).]((read/write).))
-    def read_only : ::Bool?
-      self.["readOnly"].as(::Bool?)
-    end
-
-    # :ditto:
-    def read_only! : ::Bool
-      self.["readOnly"].as(::Bool?).not_nil!
-    end
-
-    # :ditto:
-    def read_only? : ::Bool?
-      self.["readOnly"]?.as(::Bool?)
-    end
-
-    # :ditto:
-    def read_only=(value : ::Bool?)
-      self.["readOnly"] = value
-    end
-
-    # Attributes of the volume to publish.
-    def volume_attributes : ::Hash(String, String)?
-      self.["volumeAttributes"].as(::Hash(String, String)?)
-    end
-
-    # :ditto:
-    def volume_attributes! : ::Hash(String, String)
-      self.["volumeAttributes"].as(::Hash(String, String)?).not_nil!
-    end
-
-    # :ditto:
-    def volume_attributes? : ::Hash(String, String)?
-      self.["volumeAttributes"]?.as(::Hash(String, String)?)
-    end
-
-    # :ditto:
-    def volume_attributes=(value : ::Hash(String, String)?)
-      self.["volumeAttributes"] = value
-    end
-
-    # VolumeHandle is the unique volume name returned by the CSI volume plugin’s CreateVolume to refer to the volume on all subsequent calls. Required.
-    def volume_handle : String
-      self.["volumeHandle"].as(String)
-    end
-
-    # :ditto:
-    def volume_handle! : String
-      self.["volumeHandle"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def volume_handle? : String?
-      self.["volumeHandle"]?.as(String?)
-    end
-
-    # :ditto:
-    def volume_handle=(value : String)
-      self.["volumeHandle"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "controllerPublishSecretRef", accessor: "controller_publish_secret_ref", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::SecretReference },
-        { key: "driver", accessor: "driver", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "fsType", accessor: "fs_type", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "nodePublishSecretRef", accessor: "node_publish_secret_ref", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::SecretReference },
-        { key: "nodeStageSecretRef", accessor: "node_stage_secret_ref", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::SecretReference },
-        { key: "readOnly", accessor: "read_only", nilable: true, read_only: false, default: nil, kind: ::Bool },
-        { key: "volumeAttributes", accessor: "volume_attributes", nilable: true, read_only: false, default: nil, kind: ::Hash(String, String) },
-        { key: "volumeHandle", accessor: "volume_handle", nilable: false, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "controllerPublishSecretRef", accessor: "controller_publish_secret_ref", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::SecretReference},
+      {key: "driver", accessor: "driver", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "fsType", accessor: "fs_type", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "nodePublishSecretRef", accessor: "node_publish_secret_ref", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::SecretReference},
+      {key: "nodeStageSecretRef", accessor: "node_stage_secret_ref", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::SecretReference},
+      {key: "readOnly", accessor: "read_only", nilable: true, read_only: false, default: nil, kind: ::Bool},
+      {key: "volumeAttributes", accessor: "volume_attributes", nilable: true, read_only: false, default: nil, kind: ::Hash(String, String)},
+      {key: "volumeHandle", accessor: "volume_handle", nilable: false, read_only: false, default: nil, kind: String},
+    ])
   end
 end

@@ -13,7 +13,7 @@ module K8S
   # Namespace holding the types for `Api::Autoscaling::V2beta2::ObjectMetricSource`.
   module Types::Api::Autoscaling::V2beta2::ObjectMetricSource
     #
-    abstract def described_object : ::K8S::Api::Autoscaling::V2beta2::CrossVersionObjectReference
+    abstract def described_object : ::K8S::Api::Autoscaling::V2beta2::CrossVersionObjectReference?
     # :ditto:
     abstract def described_object! : ::K8S::Api::Autoscaling::V2beta2::CrossVersionObjectReference
     # :ditto:
@@ -21,7 +21,7 @@ module K8S
     # :ditto:
     abstract def described_object=(value : ::K8S::Api::Autoscaling::V2beta2::CrossVersionObjectReference)
     # metric identifies the target metric by name and selector
-    abstract def metric : ::K8S::Api::Autoscaling::V2beta2::MetricIdentifier
+    abstract def metric : ::K8S::Api::Autoscaling::V2beta2::MetricIdentifier?
     # :ditto:
     abstract def metric! : ::K8S::Api::Autoscaling::V2beta2::MetricIdentifier
     # :ditto:
@@ -29,7 +29,7 @@ module K8S
     # :ditto:
     abstract def metric=(value : ::K8S::Api::Autoscaling::V2beta2::MetricIdentifier)
     # target specifies the target value for the given metric
-    abstract def target : ::K8S::Api::Autoscaling::V2beta2::MetricTarget
+    abstract def target : ::K8S::Api::Autoscaling::V2beta2::MetricTarget?
     # :ditto:
     abstract def target! : ::K8S::Api::Autoscaling::V2beta2::MetricTarget
     # :ditto:
@@ -46,73 +46,21 @@ module K8S
   )]
   class Api::Autoscaling::V2beta2::ObjectMetricSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Autoscaling::V2beta2::ObjectMetricSource
+    k8s_object_accessor("describedObject", described_object : ::K8S::Api::Autoscaling::V2beta2::CrossVersionObjectReference, false, false, nil)
+    k8s_object_accessor("metric", metric : ::K8S::Api::Autoscaling::V2beta2::MetricIdentifier, false, false, "metric identifies the target metric by name and selector")
+    k8s_object_accessor("target", target : ::K8S::Api::Autoscaling::V2beta2::MetricTarget, false, false, "target specifies the target value for the given metric")
 
-    #
-    def described_object : ::K8S::Api::Autoscaling::V2beta2::CrossVersionObjectReference
-      self.["describedObject"].as(::K8S::Api::Autoscaling::V2beta2::CrossVersionObjectReference)
+    def initialize(*, described_object : ::K8S::Api::Autoscaling::V2beta2::CrossVersionObjectReference? = nil, metric : ::K8S::Api::Autoscaling::V2beta2::MetricIdentifier? = nil, target : ::K8S::Api::Autoscaling::V2beta2::MetricTarget? = nil)
+      super()
+      self.["describedObject"] = described_object
+      self.["metric"] = metric
+      self.["target"] = target
     end
 
-    # :ditto:
-    def described_object! : ::K8S::Api::Autoscaling::V2beta2::CrossVersionObjectReference
-      self.["describedObject"].as(::K8S::Api::Autoscaling::V2beta2::CrossVersionObjectReference).not_nil!
-    end
-
-    # :ditto:
-    def described_object? : ::K8S::Api::Autoscaling::V2beta2::CrossVersionObjectReference?
-      self.["describedObject"]?.as(::K8S::Api::Autoscaling::V2beta2::CrossVersionObjectReference?)
-    end
-
-    # :ditto:
-    def described_object=(value : ::K8S::Api::Autoscaling::V2beta2::CrossVersionObjectReference)
-      self.["describedObject"] = value
-    end
-
-    # metric identifies the target metric by name and selector
-    def metric : ::K8S::Api::Autoscaling::V2beta2::MetricIdentifier
-      self.["metric"].as(::K8S::Api::Autoscaling::V2beta2::MetricIdentifier)
-    end
-
-    # :ditto:
-    def metric! : ::K8S::Api::Autoscaling::V2beta2::MetricIdentifier
-      self.["metric"].as(::K8S::Api::Autoscaling::V2beta2::MetricIdentifier).not_nil!
-    end
-
-    # :ditto:
-    def metric? : ::K8S::Api::Autoscaling::V2beta2::MetricIdentifier?
-      self.["metric"]?.as(::K8S::Api::Autoscaling::V2beta2::MetricIdentifier?)
-    end
-
-    # :ditto:
-    def metric=(value : ::K8S::Api::Autoscaling::V2beta2::MetricIdentifier)
-      self.["metric"] = value
-    end
-
-    # target specifies the target value for the given metric
-    def target : ::K8S::Api::Autoscaling::V2beta2::MetricTarget
-      self.["target"].as(::K8S::Api::Autoscaling::V2beta2::MetricTarget)
-    end
-
-    # :ditto:
-    def target! : ::K8S::Api::Autoscaling::V2beta2::MetricTarget
-      self.["target"].as(::K8S::Api::Autoscaling::V2beta2::MetricTarget).not_nil!
-    end
-
-    # :ditto:
-    def target? : ::K8S::Api::Autoscaling::V2beta2::MetricTarget?
-      self.["target"]?.as(::K8S::Api::Autoscaling::V2beta2::MetricTarget?)
-    end
-
-    # :ditto:
-    def target=(value : ::K8S::Api::Autoscaling::V2beta2::MetricTarget)
-      self.["target"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "describedObject", accessor: "described_object", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Autoscaling::V2beta2::CrossVersionObjectReference },
-        { key: "metric", accessor: "metric", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Autoscaling::V2beta2::MetricIdentifier },
-        { key: "target", accessor: "target", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Autoscaling::V2beta2::MetricTarget },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "describedObject", accessor: "described_object", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Autoscaling::V2beta2::CrossVersionObjectReference},
+      {key: "metric", accessor: "metric", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Autoscaling::V2beta2::MetricIdentifier},
+      {key: "target", accessor: "target", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Autoscaling::V2beta2::MetricTarget},
+    ])
   end
 end

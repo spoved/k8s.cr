@@ -8,7 +8,10 @@
       "preLaunchTask": "Compile",
       "type": "lldb",
       "program": "${workspaceFolder}/bin/test",
-      "args": ""
+      "args": [],
+      "initCommands": [
+        "command script import ${workspaceFolder}/.vscode/crystal_formatters.py"
+      ]
     }
   ]
 }

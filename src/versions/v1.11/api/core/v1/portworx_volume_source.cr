@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def fs_type? : String?
     # :ditto:
-    abstract def fs_type=(value : String?)
+    abstract def fs_type=(value : String)
     # Defaults to false [[(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.)]([(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.))
     abstract def read_only : ::Bool?
     # :ditto:
@@ -23,9 +23,9 @@ module K8S
     # :ditto:
     abstract def read_only? : ::Bool?
     # :ditto:
-    abstract def read_only=(value : ::Bool?)
+    abstract def read_only=(value : ::Bool)
     # VolumeID uniquely identifies a Portworx volume
-    abstract def volume_id : String
+    abstract def volume_id : String?
     # :ditto:
     abstract def volume_id! : String
     # :ditto:
@@ -42,73 +42,21 @@ module K8S
   )]
   class Api::Core::V1::PortworxVolumeSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::PortworxVolumeSource
+    k8s_object_accessor("fsType", fs_type : String, true, false, "FSType represents the filesystem type to mount Must be a filesystem type supported by the host operating system. Ex. \"ext4\", \"xfs\". Implicitly inferred to be \"ext4\" if unspecified.")
+    k8s_object_accessor("readOnly", read_only : ::Bool, true, false, "Defaults to false [(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.)")
+    k8s_object_accessor("volumeID", volume_id : String, false, false, "VolumeID uniquely identifies a Portworx volume")
 
-    # FSType represents the filesystem type to mount Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs". Implicitly inferred to be "ext4" if unspecified.
-    def fs_type : String?
-      self.["fsType"].as(String?)
+    def initialize(*, fs_type : String? = nil, read_only : ::Bool? = nil, volume_id : String? = nil)
+      super()
+      self.["fsType"] = fs_type
+      self.["readOnly"] = read_only
+      self.["volumeID"] = volume_id
     end
 
-    # :ditto:
-    def fs_type! : String
-      self.["fsType"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def fs_type? : String?
-      self.["fsType"]?.as(String?)
-    end
-
-    # :ditto:
-    def fs_type=(value : String?)
-      self.["fsType"] = value
-    end
-
-    # Defaults to false [[(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.)]([(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.))
-    def read_only : ::Bool?
-      self.["readOnly"].as(::Bool?)
-    end
-
-    # :ditto:
-    def read_only! : ::Bool
-      self.["readOnly"].as(::Bool?).not_nil!
-    end
-
-    # :ditto:
-    def read_only? : ::Bool?
-      self.["readOnly"]?.as(::Bool?)
-    end
-
-    # :ditto:
-    def read_only=(value : ::Bool?)
-      self.["readOnly"] = value
-    end
-
-    # VolumeID uniquely identifies a Portworx volume
-    def volume_id : String
-      self.["volumeID"].as(String)
-    end
-
-    # :ditto:
-    def volume_id! : String
-      self.["volumeID"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def volume_id? : String?
-      self.["volumeID"]?.as(String?)
-    end
-
-    # :ditto:
-    def volume_id=(value : String)
-      self.["volumeID"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "fsType", accessor: "fs_type", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "readOnly", accessor: "read_only", nilable: true, read_only: false, default: nil, kind: ::Bool },
-        { key: "volumeID", accessor: "volume_id", nilable: false, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "fsType", accessor: "fs_type", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "readOnly", accessor: "read_only", nilable: true, read_only: false, default: nil, kind: ::Bool},
+      {key: "volumeID", accessor: "volume_id", nilable: false, read_only: false, default: nil, kind: String},
+    ])
   end
 end

@@ -9,7 +9,7 @@ module K8S
   # Namespace holding the types for `Api::Core::V1::PersistentVolumeClaimVolumeSource`.
   module Types::Api::Core::V1::PersistentVolumeClaimVolumeSource
     # ClaimName is the name of a PersistentVolumeClaim in the same namespace as the pod using this volume. More info: [[https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims](https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims)](https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims](https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims))
-    abstract def claim_name : String
+    abstract def claim_name : String?
     # :ditto:
     abstract def claim_name! : String
     # :ditto:
@@ -23,7 +23,7 @@ module K8S
     # :ditto:
     abstract def read_only? : ::Bool?
     # :ditto:
-    abstract def read_only=(value : ::Bool?)
+    abstract def read_only=(value : ::Bool)
   end
 
   # PersistentVolumeClaimVolumeSource references the user's PVC in the same namespace. This volume finds the bound PV and mounts that volume for the pod. A PersistentVolumeClaimVolumeSource is, essentially, a wrapper around another type of volume that is owned by someone else (the system).
@@ -33,52 +33,18 @@ module K8S
   )]
   class Api::Core::V1::PersistentVolumeClaimVolumeSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::PersistentVolumeClaimVolumeSource
+    k8s_object_accessor("claimName", claim_name : String, false, false, "ClaimName is the name of a PersistentVolumeClaim in the same namespace as the pod using this volume. More info: [https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims](https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims)")
+    k8s_object_accessor("readOnly", read_only : ::Bool, true, false, "Will force the ReadOnly setting in VolumeMounts. Default false.")
 
-    # ClaimName is the name of a PersistentVolumeClaim in the same namespace as the pod using this volume. More info: [[https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims](https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims)](https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims](https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims))
-    def claim_name : String
-      self.["claimName"].as(String)
+    def initialize(*, claim_name : String? = nil, read_only : ::Bool? = nil)
+      super()
+      self.["claimName"] = claim_name
+      self.["readOnly"] = read_only
     end
 
-    # :ditto:
-    def claim_name! : String
-      self.["claimName"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def claim_name? : String?
-      self.["claimName"]?.as(String?)
-    end
-
-    # :ditto:
-    def claim_name=(value : String)
-      self.["claimName"] = value
-    end
-
-    # Will force the ReadOnly setting in VolumeMounts. Default false.
-    def read_only : ::Bool?
-      self.["readOnly"].as(::Bool?)
-    end
-
-    # :ditto:
-    def read_only! : ::Bool
-      self.["readOnly"].as(::Bool?).not_nil!
-    end
-
-    # :ditto:
-    def read_only? : ::Bool?
-      self.["readOnly"]?.as(::Bool?)
-    end
-
-    # :ditto:
-    def read_only=(value : ::Bool?)
-      self.["readOnly"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "claimName", accessor: "claim_name", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "readOnly", accessor: "read_only", nilable: true, read_only: false, default: nil, kind: ::Bool },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "claimName", accessor: "claim_name", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "readOnly", accessor: "read_only", nilable: true, read_only: false, default: nil, kind: ::Bool},
+    ])
   end
 end

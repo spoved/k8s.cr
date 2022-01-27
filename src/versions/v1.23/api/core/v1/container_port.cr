@@ -9,7 +9,7 @@ module K8S
   # Namespace holding the types for `Api::Core::V1::ContainerPort`.
   module Types::Api::Core::V1::ContainerPort
     # Number of port to expose on the pod's IP address. This must be a valid port number, 0 < x < 65536.
-    abstract def container_port : Int32
+    abstract def container_port : Int32?
     # :ditto:
     abstract def container_port! : Int32
     # :ditto:
@@ -23,7 +23,7 @@ module K8S
     # :ditto:
     abstract def host_ip? : String?
     # :ditto:
-    abstract def host_ip=(value : String?)
+    abstract def host_ip=(value : String)
     # Number of port to expose on the host. If specified, this must be a valid port number, 0 < x < 65536. If HostNetwork is specified, this must match ContainerPort. Most containers do not need this.
     abstract def host_port : Int32?
     # :ditto:
@@ -31,7 +31,7 @@ module K8S
     # :ditto:
     abstract def host_port? : Int32?
     # :ditto:
-    abstract def host_port=(value : Int32?)
+    abstract def host_port=(value : Int32)
     # If specified, this must be an IANA_SVC_NAME and unique within the pod. Each named port in a pod must have a unique name. Name for the port that can be referred to by services.
     abstract def name : String?
     # :ditto:
@@ -39,7 +39,7 @@ module K8S
     # :ditto:
     abstract def name? : String?
     # :ditto:
-    abstract def name=(value : String?)
+    abstract def name=(value : String)
     # Protocol for port. Must be UDP, TCP, or SCTP. Defaults to "TCP".
     #
     # Possible enum values:
@@ -52,7 +52,7 @@ module K8S
     # :ditto:
     abstract def protocol? : String?
     # :ditto:
-    abstract def protocol=(value : String?)
+    abstract def protocol=(value : String)
   end
 
   # ContainerPort represents a network port in a single container.
@@ -65,120 +65,27 @@ module K8S
   )]
   class Api::Core::V1::ContainerPort < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::ContainerPort
+    k8s_object_accessor("containerPort", container_port : Int32, false, false, "Number of port to expose on the pod's IP address. This must be a valid port number, 0 < x < 65536.")
+    k8s_object_accessor("hostIP", host_ip : String, true, false, "What host IP to bind the external port to.")
+    k8s_object_accessor("hostPort", host_port : Int32, true, false, "Number of port to expose on the host. If specified, this must be a valid port number, 0 < x < 65536. If HostNetwork is specified, this must match ContainerPort. Most containers do not need this.")
+    k8s_object_accessor("name", name : String, true, false, "If specified, this must be an IANA_SVC_NAME and unique within the pod. Each named port in a pod must have a unique name. Name for the port that can be referred to by services.")
+    k8s_object_accessor("protocol", protocol : String, true, false, "Protocol for port. Must be UDP, TCP, or SCTP. Defaults to \"TCP\".\n\nPossible enum values:\n - `\"SCTP\"` is the SCTP protocol.\n - `\"TCP\"` is the TCP protocol.\n - `\"UDP\"` is the UDP protocol.")
 
-    # Number of port to expose on the pod's IP address. This must be a valid port number, 0 < x < 65536.
-    def container_port : Int32
-      self.["containerPort"].as(Int32)
+    def initialize(*, container_port : Int32? = nil, host_ip : String? = nil, host_port : Int32? = nil, name : String? = nil, protocol : String? = nil)
+      super()
+      self.["containerPort"] = container_port
+      self.["hostIP"] = host_ip
+      self.["hostPort"] = host_port
+      self.["name"] = name
+      self.["protocol"] = protocol
     end
 
-    # :ditto:
-    def container_port! : Int32
-      self.["containerPort"].as(Int32).not_nil!
-    end
-
-    # :ditto:
-    def container_port? : Int32?
-      self.["containerPort"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def container_port=(value : Int32)
-      self.["containerPort"] = value
-    end
-
-    # What host IP to bind the external port to.
-    def host_ip : String?
-      self.["hostIP"].as(String?)
-    end
-
-    # :ditto:
-    def host_ip! : String
-      self.["hostIP"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def host_ip? : String?
-      self.["hostIP"]?.as(String?)
-    end
-
-    # :ditto:
-    def host_ip=(value : String?)
-      self.["hostIP"] = value
-    end
-
-    # Number of port to expose on the host. If specified, this must be a valid port number, 0 < x < 65536. If HostNetwork is specified, this must match ContainerPort. Most containers do not need this.
-    def host_port : Int32?
-      self.["hostPort"].as(Int32?)
-    end
-
-    # :ditto:
-    def host_port! : Int32
-      self.["hostPort"].as(Int32?).not_nil!
-    end
-
-    # :ditto:
-    def host_port? : Int32?
-      self.["hostPort"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def host_port=(value : Int32?)
-      self.["hostPort"] = value
-    end
-
-    # If specified, this must be an IANA_SVC_NAME and unique within the pod. Each named port in a pod must have a unique name. Name for the port that can be referred to by services.
-    def name : String?
-      self.["name"].as(String?)
-    end
-
-    # :ditto:
-    def name! : String
-      self.["name"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def name? : String?
-      self.["name"]?.as(String?)
-    end
-
-    # :ditto:
-    def name=(value : String?)
-      self.["name"] = value
-    end
-
-    # Protocol for port. Must be UDP, TCP, or SCTP. Defaults to "TCP".
-    #
-    # Possible enum values:
-    #  - `"SCTP"` is the SCTP protocol.
-    #  - `"TCP"` is the TCP protocol.
-    #  - `"UDP"` is the UDP protocol.
-    def protocol : String?
-      self.["protocol"].as(String?)
-    end
-
-    # :ditto:
-    def protocol! : String
-      self.["protocol"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def protocol? : String?
-      self.["protocol"]?.as(String?)
-    end
-
-    # :ditto:
-    def protocol=(value : String?)
-      self.["protocol"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "containerPort", accessor: "container_port", nilable: false, read_only: false, default: nil, kind: Int32 },
-        { key: "hostIP", accessor: "host_ip", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "hostPort", accessor: "host_port", nilable: true, read_only: false, default: nil, kind: Int32 },
-        { key: "name", accessor: "name", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "protocol", accessor: "protocol", nilable: true, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "containerPort", accessor: "container_port", nilable: false, read_only: false, default: nil, kind: Int32},
+      {key: "hostIP", accessor: "host_ip", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "hostPort", accessor: "host_port", nilable: true, read_only: false, default: nil, kind: Int32},
+      {key: "name", accessor: "name", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "protocol", accessor: "protocol", nilable: true, read_only: false, default: nil, kind: String},
+    ])
   end
 end

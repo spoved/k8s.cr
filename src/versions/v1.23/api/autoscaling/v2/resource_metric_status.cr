@@ -11,7 +11,7 @@ module K8S
   # Namespace holding the types for `Api::Autoscaling::V2::ResourceMetricStatus`.
   module Types::Api::Autoscaling::V2::ResourceMetricStatus
     # current contains the current value for the given metric
-    abstract def current : ::K8S::Api::Autoscaling::V2::MetricValueStatus
+    abstract def current : ::K8S::Api::Autoscaling::V2::MetricValueStatus?
     # :ditto:
     abstract def current! : ::K8S::Api::Autoscaling::V2::MetricValueStatus
     # :ditto:
@@ -19,7 +19,7 @@ module K8S
     # :ditto:
     abstract def current=(value : ::K8S::Api::Autoscaling::V2::MetricValueStatus)
     # Name is the name of the resource in question.
-    abstract def name : String
+    abstract def name : String?
     # :ditto:
     abstract def name! : String
     # :ditto:
@@ -35,52 +35,18 @@ module K8S
   )]
   class Api::Autoscaling::V2::ResourceMetricStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Autoscaling::V2::ResourceMetricStatus
+    k8s_object_accessor("current", current : ::K8S::Api::Autoscaling::V2::MetricValueStatus, false, false, "current contains the current value for the given metric")
+    k8s_object_accessor("name", name : String, false, false, "Name is the name of the resource in question.")
 
-    # current contains the current value for the given metric
-    def current : ::K8S::Api::Autoscaling::V2::MetricValueStatus
-      self.["current"].as(::K8S::Api::Autoscaling::V2::MetricValueStatus)
+    def initialize(*, current : ::K8S::Api::Autoscaling::V2::MetricValueStatus? = nil, name : String? = nil)
+      super()
+      self.["current"] = current
+      self.["name"] = name
     end
 
-    # :ditto:
-    def current! : ::K8S::Api::Autoscaling::V2::MetricValueStatus
-      self.["current"].as(::K8S::Api::Autoscaling::V2::MetricValueStatus).not_nil!
-    end
-
-    # :ditto:
-    def current? : ::K8S::Api::Autoscaling::V2::MetricValueStatus?
-      self.["current"]?.as(::K8S::Api::Autoscaling::V2::MetricValueStatus?)
-    end
-
-    # :ditto:
-    def current=(value : ::K8S::Api::Autoscaling::V2::MetricValueStatus)
-      self.["current"] = value
-    end
-
-    # Name is the name of the resource in question.
-    def name : String
-      self.["name"].as(String)
-    end
-
-    # :ditto:
-    def name! : String
-      self.["name"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def name? : String?
-      self.["name"]?.as(String?)
-    end
-
-    # :ditto:
-    def name=(value : String)
-      self.["name"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "current", accessor: "current", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Autoscaling::V2::MetricValueStatus },
-        { key: "name", accessor: "name", nilable: false, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "current", accessor: "current", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Autoscaling::V2::MetricValueStatus},
+      {key: "name", accessor: "name", nilable: false, read_only: false, default: nil, kind: String},
+    ])
   end
 end

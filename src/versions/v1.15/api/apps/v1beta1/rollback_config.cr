@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def revision? : Int32?
     # :ditto:
-    abstract def revision=(value : Int32?)
+    abstract def revision=(value : Int32)
   end
 
   # DEPRECATED.
@@ -24,31 +24,15 @@ module K8S
   )]
   class Api::Apps::V1beta1::RollbackConfig < ::K8S::GenericObject
     include ::K8S::Types::Api::Apps::V1beta1::RollbackConfig
+    k8s_object_accessor("revision", revision : Int32, true, false, "The revision to rollback to. If set to 0, rollback to the last revision.")
 
-    # The revision to rollback to. If set to 0, rollback to the last revision.
-    def revision : Int32?
-      self.["revision"].as(Int32?)
+    def initialize(*, revision : Int32? = nil)
+      super()
+      self.["revision"] = revision
     end
 
-    # :ditto:
-    def revision! : Int32
-      self.["revision"].as(Int32?).not_nil!
-    end
-
-    # :ditto:
-    def revision? : Int32?
-      self.["revision"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def revision=(value : Int32?)
-      self.["revision"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "revision", accessor: "revision", nilable: true, read_only: false, default: nil, kind: Int32 },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "revision", accessor: "revision", nilable: true, read_only: false, default: nil, kind: Int32},
+    ])
   end
 end

@@ -9,7 +9,7 @@ module K8S
   # Namespace holding the types for `Api::Core::V1::GRPCAction`.
   module Types::Api::Core::V1::GRPCAction
     # Port number of the gRPC service. Number must be in the range 1 to 65535.
-    abstract def port : Int32
+    abstract def port : Int32?
     # :ditto:
     abstract def port! : Int32
     # :ditto:
@@ -25,7 +25,7 @@ module K8S
     # :ditto:
     abstract def service? : String?
     # :ditto:
-    abstract def service=(value : String?)
+    abstract def service=(value : String)
   end
 
   #
@@ -35,54 +35,18 @@ module K8S
   )]
   class Api::Core::V1::GRPCAction < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::GRPCAction
+    k8s_object_accessor("port", port : Int32, false, false, "Port number of the gRPC service. Number must be in the range 1 to 65535.")
+    k8s_object_accessor("service", service : String, true, false, "Service is the name of the service to place in the gRPC HealthCheckRequest (see [https://github.com/grpc/grpc/blob/master/doc/health-checking.md).](https://github.com/grpc/grpc/blob/master/doc/health-checking.md).)\n\nIf this is not specified, the default behavior is defined by gRPC.")
 
-    # Port number of the gRPC service. Number must be in the range 1 to 65535.
-    def port : Int32
-      self.["port"].as(Int32)
+    def initialize(*, port : Int32? = nil, service : String? = nil)
+      super()
+      self.["port"] = port
+      self.["service"] = service
     end
 
-    # :ditto:
-    def port! : Int32
-      self.["port"].as(Int32).not_nil!
-    end
-
-    # :ditto:
-    def port? : Int32?
-      self.["port"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def port=(value : Int32)
-      self.["port"] = value
-    end
-
-    # Service is the name of the service to place in the gRPC HealthCheckRequest (see [[https://github.com/grpc/grpc/blob/master/doc/health-checking.md).](https://github.com/grpc/grpc/blob/master/doc/health-checking.md).)](https://github.com/grpc/grpc/blob/master/doc/health-checking.md).](https://github.com/grpc/grpc/blob/master/doc/health-checking.md).))
-    #
-    # If this is not specified, the default behavior is defined by gRPC.
-    def service : String?
-      self.["service"].as(String?)
-    end
-
-    # :ditto:
-    def service! : String
-      self.["service"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def service? : String?
-      self.["service"]?.as(String?)
-    end
-
-    # :ditto:
-    def service=(value : String?)
-      self.["service"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "port", accessor: "port", nilable: false, read_only: false, default: nil, kind: Int32 },
-        { key: "service", accessor: "service", nilable: true, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "port", accessor: "port", nilable: false, read_only: false, default: nil, kind: Int32},
+      {key: "service", accessor: "service", nilable: true, read_only: false, default: nil, kind: String},
+    ])
   end
 end

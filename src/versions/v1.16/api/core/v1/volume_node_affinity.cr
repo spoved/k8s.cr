@@ -17,7 +17,7 @@ module K8S
     # :ditto:
     abstract def required? : ::K8S::Api::Core::V1::NodeSelector?
     # :ditto:
-    abstract def required=(value : ::K8S::Api::Core::V1::NodeSelector?)
+    abstract def required=(value : ::K8S::Api::Core::V1::NodeSelector)
   end
 
   # VolumeNodeAffinity defines constraints that limit what nodes this volume can be accessed from.
@@ -26,31 +26,15 @@ module K8S
   )]
   class Api::Core::V1::VolumeNodeAffinity < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::VolumeNodeAffinity
+    k8s_object_accessor("required", required : ::K8S::Api::Core::V1::NodeSelector, true, false, "Required specifies hard node constraints that must be met.")
 
-    # Required specifies hard node constraints that must be met.
-    def required : ::K8S::Api::Core::V1::NodeSelector?
-      self.["required"].as(::K8S::Api::Core::V1::NodeSelector?)
+    def initialize(*, required : ::K8S::Api::Core::V1::NodeSelector? = nil)
+      super()
+      self.["required"] = required
     end
 
-    # :ditto:
-    def required! : ::K8S::Api::Core::V1::NodeSelector
-      self.["required"].as(::K8S::Api::Core::V1::NodeSelector?).not_nil!
-    end
-
-    # :ditto:
-    def required? : ::K8S::Api::Core::V1::NodeSelector?
-      self.["required"]?.as(::K8S::Api::Core::V1::NodeSelector?)
-    end
-
-    # :ditto:
-    def required=(value : ::K8S::Api::Core::V1::NodeSelector?)
-      self.["required"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "required", accessor: "required", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::NodeSelector },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "required", accessor: "required", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::NodeSelector},
+    ])
   end
 end

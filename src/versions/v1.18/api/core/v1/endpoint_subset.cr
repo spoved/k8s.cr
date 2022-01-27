@@ -18,7 +18,7 @@ module K8S
     # :ditto:
     abstract def addresses? : ::Array(::K8S::Api::Core::V1::EndpointAddress)?
     # :ditto:
-    abstract def addresses=(value : ::Array(::K8S::Api::Core::V1::EndpointAddress)?)
+    abstract def addresses=(value : ::Array(::K8S::Api::Core::V1::EndpointAddress))
     # IP addresses which offer the related ports but are not currently marked as ready because they have not yet finished starting, have recently failed a readiness check, or have recently failed a liveness check.
     abstract def not_ready_addresses : ::Array(::K8S::Api::Core::V1::EndpointAddress)?
     # :ditto:
@@ -26,7 +26,7 @@ module K8S
     # :ditto:
     abstract def not_ready_addresses? : ::Array(::K8S::Api::Core::V1::EndpointAddress)?
     # :ditto:
-    abstract def not_ready_addresses=(value : ::Array(::K8S::Api::Core::V1::EndpointAddress)?)
+    abstract def not_ready_addresses=(value : ::Array(::K8S::Api::Core::V1::EndpointAddress))
     # Port numbers available on the related IP addresses.
     abstract def ports : ::Array(::K8S::Api::Core::V1::EndpointPort)?
     # :ditto:
@@ -34,7 +34,7 @@ module K8S
     # :ditto:
     abstract def ports? : ::Array(::K8S::Api::Core::V1::EndpointPort)?
     # :ditto:
-    abstract def ports=(value : ::Array(::K8S::Api::Core::V1::EndpointPort)?)
+    abstract def ports=(value : ::Array(::K8S::Api::Core::V1::EndpointPort))
   end
 
   # EndpointSubset is a group of addresses with a common set of ports. The expanded set of endpoints is the Cartesian product of Addresses x Ports. For example, given:
@@ -52,73 +52,21 @@ module K8S
   )]
   class Api::Core::V1::EndpointSubset < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::EndpointSubset
+    k8s_object_accessor("addresses", addresses : ::Array(::K8S::Api::Core::V1::EndpointAddress), true, false, "IP addresses which offer the related ports that are marked as ready. These endpoints should be considered safe for load balancers and clients to utilize.")
+    k8s_object_accessor("notReadyAddresses", not_ready_addresses : ::Array(::K8S::Api::Core::V1::EndpointAddress), true, false, "IP addresses which offer the related ports but are not currently marked as ready because they have not yet finished starting, have recently failed a readiness check, or have recently failed a liveness check.")
+    k8s_object_accessor("ports", ports : ::Array(::K8S::Api::Core::V1::EndpointPort), true, false, "Port numbers available on the related IP addresses.")
 
-    # IP addresses which offer the related ports that are marked as ready. These endpoints should be considered safe for load balancers and clients to utilize.
-    def addresses : ::Array(::K8S::Api::Core::V1::EndpointAddress)?
-      self.["addresses"].as(::Array(::K8S::Api::Core::V1::EndpointAddress)?)
+    def initialize(*, addresses : ::Array(::K8S::Api::Core::V1::EndpointAddress)? = nil, not_ready_addresses : ::Array(::K8S::Api::Core::V1::EndpointAddress)? = nil, ports : ::Array(::K8S::Api::Core::V1::EndpointPort)? = nil)
+      super()
+      self.["addresses"] = addresses
+      self.["notReadyAddresses"] = not_ready_addresses
+      self.["ports"] = ports
     end
 
-    # :ditto:
-    def addresses! : ::Array(::K8S::Api::Core::V1::EndpointAddress)
-      self.["addresses"].as(::Array(::K8S::Api::Core::V1::EndpointAddress)?).not_nil!
-    end
-
-    # :ditto:
-    def addresses? : ::Array(::K8S::Api::Core::V1::EndpointAddress)?
-      self.["addresses"]?.as(::Array(::K8S::Api::Core::V1::EndpointAddress)?)
-    end
-
-    # :ditto:
-    def addresses=(value : ::Array(::K8S::Api::Core::V1::EndpointAddress)?)
-      self.["addresses"] = value
-    end
-
-    # IP addresses which offer the related ports but are not currently marked as ready because they have not yet finished starting, have recently failed a readiness check, or have recently failed a liveness check.
-    def not_ready_addresses : ::Array(::K8S::Api::Core::V1::EndpointAddress)?
-      self.["notReadyAddresses"].as(::Array(::K8S::Api::Core::V1::EndpointAddress)?)
-    end
-
-    # :ditto:
-    def not_ready_addresses! : ::Array(::K8S::Api::Core::V1::EndpointAddress)
-      self.["notReadyAddresses"].as(::Array(::K8S::Api::Core::V1::EndpointAddress)?).not_nil!
-    end
-
-    # :ditto:
-    def not_ready_addresses? : ::Array(::K8S::Api::Core::V1::EndpointAddress)?
-      self.["notReadyAddresses"]?.as(::Array(::K8S::Api::Core::V1::EndpointAddress)?)
-    end
-
-    # :ditto:
-    def not_ready_addresses=(value : ::Array(::K8S::Api::Core::V1::EndpointAddress)?)
-      self.["notReadyAddresses"] = value
-    end
-
-    # Port numbers available on the related IP addresses.
-    def ports : ::Array(::K8S::Api::Core::V1::EndpointPort)?
-      self.["ports"].as(::Array(::K8S::Api::Core::V1::EndpointPort)?)
-    end
-
-    # :ditto:
-    def ports! : ::Array(::K8S::Api::Core::V1::EndpointPort)
-      self.["ports"].as(::Array(::K8S::Api::Core::V1::EndpointPort)?).not_nil!
-    end
-
-    # :ditto:
-    def ports? : ::Array(::K8S::Api::Core::V1::EndpointPort)?
-      self.["ports"]?.as(::Array(::K8S::Api::Core::V1::EndpointPort)?)
-    end
-
-    # :ditto:
-    def ports=(value : ::Array(::K8S::Api::Core::V1::EndpointPort)?)
-      self.["ports"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "addresses", accessor: "addresses", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::EndpointAddress) },
-        { key: "notReadyAddresses", accessor: "not_ready_addresses", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::EndpointAddress) },
-        { key: "ports", accessor: "ports", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::EndpointPort) },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "addresses", accessor: "addresses", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::EndpointAddress)},
+      {key: "notReadyAddresses", accessor: "not_ready_addresses", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::EndpointAddress)},
+      {key: "ports", accessor: "ports", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::EndpointPort)},
+    ])
   end
 end

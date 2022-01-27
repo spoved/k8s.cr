@@ -11,7 +11,7 @@ module K8S
   # Namespace holding the types for `Api::Autoscaling::V1::HorizontalPodAutoscalerSpec`.
   module Types::Api::Autoscaling::V1::HorizontalPodAutoscalerSpec
     # upper limit for the number of pods that can be set by the autoscaler; cannot be smaller than MinReplicas.
-    abstract def max_replicas : Int32
+    abstract def max_replicas : Int32?
     # :ditto:
     abstract def max_replicas! : Int32
     # :ditto:
@@ -25,9 +25,9 @@ module K8S
     # :ditto:
     abstract def min_replicas? : Int32?
     # :ditto:
-    abstract def min_replicas=(value : Int32?)
+    abstract def min_replicas=(value : Int32)
     # reference to scaled resource; horizontal pod autoscaler will learn the current resource consumption and will set the desired number of pods by using its Scale subresource.
-    abstract def scale_target_ref : ::K8S::Api::Autoscaling::V1::CrossVersionObjectReference
+    abstract def scale_target_ref : ::K8S::Api::Autoscaling::V1::CrossVersionObjectReference?
     # :ditto:
     abstract def scale_target_ref! : ::K8S::Api::Autoscaling::V1::CrossVersionObjectReference
     # :ditto:
@@ -41,7 +41,7 @@ module K8S
     # :ditto:
     abstract def target_cpu_utilization_percentage? : Int32?
     # :ditto:
-    abstract def target_cpu_utilization_percentage=(value : Int32?)
+    abstract def target_cpu_utilization_percentage=(value : Int32)
   end
 
   # specification of a horizontal pod autoscaler.
@@ -53,94 +53,24 @@ module K8S
   )]
   class Api::Autoscaling::V1::HorizontalPodAutoscalerSpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Autoscaling::V1::HorizontalPodAutoscalerSpec
+    k8s_object_accessor("maxReplicas", max_replicas : Int32, false, false, "upper limit for the number of pods that can be set by the autoscaler; cannot be smaller than MinReplicas.")
+    k8s_object_accessor("minReplicas", min_replicas : Int32, true, false, "lower limit for the number of pods that can be set by the autoscaler, default 1.")
+    k8s_object_accessor("scaleTargetRef", scale_target_ref : ::K8S::Api::Autoscaling::V1::CrossVersionObjectReference, false, false, "reference to scaled resource; horizontal pod autoscaler will learn the current resource consumption and will set the desired number of pods by using its Scale subresource.")
+    k8s_object_accessor("targetCPUUtilizationPercentage", target_cpu_utilization_percentage : Int32, true, false, "target average CPU utilization (represented as a percentage of requested CPU) over all the pods; if not specified the default autoscaling policy will be used.")
 
-    # upper limit for the number of pods that can be set by the autoscaler; cannot be smaller than MinReplicas.
-    def max_replicas : Int32
-      self.["maxReplicas"].as(Int32)
+    def initialize(*, max_replicas : Int32? = nil, min_replicas : Int32? = nil, scale_target_ref : ::K8S::Api::Autoscaling::V1::CrossVersionObjectReference? = nil, target_cpu_utilization_percentage : Int32? = nil)
+      super()
+      self.["maxReplicas"] = max_replicas
+      self.["minReplicas"] = min_replicas
+      self.["scaleTargetRef"] = scale_target_ref
+      self.["targetCPUUtilizationPercentage"] = target_cpu_utilization_percentage
     end
 
-    # :ditto:
-    def max_replicas! : Int32
-      self.["maxReplicas"].as(Int32).not_nil!
-    end
-
-    # :ditto:
-    def max_replicas? : Int32?
-      self.["maxReplicas"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def max_replicas=(value : Int32)
-      self.["maxReplicas"] = value
-    end
-
-    # lower limit for the number of pods that can be set by the autoscaler, default 1.
-    def min_replicas : Int32?
-      self.["minReplicas"].as(Int32?)
-    end
-
-    # :ditto:
-    def min_replicas! : Int32
-      self.["minReplicas"].as(Int32?).not_nil!
-    end
-
-    # :ditto:
-    def min_replicas? : Int32?
-      self.["minReplicas"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def min_replicas=(value : Int32?)
-      self.["minReplicas"] = value
-    end
-
-    # reference to scaled resource; horizontal pod autoscaler will learn the current resource consumption and will set the desired number of pods by using its Scale subresource.
-    def scale_target_ref : ::K8S::Api::Autoscaling::V1::CrossVersionObjectReference
-      self.["scaleTargetRef"].as(::K8S::Api::Autoscaling::V1::CrossVersionObjectReference)
-    end
-
-    # :ditto:
-    def scale_target_ref! : ::K8S::Api::Autoscaling::V1::CrossVersionObjectReference
-      self.["scaleTargetRef"].as(::K8S::Api::Autoscaling::V1::CrossVersionObjectReference).not_nil!
-    end
-
-    # :ditto:
-    def scale_target_ref? : ::K8S::Api::Autoscaling::V1::CrossVersionObjectReference?
-      self.["scaleTargetRef"]?.as(::K8S::Api::Autoscaling::V1::CrossVersionObjectReference?)
-    end
-
-    # :ditto:
-    def scale_target_ref=(value : ::K8S::Api::Autoscaling::V1::CrossVersionObjectReference)
-      self.["scaleTargetRef"] = value
-    end
-
-    # target average CPU utilization (represented as a percentage of requested CPU) over all the pods; if not specified the default autoscaling policy will be used.
-    def target_cpu_utilization_percentage : Int32?
-      self.["targetCPUUtilizationPercentage"].as(Int32?)
-    end
-
-    # :ditto:
-    def target_cpu_utilization_percentage! : Int32
-      self.["targetCPUUtilizationPercentage"].as(Int32?).not_nil!
-    end
-
-    # :ditto:
-    def target_cpu_utilization_percentage? : Int32?
-      self.["targetCPUUtilizationPercentage"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def target_cpu_utilization_percentage=(value : Int32?)
-      self.["targetCPUUtilizationPercentage"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "maxReplicas", accessor: "max_replicas", nilable: false, read_only: false, default: nil, kind: Int32 },
-        { key: "minReplicas", accessor: "min_replicas", nilable: true, read_only: false, default: nil, kind: Int32 },
-        { key: "scaleTargetRef", accessor: "scale_target_ref", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Autoscaling::V1::CrossVersionObjectReference },
-        { key: "targetCPUUtilizationPercentage", accessor: "target_cpu_utilization_percentage", nilable: true, read_only: false, default: nil, kind: Int32 },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "maxReplicas", accessor: "max_replicas", nilable: false, read_only: false, default: nil, kind: Int32},
+      {key: "minReplicas", accessor: "min_replicas", nilable: true, read_only: false, default: nil, kind: Int32},
+      {key: "scaleTargetRef", accessor: "scale_target_ref", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Autoscaling::V1::CrossVersionObjectReference},
+      {key: "targetCPUUtilizationPercentage", accessor: "target_cpu_utilization_percentage", nilable: true, read_only: false, default: nil, kind: Int32},
+    ])
   end
 end

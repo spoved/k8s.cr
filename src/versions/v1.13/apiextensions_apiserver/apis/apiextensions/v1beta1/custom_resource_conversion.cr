@@ -11,7 +11,7 @@ module K8S
   # Namespace holding the types for `ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceConversion`.
   module Types::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceConversion
     # `strategy` specifies the conversion strategy. Allowed values are: - `None`: The converter only change the apiVersion and would not touch any other field in the CR. - `Webhook`: API Server will call to an external webhook to do the conversion. Additional information is needed for this option.
-    abstract def strategy : String
+    abstract def strategy : String?
     # :ditto:
     abstract def strategy! : String
     # :ditto:
@@ -25,7 +25,7 @@ module K8S
     # :ditto:
     abstract def webhook_client_config? : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::WebhookClientConfig?
     # :ditto:
-    abstract def webhook_client_config=(value : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::WebhookClientConfig?)
+    abstract def webhook_client_config=(value : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::WebhookClientConfig)
   end
 
   # CustomResourceConversion describes how to convert different versions of a CR.
@@ -35,52 +35,18 @@ module K8S
   )]
   class ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceConversion < ::K8S::GenericObject
     include ::K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceConversion
+    k8s_object_accessor("strategy", strategy : String, false, false, "`strategy` specifies the conversion strategy. Allowed values are: - `None`: The converter only change the apiVersion and would not touch any other field in the CR. - `Webhook`: API Server will call to an external webhook to do the conversion. Additional information is needed for this option.")
+    k8s_object_accessor("webhookClientConfig", webhook_client_config : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::WebhookClientConfig, true, false, "`webhookClientConfig` is the instructions for how to call the webhook if strategy is `Webhook`. This field is alpha-level and is only honored by servers that enable the CustomResourceWebhookConversion feature.")
 
-    # `strategy` specifies the conversion strategy. Allowed values are: - `None`: The converter only change the apiVersion and would not touch any other field in the CR. - `Webhook`: API Server will call to an external webhook to do the conversion. Additional information is needed for this option.
-    def strategy : String
-      self.["strategy"].as(String)
+    def initialize(*, strategy : String? = nil, webhook_client_config : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::WebhookClientConfig? = nil)
+      super()
+      self.["strategy"] = strategy
+      self.["webhookClientConfig"] = webhook_client_config
     end
 
-    # :ditto:
-    def strategy! : String
-      self.["strategy"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def strategy? : String?
-      self.["strategy"]?.as(String?)
-    end
-
-    # :ditto:
-    def strategy=(value : String)
-      self.["strategy"] = value
-    end
-
-    # `webhookClientConfig` is the instructions for how to call the webhook if strategy is `Webhook`. This field is alpha-level and is only honored by servers that enable the CustomResourceWebhookConversion feature.
-    def webhook_client_config : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::WebhookClientConfig?
-      self.["webhookClientConfig"].as(::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::WebhookClientConfig?)
-    end
-
-    # :ditto:
-    def webhook_client_config! : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::WebhookClientConfig
-      self.["webhookClientConfig"].as(::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::WebhookClientConfig?).not_nil!
-    end
-
-    # :ditto:
-    def webhook_client_config? : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::WebhookClientConfig?
-      self.["webhookClientConfig"]?.as(::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::WebhookClientConfig?)
-    end
-
-    # :ditto:
-    def webhook_client_config=(value : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::WebhookClientConfig?)
-      self.["webhookClientConfig"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "strategy", accessor: "strategy", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "webhookClientConfig", accessor: "webhook_client_config", nilable: true, read_only: false, default: nil, kind: ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::WebhookClientConfig },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "strategy", accessor: "strategy", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "webhookClientConfig", accessor: "webhook_client_config", nilable: true, read_only: false, default: nil, kind: ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::WebhookClientConfig},
+    ])
   end
 end

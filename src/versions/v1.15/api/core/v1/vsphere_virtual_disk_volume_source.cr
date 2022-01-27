@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def fs_type? : String?
     # :ditto:
-    abstract def fs_type=(value : String?)
+    abstract def fs_type=(value : String)
     # Storage Policy Based Management (SPBM) profile ID associated with the StoragePolicyName.
     abstract def storage_policy_id : String?
     # :ditto:
@@ -23,7 +23,7 @@ module K8S
     # :ditto:
     abstract def storage_policy_id? : String?
     # :ditto:
-    abstract def storage_policy_id=(value : String?)
+    abstract def storage_policy_id=(value : String)
     # Storage Policy Based Management (SPBM) profile name.
     abstract def storage_policy_name : String?
     # :ditto:
@@ -31,9 +31,9 @@ module K8S
     # :ditto:
     abstract def storage_policy_name? : String?
     # :ditto:
-    abstract def storage_policy_name=(value : String?)
+    abstract def storage_policy_name=(value : String)
     # Path that identifies vSphere volume vmdk
-    abstract def volume_path : String
+    abstract def volume_path : String?
     # :ditto:
     abstract def volume_path! : String
     # :ditto:
@@ -51,94 +51,24 @@ module K8S
   )]
   class Api::Core::V1::VsphereVirtualDiskVolumeSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::VsphereVirtualDiskVolumeSource
+    k8s_object_accessor("fsType", fs_type : String, true, false, "Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. \"ext4\", \"xfs\", \"ntfs\". Implicitly inferred to be \"ext4\" if unspecified.")
+    k8s_object_accessor("storagePolicyID", storage_policy_id : String, true, false, "Storage Policy Based Management (SPBM) profile ID associated with the StoragePolicyName.")
+    k8s_object_accessor("storagePolicyName", storage_policy_name : String, true, false, "Storage Policy Based Management (SPBM) profile name.")
+    k8s_object_accessor("volumePath", volume_path : String, false, false, "Path that identifies vSphere volume vmdk")
 
-    # Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified.
-    def fs_type : String?
-      self.["fsType"].as(String?)
+    def initialize(*, fs_type : String? = nil, storage_policy_id : String? = nil, storage_policy_name : String? = nil, volume_path : String? = nil)
+      super()
+      self.["fsType"] = fs_type
+      self.["storagePolicyID"] = storage_policy_id
+      self.["storagePolicyName"] = storage_policy_name
+      self.["volumePath"] = volume_path
     end
 
-    # :ditto:
-    def fs_type! : String
-      self.["fsType"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def fs_type? : String?
-      self.["fsType"]?.as(String?)
-    end
-
-    # :ditto:
-    def fs_type=(value : String?)
-      self.["fsType"] = value
-    end
-
-    # Storage Policy Based Management (SPBM) profile ID associated with the StoragePolicyName.
-    def storage_policy_id : String?
-      self.["storagePolicyID"].as(String?)
-    end
-
-    # :ditto:
-    def storage_policy_id! : String
-      self.["storagePolicyID"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def storage_policy_id? : String?
-      self.["storagePolicyID"]?.as(String?)
-    end
-
-    # :ditto:
-    def storage_policy_id=(value : String?)
-      self.["storagePolicyID"] = value
-    end
-
-    # Storage Policy Based Management (SPBM) profile name.
-    def storage_policy_name : String?
-      self.["storagePolicyName"].as(String?)
-    end
-
-    # :ditto:
-    def storage_policy_name! : String
-      self.["storagePolicyName"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def storage_policy_name? : String?
-      self.["storagePolicyName"]?.as(String?)
-    end
-
-    # :ditto:
-    def storage_policy_name=(value : String?)
-      self.["storagePolicyName"] = value
-    end
-
-    # Path that identifies vSphere volume vmdk
-    def volume_path : String
-      self.["volumePath"].as(String)
-    end
-
-    # :ditto:
-    def volume_path! : String
-      self.["volumePath"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def volume_path? : String?
-      self.["volumePath"]?.as(String?)
-    end
-
-    # :ditto:
-    def volume_path=(value : String)
-      self.["volumePath"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "fsType", accessor: "fs_type", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "storagePolicyID", accessor: "storage_policy_id", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "storagePolicyName", accessor: "storage_policy_name", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "volumePath", accessor: "volume_path", nilable: false, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "fsType", accessor: "fs_type", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "storagePolicyID", accessor: "storage_policy_id", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "storagePolicyName", accessor: "storage_policy_name", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "volumePath", accessor: "volume_path", nilable: false, read_only: false, default: nil, kind: String},
+    ])
   end
 end

@@ -17,7 +17,7 @@ module K8S
     # :ditto:
     abstract def match_label_expressions? : ::Array(::K8S::Api::Core::V1::TopologySelectorLabelRequirement)?
     # :ditto:
-    abstract def match_label_expressions=(value : ::Array(::K8S::Api::Core::V1::TopologySelectorLabelRequirement)?)
+    abstract def match_label_expressions=(value : ::Array(::K8S::Api::Core::V1::TopologySelectorLabelRequirement))
   end
 
   # A topology selector term represents the result of label queries. A null or empty topology selector term matches no objects. The requirements of them are ANDed. It provides a subset of functionality as NodeSelectorTerm. This is an alpha feature and may change in the future.
@@ -26,31 +26,15 @@ module K8S
   )]
   class Api::Core::V1::TopologySelectorTerm < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::TopologySelectorTerm
+    k8s_object_accessor("matchLabelExpressions", match_label_expressions : ::Array(::K8S::Api::Core::V1::TopologySelectorLabelRequirement), true, false, "A list of topology selector requirements by labels.")
 
-    # A list of topology selector requirements by labels.
-    def match_label_expressions : ::Array(::K8S::Api::Core::V1::TopologySelectorLabelRequirement)?
-      self.["matchLabelExpressions"].as(::Array(::K8S::Api::Core::V1::TopologySelectorLabelRequirement)?)
+    def initialize(*, match_label_expressions : ::Array(::K8S::Api::Core::V1::TopologySelectorLabelRequirement)? = nil)
+      super()
+      self.["matchLabelExpressions"] = match_label_expressions
     end
 
-    # :ditto:
-    def match_label_expressions! : ::Array(::K8S::Api::Core::V1::TopologySelectorLabelRequirement)
-      self.["matchLabelExpressions"].as(::Array(::K8S::Api::Core::V1::TopologySelectorLabelRequirement)?).not_nil!
-    end
-
-    # :ditto:
-    def match_label_expressions? : ::Array(::K8S::Api::Core::V1::TopologySelectorLabelRequirement)?
-      self.["matchLabelExpressions"]?.as(::Array(::K8S::Api::Core::V1::TopologySelectorLabelRequirement)?)
-    end
-
-    # :ditto:
-    def match_label_expressions=(value : ::Array(::K8S::Api::Core::V1::TopologySelectorLabelRequirement)?)
-      self.["matchLabelExpressions"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "matchLabelExpressions", accessor: "match_label_expressions", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::TopologySelectorLabelRequirement) },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "matchLabelExpressions", accessor: "match_label_expressions", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::TopologySelectorLabelRequirement)},
+    ])
   end
 end

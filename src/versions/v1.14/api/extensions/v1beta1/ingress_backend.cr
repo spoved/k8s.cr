@@ -9,7 +9,7 @@ module K8S
   # Namespace holding the types for `Api::Extensions::V1beta1::IngressBackend`.
   module Types::Api::Extensions::V1beta1::IngressBackend
     # Specifies the name of the referenced service.
-    abstract def service_name : String
+    abstract def service_name : String?
     # :ditto:
     abstract def service_name! : String
     # :ditto:
@@ -17,7 +17,7 @@ module K8S
     # :ditto:
     abstract def service_name=(value : String)
     # Specifies the port of the referenced service.
-    abstract def service_port : ::Int32 | ::String
+    abstract def service_port : ::Int32 | ::String?
     # :ditto:
     abstract def service_port! : ::Int32 | ::String
     # :ditto:
@@ -33,52 +33,18 @@ module K8S
   )]
   class Api::Extensions::V1beta1::IngressBackend < ::K8S::GenericObject
     include ::K8S::Types::Api::Extensions::V1beta1::IngressBackend
+    k8s_object_accessor("serviceName", service_name : String, false, false, "Specifies the name of the referenced service.")
+    k8s_object_accessor("servicePort", service_port : ::Int32 | ::String, false, false, "Specifies the port of the referenced service.")
 
-    # Specifies the name of the referenced service.
-    def service_name : String
-      self.["serviceName"].as(String)
+    def initialize(*, service_name : String? = nil, service_port : ::Int32 | ::String? = nil)
+      super()
+      self.["serviceName"] = service_name
+      self.["servicePort"] = service_port
     end
 
-    # :ditto:
-    def service_name! : String
-      self.["serviceName"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def service_name? : String?
-      self.["serviceName"]?.as(String?)
-    end
-
-    # :ditto:
-    def service_name=(value : String)
-      self.["serviceName"] = value
-    end
-
-    # Specifies the port of the referenced service.
-    def service_port : ::Int32 | ::String
-      self.["servicePort"].as(::Int32 | ::String)
-    end
-
-    # :ditto:
-    def service_port! : ::Int32 | ::String
-      self.["servicePort"].as(::Int32 | ::String).not_nil!
-    end
-
-    # :ditto:
-    def service_port? : ::Int32 | ::String?
-      self.["servicePort"]?.as(::Int32 | ::String?)
-    end
-
-    # :ditto:
-    def service_port=(value : ::Int32 | ::String)
-      self.["servicePort"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "serviceName", accessor: "service_name", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "servicePort", accessor: "service_port", nilable: false, read_only: false, default: nil, kind: ::Union(::Int32 | ::String) },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "serviceName", accessor: "service_name", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "servicePort", accessor: "service_port", nilable: false, read_only: false, default: nil, kind: ::Union(::Int32 | ::String)},
+    ])
   end
 end

@@ -15,9 +15,9 @@ module K8S
     # :ditto:
     abstract def label_selector_path? : String?
     # :ditto:
-    abstract def label_selector_path=(value : String?)
+    abstract def label_selector_path=(value : String)
     # specReplicasPath defines the JSON path inside of a custom resource that corresponds to Scale `spec.replicas`. Only JSON paths without the array notation are allowed. Must be a JSON Path under `.spec`. If there is no value under the given path in the custom resource, the [[`/scale` subresource will return an error on GET.](`/scale` subresource will return an error on GET.)]([`/scale` subresource will return an error on GET.](`/scale` subresource will return an error on GET.))
-    abstract def spec_replicas_path : String
+    abstract def spec_replicas_path : String?
     # :ditto:
     abstract def spec_replicas_path! : String
     # :ditto:
@@ -25,7 +25,7 @@ module K8S
     # :ditto:
     abstract def spec_replicas_path=(value : String)
     # statusReplicasPath defines the JSON path inside of a custom resource that corresponds to Scale `status.replicas`. Only JSON paths without the array notation are allowed. Must be a JSON Path under `.status`. If there is no value under the given path in the custom resource, the `status.replicas` value in the [[`/scale` subresource will default to 0.](`/scale` subresource will default to 0.)]([`/scale` subresource will default to 0.](`/scale` subresource will default to 0.))
-    abstract def status_replicas_path : String
+    abstract def status_replicas_path : String?
     # :ditto:
     abstract def status_replicas_path! : String
     # :ditto:
@@ -42,73 +42,21 @@ module K8S
   )]
   class ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresourceScale < ::K8S::GenericObject
     include ::K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresourceScale
+    k8s_object_accessor("labelSelectorPath", label_selector_path : String, true, false, "labelSelectorPath defines the JSON path inside of a custom resource that corresponds to Scale `status.selector`. Only JSON paths without the array notation are allowed. Must be a JSON Path under `.status` or `.spec`. Must be set to work with HorizontalPodAutoscaler. The field pointed by this JSON path must be a string field (not a complex selector struct) which contains a serialized label selector in string form. More info: [https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions#scale-subresource If there is no value under the given path in the custom resource, the `status.selector` value in the `/scale` subresource will default to the empty string.](https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions#scale-subresource If there is no value under the given path in the custom resource, the `status.selector` value in the `/scale` subresource will default to the empty string.)")
+    k8s_object_accessor("specReplicasPath", spec_replicas_path : String, false, false, "specReplicasPath defines the JSON path inside of a custom resource that corresponds to Scale `spec.replicas`. Only JSON paths without the array notation are allowed. Must be a JSON Path under `.spec`. If there is no value under the given path in the custom resource, the [`/scale` subresource will return an error on GET.](`/scale` subresource will return an error on GET.)")
+    k8s_object_accessor("statusReplicasPath", status_replicas_path : String, false, false, "statusReplicasPath defines the JSON path inside of a custom resource that corresponds to Scale `status.replicas`. Only JSON paths without the array notation are allowed. Must be a JSON Path under `.status`. If there is no value under the given path in the custom resource, the `status.replicas` value in the [`/scale` subresource will default to 0.](`/scale` subresource will default to 0.)")
 
-    # labelSelectorPath defines the JSON path inside of a custom resource that corresponds to Scale `status.selector`. Only JSON paths without the array notation are allowed. Must be a JSON Path under `.status` or `.spec`. Must be set to work with HorizontalPodAutoscaler. The field pointed by this JSON path must be a string field (not a complex selector struct) which contains a serialized label selector in string form. More info: [[https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions#scale-subresource If there is no value under the given path in the custom resource, the `status.selector` value in the `/scale` subresource will default to the empty string.](https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions#scale-subresource If there is no value under the given path in the custom resource, the `status.selector` value in the `/scale` subresource will default to the empty string.)](https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions#scale-subresource If there is no value under the given path in the custom resource, the `status.selector` value in the `/scale` subresource will default to the empty string.](https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions#scale-subresource If there is no value under the given path in the custom resource, the `status.selector` value in the `/scale` subresource will default to the empty string.))
-    def label_selector_path : String?
-      self.["labelSelectorPath"].as(String?)
+    def initialize(*, label_selector_path : String? = nil, spec_replicas_path : String? = nil, status_replicas_path : String? = nil)
+      super()
+      self.["labelSelectorPath"] = label_selector_path
+      self.["specReplicasPath"] = spec_replicas_path
+      self.["statusReplicasPath"] = status_replicas_path
     end
 
-    # :ditto:
-    def label_selector_path! : String
-      self.["labelSelectorPath"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def label_selector_path? : String?
-      self.["labelSelectorPath"]?.as(String?)
-    end
-
-    # :ditto:
-    def label_selector_path=(value : String?)
-      self.["labelSelectorPath"] = value
-    end
-
-    # specReplicasPath defines the JSON path inside of a custom resource that corresponds to Scale `spec.replicas`. Only JSON paths without the array notation are allowed. Must be a JSON Path under `.spec`. If there is no value under the given path in the custom resource, the [[`/scale` subresource will return an error on GET.](`/scale` subresource will return an error on GET.)]([`/scale` subresource will return an error on GET.](`/scale` subresource will return an error on GET.))
-    def spec_replicas_path : String
-      self.["specReplicasPath"].as(String)
-    end
-
-    # :ditto:
-    def spec_replicas_path! : String
-      self.["specReplicasPath"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def spec_replicas_path? : String?
-      self.["specReplicasPath"]?.as(String?)
-    end
-
-    # :ditto:
-    def spec_replicas_path=(value : String)
-      self.["specReplicasPath"] = value
-    end
-
-    # statusReplicasPath defines the JSON path inside of a custom resource that corresponds to Scale `status.replicas`. Only JSON paths without the array notation are allowed. Must be a JSON Path under `.status`. If there is no value under the given path in the custom resource, the `status.replicas` value in the [[`/scale` subresource will default to 0.](`/scale` subresource will default to 0.)]([`/scale` subresource will default to 0.](`/scale` subresource will default to 0.))
-    def status_replicas_path : String
-      self.["statusReplicasPath"].as(String)
-    end
-
-    # :ditto:
-    def status_replicas_path! : String
-      self.["statusReplicasPath"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def status_replicas_path? : String?
-      self.["statusReplicasPath"]?.as(String?)
-    end
-
-    # :ditto:
-    def status_replicas_path=(value : String)
-      self.["statusReplicasPath"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "labelSelectorPath", accessor: "label_selector_path", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "specReplicasPath", accessor: "spec_replicas_path", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "statusReplicasPath", accessor: "status_replicas_path", nilable: false, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "labelSelectorPath", accessor: "label_selector_path", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "specReplicasPath", accessor: "spec_replicas_path", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "statusReplicasPath", accessor: "status_replicas_path", nilable: false, read_only: false, default: nil, kind: String},
+    ])
   end
 end

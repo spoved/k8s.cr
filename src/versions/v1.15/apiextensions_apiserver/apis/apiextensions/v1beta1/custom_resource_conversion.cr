@@ -17,10 +17,10 @@ module K8S
     # :ditto:
     abstract def conversion_review_versions? : ::Array(String)?
     # :ditto:
-    abstract def conversion_review_versions=(value : ::Array(String)?)
+    abstract def conversion_review_versions=(value : ::Array(String))
     # `strategy` specifies the conversion strategy. Allowed values are: - `None`: The converter only change the apiVersion and would not touch any other field in the CR. - `Webhook`: API Server will call to an external webhook to do the conversion. Additional information
     #   is needed for this option. This requires spec.preserveUnknownFields to be false.
-    abstract def strategy : String
+    abstract def strategy : String?
     # :ditto:
     abstract def strategy! : String
     # :ditto:
@@ -34,7 +34,7 @@ module K8S
     # :ditto:
     abstract def webhook_client_config? : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::WebhookClientConfig?
     # :ditto:
-    abstract def webhook_client_config=(value : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::WebhookClientConfig?)
+    abstract def webhook_client_config=(value : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::WebhookClientConfig)
   end
 
   # CustomResourceConversion describes how to convert different versions of a CR.
@@ -45,74 +45,21 @@ module K8S
   )]
   class ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceConversion < ::K8S::GenericObject
     include ::K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceConversion
+    k8s_object_accessor("conversionReviewVersions", conversion_review_versions : ::Array(String), true, false, "ConversionReviewVersions is an ordered list of preferred `ConversionReview` versions the Webhook expects. API server will try to use first version in the list which it supports. If none of the versions specified in this list supported by API server, conversion will fail for this object. If a persisted Webhook configuration specifies allowed versions and does not include any versions known to the API Server, calls to the webhook will fail. Default to `['v1beta1']`.")
+    k8s_object_accessor("strategy", strategy : String, false, false, "`strategy` specifies the conversion strategy. Allowed values are: - `None`: The converter only change the apiVersion and would not touch any other field in the CR. - `Webhook`: API Server will call to an external webhook to do the conversion. Additional information\n  is needed for this option. This requires spec.preserveUnknownFields to be false.")
+    k8s_object_accessor("webhookClientConfig", webhook_client_config : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::WebhookClientConfig, true, false, "`webhookClientConfig` is the instructions for how to call the webhook if strategy is `Webhook`. This field is alpha-level and is only honored by servers that enable the CustomResourceWebhookConversion feature.")
 
-    # ConversionReviewVersions is an ordered list of preferred `ConversionReview` versions the Webhook expects. API server will try to use first version in the list which it supports. If none of the versions specified in this list supported by API server, conversion will fail for this object. If a persisted Webhook configuration specifies allowed versions and does not include any versions known to the API Server, calls to the webhook will fail. Default to `['v1beta1']`.
-    def conversion_review_versions : ::Array(String)?
-      self.["conversionReviewVersions"].as(::Array(String)?)
+    def initialize(*, conversion_review_versions : ::Array(String)? = nil, strategy : String? = nil, webhook_client_config : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::WebhookClientConfig? = nil)
+      super()
+      self.["conversionReviewVersions"] = conversion_review_versions
+      self.["strategy"] = strategy
+      self.["webhookClientConfig"] = webhook_client_config
     end
 
-    # :ditto:
-    def conversion_review_versions! : ::Array(String)
-      self.["conversionReviewVersions"].as(::Array(String)?).not_nil!
-    end
-
-    # :ditto:
-    def conversion_review_versions? : ::Array(String)?
-      self.["conversionReviewVersions"]?.as(::Array(String)?)
-    end
-
-    # :ditto:
-    def conversion_review_versions=(value : ::Array(String)?)
-      self.["conversionReviewVersions"] = value
-    end
-
-    # `strategy` specifies the conversion strategy. Allowed values are: - `None`: The converter only change the apiVersion and would not touch any other field in the CR. - `Webhook`: API Server will call to an external webhook to do the conversion. Additional information
-    #   is needed for this option. This requires spec.preserveUnknownFields to be false.
-    def strategy : String
-      self.["strategy"].as(String)
-    end
-
-    # :ditto:
-    def strategy! : String
-      self.["strategy"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def strategy? : String?
-      self.["strategy"]?.as(String?)
-    end
-
-    # :ditto:
-    def strategy=(value : String)
-      self.["strategy"] = value
-    end
-
-    # `webhookClientConfig` is the instructions for how to call the webhook if strategy is `Webhook`. This field is alpha-level and is only honored by servers that enable the CustomResourceWebhookConversion feature.
-    def webhook_client_config : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::WebhookClientConfig?
-      self.["webhookClientConfig"].as(::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::WebhookClientConfig?)
-    end
-
-    # :ditto:
-    def webhook_client_config! : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::WebhookClientConfig
-      self.["webhookClientConfig"].as(::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::WebhookClientConfig?).not_nil!
-    end
-
-    # :ditto:
-    def webhook_client_config? : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::WebhookClientConfig?
-      self.["webhookClientConfig"]?.as(::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::WebhookClientConfig?)
-    end
-
-    # :ditto:
-    def webhook_client_config=(value : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::WebhookClientConfig?)
-      self.["webhookClientConfig"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "conversionReviewVersions", accessor: "conversion_review_versions", nilable: true, read_only: false, default: nil, kind: ::Array(String) },
-        { key: "strategy", accessor: "strategy", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "webhookClientConfig", accessor: "webhook_client_config", nilable: true, read_only: false, default: nil, kind: ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::WebhookClientConfig },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "conversionReviewVersions", accessor: "conversion_review_versions", nilable: true, read_only: false, default: nil, kind: ::Array(String)},
+      {key: "strategy", accessor: "strategy", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "webhookClientConfig", accessor: "webhook_client_config", nilable: true, read_only: false, default: nil, kind: ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::WebhookClientConfig},
+    ])
   end
 end

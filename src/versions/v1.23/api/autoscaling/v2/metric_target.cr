@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def average_utilization? : Int32?
     # :ditto:
-    abstract def average_utilization=(value : Int32?)
+    abstract def average_utilization=(value : Int32)
     # averageValue is the target value of the average of the metric across all relevant pods (as a quantity)
     abstract def average_value : ::Int32 | ::String?
     # :ditto:
@@ -23,9 +23,9 @@ module K8S
     # :ditto:
     abstract def average_value? : ::Int32 | ::String?
     # :ditto:
-    abstract def average_value=(value : ::Int32 | ::String?)
+    abstract def average_value=(value : ::Int32 | ::String)
     # type represents whether the metric type is Utilization, Value, or AverageValue
-    abstract def type : String
+    abstract def type : String?
     # :ditto:
     abstract def type! : String
     # :ditto:
@@ -39,7 +39,7 @@ module K8S
     # :ditto:
     abstract def value? : ::Int32 | ::String?
     # :ditto:
-    abstract def value=(value : ::Int32 | ::String?)
+    abstract def value=(value : ::Int32 | ::String)
   end
 
   # MetricTarget defines the target value, average value, or average utilization of a specific metric
@@ -51,94 +51,24 @@ module K8S
   )]
   class Api::Autoscaling::V2::MetricTarget < ::K8S::GenericObject
     include ::K8S::Types::Api::Autoscaling::V2::MetricTarget
+    k8s_object_accessor("averageUtilization", average_utilization : Int32, true, false, "averageUtilization is the target value of the average of the resource metric across all relevant pods, represented as a percentage of the requested value of the resource for the pods. Currently only valid for Resource metric source type")
+    k8s_object_accessor("averageValue", average_value : ::Int32 | ::String, true, false, "averageValue is the target value of the average of the metric across all relevant pods (as a quantity)")
+    k8s_object_accessor("type", type : String, false, false, "type represents whether the metric type is Utilization, Value, or AverageValue")
+    k8s_object_accessor("value", value : ::Int32 | ::String, true, false, "value is the target value of the metric (as a quantity).")
 
-    # averageUtilization is the target value of the average of the resource metric across all relevant pods, represented as a percentage of the requested value of the resource for the pods. Currently only valid for Resource metric source type
-    def average_utilization : Int32?
-      self.["averageUtilization"].as(Int32?)
-    end
-
-    # :ditto:
-    def average_utilization! : Int32
-      self.["averageUtilization"].as(Int32?).not_nil!
-    end
-
-    # :ditto:
-    def average_utilization? : Int32?
-      self.["averageUtilization"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def average_utilization=(value : Int32?)
-      self.["averageUtilization"] = value
-    end
-
-    # averageValue is the target value of the average of the metric across all relevant pods (as a quantity)
-    def average_value : ::Int32 | ::String?
-      self.["averageValue"].as(::Int32 | ::String?)
-    end
-
-    # :ditto:
-    def average_value! : ::Int32 | ::String
-      self.["averageValue"].as(::Int32 | ::String?).not_nil!
-    end
-
-    # :ditto:
-    def average_value? : ::Int32 | ::String?
-      self.["averageValue"]?.as(::Int32 | ::String?)
-    end
-
-    # :ditto:
-    def average_value=(value : ::Int32 | ::String?)
-      self.["averageValue"] = value
-    end
-
-    # type represents whether the metric type is Utilization, Value, or AverageValue
-    def type : String
-      self.["type"].as(String)
-    end
-
-    # :ditto:
-    def type! : String
-      self.["type"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def type? : String?
-      self.["type"]?.as(String?)
-    end
-
-    # :ditto:
-    def type=(value : String)
-      self.["type"] = value
-    end
-
-    # value is the target value of the metric (as a quantity).
-    def value : ::Int32 | ::String?
-      self.["value"].as(::Int32 | ::String?)
-    end
-
-    # :ditto:
-    def value! : ::Int32 | ::String
-      self.["value"].as(::Int32 | ::String?).not_nil!
-    end
-
-    # :ditto:
-    def value? : ::Int32 | ::String?
-      self.["value"]?.as(::Int32 | ::String?)
-    end
-
-    # :ditto:
-    def value=(value : ::Int32 | ::String?)
+    def initialize(*, average_utilization : Int32? = nil, average_value : ::Int32 | ::String? = nil, type : String? = nil, value : ::Int32 | ::String? = nil)
+      super()
+      self.["averageUtilization"] = average_utilization
+      self.["averageValue"] = average_value
+      self.["type"] = type
       self.["value"] = value
     end
 
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "averageUtilization", accessor: "average_utilization", nilable: true, read_only: false, default: nil, kind: Int32 },
-        { key: "averageValue", accessor: "average_value", nilable: true, read_only: false, default: nil, kind: ::Union(::Int32 | ::String) },
-        { key: "type", accessor: "type", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "value", accessor: "value", nilable: true, read_only: false, default: nil, kind: ::Union(::Int32 | ::String) },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "averageUtilization", accessor: "average_utilization", nilable: true, read_only: false, default: nil, kind: Int32},
+      {key: "averageValue", accessor: "average_value", nilable: true, read_only: false, default: nil, kind: ::Union(::Int32 | ::String)},
+      {key: "type", accessor: "type", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "value", accessor: "value", nilable: true, read_only: false, default: nil, kind: ::Union(::Int32 | ::String)},
+    ])
   end
 end

@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def timeout_seconds? : Int32?
     # :ditto:
-    abstract def timeout_seconds=(value : Int32?)
+    abstract def timeout_seconds=(value : Int32)
   end
 
   # ClientIPConfig represents the configurations of Client IP based session affinity.
@@ -24,31 +24,15 @@ module K8S
   )]
   class Api::Core::V1::ClientIPConfig < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::ClientIPConfig
+    k8s_object_accessor("timeoutSeconds", timeout_seconds : Int32, true, false, "timeoutSeconds specifies the seconds of ClientIP type session sticky time. The value must be >0 && <=86400(for 1 day) if ServiceAffinity == \"ClientIP\". Default value is 10800(for 3 hours).")
 
-    # timeoutSeconds specifies the seconds of ClientIP type session sticky time. The value must be >0 && <=86400(for 1 day) if ServiceAffinity == "ClientIP". Default value is 10800(for 3 hours).
-    def timeout_seconds : Int32?
-      self.["timeoutSeconds"].as(Int32?)
+    def initialize(*, timeout_seconds : Int32? = nil)
+      super()
+      self.["timeoutSeconds"] = timeout_seconds
     end
 
-    # :ditto:
-    def timeout_seconds! : Int32
-      self.["timeoutSeconds"].as(Int32?).not_nil!
-    end
-
-    # :ditto:
-    def timeout_seconds? : Int32?
-      self.["timeoutSeconds"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def timeout_seconds=(value : Int32?)
-      self.["timeoutSeconds"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "timeoutSeconds", accessor: "timeout_seconds", nilable: true, read_only: false, default: nil, kind: Int32 },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "timeoutSeconds", accessor: "timeout_seconds", nilable: true, read_only: false, default: nil, kind: Int32},
+    ])
   end
 end

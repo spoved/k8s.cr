@@ -18,7 +18,7 @@ module K8S
     # :ditto:
     abstract def preferred_during_scheduling_ignored_during_execution? : ::Array(::K8S::Api::Core::V1::PreferredSchedulingTerm)?
     # :ditto:
-    abstract def preferred_during_scheduling_ignored_during_execution=(value : ::Array(::K8S::Api::Core::V1::PreferredSchedulingTerm)?)
+    abstract def preferred_during_scheduling_ignored_during_execution=(value : ::Array(::K8S::Api::Core::V1::PreferredSchedulingTerm))
     # If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.
     abstract def required_during_scheduling_ignored_during_execution : ::K8S::Api::Core::V1::NodeSelector?
     # :ditto:
@@ -26,7 +26,7 @@ module K8S
     # :ditto:
     abstract def required_during_scheduling_ignored_during_execution? : ::K8S::Api::Core::V1::NodeSelector?
     # :ditto:
-    abstract def required_during_scheduling_ignored_during_execution=(value : ::K8S::Api::Core::V1::NodeSelector?)
+    abstract def required_during_scheduling_ignored_during_execution=(value : ::K8S::Api::Core::V1::NodeSelector)
   end
 
   # Node affinity is a group of node affinity scheduling rules.
@@ -36,52 +36,18 @@ module K8S
   )]
   class Api::Core::V1::NodeAffinity < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::NodeAffinity
+    k8s_object_accessor("preferredDuringSchedulingIgnoredDuringExecution", preferred_during_scheduling_ignored_during_execution : ::Array(::K8S::Api::Core::V1::PreferredSchedulingTerm), true, false, "The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding \"weight\" to the sum if the node matches the corresponding matchExpressions; the node(s) with the highest sum are the most preferred.")
+    k8s_object_accessor("requiredDuringSchedulingIgnoredDuringExecution", required_during_scheduling_ignored_during_execution : ::K8S::Api::Core::V1::NodeSelector, true, false, "If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.")
 
-    # The scheduler will prefer to schedule pods to nodes that satisfy the affinity expressions specified by this field, but it may choose a node that violates one or more of the expressions. The node that is most preferred is the one with the greatest sum of weights, i.e. for each node that meets all of the scheduling requirements (resource request, requiredDuringScheduling affinity expressions, etc.), compute a sum by iterating through the elements of this field and adding "weight" to the sum if the node matches the corresponding matchExpressions; the node(s) with the highest sum are the most preferred.
-    def preferred_during_scheduling_ignored_during_execution : ::Array(::K8S::Api::Core::V1::PreferredSchedulingTerm)?
-      self.["preferredDuringSchedulingIgnoredDuringExecution"].as(::Array(::K8S::Api::Core::V1::PreferredSchedulingTerm)?)
+    def initialize(*, preferred_during_scheduling_ignored_during_execution : ::Array(::K8S::Api::Core::V1::PreferredSchedulingTerm)? = nil, required_during_scheduling_ignored_during_execution : ::K8S::Api::Core::V1::NodeSelector? = nil)
+      super()
+      self.["preferredDuringSchedulingIgnoredDuringExecution"] = preferred_during_scheduling_ignored_during_execution
+      self.["requiredDuringSchedulingIgnoredDuringExecution"] = required_during_scheduling_ignored_during_execution
     end
 
-    # :ditto:
-    def preferred_during_scheduling_ignored_during_execution! : ::Array(::K8S::Api::Core::V1::PreferredSchedulingTerm)
-      self.["preferredDuringSchedulingIgnoredDuringExecution"].as(::Array(::K8S::Api::Core::V1::PreferredSchedulingTerm)?).not_nil!
-    end
-
-    # :ditto:
-    def preferred_during_scheduling_ignored_during_execution? : ::Array(::K8S::Api::Core::V1::PreferredSchedulingTerm)?
-      self.["preferredDuringSchedulingIgnoredDuringExecution"]?.as(::Array(::K8S::Api::Core::V1::PreferredSchedulingTerm)?)
-    end
-
-    # :ditto:
-    def preferred_during_scheduling_ignored_during_execution=(value : ::Array(::K8S::Api::Core::V1::PreferredSchedulingTerm)?)
-      self.["preferredDuringSchedulingIgnoredDuringExecution"] = value
-    end
-
-    # If the affinity requirements specified by this field are not met at scheduling time, the pod will not be scheduled onto the node. If the affinity requirements specified by this field cease to be met at some point during pod execution (e.g. due to an update), the system may or may not try to eventually evict the pod from its node.
-    def required_during_scheduling_ignored_during_execution : ::K8S::Api::Core::V1::NodeSelector?
-      self.["requiredDuringSchedulingIgnoredDuringExecution"].as(::K8S::Api::Core::V1::NodeSelector?)
-    end
-
-    # :ditto:
-    def required_during_scheduling_ignored_during_execution! : ::K8S::Api::Core::V1::NodeSelector
-      self.["requiredDuringSchedulingIgnoredDuringExecution"].as(::K8S::Api::Core::V1::NodeSelector?).not_nil!
-    end
-
-    # :ditto:
-    def required_during_scheduling_ignored_during_execution? : ::K8S::Api::Core::V1::NodeSelector?
-      self.["requiredDuringSchedulingIgnoredDuringExecution"]?.as(::K8S::Api::Core::V1::NodeSelector?)
-    end
-
-    # :ditto:
-    def required_during_scheduling_ignored_during_execution=(value : ::K8S::Api::Core::V1::NodeSelector?)
-      self.["requiredDuringSchedulingIgnoredDuringExecution"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "preferredDuringSchedulingIgnoredDuringExecution", accessor: "preferred_during_scheduling_ignored_during_execution", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::PreferredSchedulingTerm) },
-        { key: "requiredDuringSchedulingIgnoredDuringExecution", accessor: "required_during_scheduling_ignored_during_execution", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::NodeSelector },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "preferredDuringSchedulingIgnoredDuringExecution", accessor: "preferred_during_scheduling_ignored_during_execution", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::PreferredSchedulingTerm)},
+      {key: "requiredDuringSchedulingIgnoredDuringExecution", accessor: "required_during_scheduling_ignored_during_execution", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::NodeSelector},
+    ])
   end
 end

@@ -24,7 +24,7 @@ module K8S
     # :ditto:
     abstract def allow_privilege_escalation? : ::Bool?
     # :ditto:
-    abstract def allow_privilege_escalation=(value : ::Bool?)
+    abstract def allow_privilege_escalation=(value : ::Bool)
     # allowedCapabilities is a list of capabilities that can be requested to add to the container. Capabilities in this field may be added at the pod author's discretion. You must not list a capability in both allowedCapabilities and requiredDropCapabilities.
     abstract def allowed_capabilities : ::Array(String)?
     # :ditto:
@@ -32,7 +32,7 @@ module K8S
     # :ditto:
     abstract def allowed_capabilities? : ::Array(String)?
     # :ditto:
-    abstract def allowed_capabilities=(value : ::Array(String)?)
+    abstract def allowed_capabilities=(value : ::Array(String))
     # allowedFlexVolumes is a whitelist of allowed Flexvolumes.  Empty or nil indicates that all Flexvolumes may be used.  This parameter is effective only when the usage of the Flexvolumes is allowed in the "volumes" field.
     abstract def allowed_flex_volumes : ::Array(::K8S::Api::Extensions::V1beta1::AllowedFlexVolume)?
     # :ditto:
@@ -40,7 +40,7 @@ module K8S
     # :ditto:
     abstract def allowed_flex_volumes? : ::Array(::K8S::Api::Extensions::V1beta1::AllowedFlexVolume)?
     # :ditto:
-    abstract def allowed_flex_volumes=(value : ::Array(::K8S::Api::Extensions::V1beta1::AllowedFlexVolume)?)
+    abstract def allowed_flex_volumes=(value : ::Array(::K8S::Api::Extensions::V1beta1::AllowedFlexVolume))
     # allowedHostPaths is a white list of allowed host paths. Empty indicates that all host paths may be used.
     abstract def allowed_host_paths : ::Array(::K8S::Api::Extensions::V1beta1::AllowedHostPath)?
     # :ditto:
@@ -48,7 +48,7 @@ module K8S
     # :ditto:
     abstract def allowed_host_paths? : ::Array(::K8S::Api::Extensions::V1beta1::AllowedHostPath)?
     # :ditto:
-    abstract def allowed_host_paths=(value : ::Array(::K8S::Api::Extensions::V1beta1::AllowedHostPath)?)
+    abstract def allowed_host_paths=(value : ::Array(::K8S::Api::Extensions::V1beta1::AllowedHostPath))
     # AllowedProcMountTypes is a whitelist of allowed ProcMountTypes. Empty or nil indicates that only the DefaultProcMountType may be used. This requires the ProcMountType feature flag to be enabled.
     abstract def allowed_proc_mount_types : ::Array(String)?
     # :ditto:
@@ -56,7 +56,7 @@ module K8S
     # :ditto:
     abstract def allowed_proc_mount_types? : ::Array(String)?
     # :ditto:
-    abstract def allowed_proc_mount_types=(value : ::Array(String)?)
+    abstract def allowed_proc_mount_types=(value : ::Array(String))
     # allowedUnsafeSysctls is a list of explicitly allowed unsafe sysctls, defaults to none. Each entry is either a plain sysctl name or ends in "*" in which case it is considered as a prefix of allowed sysctls. Single * means all unsafe sysctls are allowed. Kubelet has to whitelist all allowed unsafe sysctls explicitly to avoid rejection.
     #
     # Examples: e.g. "foo/*" allows [["foo/bar", "foo/baz", etc. e.g. "foo.*" allows "foo.bar", "foo.baz", etc.]("foo/bar", "foo/baz", etc. e.g. "foo.*" allows "foo.bar", "foo.baz", etc.)](["foo/bar", "foo/baz", etc. e.g. "foo.*" allows "foo.bar", "foo.baz", etc.]("foo/bar", "foo/baz", etc. e.g. "foo.*" allows "foo.bar", "foo.baz", etc.))
@@ -66,7 +66,7 @@ module K8S
     # :ditto:
     abstract def allowed_unsafe_sysctls? : ::Array(String)?
     # :ditto:
-    abstract def allowed_unsafe_sysctls=(value : ::Array(String)?)
+    abstract def allowed_unsafe_sysctls=(value : ::Array(String))
     # defaultAddCapabilities is the default set of capabilities that will be added to the container unless the pod spec specifically drops the capability.  You may not list a capability in both defaultAddCapabilities and requiredDropCapabilities. Capabilities added here are implicitly allowed, and need not be included in the allowedCapabilities list.
     abstract def default_add_capabilities : ::Array(String)?
     # :ditto:
@@ -74,7 +74,7 @@ module K8S
     # :ditto:
     abstract def default_add_capabilities? : ::Array(String)?
     # :ditto:
-    abstract def default_add_capabilities=(value : ::Array(String)?)
+    abstract def default_add_capabilities=(value : ::Array(String))
     # defaultAllowPrivilegeEscalation controls the default setting for whether a process can gain more privileges than its parent process.
     abstract def default_allow_privilege_escalation : ::Bool?
     # :ditto:
@@ -82,7 +82,7 @@ module K8S
     # :ditto:
     abstract def default_allow_privilege_escalation? : ::Bool?
     # :ditto:
-    abstract def default_allow_privilege_escalation=(value : ::Bool?)
+    abstract def default_allow_privilege_escalation=(value : ::Bool)
     # forbiddenSysctls is a list of explicitly forbidden sysctls, defaults to none. Each entry is either a plain sysctl name or ends in "*" in which case it is considered as a prefix of forbidden sysctls. Single * means all sysctls are forbidden.
     #
     # Examples: e.g. "foo/*" forbids [["foo/bar", "foo/baz", etc. e.g. "foo.*" forbids "foo.bar", "foo.baz", etc.]("foo/bar", "foo/baz", etc. e.g. "foo.*" forbids "foo.bar", "foo.baz", etc.)](["foo/bar", "foo/baz", etc. e.g. "foo.*" forbids "foo.bar", "foo.baz", etc.]("foo/bar", "foo/baz", etc. e.g. "foo.*" forbids "foo.bar", "foo.baz", etc.))
@@ -92,9 +92,9 @@ module K8S
     # :ditto:
     abstract def forbidden_sysctls? : ::Array(String)?
     # :ditto:
-    abstract def forbidden_sysctls=(value : ::Array(String)?)
+    abstract def forbidden_sysctls=(value : ::Array(String))
     # fsGroup is the strategy that will dictate what fs group is used by the SecurityContext.
-    abstract def fs_group : ::K8S::Api::Extensions::V1beta1::FSGroupStrategyOptions
+    abstract def fs_group : ::K8S::Api::Extensions::V1beta1::FSGroupStrategyOptions?
     # :ditto:
     abstract def fs_group! : ::K8S::Api::Extensions::V1beta1::FSGroupStrategyOptions
     # :ditto:
@@ -108,7 +108,7 @@ module K8S
     # :ditto:
     abstract def host_ipc? : ::Bool?
     # :ditto:
-    abstract def host_ipc=(value : ::Bool?)
+    abstract def host_ipc=(value : ::Bool)
     # hostNetwork determines if the policy allows the use of HostNetwork in the pod spec.
     abstract def host_network : ::Bool?
     # :ditto:
@@ -116,7 +116,7 @@ module K8S
     # :ditto:
     abstract def host_network? : ::Bool?
     # :ditto:
-    abstract def host_network=(value : ::Bool?)
+    abstract def host_network=(value : ::Bool)
     # hostPID determines if the policy allows the use of HostPID in the pod spec.
     abstract def host_pid : ::Bool?
     # :ditto:
@@ -124,7 +124,7 @@ module K8S
     # :ditto:
     abstract def host_pid? : ::Bool?
     # :ditto:
-    abstract def host_pid=(value : ::Bool?)
+    abstract def host_pid=(value : ::Bool)
     # hostPorts determines which host port ranges are allowed to be exposed.
     abstract def host_ports : ::Array(::K8S::Api::Extensions::V1beta1::HostPortRange)?
     # :ditto:
@@ -132,7 +132,7 @@ module K8S
     # :ditto:
     abstract def host_ports? : ::Array(::K8S::Api::Extensions::V1beta1::HostPortRange)?
     # :ditto:
-    abstract def host_ports=(value : ::Array(::K8S::Api::Extensions::V1beta1::HostPortRange)?)
+    abstract def host_ports=(value : ::Array(::K8S::Api::Extensions::V1beta1::HostPortRange))
     # privileged determines if a pod can request to be run as privileged.
     abstract def privileged : ::Bool?
     # :ditto:
@@ -140,7 +140,7 @@ module K8S
     # :ditto:
     abstract def privileged? : ::Bool?
     # :ditto:
-    abstract def privileged=(value : ::Bool?)
+    abstract def privileged=(value : ::Bool)
     # readOnlyRootFilesystem when set to true will force containers to run with a read only root file system.  If the container specifically requests to run with a non-read only root file system the PSP should deny the pod. If set to false the container may run with a read only root file system if it wishes but it will not be forced to.
     abstract def read_only_root_filesystem : ::Bool?
     # :ditto:
@@ -148,7 +148,7 @@ module K8S
     # :ditto:
     abstract def read_only_root_filesystem? : ::Bool?
     # :ditto:
-    abstract def read_only_root_filesystem=(value : ::Bool?)
+    abstract def read_only_root_filesystem=(value : ::Bool)
     # requiredDropCapabilities are the capabilities that will be dropped from the container.  These are required to be dropped and cannot be added.
     abstract def required_drop_capabilities : ::Array(String)?
     # :ditto:
@@ -156,7 +156,7 @@ module K8S
     # :ditto:
     abstract def required_drop_capabilities? : ::Array(String)?
     # :ditto:
-    abstract def required_drop_capabilities=(value : ::Array(String)?)
+    abstract def required_drop_capabilities=(value : ::Array(String))
     # RunAsGroup is the strategy that will dictate the allowable RunAsGroup values that may be set. If this field is omitted, the pod's RunAsGroup can take any value. This field requires the RunAsGroup feature gate to be enabled.
     abstract def run_as_group : ::K8S::Api::Extensions::V1beta1::RunAsGroupStrategyOptions?
     # :ditto:
@@ -164,9 +164,9 @@ module K8S
     # :ditto:
     abstract def run_as_group? : ::K8S::Api::Extensions::V1beta1::RunAsGroupStrategyOptions?
     # :ditto:
-    abstract def run_as_group=(value : ::K8S::Api::Extensions::V1beta1::RunAsGroupStrategyOptions?)
+    abstract def run_as_group=(value : ::K8S::Api::Extensions::V1beta1::RunAsGroupStrategyOptions)
     # runAsUser is the strategy that will dictate the allowable RunAsUser values that may be set.
-    abstract def run_as_user : ::K8S::Api::Extensions::V1beta1::RunAsUserStrategyOptions
+    abstract def run_as_user : ::K8S::Api::Extensions::V1beta1::RunAsUserStrategyOptions?
     # :ditto:
     abstract def run_as_user! : ::K8S::Api::Extensions::V1beta1::RunAsUserStrategyOptions
     # :ditto:
@@ -174,7 +174,7 @@ module K8S
     # :ditto:
     abstract def run_as_user=(value : ::K8S::Api::Extensions::V1beta1::RunAsUserStrategyOptions)
     # seLinux is the strategy that will dictate the allowable labels that may be set.
-    abstract def se_linux : ::K8S::Api::Extensions::V1beta1::SELinuxStrategyOptions
+    abstract def se_linux : ::K8S::Api::Extensions::V1beta1::SELinuxStrategyOptions?
     # :ditto:
     abstract def se_linux! : ::K8S::Api::Extensions::V1beta1::SELinuxStrategyOptions
     # :ditto:
@@ -182,7 +182,7 @@ module K8S
     # :ditto:
     abstract def se_linux=(value : ::K8S::Api::Extensions::V1beta1::SELinuxStrategyOptions)
     # supplementalGroups is the strategy that will dictate what supplemental groups are used by the SecurityContext.
-    abstract def supplemental_groups : ::K8S::Api::Extensions::V1beta1::SupplementalGroupsStrategyOptions
+    abstract def supplemental_groups : ::K8S::Api::Extensions::V1beta1::SupplementalGroupsStrategyOptions?
     # :ditto:
     abstract def supplemental_groups! : ::K8S::Api::Extensions::V1beta1::SupplementalGroupsStrategyOptions
     # :ditto:
@@ -196,7 +196,7 @@ module K8S
     # :ditto:
     abstract def volumes? : ::Array(String)?
     # :ditto:
-    abstract def volumes=(value : ::Array(String)?)
+    abstract def volumes=(value : ::Array(String))
   end
 
   # PodSecurityPolicySpec defines the policy enforced. Deprecated: use PodSecurityPolicySpec from policy API Group instead.
@@ -226,476 +226,78 @@ module K8S
   )]
   class Api::Extensions::V1beta1::PodSecurityPolicySpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Extensions::V1beta1::PodSecurityPolicySpec
-
-    # allowPrivilegeEscalation determines if a pod can request to allow privilege escalation. If unspecified, defaults to true.
-    def allow_privilege_escalation : ::Bool?
-      self.["allowPrivilegeEscalation"].as(::Bool?)
-    end
-
-    # :ditto:
-    def allow_privilege_escalation! : ::Bool
-      self.["allowPrivilegeEscalation"].as(::Bool?).not_nil!
-    end
-
-    # :ditto:
-    def allow_privilege_escalation? : ::Bool?
-      self.["allowPrivilegeEscalation"]?.as(::Bool?)
-    end
-
-    # :ditto:
-    def allow_privilege_escalation=(value : ::Bool?)
-      self.["allowPrivilegeEscalation"] = value
-    end
-
-    # allowedCapabilities is a list of capabilities that can be requested to add to the container. Capabilities in this field may be added at the pod author's discretion. You must not list a capability in both allowedCapabilities and requiredDropCapabilities.
-    def allowed_capabilities : ::Array(String)?
-      self.["allowedCapabilities"].as(::Array(String)?)
-    end
-
-    # :ditto:
-    def allowed_capabilities! : ::Array(String)
-      self.["allowedCapabilities"].as(::Array(String)?).not_nil!
-    end
-
-    # :ditto:
-    def allowed_capabilities? : ::Array(String)?
-      self.["allowedCapabilities"]?.as(::Array(String)?)
-    end
-
-    # :ditto:
-    def allowed_capabilities=(value : ::Array(String)?)
-      self.["allowedCapabilities"] = value
-    end
-
-    # allowedFlexVolumes is a whitelist of allowed Flexvolumes.  Empty or nil indicates that all Flexvolumes may be used.  This parameter is effective only when the usage of the Flexvolumes is allowed in the "volumes" field.
-    def allowed_flex_volumes : ::Array(::K8S::Api::Extensions::V1beta1::AllowedFlexVolume)?
-      self.["allowedFlexVolumes"].as(::Array(::K8S::Api::Extensions::V1beta1::AllowedFlexVolume)?)
-    end
-
-    # :ditto:
-    def allowed_flex_volumes! : ::Array(::K8S::Api::Extensions::V1beta1::AllowedFlexVolume)
-      self.["allowedFlexVolumes"].as(::Array(::K8S::Api::Extensions::V1beta1::AllowedFlexVolume)?).not_nil!
-    end
-
-    # :ditto:
-    def allowed_flex_volumes? : ::Array(::K8S::Api::Extensions::V1beta1::AllowedFlexVolume)?
-      self.["allowedFlexVolumes"]?.as(::Array(::K8S::Api::Extensions::V1beta1::AllowedFlexVolume)?)
-    end
-
-    # :ditto:
-    def allowed_flex_volumes=(value : ::Array(::K8S::Api::Extensions::V1beta1::AllowedFlexVolume)?)
-      self.["allowedFlexVolumes"] = value
-    end
-
-    # allowedHostPaths is a white list of allowed host paths. Empty indicates that all host paths may be used.
-    def allowed_host_paths : ::Array(::K8S::Api::Extensions::V1beta1::AllowedHostPath)?
-      self.["allowedHostPaths"].as(::Array(::K8S::Api::Extensions::V1beta1::AllowedHostPath)?)
-    end
-
-    # :ditto:
-    def allowed_host_paths! : ::Array(::K8S::Api::Extensions::V1beta1::AllowedHostPath)
-      self.["allowedHostPaths"].as(::Array(::K8S::Api::Extensions::V1beta1::AllowedHostPath)?).not_nil!
-    end
-
-    # :ditto:
-    def allowed_host_paths? : ::Array(::K8S::Api::Extensions::V1beta1::AllowedHostPath)?
-      self.["allowedHostPaths"]?.as(::Array(::K8S::Api::Extensions::V1beta1::AllowedHostPath)?)
-    end
-
-    # :ditto:
-    def allowed_host_paths=(value : ::Array(::K8S::Api::Extensions::V1beta1::AllowedHostPath)?)
-      self.["allowedHostPaths"] = value
-    end
-
-    # AllowedProcMountTypes is a whitelist of allowed ProcMountTypes. Empty or nil indicates that only the DefaultProcMountType may be used. This requires the ProcMountType feature flag to be enabled.
-    def allowed_proc_mount_types : ::Array(String)?
-      self.["allowedProcMountTypes"].as(::Array(String)?)
-    end
-
-    # :ditto:
-    def allowed_proc_mount_types! : ::Array(String)
-      self.["allowedProcMountTypes"].as(::Array(String)?).not_nil!
-    end
-
-    # :ditto:
-    def allowed_proc_mount_types? : ::Array(String)?
-      self.["allowedProcMountTypes"]?.as(::Array(String)?)
-    end
-
-    # :ditto:
-    def allowed_proc_mount_types=(value : ::Array(String)?)
-      self.["allowedProcMountTypes"] = value
-    end
-
-    # allowedUnsafeSysctls is a list of explicitly allowed unsafe sysctls, defaults to none. Each entry is either a plain sysctl name or ends in "*" in which case it is considered as a prefix of allowed sysctls. Single * means all unsafe sysctls are allowed. Kubelet has to whitelist all allowed unsafe sysctls explicitly to avoid rejection.
-    #
-    # Examples: e.g. "foo/*" allows [["foo/bar", "foo/baz", etc. e.g. "foo.*" allows "foo.bar", "foo.baz", etc.]("foo/bar", "foo/baz", etc. e.g. "foo.*" allows "foo.bar", "foo.baz", etc.)](["foo/bar", "foo/baz", etc. e.g. "foo.*" allows "foo.bar", "foo.baz", etc.]("foo/bar", "foo/baz", etc. e.g. "foo.*" allows "foo.bar", "foo.baz", etc.))
-    def allowed_unsafe_sysctls : ::Array(String)?
-      self.["allowedUnsafeSysctls"].as(::Array(String)?)
-    end
-
-    # :ditto:
-    def allowed_unsafe_sysctls! : ::Array(String)
-      self.["allowedUnsafeSysctls"].as(::Array(String)?).not_nil!
-    end
-
-    # :ditto:
-    def allowed_unsafe_sysctls? : ::Array(String)?
-      self.["allowedUnsafeSysctls"]?.as(::Array(String)?)
-    end
-
-    # :ditto:
-    def allowed_unsafe_sysctls=(value : ::Array(String)?)
-      self.["allowedUnsafeSysctls"] = value
-    end
-
-    # defaultAddCapabilities is the default set of capabilities that will be added to the container unless the pod spec specifically drops the capability.  You may not list a capability in both defaultAddCapabilities and requiredDropCapabilities. Capabilities added here are implicitly allowed, and need not be included in the allowedCapabilities list.
-    def default_add_capabilities : ::Array(String)?
-      self.["defaultAddCapabilities"].as(::Array(String)?)
-    end
-
-    # :ditto:
-    def default_add_capabilities! : ::Array(String)
-      self.["defaultAddCapabilities"].as(::Array(String)?).not_nil!
-    end
-
-    # :ditto:
-    def default_add_capabilities? : ::Array(String)?
-      self.["defaultAddCapabilities"]?.as(::Array(String)?)
-    end
-
-    # :ditto:
-    def default_add_capabilities=(value : ::Array(String)?)
-      self.["defaultAddCapabilities"] = value
-    end
-
-    # defaultAllowPrivilegeEscalation controls the default setting for whether a process can gain more privileges than its parent process.
-    def default_allow_privilege_escalation : ::Bool?
-      self.["defaultAllowPrivilegeEscalation"].as(::Bool?)
-    end
-
-    # :ditto:
-    def default_allow_privilege_escalation! : ::Bool
-      self.["defaultAllowPrivilegeEscalation"].as(::Bool?).not_nil!
-    end
-
-    # :ditto:
-    def default_allow_privilege_escalation? : ::Bool?
-      self.["defaultAllowPrivilegeEscalation"]?.as(::Bool?)
-    end
-
-    # :ditto:
-    def default_allow_privilege_escalation=(value : ::Bool?)
-      self.["defaultAllowPrivilegeEscalation"] = value
-    end
-
-    # forbiddenSysctls is a list of explicitly forbidden sysctls, defaults to none. Each entry is either a plain sysctl name or ends in "*" in which case it is considered as a prefix of forbidden sysctls. Single * means all sysctls are forbidden.
-    #
-    # Examples: e.g. "foo/*" forbids [["foo/bar", "foo/baz", etc. e.g. "foo.*" forbids "foo.bar", "foo.baz", etc.]("foo/bar", "foo/baz", etc. e.g. "foo.*" forbids "foo.bar", "foo.baz", etc.)](["foo/bar", "foo/baz", etc. e.g. "foo.*" forbids "foo.bar", "foo.baz", etc.]("foo/bar", "foo/baz", etc. e.g. "foo.*" forbids "foo.bar", "foo.baz", etc.))
-    def forbidden_sysctls : ::Array(String)?
-      self.["forbiddenSysctls"].as(::Array(String)?)
-    end
-
-    # :ditto:
-    def forbidden_sysctls! : ::Array(String)
-      self.["forbiddenSysctls"].as(::Array(String)?).not_nil!
-    end
-
-    # :ditto:
-    def forbidden_sysctls? : ::Array(String)?
-      self.["forbiddenSysctls"]?.as(::Array(String)?)
-    end
-
-    # :ditto:
-    def forbidden_sysctls=(value : ::Array(String)?)
-      self.["forbiddenSysctls"] = value
-    end
-
-    # fsGroup is the strategy that will dictate what fs group is used by the SecurityContext.
-    def fs_group : ::K8S::Api::Extensions::V1beta1::FSGroupStrategyOptions
-      self.["fsGroup"].as(::K8S::Api::Extensions::V1beta1::FSGroupStrategyOptions)
-    end
-
-    # :ditto:
-    def fs_group! : ::K8S::Api::Extensions::V1beta1::FSGroupStrategyOptions
-      self.["fsGroup"].as(::K8S::Api::Extensions::V1beta1::FSGroupStrategyOptions).not_nil!
-    end
-
-    # :ditto:
-    def fs_group? : ::K8S::Api::Extensions::V1beta1::FSGroupStrategyOptions?
-      self.["fsGroup"]?.as(::K8S::Api::Extensions::V1beta1::FSGroupStrategyOptions?)
-    end
-
-    # :ditto:
-    def fs_group=(value : ::K8S::Api::Extensions::V1beta1::FSGroupStrategyOptions)
-      self.["fsGroup"] = value
-    end
-
-    # hostIPC determines if the policy allows the use of HostIPC in the pod spec.
-    def host_ipc : ::Bool?
-      self.["hostIPC"].as(::Bool?)
-    end
-
-    # :ditto:
-    def host_ipc! : ::Bool
-      self.["hostIPC"].as(::Bool?).not_nil!
-    end
-
-    # :ditto:
-    def host_ipc? : ::Bool?
-      self.["hostIPC"]?.as(::Bool?)
-    end
-
-    # :ditto:
-    def host_ipc=(value : ::Bool?)
-      self.["hostIPC"] = value
-    end
-
-    # hostNetwork determines if the policy allows the use of HostNetwork in the pod spec.
-    def host_network : ::Bool?
-      self.["hostNetwork"].as(::Bool?)
-    end
-
-    # :ditto:
-    def host_network! : ::Bool
-      self.["hostNetwork"].as(::Bool?).not_nil!
-    end
-
-    # :ditto:
-    def host_network? : ::Bool?
-      self.["hostNetwork"]?.as(::Bool?)
-    end
-
-    # :ditto:
-    def host_network=(value : ::Bool?)
-      self.["hostNetwork"] = value
-    end
-
-    # hostPID determines if the policy allows the use of HostPID in the pod spec.
-    def host_pid : ::Bool?
-      self.["hostPID"].as(::Bool?)
-    end
-
-    # :ditto:
-    def host_pid! : ::Bool
-      self.["hostPID"].as(::Bool?).not_nil!
-    end
-
-    # :ditto:
-    def host_pid? : ::Bool?
-      self.["hostPID"]?.as(::Bool?)
-    end
-
-    # :ditto:
-    def host_pid=(value : ::Bool?)
-      self.["hostPID"] = value
-    end
-
-    # hostPorts determines which host port ranges are allowed to be exposed.
-    def host_ports : ::Array(::K8S::Api::Extensions::V1beta1::HostPortRange)?
-      self.["hostPorts"].as(::Array(::K8S::Api::Extensions::V1beta1::HostPortRange)?)
-    end
-
-    # :ditto:
-    def host_ports! : ::Array(::K8S::Api::Extensions::V1beta1::HostPortRange)
-      self.["hostPorts"].as(::Array(::K8S::Api::Extensions::V1beta1::HostPortRange)?).not_nil!
-    end
-
-    # :ditto:
-    def host_ports? : ::Array(::K8S::Api::Extensions::V1beta1::HostPortRange)?
-      self.["hostPorts"]?.as(::Array(::K8S::Api::Extensions::V1beta1::HostPortRange)?)
-    end
-
-    # :ditto:
-    def host_ports=(value : ::Array(::K8S::Api::Extensions::V1beta1::HostPortRange)?)
-      self.["hostPorts"] = value
-    end
-
-    # privileged determines if a pod can request to be run as privileged.
-    def privileged : ::Bool?
-      self.["privileged"].as(::Bool?)
-    end
-
-    # :ditto:
-    def privileged! : ::Bool
-      self.["privileged"].as(::Bool?).not_nil!
-    end
-
-    # :ditto:
-    def privileged? : ::Bool?
-      self.["privileged"]?.as(::Bool?)
-    end
-
-    # :ditto:
-    def privileged=(value : ::Bool?)
-      self.["privileged"] = value
-    end
-
-    # readOnlyRootFilesystem when set to true will force containers to run with a read only root file system.  If the container specifically requests to run with a non-read only root file system the PSP should deny the pod. If set to false the container may run with a read only root file system if it wishes but it will not be forced to.
-    def read_only_root_filesystem : ::Bool?
-      self.["readOnlyRootFilesystem"].as(::Bool?)
-    end
-
-    # :ditto:
-    def read_only_root_filesystem! : ::Bool
-      self.["readOnlyRootFilesystem"].as(::Bool?).not_nil!
-    end
-
-    # :ditto:
-    def read_only_root_filesystem? : ::Bool?
-      self.["readOnlyRootFilesystem"]?.as(::Bool?)
-    end
-
-    # :ditto:
-    def read_only_root_filesystem=(value : ::Bool?)
-      self.["readOnlyRootFilesystem"] = value
-    end
-
-    # requiredDropCapabilities are the capabilities that will be dropped from the container.  These are required to be dropped and cannot be added.
-    def required_drop_capabilities : ::Array(String)?
-      self.["requiredDropCapabilities"].as(::Array(String)?)
-    end
-
-    # :ditto:
-    def required_drop_capabilities! : ::Array(String)
-      self.["requiredDropCapabilities"].as(::Array(String)?).not_nil!
-    end
-
-    # :ditto:
-    def required_drop_capabilities? : ::Array(String)?
-      self.["requiredDropCapabilities"]?.as(::Array(String)?)
-    end
-
-    # :ditto:
-    def required_drop_capabilities=(value : ::Array(String)?)
-      self.["requiredDropCapabilities"] = value
-    end
-
-    # RunAsGroup is the strategy that will dictate the allowable RunAsGroup values that may be set. If this field is omitted, the pod's RunAsGroup can take any value. This field requires the RunAsGroup feature gate to be enabled.
-    def run_as_group : ::K8S::Api::Extensions::V1beta1::RunAsGroupStrategyOptions?
-      self.["runAsGroup"].as(::K8S::Api::Extensions::V1beta1::RunAsGroupStrategyOptions?)
-    end
-
-    # :ditto:
-    def run_as_group! : ::K8S::Api::Extensions::V1beta1::RunAsGroupStrategyOptions
-      self.["runAsGroup"].as(::K8S::Api::Extensions::V1beta1::RunAsGroupStrategyOptions?).not_nil!
-    end
-
-    # :ditto:
-    def run_as_group? : ::K8S::Api::Extensions::V1beta1::RunAsGroupStrategyOptions?
-      self.["runAsGroup"]?.as(::K8S::Api::Extensions::V1beta1::RunAsGroupStrategyOptions?)
-    end
-
-    # :ditto:
-    def run_as_group=(value : ::K8S::Api::Extensions::V1beta1::RunAsGroupStrategyOptions?)
-      self.["runAsGroup"] = value
-    end
-
-    # runAsUser is the strategy that will dictate the allowable RunAsUser values that may be set.
-    def run_as_user : ::K8S::Api::Extensions::V1beta1::RunAsUserStrategyOptions
-      self.["runAsUser"].as(::K8S::Api::Extensions::V1beta1::RunAsUserStrategyOptions)
-    end
-
-    # :ditto:
-    def run_as_user! : ::K8S::Api::Extensions::V1beta1::RunAsUserStrategyOptions
-      self.["runAsUser"].as(::K8S::Api::Extensions::V1beta1::RunAsUserStrategyOptions).not_nil!
-    end
-
-    # :ditto:
-    def run_as_user? : ::K8S::Api::Extensions::V1beta1::RunAsUserStrategyOptions?
-      self.["runAsUser"]?.as(::K8S::Api::Extensions::V1beta1::RunAsUserStrategyOptions?)
-    end
-
-    # :ditto:
-    def run_as_user=(value : ::K8S::Api::Extensions::V1beta1::RunAsUserStrategyOptions)
-      self.["runAsUser"] = value
-    end
-
-    # seLinux is the strategy that will dictate the allowable labels that may be set.
-    def se_linux : ::K8S::Api::Extensions::V1beta1::SELinuxStrategyOptions
-      self.["seLinux"].as(::K8S::Api::Extensions::V1beta1::SELinuxStrategyOptions)
-    end
-
-    # :ditto:
-    def se_linux! : ::K8S::Api::Extensions::V1beta1::SELinuxStrategyOptions
-      self.["seLinux"].as(::K8S::Api::Extensions::V1beta1::SELinuxStrategyOptions).not_nil!
-    end
-
-    # :ditto:
-    def se_linux? : ::K8S::Api::Extensions::V1beta1::SELinuxStrategyOptions?
-      self.["seLinux"]?.as(::K8S::Api::Extensions::V1beta1::SELinuxStrategyOptions?)
-    end
-
-    # :ditto:
-    def se_linux=(value : ::K8S::Api::Extensions::V1beta1::SELinuxStrategyOptions)
-      self.["seLinux"] = value
-    end
-
-    # supplementalGroups is the strategy that will dictate what supplemental groups are used by the SecurityContext.
-    def supplemental_groups : ::K8S::Api::Extensions::V1beta1::SupplementalGroupsStrategyOptions
-      self.["supplementalGroups"].as(::K8S::Api::Extensions::V1beta1::SupplementalGroupsStrategyOptions)
-    end
-
-    # :ditto:
-    def supplemental_groups! : ::K8S::Api::Extensions::V1beta1::SupplementalGroupsStrategyOptions
-      self.["supplementalGroups"].as(::K8S::Api::Extensions::V1beta1::SupplementalGroupsStrategyOptions).not_nil!
-    end
-
-    # :ditto:
-    def supplemental_groups? : ::K8S::Api::Extensions::V1beta1::SupplementalGroupsStrategyOptions?
-      self.["supplementalGroups"]?.as(::K8S::Api::Extensions::V1beta1::SupplementalGroupsStrategyOptions?)
-    end
-
-    # :ditto:
-    def supplemental_groups=(value : ::K8S::Api::Extensions::V1beta1::SupplementalGroupsStrategyOptions)
-      self.["supplementalGroups"] = value
-    end
-
-    # volumes is a white list of allowed volume plugins. Empty indicates that no volumes may be used. To allow all volumes you may use '*'.
-    def volumes : ::Array(String)?
-      self.["volumes"].as(::Array(String)?)
-    end
-
-    # :ditto:
-    def volumes! : ::Array(String)
-      self.["volumes"].as(::Array(String)?).not_nil!
-    end
-
-    # :ditto:
-    def volumes? : ::Array(String)?
-      self.["volumes"]?.as(::Array(String)?)
-    end
-
-    # :ditto:
-    def volumes=(value : ::Array(String)?)
-      self.["volumes"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "allowPrivilegeEscalation", accessor: "allow_privilege_escalation", nilable: true, read_only: false, default: nil, kind: ::Bool },
-        { key: "allowedCapabilities", accessor: "allowed_capabilities", nilable: true, read_only: false, default: nil, kind: ::Array(String) },
-        { key: "allowedFlexVolumes", accessor: "allowed_flex_volumes", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Extensions::V1beta1::AllowedFlexVolume) },
-        { key: "allowedHostPaths", accessor: "allowed_host_paths", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Extensions::V1beta1::AllowedHostPath) },
-        { key: "allowedProcMountTypes", accessor: "allowed_proc_mount_types", nilable: true, read_only: false, default: nil, kind: ::Array(String) },
-        { key: "allowedUnsafeSysctls", accessor: "allowed_unsafe_sysctls", nilable: true, read_only: false, default: nil, kind: ::Array(String) },
-        { key: "defaultAddCapabilities", accessor: "default_add_capabilities", nilable: true, read_only: false, default: nil, kind: ::Array(String) },
-        { key: "defaultAllowPrivilegeEscalation", accessor: "default_allow_privilege_escalation", nilable: true, read_only: false, default: nil, kind: ::Bool },
-        { key: "forbiddenSysctls", accessor: "forbidden_sysctls", nilable: true, read_only: false, default: nil, kind: ::Array(String) },
-        { key: "fsGroup", accessor: "fs_group", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Extensions::V1beta1::FSGroupStrategyOptions },
-        { key: "hostIPC", accessor: "host_ipc", nilable: true, read_only: false, default: nil, kind: ::Bool },
-        { key: "hostNetwork", accessor: "host_network", nilable: true, read_only: false, default: nil, kind: ::Bool },
-        { key: "hostPID", accessor: "host_pid", nilable: true, read_only: false, default: nil, kind: ::Bool },
-        { key: "hostPorts", accessor: "host_ports", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Extensions::V1beta1::HostPortRange) },
-        { key: "privileged", accessor: "privileged", nilable: true, read_only: false, default: nil, kind: ::Bool },
-        { key: "readOnlyRootFilesystem", accessor: "read_only_root_filesystem", nilable: true, read_only: false, default: nil, kind: ::Bool },
-        { key: "requiredDropCapabilities", accessor: "required_drop_capabilities", nilable: true, read_only: false, default: nil, kind: ::Array(String) },
-        { key: "runAsGroup", accessor: "run_as_group", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Extensions::V1beta1::RunAsGroupStrategyOptions },
-        { key: "runAsUser", accessor: "run_as_user", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Extensions::V1beta1::RunAsUserStrategyOptions },
-        { key: "seLinux", accessor: "se_linux", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Extensions::V1beta1::SELinuxStrategyOptions },
-        { key: "supplementalGroups", accessor: "supplemental_groups", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Extensions::V1beta1::SupplementalGroupsStrategyOptions },
-        { key: "volumes", accessor: "volumes", nilable: true, read_only: false, default: nil, kind: ::Array(String) },
-      ])
-end
+    k8s_object_accessor("allowPrivilegeEscalation", allow_privilege_escalation : ::Bool, true, false, "allowPrivilegeEscalation determines if a pod can request to allow privilege escalation. If unspecified, defaults to true.")
+    k8s_object_accessor("allowedCapabilities", allowed_capabilities : ::Array(String), true, false, "allowedCapabilities is a list of capabilities that can be requested to add to the container. Capabilities in this field may be added at the pod author's discretion. You must not list a capability in both allowedCapabilities and requiredDropCapabilities.")
+    k8s_object_accessor("allowedFlexVolumes", allowed_flex_volumes : ::Array(::K8S::Api::Extensions::V1beta1::AllowedFlexVolume), true, false, "allowedFlexVolumes is a whitelist of allowed Flexvolumes.  Empty or nil indicates that all Flexvolumes may be used.  This parameter is effective only when the usage of the Flexvolumes is allowed in the \"volumes\" field.")
+    k8s_object_accessor("allowedHostPaths", allowed_host_paths : ::Array(::K8S::Api::Extensions::V1beta1::AllowedHostPath), true, false, "allowedHostPaths is a white list of allowed host paths. Empty indicates that all host paths may be used.")
+    k8s_object_accessor("allowedProcMountTypes", allowed_proc_mount_types : ::Array(String), true, false, "AllowedProcMountTypes is a whitelist of allowed ProcMountTypes. Empty or nil indicates that only the DefaultProcMountType may be used. This requires the ProcMountType feature flag to be enabled.")
+    k8s_object_accessor("allowedUnsafeSysctls", allowed_unsafe_sysctls : ::Array(String), true, false, "allowedUnsafeSysctls is a list of explicitly allowed unsafe sysctls, defaults to none. Each entry is either a plain sysctl name or ends in \"*\" in which case it is considered as a prefix of allowed sysctls. Single * means all unsafe sysctls are allowed. Kubelet has to whitelist all allowed unsafe sysctls explicitly to avoid rejection.\n\nExamples: e.g. \"foo/*\" allows [\"foo/bar\", \"foo/baz\", etc. e.g. \"foo.*\" allows \"foo.bar\", \"foo.baz\", etc.](\"foo/bar\", \"foo/baz\", etc. e.g. \"foo.*\" allows \"foo.bar\", \"foo.baz\", etc.)")
+    k8s_object_accessor("defaultAddCapabilities", default_add_capabilities : ::Array(String), true, false, "defaultAddCapabilities is the default set of capabilities that will be added to the container unless the pod spec specifically drops the capability.  You may not list a capability in both defaultAddCapabilities and requiredDropCapabilities. Capabilities added here are implicitly allowed, and need not be included in the allowedCapabilities list.")
+    k8s_object_accessor("defaultAllowPrivilegeEscalation", default_allow_privilege_escalation : ::Bool, true, false, "defaultAllowPrivilegeEscalation controls the default setting for whether a process can gain more privileges than its parent process.")
+    k8s_object_accessor("forbiddenSysctls", forbidden_sysctls : ::Array(String), true, false, "forbiddenSysctls is a list of explicitly forbidden sysctls, defaults to none. Each entry is either a plain sysctl name or ends in \"*\" in which case it is considered as a prefix of forbidden sysctls. Single * means all sysctls are forbidden.\n\nExamples: e.g. \"foo/*\" forbids [\"foo/bar\", \"foo/baz\", etc. e.g. \"foo.*\" forbids \"foo.bar\", \"foo.baz\", etc.](\"foo/bar\", \"foo/baz\", etc. e.g. \"foo.*\" forbids \"foo.bar\", \"foo.baz\", etc.)")
+    k8s_object_accessor("fsGroup", fs_group : ::K8S::Api::Extensions::V1beta1::FSGroupStrategyOptions, false, false, "fsGroup is the strategy that will dictate what fs group is used by the SecurityContext.")
+    k8s_object_accessor("hostIPC", host_ipc : ::Bool, true, false, "hostIPC determines if the policy allows the use of HostIPC in the pod spec.")
+    k8s_object_accessor("hostNetwork", host_network : ::Bool, true, false, "hostNetwork determines if the policy allows the use of HostNetwork in the pod spec.")
+    k8s_object_accessor("hostPID", host_pid : ::Bool, true, false, "hostPID determines if the policy allows the use of HostPID in the pod spec.")
+    k8s_object_accessor("hostPorts", host_ports : ::Array(::K8S::Api::Extensions::V1beta1::HostPortRange), true, false, "hostPorts determines which host port ranges are allowed to be exposed.")
+    k8s_object_accessor("privileged", privileged : ::Bool, true, false, "privileged determines if a pod can request to be run as privileged.")
+    k8s_object_accessor("readOnlyRootFilesystem", read_only_root_filesystem : ::Bool, true, false, "readOnlyRootFilesystem when set to true will force containers to run with a read only root file system.  If the container specifically requests to run with a non-read only root file system the PSP should deny the pod. If set to false the container may run with a read only root file system if it wishes but it will not be forced to.")
+    k8s_object_accessor("requiredDropCapabilities", required_drop_capabilities : ::Array(String), true, false, "requiredDropCapabilities are the capabilities that will be dropped from the container.  These are required to be dropped and cannot be added.")
+    k8s_object_accessor("runAsGroup", run_as_group : ::K8S::Api::Extensions::V1beta1::RunAsGroupStrategyOptions, true, false, "RunAsGroup is the strategy that will dictate the allowable RunAsGroup values that may be set. If this field is omitted, the pod's RunAsGroup can take any value. This field requires the RunAsGroup feature gate to be enabled.")
+    k8s_object_accessor("runAsUser", run_as_user : ::K8S::Api::Extensions::V1beta1::RunAsUserStrategyOptions, false, false, "runAsUser is the strategy that will dictate the allowable RunAsUser values that may be set.")
+    k8s_object_accessor("seLinux", se_linux : ::K8S::Api::Extensions::V1beta1::SELinuxStrategyOptions, false, false, "seLinux is the strategy that will dictate the allowable labels that may be set.")
+    k8s_object_accessor("supplementalGroups", supplemental_groups : ::K8S::Api::Extensions::V1beta1::SupplementalGroupsStrategyOptions, false, false, "supplementalGroups is the strategy that will dictate what supplemental groups are used by the SecurityContext.")
+    k8s_object_accessor("volumes", volumes : ::Array(String), true, false, "volumes is a white list of allowed volume plugins. Empty indicates that no volumes may be used. To allow all volumes you may use '*'.")
+
+    def initialize(*, allow_privilege_escalation : ::Bool? = nil, allowed_capabilities : ::Array(String)? = nil, allowed_flex_volumes : ::Array(::K8S::Api::Extensions::V1beta1::AllowedFlexVolume)? = nil, allowed_host_paths : ::Array(::K8S::Api::Extensions::V1beta1::AllowedHostPath)? = nil, allowed_proc_mount_types : ::Array(String)? = nil, allowed_unsafe_sysctls : ::Array(String)? = nil, default_add_capabilities : ::Array(String)? = nil, default_allow_privilege_escalation : ::Bool? = nil, forbidden_sysctls : ::Array(String)? = nil, fs_group : ::K8S::Api::Extensions::V1beta1::FSGroupStrategyOptions? = nil, host_ipc : ::Bool? = nil, host_network : ::Bool? = nil, host_pid : ::Bool? = nil, host_ports : ::Array(::K8S::Api::Extensions::V1beta1::HostPortRange)? = nil, privileged : ::Bool? = nil, read_only_root_filesystem : ::Bool? = nil, required_drop_capabilities : ::Array(String)? = nil, run_as_group : ::K8S::Api::Extensions::V1beta1::RunAsGroupStrategyOptions? = nil, run_as_user : ::K8S::Api::Extensions::V1beta1::RunAsUserStrategyOptions? = nil, se_linux : ::K8S::Api::Extensions::V1beta1::SELinuxStrategyOptions? = nil, supplemental_groups : ::K8S::Api::Extensions::V1beta1::SupplementalGroupsStrategyOptions? = nil, volumes : ::Array(String)? = nil)
+      super()
+      self.["allowPrivilegeEscalation"] = allow_privilege_escalation
+      self.["allowedCapabilities"] = allowed_capabilities
+      self.["allowedFlexVolumes"] = allowed_flex_volumes
+      self.["allowedHostPaths"] = allowed_host_paths
+      self.["allowedProcMountTypes"] = allowed_proc_mount_types
+      self.["allowedUnsafeSysctls"] = allowed_unsafe_sysctls
+      self.["defaultAddCapabilities"] = default_add_capabilities
+      self.["defaultAllowPrivilegeEscalation"] = default_allow_privilege_escalation
+      self.["forbiddenSysctls"] = forbidden_sysctls
+      self.["fsGroup"] = fs_group
+      self.["hostIPC"] = host_ipc
+      self.["hostNetwork"] = host_network
+      self.["hostPID"] = host_pid
+      self.["hostPorts"] = host_ports
+      self.["privileged"] = privileged
+      self.["readOnlyRootFilesystem"] = read_only_root_filesystem
+      self.["requiredDropCapabilities"] = required_drop_capabilities
+      self.["runAsGroup"] = run_as_group
+      self.["runAsUser"] = run_as_user
+      self.["seLinux"] = se_linux
+      self.["supplementalGroups"] = supplemental_groups
+      self.["volumes"] = volumes
+    end
+
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "allowPrivilegeEscalation", accessor: "allow_privilege_escalation", nilable: true, read_only: false, default: nil, kind: ::Bool},
+      {key: "allowedCapabilities", accessor: "allowed_capabilities", nilable: true, read_only: false, default: nil, kind: ::Array(String)},
+      {key: "allowedFlexVolumes", accessor: "allowed_flex_volumes", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Extensions::V1beta1::AllowedFlexVolume)},
+      {key: "allowedHostPaths", accessor: "allowed_host_paths", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Extensions::V1beta1::AllowedHostPath)},
+      {key: "allowedProcMountTypes", accessor: "allowed_proc_mount_types", nilable: true, read_only: false, default: nil, kind: ::Array(String)},
+      {key: "allowedUnsafeSysctls", accessor: "allowed_unsafe_sysctls", nilable: true, read_only: false, default: nil, kind: ::Array(String)},
+      {key: "defaultAddCapabilities", accessor: "default_add_capabilities", nilable: true, read_only: false, default: nil, kind: ::Array(String)},
+      {key: "defaultAllowPrivilegeEscalation", accessor: "default_allow_privilege_escalation", nilable: true, read_only: false, default: nil, kind: ::Bool},
+      {key: "forbiddenSysctls", accessor: "forbidden_sysctls", nilable: true, read_only: false, default: nil, kind: ::Array(String)},
+      {key: "fsGroup", accessor: "fs_group", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Extensions::V1beta1::FSGroupStrategyOptions},
+      {key: "hostIPC", accessor: "host_ipc", nilable: true, read_only: false, default: nil, kind: ::Bool},
+      {key: "hostNetwork", accessor: "host_network", nilable: true, read_only: false, default: nil, kind: ::Bool},
+      {key: "hostPID", accessor: "host_pid", nilable: true, read_only: false, default: nil, kind: ::Bool},
+      {key: "hostPorts", accessor: "host_ports", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Extensions::V1beta1::HostPortRange)},
+      {key: "privileged", accessor: "privileged", nilable: true, read_only: false, default: nil, kind: ::Bool},
+      {key: "readOnlyRootFilesystem", accessor: "read_only_root_filesystem", nilable: true, read_only: false, default: nil, kind: ::Bool},
+      {key: "requiredDropCapabilities", accessor: "required_drop_capabilities", nilable: true, read_only: false, default: nil, kind: ::Array(String)},
+      {key: "runAsGroup", accessor: "run_as_group", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Extensions::V1beta1::RunAsGroupStrategyOptions},
+      {key: "runAsUser", accessor: "run_as_user", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Extensions::V1beta1::RunAsUserStrategyOptions},
+      {key: "seLinux", accessor: "se_linux", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Extensions::V1beta1::SELinuxStrategyOptions},
+      {key: "supplementalGroups", accessor: "supplemental_groups", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Extensions::V1beta1::SupplementalGroupsStrategyOptions},
+      {key: "volumes", accessor: "volumes", nilable: true, read_only: false, default: nil, kind: ::Array(String)},
+    ])
   end
 end

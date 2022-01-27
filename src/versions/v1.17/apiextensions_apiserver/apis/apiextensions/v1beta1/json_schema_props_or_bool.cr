@@ -4,5 +4,5 @@ require "yaml"
 require "json"
 
 module K8S
-  alias ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSONSchemaPropsOrBool = ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaPropsOrBool
+  alias ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JsonSchemaPropsOrBool = ApiextensionsApiserver::Apis::Apiextensions::V1::JsonSchemaPropsOrBool
 end

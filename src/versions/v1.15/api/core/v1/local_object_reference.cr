@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def name? : String?
     # :ditto:
-    abstract def name=(value : String?)
+    abstract def name=(value : String)
   end
 
   # LocalObjectReference contains enough information to let you locate the referenced object inside the same namespace.
@@ -24,31 +24,15 @@ module K8S
   )]
   class Api::Core::V1::LocalObjectReference < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::LocalObjectReference
+    k8s_object_accessor("name", name : String, true, false, "Name of the referent. More info: [https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names)")
 
-    # Name of the referent. More info: [[https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names)](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names))
-    def name : String?
-      self.["name"].as(String?)
+    def initialize(*, name : String? = nil)
+      super()
+      self.["name"] = name
     end
 
-    # :ditto:
-    def name! : String
-      self.["name"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def name? : String?
-      self.["name"]?.as(String?)
-    end
-
-    # :ditto:
-    def name=(value : String?)
-      self.["name"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "name", accessor: "name", nilable: true, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "name", accessor: "name", nilable: true, read_only: false, default: nil, kind: String},
+    ])
   end
 end

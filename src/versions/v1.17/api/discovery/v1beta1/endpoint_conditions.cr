@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def ready? : ::Bool?
     # :ditto:
-    abstract def ready=(value : ::Bool?)
+    abstract def ready=(value : ::Bool)
   end
 
   # EndpointConditions represents the current condition of an endpoint.
@@ -24,31 +24,15 @@ module K8S
   )]
   class Api::Discovery::V1beta1::EndpointConditions < ::K8S::GenericObject
     include ::K8S::Types::Api::Discovery::V1beta1::EndpointConditions
+    k8s_object_accessor("ready", ready : ::Bool, true, false, "ready indicates that this endpoint is prepared to receive traffic, according to whatever system is managing the endpoint. A nil value indicates an unknown state. In most cases consumers should interpret this unknown state as ready.")
 
-    # ready indicates that this endpoint is prepared to receive traffic, according to whatever system is managing the endpoint. A nil value indicates an unknown state. In most cases consumers should interpret this unknown state as ready.
-    def ready : ::Bool?
-      self.["ready"].as(::Bool?)
+    def initialize(*, ready : ::Bool? = nil)
+      super()
+      self.["ready"] = ready
     end
 
-    # :ditto:
-    def ready! : ::Bool
-      self.["ready"].as(::Bool?).not_nil!
-    end
-
-    # :ditto:
-    def ready? : ::Bool?
-      self.["ready"]?.as(::Bool?)
-    end
-
-    # :ditto:
-    def ready=(value : ::Bool?)
-      self.["ready"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "ready", accessor: "ready", nilable: true, read_only: false, default: nil, kind: ::Bool },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "ready", accessor: "ready", nilable: true, read_only: false, default: nil, kind: ::Bool},
+    ])
   end
 end

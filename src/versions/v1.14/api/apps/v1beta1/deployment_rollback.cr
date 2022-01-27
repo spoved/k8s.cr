@@ -17,7 +17,7 @@ module K8S
     # :ditto:
     abstract def api_version? : String?
     # :ditto:
-    abstract def api_version=(value : String?)
+    abstract def api_version=(value : String)
     # Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [[https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds))
     abstract def kind : String?
     # :ditto:
@@ -25,9 +25,9 @@ module K8S
     # :ditto:
     abstract def kind? : String?
     # :ditto:
-    abstract def kind=(value : String?)
+    abstract def kind=(value : String)
     # Required: This must match the Name of a deployment.
-    abstract def name : String
+    abstract def name : String?
     # :ditto:
     abstract def name! : String
     # :ditto:
@@ -35,7 +35,7 @@ module K8S
     # :ditto:
     abstract def name=(value : String)
     # The config of this deployment rollback.
-    abstract def rollback_to : ::K8S::Api::Apps::V1beta1::RollbackConfig
+    abstract def rollback_to : ::K8S::Api::Apps::V1beta1::RollbackConfig?
     # :ditto:
     abstract def rollback_to! : ::K8S::Api::Apps::V1beta1::RollbackConfig
     # :ditto:
@@ -49,7 +49,7 @@ module K8S
     # :ditto:
     abstract def updated_annotations? : ::Hash(String, String)?
     # :ditto:
-    abstract def updated_annotations=(value : ::Hash(String, String)?)
+    abstract def updated_annotations=(value : ::Hash(String, String))
   end
 
   # DEPRECATED. DeploymentRollback stores the information required to rollback a deployment.
@@ -63,115 +63,27 @@ module K8S
   )]
   class Api::Apps::V1beta1::DeploymentRollback < ::K8S::GenericObject
     include ::K8S::Types::Api::Apps::V1beta1::DeploymentRollback
+    k8s_object_accessor("apiVersion", api_version : String, true, false, "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [https://git.k8s.io/community/contributors/devel/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/api-conventions.md#resources)")
+    k8s_object_accessor("kind", kind : String, true, false, "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds)")
+    k8s_object_accessor("name", name : String, false, false, "Required: This must match the Name of a deployment.")
+    k8s_object_accessor("rollbackTo", rollback_to : ::K8S::Api::Apps::V1beta1::RollbackConfig, false, false, "The config of this deployment rollback.")
+    k8s_object_accessor("updatedAnnotations", updated_annotations : ::Hash(String, String), true, false, "The annotations to be updated to a deployment")
 
-    # APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[https://git.k8s.io/community/contributors/devel/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/api-conventions.md#resources))
-    def api_version : String?
-      self.["apiVersion"].as(String?)
+    def initialize(*, api_version : String? = nil, kind : String? = nil, name : String? = nil, rollback_to : ::K8S::Api::Apps::V1beta1::RollbackConfig? = nil, updated_annotations : ::Hash(String, String)? = nil)
+      super()
+      self.["apiVersion"] = api_version
+      self.["kind"] = kind
+      self.["name"] = name
+      self.["rollbackTo"] = rollback_to
+      self.["updatedAnnotations"] = updated_annotations
     end
 
-    # :ditto:
-    def api_version! : String
-      self.["apiVersion"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def api_version? : String?
-      self.["apiVersion"]?.as(String?)
-    end
-
-    # :ditto:
-    def api_version=(value : String?)
-      self.["apiVersion"] = value
-    end
-
-    # Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [[https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds))
-    def kind : String?
-      self.["kind"].as(String?)
-    end
-
-    # :ditto:
-    def kind! : String
-      self.["kind"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def kind? : String?
-      self.["kind"]?.as(String?)
-    end
-
-    # :ditto:
-    def kind=(value : String?)
-      self.["kind"] = value
-    end
-
-    # Required: This must match the Name of a deployment.
-    def name : String
-      self.["name"].as(String)
-    end
-
-    # :ditto:
-    def name! : String
-      self.["name"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def name? : String?
-      self.["name"]?.as(String?)
-    end
-
-    # :ditto:
-    def name=(value : String)
-      self.["name"] = value
-    end
-
-    # The config of this deployment rollback.
-    def rollback_to : ::K8S::Api::Apps::V1beta1::RollbackConfig
-      self.["rollbackTo"].as(::K8S::Api::Apps::V1beta1::RollbackConfig)
-    end
-
-    # :ditto:
-    def rollback_to! : ::K8S::Api::Apps::V1beta1::RollbackConfig
-      self.["rollbackTo"].as(::K8S::Api::Apps::V1beta1::RollbackConfig).not_nil!
-    end
-
-    # :ditto:
-    def rollback_to? : ::K8S::Api::Apps::V1beta1::RollbackConfig?
-      self.["rollbackTo"]?.as(::K8S::Api::Apps::V1beta1::RollbackConfig?)
-    end
-
-    # :ditto:
-    def rollback_to=(value : ::K8S::Api::Apps::V1beta1::RollbackConfig)
-      self.["rollbackTo"] = value
-    end
-
-    # The annotations to be updated to a deployment
-    def updated_annotations : ::Hash(String, String)?
-      self.["updatedAnnotations"].as(::Hash(String, String)?)
-    end
-
-    # :ditto:
-    def updated_annotations! : ::Hash(String, String)
-      self.["updatedAnnotations"].as(::Hash(String, String)?).not_nil!
-    end
-
-    # :ditto:
-    def updated_annotations? : ::Hash(String, String)?
-      self.["updatedAnnotations"]?.as(::Hash(String, String)?)
-    end
-
-    # :ditto:
-    def updated_annotations=(value : ::Hash(String, String)?)
-      self.["updatedAnnotations"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "apiVersion", accessor: "api_version", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "kind", accessor: "kind", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "name", accessor: "name", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "rollbackTo", accessor: "rollback_to", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Apps::V1beta1::RollbackConfig },
-        { key: "updatedAnnotations", accessor: "updated_annotations", nilable: true, read_only: false, default: nil, kind: ::Hash(String, String) },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "apiVersion", accessor: "api_version", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "kind", accessor: "kind", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "name", accessor: "name", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "rollbackTo", accessor: "rollback_to", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Apps::V1beta1::RollbackConfig},
+      {key: "updatedAnnotations", accessor: "updated_annotations", nilable: true, read_only: false, default: nil, kind: ::Hash(String, String)},
+    ])
   end
 end

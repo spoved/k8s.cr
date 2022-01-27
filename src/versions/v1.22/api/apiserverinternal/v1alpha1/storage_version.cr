@@ -13,13 +13,13 @@ module K8S
   # Namespace holding the types for `Api::Apiserverinternal::V1alpha1::StorageVersion`.
   module Types::Api::Apiserverinternal::V1alpha1::StorageVersion
     # APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)))
-    abstract def api_version : String
+    abstract def api_version : String?
     # :ditto:
     abstract def api_version! : String
     # :ditto:
     abstract def api_version? : String?
     # Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)))
-    abstract def kind : String
+    abstract def kind : String?
     # :ditto:
     abstract def kind! : String
     # :ditto:
@@ -31,9 +31,9 @@ module K8S
     # :ditto:
     abstract def metadata? : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?
     # :ditto:
-    abstract def metadata=(value : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?)
+    abstract def metadata=(value : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta)
     # Spec is an empty spec. It is here to comply with Kubernetes API style.
-    abstract def spec : ::K8S::Api::Apiserverinternal::V1alpha1::StorageVersionSpec
+    abstract def spec : ::K8S::Api::Apiserverinternal::V1alpha1::StorageVersionSpec?
     # :ditto:
     abstract def spec! : ::K8S::Api::Apiserverinternal::V1alpha1::StorageVersionSpec
     # :ditto:
@@ -41,7 +41,7 @@ module K8S
     # :ditto:
     abstract def spec=(value : ::K8S::Api::Apiserverinternal::V1alpha1::StorageVersionSpec)
     # API server instances report the version they can decode and the version they encode objects to when persisting objects in the backend.
-    abstract def status : ::K8S::Api::Apiserverinternal::V1alpha1::StorageVersionStatus
+    abstract def status : ::K8S::Api::Apiserverinternal::V1alpha1::StorageVersionStatus?
     # :ditto:
     abstract def status! : ::K8S::Api::Apiserverinternal::V1alpha1::StorageVersionStatus
     # :ditto:
@@ -62,108 +62,30 @@ module K8S
   )]
   class Api::Apiserverinternal::V1alpha1::StorageVersion < ::K8S::Kubernetes::Resource::Object
     include ::K8S::Types::Api::Apiserverinternal::V1alpha1::StorageVersion
+    k8s_object_accessor("apiVersion", api_version : String = "apiserverinternal/v1alpha1", false, true, "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources))")
+    k8s_object_accessor("kind", kind : String = "StorageVersion", false, true, "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds))")
+    k8s_object_accessor("metadata", metadata : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta, true, false, "Standard object's metadata. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata))")
+    k8s_object_accessor("spec", spec : ::K8S::Api::Apiserverinternal::V1alpha1::StorageVersionSpec, false, false, "Spec is an empty spec. It is here to comply with Kubernetes API style.")
+    k8s_object_accessor("status", status : ::K8S::Api::Apiserverinternal::V1alpha1::StorageVersionStatus, false, false, "API server instances report the version they can decode and the version they encode objects to when persisting objects in the backend.")
 
-    # APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)))
-    def api_version : String
-      self.["apiVersion"] = "apiserverinternal/v1alpha1" unless self.["apiVersion"]?
-      self.["apiVersion"].as(String)
+    def initialize(*, api_version : String? = "apiserverinternal/v1alpha1", kind : String? = "StorageVersion", metadata : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta? = nil, spec : ::K8S::Api::Apiserverinternal::V1alpha1::StorageVersionSpec? = nil, status : ::K8S::Api::Apiserverinternal::V1alpha1::StorageVersionStatus? = nil)
+      super()
+      raise "api_version cannot be nil" if api_version.nil?
+      self.["apiVersion"] = api_version
+      raise "kind cannot be nil" if kind.nil?
+      self.["kind"] = kind
+      self.["metadata"] = metadata
+      self.["spec"] = spec
+      self.["status"] = status
     end
 
-    # :ditto:
-    def api_version! : String
-      self.["apiVersion"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def api_version? : String?
-      self.["apiVersion"]?.as(String?)
-    end
-
-    # Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)))
-    def kind : String
-      self.["kind"] = "StorageVersion" unless self.["kind"]?
-      self.["kind"].as(String)
-    end
-
-    # :ditto:
-    def kind! : String
-      self.["kind"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def kind? : String?
-      self.["kind"]?.as(String?)
-    end
-
-    # Standard object's metadata. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)))
-    def metadata : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?
-      self.["metadata"].as(::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?)
-    end
-
-    # :ditto:
-    def metadata! : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta
-      self.["metadata"].as(::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?).not_nil!
-    end
-
-    # :ditto:
-    def metadata? : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?
-      self.["metadata"]?.as(::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?)
-    end
-
-    # :ditto:
-    def metadata=(value : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?)
-      self.["metadata"] = value
-    end
-
-    # Spec is an empty spec. It is here to comply with Kubernetes API style.
-    def spec : ::K8S::Api::Apiserverinternal::V1alpha1::StorageVersionSpec
-      self.["spec"].as(::K8S::Api::Apiserverinternal::V1alpha1::StorageVersionSpec)
-    end
-
-    # :ditto:
-    def spec! : ::K8S::Api::Apiserverinternal::V1alpha1::StorageVersionSpec
-      self.["spec"].as(::K8S::Api::Apiserverinternal::V1alpha1::StorageVersionSpec).not_nil!
-    end
-
-    # :ditto:
-    def spec? : ::K8S::Api::Apiserverinternal::V1alpha1::StorageVersionSpec?
-      self.["spec"]?.as(::K8S::Api::Apiserverinternal::V1alpha1::StorageVersionSpec?)
-    end
-
-    # :ditto:
-    def spec=(value : ::K8S::Api::Apiserverinternal::V1alpha1::StorageVersionSpec)
-      self.["spec"] = value
-    end
-
-    # API server instances report the version they can decode and the version they encode objects to when persisting objects in the backend.
-    def status : ::K8S::Api::Apiserverinternal::V1alpha1::StorageVersionStatus
-      self.["status"].as(::K8S::Api::Apiserverinternal::V1alpha1::StorageVersionStatus)
-    end
-
-    # :ditto:
-    def status! : ::K8S::Api::Apiserverinternal::V1alpha1::StorageVersionStatus
-      self.["status"].as(::K8S::Api::Apiserverinternal::V1alpha1::StorageVersionStatus).not_nil!
-    end
-
-    # :ditto:
-    def status? : ::K8S::Api::Apiserverinternal::V1alpha1::StorageVersionStatus?
-      self.["status"]?.as(::K8S::Api::Apiserverinternal::V1alpha1::StorageVersionStatus?)
-    end
-
-    # :ditto:
-    def status=(value : ::K8S::Api::Apiserverinternal::V1alpha1::StorageVersionStatus)
-      self.["status"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "apiVersion", accessor: "api_version", nilable: false, read_only: true, default: "apiserverinternal/v1alpha1", kind: String },
-        { key: "kind", accessor: "kind", nilable: false, read_only: true, default: "StorageVersion", kind: String },
-        { key: "metadata", accessor: "metadata", nilable: true, read_only: false, default: nil, kind: ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta },
-        { key: "spec", accessor: "spec", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Apiserverinternal::V1alpha1::StorageVersionSpec },
-        { key: "status", accessor: "status", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Apiserverinternal::V1alpha1::StorageVersionStatus },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "apiVersion", accessor: "api_version", nilable: false, read_only: true, default: "apiserverinternal/v1alpha1", kind: String},
+      {key: "kind", accessor: "kind", nilable: false, read_only: true, default: "StorageVersion", kind: String},
+      {key: "metadata", accessor: "metadata", nilable: true, read_only: false, default: nil, kind: ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta},
+      {key: "spec", accessor: "spec", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Apiserverinternal::V1alpha1::StorageVersionSpec},
+      {key: "status", accessor: "status", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Apiserverinternal::V1alpha1::StorageVersionStatus},
+    ])
   end
 
   module Resources::Apiserverinternal::V1alpha1

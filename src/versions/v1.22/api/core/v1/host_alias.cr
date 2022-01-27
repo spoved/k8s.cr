@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def hostnames? : ::Array(String)?
     # :ditto:
-    abstract def hostnames=(value : ::Array(String)?)
+    abstract def hostnames=(value : ::Array(String))
     # IP address of the host file entry.
     abstract def ip : String?
     # :ditto:
@@ -23,7 +23,7 @@ module K8S
     # :ditto:
     abstract def ip? : String?
     # :ditto:
-    abstract def ip=(value : String?)
+    abstract def ip=(value : String)
   end
 
   # HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
@@ -33,52 +33,18 @@ module K8S
   )]
   class Api::Core::V1::HostAlias < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::HostAlias
+    k8s_object_accessor("hostnames", hostnames : ::Array(String), true, false, "Hostnames for the above IP address.")
+    k8s_object_accessor("ip", ip : String, true, false, "IP address of the host file entry.")
 
-    # Hostnames for the above IP address.
-    def hostnames : ::Array(String)?
-      self.["hostnames"].as(::Array(String)?)
+    def initialize(*, hostnames : ::Array(String)? = nil, ip : String? = nil)
+      super()
+      self.["hostnames"] = hostnames
+      self.["ip"] = ip
     end
 
-    # :ditto:
-    def hostnames! : ::Array(String)
-      self.["hostnames"].as(::Array(String)?).not_nil!
-    end
-
-    # :ditto:
-    def hostnames? : ::Array(String)?
-      self.["hostnames"]?.as(::Array(String)?)
-    end
-
-    # :ditto:
-    def hostnames=(value : ::Array(String)?)
-      self.["hostnames"] = value
-    end
-
-    # IP address of the host file entry.
-    def ip : String?
-      self.["ip"].as(String?)
-    end
-
-    # :ditto:
-    def ip! : String
-      self.["ip"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def ip? : String?
-      self.["ip"]?.as(String?)
-    end
-
-    # :ditto:
-    def ip=(value : String?)
-      self.["ip"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "hostnames", accessor: "hostnames", nilable: true, read_only: false, default: nil, kind: ::Array(String) },
-        { key: "ip", accessor: "ip", nilable: true, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "hostnames", accessor: "hostnames", nilable: true, read_only: false, default: nil, kind: ::Array(String)},
+      {key: "ip", accessor: "ip", nilable: true, read_only: false, default: nil, kind: String},
+    ])
   end
 end

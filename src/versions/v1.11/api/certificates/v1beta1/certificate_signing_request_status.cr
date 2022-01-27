@@ -17,7 +17,7 @@ module K8S
     # :ditto:
     abstract def certificate? : String?
     # :ditto:
-    abstract def certificate=(value : String?)
+    abstract def certificate=(value : String)
     # Conditions applied to the request, such as approval or denial.
     abstract def conditions : ::Array(::K8S::Api::Certificates::V1beta1::CertificateSigningRequestCondition)?
     # :ditto:
@@ -25,7 +25,7 @@ module K8S
     # :ditto:
     abstract def conditions? : ::Array(::K8S::Api::Certificates::V1beta1::CertificateSigningRequestCondition)?
     # :ditto:
-    abstract def conditions=(value : ::Array(::K8S::Api::Certificates::V1beta1::CertificateSigningRequestCondition)?)
+    abstract def conditions=(value : ::Array(::K8S::Api::Certificates::V1beta1::CertificateSigningRequestCondition))
   end
 
   #
@@ -35,52 +35,18 @@ module K8S
   )]
   class Api::Certificates::V1beta1::CertificateSigningRequestStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Certificates::V1beta1::CertificateSigningRequestStatus
+    k8s_object_accessor("certificate", certificate : String, true, false, "If request was approved, the controller will place the issued certificate here.")
+    k8s_object_accessor("conditions", conditions : ::Array(::K8S::Api::Certificates::V1beta1::CertificateSigningRequestCondition), true, false, "Conditions applied to the request, such as approval or denial.")
 
-    # If request was approved, the controller will place the issued certificate here.
-    def certificate : String?
-      self.["certificate"].as(String?)
+    def initialize(*, certificate : String? = nil, conditions : ::Array(::K8S::Api::Certificates::V1beta1::CertificateSigningRequestCondition)? = nil)
+      super()
+      self.["certificate"] = certificate
+      self.["conditions"] = conditions
     end
 
-    # :ditto:
-    def certificate! : String
-      self.["certificate"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def certificate? : String?
-      self.["certificate"]?.as(String?)
-    end
-
-    # :ditto:
-    def certificate=(value : String?)
-      self.["certificate"] = value
-    end
-
-    # Conditions applied to the request, such as approval or denial.
-    def conditions : ::Array(::K8S::Api::Certificates::V1beta1::CertificateSigningRequestCondition)?
-      self.["conditions"].as(::Array(::K8S::Api::Certificates::V1beta1::CertificateSigningRequestCondition)?)
-    end
-
-    # :ditto:
-    def conditions! : ::Array(::K8S::Api::Certificates::V1beta1::CertificateSigningRequestCondition)
-      self.["conditions"].as(::Array(::K8S::Api::Certificates::V1beta1::CertificateSigningRequestCondition)?).not_nil!
-    end
-
-    # :ditto:
-    def conditions? : ::Array(::K8S::Api::Certificates::V1beta1::CertificateSigningRequestCondition)?
-      self.["conditions"]?.as(::Array(::K8S::Api::Certificates::V1beta1::CertificateSigningRequestCondition)?)
-    end
-
-    # :ditto:
-    def conditions=(value : ::Array(::K8S::Api::Certificates::V1beta1::CertificateSigningRequestCondition)?)
-      self.["conditions"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "certificate", accessor: "certificate", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "conditions", accessor: "conditions", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Certificates::V1beta1::CertificateSigningRequestCondition) },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "certificate", accessor: "certificate", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "conditions", accessor: "conditions", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Certificates::V1beta1::CertificateSigningRequestCondition)},
+    ])
   end
 end

@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def resource_version? : String?
     # :ditto:
-    abstract def resource_version=(value : String?)
+    abstract def resource_version=(value : String)
     # Specifies the target UID.
     abstract def uid : String?
     # :ditto:
@@ -23,7 +23,7 @@ module K8S
     # :ditto:
     abstract def uid? : String?
     # :ditto:
-    abstract def uid=(value : String?)
+    abstract def uid=(value : String)
   end
 
   # Preconditions must be fulfilled before an operation (update, delete, etc.) is carried out.
@@ -33,52 +33,18 @@ module K8S
   )]
   class Apimachinery::Apis::Meta::V1::Preconditions < ::K8S::GenericObject
     include ::K8S::Types::Apimachinery::Apis::Meta::V1::Preconditions
+    k8s_object_accessor("resourceVersion", resource_version : String, true, false, "Specifies the target ResourceVersion")
+    k8s_object_accessor("uid", uid : String, true, false, "Specifies the target UID.")
 
-    # Specifies the target ResourceVersion
-    def resource_version : String?
-      self.["resourceVersion"].as(String?)
+    def initialize(*, resource_version : String? = nil, uid : String? = nil)
+      super()
+      self.["resourceVersion"] = resource_version
+      self.["uid"] = uid
     end
 
-    # :ditto:
-    def resource_version! : String
-      self.["resourceVersion"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def resource_version? : String?
-      self.["resourceVersion"]?.as(String?)
-    end
-
-    # :ditto:
-    def resource_version=(value : String?)
-      self.["resourceVersion"] = value
-    end
-
-    # Specifies the target UID.
-    def uid : String?
-      self.["uid"].as(String?)
-    end
-
-    # :ditto:
-    def uid! : String
-      self.["uid"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def uid? : String?
-      self.["uid"]?.as(String?)
-    end
-
-    # :ditto:
-    def uid=(value : String?)
-      self.["uid"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "resourceVersion", accessor: "resource_version", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "uid", accessor: "uid", nilable: true, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "resourceVersion", accessor: "resource_version", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "uid", accessor: "uid", nilable: true, read_only: false, default: nil, kind: String},
+    ])
   end
 end

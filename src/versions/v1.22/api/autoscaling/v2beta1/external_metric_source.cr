@@ -11,7 +11,7 @@ module K8S
   # Namespace holding the types for `Api::Autoscaling::V2beta1::ExternalMetricSource`.
   module Types::Api::Autoscaling::V2beta1::ExternalMetricSource
     # metricName is the name of the metric in question.
-    abstract def metric_name : String
+    abstract def metric_name : String?
     # :ditto:
     abstract def metric_name! : String
     # :ditto:
@@ -25,7 +25,7 @@ module K8S
     # :ditto:
     abstract def metric_selector? : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?
     # :ditto:
-    abstract def metric_selector=(value : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?)
+    abstract def metric_selector=(value : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector)
     # targetAverageValue is the target per-pod value of global metric (as a quantity). Mutually exclusive with TargetValue.
     abstract def target_average_value : ::Int32 | ::String?
     # :ditto:
@@ -33,7 +33,7 @@ module K8S
     # :ditto:
     abstract def target_average_value? : ::Int32 | ::String?
     # :ditto:
-    abstract def target_average_value=(value : ::Int32 | ::String?)
+    abstract def target_average_value=(value : ::Int32 | ::String)
     # targetValue is the target value of the metric (as a quantity). Mutually exclusive with TargetAverageValue.
     abstract def target_value : ::Int32 | ::String?
     # :ditto:
@@ -41,7 +41,7 @@ module K8S
     # :ditto:
     abstract def target_value? : ::Int32 | ::String?
     # :ditto:
-    abstract def target_value=(value : ::Int32 | ::String?)
+    abstract def target_value=(value : ::Int32 | ::String)
   end
 
   # ExternalMetricSource indicates how to scale on a metric not associated with any Kubernetes object (for example length of queue in cloud messaging service, or QPS from loadbalancer running outside of cluster). Exactly one "target" type should be set.
@@ -53,94 +53,24 @@ module K8S
   )]
   class Api::Autoscaling::V2beta1::ExternalMetricSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Autoscaling::V2beta1::ExternalMetricSource
+    k8s_object_accessor("metricName", metric_name : String, false, false, "metricName is the name of the metric in question.")
+    k8s_object_accessor("metricSelector", metric_selector : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector, true, false, "metricSelector is used to identify a specific time series within a given metric.")
+    k8s_object_accessor("targetAverageValue", target_average_value : ::Int32 | ::String, true, false, "targetAverageValue is the target per-pod value of global metric (as a quantity). Mutually exclusive with TargetValue.")
+    k8s_object_accessor("targetValue", target_value : ::Int32 | ::String, true, false, "targetValue is the target value of the metric (as a quantity). Mutually exclusive with TargetAverageValue.")
 
-    # metricName is the name of the metric in question.
-    def metric_name : String
-      self.["metricName"].as(String)
+    def initialize(*, metric_name : String? = nil, metric_selector : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector? = nil, target_average_value : ::Int32 | ::String? = nil, target_value : ::Int32 | ::String? = nil)
+      super()
+      self.["metricName"] = metric_name
+      self.["metricSelector"] = metric_selector
+      self.["targetAverageValue"] = target_average_value
+      self.["targetValue"] = target_value
     end
 
-    # :ditto:
-    def metric_name! : String
-      self.["metricName"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def metric_name? : String?
-      self.["metricName"]?.as(String?)
-    end
-
-    # :ditto:
-    def metric_name=(value : String)
-      self.["metricName"] = value
-    end
-
-    # metricSelector is used to identify a specific time series within a given metric.
-    def metric_selector : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?
-      self.["metricSelector"].as(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?)
-    end
-
-    # :ditto:
-    def metric_selector! : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector
-      self.["metricSelector"].as(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?).not_nil!
-    end
-
-    # :ditto:
-    def metric_selector? : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?
-      self.["metricSelector"]?.as(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?)
-    end
-
-    # :ditto:
-    def metric_selector=(value : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?)
-      self.["metricSelector"] = value
-    end
-
-    # targetAverageValue is the target per-pod value of global metric (as a quantity). Mutually exclusive with TargetValue.
-    def target_average_value : ::Int32 | ::String?
-      self.["targetAverageValue"].as(::Int32 | ::String?)
-    end
-
-    # :ditto:
-    def target_average_value! : ::Int32 | ::String
-      self.["targetAverageValue"].as(::Int32 | ::String?).not_nil!
-    end
-
-    # :ditto:
-    def target_average_value? : ::Int32 | ::String?
-      self.["targetAverageValue"]?.as(::Int32 | ::String?)
-    end
-
-    # :ditto:
-    def target_average_value=(value : ::Int32 | ::String?)
-      self.["targetAverageValue"] = value
-    end
-
-    # targetValue is the target value of the metric (as a quantity). Mutually exclusive with TargetAverageValue.
-    def target_value : ::Int32 | ::String?
-      self.["targetValue"].as(::Int32 | ::String?)
-    end
-
-    # :ditto:
-    def target_value! : ::Int32 | ::String
-      self.["targetValue"].as(::Int32 | ::String?).not_nil!
-    end
-
-    # :ditto:
-    def target_value? : ::Int32 | ::String?
-      self.["targetValue"]?.as(::Int32 | ::String?)
-    end
-
-    # :ditto:
-    def target_value=(value : ::Int32 | ::String?)
-      self.["targetValue"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "metricName", accessor: "metric_name", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "metricSelector", accessor: "metric_selector", nilable: true, read_only: false, default: nil, kind: ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector },
-        { key: "targetAverageValue", accessor: "target_average_value", nilable: true, read_only: false, default: nil, kind: ::Union(::Int32 | ::String) },
-        { key: "targetValue", accessor: "target_value", nilable: true, read_only: false, default: nil, kind: ::Union(::Int32 | ::String) },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "metricName", accessor: "metric_name", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "metricSelector", accessor: "metric_selector", nilable: true, read_only: false, default: nil, kind: ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector},
+      {key: "targetAverageValue", accessor: "target_average_value", nilable: true, read_only: false, default: nil, kind: ::Union(::Int32 | ::String)},
+      {key: "targetValue", accessor: "target_value", nilable: true, read_only: false, default: nil, kind: ::Union(::Int32 | ::String)},
+    ])
   end
 end

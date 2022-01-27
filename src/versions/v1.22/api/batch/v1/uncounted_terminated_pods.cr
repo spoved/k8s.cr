@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def failed? : ::Set(String)?
     # :ditto:
-    abstract def failed=(value : ::Set(String)?)
+    abstract def failed=(value : ::Set(String))
     # Succeeded holds UIDs of succeeded Pods.
     abstract def succeeded : ::Set(String)?
     # :ditto:
@@ -23,7 +23,7 @@ module K8S
     # :ditto:
     abstract def succeeded? : ::Set(String)?
     # :ditto:
-    abstract def succeeded=(value : ::Set(String)?)
+    abstract def succeeded=(value : ::Set(String))
   end
 
   # UncountedTerminatedPods holds UIDs of Pods that have terminated but haven't been accounted in Job status counters.
@@ -33,52 +33,18 @@ module K8S
   )]
   class Api::Batch::V1::UncountedTerminatedPods < ::K8S::GenericObject
     include ::K8S::Types::Api::Batch::V1::UncountedTerminatedPods
+    k8s_object_accessor("failed", failed : ::Set(String), true, false, "Failed holds UIDs of failed Pods.")
+    k8s_object_accessor("succeeded", succeeded : ::Set(String), true, false, "Succeeded holds UIDs of succeeded Pods.")
 
-    # Failed holds UIDs of failed Pods.
-    def failed : ::Set(String)?
-      self.["failed"].as(::Set(String)?)
+    def initialize(*, failed : ::Set(String)? = nil, succeeded : ::Set(String)? = nil)
+      super()
+      self.["failed"] = failed
+      self.["succeeded"] = succeeded
     end
 
-    # :ditto:
-    def failed! : ::Set(String)
-      self.["failed"].as(::Set(String)?).not_nil!
-    end
-
-    # :ditto:
-    def failed? : ::Set(String)?
-      self.["failed"]?.as(::Set(String)?)
-    end
-
-    # :ditto:
-    def failed=(value : ::Set(String)?)
-      self.["failed"] = value
-    end
-
-    # Succeeded holds UIDs of succeeded Pods.
-    def succeeded : ::Set(String)?
-      self.["succeeded"].as(::Set(String)?)
-    end
-
-    # :ditto:
-    def succeeded! : ::Set(String)
-      self.["succeeded"].as(::Set(String)?).not_nil!
-    end
-
-    # :ditto:
-    def succeeded? : ::Set(String)?
-      self.["succeeded"]?.as(::Set(String)?)
-    end
-
-    # :ditto:
-    def succeeded=(value : ::Set(String)?)
-      self.["succeeded"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "failed", accessor: "failed", nilable: true, read_only: false, default: nil, kind: ::Set(String) },
-        { key: "succeeded", accessor: "succeeded", nilable: true, read_only: false, default: nil, kind: ::Set(String) },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "failed", accessor: "failed", nilable: true, read_only: false, default: nil, kind: ::Set(String)},
+      {key: "succeeded", accessor: "succeeded", nilable: true, read_only: false, default: nil, kind: ::Set(String)},
+    ])
   end
 end

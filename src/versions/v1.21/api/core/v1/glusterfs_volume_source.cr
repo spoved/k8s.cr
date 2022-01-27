@@ -9,7 +9,7 @@ module K8S
   # Namespace holding the types for `Api::Core::V1::GlusterfsVolumeSource`.
   module Types::Api::Core::V1::GlusterfsVolumeSource
     # EndpointsName is the endpoint name that details Glusterfs topology. More info: [[https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod](https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod)](https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod](https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod))
-    abstract def endpoints : String
+    abstract def endpoints : String?
     # :ditto:
     abstract def endpoints! : String
     # :ditto:
@@ -17,7 +17,7 @@ module K8S
     # :ditto:
     abstract def endpoints=(value : String)
     # Path is the Glusterfs volume path. More info: [[https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod](https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod)](https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod](https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod))
-    abstract def path : String
+    abstract def path : String?
     # :ditto:
     abstract def path! : String
     # :ditto:
@@ -31,7 +31,7 @@ module K8S
     # :ditto:
     abstract def read_only? : ::Bool?
     # :ditto:
-    abstract def read_only=(value : ::Bool?)
+    abstract def read_only=(value : ::Bool)
   end
 
   # Represents a Glusterfs mount that lasts the lifetime of a pod. Glusterfs volumes do not support ownership management or SELinux relabeling.
@@ -42,73 +42,21 @@ module K8S
   )]
   class Api::Core::V1::GlusterfsVolumeSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::GlusterfsVolumeSource
+    k8s_object_accessor("endpoints", endpoints : String, false, false, "EndpointsName is the endpoint name that details Glusterfs topology. More info: [https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod](https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod)")
+    k8s_object_accessor("path", path : String, false, false, "Path is the Glusterfs volume path. More info: [https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod](https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod)")
+    k8s_object_accessor("readOnly", read_only : ::Bool, true, false, "ReadOnly here will force the Glusterfs volume to be mounted with read-only permissions. Defaults to false. More info: [https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod](https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod)")
 
-    # EndpointsName is the endpoint name that details Glusterfs topology. More info: [[https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod](https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod)](https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod](https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod))
-    def endpoints : String
-      self.["endpoints"].as(String)
+    def initialize(*, endpoints : String? = nil, path : String? = nil, read_only : ::Bool? = nil)
+      super()
+      self.["endpoints"] = endpoints
+      self.["path"] = path
+      self.["readOnly"] = read_only
     end
 
-    # :ditto:
-    def endpoints! : String
-      self.["endpoints"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def endpoints? : String?
-      self.["endpoints"]?.as(String?)
-    end
-
-    # :ditto:
-    def endpoints=(value : String)
-      self.["endpoints"] = value
-    end
-
-    # Path is the Glusterfs volume path. More info: [[https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod](https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod)](https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod](https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod))
-    def path : String
-      self.["path"].as(String)
-    end
-
-    # :ditto:
-    def path! : String
-      self.["path"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def path? : String?
-      self.["path"]?.as(String?)
-    end
-
-    # :ditto:
-    def path=(value : String)
-      self.["path"] = value
-    end
-
-    # ReadOnly here will force the Glusterfs volume to be mounted with read-only permissions. Defaults to false. More info: [[https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod](https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod)](https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod](https://examples.k8s.io/volumes/glusterfs/README.md#create-a-pod))
-    def read_only : ::Bool?
-      self.["readOnly"].as(::Bool?)
-    end
-
-    # :ditto:
-    def read_only! : ::Bool
-      self.["readOnly"].as(::Bool?).not_nil!
-    end
-
-    # :ditto:
-    def read_only? : ::Bool?
-      self.["readOnly"]?.as(::Bool?)
-    end
-
-    # :ditto:
-    def read_only=(value : ::Bool?)
-      self.["readOnly"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "endpoints", accessor: "endpoints", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "path", accessor: "path", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "readOnly", accessor: "read_only", nilable: true, read_only: false, default: nil, kind: ::Bool },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "endpoints", accessor: "endpoints", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "path", accessor: "path", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "readOnly", accessor: "read_only", nilable: true, read_only: false, default: nil, kind: ::Bool},
+    ])
   end
 end

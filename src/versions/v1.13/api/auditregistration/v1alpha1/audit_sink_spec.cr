@@ -12,7 +12,7 @@ module K8S
   # Namespace holding the types for `Api::Auditregistration::V1alpha1::AuditSinkSpec`.
   module Types::Api::Auditregistration::V1alpha1::AuditSinkSpec
     # Policy defines the policy for selecting which events should be sent to the webhook required
-    abstract def policy : ::K8S::Api::Auditregistration::V1alpha1::Policy
+    abstract def policy : ::K8S::Api::Auditregistration::V1alpha1::Policy?
     # :ditto:
     abstract def policy! : ::K8S::Api::Auditregistration::V1alpha1::Policy
     # :ditto:
@@ -20,7 +20,7 @@ module K8S
     # :ditto:
     abstract def policy=(value : ::K8S::Api::Auditregistration::V1alpha1::Policy)
     # Webhook to send events required
-    abstract def webhook : ::K8S::Api::Auditregistration::V1alpha1::Webhook
+    abstract def webhook : ::K8S::Api::Auditregistration::V1alpha1::Webhook?
     # :ditto:
     abstract def webhook! : ::K8S::Api::Auditregistration::V1alpha1::Webhook
     # :ditto:
@@ -36,52 +36,18 @@ module K8S
   )]
   class Api::Auditregistration::V1alpha1::AuditSinkSpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Auditregistration::V1alpha1::AuditSinkSpec
+    k8s_object_accessor("policy", policy : ::K8S::Api::Auditregistration::V1alpha1::Policy, false, false, "Policy defines the policy for selecting which events should be sent to the webhook required")
+    k8s_object_accessor("webhook", webhook : ::K8S::Api::Auditregistration::V1alpha1::Webhook, false, false, "Webhook to send events required")
 
-    # Policy defines the policy for selecting which events should be sent to the webhook required
-    def policy : ::K8S::Api::Auditregistration::V1alpha1::Policy
-      self.["policy"].as(::K8S::Api::Auditregistration::V1alpha1::Policy)
+    def initialize(*, policy : ::K8S::Api::Auditregistration::V1alpha1::Policy? = nil, webhook : ::K8S::Api::Auditregistration::V1alpha1::Webhook? = nil)
+      super()
+      self.["policy"] = policy
+      self.["webhook"] = webhook
     end
 
-    # :ditto:
-    def policy! : ::K8S::Api::Auditregistration::V1alpha1::Policy
-      self.["policy"].as(::K8S::Api::Auditregistration::V1alpha1::Policy).not_nil!
-    end
-
-    # :ditto:
-    def policy? : ::K8S::Api::Auditregistration::V1alpha1::Policy?
-      self.["policy"]?.as(::K8S::Api::Auditregistration::V1alpha1::Policy?)
-    end
-
-    # :ditto:
-    def policy=(value : ::K8S::Api::Auditregistration::V1alpha1::Policy)
-      self.["policy"] = value
-    end
-
-    # Webhook to send events required
-    def webhook : ::K8S::Api::Auditregistration::V1alpha1::Webhook
-      self.["webhook"].as(::K8S::Api::Auditregistration::V1alpha1::Webhook)
-    end
-
-    # :ditto:
-    def webhook! : ::K8S::Api::Auditregistration::V1alpha1::Webhook
-      self.["webhook"].as(::K8S::Api::Auditregistration::V1alpha1::Webhook).not_nil!
-    end
-
-    # :ditto:
-    def webhook? : ::K8S::Api::Auditregistration::V1alpha1::Webhook?
-      self.["webhook"]?.as(::K8S::Api::Auditregistration::V1alpha1::Webhook?)
-    end
-
-    # :ditto:
-    def webhook=(value : ::K8S::Api::Auditregistration::V1alpha1::Webhook)
-      self.["webhook"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "policy", accessor: "policy", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Auditregistration::V1alpha1::Policy },
-        { key: "webhook", accessor: "webhook", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Auditregistration::V1alpha1::Webhook },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "policy", accessor: "policy", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Auditregistration::V1alpha1::Policy},
+      {key: "webhook", accessor: "webhook", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Auditregistration::V1alpha1::Webhook},
+    ])
   end
 end

@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def max_unavailable? : ::Int32 | ::String?
     # :ditto:
-    abstract def max_unavailable=(value : ::Int32 | ::String?)
+    abstract def max_unavailable=(value : ::Int32 | ::String)
   end
 
   # Spec to control the desired behavior of daemon set rolling update.
@@ -24,31 +24,15 @@ module K8S
   )]
   class Api::Apps::V1::RollingUpdateDaemonSet < ::K8S::GenericObject
     include ::K8S::Types::Api::Apps::V1::RollingUpdateDaemonSet
+    k8s_object_accessor("maxUnavailable", max_unavailable : ::Int32 | ::String, true, false, "The maximum number of DaemonSet pods that can be unavailable during the update. Value can be an absolute number (ex: 5) or a percentage of total number of DaemonSet pods at the start of the update (ex: 10%). Absolute number is calculated from percentage by rounding up. This cannot be 0. Default value is 1. Example: when this is set to 30%, at most 30% of the total number of nodes that should be running the daemon pod (i.e. status.desiredNumberScheduled) can have their pods stopped for an update at any given time. The update starts by stopping at most 30% of those DaemonSet pods and then brings up new DaemonSet pods in their place. Once the new pods are available, it then proceeds onto other DaemonSet pods, thus ensuring that at least 70% of original number of DaemonSet pods are available at all times during the update.")
 
-    # The maximum number of DaemonSet pods that can be unavailable during the update. Value can be an absolute number (ex: 5) or a percentage of total number of DaemonSet pods at the start of the update (ex: 10%). Absolute number is calculated from percentage by rounding up. This cannot be 0. Default value is 1. Example: when this is set to 30%, at most 30% of the total number of nodes that should be running the daemon pod (i.e. status.desiredNumberScheduled) can have their pods stopped for an update at any given time. The update starts by stopping at most 30% of those DaemonSet pods and then brings up new DaemonSet pods in their place. Once the new pods are available, it then proceeds onto other DaemonSet pods, thus ensuring that at least 70% of original number of DaemonSet pods are available at all times during the update.
-    def max_unavailable : ::Int32 | ::String?
-      self.["maxUnavailable"].as(::Int32 | ::String?)
+    def initialize(*, max_unavailable : ::Int32 | ::String? = nil)
+      super()
+      self.["maxUnavailable"] = max_unavailable
     end
 
-    # :ditto:
-    def max_unavailable! : ::Int32 | ::String
-      self.["maxUnavailable"].as(::Int32 | ::String?).not_nil!
-    end
-
-    # :ditto:
-    def max_unavailable? : ::Int32 | ::String?
-      self.["maxUnavailable"]?.as(::Int32 | ::String?)
-    end
-
-    # :ditto:
-    def max_unavailable=(value : ::Int32 | ::String?)
-      self.["maxUnavailable"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "maxUnavailable", accessor: "max_unavailable", nilable: true, read_only: false, default: nil, kind: ::Union(::Int32 | ::String) },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "maxUnavailable", accessor: "max_unavailable", nilable: true, read_only: false, default: nil, kind: ::Union(::Int32 | ::String)},
+    ])
   end
 end

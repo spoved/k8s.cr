@@ -17,7 +17,7 @@ module K8S
     # :ditto:
     abstract def ingress? : ::Array(::K8S::Api::Core::V1::LoadBalancerIngress)?
     # :ditto:
-    abstract def ingress=(value : ::Array(::K8S::Api::Core::V1::LoadBalancerIngress)?)
+    abstract def ingress=(value : ::Array(::K8S::Api::Core::V1::LoadBalancerIngress))
   end
 
   # LoadBalancerStatus represents the status of a load-balancer.
@@ -26,31 +26,15 @@ module K8S
   )]
   class Api::Core::V1::LoadBalancerStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::LoadBalancerStatus
+    k8s_object_accessor("ingress", ingress : ::Array(::K8S::Api::Core::V1::LoadBalancerIngress), true, false, "Ingress is a list containing ingress points for the load-balancer. Traffic intended for the service should be sent to these ingress points.")
 
-    # Ingress is a list containing ingress points for the load-balancer. Traffic intended for the service should be sent to these ingress points.
-    def ingress : ::Array(::K8S::Api::Core::V1::LoadBalancerIngress)?
-      self.["ingress"].as(::Array(::K8S::Api::Core::V1::LoadBalancerIngress)?)
+    def initialize(*, ingress : ::Array(::K8S::Api::Core::V1::LoadBalancerIngress)? = nil)
+      super()
+      self.["ingress"] = ingress
     end
 
-    # :ditto:
-    def ingress! : ::Array(::K8S::Api::Core::V1::LoadBalancerIngress)
-      self.["ingress"].as(::Array(::K8S::Api::Core::V1::LoadBalancerIngress)?).not_nil!
-    end
-
-    # :ditto:
-    def ingress? : ::Array(::K8S::Api::Core::V1::LoadBalancerIngress)?
-      self.["ingress"]?.as(::Array(::K8S::Api::Core::V1::LoadBalancerIngress)?)
-    end
-
-    # :ditto:
-    def ingress=(value : ::Array(::K8S::Api::Core::V1::LoadBalancerIngress)?)
-      self.["ingress"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "ingress", accessor: "ingress", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::LoadBalancerIngress) },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "ingress", accessor: "ingress", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::LoadBalancerIngress)},
+    ])
   end
 end

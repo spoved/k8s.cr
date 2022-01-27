@@ -15,9 +15,9 @@ module K8S
     # :ditto:
     abstract def caching_mode? : String?
     # :ditto:
-    abstract def caching_mode=(value : String?)
+    abstract def caching_mode=(value : String)
     # The Name of the data disk in the blob storage
-    abstract def disk_name : String
+    abstract def disk_name : String?
     # :ditto:
     abstract def disk_name! : String
     # :ditto:
@@ -25,7 +25,7 @@ module K8S
     # :ditto:
     abstract def disk_name=(value : String)
     # The URI the data disk in the blob storage
-    abstract def disk_uri : String
+    abstract def disk_uri : String?
     # :ditto:
     abstract def disk_uri! : String
     # :ditto:
@@ -39,7 +39,7 @@ module K8S
     # :ditto:
     abstract def fs_type? : String?
     # :ditto:
-    abstract def fs_type=(value : String?)
+    abstract def fs_type=(value : String)
     # Expected values Shared: multiple blob disks per storage account  Dedicated: single blob disk per storage account  Managed: azure managed data disk (only in managed availability set). defaults to shared
     abstract def kind : String?
     # :ditto:
@@ -47,7 +47,7 @@ module K8S
     # :ditto:
     abstract def kind? : String?
     # :ditto:
-    abstract def kind=(value : String?)
+    abstract def kind=(value : String)
     # Defaults to false [[(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.)]([(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.))
     abstract def read_only : ::Bool?
     # :ditto:
@@ -55,7 +55,7 @@ module K8S
     # :ditto:
     abstract def read_only? : ::Bool?
     # :ditto:
-    abstract def read_only=(value : ::Bool?)
+    abstract def read_only=(value : ::Bool)
   end
 
   # AzureDisk represents an Azure Data Disk mount on the host and bind mount to the pod.
@@ -69,136 +69,30 @@ module K8S
   )]
   class Api::Core::V1::AzureDiskVolumeSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::AzureDiskVolumeSource
+    k8s_object_accessor("cachingMode", caching_mode : String, true, false, "Host Caching mode: None, Read Only, Read Write.")
+    k8s_object_accessor("diskName", disk_name : String, false, false, "The Name of the data disk in the blob storage")
+    k8s_object_accessor("diskURI", disk_uri : String, false, false, "The URI the data disk in the blob storage")
+    k8s_object_accessor("fsType", fs_type : String, true, false, "Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. \"ext4\", \"xfs\", \"ntfs\". Implicitly inferred to be \"ext4\" if unspecified.")
+    k8s_object_accessor("kind", kind : String, true, false, "Expected values Shared: multiple blob disks per storage account  Dedicated: single blob disk per storage account  Managed: azure managed data disk (only in managed availability set). defaults to shared")
+    k8s_object_accessor("readOnly", read_only : ::Bool, true, false, "Defaults to false [(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.)")
 
-    # Host Caching mode: None, Read Only, Read Write.
-    def caching_mode : String?
-      self.["cachingMode"].as(String?)
+    def initialize(*, caching_mode : String? = nil, disk_name : String? = nil, disk_uri : String? = nil, fs_type : String? = nil, kind : String? = nil, read_only : ::Bool? = nil)
+      super()
+      self.["cachingMode"] = caching_mode
+      self.["diskName"] = disk_name
+      self.["diskURI"] = disk_uri
+      self.["fsType"] = fs_type
+      self.["kind"] = kind
+      self.["readOnly"] = read_only
     end
 
-    # :ditto:
-    def caching_mode! : String
-      self.["cachingMode"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def caching_mode? : String?
-      self.["cachingMode"]?.as(String?)
-    end
-
-    # :ditto:
-    def caching_mode=(value : String?)
-      self.["cachingMode"] = value
-    end
-
-    # The Name of the data disk in the blob storage
-    def disk_name : String
-      self.["diskName"].as(String)
-    end
-
-    # :ditto:
-    def disk_name! : String
-      self.["diskName"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def disk_name? : String?
-      self.["diskName"]?.as(String?)
-    end
-
-    # :ditto:
-    def disk_name=(value : String)
-      self.["diskName"] = value
-    end
-
-    # The URI the data disk in the blob storage
-    def disk_uri : String
-      self.["diskURI"].as(String)
-    end
-
-    # :ditto:
-    def disk_uri! : String
-      self.["diskURI"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def disk_uri? : String?
-      self.["diskURI"]?.as(String?)
-    end
-
-    # :ditto:
-    def disk_uri=(value : String)
-      self.["diskURI"] = value
-    end
-
-    # Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified.
-    def fs_type : String?
-      self.["fsType"].as(String?)
-    end
-
-    # :ditto:
-    def fs_type! : String
-      self.["fsType"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def fs_type? : String?
-      self.["fsType"]?.as(String?)
-    end
-
-    # :ditto:
-    def fs_type=(value : String?)
-      self.["fsType"] = value
-    end
-
-    # Expected values Shared: multiple blob disks per storage account  Dedicated: single blob disk per storage account  Managed: azure managed data disk (only in managed availability set). defaults to shared
-    def kind : String?
-      self.["kind"].as(String?)
-    end
-
-    # :ditto:
-    def kind! : String
-      self.["kind"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def kind? : String?
-      self.["kind"]?.as(String?)
-    end
-
-    # :ditto:
-    def kind=(value : String?)
-      self.["kind"] = value
-    end
-
-    # Defaults to false [[(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.)]([(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.))
-    def read_only : ::Bool?
-      self.["readOnly"].as(::Bool?)
-    end
-
-    # :ditto:
-    def read_only! : ::Bool
-      self.["readOnly"].as(::Bool?).not_nil!
-    end
-
-    # :ditto:
-    def read_only? : ::Bool?
-      self.["readOnly"]?.as(::Bool?)
-    end
-
-    # :ditto:
-    def read_only=(value : ::Bool?)
-      self.["readOnly"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "cachingMode", accessor: "caching_mode", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "diskName", accessor: "disk_name", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "diskURI", accessor: "disk_uri", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "fsType", accessor: "fs_type", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "kind", accessor: "kind", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "readOnly", accessor: "read_only", nilable: true, read_only: false, default: nil, kind: ::Bool },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "cachingMode", accessor: "caching_mode", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "diskName", accessor: "disk_name", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "diskURI", accessor: "disk_uri", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "fsType", accessor: "fs_type", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "kind", accessor: "kind", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "readOnly", accessor: "read_only", nilable: true, read_only: false, default: nil, kind: ::Bool},
+    ])
   end
 end

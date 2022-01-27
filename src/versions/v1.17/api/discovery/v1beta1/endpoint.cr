@@ -12,7 +12,7 @@ module K8S
   # Namespace holding the types for `Api::Discovery::V1beta1::Endpoint`.
   module Types::Api::Discovery::V1beta1::Endpoint
     # addresses of this endpoint. The contents of this field are interpreted according to the corresponding EndpointSlice addressType field. Consumers must handle different types of addresses in the context of their own capabilities. This must contain at least one address but no more than 100.
-    abstract def addresses : ::Set(String)
+    abstract def addresses : ::Set(String)?
     # :ditto:
     abstract def addresses! : ::Set(String)
     # :ditto:
@@ -26,7 +26,7 @@ module K8S
     # :ditto:
     abstract def conditions? : ::K8S::Api::Discovery::V1beta1::EndpointConditions?
     # :ditto:
-    abstract def conditions=(value : ::K8S::Api::Discovery::V1beta1::EndpointConditions?)
+    abstract def conditions=(value : ::K8S::Api::Discovery::V1beta1::EndpointConditions)
     # hostname of this endpoint. This field may be used by consumers of endpoints to distinguish endpoints from each other (e.g. in DNS names). Multiple endpoints which use the same hostname should be considered fungible (e.g. multiple A values in DNS). Must pass DNS Label (RFC 1123) validation.
     abstract def hostname : String?
     # :ditto:
@@ -34,7 +34,7 @@ module K8S
     # :ditto:
     abstract def hostname? : String?
     # :ditto:
-    abstract def hostname=(value : String?)
+    abstract def hostname=(value : String)
     # targetRef is a reference to a Kubernetes object that represents this endpoint.
     abstract def target_ref : ::K8S::Api::Core::V1::ObjectReference?
     # :ditto:
@@ -42,7 +42,7 @@ module K8S
     # :ditto:
     abstract def target_ref? : ::K8S::Api::Core::V1::ObjectReference?
     # :ditto:
-    abstract def target_ref=(value : ::K8S::Api::Core::V1::ObjectReference?)
+    abstract def target_ref=(value : ::K8S::Api::Core::V1::ObjectReference)
     # topology contains arbitrary topology information associated with the endpoint. These [[key/value pairs must conform with the label format. https://kubernetes.io/docs/concepts/overview/working-with-objects/labels Topology may include a maximum of 16 key/value pairs. This includes, but is not limited to the following well known keys: * kubernetes.io/hostname: the value indicates the hostname of the node](key/value pairs must conform with the label format. https://kubernetes.io/docs/concepts/overview/working-with-objects/labels Topology may include a maximum of 16 key/value pairs. This includes, but is not limited to the following well known keys: * kubernetes.io/hostname: the value indicates the hostname of the node)]([key/value pairs must conform with the label format. https://kubernetes.io/docs/concepts/overview/working-with-objects/labels Topology may include a maximum of 16 key/value pairs. This includes, but is not limited to the following well known keys: * kubernetes.io/hostname: the value indicates the hostname of the node](key/value pairs must conform with the label format. https://kubernetes.io/docs/concepts/overview/working-with-objects/labels Topology may include a maximum of 16 key/value pairs. This includes, but is not limited to the following well known keys: * kubernetes.io/hostname: the value indicates the hostname of the node))
     #   where the endpoint is located. This should match the corresponding
     #   node label.
@@ -56,7 +56,7 @@ module K8S
     # :ditto:
     abstract def topology? : ::Hash(String, String)?
     # :ditto:
-    abstract def topology=(value : ::Hash(String, String)?)
+    abstract def topology=(value : ::Hash(String, String))
   end
 
   # Endpoint represents a single logical "backend" implementing a service.
@@ -69,121 +69,27 @@ module K8S
   )]
   class Api::Discovery::V1beta1::Endpoint < ::K8S::GenericObject
     include ::K8S::Types::Api::Discovery::V1beta1::Endpoint
+    k8s_object_accessor("addresses", addresses : ::Set(String), false, false, "addresses of this endpoint. The contents of this field are interpreted according to the corresponding EndpointSlice addressType field. Consumers must handle different types of addresses in the context of their own capabilities. This must contain at least one address but no more than 100.")
+    k8s_object_accessor("conditions", conditions : ::K8S::Api::Discovery::V1beta1::EndpointConditions, true, false, "conditions contains information about the current status of the endpoint.")
+    k8s_object_accessor("hostname", hostname : String, true, false, "hostname of this endpoint. This field may be used by consumers of endpoints to distinguish endpoints from each other (e.g. in DNS names). Multiple endpoints which use the same hostname should be considered fungible (e.g. multiple A values in DNS). Must pass DNS Label (RFC 1123) validation.")
+    k8s_object_accessor("targetRef", target_ref : ::K8S::Api::Core::V1::ObjectReference, true, false, "targetRef is a reference to a Kubernetes object that represents this endpoint.")
+    k8s_object_accessor("topology", topology : ::Hash(String, String), true, false, "topology contains arbitrary topology information associated with the endpoint. These [key/value pairs must conform with the label format. https://kubernetes.io/docs/concepts/overview/working-with-objects/labels Topology may include a maximum of 16 key/value pairs. This includes, but is not limited to the following well known keys: * kubernetes.io/hostname: the value indicates the hostname of the node](key/value pairs must conform with the label format. https://kubernetes.io/docs/concepts/overview/working-with-objects/labels Topology may include a maximum of 16 key/value pairs. This includes, but is not limited to the following well known keys: * kubernetes.io/hostname: the value indicates the hostname of the node)\n  where the endpoint is located. This should match the corresponding\n  node label.\n* [topology.kubernetes.io/zone: the value indicates the zone where the](topology.kubernetes.io/zone: the value indicates the zone where the)\n  endpoint is located. This should match the corresponding node label.\n* [topology.kubernetes.io/region: the value indicates the region where the](topology.kubernetes.io/region: the value indicates the region where the)\n  endpoint is located. This should match the corresponding node label.")
 
-    # addresses of this endpoint. The contents of this field are interpreted according to the corresponding EndpointSlice addressType field. Consumers must handle different types of addresses in the context of their own capabilities. This must contain at least one address but no more than 100.
-    def addresses : ::Set(String)
-      self.["addresses"].as(::Set(String))
+    def initialize(*, addresses : ::Set(String)? = nil, conditions : ::K8S::Api::Discovery::V1beta1::EndpointConditions? = nil, hostname : String? = nil, target_ref : ::K8S::Api::Core::V1::ObjectReference? = nil, topology : ::Hash(String, String)? = nil)
+      super()
+      self.["addresses"] = addresses
+      self.["conditions"] = conditions
+      self.["hostname"] = hostname
+      self.["targetRef"] = target_ref
+      self.["topology"] = topology
     end
 
-    # :ditto:
-    def addresses! : ::Set(String)
-      self.["addresses"].as(::Set(String)).not_nil!
-    end
-
-    # :ditto:
-    def addresses? : ::Set(String)?
-      self.["addresses"]?.as(::Set(String)?)
-    end
-
-    # :ditto:
-    def addresses=(value : ::Set(String))
-      self.["addresses"] = value
-    end
-
-    # conditions contains information about the current status of the endpoint.
-    def conditions : ::K8S::Api::Discovery::V1beta1::EndpointConditions?
-      self.["conditions"].as(::K8S::Api::Discovery::V1beta1::EndpointConditions?)
-    end
-
-    # :ditto:
-    def conditions! : ::K8S::Api::Discovery::V1beta1::EndpointConditions
-      self.["conditions"].as(::K8S::Api::Discovery::V1beta1::EndpointConditions?).not_nil!
-    end
-
-    # :ditto:
-    def conditions? : ::K8S::Api::Discovery::V1beta1::EndpointConditions?
-      self.["conditions"]?.as(::K8S::Api::Discovery::V1beta1::EndpointConditions?)
-    end
-
-    # :ditto:
-    def conditions=(value : ::K8S::Api::Discovery::V1beta1::EndpointConditions?)
-      self.["conditions"] = value
-    end
-
-    # hostname of this endpoint. This field may be used by consumers of endpoints to distinguish endpoints from each other (e.g. in DNS names). Multiple endpoints which use the same hostname should be considered fungible (e.g. multiple A values in DNS). Must pass DNS Label (RFC 1123) validation.
-    def hostname : String?
-      self.["hostname"].as(String?)
-    end
-
-    # :ditto:
-    def hostname! : String
-      self.["hostname"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def hostname? : String?
-      self.["hostname"]?.as(String?)
-    end
-
-    # :ditto:
-    def hostname=(value : String?)
-      self.["hostname"] = value
-    end
-
-    # targetRef is a reference to a Kubernetes object that represents this endpoint.
-    def target_ref : ::K8S::Api::Core::V1::ObjectReference?
-      self.["targetRef"].as(::K8S::Api::Core::V1::ObjectReference?)
-    end
-
-    # :ditto:
-    def target_ref! : ::K8S::Api::Core::V1::ObjectReference
-      self.["targetRef"].as(::K8S::Api::Core::V1::ObjectReference?).not_nil!
-    end
-
-    # :ditto:
-    def target_ref? : ::K8S::Api::Core::V1::ObjectReference?
-      self.["targetRef"]?.as(::K8S::Api::Core::V1::ObjectReference?)
-    end
-
-    # :ditto:
-    def target_ref=(value : ::K8S::Api::Core::V1::ObjectReference?)
-      self.["targetRef"] = value
-    end
-
-    # topology contains arbitrary topology information associated with the endpoint. These [[key/value pairs must conform with the label format. https://kubernetes.io/docs/concepts/overview/working-with-objects/labels Topology may include a maximum of 16 key/value pairs. This includes, but is not limited to the following well known keys: * kubernetes.io/hostname: the value indicates the hostname of the node](key/value pairs must conform with the label format. https://kubernetes.io/docs/concepts/overview/working-with-objects/labels Topology may include a maximum of 16 key/value pairs. This includes, but is not limited to the following well known keys: * kubernetes.io/hostname: the value indicates the hostname of the node)]([key/value pairs must conform with the label format. https://kubernetes.io/docs/concepts/overview/working-with-objects/labels Topology may include a maximum of 16 key/value pairs. This includes, but is not limited to the following well known keys: * kubernetes.io/hostname: the value indicates the hostname of the node](key/value pairs must conform with the label format. https://kubernetes.io/docs/concepts/overview/working-with-objects/labels Topology may include a maximum of 16 key/value pairs. This includes, but is not limited to the following well known keys: * kubernetes.io/hostname: the value indicates the hostname of the node))
-    #   where the endpoint is located. This should match the corresponding
-    #   node label.
-    # * [[topology.kubernetes.io/zone: the value indicates the zone where the](topology.kubernetes.io/zone: the value indicates the zone where the)]([topology.kubernetes.io/zone: the value indicates the zone where the](topology.kubernetes.io/zone: the value indicates the zone where the))
-    #   endpoint is located. This should match the corresponding node label.
-    # * [[topology.kubernetes.io/region: the value indicates the region where the](topology.kubernetes.io/region: the value indicates the region where the)]([topology.kubernetes.io/region: the value indicates the region where the](topology.kubernetes.io/region: the value indicates the region where the))
-    #   endpoint is located. This should match the corresponding node label.
-    def topology : ::Hash(String, String)?
-      self.["topology"].as(::Hash(String, String)?)
-    end
-
-    # :ditto:
-    def topology! : ::Hash(String, String)
-      self.["topology"].as(::Hash(String, String)?).not_nil!
-    end
-
-    # :ditto:
-    def topology? : ::Hash(String, String)?
-      self.["topology"]?.as(::Hash(String, String)?)
-    end
-
-    # :ditto:
-    def topology=(value : ::Hash(String, String)?)
-      self.["topology"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "addresses", accessor: "addresses", nilable: false, read_only: false, default: nil, kind: ::Set(String) },
-        { key: "conditions", accessor: "conditions", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Discovery::V1beta1::EndpointConditions },
-        { key: "hostname", accessor: "hostname", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "targetRef", accessor: "target_ref", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::ObjectReference },
-        { key: "topology", accessor: "topology", nilable: true, read_only: false, default: nil, kind: ::Hash(String, String) },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "addresses", accessor: "addresses", nilable: false, read_only: false, default: nil, kind: ::Set(String)},
+      {key: "conditions", accessor: "conditions", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Discovery::V1beta1::EndpointConditions},
+      {key: "hostname", accessor: "hostname", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "targetRef", accessor: "target_ref", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::ObjectReference},
+      {key: "topology", accessor: "topology", nilable: true, read_only: false, default: nil, kind: ::Hash(String, String)},
+    ])
   end
 end

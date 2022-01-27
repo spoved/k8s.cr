@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def finalizers? : ::Array(String)?
     # :ditto:
-    abstract def finalizers=(value : ::Array(String)?)
+    abstract def finalizers=(value : ::Array(String))
   end
 
   # NamespaceSpec describes the attributes on a Namespace.
@@ -24,31 +24,15 @@ module K8S
   )]
   class Api::Core::V1::NamespaceSpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::NamespaceSpec
+    k8s_object_accessor("finalizers", finalizers : ::Array(String), true, false, "Finalizers is an opaque list of values that must be empty to permanently remove object from storage. More info: [https://kubernetes.io/docs/tasks/administer-cluster/namespaces/](https://kubernetes.io/docs/tasks/administer-cluster/namespaces/)")
 
-    # Finalizers is an opaque list of values that must be empty to permanently remove object from storage. More info: [[https://kubernetes.io/docs/tasks/administer-cluster/namespaces/](https://kubernetes.io/docs/tasks/administer-cluster/namespaces/)](https://kubernetes.io/docs/tasks/administer-cluster/namespaces/](https://kubernetes.io/docs/tasks/administer-cluster/namespaces/))
-    def finalizers : ::Array(String)?
-      self.["finalizers"].as(::Array(String)?)
+    def initialize(*, finalizers : ::Array(String)? = nil)
+      super()
+      self.["finalizers"] = finalizers
     end
 
-    # :ditto:
-    def finalizers! : ::Array(String)
-      self.["finalizers"].as(::Array(String)?).not_nil!
-    end
-
-    # :ditto:
-    def finalizers? : ::Array(String)?
-      self.["finalizers"]?.as(::Array(String)?)
-    end
-
-    # :ditto:
-    def finalizers=(value : ::Array(String)?)
-      self.["finalizers"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "finalizers", accessor: "finalizers", nilable: true, read_only: false, default: nil, kind: ::Array(String) },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "finalizers", accessor: "finalizers", nilable: true, read_only: false, default: nil, kind: ::Array(String)},
+    ])
   end
 end

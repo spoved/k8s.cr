@@ -13,13 +13,13 @@ module K8S
   # Namespace holding the types for `Api::Extensions::V1beta1::Ingress`.
   module Types::Api::Extensions::V1beta1::Ingress
     # APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)))
-    abstract def api_version : String
+    abstract def api_version : String?
     # :ditto:
     abstract def api_version! : String
     # :ditto:
     abstract def api_version? : String?
     # Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)))
-    abstract def kind : String
+    abstract def kind : String?
     # :ditto:
     abstract def kind! : String
     # :ditto:
@@ -31,7 +31,7 @@ module K8S
     # :ditto:
     abstract def metadata? : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?
     # :ditto:
-    abstract def metadata=(value : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?)
+    abstract def metadata=(value : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta)
     # Spec is the desired state of the Ingress. More info: [[https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status](https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status)](https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status](https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status))
     abstract def spec : ::K8S::Api::Extensions::V1beta1::IngressSpec?
     # :ditto:
@@ -39,7 +39,7 @@ module K8S
     # :ditto:
     abstract def spec? : ::K8S::Api::Extensions::V1beta1::IngressSpec?
     # :ditto:
-    abstract def spec=(value : ::K8S::Api::Extensions::V1beta1::IngressSpec?)
+    abstract def spec=(value : ::K8S::Api::Extensions::V1beta1::IngressSpec)
     # Status is the current state of the Ingress. More info: [[https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status](https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status)](https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status](https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status))
     abstract def status : ::K8S::Api::Extensions::V1beta1::IngressStatus?
     # :ditto:
@@ -47,7 +47,7 @@ module K8S
     # :ditto:
     abstract def status? : ::K8S::Api::Extensions::V1beta1::IngressStatus?
     # :ditto:
-    abstract def status=(value : ::K8S::Api::Extensions::V1beta1::IngressStatus?)
+    abstract def status=(value : ::K8S::Api::Extensions::V1beta1::IngressStatus)
   end
 
   # Ingress is a collection of rules that allow inbound connections to reach the endpoints defined by a backend. An Ingress can be configured to give services externally-reachable urls, load balance traffic, terminate SSL, offer name based virtual hosting etc.
@@ -61,108 +61,30 @@ module K8S
   )]
   class Api::Extensions::V1beta1::Ingress < ::K8S::Kubernetes::Resource::Object
     include ::K8S::Types::Api::Extensions::V1beta1::Ingress
+    k8s_object_accessor("apiVersion", api_version : String = "extensions/v1beta1", false, true, "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources))")
+    k8s_object_accessor("kind", kind : String = "Ingress", false, true, "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds))")
+    k8s_object_accessor("metadata", metadata : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta, true, false, "Standard object's metadata. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata))")
+    k8s_object_accessor("spec", spec : ::K8S::Api::Extensions::V1beta1::IngressSpec, true, false, "Spec is the desired state of the Ingress. More info: [https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status](https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status)")
+    k8s_object_accessor("status", status : ::K8S::Api::Extensions::V1beta1::IngressStatus, true, false, "Status is the current state of the Ingress. More info: [https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status](https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status)")
 
-    # APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)))
-    def api_version : String
-      self.["apiVersion"] = "extensions/v1beta1" unless self.["apiVersion"]?
-      self.["apiVersion"].as(String)
+    def initialize(*, api_version : String? = "extensions/v1beta1", kind : String? = "Ingress", metadata : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta? = nil, spec : ::K8S::Api::Extensions::V1beta1::IngressSpec? = nil, status : ::K8S::Api::Extensions::V1beta1::IngressStatus? = nil)
+      super()
+      raise "api_version cannot be nil" if api_version.nil?
+      self.["apiVersion"] = api_version
+      raise "kind cannot be nil" if kind.nil?
+      self.["kind"] = kind
+      self.["metadata"] = metadata
+      self.["spec"] = spec
+      self.["status"] = status
     end
 
-    # :ditto:
-    def api_version! : String
-      self.["apiVersion"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def api_version? : String?
-      self.["apiVersion"]?.as(String?)
-    end
-
-    # Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)))
-    def kind : String
-      self.["kind"] = "Ingress" unless self.["kind"]?
-      self.["kind"].as(String)
-    end
-
-    # :ditto:
-    def kind! : String
-      self.["kind"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def kind? : String?
-      self.["kind"]?.as(String?)
-    end
-
-    # Standard object's metadata. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)))
-    def metadata : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?
-      self.["metadata"].as(::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?)
-    end
-
-    # :ditto:
-    def metadata! : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta
-      self.["metadata"].as(::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?).not_nil!
-    end
-
-    # :ditto:
-    def metadata? : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?
-      self.["metadata"]?.as(::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?)
-    end
-
-    # :ditto:
-    def metadata=(value : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?)
-      self.["metadata"] = value
-    end
-
-    # Spec is the desired state of the Ingress. More info: [[https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status](https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status)](https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status](https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status))
-    def spec : ::K8S::Api::Extensions::V1beta1::IngressSpec?
-      self.["spec"].as(::K8S::Api::Extensions::V1beta1::IngressSpec?)
-    end
-
-    # :ditto:
-    def spec! : ::K8S::Api::Extensions::V1beta1::IngressSpec
-      self.["spec"].as(::K8S::Api::Extensions::V1beta1::IngressSpec?).not_nil!
-    end
-
-    # :ditto:
-    def spec? : ::K8S::Api::Extensions::V1beta1::IngressSpec?
-      self.["spec"]?.as(::K8S::Api::Extensions::V1beta1::IngressSpec?)
-    end
-
-    # :ditto:
-    def spec=(value : ::K8S::Api::Extensions::V1beta1::IngressSpec?)
-      self.["spec"] = value
-    end
-
-    # Status is the current state of the Ingress. More info: [[https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status](https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status)](https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status](https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status))
-    def status : ::K8S::Api::Extensions::V1beta1::IngressStatus?
-      self.["status"].as(::K8S::Api::Extensions::V1beta1::IngressStatus?)
-    end
-
-    # :ditto:
-    def status! : ::K8S::Api::Extensions::V1beta1::IngressStatus
-      self.["status"].as(::K8S::Api::Extensions::V1beta1::IngressStatus?).not_nil!
-    end
-
-    # :ditto:
-    def status? : ::K8S::Api::Extensions::V1beta1::IngressStatus?
-      self.["status"]?.as(::K8S::Api::Extensions::V1beta1::IngressStatus?)
-    end
-
-    # :ditto:
-    def status=(value : ::K8S::Api::Extensions::V1beta1::IngressStatus?)
-      self.["status"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "apiVersion", accessor: "api_version", nilable: false, read_only: true, default: "extensions/v1beta1", kind: String },
-        { key: "kind", accessor: "kind", nilable: false, read_only: true, default: "Ingress", kind: String },
-        { key: "metadata", accessor: "metadata", nilable: true, read_only: false, default: nil, kind: ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta },
-        { key: "spec", accessor: "spec", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Extensions::V1beta1::IngressSpec },
-        { key: "status", accessor: "status", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Extensions::V1beta1::IngressStatus },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "apiVersion", accessor: "api_version", nilable: false, read_only: true, default: "extensions/v1beta1", kind: String},
+      {key: "kind", accessor: "kind", nilable: false, read_only: true, default: "Ingress", kind: String},
+      {key: "metadata", accessor: "metadata", nilable: true, read_only: false, default: nil, kind: ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta},
+      {key: "spec", accessor: "spec", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Extensions::V1beta1::IngressSpec},
+      {key: "status", accessor: "status", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Extensions::V1beta1::IngressStatus},
+    ])
   end
 
   module Resources::Extensions::V1beta1

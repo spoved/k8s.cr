@@ -19,7 +19,7 @@ module K8S
     # :ditto:
     abstract def non_resource_rules? : ::Array(::K8S::Api::Flowcontrol::V1beta1::NonResourcePolicyRule)?
     # :ditto:
-    abstract def non_resource_rules=(value : ::Array(::K8S::Api::Flowcontrol::V1beta1::NonResourcePolicyRule)?)
+    abstract def non_resource_rules=(value : ::Array(::K8S::Api::Flowcontrol::V1beta1::NonResourcePolicyRule))
     # `resourceRules` is a slice of ResourcePolicyRules that identify matching requests according to their verb and the target resource. At least one of `resourceRules` and `nonResourceRules` has to be non-empty.
     abstract def resource_rules : ::Array(::K8S::Api::Flowcontrol::V1beta1::ResourcePolicyRule)?
     # :ditto:
@@ -27,9 +27,9 @@ module K8S
     # :ditto:
     abstract def resource_rules? : ::Array(::K8S::Api::Flowcontrol::V1beta1::ResourcePolicyRule)?
     # :ditto:
-    abstract def resource_rules=(value : ::Array(::K8S::Api::Flowcontrol::V1beta1::ResourcePolicyRule)?)
+    abstract def resource_rules=(value : ::Array(::K8S::Api::Flowcontrol::V1beta1::ResourcePolicyRule))
     # subjects is the list of normal user, serviceaccount, or group that this rule cares about. There must be at least one member in this slice. A slice that includes both the system:authenticated and system:unauthenticated user groups matches every request. Required.
-    abstract def subjects : ::Array(::K8S::Api::Flowcontrol::V1beta1::Subject)
+    abstract def subjects : ::Array(::K8S::Api::Flowcontrol::V1beta1::Subject)?
     # :ditto:
     abstract def subjects! : ::Array(::K8S::Api::Flowcontrol::V1beta1::Subject)
     # :ditto:
@@ -46,73 +46,21 @@ module K8S
   )]
   class Api::Flowcontrol::V1beta1::PolicyRulesWithSubjects < ::K8S::GenericObject
     include ::K8S::Types::Api::Flowcontrol::V1beta1::PolicyRulesWithSubjects
+    k8s_object_accessor("nonResourceRules", non_resource_rules : ::Array(::K8S::Api::Flowcontrol::V1beta1::NonResourcePolicyRule), true, false, "`nonResourceRules` is a list of NonResourcePolicyRules that identify matching requests according to their verb and the target non-resource URL.")
+    k8s_object_accessor("resourceRules", resource_rules : ::Array(::K8S::Api::Flowcontrol::V1beta1::ResourcePolicyRule), true, false, "`resourceRules` is a slice of ResourcePolicyRules that identify matching requests according to their verb and the target resource. At least one of `resourceRules` and `nonResourceRules` has to be non-empty.")
+    k8s_object_accessor("subjects", subjects : ::Array(::K8S::Api::Flowcontrol::V1beta1::Subject), false, false, "subjects is the list of normal user, serviceaccount, or group that this rule cares about. There must be at least one member in this slice. A slice that includes both the system:authenticated and system:unauthenticated user groups matches every request. Required.")
 
-    # `nonResourceRules` is a list of NonResourcePolicyRules that identify matching requests according to their verb and the target non-resource URL.
-    def non_resource_rules : ::Array(::K8S::Api::Flowcontrol::V1beta1::NonResourcePolicyRule)?
-      self.["nonResourceRules"].as(::Array(::K8S::Api::Flowcontrol::V1beta1::NonResourcePolicyRule)?)
+    def initialize(*, non_resource_rules : ::Array(::K8S::Api::Flowcontrol::V1beta1::NonResourcePolicyRule)? = nil, resource_rules : ::Array(::K8S::Api::Flowcontrol::V1beta1::ResourcePolicyRule)? = nil, subjects : ::Array(::K8S::Api::Flowcontrol::V1beta1::Subject)? = nil)
+      super()
+      self.["nonResourceRules"] = non_resource_rules
+      self.["resourceRules"] = resource_rules
+      self.["subjects"] = subjects
     end
 
-    # :ditto:
-    def non_resource_rules! : ::Array(::K8S::Api::Flowcontrol::V1beta1::NonResourcePolicyRule)
-      self.["nonResourceRules"].as(::Array(::K8S::Api::Flowcontrol::V1beta1::NonResourcePolicyRule)?).not_nil!
-    end
-
-    # :ditto:
-    def non_resource_rules? : ::Array(::K8S::Api::Flowcontrol::V1beta1::NonResourcePolicyRule)?
-      self.["nonResourceRules"]?.as(::Array(::K8S::Api::Flowcontrol::V1beta1::NonResourcePolicyRule)?)
-    end
-
-    # :ditto:
-    def non_resource_rules=(value : ::Array(::K8S::Api::Flowcontrol::V1beta1::NonResourcePolicyRule)?)
-      self.["nonResourceRules"] = value
-    end
-
-    # `resourceRules` is a slice of ResourcePolicyRules that identify matching requests according to their verb and the target resource. At least one of `resourceRules` and `nonResourceRules` has to be non-empty.
-    def resource_rules : ::Array(::K8S::Api::Flowcontrol::V1beta1::ResourcePolicyRule)?
-      self.["resourceRules"].as(::Array(::K8S::Api::Flowcontrol::V1beta1::ResourcePolicyRule)?)
-    end
-
-    # :ditto:
-    def resource_rules! : ::Array(::K8S::Api::Flowcontrol::V1beta1::ResourcePolicyRule)
-      self.["resourceRules"].as(::Array(::K8S::Api::Flowcontrol::V1beta1::ResourcePolicyRule)?).not_nil!
-    end
-
-    # :ditto:
-    def resource_rules? : ::Array(::K8S::Api::Flowcontrol::V1beta1::ResourcePolicyRule)?
-      self.["resourceRules"]?.as(::Array(::K8S::Api::Flowcontrol::V1beta1::ResourcePolicyRule)?)
-    end
-
-    # :ditto:
-    def resource_rules=(value : ::Array(::K8S::Api::Flowcontrol::V1beta1::ResourcePolicyRule)?)
-      self.["resourceRules"] = value
-    end
-
-    # subjects is the list of normal user, serviceaccount, or group that this rule cares about. There must be at least one member in this slice. A slice that includes both the system:authenticated and system:unauthenticated user groups matches every request. Required.
-    def subjects : ::Array(::K8S::Api::Flowcontrol::V1beta1::Subject)
-      self.["subjects"].as(::Array(::K8S::Api::Flowcontrol::V1beta1::Subject))
-    end
-
-    # :ditto:
-    def subjects! : ::Array(::K8S::Api::Flowcontrol::V1beta1::Subject)
-      self.["subjects"].as(::Array(::K8S::Api::Flowcontrol::V1beta1::Subject)).not_nil!
-    end
-
-    # :ditto:
-    def subjects? : ::Array(::K8S::Api::Flowcontrol::V1beta1::Subject)?
-      self.["subjects"]?.as(::Array(::K8S::Api::Flowcontrol::V1beta1::Subject)?)
-    end
-
-    # :ditto:
-    def subjects=(value : ::Array(::K8S::Api::Flowcontrol::V1beta1::Subject))
-      self.["subjects"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "nonResourceRules", accessor: "non_resource_rules", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Flowcontrol::V1beta1::NonResourcePolicyRule) },
-        { key: "resourceRules", accessor: "resource_rules", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Flowcontrol::V1beta1::ResourcePolicyRule) },
-        { key: "subjects", accessor: "subjects", nilable: false, read_only: false, default: nil, kind: ::Array(::K8S::Api::Flowcontrol::V1beta1::Subject) },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "nonResourceRules", accessor: "non_resource_rules", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Flowcontrol::V1beta1::NonResourcePolicyRule)},
+      {key: "resourceRules", accessor: "resource_rules", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Flowcontrol::V1beta1::ResourcePolicyRule)},
+      {key: "subjects", accessor: "subjects", nilable: false, read_only: false, default: nil, kind: ::Array(::K8S::Api::Flowcontrol::V1beta1::Subject)},
+    ])
   end
 end

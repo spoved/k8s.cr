@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def ip? : String?
     # :ditto:
-    abstract def ip=(value : String?)
+    abstract def ip=(value : String)
   end
 
   # IP address information for entries in the (plural) PodIPs field. Each entry includes:
@@ -25,31 +25,15 @@ module K8S
   )]
   class Api::Core::V1::PodIP < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::PodIP
+    k8s_object_accessor("ip", ip : String, true, false, "ip is an IP address (IPv4 or IPv6) assigned to the pod")
 
-    # ip is an IP address (IPv4 or IPv6) assigned to the pod
-    def ip : String?
-      self.["ip"].as(String?)
+    def initialize(*, ip : String? = nil)
+      super()
+      self.["ip"] = ip
     end
 
-    # :ditto:
-    def ip! : String
-      self.["ip"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def ip? : String?
-      self.["ip"]?.as(String?)
-    end
-
-    # :ditto:
-    def ip=(value : String?)
-      self.["ip"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "ip", accessor: "ip", nilable: true, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "ip", accessor: "ip", nilable: true, read_only: false, default: nil, kind: String},
+    ])
   end
 end

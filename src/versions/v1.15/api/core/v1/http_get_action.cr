@@ -17,7 +17,7 @@ module K8S
     # :ditto:
     abstract def host? : String?
     # :ditto:
-    abstract def host=(value : String?)
+    abstract def host=(value : String)
     # Custom headers to set in the request. HTTP allows repeated headers.
     abstract def http_headers : ::Array(::K8S::Api::Core::V1::HTTPHeader)?
     # :ditto:
@@ -25,7 +25,7 @@ module K8S
     # :ditto:
     abstract def http_headers? : ::Array(::K8S::Api::Core::V1::HTTPHeader)?
     # :ditto:
-    abstract def http_headers=(value : ::Array(::K8S::Api::Core::V1::HTTPHeader)?)
+    abstract def http_headers=(value : ::Array(::K8S::Api::Core::V1::HTTPHeader))
     # Path to access on the HTTP server.
     abstract def path : String?
     # :ditto:
@@ -33,9 +33,9 @@ module K8S
     # :ditto:
     abstract def path? : String?
     # :ditto:
-    abstract def path=(value : String?)
+    abstract def path=(value : String)
     # Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
-    abstract def port : ::Int32 | ::String
+    abstract def port : ::Int32 | ::String?
     # :ditto:
     abstract def port! : ::Int32 | ::String
     # :ditto:
@@ -49,7 +49,7 @@ module K8S
     # :ditto:
     abstract def scheme? : String?
     # :ditto:
-    abstract def scheme=(value : String?)
+    abstract def scheme=(value : String)
   end
 
   # HTTPGetAction describes an action based on HTTP Get requests.
@@ -62,115 +62,27 @@ module K8S
   )]
   class Api::Core::V1::HTTPGetAction < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::HTTPGetAction
+    k8s_object_accessor("host", host : String, true, false, "Host name to connect to, defaults to the pod IP. You probably want to set \"Host\" in httpHeaders instead.")
+    k8s_object_accessor("httpHeaders", http_headers : ::Array(::K8S::Api::Core::V1::HTTPHeader), true, false, "Custom headers to set in the request. HTTP allows repeated headers.")
+    k8s_object_accessor("path", path : String, true, false, "Path to access on the HTTP server.")
+    k8s_object_accessor("port", port : ::Int32 | ::String, false, false, "Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.")
+    k8s_object_accessor("scheme", scheme : String, true, false, "Scheme to use for connecting to the host. Defaults to HTTP.")
 
-    # Host name to connect to, defaults to the pod IP. You probably want to set "Host" in httpHeaders instead.
-    def host : String?
-      self.["host"].as(String?)
+    def initialize(*, host : String? = nil, http_headers : ::Array(::K8S::Api::Core::V1::HTTPHeader)? = nil, path : String? = nil, port : ::Int32 | ::String? = nil, scheme : String? = nil)
+      super()
+      self.["host"] = host
+      self.["httpHeaders"] = http_headers
+      self.["path"] = path
+      self.["port"] = port
+      self.["scheme"] = scheme
     end
 
-    # :ditto:
-    def host! : String
-      self.["host"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def host? : String?
-      self.["host"]?.as(String?)
-    end
-
-    # :ditto:
-    def host=(value : String?)
-      self.["host"] = value
-    end
-
-    # Custom headers to set in the request. HTTP allows repeated headers.
-    def http_headers : ::Array(::K8S::Api::Core::V1::HTTPHeader)?
-      self.["httpHeaders"].as(::Array(::K8S::Api::Core::V1::HTTPHeader)?)
-    end
-
-    # :ditto:
-    def http_headers! : ::Array(::K8S::Api::Core::V1::HTTPHeader)
-      self.["httpHeaders"].as(::Array(::K8S::Api::Core::V1::HTTPHeader)?).not_nil!
-    end
-
-    # :ditto:
-    def http_headers? : ::Array(::K8S::Api::Core::V1::HTTPHeader)?
-      self.["httpHeaders"]?.as(::Array(::K8S::Api::Core::V1::HTTPHeader)?)
-    end
-
-    # :ditto:
-    def http_headers=(value : ::Array(::K8S::Api::Core::V1::HTTPHeader)?)
-      self.["httpHeaders"] = value
-    end
-
-    # Path to access on the HTTP server.
-    def path : String?
-      self.["path"].as(String?)
-    end
-
-    # :ditto:
-    def path! : String
-      self.["path"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def path? : String?
-      self.["path"]?.as(String?)
-    end
-
-    # :ditto:
-    def path=(value : String?)
-      self.["path"] = value
-    end
-
-    # Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
-    def port : ::Int32 | ::String
-      self.["port"].as(::Int32 | ::String)
-    end
-
-    # :ditto:
-    def port! : ::Int32 | ::String
-      self.["port"].as(::Int32 | ::String).not_nil!
-    end
-
-    # :ditto:
-    def port? : ::Int32 | ::String?
-      self.["port"]?.as(::Int32 | ::String?)
-    end
-
-    # :ditto:
-    def port=(value : ::Int32 | ::String)
-      self.["port"] = value
-    end
-
-    # Scheme to use for connecting to the host. Defaults to HTTP.
-    def scheme : String?
-      self.["scheme"].as(String?)
-    end
-
-    # :ditto:
-    def scheme! : String
-      self.["scheme"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def scheme? : String?
-      self.["scheme"]?.as(String?)
-    end
-
-    # :ditto:
-    def scheme=(value : String?)
-      self.["scheme"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "host", accessor: "host", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "httpHeaders", accessor: "http_headers", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::HTTPHeader) },
-        { key: "path", accessor: "path", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "port", accessor: "port", nilable: false, read_only: false, default: nil, kind: ::Union(::Int32 | ::String) },
-        { key: "scheme", accessor: "scheme", nilable: true, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "host", accessor: "host", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "httpHeaders", accessor: "http_headers", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::HTTPHeader)},
+      {key: "path", accessor: "path", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "port", accessor: "port", nilable: false, read_only: false, default: nil, kind: ::Union(::Int32 | ::String)},
+      {key: "scheme", accessor: "scheme", nilable: true, read_only: false, default: nil, kind: String},
+    ])
   end
 end

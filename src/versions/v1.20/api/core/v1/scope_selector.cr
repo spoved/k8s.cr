@@ -17,7 +17,7 @@ module K8S
     # :ditto:
     abstract def match_expressions? : ::Array(::K8S::Api::Core::V1::ScopedResourceSelectorRequirement)?
     # :ditto:
-    abstract def match_expressions=(value : ::Array(::K8S::Api::Core::V1::ScopedResourceSelectorRequirement)?)
+    abstract def match_expressions=(value : ::Array(::K8S::Api::Core::V1::ScopedResourceSelectorRequirement))
   end
 
   # A scope selector represents the AND of the selectors represented by the scoped-resource selector requirements.
@@ -26,31 +26,15 @@ module K8S
   )]
   class Api::Core::V1::ScopeSelector < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::ScopeSelector
+    k8s_object_accessor("matchExpressions", match_expressions : ::Array(::K8S::Api::Core::V1::ScopedResourceSelectorRequirement), true, false, "A list of scope selector requirements by scope of the resources.")
 
-    # A list of scope selector requirements by scope of the resources.
-    def match_expressions : ::Array(::K8S::Api::Core::V1::ScopedResourceSelectorRequirement)?
-      self.["matchExpressions"].as(::Array(::K8S::Api::Core::V1::ScopedResourceSelectorRequirement)?)
+    def initialize(*, match_expressions : ::Array(::K8S::Api::Core::V1::ScopedResourceSelectorRequirement)? = nil)
+      super()
+      self.["matchExpressions"] = match_expressions
     end
 
-    # :ditto:
-    def match_expressions! : ::Array(::K8S::Api::Core::V1::ScopedResourceSelectorRequirement)
-      self.["matchExpressions"].as(::Array(::K8S::Api::Core::V1::ScopedResourceSelectorRequirement)?).not_nil!
-    end
-
-    # :ditto:
-    def match_expressions? : ::Array(::K8S::Api::Core::V1::ScopedResourceSelectorRequirement)?
-      self.["matchExpressions"]?.as(::Array(::K8S::Api::Core::V1::ScopedResourceSelectorRequirement)?)
-    end
-
-    # :ditto:
-    def match_expressions=(value : ::Array(::K8S::Api::Core::V1::ScopedResourceSelectorRequirement)?)
-      self.["matchExpressions"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "matchExpressions", accessor: "match_expressions", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::ScopedResourceSelectorRequirement) },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "matchExpressions", accessor: "match_expressions", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::ScopedResourceSelectorRequirement)},
+    ])
   end
 end

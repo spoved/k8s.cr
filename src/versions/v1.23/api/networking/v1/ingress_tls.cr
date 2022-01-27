@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def hosts? : ::Array(String)?
     # :ditto:
-    abstract def hosts=(value : ::Array(String)?)
+    abstract def hosts=(value : ::Array(String))
     # SecretName is the name of the secret used to terminate TLS traffic on port 443. Field is left optional to allow TLS routing based on SNI hostname alone. If the SNI host in a listener conflicts with the "Host" header field used by an IngressRule, the SNI host is used for termination and value of the Host header is used for routing.
     abstract def secret_name : String?
     # :ditto:
@@ -23,7 +23,7 @@ module K8S
     # :ditto:
     abstract def secret_name? : String?
     # :ditto:
-    abstract def secret_name=(value : String?)
+    abstract def secret_name=(value : String)
   end
 
   # IngressTLS describes the transport layer security associated with an Ingress.
@@ -33,52 +33,18 @@ module K8S
   )]
   class Api::Networking::V1::IngressTLS < ::K8S::GenericObject
     include ::K8S::Types::Api::Networking::V1::IngressTLS
+    k8s_object_accessor("hosts", hosts : ::Array(String), true, false, "Hosts are a list of hosts included in the TLS certificate. The values in this list must match the name/s used in the tlsSecret. Defaults to the wildcard host setting for the loadbalancer controller fulfilling this Ingress, if left unspecified.")
+    k8s_object_accessor("secretName", secret_name : String, true, false, "SecretName is the name of the secret used to terminate TLS traffic on port 443. Field is left optional to allow TLS routing based on SNI hostname alone. If the SNI host in a listener conflicts with the \"Host\" header field used by an IngressRule, the SNI host is used for termination and value of the Host header is used for routing.")
 
-    # Hosts are a list of hosts included in the TLS certificate. The values in this list must match the name/s used in the tlsSecret. Defaults to the wildcard host setting for the loadbalancer controller fulfilling this Ingress, if left unspecified.
-    def hosts : ::Array(String)?
-      self.["hosts"].as(::Array(String)?)
+    def initialize(*, hosts : ::Array(String)? = nil, secret_name : String? = nil)
+      super()
+      self.["hosts"] = hosts
+      self.["secretName"] = secret_name
     end
 
-    # :ditto:
-    def hosts! : ::Array(String)
-      self.["hosts"].as(::Array(String)?).not_nil!
-    end
-
-    # :ditto:
-    def hosts? : ::Array(String)?
-      self.["hosts"]?.as(::Array(String)?)
-    end
-
-    # :ditto:
-    def hosts=(value : ::Array(String)?)
-      self.["hosts"] = value
-    end
-
-    # SecretName is the name of the secret used to terminate TLS traffic on port 443. Field is left optional to allow TLS routing based on SNI hostname alone. If the SNI host in a listener conflicts with the "Host" header field used by an IngressRule, the SNI host is used for termination and value of the Host header is used for routing.
-    def secret_name : String?
-      self.["secretName"].as(String?)
-    end
-
-    # :ditto:
-    def secret_name! : String
-      self.["secretName"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def secret_name? : String?
-      self.["secretName"]?.as(String?)
-    end
-
-    # :ditto:
-    def secret_name=(value : String?)
-      self.["secretName"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "hosts", accessor: "hosts", nilable: true, read_only: false, default: nil, kind: ::Array(String) },
-        { key: "secretName", accessor: "secret_name", nilable: true, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "hosts", accessor: "hosts", nilable: true, read_only: false, default: nil, kind: ::Array(String)},
+      {key: "secretName", accessor: "secret_name", nilable: true, read_only: false, default: nil, kind: String},
+    ])
   end
 end

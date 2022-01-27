@@ -11,7 +11,7 @@ module K8S
   # Namespace holding the types for `Api::Core::V1::NodeSelector`.
   module Types::Api::Core::V1::NodeSelector
     # Required. A list of node selector terms. The terms are ORed.
-    abstract def node_selector_terms : ::Array(::K8S::Api::Core::V1::NodeSelectorTerm)
+    abstract def node_selector_terms : ::Array(::K8S::Api::Core::V1::NodeSelectorTerm)?
     # :ditto:
     abstract def node_selector_terms! : ::Array(::K8S::Api::Core::V1::NodeSelectorTerm)
     # :ditto:
@@ -26,31 +26,15 @@ module K8S
   )]
   class Api::Core::V1::NodeSelector < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::NodeSelector
+    k8s_object_accessor("nodeSelectorTerms", node_selector_terms : ::Array(::K8S::Api::Core::V1::NodeSelectorTerm), false, false, "Required. A list of node selector terms. The terms are ORed.")
 
-    # Required. A list of node selector terms. The terms are ORed.
-    def node_selector_terms : ::Array(::K8S::Api::Core::V1::NodeSelectorTerm)
-      self.["nodeSelectorTerms"].as(::Array(::K8S::Api::Core::V1::NodeSelectorTerm))
+    def initialize(*, node_selector_terms : ::Array(::K8S::Api::Core::V1::NodeSelectorTerm)? = nil)
+      super()
+      self.["nodeSelectorTerms"] = node_selector_terms
     end
 
-    # :ditto:
-    def node_selector_terms! : ::Array(::K8S::Api::Core::V1::NodeSelectorTerm)
-      self.["nodeSelectorTerms"].as(::Array(::K8S::Api::Core::V1::NodeSelectorTerm)).not_nil!
-    end
-
-    # :ditto:
-    def node_selector_terms? : ::Array(::K8S::Api::Core::V1::NodeSelectorTerm)?
-      self.["nodeSelectorTerms"]?.as(::Array(::K8S::Api::Core::V1::NodeSelectorTerm)?)
-    end
-
-    # :ditto:
-    def node_selector_terms=(value : ::Array(::K8S::Api::Core::V1::NodeSelectorTerm))
-      self.["nodeSelectorTerms"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "nodeSelectorTerms", accessor: "node_selector_terms", nilable: false, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::NodeSelectorTerm) },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "nodeSelectorTerms", accessor: "node_selector_terms", nilable: false, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::NodeSelectorTerm)},
+    ])
   end
 end

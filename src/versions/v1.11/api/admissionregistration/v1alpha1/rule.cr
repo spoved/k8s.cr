@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def api_groups? : ::Array(String)?
     # :ditto:
-    abstract def api_groups=(value : ::Array(String)?)
+    abstract def api_groups=(value : ::Array(String))
     # APIVersions is the API versions the resources belong to. '*' is all versions. If '*' is present, the length of the slice must be one. Required.
     abstract def api_versions : ::Array(String)?
     # :ditto:
@@ -23,7 +23,7 @@ module K8S
     # :ditto:
     abstract def api_versions? : ::Array(String)?
     # :ditto:
-    abstract def api_versions=(value : ::Array(String)?)
+    abstract def api_versions=(value : ::Array(String))
     # Resources is a list of resources this rule applies to.
     #
     # For example: 'pods' means pods. [['pods/log' means the log subresource of pods. '*' means all resources, but not subresources. 'pods/*' means all subresources of pods. '*/scale' means all scale subresources. '*/*' means all resources and their subresources.]('pods/log' means the log subresource of pods. '*' means all resources, but not subresources. 'pods/*' means all subresources of pods. '*/scale' means all scale subresources. '*/*' means all resources and their subresources.)](['pods/log' means the log subresource of pods. '*' means all resources, but not subresources. 'pods/*' means all subresources of pods. '*/scale' means all scale subresources. '*/*' means all resources and their subresources.]('pods/log' means the log subresource of pods. '*' means all resources, but not subresources. 'pods/*' means all subresources of pods. '*/scale' means all scale subresources. '*/*' means all resources and their subresources.))
@@ -37,7 +37,7 @@ module K8S
     # :ditto:
     abstract def resources? : ::Array(String)?
     # :ditto:
-    abstract def resources=(value : ::Array(String)?)
+    abstract def resources=(value : ::Array(String))
   end
 
   # Rule is a tuple of APIGroups, APIVersion, and Resources.It is recommended to make sure that all the tuple expansions are valid.
@@ -48,79 +48,21 @@ module K8S
   )]
   class Api::Admissionregistration::V1alpha1::Rule < ::K8S::GenericObject
     include ::K8S::Types::Api::Admissionregistration::V1alpha1::Rule
+    k8s_object_accessor("apiGroups", api_groups : ::Array(String), true, false, "APIGroups is the API groups the resources belong to. '*' is all groups. If '*' is present, the length of the slice must be one. Required.")
+    k8s_object_accessor("apiVersions", api_versions : ::Array(String), true, false, "APIVersions is the API versions the resources belong to. '*' is all versions. If '*' is present, the length of the slice must be one. Required.")
+    k8s_object_accessor("resources", resources : ::Array(String), true, false, "Resources is a list of resources this rule applies to.\n\nFor example: 'pods' means pods. ['pods/log' means the log subresource of pods. '*' means all resources, but not subresources. 'pods/*' means all subresources of pods. '*/scale' means all scale subresources. '*/*' means all resources and their subresources.]('pods/log' means the log subresource of pods. '*' means all resources, but not subresources. 'pods/*' means all subresources of pods. '*/scale' means all scale subresources. '*/*' means all resources and their subresources.)\n\nIf wildcard is present, the validation rule will ensure resources do not overlap with each other.\n\nDepending on the enclosing object, subresources might not be allowed. Required.")
 
-    # APIGroups is the API groups the resources belong to. '*' is all groups. If '*' is present, the length of the slice must be one. Required.
-    def api_groups : ::Array(String)?
-      self.["apiGroups"].as(::Array(String)?)
+    def initialize(*, api_groups : ::Array(String)? = nil, api_versions : ::Array(String)? = nil, resources : ::Array(String)? = nil)
+      super()
+      self.["apiGroups"] = api_groups
+      self.["apiVersions"] = api_versions
+      self.["resources"] = resources
     end
 
-    # :ditto:
-    def api_groups! : ::Array(String)
-      self.["apiGroups"].as(::Array(String)?).not_nil!
-    end
-
-    # :ditto:
-    def api_groups? : ::Array(String)?
-      self.["apiGroups"]?.as(::Array(String)?)
-    end
-
-    # :ditto:
-    def api_groups=(value : ::Array(String)?)
-      self.["apiGroups"] = value
-    end
-
-    # APIVersions is the API versions the resources belong to. '*' is all versions. If '*' is present, the length of the slice must be one. Required.
-    def api_versions : ::Array(String)?
-      self.["apiVersions"].as(::Array(String)?)
-    end
-
-    # :ditto:
-    def api_versions! : ::Array(String)
-      self.["apiVersions"].as(::Array(String)?).not_nil!
-    end
-
-    # :ditto:
-    def api_versions? : ::Array(String)?
-      self.["apiVersions"]?.as(::Array(String)?)
-    end
-
-    # :ditto:
-    def api_versions=(value : ::Array(String)?)
-      self.["apiVersions"] = value
-    end
-
-    # Resources is a list of resources this rule applies to.
-    #
-    # For example: 'pods' means pods. [['pods/log' means the log subresource of pods. '*' means all resources, but not subresources. 'pods/*' means all subresources of pods. '*/scale' means all scale subresources. '*/*' means all resources and their subresources.]('pods/log' means the log subresource of pods. '*' means all resources, but not subresources. 'pods/*' means all subresources of pods. '*/scale' means all scale subresources. '*/*' means all resources and their subresources.)](['pods/log' means the log subresource of pods. '*' means all resources, but not subresources. 'pods/*' means all subresources of pods. '*/scale' means all scale subresources. '*/*' means all resources and their subresources.]('pods/log' means the log subresource of pods. '*' means all resources, but not subresources. 'pods/*' means all subresources of pods. '*/scale' means all scale subresources. '*/*' means all resources and their subresources.))
-    #
-    # If wildcard is present, the validation rule will ensure resources do not overlap with each other.
-    #
-    # Depending on the enclosing object, subresources might not be allowed. Required.
-    def resources : ::Array(String)?
-      self.["resources"].as(::Array(String)?)
-    end
-
-    # :ditto:
-    def resources! : ::Array(String)
-      self.["resources"].as(::Array(String)?).not_nil!
-    end
-
-    # :ditto:
-    def resources? : ::Array(String)?
-      self.["resources"]?.as(::Array(String)?)
-    end
-
-    # :ditto:
-    def resources=(value : ::Array(String)?)
-      self.["resources"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "apiGroups", accessor: "api_groups", nilable: true, read_only: false, default: nil, kind: ::Array(String) },
-        { key: "apiVersions", accessor: "api_versions", nilable: true, read_only: false, default: nil, kind: ::Array(String) },
-        { key: "resources", accessor: "resources", nilable: true, read_only: false, default: nil, kind: ::Array(String) },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "apiGroups", accessor: "api_groups", nilable: true, read_only: false, default: nil, kind: ::Array(String)},
+      {key: "apiVersions", accessor: "api_versions", nilable: true, read_only: false, default: nil, kind: ::Array(String)},
+      {key: "resources", accessor: "resources", nilable: true, read_only: false, default: nil, kind: ::Array(String)},
+    ])
   end
 end

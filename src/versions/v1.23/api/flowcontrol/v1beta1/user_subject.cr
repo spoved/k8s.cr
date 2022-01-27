@@ -9,7 +9,7 @@ module K8S
   # Namespace holding the types for `Api::Flowcontrol::V1beta1::UserSubject`.
   module Types::Api::Flowcontrol::V1beta1::UserSubject
     # `name` is the username that matches, or "*" to match all usernames. Required.
-    abstract def name : String
+    abstract def name : String?
     # :ditto:
     abstract def name! : String
     # :ditto:
@@ -24,31 +24,15 @@ module K8S
   )]
   class Api::Flowcontrol::V1beta1::UserSubject < ::K8S::GenericObject
     include ::K8S::Types::Api::Flowcontrol::V1beta1::UserSubject
+    k8s_object_accessor("name", name : String, false, false, "`name` is the username that matches, or \"*\" to match all usernames. Required.")
 
-    # `name` is the username that matches, or "*" to match all usernames. Required.
-    def name : String
-      self.["name"].as(String)
+    def initialize(*, name : String? = nil)
+      super()
+      self.["name"] = name
     end
 
-    # :ditto:
-    def name! : String
-      self.["name"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def name? : String?
-      self.["name"]?.as(String?)
-    end
-
-    # :ditto:
-    def name=(value : String)
-      self.["name"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "name", accessor: "name", nilable: false, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "name", accessor: "name", nilable: false, read_only: false, default: nil, kind: String},
+    ])
   end
 end

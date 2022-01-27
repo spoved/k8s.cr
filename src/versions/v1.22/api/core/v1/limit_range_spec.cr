@@ -11,7 +11,7 @@ module K8S
   # Namespace holding the types for `Api::Core::V1::LimitRangeSpec`.
   module Types::Api::Core::V1::LimitRangeSpec
     # Limits is the list of LimitRangeItem objects that are enforced.
-    abstract def limits : ::Array(::K8S::Api::Core::V1::LimitRangeItem)
+    abstract def limits : ::Array(::K8S::Api::Core::V1::LimitRangeItem)?
     # :ditto:
     abstract def limits! : ::Array(::K8S::Api::Core::V1::LimitRangeItem)
     # :ditto:
@@ -26,31 +26,15 @@ module K8S
   )]
   class Api::Core::V1::LimitRangeSpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::LimitRangeSpec
+    k8s_object_accessor("limits", limits : ::Array(::K8S::Api::Core::V1::LimitRangeItem), false, false, "Limits is the list of LimitRangeItem objects that are enforced.")
 
-    # Limits is the list of LimitRangeItem objects that are enforced.
-    def limits : ::Array(::K8S::Api::Core::V1::LimitRangeItem)
-      self.["limits"].as(::Array(::K8S::Api::Core::V1::LimitRangeItem))
+    def initialize(*, limits : ::Array(::K8S::Api::Core::V1::LimitRangeItem)? = nil)
+      super()
+      self.["limits"] = limits
     end
 
-    # :ditto:
-    def limits! : ::Array(::K8S::Api::Core::V1::LimitRangeItem)
-      self.["limits"].as(::Array(::K8S::Api::Core::V1::LimitRangeItem)).not_nil!
-    end
-
-    # :ditto:
-    def limits? : ::Array(::K8S::Api::Core::V1::LimitRangeItem)?
-      self.["limits"]?.as(::Array(::K8S::Api::Core::V1::LimitRangeItem)?)
-    end
-
-    # :ditto:
-    def limits=(value : ::Array(::K8S::Api::Core::V1::LimitRangeItem))
-      self.["limits"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "limits", accessor: "limits", nilable: false, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::LimitRangeItem) },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "limits", accessor: "limits", nilable: false, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::LimitRangeItem)},
+    ])
   end
 end

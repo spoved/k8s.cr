@@ -12,7 +12,7 @@ module K8S
   # Namespace holding the types for `Apimachinery::Apis::Meta::V1::Initializers`.
   module Types::Apimachinery::Apis::Meta::V1::Initializers
     # Pending is a list of initializers that must execute in order before this object is visible. When the last pending initializer is removed, and no failing result is set, the initializers struct will be set to nil and the object is considered as initialized and visible to all clients.
-    abstract def pending : ::Array(::K8S::Apimachinery::Apis::Meta::V1::Initializer)
+    abstract def pending : ::Array(::K8S::Apimachinery::Apis::Meta::V1::Initializer)?
     # :ditto:
     abstract def pending! : ::Array(::K8S::Apimachinery::Apis::Meta::V1::Initializer)
     # :ditto:
@@ -26,7 +26,7 @@ module K8S
     # :ditto:
     abstract def result? : ::K8S::Apimachinery::Apis::Meta::V1::Status?
     # :ditto:
-    abstract def result=(value : ::K8S::Apimachinery::Apis::Meta::V1::Status?)
+    abstract def result=(value : ::K8S::Apimachinery::Apis::Meta::V1::Status)
   end
 
   # Initializers tracks the progress of initialization.
@@ -36,52 +36,18 @@ module K8S
   )]
   class Apimachinery::Apis::Meta::V1::Initializers < ::K8S::GenericObject
     include ::K8S::Types::Apimachinery::Apis::Meta::V1::Initializers
+    k8s_object_accessor("pending", pending : ::Array(::K8S::Apimachinery::Apis::Meta::V1::Initializer), false, false, "Pending is a list of initializers that must execute in order before this object is visible. When the last pending initializer is removed, and no failing result is set, the initializers struct will be set to nil and the object is considered as initialized and visible to all clients.")
+    k8s_object_accessor("result", result : ::K8S::Apimachinery::Apis::Meta::V1::Status, true, false, "If result is set with the Failure field, the object will be persisted to storage and then deleted, ensuring that other clients can observe the deletion.")
 
-    # Pending is a list of initializers that must execute in order before this object is visible. When the last pending initializer is removed, and no failing result is set, the initializers struct will be set to nil and the object is considered as initialized and visible to all clients.
-    def pending : ::Array(::K8S::Apimachinery::Apis::Meta::V1::Initializer)
-      self.["pending"].as(::Array(::K8S::Apimachinery::Apis::Meta::V1::Initializer))
+    def initialize(*, pending : ::Array(::K8S::Apimachinery::Apis::Meta::V1::Initializer)? = nil, result : ::K8S::Apimachinery::Apis::Meta::V1::Status? = nil)
+      super()
+      self.["pending"] = pending
+      self.["result"] = result
     end
 
-    # :ditto:
-    def pending! : ::Array(::K8S::Apimachinery::Apis::Meta::V1::Initializer)
-      self.["pending"].as(::Array(::K8S::Apimachinery::Apis::Meta::V1::Initializer)).not_nil!
-    end
-
-    # :ditto:
-    def pending? : ::Array(::K8S::Apimachinery::Apis::Meta::V1::Initializer)?
-      self.["pending"]?.as(::Array(::K8S::Apimachinery::Apis::Meta::V1::Initializer)?)
-    end
-
-    # :ditto:
-    def pending=(value : ::Array(::K8S::Apimachinery::Apis::Meta::V1::Initializer))
-      self.["pending"] = value
-    end
-
-    # If result is set with the Failure field, the object will be persisted to storage and then deleted, ensuring that other clients can observe the deletion.
-    def result : ::K8S::Apimachinery::Apis::Meta::V1::Status?
-      self.["result"].as(::K8S::Apimachinery::Apis::Meta::V1::Status?)
-    end
-
-    # :ditto:
-    def result! : ::K8S::Apimachinery::Apis::Meta::V1::Status
-      self.["result"].as(::K8S::Apimachinery::Apis::Meta::V1::Status?).not_nil!
-    end
-
-    # :ditto:
-    def result? : ::K8S::Apimachinery::Apis::Meta::V1::Status?
-      self.["result"]?.as(::K8S::Apimachinery::Apis::Meta::V1::Status?)
-    end
-
-    # :ditto:
-    def result=(value : ::K8S::Apimachinery::Apis::Meta::V1::Status?)
-      self.["result"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "pending", accessor: "pending", nilable: false, read_only: false, default: nil, kind: ::Array(::K8S::Apimachinery::Apis::Meta::V1::Initializer) },
-        { key: "result", accessor: "result", nilable: true, read_only: false, default: nil, kind: ::K8S::Apimachinery::Apis::Meta::V1::Status },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "pending", accessor: "pending", nilable: false, read_only: false, default: nil, kind: ::Array(::K8S::Apimachinery::Apis::Meta::V1::Initializer)},
+      {key: "result", accessor: "result", nilable: true, read_only: false, default: nil, kind: ::K8S::Apimachinery::Apis::Meta::V1::Status},
+    ])
   end
 end

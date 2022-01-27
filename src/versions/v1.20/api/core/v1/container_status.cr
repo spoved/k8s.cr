@@ -17,9 +17,9 @@ module K8S
     # :ditto:
     abstract def container_id? : String?
     # :ditto:
-    abstract def container_id=(value : String?)
+    abstract def container_id=(value : String)
     # The image the container is running. More info: [[https://kubernetes.io/docs/concepts/containers/images](https://kubernetes.io/docs/concepts/containers/images)](https://kubernetes.io/docs/concepts/containers/images](https://kubernetes.io/docs/concepts/containers/images))
-    abstract def image : String
+    abstract def image : String?
     # :ditto:
     abstract def image! : String
     # :ditto:
@@ -27,7 +27,7 @@ module K8S
     # :ditto:
     abstract def image=(value : String)
     # ImageID of the container's image.
-    abstract def image_id : String
+    abstract def image_id : String?
     # :ditto:
     abstract def image_id! : String
     # :ditto:
@@ -41,9 +41,9 @@ module K8S
     # :ditto:
     abstract def last_state? : ::K8S::Api::Core::V1::ContainerState?
     # :ditto:
-    abstract def last_state=(value : ::K8S::Api::Core::V1::ContainerState?)
+    abstract def last_state=(value : ::K8S::Api::Core::V1::ContainerState)
     # This must be a DNS_LABEL. Each container in a pod must have a unique name. Cannot be updated.
-    abstract def name : String
+    abstract def name : String?
     # :ditto:
     abstract def name! : String
     # :ditto:
@@ -51,7 +51,7 @@ module K8S
     # :ditto:
     abstract def name=(value : String)
     # Specifies whether the container has passed its readiness probe.
-    abstract def ready : ::Bool
+    abstract def ready : ::Bool?
     # :ditto:
     abstract def ready! : ::Bool
     # :ditto:
@@ -59,7 +59,7 @@ module K8S
     # :ditto:
     abstract def ready=(value : ::Bool)
     # The number of times the container has been restarted, currently based on the number of dead containers that have not yet been removed. Note that this is calculated from dead containers. But those containers are subject to garbage collection. This value will get capped at 5 by GC.
-    abstract def restart_count : Int32
+    abstract def restart_count : Int32?
     # :ditto:
     abstract def restart_count! : Int32
     # :ditto:
@@ -73,7 +73,7 @@ module K8S
     # :ditto:
     abstract def started? : ::Bool?
     # :ditto:
-    abstract def started=(value : ::Bool?)
+    abstract def started=(value : ::Bool)
     # Details about the container's current condition.
     abstract def state : ::K8S::Api::Core::V1::ContainerState?
     # :ditto:
@@ -81,7 +81,7 @@ module K8S
     # :ditto:
     abstract def state? : ::K8S::Api::Core::V1::ContainerState?
     # :ditto:
-    abstract def state=(value : ::K8S::Api::Core::V1::ContainerState?)
+    abstract def state=(value : ::K8S::Api::Core::V1::ContainerState)
   end
 
   # ContainerStatus contains details for the current status of this container.
@@ -98,199 +98,39 @@ module K8S
   )]
   class Api::Core::V1::ContainerStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::ContainerStatus
+    k8s_object_accessor("containerID", container_id : String, true, false, "Container's ID in the format 'docker://<container_id>'.")
+    k8s_object_accessor("image", image : String, false, false, "The image the container is running. More info: [https://kubernetes.io/docs/concepts/containers/images](https://kubernetes.io/docs/concepts/containers/images)")
+    k8s_object_accessor("imageID", image_id : String, false, false, "ImageID of the container's image.")
+    k8s_object_accessor("lastState", last_state : ::K8S::Api::Core::V1::ContainerState, true, false, "Details about the container's last termination condition.")
+    k8s_object_accessor("name", name : String, false, false, "This must be a DNS_LABEL. Each container in a pod must have a unique name. Cannot be updated.")
+    k8s_object_accessor("ready", ready : ::Bool, false, false, "Specifies whether the container has passed its readiness probe.")
+    k8s_object_accessor("restartCount", restart_count : Int32, false, false, "The number of times the container has been restarted, currently based on the number of dead containers that have not yet been removed. Note that this is calculated from dead containers. But those containers are subject to garbage collection. This value will get capped at 5 by GC.")
+    k8s_object_accessor("started", started : ::Bool, true, false, "Specifies whether the container has passed its startup probe. Initialized as false, becomes true after startupProbe is considered successful. Resets to false when the container is restarted, or if kubelet loses state temporarily. Is always true when no startupProbe is defined.")
+    k8s_object_accessor("state", state : ::K8S::Api::Core::V1::ContainerState, true, false, "Details about the container's current condition.")
 
-    # Container's ID in the format 'docker://<container_id>'.
-    def container_id : String?
-      self.["containerID"].as(String?)
+    def initialize(*, container_id : String? = nil, image : String? = nil, image_id : String? = nil, last_state : ::K8S::Api::Core::V1::ContainerState? = nil, name : String? = nil, ready : ::Bool? = nil, restart_count : Int32? = nil, started : ::Bool? = nil, state : ::K8S::Api::Core::V1::ContainerState? = nil)
+      super()
+      self.["containerID"] = container_id
+      self.["image"] = image
+      self.["imageID"] = image_id
+      self.["lastState"] = last_state
+      self.["name"] = name
+      self.["ready"] = ready
+      self.["restartCount"] = restart_count
+      self.["started"] = started
+      self.["state"] = state
     end
 
-    # :ditto:
-    def container_id! : String
-      self.["containerID"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def container_id? : String?
-      self.["containerID"]?.as(String?)
-    end
-
-    # :ditto:
-    def container_id=(value : String?)
-      self.["containerID"] = value
-    end
-
-    # The image the container is running. More info: [[https://kubernetes.io/docs/concepts/containers/images](https://kubernetes.io/docs/concepts/containers/images)](https://kubernetes.io/docs/concepts/containers/images](https://kubernetes.io/docs/concepts/containers/images))
-    def image : String
-      self.["image"].as(String)
-    end
-
-    # :ditto:
-    def image! : String
-      self.["image"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def image? : String?
-      self.["image"]?.as(String?)
-    end
-
-    # :ditto:
-    def image=(value : String)
-      self.["image"] = value
-    end
-
-    # ImageID of the container's image.
-    def image_id : String
-      self.["imageID"].as(String)
-    end
-
-    # :ditto:
-    def image_id! : String
-      self.["imageID"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def image_id? : String?
-      self.["imageID"]?.as(String?)
-    end
-
-    # :ditto:
-    def image_id=(value : String)
-      self.["imageID"] = value
-    end
-
-    # Details about the container's last termination condition.
-    def last_state : ::K8S::Api::Core::V1::ContainerState?
-      self.["lastState"].as(::K8S::Api::Core::V1::ContainerState?)
-    end
-
-    # :ditto:
-    def last_state! : ::K8S::Api::Core::V1::ContainerState
-      self.["lastState"].as(::K8S::Api::Core::V1::ContainerState?).not_nil!
-    end
-
-    # :ditto:
-    def last_state? : ::K8S::Api::Core::V1::ContainerState?
-      self.["lastState"]?.as(::K8S::Api::Core::V1::ContainerState?)
-    end
-
-    # :ditto:
-    def last_state=(value : ::K8S::Api::Core::V1::ContainerState?)
-      self.["lastState"] = value
-    end
-
-    # This must be a DNS_LABEL. Each container in a pod must have a unique name. Cannot be updated.
-    def name : String
-      self.["name"].as(String)
-    end
-
-    # :ditto:
-    def name! : String
-      self.["name"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def name? : String?
-      self.["name"]?.as(String?)
-    end
-
-    # :ditto:
-    def name=(value : String)
-      self.["name"] = value
-    end
-
-    # Specifies whether the container has passed its readiness probe.
-    def ready : ::Bool
-      self.["ready"].as(::Bool)
-    end
-
-    # :ditto:
-    def ready! : ::Bool
-      self.["ready"].as(::Bool).not_nil!
-    end
-
-    # :ditto:
-    def ready? : ::Bool?
-      self.["ready"]?.as(::Bool?)
-    end
-
-    # :ditto:
-    def ready=(value : ::Bool)
-      self.["ready"] = value
-    end
-
-    # The number of times the container has been restarted, currently based on the number of dead containers that have not yet been removed. Note that this is calculated from dead containers. But those containers are subject to garbage collection. This value will get capped at 5 by GC.
-    def restart_count : Int32
-      self.["restartCount"].as(Int32)
-    end
-
-    # :ditto:
-    def restart_count! : Int32
-      self.["restartCount"].as(Int32).not_nil!
-    end
-
-    # :ditto:
-    def restart_count? : Int32?
-      self.["restartCount"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def restart_count=(value : Int32)
-      self.["restartCount"] = value
-    end
-
-    # Specifies whether the container has passed its startup probe. Initialized as false, becomes true after startupProbe is considered successful. Resets to false when the container is restarted, or if kubelet loses state temporarily. Is always true when no startupProbe is defined.
-    def started : ::Bool?
-      self.["started"].as(::Bool?)
-    end
-
-    # :ditto:
-    def started! : ::Bool
-      self.["started"].as(::Bool?).not_nil!
-    end
-
-    # :ditto:
-    def started? : ::Bool?
-      self.["started"]?.as(::Bool?)
-    end
-
-    # :ditto:
-    def started=(value : ::Bool?)
-      self.["started"] = value
-    end
-
-    # Details about the container's current condition.
-    def state : ::K8S::Api::Core::V1::ContainerState?
-      self.["state"].as(::K8S::Api::Core::V1::ContainerState?)
-    end
-
-    # :ditto:
-    def state! : ::K8S::Api::Core::V1::ContainerState
-      self.["state"].as(::K8S::Api::Core::V1::ContainerState?).not_nil!
-    end
-
-    # :ditto:
-    def state? : ::K8S::Api::Core::V1::ContainerState?
-      self.["state"]?.as(::K8S::Api::Core::V1::ContainerState?)
-    end
-
-    # :ditto:
-    def state=(value : ::K8S::Api::Core::V1::ContainerState?)
-      self.["state"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "containerID", accessor: "container_id", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "image", accessor: "image", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "imageID", accessor: "image_id", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "lastState", accessor: "last_state", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::ContainerState },
-        { key: "name", accessor: "name", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "ready", accessor: "ready", nilable: false, read_only: false, default: nil, kind: ::Bool },
-        { key: "restartCount", accessor: "restart_count", nilable: false, read_only: false, default: nil, kind: Int32 },
-        { key: "started", accessor: "started", nilable: true, read_only: false, default: nil, kind: ::Bool },
-        { key: "state", accessor: "state", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::ContainerState },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "containerID", accessor: "container_id", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "image", accessor: "image", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "imageID", accessor: "image_id", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "lastState", accessor: "last_state", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::ContainerState},
+      {key: "name", accessor: "name", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "ready", accessor: "ready", nilable: false, read_only: false, default: nil, kind: ::Bool},
+      {key: "restartCount", accessor: "restart_count", nilable: false, read_only: false, default: nil, kind: Int32},
+      {key: "started", accessor: "started", nilable: true, read_only: false, default: nil, kind: ::Bool},
+      {key: "state", accessor: "state", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::ContainerState},
+    ])
   end
 end

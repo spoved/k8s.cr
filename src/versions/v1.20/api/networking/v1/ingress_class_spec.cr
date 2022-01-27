@@ -17,7 +17,7 @@ module K8S
     # :ditto:
     abstract def controller? : String?
     # :ditto:
-    abstract def controller=(value : String?)
+    abstract def controller=(value : String)
     # Parameters is a link to a custom resource containing additional configuration for the controller. This is optional if the controller does not require extra parameters.
     abstract def parameters : ::K8S::Api::Core::V1::TypedLocalObjectReference?
     # :ditto:
@@ -25,7 +25,7 @@ module K8S
     # :ditto:
     abstract def parameters? : ::K8S::Api::Core::V1::TypedLocalObjectReference?
     # :ditto:
-    abstract def parameters=(value : ::K8S::Api::Core::V1::TypedLocalObjectReference?)
+    abstract def parameters=(value : ::K8S::Api::Core::V1::TypedLocalObjectReference)
   end
 
   # IngressClassSpec provides information about the class of an Ingress.
@@ -35,52 +35,18 @@ module K8S
   )]
   class Api::Networking::V1::IngressClassSpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Networking::V1::IngressClassSpec
+    k8s_object_accessor("controller", controller : String, true, false, "Controller refers to the name of the controller that should handle this class. This allows for different \"flavors\" that are controlled by the same controller. For example, you may have different Parameters for the same implementing controller. This should be specified as a domain-prefixed path no more than 250 characters in length, e.g. [\"acme.io/ingress-controller\". This field is immutable.](\"acme.io/ingress-controller\". This field is immutable.)")
+    k8s_object_accessor("parameters", parameters : ::K8S::Api::Core::V1::TypedLocalObjectReference, true, false, "Parameters is a link to a custom resource containing additional configuration for the controller. This is optional if the controller does not require extra parameters.")
 
-    # Controller refers to the name of the controller that should handle this class. This allows for different "flavors" that are controlled by the same controller. For example, you may have different Parameters for the same implementing controller. This should be specified as a domain-prefixed path no more than 250 characters in length, e.g. [["acme.io/ingress-controller". This field is immutable.]("acme.io/ingress-controller". This field is immutable.)](["acme.io/ingress-controller". This field is immutable.]("acme.io/ingress-controller". This field is immutable.))
-    def controller : String?
-      self.["controller"].as(String?)
+    def initialize(*, controller : String? = nil, parameters : ::K8S::Api::Core::V1::TypedLocalObjectReference? = nil)
+      super()
+      self.["controller"] = controller
+      self.["parameters"] = parameters
     end
 
-    # :ditto:
-    def controller! : String
-      self.["controller"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def controller? : String?
-      self.["controller"]?.as(String?)
-    end
-
-    # :ditto:
-    def controller=(value : String?)
-      self.["controller"] = value
-    end
-
-    # Parameters is a link to a custom resource containing additional configuration for the controller. This is optional if the controller does not require extra parameters.
-    def parameters : ::K8S::Api::Core::V1::TypedLocalObjectReference?
-      self.["parameters"].as(::K8S::Api::Core::V1::TypedLocalObjectReference?)
-    end
-
-    # :ditto:
-    def parameters! : ::K8S::Api::Core::V1::TypedLocalObjectReference
-      self.["parameters"].as(::K8S::Api::Core::V1::TypedLocalObjectReference?).not_nil!
-    end
-
-    # :ditto:
-    def parameters? : ::K8S::Api::Core::V1::TypedLocalObjectReference?
-      self.["parameters"]?.as(::K8S::Api::Core::V1::TypedLocalObjectReference?)
-    end
-
-    # :ditto:
-    def parameters=(value : ::K8S::Api::Core::V1::TypedLocalObjectReference?)
-      self.["parameters"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "controller", accessor: "controller", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "parameters", accessor: "parameters", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::TypedLocalObjectReference },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "controller", accessor: "controller", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "parameters", accessor: "parameters", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::TypedLocalObjectReference},
+    ])
   end
 end

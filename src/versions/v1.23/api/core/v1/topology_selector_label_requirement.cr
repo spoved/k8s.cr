@@ -9,7 +9,7 @@ module K8S
   # Namespace holding the types for `Api::Core::V1::TopologySelectorLabelRequirement`.
   module Types::Api::Core::V1::TopologySelectorLabelRequirement
     # The label key that the selector applies to.
-    abstract def key : String
+    abstract def key : String?
     # :ditto:
     abstract def key! : String
     # :ditto:
@@ -17,7 +17,7 @@ module K8S
     # :ditto:
     abstract def key=(value : String)
     # An array of string values. One value must match the label to be selected. Each entry in Values is ORed.
-    abstract def values : ::Array(String)
+    abstract def values : ::Array(String)?
     # :ditto:
     abstract def values! : ::Array(String)
     # :ditto:
@@ -33,52 +33,18 @@ module K8S
   )]
   class Api::Core::V1::TopologySelectorLabelRequirement < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::TopologySelectorLabelRequirement
+    k8s_object_accessor("key", key : String, false, false, "The label key that the selector applies to.")
+    k8s_object_accessor("values", values : ::Array(String), false, false, "An array of string values. One value must match the label to be selected. Each entry in Values is ORed.")
 
-    # The label key that the selector applies to.
-    def key : String
-      self.["key"].as(String)
+    def initialize(*, key : String? = nil, values : ::Array(String)? = nil)
+      super()
+      self.["key"] = key
+      self.["values"] = values
     end
 
-    # :ditto:
-    def key! : String
-      self.["key"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def key? : String?
-      self.["key"]?.as(String?)
-    end
-
-    # :ditto:
-    def key=(value : String)
-      self.["key"] = value
-    end
-
-    # An array of string values. One value must match the label to be selected. Each entry in Values is ORed.
-    def values : ::Array(String)
-      self.["values"].as(::Array(String))
-    end
-
-    # :ditto:
-    def values! : ::Array(String)
-      self.["values"].as(::Array(String)).not_nil!
-    end
-
-    # :ditto:
-    def values? : ::Array(String)?
-      self.["values"]?.as(::Array(String)?)
-    end
-
-    # :ditto:
-    def values=(value : ::Array(String))
-      self.["values"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "key", accessor: "key", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "values", accessor: "values", nilable: false, read_only: false, default: nil, kind: ::Array(String) },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "key", accessor: "key", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "values", accessor: "values", nilable: false, read_only: false, default: nil, kind: ::Array(String)},
+    ])
   end
 end

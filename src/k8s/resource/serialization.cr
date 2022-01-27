@@ -104,33 +104,30 @@ class ::K8S::Kubernetes::Resource
     reg[:resource] unless reg.nil?
   end
 
-  private macro __from_yaml(group, ver, kind, ctx, node)
-      case { {{group}}.sub(/^io\.k8s(\.[-a-z]+\.pkg)?\.apis?(\.core)?\./, ""), {{ver}}, {{kind}} }
-      {% for entry in REGISTRY %}
-      when { {{entry[:group]}}, {{entry[:version]}}, {{entry[:kind]}} }
-        {{entry[:resource]}}.new({{ctx}}, {{node}}).as(::K8S::Kubernetes::Resource)
-      {% end %}
-      else
-        Log.warn { "Unknown resource: #{{{group}}}/#{{{ver}}}/#{{{kind}}}" }
-        ::K8S::Kubernetes::Resource::Object.new(Hash(String, JSON::Any).new({{ctx}}, {{node}}))
-        # raise K8S::Error::UnknownResource.new("#{{{group}}}/#{{{ver}}}/#{{{kind}}}")
-
-
-
-      end
+  macro __from_yaml(group, ver, kind, ctx, node)
+    case { {{group}}.sub(/^io\.k8s(\.[-a-z]+\.pkg)?\.apis?(\.core)?\./, ""), {{ver}}, {{kind}} }
+    {% for entry in REGISTRY %}
+    when { {{entry[:group]}}, {{entry[:version]}}, {{entry[:kind]}} }
+      {{entry[:resource]}}.new({{ctx}}, {{node}}).as(::K8S::Kubernetes::Resource)
+    {% end %}
+    else
+      Log.warn { "Unknown resource: #{{{group}}}/#{{{ver}}}/#{{{kind}}}" }
+      ::K8S::Kubernetes::Resource::Object.new(Hash(String, JSON::Any).new({{ctx}}, {{node}}))
+      # raise K8S::Error::UnknownResource.new("#{{{group}}}/#{{{ver}}}/#{{{kind}}}")
     end
+  end
 
-  private macro __from_json(group, ver, kind, json)
-      case { {{group}}.sub(/^io\.k8s(\.[-a-z]+\.pkg)?\.apis?(\.core)?\./, ""), {{ver}}, {{kind}} }
-      {% for entry in REGISTRY %}
-      when { {{entry[:group]}}, {{entry[:version]}}, {{entry[:kind]}} }
-        {{entry[:resource]}}.from_json({{json}}).as(::K8S::Kubernetes::Resource)
-      {% end %}
-      else
-        # raise K8S::Error::UnknownResource.new("#{{{group}}}/#{{{ver}}}/#{{{kind}}}")
-        ::K8S::Kubernetes::Resource::Object.new(Hash(String, JSON::Any).from_json({{json}}))
-      end
+  macro __from_json(group, ver, kind, json)
+    case { {{group}}.sub(/^io\.k8s(\.[-a-z]+\.pkg)?\.apis?(\.core)?\./, ""), {{ver}}, {{kind}} }
+    {% for entry in REGISTRY %}
+    when { {{entry[:group]}}, {{entry[:version]}}, {{entry[:kind]}} }
+      {{entry[:resource]}}.from_json({{json}}).as(::K8S::Kubernetes::Resource)
+    {% end %}
+    else
+      # raise K8S::Error::UnknownResource.new("#{{{group}}}/#{{{ver}}}/#{{{kind}}}")
+      ::K8S::Kubernetes::Resource::Object.new(::JSON::PullParser.new({{json}}))
     end
+  end
 
   def self.new(pull : ::JSON::PullParser)
     location = pull.location
@@ -185,7 +182,7 @@ class ::K8S::Kubernetes::Resource
     ver = parts.pop
     group = parts.join('/')
     # pp({group: group, ver: ver, discriminator_value: discriminator_value})
-    __from_json(group, ver, discriminator_value, json)
+    ::K8S::Kubernetes::Resource.__from_json(group, ver, discriminator_value, json)
     # klass = resource_class(group, ver, discriminator_value)
     # raise K8S::Error::UndefinedResource.new(discriminator_value) if klass.nil?
     # klass.new(pull).as(::K8S::Kubernetes::Resource)
@@ -244,7 +241,7 @@ class ::K8S::Kubernetes::Resource
     group = parts.join('/')
 
     # pp({group: group, ver: ver, discriminator_value: discriminator_value})
-    __from_yaml(group, ver, discriminator_value, ctx, node)
+    ::K8S::Kubernetes::Resource.__from_yaml(group, ver, discriminator_value, ctx, node)
     # klass = resource_class(group, ver, discriminator_value)
     # raise K8S::Error::UndefinedResource.new(discriminator_value) if klass.nil?
     # klass.new(ctx, node).as(::K8S::Kubernetes::Resource)

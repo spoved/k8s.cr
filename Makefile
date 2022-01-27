@@ -4,7 +4,7 @@ help: ## Show this help
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z \-_0-9]+:.*?## / {printf "\033[36m%-10s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST) | sort
 
 gen: ## Generate k8s resources
-	crystal ./bin/generate
+	crystal ./bin/generate.cr
 
 docs: ## Generate docs
 	crystal ./bin/gen_docs.cr
@@ -24,4 +24,10 @@ spec: ## Run spec
 	@crystal spec -Dk8s_v1.22
 	@crystal spec -Dk8s_v1.23
 
-.PHONY: gen docs spec help
+sentry: ## Compile sentry
+	@crystal build --release -o ./bin/sentry ./lib/sentry/src/sentry_cli.cr
+
+watch: ## Watch for changes and rebuild automatically
+	@bin/sentry
+
+.PHONY: gen docs spec help sentry

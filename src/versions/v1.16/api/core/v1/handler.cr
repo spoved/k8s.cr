@@ -19,7 +19,7 @@ module K8S
     # :ditto:
     abstract def exec? : ::K8S::Api::Core::V1::ExecAction?
     # :ditto:
-    abstract def exec=(value : ::K8S::Api::Core::V1::ExecAction?)
+    abstract def exec=(value : ::K8S::Api::Core::V1::ExecAction)
     # HTTPGet specifies the http request to perform.
     abstract def http_get : ::K8S::Api::Core::V1::HTTPGetAction?
     # :ditto:
@@ -27,7 +27,7 @@ module K8S
     # :ditto:
     abstract def http_get? : ::K8S::Api::Core::V1::HTTPGetAction?
     # :ditto:
-    abstract def http_get=(value : ::K8S::Api::Core::V1::HTTPGetAction?)
+    abstract def http_get=(value : ::K8S::Api::Core::V1::HTTPGetAction)
     # TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported
     abstract def tcp_socket : ::K8S::Api::Core::V1::TCPSocketAction?
     # :ditto:
@@ -35,7 +35,7 @@ module K8S
     # :ditto:
     abstract def tcp_socket? : ::K8S::Api::Core::V1::TCPSocketAction?
     # :ditto:
-    abstract def tcp_socket=(value : ::K8S::Api::Core::V1::TCPSocketAction?)
+    abstract def tcp_socket=(value : ::K8S::Api::Core::V1::TCPSocketAction)
   end
 
   # Handler defines a specific action that should be taken
@@ -46,73 +46,21 @@ module K8S
   )]
   class Api::Core::V1::Handler < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::Handler
+    k8s_object_accessor("exec", exec : ::K8S::Api::Core::V1::ExecAction, true, false, "One and only one of the following should be specified. Exec specifies the action to take.")
+    k8s_object_accessor("httpGet", http_get : ::K8S::Api::Core::V1::HTTPGetAction, true, false, "HTTPGet specifies the http request to perform.")
+    k8s_object_accessor("tcpSocket", tcp_socket : ::K8S::Api::Core::V1::TCPSocketAction, true, false, "TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported")
 
-    # One and only one of the following should be specified. Exec specifies the action to take.
-    def exec : ::K8S::Api::Core::V1::ExecAction?
-      self.["exec"].as(::K8S::Api::Core::V1::ExecAction?)
+    def initialize(*, exec : ::K8S::Api::Core::V1::ExecAction? = nil, http_get : ::K8S::Api::Core::V1::HTTPGetAction? = nil, tcp_socket : ::K8S::Api::Core::V1::TCPSocketAction? = nil)
+      super()
+      self.["exec"] = exec
+      self.["httpGet"] = http_get
+      self.["tcpSocket"] = tcp_socket
     end
 
-    # :ditto:
-    def exec! : ::K8S::Api::Core::V1::ExecAction
-      self.["exec"].as(::K8S::Api::Core::V1::ExecAction?).not_nil!
-    end
-
-    # :ditto:
-    def exec? : ::K8S::Api::Core::V1::ExecAction?
-      self.["exec"]?.as(::K8S::Api::Core::V1::ExecAction?)
-    end
-
-    # :ditto:
-    def exec=(value : ::K8S::Api::Core::V1::ExecAction?)
-      self.["exec"] = value
-    end
-
-    # HTTPGet specifies the http request to perform.
-    def http_get : ::K8S::Api::Core::V1::HTTPGetAction?
-      self.["httpGet"].as(::K8S::Api::Core::V1::HTTPGetAction?)
-    end
-
-    # :ditto:
-    def http_get! : ::K8S::Api::Core::V1::HTTPGetAction
-      self.["httpGet"].as(::K8S::Api::Core::V1::HTTPGetAction?).not_nil!
-    end
-
-    # :ditto:
-    def http_get? : ::K8S::Api::Core::V1::HTTPGetAction?
-      self.["httpGet"]?.as(::K8S::Api::Core::V1::HTTPGetAction?)
-    end
-
-    # :ditto:
-    def http_get=(value : ::K8S::Api::Core::V1::HTTPGetAction?)
-      self.["httpGet"] = value
-    end
-
-    # TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported
-    def tcp_socket : ::K8S::Api::Core::V1::TCPSocketAction?
-      self.["tcpSocket"].as(::K8S::Api::Core::V1::TCPSocketAction?)
-    end
-
-    # :ditto:
-    def tcp_socket! : ::K8S::Api::Core::V1::TCPSocketAction
-      self.["tcpSocket"].as(::K8S::Api::Core::V1::TCPSocketAction?).not_nil!
-    end
-
-    # :ditto:
-    def tcp_socket? : ::K8S::Api::Core::V1::TCPSocketAction?
-      self.["tcpSocket"]?.as(::K8S::Api::Core::V1::TCPSocketAction?)
-    end
-
-    # :ditto:
-    def tcp_socket=(value : ::K8S::Api::Core::V1::TCPSocketAction?)
-      self.["tcpSocket"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "exec", accessor: "exec", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::ExecAction },
-        { key: "httpGet", accessor: "http_get", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::HTTPGetAction },
-        { key: "tcpSocket", accessor: "tcp_socket", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::TCPSocketAction },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "exec", accessor: "exec", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::ExecAction},
+      {key: "httpGet", accessor: "http_get", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::HTTPGetAction},
+      {key: "tcpSocket", accessor: "tcp_socket", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::TCPSocketAction},
+    ])
   end
 end

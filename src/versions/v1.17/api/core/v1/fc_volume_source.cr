@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def fs_type? : String?
     # :ditto:
-    abstract def fs_type=(value : String?)
+    abstract def fs_type=(value : String)
     # Optional: FC target lun number
     abstract def lun : Int32?
     # :ditto:
@@ -23,7 +23,7 @@ module K8S
     # :ditto:
     abstract def lun? : Int32?
     # :ditto:
-    abstract def lun=(value : Int32?)
+    abstract def lun=(value : Int32)
     # Optional: Defaults to false [[(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.)]([(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.))
     abstract def read_only : ::Bool?
     # :ditto:
@@ -31,7 +31,7 @@ module K8S
     # :ditto:
     abstract def read_only? : ::Bool?
     # :ditto:
-    abstract def read_only=(value : ::Bool?)
+    abstract def read_only=(value : ::Bool)
     # Optional: FC target worldwide names (WWNs)
     abstract def target_wwns : ::Array(String)?
     # :ditto:
@@ -39,7 +39,7 @@ module K8S
     # :ditto:
     abstract def target_wwns? : ::Array(String)?
     # :ditto:
-    abstract def target_wwns=(value : ::Array(String)?)
+    abstract def target_wwns=(value : ::Array(String))
     # Optional: FC volume world wide identifiers (wwids) Either wwids or combination of targetWWNs and lun must be set, but not both simultaneously.
     abstract def wwids : ::Array(String)?
     # :ditto:
@@ -47,7 +47,7 @@ module K8S
     # :ditto:
     abstract def wwids? : ::Array(String)?
     # :ditto:
-    abstract def wwids=(value : ::Array(String)?)
+    abstract def wwids=(value : ::Array(String))
   end
 
   # Represents a Fibre Channel volume. Fibre Channel volumes can only be mounted as [read/write once. Fibre Channel volumes support ownership management and SELinux relabeling.](read/write once. Fibre Channel volumes support ownership management and SELinux relabeling.)
@@ -60,115 +60,27 @@ module K8S
   )]
   class Api::Core::V1::FCVolumeSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::FCVolumeSource
+    k8s_object_accessor("fsType", fs_type : String, true, false, "Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. \"ext4\", \"xfs\", \"ntfs\". Implicitly inferred to be \"ext4\" if unspecified.")
+    k8s_object_accessor("lun", lun : Int32, true, false, "Optional: FC target lun number")
+    k8s_object_accessor("readOnly", read_only : ::Bool, true, false, "Optional: Defaults to false [(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.)")
+    k8s_object_accessor("targetWWNs", target_wwns : ::Array(String), true, false, "Optional: FC target worldwide names (WWNs)")
+    k8s_object_accessor("wwids", wwids : ::Array(String), true, false, "Optional: FC volume world wide identifiers (wwids) Either wwids or combination of targetWWNs and lun must be set, but not both simultaneously.")
 
-    # Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified.
-    def fs_type : String?
-      self.["fsType"].as(String?)
+    def initialize(*, fs_type : String? = nil, lun : Int32? = nil, read_only : ::Bool? = nil, target_wwns : ::Array(String)? = nil, wwids : ::Array(String)? = nil)
+      super()
+      self.["fsType"] = fs_type
+      self.["lun"] = lun
+      self.["readOnly"] = read_only
+      self.["targetWWNs"] = target_wwns
+      self.["wwids"] = wwids
     end
 
-    # :ditto:
-    def fs_type! : String
-      self.["fsType"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def fs_type? : String?
-      self.["fsType"]?.as(String?)
-    end
-
-    # :ditto:
-    def fs_type=(value : String?)
-      self.["fsType"] = value
-    end
-
-    # Optional: FC target lun number
-    def lun : Int32?
-      self.["lun"].as(Int32?)
-    end
-
-    # :ditto:
-    def lun! : Int32
-      self.["lun"].as(Int32?).not_nil!
-    end
-
-    # :ditto:
-    def lun? : Int32?
-      self.["lun"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def lun=(value : Int32?)
-      self.["lun"] = value
-    end
-
-    # Optional: Defaults to false [[(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.)]([(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.))
-    def read_only : ::Bool?
-      self.["readOnly"].as(::Bool?)
-    end
-
-    # :ditto:
-    def read_only! : ::Bool
-      self.["readOnly"].as(::Bool?).not_nil!
-    end
-
-    # :ditto:
-    def read_only? : ::Bool?
-      self.["readOnly"]?.as(::Bool?)
-    end
-
-    # :ditto:
-    def read_only=(value : ::Bool?)
-      self.["readOnly"] = value
-    end
-
-    # Optional: FC target worldwide names (WWNs)
-    def target_wwns : ::Array(String)?
-      self.["targetWWNs"].as(::Array(String)?)
-    end
-
-    # :ditto:
-    def target_wwns! : ::Array(String)
-      self.["targetWWNs"].as(::Array(String)?).not_nil!
-    end
-
-    # :ditto:
-    def target_wwns? : ::Array(String)?
-      self.["targetWWNs"]?.as(::Array(String)?)
-    end
-
-    # :ditto:
-    def target_wwns=(value : ::Array(String)?)
-      self.["targetWWNs"] = value
-    end
-
-    # Optional: FC volume world wide identifiers (wwids) Either wwids or combination of targetWWNs and lun must be set, but not both simultaneously.
-    def wwids : ::Array(String)?
-      self.["wwids"].as(::Array(String)?)
-    end
-
-    # :ditto:
-    def wwids! : ::Array(String)
-      self.["wwids"].as(::Array(String)?).not_nil!
-    end
-
-    # :ditto:
-    def wwids? : ::Array(String)?
-      self.["wwids"]?.as(::Array(String)?)
-    end
-
-    # :ditto:
-    def wwids=(value : ::Array(String)?)
-      self.["wwids"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "fsType", accessor: "fs_type", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "lun", accessor: "lun", nilable: true, read_only: false, default: nil, kind: Int32 },
-        { key: "readOnly", accessor: "read_only", nilable: true, read_only: false, default: nil, kind: ::Bool },
-        { key: "targetWWNs", accessor: "target_wwns", nilable: true, read_only: false, default: nil, kind: ::Array(String) },
-        { key: "wwids", accessor: "wwids", nilable: true, read_only: false, default: nil, kind: ::Array(String) },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "fsType", accessor: "fs_type", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "lun", accessor: "lun", nilable: true, read_only: false, default: nil, kind: Int32},
+      {key: "readOnly", accessor: "read_only", nilable: true, read_only: false, default: nil, kind: ::Bool},
+      {key: "targetWWNs", accessor: "target_wwns", nilable: true, read_only: false, default: nil, kind: ::Array(String)},
+      {key: "wwids", accessor: "wwids", nilable: true, read_only: false, default: nil, kind: ::Array(String)},
+    ])
   end
 end

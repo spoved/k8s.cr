@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def categories? : ::Array(String)?
     # :ditto:
-    abstract def categories=(value : ::Array(String)?)
+    abstract def categories=(value : ::Array(String))
     # group is the preferred group of the resource.  Empty implies the group of the containing resource list. For subresources, this may have a different value, for example: Scale".
     abstract def group : String?
     # :ditto:
@@ -23,9 +23,9 @@ module K8S
     # :ditto:
     abstract def group? : String?
     # :ditto:
-    abstract def group=(value : String?)
+    abstract def group=(value : String)
     # kind is the kind for the resource (e.g. 'Foo' is the kind for a resource 'foo')
-    abstract def kind : String
+    abstract def kind : String?
     # :ditto:
     abstract def kind! : String
     # :ditto:
@@ -33,7 +33,7 @@ module K8S
     # :ditto:
     abstract def kind=(value : String)
     # name is the plural name of the resource.
-    abstract def name : String
+    abstract def name : String?
     # :ditto:
     abstract def name! : String
     # :ditto:
@@ -41,7 +41,7 @@ module K8S
     # :ditto:
     abstract def name=(value : String)
     # namespaced indicates if a resource is namespaced or not.
-    abstract def namespaced : ::Bool
+    abstract def namespaced : ::Bool?
     # :ditto:
     abstract def namespaced! : ::Bool
     # :ditto:
@@ -55,9 +55,9 @@ module K8S
     # :ditto:
     abstract def short_names? : ::Array(String)?
     # :ditto:
-    abstract def short_names=(value : ::Array(String)?)
+    abstract def short_names=(value : ::Array(String))
     # singularName is the singular name of the resource.  This allows clients to handle plural and singular opaquely. The singularName is more correct for reporting status on a single item and both singular and plural are allowed from the kubectl CLI interface.
-    abstract def singular_name : String
+    abstract def singular_name : String?
     # :ditto:
     abstract def singular_name! : String
     # :ditto:
@@ -71,9 +71,9 @@ module K8S
     # :ditto:
     abstract def storage_version_hash? : String?
     # :ditto:
-    abstract def storage_version_hash=(value : String?)
+    abstract def storage_version_hash=(value : String)
     # verbs is a list of supported kube verbs (this includes get, list, watch, create, update, patch, delete, deletecollection, and proxy)
-    abstract def verbs : ::Array(String)
+    abstract def verbs : ::Array(String)?
     # :ditto:
     abstract def verbs! : ::Array(String)
     # :ditto:
@@ -87,7 +87,7 @@ module K8S
     # :ditto:
     abstract def version? : String?
     # :ditto:
-    abstract def version=(value : String?)
+    abstract def version=(value : String)
   end
 
   # APIResource specifies the name of a resource and whether it is namespaced.
@@ -105,220 +105,42 @@ module K8S
   )]
   class Apimachinery::Apis::Meta::V1::APIResource < ::K8S::GenericObject
     include ::K8S::Types::Apimachinery::Apis::Meta::V1::APIResource
+    k8s_object_accessor("categories", categories : ::Array(String), true, false, "categories is a list of the grouped resources this resource belongs to (e.g. 'all')")
+    k8s_object_accessor("group", group : String, true, false, "group is the preferred group of the resource.  Empty implies the group of the containing resource list. For subresources, this may have a different value, for example: Scale\".")
+    k8s_object_accessor("kind", kind : String, false, false, "kind is the kind for the resource (e.g. 'Foo' is the kind for a resource 'foo')")
+    k8s_object_accessor("name", name : String, false, false, "name is the plural name of the resource.")
+    k8s_object_accessor("namespaced", namespaced : ::Bool, false, false, "namespaced indicates if a resource is namespaced or not.")
+    k8s_object_accessor("shortNames", short_names : ::Array(String), true, false, "shortNames is a list of suggested short names of the resource.")
+    k8s_object_accessor("singularName", singular_name : String, false, false, "singularName is the singular name of the resource.  This allows clients to handle plural and singular opaquely. The singularName is more correct for reporting status on a single item and both singular and plural are allowed from the kubectl CLI interface.")
+    k8s_object_accessor("storageVersionHash", storage_version_hash : String, true, false, "The hash value of the storage version, the version this resource is converted to when written to the data store. Value must be treated as opaque by clients. Only equality comparison on the value is valid. This is an alpha feature and may change or be removed in the future. The field is populated by the apiserver only if the StorageVersionHash feature gate is enabled. This field will remain optional even if it graduates.")
+    k8s_object_accessor("verbs", verbs : ::Array(String), false, false, "verbs is a list of supported kube verbs (this includes get, list, watch, create, update, patch, delete, deletecollection, and proxy)")
+    k8s_object_accessor("version", version : String, true, false, "version is the preferred version of the resource.  Empty implies the version of the containing resource list For subresources, this may have a different value, for example: v1 (while inside a v1beta1 version of the core resource's group)\".")
 
-    # categories is a list of the grouped resources this resource belongs to (e.g. 'all')
-    def categories : ::Array(String)?
-      self.["categories"].as(::Array(String)?)
+    def initialize(*, categories : ::Array(String)? = nil, group : String? = nil, kind : String? = nil, name : String? = nil, namespaced : ::Bool? = nil, short_names : ::Array(String)? = nil, singular_name : String? = nil, storage_version_hash : String? = nil, verbs : ::Array(String)? = nil, version : String? = nil)
+      super()
+      self.["categories"] = categories
+      self.["group"] = group
+      self.["kind"] = kind
+      self.["name"] = name
+      self.["namespaced"] = namespaced
+      self.["shortNames"] = short_names
+      self.["singularName"] = singular_name
+      self.["storageVersionHash"] = storage_version_hash
+      self.["verbs"] = verbs
+      self.["version"] = version
     end
 
-    # :ditto:
-    def categories! : ::Array(String)
-      self.["categories"].as(::Array(String)?).not_nil!
-    end
-
-    # :ditto:
-    def categories? : ::Array(String)?
-      self.["categories"]?.as(::Array(String)?)
-    end
-
-    # :ditto:
-    def categories=(value : ::Array(String)?)
-      self.["categories"] = value
-    end
-
-    # group is the preferred group of the resource.  Empty implies the group of the containing resource list. For subresources, this may have a different value, for example: Scale".
-    def group : String?
-      self.["group"].as(String?)
-    end
-
-    # :ditto:
-    def group! : String
-      self.["group"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def group? : String?
-      self.["group"]?.as(String?)
-    end
-
-    # :ditto:
-    def group=(value : String?)
-      self.["group"] = value
-    end
-
-    # kind is the kind for the resource (e.g. 'Foo' is the kind for a resource 'foo')
-    def kind : String
-      self.["kind"].as(String)
-    end
-
-    # :ditto:
-    def kind! : String
-      self.["kind"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def kind? : String?
-      self.["kind"]?.as(String?)
-    end
-
-    # :ditto:
-    def kind=(value : String)
-      self.["kind"] = value
-    end
-
-    # name is the plural name of the resource.
-    def name : String
-      self.["name"].as(String)
-    end
-
-    # :ditto:
-    def name! : String
-      self.["name"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def name? : String?
-      self.["name"]?.as(String?)
-    end
-
-    # :ditto:
-    def name=(value : String)
-      self.["name"] = value
-    end
-
-    # namespaced indicates if a resource is namespaced or not.
-    def namespaced : ::Bool
-      self.["namespaced"].as(::Bool)
-    end
-
-    # :ditto:
-    def namespaced! : ::Bool
-      self.["namespaced"].as(::Bool).not_nil!
-    end
-
-    # :ditto:
-    def namespaced? : ::Bool?
-      self.["namespaced"]?.as(::Bool?)
-    end
-
-    # :ditto:
-    def namespaced=(value : ::Bool)
-      self.["namespaced"] = value
-    end
-
-    # shortNames is a list of suggested short names of the resource.
-    def short_names : ::Array(String)?
-      self.["shortNames"].as(::Array(String)?)
-    end
-
-    # :ditto:
-    def short_names! : ::Array(String)
-      self.["shortNames"].as(::Array(String)?).not_nil!
-    end
-
-    # :ditto:
-    def short_names? : ::Array(String)?
-      self.["shortNames"]?.as(::Array(String)?)
-    end
-
-    # :ditto:
-    def short_names=(value : ::Array(String)?)
-      self.["shortNames"] = value
-    end
-
-    # singularName is the singular name of the resource.  This allows clients to handle plural and singular opaquely. The singularName is more correct for reporting status on a single item and both singular and plural are allowed from the kubectl CLI interface.
-    def singular_name : String
-      self.["singularName"].as(String)
-    end
-
-    # :ditto:
-    def singular_name! : String
-      self.["singularName"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def singular_name? : String?
-      self.["singularName"]?.as(String?)
-    end
-
-    # :ditto:
-    def singular_name=(value : String)
-      self.["singularName"] = value
-    end
-
-    # The hash value of the storage version, the version this resource is converted to when written to the data store. Value must be treated as opaque by clients. Only equality comparison on the value is valid. This is an alpha feature and may change or be removed in the future. The field is populated by the apiserver only if the StorageVersionHash feature gate is enabled. This field will remain optional even if it graduates.
-    def storage_version_hash : String?
-      self.["storageVersionHash"].as(String?)
-    end
-
-    # :ditto:
-    def storage_version_hash! : String
-      self.["storageVersionHash"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def storage_version_hash? : String?
-      self.["storageVersionHash"]?.as(String?)
-    end
-
-    # :ditto:
-    def storage_version_hash=(value : String?)
-      self.["storageVersionHash"] = value
-    end
-
-    # verbs is a list of supported kube verbs (this includes get, list, watch, create, update, patch, delete, deletecollection, and proxy)
-    def verbs : ::Array(String)
-      self.["verbs"].as(::Array(String))
-    end
-
-    # :ditto:
-    def verbs! : ::Array(String)
-      self.["verbs"].as(::Array(String)).not_nil!
-    end
-
-    # :ditto:
-    def verbs? : ::Array(String)?
-      self.["verbs"]?.as(::Array(String)?)
-    end
-
-    # :ditto:
-    def verbs=(value : ::Array(String))
-      self.["verbs"] = value
-    end
-
-    # version is the preferred version of the resource.  Empty implies the version of the containing resource list For subresources, this may have a different value, for example: v1 (while inside a v1beta1 version of the core resource's group)".
-    def version : String?
-      self.["version"].as(String?)
-    end
-
-    # :ditto:
-    def version! : String
-      self.["version"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def version? : String?
-      self.["version"]?.as(String?)
-    end
-
-    # :ditto:
-    def version=(value : String?)
-      self.["version"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "categories", accessor: "categories", nilable: true, read_only: false, default: nil, kind: ::Array(String) },
-        { key: "group", accessor: "group", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "kind", accessor: "kind", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "name", accessor: "name", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "namespaced", accessor: "namespaced", nilable: false, read_only: false, default: nil, kind: ::Bool },
-        { key: "shortNames", accessor: "short_names", nilable: true, read_only: false, default: nil, kind: ::Array(String) },
-        { key: "singularName", accessor: "singular_name", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "storageVersionHash", accessor: "storage_version_hash", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "verbs", accessor: "verbs", nilable: false, read_only: false, default: nil, kind: ::Array(String) },
-        { key: "version", accessor: "version", nilable: true, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "categories", accessor: "categories", nilable: true, read_only: false, default: nil, kind: ::Array(String)},
+      {key: "group", accessor: "group", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "kind", accessor: "kind", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "name", accessor: "name", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "namespaced", accessor: "namespaced", nilable: false, read_only: false, default: nil, kind: ::Bool},
+      {key: "shortNames", accessor: "short_names", nilable: true, read_only: false, default: nil, kind: ::Array(String)},
+      {key: "singularName", accessor: "singular_name", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "storageVersionHash", accessor: "storage_version_hash", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "verbs", accessor: "verbs", nilable: false, read_only: false, default: nil, kind: ::Array(String)},
+      {key: "version", accessor: "version", nilable: true, read_only: false, default: nil, kind: String},
+    ])
   end
 end

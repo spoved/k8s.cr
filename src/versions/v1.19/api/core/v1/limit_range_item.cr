@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def default? : ::Hash(String, ::Int32 | ::String)?
     # :ditto:
-    abstract def default=(value : ::Hash(String, ::Int32 | ::String)?)
+    abstract def default=(value : ::Hash(String, ::Int32 | ::String))
     # DefaultRequest is the default resource requirement request value by resource name if resource request is omitted.
     abstract def default_request : ::Hash(String, ::Int32 | ::String)?
     # :ditto:
@@ -23,7 +23,7 @@ module K8S
     # :ditto:
     abstract def default_request? : ::Hash(String, ::Int32 | ::String)?
     # :ditto:
-    abstract def default_request=(value : ::Hash(String, ::Int32 | ::String)?)
+    abstract def default_request=(value : ::Hash(String, ::Int32 | ::String))
     # Max usage constraints on this kind by resource name.
     abstract def max : ::Hash(String, ::Int32 | ::String)?
     # :ditto:
@@ -31,7 +31,7 @@ module K8S
     # :ditto:
     abstract def max? : ::Hash(String, ::Int32 | ::String)?
     # :ditto:
-    abstract def max=(value : ::Hash(String, ::Int32 | ::String)?)
+    abstract def max=(value : ::Hash(String, ::Int32 | ::String))
     # MaxLimitRequestRatio if specified, the named resource must have a request and limit that are both non-zero where limit divided by request is less than or equal to the enumerated value; this represents the max burst for the named resource.
     abstract def max_limit_request_ratio : ::Hash(String, ::Int32 | ::String)?
     # :ditto:
@@ -39,7 +39,7 @@ module K8S
     # :ditto:
     abstract def max_limit_request_ratio? : ::Hash(String, ::Int32 | ::String)?
     # :ditto:
-    abstract def max_limit_request_ratio=(value : ::Hash(String, ::Int32 | ::String)?)
+    abstract def max_limit_request_ratio=(value : ::Hash(String, ::Int32 | ::String))
     # Min usage constraints on this kind by resource name.
     abstract def min : ::Hash(String, ::Int32 | ::String)?
     # :ditto:
@@ -47,9 +47,9 @@ module K8S
     # :ditto:
     abstract def min? : ::Hash(String, ::Int32 | ::String)?
     # :ditto:
-    abstract def min=(value : ::Hash(String, ::Int32 | ::String)?)
+    abstract def min=(value : ::Hash(String, ::Int32 | ::String))
     # Type of resource that this limit applies to.
-    abstract def type : String
+    abstract def type : String?
     # :ditto:
     abstract def type! : String
     # :ditto:
@@ -69,136 +69,30 @@ module K8S
   )]
   class Api::Core::V1::LimitRangeItem < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::LimitRangeItem
+    k8s_object_accessor("default", default : ::Hash(String, ::Int32 | ::String), true, false, "Default resource requirement limit value by resource name if resource limit is omitted.")
+    k8s_object_accessor("defaultRequest", default_request : ::Hash(String, ::Int32 | ::String), true, false, "DefaultRequest is the default resource requirement request value by resource name if resource request is omitted.")
+    k8s_object_accessor("max", max : ::Hash(String, ::Int32 | ::String), true, false, "Max usage constraints on this kind by resource name.")
+    k8s_object_accessor("maxLimitRequestRatio", max_limit_request_ratio : ::Hash(String, ::Int32 | ::String), true, false, "MaxLimitRequestRatio if specified, the named resource must have a request and limit that are both non-zero where limit divided by request is less than or equal to the enumerated value; this represents the max burst for the named resource.")
+    k8s_object_accessor("min", min : ::Hash(String, ::Int32 | ::String), true, false, "Min usage constraints on this kind by resource name.")
+    k8s_object_accessor("type", type : String, false, false, "Type of resource that this limit applies to.")
 
-    # Default resource requirement limit value by resource name if resource limit is omitted.
-    def default : ::Hash(String, ::Int32 | ::String)?
-      self.["default"].as(::Hash(String, ::Int32 | ::String)?)
+    def initialize(*, default : ::Hash(String, ::Int32 | ::String)? = nil, default_request : ::Hash(String, ::Int32 | ::String)? = nil, max : ::Hash(String, ::Int32 | ::String)? = nil, max_limit_request_ratio : ::Hash(String, ::Int32 | ::String)? = nil, min : ::Hash(String, ::Int32 | ::String)? = nil, type : String? = nil)
+      super()
+      self.["default"] = default
+      self.["defaultRequest"] = default_request
+      self.["max"] = max
+      self.["maxLimitRequestRatio"] = max_limit_request_ratio
+      self.["min"] = min
+      self.["type"] = type
     end
 
-    # :ditto:
-    def default! : ::Hash(String, ::Int32 | ::String)
-      self.["default"].as(::Hash(String, ::Int32 | ::String)?).not_nil!
-    end
-
-    # :ditto:
-    def default? : ::Hash(String, ::Int32 | ::String)?
-      self.["default"]?.as(::Hash(String, ::Int32 | ::String)?)
-    end
-
-    # :ditto:
-    def default=(value : ::Hash(String, ::Int32 | ::String)?)
-      self.["default"] = value
-    end
-
-    # DefaultRequest is the default resource requirement request value by resource name if resource request is omitted.
-    def default_request : ::Hash(String, ::Int32 | ::String)?
-      self.["defaultRequest"].as(::Hash(String, ::Int32 | ::String)?)
-    end
-
-    # :ditto:
-    def default_request! : ::Hash(String, ::Int32 | ::String)
-      self.["defaultRequest"].as(::Hash(String, ::Int32 | ::String)?).not_nil!
-    end
-
-    # :ditto:
-    def default_request? : ::Hash(String, ::Int32 | ::String)?
-      self.["defaultRequest"]?.as(::Hash(String, ::Int32 | ::String)?)
-    end
-
-    # :ditto:
-    def default_request=(value : ::Hash(String, ::Int32 | ::String)?)
-      self.["defaultRequest"] = value
-    end
-
-    # Max usage constraints on this kind by resource name.
-    def max : ::Hash(String, ::Int32 | ::String)?
-      self.["max"].as(::Hash(String, ::Int32 | ::String)?)
-    end
-
-    # :ditto:
-    def max! : ::Hash(String, ::Int32 | ::String)
-      self.["max"].as(::Hash(String, ::Int32 | ::String)?).not_nil!
-    end
-
-    # :ditto:
-    def max? : ::Hash(String, ::Int32 | ::String)?
-      self.["max"]?.as(::Hash(String, ::Int32 | ::String)?)
-    end
-
-    # :ditto:
-    def max=(value : ::Hash(String, ::Int32 | ::String)?)
-      self.["max"] = value
-    end
-
-    # MaxLimitRequestRatio if specified, the named resource must have a request and limit that are both non-zero where limit divided by request is less than or equal to the enumerated value; this represents the max burst for the named resource.
-    def max_limit_request_ratio : ::Hash(String, ::Int32 | ::String)?
-      self.["maxLimitRequestRatio"].as(::Hash(String, ::Int32 | ::String)?)
-    end
-
-    # :ditto:
-    def max_limit_request_ratio! : ::Hash(String, ::Int32 | ::String)
-      self.["maxLimitRequestRatio"].as(::Hash(String, ::Int32 | ::String)?).not_nil!
-    end
-
-    # :ditto:
-    def max_limit_request_ratio? : ::Hash(String, ::Int32 | ::String)?
-      self.["maxLimitRequestRatio"]?.as(::Hash(String, ::Int32 | ::String)?)
-    end
-
-    # :ditto:
-    def max_limit_request_ratio=(value : ::Hash(String, ::Int32 | ::String)?)
-      self.["maxLimitRequestRatio"] = value
-    end
-
-    # Min usage constraints on this kind by resource name.
-    def min : ::Hash(String, ::Int32 | ::String)?
-      self.["min"].as(::Hash(String, ::Int32 | ::String)?)
-    end
-
-    # :ditto:
-    def min! : ::Hash(String, ::Int32 | ::String)
-      self.["min"].as(::Hash(String, ::Int32 | ::String)?).not_nil!
-    end
-
-    # :ditto:
-    def min? : ::Hash(String, ::Int32 | ::String)?
-      self.["min"]?.as(::Hash(String, ::Int32 | ::String)?)
-    end
-
-    # :ditto:
-    def min=(value : ::Hash(String, ::Int32 | ::String)?)
-      self.["min"] = value
-    end
-
-    # Type of resource that this limit applies to.
-    def type : String
-      self.["type"].as(String)
-    end
-
-    # :ditto:
-    def type! : String
-      self.["type"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def type? : String?
-      self.["type"]?.as(String?)
-    end
-
-    # :ditto:
-    def type=(value : String)
-      self.["type"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "default", accessor: "default", nilable: true, read_only: false, default: nil, kind: ::Union(::Hash(String, ::Int32 | ::String)) },
-        { key: "defaultRequest", accessor: "default_request", nilable: true, read_only: false, default: nil, kind: ::Union(::Hash(String, ::Int32 | ::String)) },
-        { key: "max", accessor: "max", nilable: true, read_only: false, default: nil, kind: ::Union(::Hash(String, ::Int32 | ::String)) },
-        { key: "maxLimitRequestRatio", accessor: "max_limit_request_ratio", nilable: true, read_only: false, default: nil, kind: ::Union(::Hash(String, ::Int32 | ::String)) },
-        { key: "min", accessor: "min", nilable: true, read_only: false, default: nil, kind: ::Union(::Hash(String, ::Int32 | ::String)) },
-        { key: "type", accessor: "type", nilable: false, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "default", accessor: "default", nilable: true, read_only: false, default: nil, kind: ::Union(::Hash(String, ::Int32 | ::String))},
+      {key: "defaultRequest", accessor: "default_request", nilable: true, read_only: false, default: nil, kind: ::Union(::Hash(String, ::Int32 | ::String))},
+      {key: "max", accessor: "max", nilable: true, read_only: false, default: nil, kind: ::Union(::Hash(String, ::Int32 | ::String))},
+      {key: "maxLimitRequestRatio", accessor: "max_limit_request_ratio", nilable: true, read_only: false, default: nil, kind: ::Union(::Hash(String, ::Int32 | ::String))},
+      {key: "min", accessor: "min", nilable: true, read_only: false, default: nil, kind: ::Union(::Hash(String, ::Int32 | ::String))},
+      {key: "type", accessor: "type", nilable: false, read_only: false, default: nil, kind: String},
+    ])
   end
 end

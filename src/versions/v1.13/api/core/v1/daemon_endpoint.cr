@@ -9,7 +9,7 @@ module K8S
   # Namespace holding the types for `Api::Core::V1::DaemonEndpoint`.
   module Types::Api::Core::V1::DaemonEndpoint
     # Port number of the given endpoint.
-    abstract def port : Int32
+    abstract def port : Int32?
     # :ditto:
     abstract def port! : Int32
     # :ditto:
@@ -24,31 +24,15 @@ module K8S
   )]
   class Api::Core::V1::DaemonEndpoint < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::DaemonEndpoint
+    k8s_object_accessor("Port", port : Int32, false, false, "Port number of the given endpoint.")
 
-    # Port number of the given endpoint.
-    def port : Int32
-      self.["Port"].as(Int32)
+    def initialize(*, port : Int32? = nil)
+      super()
+      self.["Port"] = port
     end
 
-    # :ditto:
-    def port! : Int32
-      self.["Port"].as(Int32).not_nil!
-    end
-
-    # :ditto:
-    def port? : Int32?
-      self.["Port"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def port=(value : Int32)
-      self.["Port"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "Port", accessor: "port", nilable: false, read_only: false, default: nil, kind: Int32 },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "Port", accessor: "port", nilable: false, read_only: false, default: nil, kind: Int32},
+    ])
   end
 end

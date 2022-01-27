@@ -17,7 +17,7 @@ module K8S
     # :ditto:
     abstract def conditions? : ::Array(::K8S::KubeAggregator::Apis::Apiregistration::V1::APIServiceCondition)?
     # :ditto:
-    abstract def conditions=(value : ::Array(::K8S::KubeAggregator::Apis::Apiregistration::V1::APIServiceCondition)?)
+    abstract def conditions=(value : ::Array(::K8S::KubeAggregator::Apis::Apiregistration::V1::APIServiceCondition))
   end
 
   # APIServiceStatus contains derived information about an API server
@@ -26,31 +26,15 @@ module K8S
   )]
   class KubeAggregator::Apis::Apiregistration::V1::APIServiceStatus < ::K8S::GenericObject
     include ::K8S::Types::KubeAggregator::Apis::Apiregistration::V1::APIServiceStatus
+    k8s_object_accessor("conditions", conditions : ::Array(::K8S::KubeAggregator::Apis::Apiregistration::V1::APIServiceCondition), true, false, "Current service state of apiService.")
 
-    # Current service state of apiService.
-    def conditions : ::Array(::K8S::KubeAggregator::Apis::Apiregistration::V1::APIServiceCondition)?
-      self.["conditions"].as(::Array(::K8S::KubeAggregator::Apis::Apiregistration::V1::APIServiceCondition)?)
+    def initialize(*, conditions : ::Array(::K8S::KubeAggregator::Apis::Apiregistration::V1::APIServiceCondition)? = nil)
+      super()
+      self.["conditions"] = conditions
     end
 
-    # :ditto:
-    def conditions! : ::Array(::K8S::KubeAggregator::Apis::Apiregistration::V1::APIServiceCondition)
-      self.["conditions"].as(::Array(::K8S::KubeAggregator::Apis::Apiregistration::V1::APIServiceCondition)?).not_nil!
-    end
-
-    # :ditto:
-    def conditions? : ::Array(::K8S::KubeAggregator::Apis::Apiregistration::V1::APIServiceCondition)?
-      self.["conditions"]?.as(::Array(::K8S::KubeAggregator::Apis::Apiregistration::V1::APIServiceCondition)?)
-    end
-
-    # :ditto:
-    def conditions=(value : ::Array(::K8S::KubeAggregator::Apis::Apiregistration::V1::APIServiceCondition)?)
-      self.["conditions"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "conditions", accessor: "conditions", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::KubeAggregator::Apis::Apiregistration::V1::APIServiceCondition) },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "conditions", accessor: "conditions", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::KubeAggregator::Apis::Apiregistration::V1::APIServiceCondition)},
+    ])
   end
 end

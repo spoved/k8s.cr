@@ -15,9 +15,9 @@ module K8S
     # :ditto:
     abstract def api_version? : String?
     # :ditto:
-    abstract def api_version=(value : String?)
+    abstract def api_version=(value : String)
     # Path of the field to select in the specified API version.
-    abstract def field_path : String
+    abstract def field_path : String?
     # :ditto:
     abstract def field_path! : String
     # :ditto:
@@ -33,52 +33,18 @@ module K8S
   )]
   class Api::Core::V1::ObjectFieldSelector < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::ObjectFieldSelector
+    k8s_object_accessor("apiVersion", api_version : String, true, false, "Version of the schema the FieldPath is written in terms of, defaults to \"v1\".")
+    k8s_object_accessor("fieldPath", field_path : String, false, false, "Path of the field to select in the specified API version.")
 
-    # Version of the schema the FieldPath is written in terms of, defaults to "v1".
-    def api_version : String?
-      self.["apiVersion"].as(String?)
+    def initialize(*, api_version : String? = nil, field_path : String? = nil)
+      super()
+      self.["apiVersion"] = api_version
+      self.["fieldPath"] = field_path
     end
 
-    # :ditto:
-    def api_version! : String
-      self.["apiVersion"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def api_version? : String?
-      self.["apiVersion"]?.as(String?)
-    end
-
-    # :ditto:
-    def api_version=(value : String?)
-      self.["apiVersion"] = value
-    end
-
-    # Path of the field to select in the specified API version.
-    def field_path : String
-      self.["fieldPath"].as(String)
-    end
-
-    # :ditto:
-    def field_path! : String
-      self.["fieldPath"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def field_path? : String?
-      self.["fieldPath"]?.as(String?)
-    end
-
-    # :ditto:
-    def field_path=(value : String)
-      self.["fieldPath"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "apiVersion", accessor: "api_version", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "fieldPath", accessor: "field_path", nilable: false, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "apiVersion", accessor: "api_version", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "fieldPath", accessor: "field_path", nilable: false, read_only: false, default: nil, kind: String},
+    ])
   end
 end

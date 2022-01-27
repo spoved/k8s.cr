@@ -19,9 +19,9 @@ module K8S
     # :ditto:
     abstract def behavior? : ::K8S::Api::Autoscaling::V2::HorizontalPodAutoscalerBehavior?
     # :ditto:
-    abstract def behavior=(value : ::K8S::Api::Autoscaling::V2::HorizontalPodAutoscalerBehavior?)
+    abstract def behavior=(value : ::K8S::Api::Autoscaling::V2::HorizontalPodAutoscalerBehavior)
     # maxReplicas is the upper limit for the number of replicas to which the autoscaler can scale up. It cannot be less that minReplicas.
-    abstract def max_replicas : Int32
+    abstract def max_replicas : Int32?
     # :ditto:
     abstract def max_replicas! : Int32
     # :ditto:
@@ -35,7 +35,7 @@ module K8S
     # :ditto:
     abstract def metrics? : ::Array(::K8S::Api::Autoscaling::V2::MetricSpec)?
     # :ditto:
-    abstract def metrics=(value : ::Array(::K8S::Api::Autoscaling::V2::MetricSpec)?)
+    abstract def metrics=(value : ::Array(::K8S::Api::Autoscaling::V2::MetricSpec))
     # minReplicas is the lower limit for the number of replicas to which the autoscaler can scale down.  It defaults to 1 pod.  minReplicas is allowed to be 0 if the alpha feature gate HPAScaleToZero is enabled and at least one Object or External metric is configured.  Scaling is active as long as at least one metric value is available.
     abstract def min_replicas : Int32?
     # :ditto:
@@ -43,9 +43,9 @@ module K8S
     # :ditto:
     abstract def min_replicas? : Int32?
     # :ditto:
-    abstract def min_replicas=(value : Int32?)
+    abstract def min_replicas=(value : Int32)
     # scaleTargetRef points to the target resource to scale, and is used to the pods for which metrics should be collected, as well as to actually change the replica count.
-    abstract def scale_target_ref : ::K8S::Api::Autoscaling::V2::CrossVersionObjectReference
+    abstract def scale_target_ref : ::K8S::Api::Autoscaling::V2::CrossVersionObjectReference?
     # :ditto:
     abstract def scale_target_ref! : ::K8S::Api::Autoscaling::V2::CrossVersionObjectReference
     # :ditto:
@@ -64,115 +64,27 @@ module K8S
   )]
   class Api::Autoscaling::V2::HorizontalPodAutoscalerSpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Autoscaling::V2::HorizontalPodAutoscalerSpec
+    k8s_object_accessor("behavior", behavior : ::K8S::Api::Autoscaling::V2::HorizontalPodAutoscalerBehavior, true, false, "behavior configures the scaling behavior of the target in both Up and Down directions (scaleUp and scaleDown fields respectively). If not set, the default HPAScalingRules for scale up and scale down are used.")
+    k8s_object_accessor("maxReplicas", max_replicas : Int32, false, false, "maxReplicas is the upper limit for the number of replicas to which the autoscaler can scale up. It cannot be less that minReplicas.")
+    k8s_object_accessor("metrics", metrics : ::Array(::K8S::Api::Autoscaling::V2::MetricSpec), true, false, "metrics contains the specifications for which to use to calculate the desired replica count (the maximum replica count across all metrics will be used).  The desired replica count is calculated multiplying the ratio between the target value and the current value by the current number of pods.  Ergo, metrics used must decrease as the pod count is increased, and vice-versa.  See the individual metric source types for more information about how each type of metric must respond. If not set, the default metric will be set to 80% average CPU utilization.")
+    k8s_object_accessor("minReplicas", min_replicas : Int32, true, false, "minReplicas is the lower limit for the number of replicas to which the autoscaler can scale down.  It defaults to 1 pod.  minReplicas is allowed to be 0 if the alpha feature gate HPAScaleToZero is enabled and at least one Object or External metric is configured.  Scaling is active as long as at least one metric value is available.")
+    k8s_object_accessor("scaleTargetRef", scale_target_ref : ::K8S::Api::Autoscaling::V2::CrossVersionObjectReference, false, false, "scaleTargetRef points to the target resource to scale, and is used to the pods for which metrics should be collected, as well as to actually change the replica count.")
 
-    # behavior configures the scaling behavior of the target in both Up and Down directions (scaleUp and scaleDown fields respectively). If not set, the default HPAScalingRules for scale up and scale down are used.
-    def behavior : ::K8S::Api::Autoscaling::V2::HorizontalPodAutoscalerBehavior?
-      self.["behavior"].as(::K8S::Api::Autoscaling::V2::HorizontalPodAutoscalerBehavior?)
+    def initialize(*, behavior : ::K8S::Api::Autoscaling::V2::HorizontalPodAutoscalerBehavior? = nil, max_replicas : Int32? = nil, metrics : ::Array(::K8S::Api::Autoscaling::V2::MetricSpec)? = nil, min_replicas : Int32? = nil, scale_target_ref : ::K8S::Api::Autoscaling::V2::CrossVersionObjectReference? = nil)
+      super()
+      self.["behavior"] = behavior
+      self.["maxReplicas"] = max_replicas
+      self.["metrics"] = metrics
+      self.["minReplicas"] = min_replicas
+      self.["scaleTargetRef"] = scale_target_ref
     end
 
-    # :ditto:
-    def behavior! : ::K8S::Api::Autoscaling::V2::HorizontalPodAutoscalerBehavior
-      self.["behavior"].as(::K8S::Api::Autoscaling::V2::HorizontalPodAutoscalerBehavior?).not_nil!
-    end
-
-    # :ditto:
-    def behavior? : ::K8S::Api::Autoscaling::V2::HorizontalPodAutoscalerBehavior?
-      self.["behavior"]?.as(::K8S::Api::Autoscaling::V2::HorizontalPodAutoscalerBehavior?)
-    end
-
-    # :ditto:
-    def behavior=(value : ::K8S::Api::Autoscaling::V2::HorizontalPodAutoscalerBehavior?)
-      self.["behavior"] = value
-    end
-
-    # maxReplicas is the upper limit for the number of replicas to which the autoscaler can scale up. It cannot be less that minReplicas.
-    def max_replicas : Int32
-      self.["maxReplicas"].as(Int32)
-    end
-
-    # :ditto:
-    def max_replicas! : Int32
-      self.["maxReplicas"].as(Int32).not_nil!
-    end
-
-    # :ditto:
-    def max_replicas? : Int32?
-      self.["maxReplicas"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def max_replicas=(value : Int32)
-      self.["maxReplicas"] = value
-    end
-
-    # metrics contains the specifications for which to use to calculate the desired replica count (the maximum replica count across all metrics will be used).  The desired replica count is calculated multiplying the ratio between the target value and the current value by the current number of pods.  Ergo, metrics used must decrease as the pod count is increased, and vice-versa.  See the individual metric source types for more information about how each type of metric must respond. If not set, the default metric will be set to 80% average CPU utilization.
-    def metrics : ::Array(::K8S::Api::Autoscaling::V2::MetricSpec)?
-      self.["metrics"].as(::Array(::K8S::Api::Autoscaling::V2::MetricSpec)?)
-    end
-
-    # :ditto:
-    def metrics! : ::Array(::K8S::Api::Autoscaling::V2::MetricSpec)
-      self.["metrics"].as(::Array(::K8S::Api::Autoscaling::V2::MetricSpec)?).not_nil!
-    end
-
-    # :ditto:
-    def metrics? : ::Array(::K8S::Api::Autoscaling::V2::MetricSpec)?
-      self.["metrics"]?.as(::Array(::K8S::Api::Autoscaling::V2::MetricSpec)?)
-    end
-
-    # :ditto:
-    def metrics=(value : ::Array(::K8S::Api::Autoscaling::V2::MetricSpec)?)
-      self.["metrics"] = value
-    end
-
-    # minReplicas is the lower limit for the number of replicas to which the autoscaler can scale down.  It defaults to 1 pod.  minReplicas is allowed to be 0 if the alpha feature gate HPAScaleToZero is enabled and at least one Object or External metric is configured.  Scaling is active as long as at least one metric value is available.
-    def min_replicas : Int32?
-      self.["minReplicas"].as(Int32?)
-    end
-
-    # :ditto:
-    def min_replicas! : Int32
-      self.["minReplicas"].as(Int32?).not_nil!
-    end
-
-    # :ditto:
-    def min_replicas? : Int32?
-      self.["minReplicas"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def min_replicas=(value : Int32?)
-      self.["minReplicas"] = value
-    end
-
-    # scaleTargetRef points to the target resource to scale, and is used to the pods for which metrics should be collected, as well as to actually change the replica count.
-    def scale_target_ref : ::K8S::Api::Autoscaling::V2::CrossVersionObjectReference
-      self.["scaleTargetRef"].as(::K8S::Api::Autoscaling::V2::CrossVersionObjectReference)
-    end
-
-    # :ditto:
-    def scale_target_ref! : ::K8S::Api::Autoscaling::V2::CrossVersionObjectReference
-      self.["scaleTargetRef"].as(::K8S::Api::Autoscaling::V2::CrossVersionObjectReference).not_nil!
-    end
-
-    # :ditto:
-    def scale_target_ref? : ::K8S::Api::Autoscaling::V2::CrossVersionObjectReference?
-      self.["scaleTargetRef"]?.as(::K8S::Api::Autoscaling::V2::CrossVersionObjectReference?)
-    end
-
-    # :ditto:
-    def scale_target_ref=(value : ::K8S::Api::Autoscaling::V2::CrossVersionObjectReference)
-      self.["scaleTargetRef"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "behavior", accessor: "behavior", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Autoscaling::V2::HorizontalPodAutoscalerBehavior },
-        { key: "maxReplicas", accessor: "max_replicas", nilable: false, read_only: false, default: nil, kind: Int32 },
-        { key: "metrics", accessor: "metrics", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Autoscaling::V2::MetricSpec) },
-        { key: "minReplicas", accessor: "min_replicas", nilable: true, read_only: false, default: nil, kind: Int32 },
-        { key: "scaleTargetRef", accessor: "scale_target_ref", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Autoscaling::V2::CrossVersionObjectReference },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "behavior", accessor: "behavior", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Autoscaling::V2::HorizontalPodAutoscalerBehavior},
+      {key: "maxReplicas", accessor: "max_replicas", nilable: false, read_only: false, default: nil, kind: Int32},
+      {key: "metrics", accessor: "metrics", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Autoscaling::V2::MetricSpec)},
+      {key: "minReplicas", accessor: "min_replicas", nilable: true, read_only: false, default: nil, kind: Int32},
+      {key: "scaleTargetRef", accessor: "scale_target_ref", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Autoscaling::V2::CrossVersionObjectReference},
+    ])
   end
 end

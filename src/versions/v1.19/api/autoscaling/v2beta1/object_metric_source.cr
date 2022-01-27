@@ -18,9 +18,9 @@ module K8S
     # :ditto:
     abstract def average_value? : ::Int32 | ::String?
     # :ditto:
-    abstract def average_value=(value : ::Int32 | ::String?)
+    abstract def average_value=(value : ::Int32 | ::String)
     # metricName is the name of the metric in question.
-    abstract def metric_name : String
+    abstract def metric_name : String?
     # :ditto:
     abstract def metric_name! : String
     # :ditto:
@@ -34,9 +34,9 @@ module K8S
     # :ditto:
     abstract def selector? : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?
     # :ditto:
-    abstract def selector=(value : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?)
+    abstract def selector=(value : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector)
     # target is the described Kubernetes object.
-    abstract def target : ::K8S::Api::Autoscaling::V2beta1::CrossVersionObjectReference
+    abstract def target : ::K8S::Api::Autoscaling::V2beta1::CrossVersionObjectReference?
     # :ditto:
     abstract def target! : ::K8S::Api::Autoscaling::V2beta1::CrossVersionObjectReference
     # :ditto:
@@ -44,7 +44,7 @@ module K8S
     # :ditto:
     abstract def target=(value : ::K8S::Api::Autoscaling::V2beta1::CrossVersionObjectReference)
     # targetValue is the target value of the metric (as a quantity).
-    abstract def target_value : ::Int32 | ::String
+    abstract def target_value : ::Int32 | ::String?
     # :ditto:
     abstract def target_value! : ::Int32 | ::String
     # :ditto:
@@ -63,115 +63,27 @@ module K8S
   )]
   class Api::Autoscaling::V2beta1::ObjectMetricSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Autoscaling::V2beta1::ObjectMetricSource
+    k8s_object_accessor("averageValue", average_value : ::Int32 | ::String, true, false, "averageValue is the target value of the average of the metric across all relevant pods (as a quantity)")
+    k8s_object_accessor("metricName", metric_name : String, false, false, "metricName is the name of the metric in question.")
+    k8s_object_accessor("selector", selector : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector, true, false, "selector is the string-encoded form of a standard kubernetes label selector for the given metric When set, it is passed as an additional parameter to the metrics server for more specific metrics scoping When unset, just the metricName will be used to gather metrics.")
+    k8s_object_accessor("target", target : ::K8S::Api::Autoscaling::V2beta1::CrossVersionObjectReference, false, false, "target is the described Kubernetes object.")
+    k8s_object_accessor("targetValue", target_value : ::Int32 | ::String, false, false, "targetValue is the target value of the metric (as a quantity).")
 
-    # averageValue is the target value of the average of the metric across all relevant pods (as a quantity)
-    def average_value : ::Int32 | ::String?
-      self.["averageValue"].as(::Int32 | ::String?)
+    def initialize(*, average_value : ::Int32 | ::String? = nil, metric_name : String? = nil, selector : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector? = nil, target : ::K8S::Api::Autoscaling::V2beta1::CrossVersionObjectReference? = nil, target_value : ::Int32 | ::String? = nil)
+      super()
+      self.["averageValue"] = average_value
+      self.["metricName"] = metric_name
+      self.["selector"] = selector
+      self.["target"] = target
+      self.["targetValue"] = target_value
     end
 
-    # :ditto:
-    def average_value! : ::Int32 | ::String
-      self.["averageValue"].as(::Int32 | ::String?).not_nil!
-    end
-
-    # :ditto:
-    def average_value? : ::Int32 | ::String?
-      self.["averageValue"]?.as(::Int32 | ::String?)
-    end
-
-    # :ditto:
-    def average_value=(value : ::Int32 | ::String?)
-      self.["averageValue"] = value
-    end
-
-    # metricName is the name of the metric in question.
-    def metric_name : String
-      self.["metricName"].as(String)
-    end
-
-    # :ditto:
-    def metric_name! : String
-      self.["metricName"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def metric_name? : String?
-      self.["metricName"]?.as(String?)
-    end
-
-    # :ditto:
-    def metric_name=(value : String)
-      self.["metricName"] = value
-    end
-
-    # selector is the string-encoded form of a standard kubernetes label selector for the given metric When set, it is passed as an additional parameter to the metrics server for more specific metrics scoping When unset, just the metricName will be used to gather metrics.
-    def selector : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?
-      self.["selector"].as(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?)
-    end
-
-    # :ditto:
-    def selector! : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector
-      self.["selector"].as(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?).not_nil!
-    end
-
-    # :ditto:
-    def selector? : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?
-      self.["selector"]?.as(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?)
-    end
-
-    # :ditto:
-    def selector=(value : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?)
-      self.["selector"] = value
-    end
-
-    # target is the described Kubernetes object.
-    def target : ::K8S::Api::Autoscaling::V2beta1::CrossVersionObjectReference
-      self.["target"].as(::K8S::Api::Autoscaling::V2beta1::CrossVersionObjectReference)
-    end
-
-    # :ditto:
-    def target! : ::K8S::Api::Autoscaling::V2beta1::CrossVersionObjectReference
-      self.["target"].as(::K8S::Api::Autoscaling::V2beta1::CrossVersionObjectReference).not_nil!
-    end
-
-    # :ditto:
-    def target? : ::K8S::Api::Autoscaling::V2beta1::CrossVersionObjectReference?
-      self.["target"]?.as(::K8S::Api::Autoscaling::V2beta1::CrossVersionObjectReference?)
-    end
-
-    # :ditto:
-    def target=(value : ::K8S::Api::Autoscaling::V2beta1::CrossVersionObjectReference)
-      self.["target"] = value
-    end
-
-    # targetValue is the target value of the metric (as a quantity).
-    def target_value : ::Int32 | ::String
-      self.["targetValue"].as(::Int32 | ::String)
-    end
-
-    # :ditto:
-    def target_value! : ::Int32 | ::String
-      self.["targetValue"].as(::Int32 | ::String).not_nil!
-    end
-
-    # :ditto:
-    def target_value? : ::Int32 | ::String?
-      self.["targetValue"]?.as(::Int32 | ::String?)
-    end
-
-    # :ditto:
-    def target_value=(value : ::Int32 | ::String)
-      self.["targetValue"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "averageValue", accessor: "average_value", nilable: true, read_only: false, default: nil, kind: ::Union(::Int32 | ::String) },
-        { key: "metricName", accessor: "metric_name", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "selector", accessor: "selector", nilable: true, read_only: false, default: nil, kind: ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector },
-        { key: "target", accessor: "target", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Autoscaling::V2beta1::CrossVersionObjectReference },
-        { key: "targetValue", accessor: "target_value", nilable: false, read_only: false, default: nil, kind: ::Union(::Int32 | ::String) },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "averageValue", accessor: "average_value", nilable: true, read_only: false, default: nil, kind: ::Union(::Int32 | ::String)},
+      {key: "metricName", accessor: "metric_name", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "selector", accessor: "selector", nilable: true, read_only: false, default: nil, kind: ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector},
+      {key: "target", accessor: "target", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Autoscaling::V2beta1::CrossVersionObjectReference},
+      {key: "targetValue", accessor: "target_value", nilable: false, read_only: false, default: nil, kind: ::Union(::Int32 | ::String)},
+    ])
   end
 end

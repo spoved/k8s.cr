@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def description? : String?
     # :ditto:
-    abstract def description=(value : String?)
+    abstract def description=(value : String)
     #
     abstract def url : String?
     # :ditto:
@@ -23,7 +23,7 @@ module K8S
     # :ditto:
     abstract def url? : String?
     # :ditto:
-    abstract def url=(value : String?)
+    abstract def url=(value : String)
   end
 
   # ExternalDocumentation allows referencing an external resource for extended documentation.
@@ -33,52 +33,18 @@ module K8S
   )]
   class ApiextensionsApiserver::Apis::Apiextensions::V1::ExternalDocumentation < ::K8S::GenericObject
     include ::K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1::ExternalDocumentation
+    k8s_object_accessor("description", description : String, true, false, nil)
+    k8s_object_accessor("url", url : String, true, false, nil)
 
-    #
-    def description : String?
-      self.["description"].as(String?)
+    def initialize(*, description : String? = nil, url : String? = nil)
+      super()
+      self.["description"] = description
+      self.["url"] = url
     end
 
-    # :ditto:
-    def description! : String
-      self.["description"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def description? : String?
-      self.["description"]?.as(String?)
-    end
-
-    # :ditto:
-    def description=(value : String?)
-      self.["description"] = value
-    end
-
-    #
-    def url : String?
-      self.["url"].as(String?)
-    end
-
-    # :ditto:
-    def url! : String
-      self.["url"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def url? : String?
-      self.["url"]?.as(String?)
-    end
-
-    # :ditto:
-    def url=(value : String?)
-      self.["url"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "description", accessor: "description", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "url", accessor: "url", nilable: true, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "description", accessor: "description", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "url", accessor: "url", nilable: true, read_only: false, default: nil, kind: String},
+    ])
   end
 end

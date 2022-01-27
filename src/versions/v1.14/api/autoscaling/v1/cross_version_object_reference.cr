@@ -15,9 +15,9 @@ module K8S
     # :ditto:
     abstract def api_version? : String?
     # :ditto:
-    abstract def api_version=(value : String?)
+    abstract def api_version=(value : String)
     # Kind of the referent; More info: [[https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds"](https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds")](https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds"](https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds"))
-    abstract def kind : String
+    abstract def kind : String?
     # :ditto:
     abstract def kind! : String
     # :ditto:
@@ -25,7 +25,7 @@ module K8S
     # :ditto:
     abstract def kind=(value : String)
     # Name of the referent; More info: [[http://kubernetes.io/docs/user-guide/identifiers#names](http://kubernetes.io/docs/user-guide/identifiers#names)](http://kubernetes.io/docs/user-guide/identifiers#names](http://kubernetes.io/docs/user-guide/identifiers#names))
-    abstract def name : String
+    abstract def name : String?
     # :ditto:
     abstract def name! : String
     # :ditto:
@@ -42,73 +42,21 @@ module K8S
   )]
   class Api::Autoscaling::V1::CrossVersionObjectReference < ::K8S::GenericObject
     include ::K8S::Types::Api::Autoscaling::V1::CrossVersionObjectReference
+    k8s_object_accessor("apiVersion", api_version : String, true, false, "API version of the referent")
+    k8s_object_accessor("kind", kind : String, false, false, "Kind of the referent; More info: [https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds\"](https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds\")")
+    k8s_object_accessor("name", name : String, false, false, "Name of the referent; More info: [http://kubernetes.io/docs/user-guide/identifiers#names](http://kubernetes.io/docs/user-guide/identifiers#names)")
 
-    # API version of the referent
-    def api_version : String?
-      self.["apiVersion"].as(String?)
+    def initialize(*, api_version : String? = nil, kind : String? = nil, name : String? = nil)
+      super()
+      self.["apiVersion"] = api_version
+      self.["kind"] = kind
+      self.["name"] = name
     end
 
-    # :ditto:
-    def api_version! : String
-      self.["apiVersion"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def api_version? : String?
-      self.["apiVersion"]?.as(String?)
-    end
-
-    # :ditto:
-    def api_version=(value : String?)
-      self.["apiVersion"] = value
-    end
-
-    # Kind of the referent; More info: [[https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds"](https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds")](https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds"](https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds"))
-    def kind : String
-      self.["kind"].as(String)
-    end
-
-    # :ditto:
-    def kind! : String
-      self.["kind"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def kind? : String?
-      self.["kind"]?.as(String?)
-    end
-
-    # :ditto:
-    def kind=(value : String)
-      self.["kind"] = value
-    end
-
-    # Name of the referent; More info: [[http://kubernetes.io/docs/user-guide/identifiers#names](http://kubernetes.io/docs/user-guide/identifiers#names)](http://kubernetes.io/docs/user-guide/identifiers#names](http://kubernetes.io/docs/user-guide/identifiers#names))
-    def name : String
-      self.["name"].as(String)
-    end
-
-    # :ditto:
-    def name! : String
-      self.["name"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def name? : String?
-      self.["name"]?.as(String?)
-    end
-
-    # :ditto:
-    def name=(value : String)
-      self.["name"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "apiVersion", accessor: "api_version", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "kind", accessor: "kind", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "name", accessor: "name", nilable: false, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "apiVersion", accessor: "api_version", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "kind", accessor: "kind", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "name", accessor: "name", nilable: false, read_only: false, default: nil, kind: String},
+    ])
   end
 end

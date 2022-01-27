@@ -17,7 +17,7 @@ module K8S
     # :ditto:
     abstract def fs_type? : String?
     # :ditto:
-    abstract def fs_type=(value : String?)
+    abstract def fs_type=(value : String)
     # Optional: Defaults to false [[(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts. More info: https://releases.k8s.io/HEAD/examples/mysql-cinder-pd/README.md]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts. More info: https://releases.k8s.io/HEAD/examples/mysql-cinder-pd/README.md)]([(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts. More info: https://releases.k8s.io/HEAD/examples/mysql-cinder-pd/README.md]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts. More info: https://releases.k8s.io/HEAD/examples/mysql-cinder-pd/README.md))
     abstract def read_only : ::Bool?
     # :ditto:
@@ -25,7 +25,7 @@ module K8S
     # :ditto:
     abstract def read_only? : ::Bool?
     # :ditto:
-    abstract def read_only=(value : ::Bool?)
+    abstract def read_only=(value : ::Bool)
     # Optional: points to a secret object containing parameters used to connect to OpenStack.
     abstract def secret_ref : ::K8S::Api::Core::V1::SecretReference?
     # :ditto:
@@ -33,9 +33,9 @@ module K8S
     # :ditto:
     abstract def secret_ref? : ::K8S::Api::Core::V1::SecretReference?
     # :ditto:
-    abstract def secret_ref=(value : ::K8S::Api::Core::V1::SecretReference?)
+    abstract def secret_ref=(value : ::K8S::Api::Core::V1::SecretReference)
     # volume id used to identify the volume in cinder More info: [[https://releases.k8s.io/HEAD/examples/mysql-cinder-pd/README.md](https://releases.k8s.io/HEAD/examples/mysql-cinder-pd/README.md)](https://releases.k8s.io/HEAD/examples/mysql-cinder-pd/README.md](https://releases.k8s.io/HEAD/examples/mysql-cinder-pd/README.md))
-    abstract def volume_id : String
+    abstract def volume_id : String?
     # :ditto:
     abstract def volume_id! : String
     # :ditto:
@@ -53,94 +53,24 @@ module K8S
   )]
   class Api::Core::V1::CinderPersistentVolumeSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::CinderPersistentVolumeSource
+    k8s_object_accessor("fsType", fs_type : String, true, false, "Filesystem type to mount. Must be a filesystem type supported by the host operating system. Examples: \"ext4\", \"xfs\", \"ntfs\". Implicitly inferred to be \"ext4\" if unspecified. More info: [https://releases.k8s.io/HEAD/examples/mysql-cinder-pd/README.md](https://releases.k8s.io/HEAD/examples/mysql-cinder-pd/README.md)")
+    k8s_object_accessor("readOnly", read_only : ::Bool, true, false, "Optional: Defaults to false [(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts. More info: https://releases.k8s.io/HEAD/examples/mysql-cinder-pd/README.md]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts. More info: https://releases.k8s.io/HEAD/examples/mysql-cinder-pd/README.md)")
+    k8s_object_accessor("secretRef", secret_ref : ::K8S::Api::Core::V1::SecretReference, true, false, "Optional: points to a secret object containing parameters used to connect to OpenStack.")
+    k8s_object_accessor("volumeID", volume_id : String, false, false, "volume id used to identify the volume in cinder More info: [https://releases.k8s.io/HEAD/examples/mysql-cinder-pd/README.md](https://releases.k8s.io/HEAD/examples/mysql-cinder-pd/README.md)")
 
-    # Filesystem type to mount. Must be a filesystem type supported by the host operating system. Examples: "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified. More info: [[https://releases.k8s.io/HEAD/examples/mysql-cinder-pd/README.md](https://releases.k8s.io/HEAD/examples/mysql-cinder-pd/README.md)](https://releases.k8s.io/HEAD/examples/mysql-cinder-pd/README.md](https://releases.k8s.io/HEAD/examples/mysql-cinder-pd/README.md))
-    def fs_type : String?
-      self.["fsType"].as(String?)
+    def initialize(*, fs_type : String? = nil, read_only : ::Bool? = nil, secret_ref : ::K8S::Api::Core::V1::SecretReference? = nil, volume_id : String? = nil)
+      super()
+      self.["fsType"] = fs_type
+      self.["readOnly"] = read_only
+      self.["secretRef"] = secret_ref
+      self.["volumeID"] = volume_id
     end
 
-    # :ditto:
-    def fs_type! : String
-      self.["fsType"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def fs_type? : String?
-      self.["fsType"]?.as(String?)
-    end
-
-    # :ditto:
-    def fs_type=(value : String?)
-      self.["fsType"] = value
-    end
-
-    # Optional: Defaults to false [[(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts. More info: https://releases.k8s.io/HEAD/examples/mysql-cinder-pd/README.md]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts. More info: https://releases.k8s.io/HEAD/examples/mysql-cinder-pd/README.md)]([(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts. More info: https://releases.k8s.io/HEAD/examples/mysql-cinder-pd/README.md]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts. More info: https://releases.k8s.io/HEAD/examples/mysql-cinder-pd/README.md))
-    def read_only : ::Bool?
-      self.["readOnly"].as(::Bool?)
-    end
-
-    # :ditto:
-    def read_only! : ::Bool
-      self.["readOnly"].as(::Bool?).not_nil!
-    end
-
-    # :ditto:
-    def read_only? : ::Bool?
-      self.["readOnly"]?.as(::Bool?)
-    end
-
-    # :ditto:
-    def read_only=(value : ::Bool?)
-      self.["readOnly"] = value
-    end
-
-    # Optional: points to a secret object containing parameters used to connect to OpenStack.
-    def secret_ref : ::K8S::Api::Core::V1::SecretReference?
-      self.["secretRef"].as(::K8S::Api::Core::V1::SecretReference?)
-    end
-
-    # :ditto:
-    def secret_ref! : ::K8S::Api::Core::V1::SecretReference
-      self.["secretRef"].as(::K8S::Api::Core::V1::SecretReference?).not_nil!
-    end
-
-    # :ditto:
-    def secret_ref? : ::K8S::Api::Core::V1::SecretReference?
-      self.["secretRef"]?.as(::K8S::Api::Core::V1::SecretReference?)
-    end
-
-    # :ditto:
-    def secret_ref=(value : ::K8S::Api::Core::V1::SecretReference?)
-      self.["secretRef"] = value
-    end
-
-    # volume id used to identify the volume in cinder More info: [[https://releases.k8s.io/HEAD/examples/mysql-cinder-pd/README.md](https://releases.k8s.io/HEAD/examples/mysql-cinder-pd/README.md)](https://releases.k8s.io/HEAD/examples/mysql-cinder-pd/README.md](https://releases.k8s.io/HEAD/examples/mysql-cinder-pd/README.md))
-    def volume_id : String
-      self.["volumeID"].as(String)
-    end
-
-    # :ditto:
-    def volume_id! : String
-      self.["volumeID"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def volume_id? : String?
-      self.["volumeID"]?.as(String?)
-    end
-
-    # :ditto:
-    def volume_id=(value : String)
-      self.["volumeID"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "fsType", accessor: "fs_type", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "readOnly", accessor: "read_only", nilable: true, read_only: false, default: nil, kind: ::Bool },
-        { key: "secretRef", accessor: "secret_ref", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::SecretReference },
-        { key: "volumeID", accessor: "volume_id", nilable: false, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "fsType", accessor: "fs_type", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "readOnly", accessor: "read_only", nilable: true, read_only: false, default: nil, kind: ::Bool},
+      {key: "secretRef", accessor: "secret_ref", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::SecretReference},
+      {key: "volumeID", accessor: "volume_id", nilable: false, read_only: false, default: nil, kind: String},
+    ])
   end
 end

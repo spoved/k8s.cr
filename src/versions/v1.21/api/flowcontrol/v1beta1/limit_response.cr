@@ -17,9 +17,9 @@ module K8S
     # :ditto:
     abstract def queuing? : ::K8S::Api::Flowcontrol::V1beta1::QueuingConfiguration?
     # :ditto:
-    abstract def queuing=(value : ::K8S::Api::Flowcontrol::V1beta1::QueuingConfiguration?)
+    abstract def queuing=(value : ::K8S::Api::Flowcontrol::V1beta1::QueuingConfiguration)
     # `type` is "Queue" or "Reject". "Queue" means that requests that can not be executed upon arrival are held in a queue until they can be executed or a queuing limit is reached. "Reject" means that requests that can not be executed upon arrival are rejected. Required.
-    abstract def type : String
+    abstract def type : String?
     # :ditto:
     abstract def type! : String
     # :ditto:
@@ -35,52 +35,18 @@ module K8S
   )]
   class Api::Flowcontrol::V1beta1::LimitResponse < ::K8S::GenericObject
     include ::K8S::Types::Api::Flowcontrol::V1beta1::LimitResponse
+    k8s_object_accessor("queuing", queuing : ::K8S::Api::Flowcontrol::V1beta1::QueuingConfiguration, true, false, "`queuing` holds the configuration parameters for queuing. This field may be non-empty only if `type` is `\"Queue\"`.")
+    k8s_object_accessor("type", type : String, false, false, "`type` is \"Queue\" or \"Reject\". \"Queue\" means that requests that can not be executed upon arrival are held in a queue until they can be executed or a queuing limit is reached. \"Reject\" means that requests that can not be executed upon arrival are rejected. Required.")
 
-    # `queuing` holds the configuration parameters for queuing. This field may be non-empty only if `type` is `"Queue"`.
-    def queuing : ::K8S::Api::Flowcontrol::V1beta1::QueuingConfiguration?
-      self.["queuing"].as(::K8S::Api::Flowcontrol::V1beta1::QueuingConfiguration?)
+    def initialize(*, queuing : ::K8S::Api::Flowcontrol::V1beta1::QueuingConfiguration? = nil, type : String? = nil)
+      super()
+      self.["queuing"] = queuing
+      self.["type"] = type
     end
 
-    # :ditto:
-    def queuing! : ::K8S::Api::Flowcontrol::V1beta1::QueuingConfiguration
-      self.["queuing"].as(::K8S::Api::Flowcontrol::V1beta1::QueuingConfiguration?).not_nil!
-    end
-
-    # :ditto:
-    def queuing? : ::K8S::Api::Flowcontrol::V1beta1::QueuingConfiguration?
-      self.["queuing"]?.as(::K8S::Api::Flowcontrol::V1beta1::QueuingConfiguration?)
-    end
-
-    # :ditto:
-    def queuing=(value : ::K8S::Api::Flowcontrol::V1beta1::QueuingConfiguration?)
-      self.["queuing"] = value
-    end
-
-    # `type` is "Queue" or "Reject". "Queue" means that requests that can not be executed upon arrival are held in a queue until they can be executed or a queuing limit is reached. "Reject" means that requests that can not be executed upon arrival are rejected. Required.
-    def type : String
-      self.["type"].as(String)
-    end
-
-    # :ditto:
-    def type! : String
-      self.["type"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def type? : String?
-      self.["type"]?.as(String?)
-    end
-
-    # :ditto:
-    def type=(value : String)
-      self.["type"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "queuing", accessor: "queuing", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Flowcontrol::V1beta1::QueuingConfiguration },
-        { key: "type", accessor: "type", nilable: false, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "queuing", accessor: "queuing", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Flowcontrol::V1beta1::QueuingConfiguration},
+      {key: "type", accessor: "type", nilable: false, read_only: false, default: nil, kind: String},
+    ])
   end
 end

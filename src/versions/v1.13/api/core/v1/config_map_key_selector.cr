@@ -9,7 +9,7 @@ module K8S
   # Namespace holding the types for `Api::Core::V1::ConfigMapKeySelector`.
   module Types::Api::Core::V1::ConfigMapKeySelector
     # The key to select.
-    abstract def key : String
+    abstract def key : String?
     # :ditto:
     abstract def key! : String
     # :ditto:
@@ -23,7 +23,7 @@ module K8S
     # :ditto:
     abstract def name? : String?
     # :ditto:
-    abstract def name=(value : String?)
+    abstract def name=(value : String)
     # Specify whether the ConfigMap or it's key must be defined
     abstract def optional : ::Bool?
     # :ditto:
@@ -31,7 +31,7 @@ module K8S
     # :ditto:
     abstract def optional? : ::Bool?
     # :ditto:
-    abstract def optional=(value : ::Bool?)
+    abstract def optional=(value : ::Bool)
   end
 
   # Selects a key from a ConfigMap.
@@ -42,73 +42,21 @@ module K8S
   )]
   class Api::Core::V1::ConfigMapKeySelector < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::ConfigMapKeySelector
+    k8s_object_accessor("key", key : String, false, false, "The key to select.")
+    k8s_object_accessor("name", name : String, true, false, "Name of the referent. More info: [https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names)")
+    k8s_object_accessor("optional", optional : ::Bool, true, false, "Specify whether the ConfigMap or it's key must be defined")
 
-    # The key to select.
-    def key : String
-      self.["key"].as(String)
+    def initialize(*, key : String? = nil, name : String? = nil, optional : ::Bool? = nil)
+      super()
+      self.["key"] = key
+      self.["name"] = name
+      self.["optional"] = optional
     end
 
-    # :ditto:
-    def key! : String
-      self.["key"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def key? : String?
-      self.["key"]?.as(String?)
-    end
-
-    # :ditto:
-    def key=(value : String)
-      self.["key"] = value
-    end
-
-    # Name of the referent. More info: [[https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names)](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names))
-    def name : String?
-      self.["name"].as(String?)
-    end
-
-    # :ditto:
-    def name! : String
-      self.["name"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def name? : String?
-      self.["name"]?.as(String?)
-    end
-
-    # :ditto:
-    def name=(value : String?)
-      self.["name"] = value
-    end
-
-    # Specify whether the ConfigMap or it's key must be defined
-    def optional : ::Bool?
-      self.["optional"].as(::Bool?)
-    end
-
-    # :ditto:
-    def optional! : ::Bool
-      self.["optional"].as(::Bool?).not_nil!
-    end
-
-    # :ditto:
-    def optional? : ::Bool?
-      self.["optional"]?.as(::Bool?)
-    end
-
-    # :ditto:
-    def optional=(value : ::Bool?)
-      self.["optional"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "key", accessor: "key", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "name", accessor: "name", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "optional", accessor: "optional", nilable: true, read_only: false, default: nil, kind: ::Bool },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "key", accessor: "key", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "name", accessor: "name", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "optional", accessor: "optional", nilable: true, read_only: false, default: nil, kind: ::Bool},
+    ])
   end
 end

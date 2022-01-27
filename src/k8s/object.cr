@@ -45,6 +45,10 @@ class K8S::Object(V)
   # List of methods delegated to the underlying `Hash` returning `self`.
   CHAINED_HASH_METHODS = %w(reject! select! compact! clear)
 
+  def initialize
+    @__hash__ = Hash(String, V).new
+  end
+
   macro method_missing(call)
     {% if CHAINED_HASH_METHODS.includes?(call.name.stringify) %}
       @__hash__.{{call}}
@@ -251,9 +255,15 @@ class K8S::Object(V)
 
   def self.new(pull : ::JSON::PullParser)
     self.new(Hash(String, JSON::Any).new(pull))
+  rescue ex
+    Log.error &.emit "Error parsing JSON: #{ex.message}", klass: self.to_s
+    raise ex
   end
 
   def self.new(ctx : ::YAML::ParseContext, node : ::YAML::Nodes::Node)
     self.new(Hash(String, JSON::Any).new(ctx, node))
+  rescue ex
+    Log.error &.emit "Error parsing YAML: #{ex.message}", klass: self.to_s
+    raise ex
   end
 end

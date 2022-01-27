@@ -17,7 +17,7 @@ module K8S
     # :ditto:
     abstract def access_modes? : ::Array(String)?
     # :ditto:
-    abstract def access_modes=(value : ::Array(String)?)
+    abstract def access_modes=(value : ::Array(String))
     # Represents the actual resources of the underlying volume.
     abstract def capacity : ::Hash(String, ::Int32 | ::String)?
     # :ditto:
@@ -25,7 +25,7 @@ module K8S
     # :ditto:
     abstract def capacity? : ::Hash(String, ::Int32 | ::String)?
     # :ditto:
-    abstract def capacity=(value : ::Hash(String, ::Int32 | ::String)?)
+    abstract def capacity=(value : ::Hash(String, ::Int32 | ::String))
     # Current Condition of persistent volume claim. If underlying persistent volume is being resized then the Condition will be set to 'ResizeStarted'.
     abstract def conditions : ::Array(::K8S::Api::Core::V1::PersistentVolumeClaimCondition)?
     # :ditto:
@@ -33,7 +33,7 @@ module K8S
     # :ditto:
     abstract def conditions? : ::Array(::K8S::Api::Core::V1::PersistentVolumeClaimCondition)?
     # :ditto:
-    abstract def conditions=(value : ::Array(::K8S::Api::Core::V1::PersistentVolumeClaimCondition)?)
+    abstract def conditions=(value : ::Array(::K8S::Api::Core::V1::PersistentVolumeClaimCondition))
     # Phase represents the current phase of PersistentVolumeClaim.
     abstract def phase : String?
     # :ditto:
@@ -41,7 +41,7 @@ module K8S
     # :ditto:
     abstract def phase? : String?
     # :ditto:
-    abstract def phase=(value : String?)
+    abstract def phase=(value : String)
   end
 
   # PersistentVolumeClaimStatus is the current status of a persistent volume claim.
@@ -53,94 +53,24 @@ module K8S
   )]
   class Api::Core::V1::PersistentVolumeClaimStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::PersistentVolumeClaimStatus
+    k8s_object_accessor("accessModes", access_modes : ::Array(String), true, false, "AccessModes contains the actual access modes the volume backing the PVC has. More info: [https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1](https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1)")
+    k8s_object_accessor("capacity", capacity : ::Hash(String, ::Int32 | ::String), true, false, "Represents the actual resources of the underlying volume.")
+    k8s_object_accessor("conditions", conditions : ::Array(::K8S::Api::Core::V1::PersistentVolumeClaimCondition), true, false, "Current Condition of persistent volume claim. If underlying persistent volume is being resized then the Condition will be set to 'ResizeStarted'.")
+    k8s_object_accessor("phase", phase : String, true, false, "Phase represents the current phase of PersistentVolumeClaim.")
 
-    # AccessModes contains the actual access modes the volume backing the PVC has. More info: [[https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1](https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1)](https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1](https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1))
-    def access_modes : ::Array(String)?
-      self.["accessModes"].as(::Array(String)?)
+    def initialize(*, access_modes : ::Array(String)? = nil, capacity : ::Hash(String, ::Int32 | ::String)? = nil, conditions : ::Array(::K8S::Api::Core::V1::PersistentVolumeClaimCondition)? = nil, phase : String? = nil)
+      super()
+      self.["accessModes"] = access_modes
+      self.["capacity"] = capacity
+      self.["conditions"] = conditions
+      self.["phase"] = phase
     end
 
-    # :ditto:
-    def access_modes! : ::Array(String)
-      self.["accessModes"].as(::Array(String)?).not_nil!
-    end
-
-    # :ditto:
-    def access_modes? : ::Array(String)?
-      self.["accessModes"]?.as(::Array(String)?)
-    end
-
-    # :ditto:
-    def access_modes=(value : ::Array(String)?)
-      self.["accessModes"] = value
-    end
-
-    # Represents the actual resources of the underlying volume.
-    def capacity : ::Hash(String, ::Int32 | ::String)?
-      self.["capacity"].as(::Hash(String, ::Int32 | ::String)?)
-    end
-
-    # :ditto:
-    def capacity! : ::Hash(String, ::Int32 | ::String)
-      self.["capacity"].as(::Hash(String, ::Int32 | ::String)?).not_nil!
-    end
-
-    # :ditto:
-    def capacity? : ::Hash(String, ::Int32 | ::String)?
-      self.["capacity"]?.as(::Hash(String, ::Int32 | ::String)?)
-    end
-
-    # :ditto:
-    def capacity=(value : ::Hash(String, ::Int32 | ::String)?)
-      self.["capacity"] = value
-    end
-
-    # Current Condition of persistent volume claim. If underlying persistent volume is being resized then the Condition will be set to 'ResizeStarted'.
-    def conditions : ::Array(::K8S::Api::Core::V1::PersistentVolumeClaimCondition)?
-      self.["conditions"].as(::Array(::K8S::Api::Core::V1::PersistentVolumeClaimCondition)?)
-    end
-
-    # :ditto:
-    def conditions! : ::Array(::K8S::Api::Core::V1::PersistentVolumeClaimCondition)
-      self.["conditions"].as(::Array(::K8S::Api::Core::V1::PersistentVolumeClaimCondition)?).not_nil!
-    end
-
-    # :ditto:
-    def conditions? : ::Array(::K8S::Api::Core::V1::PersistentVolumeClaimCondition)?
-      self.["conditions"]?.as(::Array(::K8S::Api::Core::V1::PersistentVolumeClaimCondition)?)
-    end
-
-    # :ditto:
-    def conditions=(value : ::Array(::K8S::Api::Core::V1::PersistentVolumeClaimCondition)?)
-      self.["conditions"] = value
-    end
-
-    # Phase represents the current phase of PersistentVolumeClaim.
-    def phase : String?
-      self.["phase"].as(String?)
-    end
-
-    # :ditto:
-    def phase! : String
-      self.["phase"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def phase? : String?
-      self.["phase"]?.as(String?)
-    end
-
-    # :ditto:
-    def phase=(value : String?)
-      self.["phase"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "accessModes", accessor: "access_modes", nilable: true, read_only: false, default: nil, kind: ::Array(String) },
-        { key: "capacity", accessor: "capacity", nilable: true, read_only: false, default: nil, kind: ::Union(::Hash(String, ::Int32 | ::String)) },
-        { key: "conditions", accessor: "conditions", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::PersistentVolumeClaimCondition) },
-        { key: "phase", accessor: "phase", nilable: true, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "accessModes", accessor: "access_modes", nilable: true, read_only: false, default: nil, kind: ::Array(String)},
+      {key: "capacity", accessor: "capacity", nilable: true, read_only: false, default: nil, kind: ::Union(::Hash(String, ::Int32 | ::String))},
+      {key: "conditions", accessor: "conditions", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::PersistentVolumeClaimCondition)},
+      {key: "phase", accessor: "phase", nilable: true, read_only: false, default: nil, kind: String},
+    ])
   end
 end

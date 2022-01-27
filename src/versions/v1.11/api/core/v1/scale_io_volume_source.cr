@@ -17,9 +17,9 @@ module K8S
     # :ditto:
     abstract def fs_type? : String?
     # :ditto:
-    abstract def fs_type=(value : String?)
+    abstract def fs_type=(value : String)
     # The host address of the ScaleIO API Gateway.
-    abstract def gateway : String
+    abstract def gateway : String?
     # :ditto:
     abstract def gateway! : String
     # :ditto:
@@ -33,7 +33,7 @@ module K8S
     # :ditto:
     abstract def protection_domain? : String?
     # :ditto:
-    abstract def protection_domain=(value : String?)
+    abstract def protection_domain=(value : String)
     # Defaults to false [[(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.)]([(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.))
     abstract def read_only : ::Bool?
     # :ditto:
@@ -41,9 +41,9 @@ module K8S
     # :ditto:
     abstract def read_only? : ::Bool?
     # :ditto:
-    abstract def read_only=(value : ::Bool?)
+    abstract def read_only=(value : ::Bool)
     # SecretRef references to the secret for ScaleIO user and other sensitive information. If this is not provided, Login operation will fail.
-    abstract def secret_ref : ::K8S::Api::Core::V1::LocalObjectReference
+    abstract def secret_ref : ::K8S::Api::Core::V1::LocalObjectReference?
     # :ditto:
     abstract def secret_ref! : ::K8S::Api::Core::V1::LocalObjectReference
     # :ditto:
@@ -57,7 +57,7 @@ module K8S
     # :ditto:
     abstract def ssl_enabled? : ::Bool?
     # :ditto:
-    abstract def ssl_enabled=(value : ::Bool?)
+    abstract def ssl_enabled=(value : ::Bool)
     # Indicates whether the storage for a volume should be ThickProvisioned or ThinProvisioned.
     abstract def storage_mode : String?
     # :ditto:
@@ -65,7 +65,7 @@ module K8S
     # :ditto:
     abstract def storage_mode? : String?
     # :ditto:
-    abstract def storage_mode=(value : String?)
+    abstract def storage_mode=(value : String)
     # The ScaleIO Storage Pool associated with the protection domain.
     abstract def storage_pool : String?
     # :ditto:
@@ -73,9 +73,9 @@ module K8S
     # :ditto:
     abstract def storage_pool? : String?
     # :ditto:
-    abstract def storage_pool=(value : String?)
+    abstract def storage_pool=(value : String)
     # The name of the storage system as configured in ScaleIO.
-    abstract def system : String
+    abstract def system : String?
     # :ditto:
     abstract def system! : String
     # :ditto:
@@ -89,7 +89,7 @@ module K8S
     # :ditto:
     abstract def volume_name? : String?
     # :ditto:
-    abstract def volume_name=(value : String?)
+    abstract def volume_name=(value : String)
   end
 
   # ScaleIOVolumeSource represents a persistent ScaleIO volume
@@ -107,220 +107,42 @@ module K8S
   )]
   class Api::Core::V1::ScaleIOVolumeSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::ScaleIOVolumeSource
+    k8s_object_accessor("fsType", fs_type : String, true, false, "Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. \"ext4\", \"xfs\", \"ntfs\". Implicitly inferred to be \"ext4\" if unspecified.")
+    k8s_object_accessor("gateway", gateway : String, false, false, "The host address of the ScaleIO API Gateway.")
+    k8s_object_accessor("protectionDomain", protection_domain : String, true, false, "The name of the ScaleIO Protection Domain for the configured storage.")
+    k8s_object_accessor("readOnly", read_only : ::Bool, true, false, "Defaults to false [(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.)")
+    k8s_object_accessor("secretRef", secret_ref : ::K8S::Api::Core::V1::LocalObjectReference, false, false, "SecretRef references to the secret for ScaleIO user and other sensitive information. If this is not provided, Login operation will fail.")
+    k8s_object_accessor("sslEnabled", ssl_enabled : ::Bool, true, false, "Flag to [enable/disable SSL communication with Gateway, default false](enable/disable SSL communication with Gateway, default false)")
+    k8s_object_accessor("storageMode", storage_mode : String, true, false, "Indicates whether the storage for a volume should be ThickProvisioned or ThinProvisioned.")
+    k8s_object_accessor("storagePool", storage_pool : String, true, false, "The ScaleIO Storage Pool associated with the protection domain.")
+    k8s_object_accessor("system", system : String, false, false, "The name of the storage system as configured in ScaleIO.")
+    k8s_object_accessor("volumeName", volume_name : String, true, false, "The name of a volume already created in the ScaleIO system that is associated with this volume source.")
 
-    # Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified.
-    def fs_type : String?
-      self.["fsType"].as(String?)
+    def initialize(*, fs_type : String? = nil, gateway : String? = nil, protection_domain : String? = nil, read_only : ::Bool? = nil, secret_ref : ::K8S::Api::Core::V1::LocalObjectReference? = nil, ssl_enabled : ::Bool? = nil, storage_mode : String? = nil, storage_pool : String? = nil, system : String? = nil, volume_name : String? = nil)
+      super()
+      self.["fsType"] = fs_type
+      self.["gateway"] = gateway
+      self.["protectionDomain"] = protection_domain
+      self.["readOnly"] = read_only
+      self.["secretRef"] = secret_ref
+      self.["sslEnabled"] = ssl_enabled
+      self.["storageMode"] = storage_mode
+      self.["storagePool"] = storage_pool
+      self.["system"] = system
+      self.["volumeName"] = volume_name
     end
 
-    # :ditto:
-    def fs_type! : String
-      self.["fsType"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def fs_type? : String?
-      self.["fsType"]?.as(String?)
-    end
-
-    # :ditto:
-    def fs_type=(value : String?)
-      self.["fsType"] = value
-    end
-
-    # The host address of the ScaleIO API Gateway.
-    def gateway : String
-      self.["gateway"].as(String)
-    end
-
-    # :ditto:
-    def gateway! : String
-      self.["gateway"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def gateway? : String?
-      self.["gateway"]?.as(String?)
-    end
-
-    # :ditto:
-    def gateway=(value : String)
-      self.["gateway"] = value
-    end
-
-    # The name of the ScaleIO Protection Domain for the configured storage.
-    def protection_domain : String?
-      self.["protectionDomain"].as(String?)
-    end
-
-    # :ditto:
-    def protection_domain! : String
-      self.["protectionDomain"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def protection_domain? : String?
-      self.["protectionDomain"]?.as(String?)
-    end
-
-    # :ditto:
-    def protection_domain=(value : String?)
-      self.["protectionDomain"] = value
-    end
-
-    # Defaults to false [[(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.)]([(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.))
-    def read_only : ::Bool?
-      self.["readOnly"].as(::Bool?)
-    end
-
-    # :ditto:
-    def read_only! : ::Bool
-      self.["readOnly"].as(::Bool?).not_nil!
-    end
-
-    # :ditto:
-    def read_only? : ::Bool?
-      self.["readOnly"]?.as(::Bool?)
-    end
-
-    # :ditto:
-    def read_only=(value : ::Bool?)
-      self.["readOnly"] = value
-    end
-
-    # SecretRef references to the secret for ScaleIO user and other sensitive information. If this is not provided, Login operation will fail.
-    def secret_ref : ::K8S::Api::Core::V1::LocalObjectReference
-      self.["secretRef"].as(::K8S::Api::Core::V1::LocalObjectReference)
-    end
-
-    # :ditto:
-    def secret_ref! : ::K8S::Api::Core::V1::LocalObjectReference
-      self.["secretRef"].as(::K8S::Api::Core::V1::LocalObjectReference).not_nil!
-    end
-
-    # :ditto:
-    def secret_ref? : ::K8S::Api::Core::V1::LocalObjectReference?
-      self.["secretRef"]?.as(::K8S::Api::Core::V1::LocalObjectReference?)
-    end
-
-    # :ditto:
-    def secret_ref=(value : ::K8S::Api::Core::V1::LocalObjectReference)
-      self.["secretRef"] = value
-    end
-
-    # Flag to [[enable/disable SSL communication with Gateway, default false](enable/disable SSL communication with Gateway, default false)]([enable/disable SSL communication with Gateway, default false](enable/disable SSL communication with Gateway, default false))
-    def ssl_enabled : ::Bool?
-      self.["sslEnabled"].as(::Bool?)
-    end
-
-    # :ditto:
-    def ssl_enabled! : ::Bool
-      self.["sslEnabled"].as(::Bool?).not_nil!
-    end
-
-    # :ditto:
-    def ssl_enabled? : ::Bool?
-      self.["sslEnabled"]?.as(::Bool?)
-    end
-
-    # :ditto:
-    def ssl_enabled=(value : ::Bool?)
-      self.["sslEnabled"] = value
-    end
-
-    # Indicates whether the storage for a volume should be ThickProvisioned or ThinProvisioned.
-    def storage_mode : String?
-      self.["storageMode"].as(String?)
-    end
-
-    # :ditto:
-    def storage_mode! : String
-      self.["storageMode"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def storage_mode? : String?
-      self.["storageMode"]?.as(String?)
-    end
-
-    # :ditto:
-    def storage_mode=(value : String?)
-      self.["storageMode"] = value
-    end
-
-    # The ScaleIO Storage Pool associated with the protection domain.
-    def storage_pool : String?
-      self.["storagePool"].as(String?)
-    end
-
-    # :ditto:
-    def storage_pool! : String
-      self.["storagePool"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def storage_pool? : String?
-      self.["storagePool"]?.as(String?)
-    end
-
-    # :ditto:
-    def storage_pool=(value : String?)
-      self.["storagePool"] = value
-    end
-
-    # The name of the storage system as configured in ScaleIO.
-    def system : String
-      self.["system"].as(String)
-    end
-
-    # :ditto:
-    def system! : String
-      self.["system"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def system? : String?
-      self.["system"]?.as(String?)
-    end
-
-    # :ditto:
-    def system=(value : String)
-      self.["system"] = value
-    end
-
-    # The name of a volume already created in the ScaleIO system that is associated with this volume source.
-    def volume_name : String?
-      self.["volumeName"].as(String?)
-    end
-
-    # :ditto:
-    def volume_name! : String
-      self.["volumeName"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def volume_name? : String?
-      self.["volumeName"]?.as(String?)
-    end
-
-    # :ditto:
-    def volume_name=(value : String?)
-      self.["volumeName"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "fsType", accessor: "fs_type", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "gateway", accessor: "gateway", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "protectionDomain", accessor: "protection_domain", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "readOnly", accessor: "read_only", nilable: true, read_only: false, default: nil, kind: ::Bool },
-        { key: "secretRef", accessor: "secret_ref", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::LocalObjectReference },
-        { key: "sslEnabled", accessor: "ssl_enabled", nilable: true, read_only: false, default: nil, kind: ::Bool },
-        { key: "storageMode", accessor: "storage_mode", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "storagePool", accessor: "storage_pool", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "system", accessor: "system", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "volumeName", accessor: "volume_name", nilable: true, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "fsType", accessor: "fs_type", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "gateway", accessor: "gateway", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "protectionDomain", accessor: "protection_domain", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "readOnly", accessor: "read_only", nilable: true, read_only: false, default: nil, kind: ::Bool},
+      {key: "secretRef", accessor: "secret_ref", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::LocalObjectReference},
+      {key: "sslEnabled", accessor: "ssl_enabled", nilable: true, read_only: false, default: nil, kind: ::Bool},
+      {key: "storageMode", accessor: "storage_mode", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "storagePool", accessor: "storage_pool", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "system", accessor: "system", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "volumeName", accessor: "volume_name", nilable: true, read_only: false, default: nil, kind: String},
+    ])
   end
 end

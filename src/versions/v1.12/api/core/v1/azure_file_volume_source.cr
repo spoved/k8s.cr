@@ -15,9 +15,9 @@ module K8S
     # :ditto:
     abstract def read_only? : ::Bool?
     # :ditto:
-    abstract def read_only=(value : ::Bool?)
+    abstract def read_only=(value : ::Bool)
     # the name of secret that contains Azure Storage Account Name and Key
-    abstract def secret_name : String
+    abstract def secret_name : String?
     # :ditto:
     abstract def secret_name! : String
     # :ditto:
@@ -25,7 +25,7 @@ module K8S
     # :ditto:
     abstract def secret_name=(value : String)
     # Share Name
-    abstract def share_name : String
+    abstract def share_name : String?
     # :ditto:
     abstract def share_name! : String
     # :ditto:
@@ -42,73 +42,21 @@ module K8S
   )]
   class Api::Core::V1::AzureFileVolumeSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::AzureFileVolumeSource
+    k8s_object_accessor("readOnly", read_only : ::Bool, true, false, "Defaults to false [(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.)")
+    k8s_object_accessor("secretName", secret_name : String, false, false, "the name of secret that contains Azure Storage Account Name and Key")
+    k8s_object_accessor("shareName", share_name : String, false, false, "Share Name")
 
-    # Defaults to false [[(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.)]([(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.))
-    def read_only : ::Bool?
-      self.["readOnly"].as(::Bool?)
+    def initialize(*, read_only : ::Bool? = nil, secret_name : String? = nil, share_name : String? = nil)
+      super()
+      self.["readOnly"] = read_only
+      self.["secretName"] = secret_name
+      self.["shareName"] = share_name
     end
 
-    # :ditto:
-    def read_only! : ::Bool
-      self.["readOnly"].as(::Bool?).not_nil!
-    end
-
-    # :ditto:
-    def read_only? : ::Bool?
-      self.["readOnly"]?.as(::Bool?)
-    end
-
-    # :ditto:
-    def read_only=(value : ::Bool?)
-      self.["readOnly"] = value
-    end
-
-    # the name of secret that contains Azure Storage Account Name and Key
-    def secret_name : String
-      self.["secretName"].as(String)
-    end
-
-    # :ditto:
-    def secret_name! : String
-      self.["secretName"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def secret_name? : String?
-      self.["secretName"]?.as(String?)
-    end
-
-    # :ditto:
-    def secret_name=(value : String)
-      self.["secretName"] = value
-    end
-
-    # Share Name
-    def share_name : String
-      self.["shareName"].as(String)
-    end
-
-    # :ditto:
-    def share_name! : String
-      self.["shareName"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def share_name? : String?
-      self.["shareName"]?.as(String?)
-    end
-
-    # :ditto:
-    def share_name=(value : String)
-      self.["shareName"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "readOnly", accessor: "read_only", nilable: true, read_only: false, default: nil, kind: ::Bool },
-        { key: "secretName", accessor: "secret_name", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "shareName", accessor: "share_name", nilable: false, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "readOnly", accessor: "read_only", nilable: true, read_only: false, default: nil, kind: ::Bool},
+      {key: "secretName", accessor: "secret_name", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "shareName", accessor: "share_name", nilable: false, read_only: false, default: nil, kind: String},
+    ])
   end
 end

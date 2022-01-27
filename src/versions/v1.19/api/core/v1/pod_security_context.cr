@@ -24,7 +24,7 @@ module K8S
     # :ditto:
     abstract def fs_group? : Int32?
     # :ditto:
-    abstract def fs_group=(value : Int32?)
+    abstract def fs_group=(value : Int32)
     # fsGroupChangePolicy defines behavior of changing ownership and permission of the volume before being exposed inside Pod. This field will only apply to volume types which support fsGroup based ownership(and permissions). It will have no effect on ephemeral volume types such as: secret, configmaps and emptydir. Valid values are "OnRootMismatch" and "Always". If not specified defaults to "Always".
     abstract def fs_group_change_policy : String?
     # :ditto:
@@ -32,7 +32,7 @@ module K8S
     # :ditto:
     abstract def fs_group_change_policy? : String?
     # :ditto:
-    abstract def fs_group_change_policy=(value : String?)
+    abstract def fs_group_change_policy=(value : String)
     # The GID to run the entrypoint of the container process. Uses runtime default if unset. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container.
     abstract def run_as_group : Int32?
     # :ditto:
@@ -40,7 +40,7 @@ module K8S
     # :ditto:
     abstract def run_as_group? : Int32?
     # :ditto:
-    abstract def run_as_group=(value : Int32?)
+    abstract def run_as_group=(value : Int32)
     # Indicates that the container must run as a non-root user. If true, the Kubelet will validate the image at runtime to ensure that it does not run as UID 0 (root) and fail to start the container if it does. If unset or false, no such validation will be performed. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
     abstract def run_as_non_root : ::Bool?
     # :ditto:
@@ -48,7 +48,7 @@ module K8S
     # :ditto:
     abstract def run_as_non_root? : ::Bool?
     # :ditto:
-    abstract def run_as_non_root=(value : ::Bool?)
+    abstract def run_as_non_root=(value : ::Bool)
     # The UID to run the entrypoint of the container process. Defaults to user specified in image metadata if unspecified. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container.
     abstract def run_as_user : Int32?
     # :ditto:
@@ -56,7 +56,7 @@ module K8S
     # :ditto:
     abstract def run_as_user? : Int32?
     # :ditto:
-    abstract def run_as_user=(value : Int32?)
+    abstract def run_as_user=(value : Int32)
     # The SELinux context to be applied to all containers. If unspecified, the container runtime will allocate a random SELinux context for each container.  May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container.
     abstract def se_linux_options : ::K8S::Api::Core::V1::SELinuxOptions?
     # :ditto:
@@ -64,7 +64,7 @@ module K8S
     # :ditto:
     abstract def se_linux_options? : ::K8S::Api::Core::V1::SELinuxOptions?
     # :ditto:
-    abstract def se_linux_options=(value : ::K8S::Api::Core::V1::SELinuxOptions?)
+    abstract def se_linux_options=(value : ::K8S::Api::Core::V1::SELinuxOptions)
     # The seccomp options to use by the containers in this pod.
     abstract def seccomp_profile : ::K8S::Api::Core::V1::SeccompProfile?
     # :ditto:
@@ -72,7 +72,7 @@ module K8S
     # :ditto:
     abstract def seccomp_profile? : ::K8S::Api::Core::V1::SeccompProfile?
     # :ditto:
-    abstract def seccomp_profile=(value : ::K8S::Api::Core::V1::SeccompProfile?)
+    abstract def seccomp_profile=(value : ::K8S::Api::Core::V1::SeccompProfile)
     # A list of groups applied to the first process run in each container, in addition to the container's primary GID.  If unspecified, no groups will be added to any container.
     abstract def supplemental_groups : ::Array(Int32)?
     # :ditto:
@@ -80,7 +80,7 @@ module K8S
     # :ditto:
     abstract def supplemental_groups? : ::Array(Int32)?
     # :ditto:
-    abstract def supplemental_groups=(value : ::Array(Int32)?)
+    abstract def supplemental_groups=(value : ::Array(Int32))
     # Sysctls hold a list of namespaced sysctls used for the pod. Pods with unsupported sysctls (by the container runtime) might fail to launch.
     abstract def sysctls : ::Array(::K8S::Api::Core::V1::Sysctl)?
     # :ditto:
@@ -88,7 +88,7 @@ module K8S
     # :ditto:
     abstract def sysctls? : ::Array(::K8S::Api::Core::V1::Sysctl)?
     # :ditto:
-    abstract def sysctls=(value : ::Array(::K8S::Api::Core::V1::Sysctl)?)
+    abstract def sysctls=(value : ::Array(::K8S::Api::Core::V1::Sysctl))
     # The Windows specific settings applied to all containers. If unspecified, the options within a container's SecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
     abstract def windows_options : ::K8S::Api::Core::V1::WindowsSecurityContextOptions?
     # :ditto:
@@ -96,7 +96,7 @@ module K8S
     # :ditto:
     abstract def windows_options? : ::K8S::Api::Core::V1::WindowsSecurityContextOptions?
     # :ditto:
-    abstract def windows_options=(value : ::K8S::Api::Core::V1::WindowsSecurityContextOptions?)
+    abstract def windows_options=(value : ::K8S::Api::Core::V1::WindowsSecurityContextOptions)
   end
 
   # PodSecurityContext holds pod-level security attributes and common container settings. Some fields are also present in container.securityContext.  Field values of container.securityContext take precedence over field values of PodSecurityContext.
@@ -114,224 +114,42 @@ module K8S
   )]
   class Api::Core::V1::PodSecurityContext < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::PodSecurityContext
+    k8s_object_accessor("fsGroup", fs_group : Int32, true, false, "A special supplemental group that applies to all containers in a pod. Some volume types allow the Kubelet to change the ownership of that volume to be owned by the pod:\n\n1. The owning GID will be the FSGroup 2. The setgid bit is set (new files created in the volume will be owned by FSGroup) 3. The permission bits are OR'd with rw-rw----\n\nIf unset, the Kubelet will not modify the ownership and permissions of any volume.")
+    k8s_object_accessor("fsGroupChangePolicy", fs_group_change_policy : String, true, false, "fsGroupChangePolicy defines behavior of changing ownership and permission of the volume before being exposed inside Pod. This field will only apply to volume types which support fsGroup based ownership(and permissions). It will have no effect on ephemeral volume types such as: secret, configmaps and emptydir. Valid values are \"OnRootMismatch\" and \"Always\". If not specified defaults to \"Always\".")
+    k8s_object_accessor("runAsGroup", run_as_group : Int32, true, false, "The GID to run the entrypoint of the container process. Uses runtime default if unset. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container.")
+    k8s_object_accessor("runAsNonRoot", run_as_non_root : ::Bool, true, false, "Indicates that the container must run as a non-root user. If true, the Kubelet will validate the image at runtime to ensure that it does not run as UID 0 (root) and fail to start the container if it does. If unset or false, no such validation will be performed. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.")
+    k8s_object_accessor("runAsUser", run_as_user : Int32, true, false, "The UID to run the entrypoint of the container process. Defaults to user specified in image metadata if unspecified. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container.")
+    k8s_object_accessor("seLinuxOptions", se_linux_options : ::K8S::Api::Core::V1::SELinuxOptions, true, false, "The SELinux context to be applied to all containers. If unspecified, the container runtime will allocate a random SELinux context for each container.  May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container.")
+    k8s_object_accessor("seccompProfile", seccomp_profile : ::K8S::Api::Core::V1::SeccompProfile, true, false, "The seccomp options to use by the containers in this pod.")
+    k8s_object_accessor("supplementalGroups", supplemental_groups : ::Array(Int32), true, false, "A list of groups applied to the first process run in each container, in addition to the container's primary GID.  If unspecified, no groups will be added to any container.")
+    k8s_object_accessor("sysctls", sysctls : ::Array(::K8S::Api::Core::V1::Sysctl), true, false, "Sysctls hold a list of namespaced sysctls used for the pod. Pods with unsupported sysctls (by the container runtime) might fail to launch.")
+    k8s_object_accessor("windowsOptions", windows_options : ::K8S::Api::Core::V1::WindowsSecurityContextOptions, true, false, "The Windows specific settings applied to all containers. If unspecified, the options within a container's SecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.")
 
-    # A special supplemental group that applies to all containers in a pod. Some volume types allow the Kubelet to change the ownership of that volume to be owned by the pod:
-    #
-    # 1. The owning GID will be the FSGroup 2. The setgid bit is set (new files created in the volume will be owned by FSGroup) 3. The permission bits are OR'd with rw-rw----
-    #
-    # If unset, the Kubelet will not modify the ownership and permissions of any volume.
-    def fs_group : Int32?
-      self.["fsGroup"].as(Int32?)
+    def initialize(*, fs_group : Int32? = nil, fs_group_change_policy : String? = nil, run_as_group : Int32? = nil, run_as_non_root : ::Bool? = nil, run_as_user : Int32? = nil, se_linux_options : ::K8S::Api::Core::V1::SELinuxOptions? = nil, seccomp_profile : ::K8S::Api::Core::V1::SeccompProfile? = nil, supplemental_groups : ::Array(Int32)? = nil, sysctls : ::Array(::K8S::Api::Core::V1::Sysctl)? = nil, windows_options : ::K8S::Api::Core::V1::WindowsSecurityContextOptions? = nil)
+      super()
+      self.["fsGroup"] = fs_group
+      self.["fsGroupChangePolicy"] = fs_group_change_policy
+      self.["runAsGroup"] = run_as_group
+      self.["runAsNonRoot"] = run_as_non_root
+      self.["runAsUser"] = run_as_user
+      self.["seLinuxOptions"] = se_linux_options
+      self.["seccompProfile"] = seccomp_profile
+      self.["supplementalGroups"] = supplemental_groups
+      self.["sysctls"] = sysctls
+      self.["windowsOptions"] = windows_options
     end
 
-    # :ditto:
-    def fs_group! : Int32
-      self.["fsGroup"].as(Int32?).not_nil!
-    end
-
-    # :ditto:
-    def fs_group? : Int32?
-      self.["fsGroup"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def fs_group=(value : Int32?)
-      self.["fsGroup"] = value
-    end
-
-    # fsGroupChangePolicy defines behavior of changing ownership and permission of the volume before being exposed inside Pod. This field will only apply to volume types which support fsGroup based ownership(and permissions). It will have no effect on ephemeral volume types such as: secret, configmaps and emptydir. Valid values are "OnRootMismatch" and "Always". If not specified defaults to "Always".
-    def fs_group_change_policy : String?
-      self.["fsGroupChangePolicy"].as(String?)
-    end
-
-    # :ditto:
-    def fs_group_change_policy! : String
-      self.["fsGroupChangePolicy"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def fs_group_change_policy? : String?
-      self.["fsGroupChangePolicy"]?.as(String?)
-    end
-
-    # :ditto:
-    def fs_group_change_policy=(value : String?)
-      self.["fsGroupChangePolicy"] = value
-    end
-
-    # The GID to run the entrypoint of the container process. Uses runtime default if unset. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container.
-    def run_as_group : Int32?
-      self.["runAsGroup"].as(Int32?)
-    end
-
-    # :ditto:
-    def run_as_group! : Int32
-      self.["runAsGroup"].as(Int32?).not_nil!
-    end
-
-    # :ditto:
-    def run_as_group? : Int32?
-      self.["runAsGroup"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def run_as_group=(value : Int32?)
-      self.["runAsGroup"] = value
-    end
-
-    # Indicates that the container must run as a non-root user. If true, the Kubelet will validate the image at runtime to ensure that it does not run as UID 0 (root) and fail to start the container if it does. If unset or false, no such validation will be performed. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
-    def run_as_non_root : ::Bool?
-      self.["runAsNonRoot"].as(::Bool?)
-    end
-
-    # :ditto:
-    def run_as_non_root! : ::Bool
-      self.["runAsNonRoot"].as(::Bool?).not_nil!
-    end
-
-    # :ditto:
-    def run_as_non_root? : ::Bool?
-      self.["runAsNonRoot"]?.as(::Bool?)
-    end
-
-    # :ditto:
-    def run_as_non_root=(value : ::Bool?)
-      self.["runAsNonRoot"] = value
-    end
-
-    # The UID to run the entrypoint of the container process. Defaults to user specified in image metadata if unspecified. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container.
-    def run_as_user : Int32?
-      self.["runAsUser"].as(Int32?)
-    end
-
-    # :ditto:
-    def run_as_user! : Int32
-      self.["runAsUser"].as(Int32?).not_nil!
-    end
-
-    # :ditto:
-    def run_as_user? : Int32?
-      self.["runAsUser"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def run_as_user=(value : Int32?)
-      self.["runAsUser"] = value
-    end
-
-    # The SELinux context to be applied to all containers. If unspecified, the container runtime will allocate a random SELinux context for each container.  May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container.
-    def se_linux_options : ::K8S::Api::Core::V1::SELinuxOptions?
-      self.["seLinuxOptions"].as(::K8S::Api::Core::V1::SELinuxOptions?)
-    end
-
-    # :ditto:
-    def se_linux_options! : ::K8S::Api::Core::V1::SELinuxOptions
-      self.["seLinuxOptions"].as(::K8S::Api::Core::V1::SELinuxOptions?).not_nil!
-    end
-
-    # :ditto:
-    def se_linux_options? : ::K8S::Api::Core::V1::SELinuxOptions?
-      self.["seLinuxOptions"]?.as(::K8S::Api::Core::V1::SELinuxOptions?)
-    end
-
-    # :ditto:
-    def se_linux_options=(value : ::K8S::Api::Core::V1::SELinuxOptions?)
-      self.["seLinuxOptions"] = value
-    end
-
-    # The seccomp options to use by the containers in this pod.
-    def seccomp_profile : ::K8S::Api::Core::V1::SeccompProfile?
-      self.["seccompProfile"].as(::K8S::Api::Core::V1::SeccompProfile?)
-    end
-
-    # :ditto:
-    def seccomp_profile! : ::K8S::Api::Core::V1::SeccompProfile
-      self.["seccompProfile"].as(::K8S::Api::Core::V1::SeccompProfile?).not_nil!
-    end
-
-    # :ditto:
-    def seccomp_profile? : ::K8S::Api::Core::V1::SeccompProfile?
-      self.["seccompProfile"]?.as(::K8S::Api::Core::V1::SeccompProfile?)
-    end
-
-    # :ditto:
-    def seccomp_profile=(value : ::K8S::Api::Core::V1::SeccompProfile?)
-      self.["seccompProfile"] = value
-    end
-
-    # A list of groups applied to the first process run in each container, in addition to the container's primary GID.  If unspecified, no groups will be added to any container.
-    def supplemental_groups : ::Array(Int32)?
-      self.["supplementalGroups"].as(::Array(Int32)?)
-    end
-
-    # :ditto:
-    def supplemental_groups! : ::Array(Int32)
-      self.["supplementalGroups"].as(::Array(Int32)?).not_nil!
-    end
-
-    # :ditto:
-    def supplemental_groups? : ::Array(Int32)?
-      self.["supplementalGroups"]?.as(::Array(Int32)?)
-    end
-
-    # :ditto:
-    def supplemental_groups=(value : ::Array(Int32)?)
-      self.["supplementalGroups"] = value
-    end
-
-    # Sysctls hold a list of namespaced sysctls used for the pod. Pods with unsupported sysctls (by the container runtime) might fail to launch.
-    def sysctls : ::Array(::K8S::Api::Core::V1::Sysctl)?
-      self.["sysctls"].as(::Array(::K8S::Api::Core::V1::Sysctl)?)
-    end
-
-    # :ditto:
-    def sysctls! : ::Array(::K8S::Api::Core::V1::Sysctl)
-      self.["sysctls"].as(::Array(::K8S::Api::Core::V1::Sysctl)?).not_nil!
-    end
-
-    # :ditto:
-    def sysctls? : ::Array(::K8S::Api::Core::V1::Sysctl)?
-      self.["sysctls"]?.as(::Array(::K8S::Api::Core::V1::Sysctl)?)
-    end
-
-    # :ditto:
-    def sysctls=(value : ::Array(::K8S::Api::Core::V1::Sysctl)?)
-      self.["sysctls"] = value
-    end
-
-    # The Windows specific settings applied to all containers. If unspecified, the options within a container's SecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
-    def windows_options : ::K8S::Api::Core::V1::WindowsSecurityContextOptions?
-      self.["windowsOptions"].as(::K8S::Api::Core::V1::WindowsSecurityContextOptions?)
-    end
-
-    # :ditto:
-    def windows_options! : ::K8S::Api::Core::V1::WindowsSecurityContextOptions
-      self.["windowsOptions"].as(::K8S::Api::Core::V1::WindowsSecurityContextOptions?).not_nil!
-    end
-
-    # :ditto:
-    def windows_options? : ::K8S::Api::Core::V1::WindowsSecurityContextOptions?
-      self.["windowsOptions"]?.as(::K8S::Api::Core::V1::WindowsSecurityContextOptions?)
-    end
-
-    # :ditto:
-    def windows_options=(value : ::K8S::Api::Core::V1::WindowsSecurityContextOptions?)
-      self.["windowsOptions"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "fsGroup", accessor: "fs_group", nilable: true, read_only: false, default: nil, kind: Int32 },
-        { key: "fsGroupChangePolicy", accessor: "fs_group_change_policy", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "runAsGroup", accessor: "run_as_group", nilable: true, read_only: false, default: nil, kind: Int32 },
-        { key: "runAsNonRoot", accessor: "run_as_non_root", nilable: true, read_only: false, default: nil, kind: ::Bool },
-        { key: "runAsUser", accessor: "run_as_user", nilable: true, read_only: false, default: nil, kind: Int32 },
-        { key: "seLinuxOptions", accessor: "se_linux_options", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::SELinuxOptions },
-        { key: "seccompProfile", accessor: "seccomp_profile", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::SeccompProfile },
-        { key: "supplementalGroups", accessor: "supplemental_groups", nilable: true, read_only: false, default: nil, kind: ::Array(Int32) },
-        { key: "sysctls", accessor: "sysctls", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::Sysctl) },
-        { key: "windowsOptions", accessor: "windows_options", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::WindowsSecurityContextOptions },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "fsGroup", accessor: "fs_group", nilable: true, read_only: false, default: nil, kind: Int32},
+      {key: "fsGroupChangePolicy", accessor: "fs_group_change_policy", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "runAsGroup", accessor: "run_as_group", nilable: true, read_only: false, default: nil, kind: Int32},
+      {key: "runAsNonRoot", accessor: "run_as_non_root", nilable: true, read_only: false, default: nil, kind: ::Bool},
+      {key: "runAsUser", accessor: "run_as_user", nilable: true, read_only: false, default: nil, kind: Int32},
+      {key: "seLinuxOptions", accessor: "se_linux_options", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::SELinuxOptions},
+      {key: "seccompProfile", accessor: "seccomp_profile", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::SeccompProfile},
+      {key: "supplementalGroups", accessor: "supplemental_groups", nilable: true, read_only: false, default: nil, kind: ::Array(Int32)},
+      {key: "sysctls", accessor: "sysctls", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::Sysctl)},
+      {key: "windowsOptions", accessor: "windows_options", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::WindowsSecurityContextOptions},
+    ])
   end
 end

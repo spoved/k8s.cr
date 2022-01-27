@@ -9,7 +9,7 @@ module K8S
   # Namespace holding the types for `Api::Autoscaling::V1::ScaleStatus`.
   module Types::Api::Autoscaling::V1::ScaleStatus
     # actual number of observed instances of the scaled object.
-    abstract def replicas : Int32
+    abstract def replicas : Int32?
     # :ditto:
     abstract def replicas! : Int32
     # :ditto:
@@ -23,7 +23,7 @@ module K8S
     # :ditto:
     abstract def selector? : String?
     # :ditto:
-    abstract def selector=(value : String?)
+    abstract def selector=(value : String)
   end
 
   # ScaleStatus represents the current status of a scale subresource.
@@ -33,52 +33,18 @@ module K8S
   )]
   class Api::Autoscaling::V1::ScaleStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Autoscaling::V1::ScaleStatus
+    k8s_object_accessor("replicas", replicas : Int32, false, false, "actual number of observed instances of the scaled object.")
+    k8s_object_accessor("selector", selector : String, true, false, "label query over pods that should match the replicas count. This is same as the label selector but in the string format to avoid introspection by clients. The string will be in the same format as the query-param syntax. More info about label selectors: [http://kubernetes.io/docs/user-guide/labels#label-selectors](http://kubernetes.io/docs/user-guide/labels#label-selectors)")
 
-    # actual number of observed instances of the scaled object.
-    def replicas : Int32
-      self.["replicas"].as(Int32)
+    def initialize(*, replicas : Int32? = nil, selector : String? = nil)
+      super()
+      self.["replicas"] = replicas
+      self.["selector"] = selector
     end
 
-    # :ditto:
-    def replicas! : Int32
-      self.["replicas"].as(Int32).not_nil!
-    end
-
-    # :ditto:
-    def replicas? : Int32?
-      self.["replicas"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def replicas=(value : Int32)
-      self.["replicas"] = value
-    end
-
-    # label query over pods that should match the replicas count. This is same as the label selector but in the string format to avoid introspection by clients. The string will be in the same format as the query-param syntax. More info about label selectors: [[http://kubernetes.io/docs/user-guide/labels#label-selectors](http://kubernetes.io/docs/user-guide/labels#label-selectors)](http://kubernetes.io/docs/user-guide/labels#label-selectors](http://kubernetes.io/docs/user-guide/labels#label-selectors))
-    def selector : String?
-      self.["selector"].as(String?)
-    end
-
-    # :ditto:
-    def selector! : String
-      self.["selector"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def selector? : String?
-      self.["selector"]?.as(String?)
-    end
-
-    # :ditto:
-    def selector=(value : String?)
-      self.["selector"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "replicas", accessor: "replicas", nilable: false, read_only: false, default: nil, kind: Int32 },
-        { key: "selector", accessor: "selector", nilable: true, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "replicas", accessor: "replicas", nilable: false, read_only: false, default: nil, kind: Int32},
+      {key: "selector", accessor: "selector", nilable: true, read_only: false, default: nil, kind: String},
+    ])
   end
 end

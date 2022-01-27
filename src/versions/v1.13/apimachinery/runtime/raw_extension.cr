@@ -9,7 +9,7 @@ module K8S
   # Namespace holding the types for `Apimachinery::Runtime::RawExtension`.
   module Types::Apimachinery::Runtime::RawExtension
     # Raw is the underlying serialization of this object.
-    abstract def raw : String
+    abstract def raw : String?
     # :ditto:
     abstract def raw! : String
     # :ditto:
@@ -51,31 +51,15 @@ module K8S
   )]
   class Apimachinery::Runtime::RawExtension < ::K8S::GenericObject
     include ::K8S::Types::Apimachinery::Runtime::RawExtension
+    k8s_object_accessor("Raw", raw : String, false, false, "Raw is the underlying serialization of this object.")
 
-    # Raw is the underlying serialization of this object.
-    def raw : String
-      self.["Raw"].as(String)
+    def initialize(*, raw : String? = nil)
+      super()
+      self.["Raw"] = raw
     end
 
-    # :ditto:
-    def raw! : String
-      self.["Raw"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def raw? : String?
-      self.["Raw"]?.as(String?)
-    end
-
-    # :ditto:
-    def raw=(value : String)
-      self.["Raw"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "Raw", accessor: "raw", nilable: false, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "Raw", accessor: "raw", nilable: false, read_only: false, default: nil, kind: String},
+    ])
   end
 end

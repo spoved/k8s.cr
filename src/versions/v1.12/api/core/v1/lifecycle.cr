@@ -17,7 +17,7 @@ module K8S
     # :ditto:
     abstract def post_start? : ::K8S::Api::Core::V1::Handler?
     # :ditto:
-    abstract def post_start=(value : ::K8S::Api::Core::V1::Handler?)
+    abstract def post_start=(value : ::K8S::Api::Core::V1::Handler)
     # PreStop is called immediately before a container is terminated. The container is terminated after the handler completes. The reason for termination is passed to the handler. Regardless of the outcome of the handler, the container is eventually terminated. Other management of the container blocks until the hook completes. More info: [[https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks](https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks)](https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks](https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks))
     abstract def pre_stop : ::K8S::Api::Core::V1::Handler?
     # :ditto:
@@ -25,7 +25,7 @@ module K8S
     # :ditto:
     abstract def pre_stop? : ::K8S::Api::Core::V1::Handler?
     # :ditto:
-    abstract def pre_stop=(value : ::K8S::Api::Core::V1::Handler?)
+    abstract def pre_stop=(value : ::K8S::Api::Core::V1::Handler)
   end
 
   # Lifecycle describes actions that the management system should take in response to container lifecycle events. For the PostStart and PreStop lifecycle handlers, management of the container blocks until the action is complete, unless the container process fails, in which case the handler is aborted.
@@ -35,52 +35,18 @@ module K8S
   )]
   class Api::Core::V1::Lifecycle < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::Lifecycle
+    k8s_object_accessor("postStart", post_start : ::K8S::Api::Core::V1::Handler, true, false, "PostStart is called immediately after a container is created. If the handler fails, the container is terminated and restarted according to its restart policy. Other management of the container blocks until the hook completes. More info: [https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks](https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks)")
+    k8s_object_accessor("preStop", pre_stop : ::K8S::Api::Core::V1::Handler, true, false, "PreStop is called immediately before a container is terminated. The container is terminated after the handler completes. The reason for termination is passed to the handler. Regardless of the outcome of the handler, the container is eventually terminated. Other management of the container blocks until the hook completes. More info: [https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks](https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks)")
 
-    # PostStart is called immediately after a container is created. If the handler fails, the container is terminated and restarted according to its restart policy. Other management of the container blocks until the hook completes. More info: [[https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks](https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks)](https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks](https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks))
-    def post_start : ::K8S::Api::Core::V1::Handler?
-      self.["postStart"].as(::K8S::Api::Core::V1::Handler?)
+    def initialize(*, post_start : ::K8S::Api::Core::V1::Handler? = nil, pre_stop : ::K8S::Api::Core::V1::Handler? = nil)
+      super()
+      self.["postStart"] = post_start
+      self.["preStop"] = pre_stop
     end
 
-    # :ditto:
-    def post_start! : ::K8S::Api::Core::V1::Handler
-      self.["postStart"].as(::K8S::Api::Core::V1::Handler?).not_nil!
-    end
-
-    # :ditto:
-    def post_start? : ::K8S::Api::Core::V1::Handler?
-      self.["postStart"]?.as(::K8S::Api::Core::V1::Handler?)
-    end
-
-    # :ditto:
-    def post_start=(value : ::K8S::Api::Core::V1::Handler?)
-      self.["postStart"] = value
-    end
-
-    # PreStop is called immediately before a container is terminated. The container is terminated after the handler completes. The reason for termination is passed to the handler. Regardless of the outcome of the handler, the container is eventually terminated. Other management of the container blocks until the hook completes. More info: [[https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks](https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks)](https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks](https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#container-hooks))
-    def pre_stop : ::K8S::Api::Core::V1::Handler?
-      self.["preStop"].as(::K8S::Api::Core::V1::Handler?)
-    end
-
-    # :ditto:
-    def pre_stop! : ::K8S::Api::Core::V1::Handler
-      self.["preStop"].as(::K8S::Api::Core::V1::Handler?).not_nil!
-    end
-
-    # :ditto:
-    def pre_stop? : ::K8S::Api::Core::V1::Handler?
-      self.["preStop"]?.as(::K8S::Api::Core::V1::Handler?)
-    end
-
-    # :ditto:
-    def pre_stop=(value : ::K8S::Api::Core::V1::Handler?)
-      self.["preStop"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "postStart", accessor: "post_start", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::Handler },
-        { key: "preStop", accessor: "pre_stop", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::Handler },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "postStart", accessor: "post_start", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::Handler},
+      {key: "preStop", accessor: "pre_stop", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::Handler},
+    ])
   end
 end

@@ -17,7 +17,7 @@ module K8S
     # :ditto:
     abstract def rolling_update? : ::K8S::Api::Apps::V1::RollingUpdateDaemonSet?
     # :ditto:
-    abstract def rolling_update=(value : ::K8S::Api::Apps::V1::RollingUpdateDaemonSet?)
+    abstract def rolling_update=(value : ::K8S::Api::Apps::V1::RollingUpdateDaemonSet)
     # Type of daemon set update. Can be "RollingUpdate" or "OnDelete". Default is RollingUpdate.
     #
     # Possible enum values:
@@ -29,7 +29,7 @@ module K8S
     # :ditto:
     abstract def type? : String?
     # :ditto:
-    abstract def type=(value : String?)
+    abstract def type=(value : String)
   end
 
   # DaemonSetUpdateStrategy is a struct used to control the update strategy for a DaemonSet.
@@ -39,56 +39,18 @@ module K8S
   )]
   class Api::Apps::V1::DaemonSetUpdateStrategy < ::K8S::GenericObject
     include ::K8S::Types::Api::Apps::V1::DaemonSetUpdateStrategy
+    k8s_object_accessor("rollingUpdate", rolling_update : ::K8S::Api::Apps::V1::RollingUpdateDaemonSet, true, false, "Rolling update config params. Present only if type = \"RollingUpdate\".")
+    k8s_object_accessor("type", type : String, true, false, "Type of daemon set update. Can be \"RollingUpdate\" or \"OnDelete\". Default is RollingUpdate.\n\nPossible enum values:\n - `\"OnDelete\"` Replace the old daemons only when it's killed\n - `\"RollingUpdate\"` Replace the old daemons by new ones using rolling update i.e replace them on each node one after the other.")
 
-    # Rolling update config params. Present only if type = "RollingUpdate".
-    def rolling_update : ::K8S::Api::Apps::V1::RollingUpdateDaemonSet?
-      self.["rollingUpdate"].as(::K8S::Api::Apps::V1::RollingUpdateDaemonSet?)
+    def initialize(*, rolling_update : ::K8S::Api::Apps::V1::RollingUpdateDaemonSet? = nil, type : String? = nil)
+      super()
+      self.["rollingUpdate"] = rolling_update
+      self.["type"] = type
     end
 
-    # :ditto:
-    def rolling_update! : ::K8S::Api::Apps::V1::RollingUpdateDaemonSet
-      self.["rollingUpdate"].as(::K8S::Api::Apps::V1::RollingUpdateDaemonSet?).not_nil!
-    end
-
-    # :ditto:
-    def rolling_update? : ::K8S::Api::Apps::V1::RollingUpdateDaemonSet?
-      self.["rollingUpdate"]?.as(::K8S::Api::Apps::V1::RollingUpdateDaemonSet?)
-    end
-
-    # :ditto:
-    def rolling_update=(value : ::K8S::Api::Apps::V1::RollingUpdateDaemonSet?)
-      self.["rollingUpdate"] = value
-    end
-
-    # Type of daemon set update. Can be "RollingUpdate" or "OnDelete". Default is RollingUpdate.
-    #
-    # Possible enum values:
-    #  - `"OnDelete"` Replace the old daemons only when it's killed
-    #  - `"RollingUpdate"` Replace the old daemons by new ones using rolling update i.e replace them on each node one after the other.
-    def type : String?
-      self.["type"].as(String?)
-    end
-
-    # :ditto:
-    def type! : String
-      self.["type"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def type? : String?
-      self.["type"]?.as(String?)
-    end
-
-    # :ditto:
-    def type=(value : String?)
-      self.["type"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "rollingUpdate", accessor: "rolling_update", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Apps::V1::RollingUpdateDaemonSet },
-        { key: "type", accessor: "type", nilable: true, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "rollingUpdate", accessor: "rolling_update", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Apps::V1::RollingUpdateDaemonSet},
+      {key: "type", accessor: "type", nilable: true, read_only: false, default: nil, kind: String},
+    ])
   end
 end

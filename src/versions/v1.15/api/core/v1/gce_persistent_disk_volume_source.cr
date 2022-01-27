@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def fs_type? : String?
     # :ditto:
-    abstract def fs_type=(value : String?)
+    abstract def fs_type=(value : String)
     # The partition in the volume that you want to mount. If omitted, the default is to mount by volume name. Examples: For volume [[/dev/sda1, you specify the partition as "1". Similarly, the volume partition for /dev/sda is "0" (or you can leave the property empty). More info: https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk](/dev/sda1, you specify the partition as "1". Similarly, the volume partition for /dev/sda is "0" (or you can leave the property empty). More info: https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk)]([/dev/sda1, you specify the partition as "1". Similarly, the volume partition for /dev/sda is "0" (or you can leave the property empty). More info: https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk](/dev/sda1, you specify the partition as "1". Similarly, the volume partition for /dev/sda is "0" (or you can leave the property empty). More info: https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk))
     abstract def partition : Int32?
     # :ditto:
@@ -23,9 +23,9 @@ module K8S
     # :ditto:
     abstract def partition? : Int32?
     # :ditto:
-    abstract def partition=(value : Int32?)
+    abstract def partition=(value : Int32)
     # Unique name of the PD resource in GCE. Used to identify the disk in GCE. More info: [[https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk](https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk)](https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk](https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk))
-    abstract def pd_name : String
+    abstract def pd_name : String?
     # :ditto:
     abstract def pd_name! : String
     # :ditto:
@@ -39,7 +39,7 @@ module K8S
     # :ditto:
     abstract def read_only? : ::Bool?
     # :ditto:
-    abstract def read_only=(value : ::Bool?)
+    abstract def read_only=(value : ::Bool)
   end
 
   # Represents a Persistent Disk resource in Google Compute Engine.
@@ -53,94 +53,24 @@ module K8S
   )]
   class Api::Core::V1::GCEPersistentDiskVolumeSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::GCEPersistentDiskVolumeSource
+    k8s_object_accessor("fsType", fs_type : String, true, false, "Filesystem type of the volume that you want to mount. Tip: Ensure that the filesystem type is supported by the host operating system. Examples: \"ext4\", \"xfs\", \"ntfs\". Implicitly inferred to be \"ext4\" if unspecified. More info: [https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk](https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk)")
+    k8s_object_accessor("partition", partition : Int32, true, false, "The partition in the volume that you want to mount. If omitted, the default is to mount by volume name. Examples: For volume [/dev/sda1, you specify the partition as \"1\". Similarly, the volume partition for /dev/sda is \"0\" (or you can leave the property empty). More info: https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk](/dev/sda1, you specify the partition as \"1\". Similarly, the volume partition for /dev/sda is \"0\" (or you can leave the property empty). More info: https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk)")
+    k8s_object_accessor("pdName", pd_name : String, false, false, "Unique name of the PD resource in GCE. Used to identify the disk in GCE. More info: [https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk](https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk)")
+    k8s_object_accessor("readOnly", read_only : ::Bool, true, false, "ReadOnly here will force the ReadOnly setting in VolumeMounts. Defaults to false. More info: [https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk](https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk)")
 
-    # Filesystem type of the volume that you want to mount. Tip: Ensure that the filesystem type is supported by the host operating system. Examples: "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified. More info: [[https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk](https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk)](https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk](https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk))
-    def fs_type : String?
-      self.["fsType"].as(String?)
+    def initialize(*, fs_type : String? = nil, partition : Int32? = nil, pd_name : String? = nil, read_only : ::Bool? = nil)
+      super()
+      self.["fsType"] = fs_type
+      self.["partition"] = partition
+      self.["pdName"] = pd_name
+      self.["readOnly"] = read_only
     end
 
-    # :ditto:
-    def fs_type! : String
-      self.["fsType"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def fs_type? : String?
-      self.["fsType"]?.as(String?)
-    end
-
-    # :ditto:
-    def fs_type=(value : String?)
-      self.["fsType"] = value
-    end
-
-    # The partition in the volume that you want to mount. If omitted, the default is to mount by volume name. Examples: For volume [[/dev/sda1, you specify the partition as "1". Similarly, the volume partition for /dev/sda is "0" (or you can leave the property empty). More info: https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk](/dev/sda1, you specify the partition as "1". Similarly, the volume partition for /dev/sda is "0" (or you can leave the property empty). More info: https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk)]([/dev/sda1, you specify the partition as "1". Similarly, the volume partition for /dev/sda is "0" (or you can leave the property empty). More info: https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk](/dev/sda1, you specify the partition as "1". Similarly, the volume partition for /dev/sda is "0" (or you can leave the property empty). More info: https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk))
-    def partition : Int32?
-      self.["partition"].as(Int32?)
-    end
-
-    # :ditto:
-    def partition! : Int32
-      self.["partition"].as(Int32?).not_nil!
-    end
-
-    # :ditto:
-    def partition? : Int32?
-      self.["partition"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def partition=(value : Int32?)
-      self.["partition"] = value
-    end
-
-    # Unique name of the PD resource in GCE. Used to identify the disk in GCE. More info: [[https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk](https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk)](https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk](https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk))
-    def pd_name : String
-      self.["pdName"].as(String)
-    end
-
-    # :ditto:
-    def pd_name! : String
-      self.["pdName"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def pd_name? : String?
-      self.["pdName"]?.as(String?)
-    end
-
-    # :ditto:
-    def pd_name=(value : String)
-      self.["pdName"] = value
-    end
-
-    # ReadOnly here will force the ReadOnly setting in VolumeMounts. Defaults to false. More info: [[https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk](https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk)](https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk](https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk))
-    def read_only : ::Bool?
-      self.["readOnly"].as(::Bool?)
-    end
-
-    # :ditto:
-    def read_only! : ::Bool
-      self.["readOnly"].as(::Bool?).not_nil!
-    end
-
-    # :ditto:
-    def read_only? : ::Bool?
-      self.["readOnly"]?.as(::Bool?)
-    end
-
-    # :ditto:
-    def read_only=(value : ::Bool?)
-      self.["readOnly"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "fsType", accessor: "fs_type", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "partition", accessor: "partition", nilable: true, read_only: false, default: nil, kind: Int32 },
-        { key: "pdName", accessor: "pd_name", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "readOnly", accessor: "read_only", nilable: true, read_only: false, default: nil, kind: ::Bool },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "fsType", accessor: "fs_type", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "partition", accessor: "partition", nilable: true, read_only: false, default: nil, kind: Int32},
+      {key: "pdName", accessor: "pd_name", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "readOnly", accessor: "read_only", nilable: true, read_only: false, default: nil, kind: ::Bool},
+    ])
   end
 end

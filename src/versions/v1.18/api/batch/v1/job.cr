@@ -13,13 +13,13 @@ module K8S
   # Namespace holding the types for `Api::Batch::V1::Job`.
   module Types::Api::Batch::V1::Job
     # APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)))
-    abstract def api_version : String
+    abstract def api_version : String?
     # :ditto:
     abstract def api_version! : String
     # :ditto:
     abstract def api_version? : String?
     # Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)))
-    abstract def kind : String
+    abstract def kind : String?
     # :ditto:
     abstract def kind! : String
     # :ditto:
@@ -31,7 +31,7 @@ module K8S
     # :ditto:
     abstract def metadata? : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?
     # :ditto:
-    abstract def metadata=(value : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?)
+    abstract def metadata=(value : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta)
     # Specification of the desired behavior of a job. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status))
     abstract def spec : ::K8S::Api::Batch::V1::JobSpec?
     # :ditto:
@@ -39,7 +39,7 @@ module K8S
     # :ditto:
     abstract def spec? : ::K8S::Api::Batch::V1::JobSpec?
     # :ditto:
-    abstract def spec=(value : ::K8S::Api::Batch::V1::JobSpec?)
+    abstract def spec=(value : ::K8S::Api::Batch::V1::JobSpec)
     # Current status of a job. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status))
     abstract def status : ::K8S::Api::Batch::V1::JobStatus?
     # :ditto:
@@ -47,7 +47,7 @@ module K8S
     # :ditto:
     abstract def status? : ::K8S::Api::Batch::V1::JobStatus?
     # :ditto:
-    abstract def status=(value : ::K8S::Api::Batch::V1::JobStatus?)
+    abstract def status=(value : ::K8S::Api::Batch::V1::JobStatus)
   end
 
   # Job represents the configuration of a single job.
@@ -61,108 +61,30 @@ module K8S
   )]
   class Api::Batch::V1::Job < ::K8S::Kubernetes::Resource::Object
     include ::K8S::Types::Api::Batch::V1::Job
+    k8s_object_accessor("apiVersion", api_version : String = "batch/v1", false, true, "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources))")
+    k8s_object_accessor("kind", kind : String = "Job", false, true, "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds))")
+    k8s_object_accessor("metadata", metadata : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta, true, false, "Standard object's metadata. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata))")
+    k8s_object_accessor("spec", spec : ::K8S::Api::Batch::V1::JobSpec, true, false, "Specification of the desired behavior of a job. More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status)")
+    k8s_object_accessor("status", status : ::K8S::Api::Batch::V1::JobStatus, true, false, "Current status of a job. More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status)")
 
-    # APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)))
-    def api_version : String
-      self.["apiVersion"] = "batch/v1" unless self.["apiVersion"]?
-      self.["apiVersion"].as(String)
+    def initialize(*, api_version : String? = "batch/v1", kind : String? = "Job", metadata : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta? = nil, spec : ::K8S::Api::Batch::V1::JobSpec? = nil, status : ::K8S::Api::Batch::V1::JobStatus? = nil)
+      super()
+      raise "api_version cannot be nil" if api_version.nil?
+      self.["apiVersion"] = api_version
+      raise "kind cannot be nil" if kind.nil?
+      self.["kind"] = kind
+      self.["metadata"] = metadata
+      self.["spec"] = spec
+      self.["status"] = status
     end
 
-    # :ditto:
-    def api_version! : String
-      self.["apiVersion"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def api_version? : String?
-      self.["apiVersion"]?.as(String?)
-    end
-
-    # Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)))
-    def kind : String
-      self.["kind"] = "Job" unless self.["kind"]?
-      self.["kind"].as(String)
-    end
-
-    # :ditto:
-    def kind! : String
-      self.["kind"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def kind? : String?
-      self.["kind"]?.as(String?)
-    end
-
-    # Standard object's metadata. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)))
-    def metadata : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?
-      self.["metadata"].as(::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?)
-    end
-
-    # :ditto:
-    def metadata! : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta
-      self.["metadata"].as(::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?).not_nil!
-    end
-
-    # :ditto:
-    def metadata? : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?
-      self.["metadata"]?.as(::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?)
-    end
-
-    # :ditto:
-    def metadata=(value : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?)
-      self.["metadata"] = value
-    end
-
-    # Specification of the desired behavior of a job. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status))
-    def spec : ::K8S::Api::Batch::V1::JobSpec?
-      self.["spec"].as(::K8S::Api::Batch::V1::JobSpec?)
-    end
-
-    # :ditto:
-    def spec! : ::K8S::Api::Batch::V1::JobSpec
-      self.["spec"].as(::K8S::Api::Batch::V1::JobSpec?).not_nil!
-    end
-
-    # :ditto:
-    def spec? : ::K8S::Api::Batch::V1::JobSpec?
-      self.["spec"]?.as(::K8S::Api::Batch::V1::JobSpec?)
-    end
-
-    # :ditto:
-    def spec=(value : ::K8S::Api::Batch::V1::JobSpec?)
-      self.["spec"] = value
-    end
-
-    # Current status of a job. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status))
-    def status : ::K8S::Api::Batch::V1::JobStatus?
-      self.["status"].as(::K8S::Api::Batch::V1::JobStatus?)
-    end
-
-    # :ditto:
-    def status! : ::K8S::Api::Batch::V1::JobStatus
-      self.["status"].as(::K8S::Api::Batch::V1::JobStatus?).not_nil!
-    end
-
-    # :ditto:
-    def status? : ::K8S::Api::Batch::V1::JobStatus?
-      self.["status"]?.as(::K8S::Api::Batch::V1::JobStatus?)
-    end
-
-    # :ditto:
-    def status=(value : ::K8S::Api::Batch::V1::JobStatus?)
-      self.["status"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "apiVersion", accessor: "api_version", nilable: false, read_only: true, default: "batch/v1", kind: String },
-        { key: "kind", accessor: "kind", nilable: false, read_only: true, default: "Job", kind: String },
-        { key: "metadata", accessor: "metadata", nilable: true, read_only: false, default: nil, kind: ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta },
-        { key: "spec", accessor: "spec", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Batch::V1::JobSpec },
-        { key: "status", accessor: "status", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Batch::V1::JobStatus },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "apiVersion", accessor: "api_version", nilable: false, read_only: true, default: "batch/v1", kind: String},
+      {key: "kind", accessor: "kind", nilable: false, read_only: true, default: "Job", kind: String},
+      {key: "metadata", accessor: "metadata", nilable: true, read_only: false, default: nil, kind: ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta},
+      {key: "spec", accessor: "spec", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Batch::V1::JobSpec},
+      {key: "status", accessor: "status", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Batch::V1::JobStatus},
+    ])
   end
 
   module Resources::Batch::V1

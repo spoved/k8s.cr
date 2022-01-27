@@ -3,8 +3,8 @@
 require "yaml"
 require "json"
 
-module K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSON; end
+module K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::Json; end
 
 module K8S
-  alias ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JSON = ::JSON::Any::Type
+  alias ApiextensionsApiserver::Apis::Apiextensions::V1beta1::Json = ::JSON::Any::Type
 end

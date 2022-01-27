@@ -17,7 +17,7 @@ module K8S
     # :ditto:
     abstract def hostname? : String?
     # :ditto:
-    abstract def hostname=(value : String?)
+    abstract def hostname=(value : String)
     # IP is set for load-balancer ingress points that are IP based (typically GCE or OpenStack load-balancers)
     abstract def ip : String?
     # :ditto:
@@ -25,7 +25,7 @@ module K8S
     # :ditto:
     abstract def ip? : String?
     # :ditto:
-    abstract def ip=(value : String?)
+    abstract def ip=(value : String)
     # Ports is a list of records of service ports If used, every port defined in the service should have an entry in it
     abstract def ports : ::Array(::K8S::Api::Core::V1::PortStatus)?
     # :ditto:
@@ -33,7 +33,7 @@ module K8S
     # :ditto:
     abstract def ports? : ::Array(::K8S::Api::Core::V1::PortStatus)?
     # :ditto:
-    abstract def ports=(value : ::Array(::K8S::Api::Core::V1::PortStatus)?)
+    abstract def ports=(value : ::Array(::K8S::Api::Core::V1::PortStatus))
   end
 
   # LoadBalancerIngress represents the status of a load-balancer ingress point: traffic intended for the service should be sent to an ingress point.
@@ -44,73 +44,21 @@ module K8S
   )]
   class Api::Core::V1::LoadBalancerIngress < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::LoadBalancerIngress
+    k8s_object_accessor("hostname", hostname : String, true, false, "Hostname is set for load-balancer ingress points that are DNS based (typically AWS load-balancers)")
+    k8s_object_accessor("ip", ip : String, true, false, "IP is set for load-balancer ingress points that are IP based (typically GCE or OpenStack load-balancers)")
+    k8s_object_accessor("ports", ports : ::Array(::K8S::Api::Core::V1::PortStatus), true, false, "Ports is a list of records of service ports If used, every port defined in the service should have an entry in it")
 
-    # Hostname is set for load-balancer ingress points that are DNS based (typically AWS load-balancers)
-    def hostname : String?
-      self.["hostname"].as(String?)
+    def initialize(*, hostname : String? = nil, ip : String? = nil, ports : ::Array(::K8S::Api::Core::V1::PortStatus)? = nil)
+      super()
+      self.["hostname"] = hostname
+      self.["ip"] = ip
+      self.["ports"] = ports
     end
 
-    # :ditto:
-    def hostname! : String
-      self.["hostname"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def hostname? : String?
-      self.["hostname"]?.as(String?)
-    end
-
-    # :ditto:
-    def hostname=(value : String?)
-      self.["hostname"] = value
-    end
-
-    # IP is set for load-balancer ingress points that are IP based (typically GCE or OpenStack load-balancers)
-    def ip : String?
-      self.["ip"].as(String?)
-    end
-
-    # :ditto:
-    def ip! : String
-      self.["ip"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def ip? : String?
-      self.["ip"]?.as(String?)
-    end
-
-    # :ditto:
-    def ip=(value : String?)
-      self.["ip"] = value
-    end
-
-    # Ports is a list of records of service ports If used, every port defined in the service should have an entry in it
-    def ports : ::Array(::K8S::Api::Core::V1::PortStatus)?
-      self.["ports"].as(::Array(::K8S::Api::Core::V1::PortStatus)?)
-    end
-
-    # :ditto:
-    def ports! : ::Array(::K8S::Api::Core::V1::PortStatus)
-      self.["ports"].as(::Array(::K8S::Api::Core::V1::PortStatus)?).not_nil!
-    end
-
-    # :ditto:
-    def ports? : ::Array(::K8S::Api::Core::V1::PortStatus)?
-      self.["ports"]?.as(::Array(::K8S::Api::Core::V1::PortStatus)?)
-    end
-
-    # :ditto:
-    def ports=(value : ::Array(::K8S::Api::Core::V1::PortStatus)?)
-      self.["ports"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "hostname", accessor: "hostname", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "ip", accessor: "ip", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "ports", accessor: "ports", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::PortStatus) },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "hostname", accessor: "hostname", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "ip", accessor: "ip", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "ports", accessor: "ports", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::PortStatus)},
+    ])
   end
 end

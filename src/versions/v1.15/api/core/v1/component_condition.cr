@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def error? : String?
     # :ditto:
-    abstract def error=(value : String?)
+    abstract def error=(value : String)
     # Message about the condition for a component. For example, information about a health check.
     abstract def message : String?
     # :ditto:
@@ -23,9 +23,9 @@ module K8S
     # :ditto:
     abstract def message? : String?
     # :ditto:
-    abstract def message=(value : String?)
+    abstract def message=(value : String)
     # Status of the condition for a component. Valid values for "Healthy": "True", "False", or "Unknown".
-    abstract def status : String
+    abstract def status : String?
     # :ditto:
     abstract def status! : String
     # :ditto:
@@ -33,7 +33,7 @@ module K8S
     # :ditto:
     abstract def status=(value : String)
     # Type of condition for a component. Valid value: "Healthy"
-    abstract def type : String
+    abstract def type : String?
     # :ditto:
     abstract def type! : String
     # :ditto:
@@ -51,94 +51,24 @@ module K8S
   )]
   class Api::Core::V1::ComponentCondition < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::ComponentCondition
+    k8s_object_accessor("error", error : String, true, false, "Condition error code for a component. For example, a health check error code.")
+    k8s_object_accessor("message", message : String, true, false, "Message about the condition for a component. For example, information about a health check.")
+    k8s_object_accessor("status", status : String, false, false, "Status of the condition for a component. Valid values for \"Healthy\": \"True\", \"False\", or \"Unknown\".")
+    k8s_object_accessor("type", type : String, false, false, "Type of condition for a component. Valid value: \"Healthy\"")
 
-    # Condition error code for a component. For example, a health check error code.
-    def error : String?
-      self.["error"].as(String?)
+    def initialize(*, error : String? = nil, message : String? = nil, status : String? = nil, type : String? = nil)
+      super()
+      self.["error"] = error
+      self.["message"] = message
+      self.["status"] = status
+      self.["type"] = type
     end
 
-    # :ditto:
-    def error! : String
-      self.["error"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def error? : String?
-      self.["error"]?.as(String?)
-    end
-
-    # :ditto:
-    def error=(value : String?)
-      self.["error"] = value
-    end
-
-    # Message about the condition for a component. For example, information about a health check.
-    def message : String?
-      self.["message"].as(String?)
-    end
-
-    # :ditto:
-    def message! : String
-      self.["message"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def message? : String?
-      self.["message"]?.as(String?)
-    end
-
-    # :ditto:
-    def message=(value : String?)
-      self.["message"] = value
-    end
-
-    # Status of the condition for a component. Valid values for "Healthy": "True", "False", or "Unknown".
-    def status : String
-      self.["status"].as(String)
-    end
-
-    # :ditto:
-    def status! : String
-      self.["status"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def status? : String?
-      self.["status"]?.as(String?)
-    end
-
-    # :ditto:
-    def status=(value : String)
-      self.["status"] = value
-    end
-
-    # Type of condition for a component. Valid value: "Healthy"
-    def type : String
-      self.["type"].as(String)
-    end
-
-    # :ditto:
-    def type! : String
-      self.["type"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def type? : String?
-      self.["type"]?.as(String?)
-    end
-
-    # :ditto:
-    def type=(value : String)
-      self.["type"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "error", accessor: "error", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "message", accessor: "message", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "status", accessor: "status", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "type", accessor: "type", nilable: false, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "error", accessor: "error", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "message", accessor: "message", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "status", accessor: "status", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "type", accessor: "type", nilable: false, read_only: false, default: nil, kind: String},
+    ])
   end
 end

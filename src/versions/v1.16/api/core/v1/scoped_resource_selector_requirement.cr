@@ -9,7 +9,7 @@ module K8S
   # Namespace holding the types for `Api::Core::V1::ScopedResourceSelectorRequirement`.
   module Types::Api::Core::V1::ScopedResourceSelectorRequirement
     # Represents a scope's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist.
-    abstract def operator : String
+    abstract def operator : String?
     # :ditto:
     abstract def operator! : String
     # :ditto:
@@ -17,7 +17,7 @@ module K8S
     # :ditto:
     abstract def operator=(value : String)
     # The name of the scope that the selector applies to.
-    abstract def scope_name : String
+    abstract def scope_name : String?
     # :ditto:
     abstract def scope_name! : String
     # :ditto:
@@ -31,7 +31,7 @@ module K8S
     # :ditto:
     abstract def values? : ::Array(String)?
     # :ditto:
-    abstract def values=(value : ::Array(String)?)
+    abstract def values=(value : ::Array(String))
   end
 
   # A scoped-resource selector requirement is a selector that contains values, a scope name, and an operator that relates the scope name and values.
@@ -42,73 +42,21 @@ module K8S
   )]
   class Api::Core::V1::ScopedResourceSelectorRequirement < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::ScopedResourceSelectorRequirement
+    k8s_object_accessor("operator", operator : String, false, false, "Represents a scope's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist.")
+    k8s_object_accessor("scopeName", scope_name : String, false, false, "The name of the scope that the selector applies to.")
+    k8s_object_accessor("values", values : ::Array(String), true, false, "An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.")
 
-    # Represents a scope's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist.
-    def operator : String
-      self.["operator"].as(String)
+    def initialize(*, operator : String? = nil, scope_name : String? = nil, values : ::Array(String)? = nil)
+      super()
+      self.["operator"] = operator
+      self.["scopeName"] = scope_name
+      self.["values"] = values
     end
 
-    # :ditto:
-    def operator! : String
-      self.["operator"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def operator? : String?
-      self.["operator"]?.as(String?)
-    end
-
-    # :ditto:
-    def operator=(value : String)
-      self.["operator"] = value
-    end
-
-    # The name of the scope that the selector applies to.
-    def scope_name : String
-      self.["scopeName"].as(String)
-    end
-
-    # :ditto:
-    def scope_name! : String
-      self.["scopeName"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def scope_name? : String?
-      self.["scopeName"]?.as(String?)
-    end
-
-    # :ditto:
-    def scope_name=(value : String)
-      self.["scopeName"] = value
-    end
-
-    # An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
-    def values : ::Array(String)?
-      self.["values"].as(::Array(String)?)
-    end
-
-    # :ditto:
-    def values! : ::Array(String)
-      self.["values"].as(::Array(String)?).not_nil!
-    end
-
-    # :ditto:
-    def values? : ::Array(String)?
-      self.["values"]?.as(::Array(String)?)
-    end
-
-    # :ditto:
-    def values=(value : ::Array(String)?)
-      self.["values"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "operator", accessor: "operator", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "scopeName", accessor: "scope_name", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "values", accessor: "values", nilable: true, read_only: false, default: nil, kind: ::Array(String) },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "operator", accessor: "operator", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "scopeName", accessor: "scope_name", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "values", accessor: "values", nilable: true, read_only: false, default: nil, kind: ::Array(String)},
+    ])
   end
 end

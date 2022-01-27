@@ -9,7 +9,7 @@ module K8S
   # Namespace holding the types for `Api::Core::V1::NodeAddress`.
   module Types::Api::Core::V1::NodeAddress
     # The node address.
-    abstract def address : String
+    abstract def address : String?
     # :ditto:
     abstract def address! : String
     # :ditto:
@@ -17,7 +17,7 @@ module K8S
     # :ditto:
     abstract def address=(value : String)
     # Node address type, one of Hostname, ExternalIP or InternalIP.
-    abstract def type : String
+    abstract def type : String?
     # :ditto:
     abstract def type! : String
     # :ditto:
@@ -33,52 +33,18 @@ module K8S
   )]
   class Api::Core::V1::NodeAddress < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::NodeAddress
+    k8s_object_accessor("address", address : String, false, false, "The node address.")
+    k8s_object_accessor("type", type : String, false, false, "Node address type, one of Hostname, ExternalIP or InternalIP.")
 
-    # The node address.
-    def address : String
-      self.["address"].as(String)
+    def initialize(*, address : String? = nil, type : String? = nil)
+      super()
+      self.["address"] = address
+      self.["type"] = type
     end
 
-    # :ditto:
-    def address! : String
-      self.["address"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def address? : String?
-      self.["address"]?.as(String?)
-    end
-
-    # :ditto:
-    def address=(value : String)
-      self.["address"] = value
-    end
-
-    # Node address type, one of Hostname, ExternalIP or InternalIP.
-    def type : String
-      self.["type"].as(String)
-    end
-
-    # :ditto:
-    def type! : String
-      self.["type"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def type? : String?
-      self.["type"]?.as(String?)
-    end
-
-    # :ditto:
-    def type=(value : String)
-      self.["type"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "address", accessor: "address", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "type", accessor: "type", nilable: false, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "address", accessor: "address", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "type", accessor: "type", nilable: false, read_only: false, default: nil, kind: String},
+    ])
   end
 end

@@ -17,7 +17,7 @@ module K8S
     # :ditto:
     abstract def match_expressions? : ::Array(::K8S::Apimachinery::Apis::Meta::V1::LabelSelectorRequirement)?
     # :ditto:
-    abstract def match_expressions=(value : ::Array(::K8S::Apimachinery::Apis::Meta::V1::LabelSelectorRequirement)?)
+    abstract def match_expressions=(value : ::Array(::K8S::Apimachinery::Apis::Meta::V1::LabelSelectorRequirement))
     # matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
     abstract def match_labels : ::Hash(String, String)?
     # :ditto:
@@ -25,7 +25,7 @@ module K8S
     # :ditto:
     abstract def match_labels? : ::Hash(String, String)?
     # :ditto:
-    abstract def match_labels=(value : ::Hash(String, String)?)
+    abstract def match_labels=(value : ::Hash(String, String))
   end
 
   # A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all objects. A null label selector matches no objects.
@@ -35,52 +35,18 @@ module K8S
   )]
   class Apimachinery::Apis::Meta::V1::LabelSelector < ::K8S::GenericObject
     include ::K8S::Types::Apimachinery::Apis::Meta::V1::LabelSelector
+    k8s_object_accessor("matchExpressions", match_expressions : ::Array(::K8S::Apimachinery::Apis::Meta::V1::LabelSelectorRequirement), true, false, "matchExpressions is a list of label selector requirements. The requirements are ANDed.")
+    k8s_object_accessor("matchLabels", match_labels : ::Hash(String, String), true, false, "matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is \"key\", the operator is \"In\", and the values array contains only \"value\". The requirements are ANDed.")
 
-    # matchExpressions is a list of label selector requirements. The requirements are ANDed.
-    def match_expressions : ::Array(::K8S::Apimachinery::Apis::Meta::V1::LabelSelectorRequirement)?
-      self.["matchExpressions"].as(::Array(::K8S::Apimachinery::Apis::Meta::V1::LabelSelectorRequirement)?)
+    def initialize(*, match_expressions : ::Array(::K8S::Apimachinery::Apis::Meta::V1::LabelSelectorRequirement)? = nil, match_labels : ::Hash(String, String)? = nil)
+      super()
+      self.["matchExpressions"] = match_expressions
+      self.["matchLabels"] = match_labels
     end
 
-    # :ditto:
-    def match_expressions! : ::Array(::K8S::Apimachinery::Apis::Meta::V1::LabelSelectorRequirement)
-      self.["matchExpressions"].as(::Array(::K8S::Apimachinery::Apis::Meta::V1::LabelSelectorRequirement)?).not_nil!
-    end
-
-    # :ditto:
-    def match_expressions? : ::Array(::K8S::Apimachinery::Apis::Meta::V1::LabelSelectorRequirement)?
-      self.["matchExpressions"]?.as(::Array(::K8S::Apimachinery::Apis::Meta::V1::LabelSelectorRequirement)?)
-    end
-
-    # :ditto:
-    def match_expressions=(value : ::Array(::K8S::Apimachinery::Apis::Meta::V1::LabelSelectorRequirement)?)
-      self.["matchExpressions"] = value
-    end
-
-    # matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
-    def match_labels : ::Hash(String, String)?
-      self.["matchLabels"].as(::Hash(String, String)?)
-    end
-
-    # :ditto:
-    def match_labels! : ::Hash(String, String)
-      self.["matchLabels"].as(::Hash(String, String)?).not_nil!
-    end
-
-    # :ditto:
-    def match_labels? : ::Hash(String, String)?
-      self.["matchLabels"]?.as(::Hash(String, String)?)
-    end
-
-    # :ditto:
-    def match_labels=(value : ::Hash(String, String)?)
-      self.["matchLabels"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "matchExpressions", accessor: "match_expressions", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Apimachinery::Apis::Meta::V1::LabelSelectorRequirement) },
-        { key: "matchLabels", accessor: "match_labels", nilable: true, read_only: false, default: nil, kind: ::Hash(String, String) },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "matchExpressions", accessor: "match_expressions", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Apimachinery::Apis::Meta::V1::LabelSelectorRequirement)},
+      {key: "matchLabels", accessor: "match_labels", nilable: true, read_only: false, default: nil, kind: ::Hash(String, String)},
+    ])
   end
 end

@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def add? : ::Array(String)?
     # :ditto:
-    abstract def add=(value : ::Array(String)?)
+    abstract def add=(value : ::Array(String))
     # Removed capabilities
     abstract def drop : ::Array(String)?
     # :ditto:
@@ -23,7 +23,7 @@ module K8S
     # :ditto:
     abstract def drop? : ::Array(String)?
     # :ditto:
-    abstract def drop=(value : ::Array(String)?)
+    abstract def drop=(value : ::Array(String))
   end
 
   # Adds and removes POSIX capabilities from running containers.
@@ -33,52 +33,18 @@ module K8S
   )]
   class Api::Core::V1::Capabilities < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::Capabilities
+    k8s_object_accessor("add", add : ::Array(String), true, false, "Added capabilities")
+    k8s_object_accessor("drop", drop : ::Array(String), true, false, "Removed capabilities")
 
-    # Added capabilities
-    def add : ::Array(String)?
-      self.["add"].as(::Array(String)?)
+    def initialize(*, add : ::Array(String)? = nil, drop : ::Array(String)? = nil)
+      super()
+      self.["add"] = add
+      self.["drop"] = drop
     end
 
-    # :ditto:
-    def add! : ::Array(String)
-      self.["add"].as(::Array(String)?).not_nil!
-    end
-
-    # :ditto:
-    def add? : ::Array(String)?
-      self.["add"]?.as(::Array(String)?)
-    end
-
-    # :ditto:
-    def add=(value : ::Array(String)?)
-      self.["add"] = value
-    end
-
-    # Removed capabilities
-    def drop : ::Array(String)?
-      self.["drop"].as(::Array(String)?)
-    end
-
-    # :ditto:
-    def drop! : ::Array(String)
-      self.["drop"].as(::Array(String)?).not_nil!
-    end
-
-    # :ditto:
-    def drop? : ::Array(String)?
-      self.["drop"]?.as(::Array(String)?)
-    end
-
-    # :ditto:
-    def drop=(value : ::Array(String)?)
-      self.["drop"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "add", accessor: "add", nilable: true, read_only: false, default: nil, kind: ::Array(String) },
-        { key: "drop", accessor: "drop", nilable: true, read_only: false, default: nil, kind: ::Array(String) },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "add", accessor: "add", nilable: true, read_only: false, default: nil, kind: ::Array(String)},
+      {key: "drop", accessor: "drop", nilable: true, read_only: false, default: nil, kind: ::Array(String)},
+    ])
   end
 end

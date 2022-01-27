@@ -15,9 +15,9 @@ module K8S
     # :ditto:
     abstract def fs_type? : String?
     # :ditto:
-    abstract def fs_type=(value : String?)
+    abstract def fs_type=(value : String)
     # ID that identifies Photon Controller persistent disk
-    abstract def pd_id : String
+    abstract def pd_id : String?
     # :ditto:
     abstract def pd_id! : String
     # :ditto:
@@ -33,52 +33,18 @@ module K8S
   )]
   class Api::Core::V1::PhotonPersistentDiskVolumeSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::PhotonPersistentDiskVolumeSource
+    k8s_object_accessor("fsType", fs_type : String, true, false, "Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. \"ext4\", \"xfs\", \"ntfs\". Implicitly inferred to be \"ext4\" if unspecified.")
+    k8s_object_accessor("pdID", pd_id : String, false, false, "ID that identifies Photon Controller persistent disk")
 
-    # Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified.
-    def fs_type : String?
-      self.["fsType"].as(String?)
+    def initialize(*, fs_type : String? = nil, pd_id : String? = nil)
+      super()
+      self.["fsType"] = fs_type
+      self.["pdID"] = pd_id
     end
 
-    # :ditto:
-    def fs_type! : String
-      self.["fsType"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def fs_type? : String?
-      self.["fsType"]?.as(String?)
-    end
-
-    # :ditto:
-    def fs_type=(value : String?)
-      self.["fsType"] = value
-    end
-
-    # ID that identifies Photon Controller persistent disk
-    def pd_id : String
-      self.["pdID"].as(String)
-    end
-
-    # :ditto:
-    def pd_id! : String
-      self.["pdID"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def pd_id? : String?
-      self.["pdID"]?.as(String?)
-    end
-
-    # :ditto:
-    def pd_id=(value : String)
-      self.["pdID"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "fsType", accessor: "fs_type", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "pdID", accessor: "pd_id", nilable: false, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "fsType", accessor: "fs_type", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "pdID", accessor: "pd_id", nilable: false, read_only: false, default: nil, kind: String},
+    ])
   end
 end

@@ -15,9 +15,9 @@ module K8S
     # :ditto:
     abstract def categories? : ::Array(String)?
     # :ditto:
-    abstract def categories=(value : ::Array(String)?)
+    abstract def categories=(value : ::Array(String))
     # kind is the serialized kind of the resource. It is normally CamelCase and singular. Custom resource instances will use this value as the `kind` attribute in API calls.
-    abstract def kind : String
+    abstract def kind : String?
     # :ditto:
     abstract def kind! : String
     # :ditto:
@@ -31,9 +31,9 @@ module K8S
     # :ditto:
     abstract def list_kind? : String?
     # :ditto:
-    abstract def list_kind=(value : String?)
+    abstract def list_kind=(value : String)
     # plural is the plural name of the resource to serve. The custom resources are served under [[`/apis/<group>/<version>/.../<plural>`. Must match the name of the CustomResourceDefinition (in the form `<names.plural>.<group>`). Must be all lowercase.](`/apis/<group>/<version>/.../<plural>`. Must match the name of the CustomResourceDefinition (in the form `<names.plural>.<group>`). Must be all lowercase.)]([`/apis/<group>/<version>/.../<plural>`. Must match the name of the CustomResourceDefinition (in the form `<names.plural>.<group>`). Must be all lowercase.](`/apis/<group>/<version>/.../<plural>`. Must match the name of the CustomResourceDefinition (in the form `<names.plural>.<group>`). Must be all lowercase.))
-    abstract def plural : String
+    abstract def plural : String?
     # :ditto:
     abstract def plural! : String
     # :ditto:
@@ -47,7 +47,7 @@ module K8S
     # :ditto:
     abstract def short_names? : ::Array(String)?
     # :ditto:
-    abstract def short_names=(value : ::Array(String)?)
+    abstract def short_names=(value : ::Array(String))
     # singular is the singular name of the resource. It must be all lowercase. Defaults to lowercased `kind`.
     abstract def singular : String?
     # :ditto:
@@ -55,7 +55,7 @@ module K8S
     # :ditto:
     abstract def singular? : String?
     # :ditto:
-    abstract def singular=(value : String?)
+    abstract def singular=(value : String)
   end
 
   # CustomResourceDefinitionNames indicates the names to serve this CustomResourceDefinition
@@ -69,136 +69,30 @@ module K8S
   )]
   class ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionNames < ::K8S::GenericObject
     include ::K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionNames
+    k8s_object_accessor("categories", categories : ::Array(String), true, false, "categories is a list of grouped resources this custom resource belongs to (e.g. 'all'). This is published in API discovery documents, and used by clients to support invocations like `kubectl get all`.")
+    k8s_object_accessor("kind", kind : String, false, false, "kind is the serialized kind of the resource. It is normally CamelCase and singular. Custom resource instances will use this value as the `kind` attribute in API calls.")
+    k8s_object_accessor("listKind", list_kind : String, true, false, "listKind is the serialized kind of the list for this resource. Defaults to \"`kind`List\".")
+    k8s_object_accessor("plural", plural : String, false, false, "plural is the plural name of the resource to serve. The custom resources are served under [`/apis/<group>/<version>/.../<plural>`. Must match the name of the CustomResourceDefinition (in the form `<names.plural>.<group>`). Must be all lowercase.](`/apis/<group>/<version>/.../<plural>`. Must match the name of the CustomResourceDefinition (in the form `<names.plural>.<group>`). Must be all lowercase.)")
+    k8s_object_accessor("shortNames", short_names : ::Array(String), true, false, "shortNames are short names for the resource, exposed in API discovery documents, and used by clients to support invocations like `kubectl get <shortname>`. It must be all lowercase.")
+    k8s_object_accessor("singular", singular : String, true, false, "singular is the singular name of the resource. It must be all lowercase. Defaults to lowercased `kind`.")
 
-    # categories is a list of grouped resources this custom resource belongs to (e.g. 'all'). This is published in API discovery documents, and used by clients to support invocations like `kubectl get all`.
-    def categories : ::Array(String)?
-      self.["categories"].as(::Array(String)?)
+    def initialize(*, categories : ::Array(String)? = nil, kind : String? = nil, list_kind : String? = nil, plural : String? = nil, short_names : ::Array(String)? = nil, singular : String? = nil)
+      super()
+      self.["categories"] = categories
+      self.["kind"] = kind
+      self.["listKind"] = list_kind
+      self.["plural"] = plural
+      self.["shortNames"] = short_names
+      self.["singular"] = singular
     end
 
-    # :ditto:
-    def categories! : ::Array(String)
-      self.["categories"].as(::Array(String)?).not_nil!
-    end
-
-    # :ditto:
-    def categories? : ::Array(String)?
-      self.["categories"]?.as(::Array(String)?)
-    end
-
-    # :ditto:
-    def categories=(value : ::Array(String)?)
-      self.["categories"] = value
-    end
-
-    # kind is the serialized kind of the resource. It is normally CamelCase and singular. Custom resource instances will use this value as the `kind` attribute in API calls.
-    def kind : String
-      self.["kind"].as(String)
-    end
-
-    # :ditto:
-    def kind! : String
-      self.["kind"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def kind? : String?
-      self.["kind"]?.as(String?)
-    end
-
-    # :ditto:
-    def kind=(value : String)
-      self.["kind"] = value
-    end
-
-    # listKind is the serialized kind of the list for this resource. Defaults to "`kind`List".
-    def list_kind : String?
-      self.["listKind"].as(String?)
-    end
-
-    # :ditto:
-    def list_kind! : String
-      self.["listKind"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def list_kind? : String?
-      self.["listKind"]?.as(String?)
-    end
-
-    # :ditto:
-    def list_kind=(value : String?)
-      self.["listKind"] = value
-    end
-
-    # plural is the plural name of the resource to serve. The custom resources are served under [[`/apis/<group>/<version>/.../<plural>`. Must match the name of the CustomResourceDefinition (in the form `<names.plural>.<group>`). Must be all lowercase.](`/apis/<group>/<version>/.../<plural>`. Must match the name of the CustomResourceDefinition (in the form `<names.plural>.<group>`). Must be all lowercase.)]([`/apis/<group>/<version>/.../<plural>`. Must match the name of the CustomResourceDefinition (in the form `<names.plural>.<group>`). Must be all lowercase.](`/apis/<group>/<version>/.../<plural>`. Must match the name of the CustomResourceDefinition (in the form `<names.plural>.<group>`). Must be all lowercase.))
-    def plural : String
-      self.["plural"].as(String)
-    end
-
-    # :ditto:
-    def plural! : String
-      self.["plural"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def plural? : String?
-      self.["plural"]?.as(String?)
-    end
-
-    # :ditto:
-    def plural=(value : String)
-      self.["plural"] = value
-    end
-
-    # shortNames are short names for the resource, exposed in API discovery documents, and used by clients to support invocations like `kubectl get <shortname>`. It must be all lowercase.
-    def short_names : ::Array(String)?
-      self.["shortNames"].as(::Array(String)?)
-    end
-
-    # :ditto:
-    def short_names! : ::Array(String)
-      self.["shortNames"].as(::Array(String)?).not_nil!
-    end
-
-    # :ditto:
-    def short_names? : ::Array(String)?
-      self.["shortNames"]?.as(::Array(String)?)
-    end
-
-    # :ditto:
-    def short_names=(value : ::Array(String)?)
-      self.["shortNames"] = value
-    end
-
-    # singular is the singular name of the resource. It must be all lowercase. Defaults to lowercased `kind`.
-    def singular : String?
-      self.["singular"].as(String?)
-    end
-
-    # :ditto:
-    def singular! : String
-      self.["singular"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def singular? : String?
-      self.["singular"]?.as(String?)
-    end
-
-    # :ditto:
-    def singular=(value : String?)
-      self.["singular"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "categories", accessor: "categories", nilable: true, read_only: false, default: nil, kind: ::Array(String) },
-        { key: "kind", accessor: "kind", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "listKind", accessor: "list_kind", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "plural", accessor: "plural", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "shortNames", accessor: "short_names", nilable: true, read_only: false, default: nil, kind: ::Array(String) },
-        { key: "singular", accessor: "singular", nilable: true, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "categories", accessor: "categories", nilable: true, read_only: false, default: nil, kind: ::Array(String)},
+      {key: "kind", accessor: "kind", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "listKind", accessor: "list_kind", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "plural", accessor: "plural", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "shortNames", accessor: "short_names", nilable: true, read_only: false, default: nil, kind: ::Array(String)},
+      {key: "singular", accessor: "singular", nilable: true, read_only: false, default: nil, kind: String},
+    ])
   end
 end

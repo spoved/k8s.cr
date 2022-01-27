@@ -12,13 +12,13 @@ module K8S
   # Namespace holding the types for `Api::Storage::V1alpha1::CSIStorageCapacity`.
   module Types::Api::Storage::V1alpha1::CSIStorageCapacity
     # APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)))
-    abstract def api_version : String
+    abstract def api_version : String?
     # :ditto:
     abstract def api_version! : String
     # :ditto:
     abstract def api_version? : String?
     # Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)))
-    abstract def kind : String
+    abstract def kind : String?
     # :ditto:
     abstract def kind! : String
     # :ditto:
@@ -30,7 +30,7 @@ module K8S
     # :ditto:
     abstract def metadata? : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?
     # :ditto:
-    abstract def metadata=(value : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?)
+    abstract def metadata=(value : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta)
     # Capacity is the value reported by the CSI driver in its GetCapacityResponse for a GetCapacityRequest with topology and parameters that match the previous fields.
     #
     # The semantic is currently (CSI spec 1.2) defined as: The available capacity, in bytes, of the storage that can be used to provision volumes. If not set, that information is currently unavailable and treated like zero capacity.
@@ -40,7 +40,7 @@ module K8S
     # :ditto:
     abstract def capacity? : ::Int32 | ::String?
     # :ditto:
-    abstract def capacity=(value : ::Int32 | ::String?)
+    abstract def capacity=(value : ::Int32 | ::String)
     # MaximumVolumeSize is the value reported by the CSI driver in its GetCapacityResponse for a GetCapacityRequest with topology and parameters that match the previous fields.
     #
     # This is defined since CSI spec 1.4.0 as the largest size that may be used in a CreateVolumeRequest.capacity_range.required_bytes field to create a volume with the same parameters as those in GetCapacityRequest. The corresponding value in the Kubernetes API is ResourceRequirements.Requests in a volume claim.
@@ -50,7 +50,7 @@ module K8S
     # :ditto:
     abstract def maximum_volume_size? : ::Int32 | ::String?
     # :ditto:
-    abstract def maximum_volume_size=(value : ::Int32 | ::String?)
+    abstract def maximum_volume_size=(value : ::Int32 | ::String)
     # NodeTopology defines which nodes have access to the storage for which capacity was reported. If not set, the storage is not accessible from any node in the cluster. If empty, the storage is accessible from all nodes. This field is immutable.
     abstract def node_topology : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?
     # :ditto:
@@ -58,9 +58,9 @@ module K8S
     # :ditto:
     abstract def node_topology? : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?
     # :ditto:
-    abstract def node_topology=(value : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?)
+    abstract def node_topology=(value : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector)
     # The name of the StorageClass that the reported capacity applies to. It must meet the same requirements as the name of a StorageClass object (non-empty, DNS subdomain). If that object no longer exists, the CSIStorageCapacity object is obsolete and should be removed by its creator. This field is immutable.
-    abstract def storage_class_name : String
+    abstract def storage_class_name : String?
     # :ditto:
     abstract def storage_class_name! : String
     # :ditto:
@@ -90,154 +90,36 @@ module K8S
   )]
   class Api::Storage::V1alpha1::CSIStorageCapacity < ::K8S::Kubernetes::Resource::Object
     include ::K8S::Types::Api::Storage::V1alpha1::CSIStorageCapacity
+    k8s_object_accessor("apiVersion", api_version : String = "storage/v1alpha1", false, true, "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources))")
+    k8s_object_accessor("kind", kind : String = "CSIStorageCapacity", false, true, "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds))")
+    k8s_object_accessor("metadata", metadata : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta, true, false, "Standard object's metadata. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata))")
+    k8s_object_accessor("capacity", capacity : ::Int32 | ::String, true, false, "Capacity is the value reported by the CSI driver in its GetCapacityResponse for a GetCapacityRequest with topology and parameters that match the previous fields.\n\nThe semantic is currently (CSI spec 1.2) defined as: The available capacity, in bytes, of the storage that can be used to provision volumes. If not set, that information is currently unavailable and treated like zero capacity.")
+    k8s_object_accessor("maximumVolumeSize", maximum_volume_size : ::Int32 | ::String, true, false, "MaximumVolumeSize is the value reported by the CSI driver in its GetCapacityResponse for a GetCapacityRequest with topology and parameters that match the previous fields.\n\nThis is defined since CSI spec 1.4.0 as the largest size that may be used in a CreateVolumeRequest.capacity_range.required_bytes field to create a volume with the same parameters as those in GetCapacityRequest. The corresponding value in the Kubernetes API is ResourceRequirements.Requests in a volume claim.")
+    k8s_object_accessor("nodeTopology", node_topology : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector, true, false, "NodeTopology defines which nodes have access to the storage for which capacity was reported. If not set, the storage is not accessible from any node in the cluster. If empty, the storage is accessible from all nodes. This field is immutable.")
+    k8s_object_accessor("storageClassName", storage_class_name : String, false, false, "The name of the StorageClass that the reported capacity applies to. It must meet the same requirements as the name of a StorageClass object (non-empty, DNS subdomain). If that object no longer exists, the CSIStorageCapacity object is obsolete and should be removed by its creator. This field is immutable.")
 
-    # APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)))
-    def api_version : String
-      self.["apiVersion"] = "storage/v1alpha1" unless self.["apiVersion"]?
-      self.["apiVersion"].as(String)
+    def initialize(*, api_version : String? = "storage/v1alpha1", kind : String? = "CSIStorageCapacity", metadata : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta? = nil, capacity : ::Int32 | ::String? = nil, maximum_volume_size : ::Int32 | ::String? = nil, node_topology : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector? = nil, storage_class_name : String? = nil)
+      super()
+      raise "api_version cannot be nil" if api_version.nil?
+      self.["apiVersion"] = api_version
+      raise "kind cannot be nil" if kind.nil?
+      self.["kind"] = kind
+      self.["metadata"] = metadata
+      self.["capacity"] = capacity
+      self.["maximumVolumeSize"] = maximum_volume_size
+      self.["nodeTopology"] = node_topology
+      self.["storageClassName"] = storage_class_name
     end
 
-    # :ditto:
-    def api_version! : String
-      self.["apiVersion"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def api_version? : String?
-      self.["apiVersion"]?.as(String?)
-    end
-
-    # Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)))
-    def kind : String
-      self.["kind"] = "CSIStorageCapacity" unless self.["kind"]?
-      self.["kind"].as(String)
-    end
-
-    # :ditto:
-    def kind! : String
-      self.["kind"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def kind? : String?
-      self.["kind"]?.as(String?)
-    end
-
-    # Standard object's metadata. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)))
-    def metadata : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?
-      self.["metadata"].as(::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?)
-    end
-
-    # :ditto:
-    def metadata! : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta
-      self.["metadata"].as(::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?).not_nil!
-    end
-
-    # :ditto:
-    def metadata? : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?
-      self.["metadata"]?.as(::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?)
-    end
-
-    # :ditto:
-    def metadata=(value : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?)
-      self.["metadata"] = value
-    end
-
-    # Capacity is the value reported by the CSI driver in its GetCapacityResponse for a GetCapacityRequest with topology and parameters that match the previous fields.
-    #
-    # The semantic is currently (CSI spec 1.2) defined as: The available capacity, in bytes, of the storage that can be used to provision volumes. If not set, that information is currently unavailable and treated like zero capacity.
-    def capacity : ::Int32 | ::String?
-      self.["capacity"].as(::Int32 | ::String?)
-    end
-
-    # :ditto:
-    def capacity! : ::Int32 | ::String
-      self.["capacity"].as(::Int32 | ::String?).not_nil!
-    end
-
-    # :ditto:
-    def capacity? : ::Int32 | ::String?
-      self.["capacity"]?.as(::Int32 | ::String?)
-    end
-
-    # :ditto:
-    def capacity=(value : ::Int32 | ::String?)
-      self.["capacity"] = value
-    end
-
-    # MaximumVolumeSize is the value reported by the CSI driver in its GetCapacityResponse for a GetCapacityRequest with topology and parameters that match the previous fields.
-    #
-    # This is defined since CSI spec 1.4.0 as the largest size that may be used in a CreateVolumeRequest.capacity_range.required_bytes field to create a volume with the same parameters as those in GetCapacityRequest. The corresponding value in the Kubernetes API is ResourceRequirements.Requests in a volume claim.
-    def maximum_volume_size : ::Int32 | ::String?
-      self.["maximumVolumeSize"].as(::Int32 | ::String?)
-    end
-
-    # :ditto:
-    def maximum_volume_size! : ::Int32 | ::String
-      self.["maximumVolumeSize"].as(::Int32 | ::String?).not_nil!
-    end
-
-    # :ditto:
-    def maximum_volume_size? : ::Int32 | ::String?
-      self.["maximumVolumeSize"]?.as(::Int32 | ::String?)
-    end
-
-    # :ditto:
-    def maximum_volume_size=(value : ::Int32 | ::String?)
-      self.["maximumVolumeSize"] = value
-    end
-
-    # NodeTopology defines which nodes have access to the storage for which capacity was reported. If not set, the storage is not accessible from any node in the cluster. If empty, the storage is accessible from all nodes. This field is immutable.
-    def node_topology : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?
-      self.["nodeTopology"].as(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?)
-    end
-
-    # :ditto:
-    def node_topology! : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector
-      self.["nodeTopology"].as(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?).not_nil!
-    end
-
-    # :ditto:
-    def node_topology? : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?
-      self.["nodeTopology"]?.as(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?)
-    end
-
-    # :ditto:
-    def node_topology=(value : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?)
-      self.["nodeTopology"] = value
-    end
-
-    # The name of the StorageClass that the reported capacity applies to. It must meet the same requirements as the name of a StorageClass object (non-empty, DNS subdomain). If that object no longer exists, the CSIStorageCapacity object is obsolete and should be removed by its creator. This field is immutable.
-    def storage_class_name : String
-      self.["storageClassName"].as(String)
-    end
-
-    # :ditto:
-    def storage_class_name! : String
-      self.["storageClassName"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def storage_class_name? : String?
-      self.["storageClassName"]?.as(String?)
-    end
-
-    # :ditto:
-    def storage_class_name=(value : String)
-      self.["storageClassName"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "apiVersion", accessor: "api_version", nilable: false, read_only: true, default: "storage/v1alpha1", kind: String },
-        { key: "kind", accessor: "kind", nilable: false, read_only: true, default: "CSIStorageCapacity", kind: String },
-        { key: "metadata", accessor: "metadata", nilable: true, read_only: false, default: nil, kind: ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta },
-        { key: "capacity", accessor: "capacity", nilable: true, read_only: false, default: nil, kind: ::Union(::Int32 | ::String) },
-        { key: "maximumVolumeSize", accessor: "maximum_volume_size", nilable: true, read_only: false, default: nil, kind: ::Union(::Int32 | ::String) },
-        { key: "nodeTopology", accessor: "node_topology", nilable: true, read_only: false, default: nil, kind: ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector },
-        { key: "storageClassName", accessor: "storage_class_name", nilable: false, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "apiVersion", accessor: "api_version", nilable: false, read_only: true, default: "storage/v1alpha1", kind: String},
+      {key: "kind", accessor: "kind", nilable: false, read_only: true, default: "CSIStorageCapacity", kind: String},
+      {key: "metadata", accessor: "metadata", nilable: true, read_only: false, default: nil, kind: ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta},
+      {key: "capacity", accessor: "capacity", nilable: true, read_only: false, default: nil, kind: ::Union(::Int32 | ::String)},
+      {key: "maximumVolumeSize", accessor: "maximum_volume_size", nilable: true, read_only: false, default: nil, kind: ::Union(::Int32 | ::String)},
+      {key: "nodeTopology", accessor: "node_topology", nilable: true, read_only: false, default: nil, kind: ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector},
+      {key: "storageClassName", accessor: "storage_class_name", nilable: false, read_only: false, default: nil, kind: String},
+    ])
   end
 
   module Resources::Storage::V1alpha1

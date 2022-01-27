@@ -15,7 +15,7 @@ module K8S
     #  - `"Exists"`
     #  - `"In"`
     #  - `"NotIn"`
-    abstract def operator : String
+    abstract def operator : String?
     # :ditto:
     abstract def operator! : String
     # :ditto:
@@ -31,7 +31,7 @@ module K8S
     #  - `"NotTerminating"` Match all pod objects where spec.activeDeadlineSeconds is nil
     #  - `"PriorityClass"` Match all pod objects that have priority class mentioned
     #  - `"Terminating"` Match all pod objects where spec.activeDeadlineSeconds >=0
-    abstract def scope_name : String
+    abstract def scope_name : String?
     # :ditto:
     abstract def scope_name! : String
     # :ditto:
@@ -45,7 +45,7 @@ module K8S
     # :ditto:
     abstract def values? : ::Array(String)?
     # :ditto:
-    abstract def values=(value : ::Array(String)?)
+    abstract def values=(value : ::Array(String))
   end
 
   # A scoped-resource selector requirement is a selector that contains values, a scope name, and an operator that relates the scope name and values.
@@ -56,87 +56,21 @@ module K8S
   )]
   class Api::Core::V1::ScopedResourceSelectorRequirement < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::ScopedResourceSelectorRequirement
+    k8s_object_accessor("operator", operator : String, false, false, "Represents a scope's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist.\n\nPossible enum values:\n - `\"DoesNotExist\"`\n - `\"Exists\"`\n - `\"In\"`\n - `\"NotIn\"`")
+    k8s_object_accessor("scopeName", scope_name : String, false, false, "The name of the scope that the selector applies to.\n\nPossible enum values:\n - `\"BestEffort\"` Match all pod objects that have best effort quality of service\n - `\"CrossNamespacePodAffinity\"` Match all pod objects that have cross-namespace pod (anti)affinity mentioned. This is a beta feature enabled by the PodAffinityNamespaceSelector feature flag.\n - `\"NotBestEffort\"` Match all pod objects that do not have best effort quality of service\n - `\"NotTerminating\"` Match all pod objects where spec.activeDeadlineSeconds is nil\n - `\"PriorityClass\"` Match all pod objects that have priority class mentioned\n - `\"Terminating\"` Match all pod objects where spec.activeDeadlineSeconds >=0")
+    k8s_object_accessor("values", values : ::Array(String), true, false, "An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.")
 
-    # Represents a scope's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist.
-    #
-    # Possible enum values:
-    #  - `"DoesNotExist"`
-    #  - `"Exists"`
-    #  - `"In"`
-    #  - `"NotIn"`
-    def operator : String
-      self.["operator"].as(String)
+    def initialize(*, operator : String? = nil, scope_name : String? = nil, values : ::Array(String)? = nil)
+      super()
+      self.["operator"] = operator
+      self.["scopeName"] = scope_name
+      self.["values"] = values
     end
 
-    # :ditto:
-    def operator! : String
-      self.["operator"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def operator? : String?
-      self.["operator"]?.as(String?)
-    end
-
-    # :ditto:
-    def operator=(value : String)
-      self.["operator"] = value
-    end
-
-    # The name of the scope that the selector applies to.
-    #
-    # Possible enum values:
-    #  - `"BestEffort"` Match all pod objects that have best effort quality of service
-    #  - `"CrossNamespacePodAffinity"` Match all pod objects that have cross-namespace pod (anti)affinity mentioned. This is a beta feature enabled by the PodAffinityNamespaceSelector feature flag.
-    #  - `"NotBestEffort"` Match all pod objects that do not have best effort quality of service
-    #  - `"NotTerminating"` Match all pod objects where spec.activeDeadlineSeconds is nil
-    #  - `"PriorityClass"` Match all pod objects that have priority class mentioned
-    #  - `"Terminating"` Match all pod objects where spec.activeDeadlineSeconds >=0
-    def scope_name : String
-      self.["scopeName"].as(String)
-    end
-
-    # :ditto:
-    def scope_name! : String
-      self.["scopeName"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def scope_name? : String?
-      self.["scopeName"]?.as(String?)
-    end
-
-    # :ditto:
-    def scope_name=(value : String)
-      self.["scopeName"] = value
-    end
-
-    # An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
-    def values : ::Array(String)?
-      self.["values"].as(::Array(String)?)
-    end
-
-    # :ditto:
-    def values! : ::Array(String)
-      self.["values"].as(::Array(String)?).not_nil!
-    end
-
-    # :ditto:
-    def values? : ::Array(String)?
-      self.["values"]?.as(::Array(String)?)
-    end
-
-    # :ditto:
-    def values=(value : ::Array(String)?)
-      self.["values"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "operator", accessor: "operator", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "scopeName", accessor: "scope_name", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "values", accessor: "values", nilable: true, read_only: false, default: nil, kind: ::Array(String) },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "operator", accessor: "operator", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "scopeName", accessor: "scope_name", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "values", accessor: "values", nilable: true, read_only: false, default: nil, kind: ::Array(String)},
+    ])
   end
 end

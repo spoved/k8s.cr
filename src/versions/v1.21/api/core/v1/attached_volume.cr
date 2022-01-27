@@ -9,7 +9,7 @@ module K8S
   # Namespace holding the types for `Api::Core::V1::AttachedVolume`.
   module Types::Api::Core::V1::AttachedVolume
     # DevicePath represents the device path where the volume should be available
-    abstract def device_path : String
+    abstract def device_path : String?
     # :ditto:
     abstract def device_path! : String
     # :ditto:
@@ -17,7 +17,7 @@ module K8S
     # :ditto:
     abstract def device_path=(value : String)
     # Name of the attached volume
-    abstract def name : String
+    abstract def name : String?
     # :ditto:
     abstract def name! : String
     # :ditto:
@@ -33,52 +33,18 @@ module K8S
   )]
   class Api::Core::V1::AttachedVolume < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::AttachedVolume
+    k8s_object_accessor("devicePath", device_path : String, false, false, "DevicePath represents the device path where the volume should be available")
+    k8s_object_accessor("name", name : String, false, false, "Name of the attached volume")
 
-    # DevicePath represents the device path where the volume should be available
-    def device_path : String
-      self.["devicePath"].as(String)
+    def initialize(*, device_path : String? = nil, name : String? = nil)
+      super()
+      self.["devicePath"] = device_path
+      self.["name"] = name
     end
 
-    # :ditto:
-    def device_path! : String
-      self.["devicePath"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def device_path? : String?
-      self.["devicePath"]?.as(String?)
-    end
-
-    # :ditto:
-    def device_path=(value : String)
-      self.["devicePath"] = value
-    end
-
-    # Name of the attached volume
-    def name : String
-      self.["name"].as(String)
-    end
-
-    # :ditto:
-    def name! : String
-      self.["name"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def name? : String?
-      self.["name"]?.as(String?)
-    end
-
-    # :ditto:
-    def name=(value : String)
-      self.["name"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "devicePath", accessor: "device_path", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "name", accessor: "name", nilable: false, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "devicePath", accessor: "device_path", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "name", accessor: "name", nilable: false, read_only: false, default: nil, kind: String},
+    ])
   end
 end

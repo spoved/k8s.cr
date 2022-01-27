@@ -9,7 +9,7 @@ module K8S
   # Namespace holding the types for `Api::Discovery::V1::ForZone`.
   module Types::Api::Discovery::V1::ForZone
     # name represents the name of the zone.
-    abstract def name : String
+    abstract def name : String?
     # :ditto:
     abstract def name! : String
     # :ditto:
@@ -24,31 +24,15 @@ module K8S
   )]
   class Api::Discovery::V1::ForZone < ::K8S::GenericObject
     include ::K8S::Types::Api::Discovery::V1::ForZone
+    k8s_object_accessor("name", name : String, false, false, "name represents the name of the zone.")
 
-    # name represents the name of the zone.
-    def name : String
-      self.["name"].as(String)
+    def initialize(*, name : String? = nil)
+      super()
+      self.["name"] = name
     end
 
-    # :ditto:
-    def name! : String
-      self.["name"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def name? : String?
-      self.["name"]?.as(String?)
-    end
-
-    # :ditto:
-    def name=(value : String)
-      self.["name"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "name", accessor: "name", nilable: false, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "name", accessor: "name", nilable: false, read_only: false, default: nil, kind: String},
+    ])
   end
 end

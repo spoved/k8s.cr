@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def message? : String?
     # :ditto:
-    abstract def message=(value : String?)
+    abstract def message=(value : String)
     # (brief) reason the container is not yet running.
     abstract def reason : String?
     # :ditto:
@@ -23,7 +23,7 @@ module K8S
     # :ditto:
     abstract def reason? : String?
     # :ditto:
-    abstract def reason=(value : String?)
+    abstract def reason=(value : String)
   end
 
   # ContainerStateWaiting is a waiting state of a container.
@@ -33,52 +33,18 @@ module K8S
   )]
   class Api::Core::V1::ContainerStateWaiting < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::ContainerStateWaiting
+    k8s_object_accessor("message", message : String, true, false, "Message regarding why the container is not yet running.")
+    k8s_object_accessor("reason", reason : String, true, false, "(brief) reason the container is not yet running.")
 
-    # Message regarding why the container is not yet running.
-    def message : String?
-      self.["message"].as(String?)
+    def initialize(*, message : String? = nil, reason : String? = nil)
+      super()
+      self.["message"] = message
+      self.["reason"] = reason
     end
 
-    # :ditto:
-    def message! : String
-      self.["message"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def message? : String?
-      self.["message"]?.as(String?)
-    end
-
-    # :ditto:
-    def message=(value : String?)
-      self.["message"] = value
-    end
-
-    # (brief) reason the container is not yet running.
-    def reason : String?
-      self.["reason"].as(String?)
-    end
-
-    # :ditto:
-    def reason! : String
-      self.["reason"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def reason? : String?
-      self.["reason"]?.as(String?)
-    end
-
-    # :ditto:
-    def reason=(value : String?)
-      self.["reason"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "message", accessor: "message", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "reason", accessor: "reason", nilable: true, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "message", accessor: "message", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "reason", accessor: "reason", nilable: true, read_only: false, default: nil, kind: String},
+    ])
   end
 end

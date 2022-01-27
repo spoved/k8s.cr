@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def medium? : String?
     # :ditto:
-    abstract def medium=(value : String?)
+    abstract def medium=(value : String)
     # Total amount of local storage required for this EmptyDir volume. The size limit is also applicable for memory medium. The maximum usage on memory medium EmptyDir would be the minimum value between the SizeLimit specified here and the sum of memory limits of all containers in a pod. The default is nil which means that the limit is undefined. More info: [[http://kubernetes.io/docs/user-guide/volumes#emptydir](http://kubernetes.io/docs/user-guide/volumes#emptydir)](http://kubernetes.io/docs/user-guide/volumes#emptydir](http://kubernetes.io/docs/user-guide/volumes#emptydir))
     abstract def size_limit : ::Int32 | ::String?
     # :ditto:
@@ -23,7 +23,7 @@ module K8S
     # :ditto:
     abstract def size_limit? : ::Int32 | ::String?
     # :ditto:
-    abstract def size_limit=(value : ::Int32 | ::String?)
+    abstract def size_limit=(value : ::Int32 | ::String)
   end
 
   # Represents an empty directory for a pod. Empty directory volumes support ownership management and SELinux relabeling.
@@ -33,52 +33,18 @@ module K8S
   )]
   class Api::Core::V1::EmptyDirVolumeSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::EmptyDirVolumeSource
+    k8s_object_accessor("medium", medium : String, true, false, "What type of storage medium should back this directory. The default is \"\" which means to use the node's default medium. Must be an empty string (default) or Memory. More info: [https://kubernetes.io/docs/concepts/storage/volumes#emptydir](https://kubernetes.io/docs/concepts/storage/volumes#emptydir)")
+    k8s_object_accessor("sizeLimit", size_limit : ::Int32 | ::String, true, false, "Total amount of local storage required for this EmptyDir volume. The size limit is also applicable for memory medium. The maximum usage on memory medium EmptyDir would be the minimum value between the SizeLimit specified here and the sum of memory limits of all containers in a pod. The default is nil which means that the limit is undefined. More info: [http://kubernetes.io/docs/user-guide/volumes#emptydir](http://kubernetes.io/docs/user-guide/volumes#emptydir)")
 
-    # What type of storage medium should back this directory. The default is "" which means to use the node's default medium. Must be an empty string (default) or Memory. More info: [[https://kubernetes.io/docs/concepts/storage/volumes#emptydir](https://kubernetes.io/docs/concepts/storage/volumes#emptydir)](https://kubernetes.io/docs/concepts/storage/volumes#emptydir](https://kubernetes.io/docs/concepts/storage/volumes#emptydir))
-    def medium : String?
-      self.["medium"].as(String?)
+    def initialize(*, medium : String? = nil, size_limit : ::Int32 | ::String? = nil)
+      super()
+      self.["medium"] = medium
+      self.["sizeLimit"] = size_limit
     end
 
-    # :ditto:
-    def medium! : String
-      self.["medium"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def medium? : String?
-      self.["medium"]?.as(String?)
-    end
-
-    # :ditto:
-    def medium=(value : String?)
-      self.["medium"] = value
-    end
-
-    # Total amount of local storage required for this EmptyDir volume. The size limit is also applicable for memory medium. The maximum usage on memory medium EmptyDir would be the minimum value between the SizeLimit specified here and the sum of memory limits of all containers in a pod. The default is nil which means that the limit is undefined. More info: [[http://kubernetes.io/docs/user-guide/volumes#emptydir](http://kubernetes.io/docs/user-guide/volumes#emptydir)](http://kubernetes.io/docs/user-guide/volumes#emptydir](http://kubernetes.io/docs/user-guide/volumes#emptydir))
-    def size_limit : ::Int32 | ::String?
-      self.["sizeLimit"].as(::Int32 | ::String?)
-    end
-
-    # :ditto:
-    def size_limit! : ::Int32 | ::String
-      self.["sizeLimit"].as(::Int32 | ::String?).not_nil!
-    end
-
-    # :ditto:
-    def size_limit? : ::Int32 | ::String?
-      self.["sizeLimit"]?.as(::Int32 | ::String?)
-    end
-
-    # :ditto:
-    def size_limit=(value : ::Int32 | ::String?)
-      self.["sizeLimit"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "medium", accessor: "medium", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "sizeLimit", accessor: "size_limit", nilable: true, read_only: false, default: nil, kind: ::Union(::Int32 | ::String) },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "medium", accessor: "medium", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "sizeLimit", accessor: "size_limit", nilable: true, read_only: false, default: nil, kind: ::Union(::Int32 | ::String)},
+    ])
   end
 end

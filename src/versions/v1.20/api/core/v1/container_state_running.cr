@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def started_at? : ::Time?
     # :ditto:
-    abstract def started_at=(value : ::Time?)
+    abstract def started_at=(value : ::Time)
   end
 
   # ContainerStateRunning is a running state of a container.
@@ -24,31 +24,15 @@ module K8S
   )]
   class Api::Core::V1::ContainerStateRunning < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::ContainerStateRunning
+    k8s_object_accessor("startedAt", started_at : ::Time, true, false, "Time at which the container was last (re-)started")
 
-    # Time at which the container was last (re-)started
-    def started_at : ::Time?
-      self.["startedAt"].as(::Time?)
+    def initialize(*, started_at : ::Time? = nil)
+      super()
+      self.["startedAt"] = started_at
     end
 
-    # :ditto:
-    def started_at! : ::Time
-      self.["startedAt"].as(::Time?).not_nil!
-    end
-
-    # :ditto:
-    def started_at? : ::Time?
-      self.["startedAt"]?.as(::Time?)
-    end
-
-    # :ditto:
-    def started_at=(value : ::Time?)
-      self.["startedAt"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "startedAt", accessor: "started_at", nilable: true, read_only: false, default: nil, kind: ::Time },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "startedAt", accessor: "started_at", nilable: true, read_only: false, default: nil, kind: ::Time},
+    ])
   end
 end

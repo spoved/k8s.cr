@@ -17,7 +17,7 @@ module K8S
     # :ditto:
     abstract def conditions? : ::Array(::K8S::Api::Core::V1::NamespaceCondition)?
     # :ditto:
-    abstract def conditions=(value : ::Array(::K8S::Api::Core::V1::NamespaceCondition)?)
+    abstract def conditions=(value : ::Array(::K8S::Api::Core::V1::NamespaceCondition))
     # Phase is the current lifecycle phase of the namespace. More info: [[https://kubernetes.io/docs/tasks/administer-cluster/namespaces/](https://kubernetes.io/docs/tasks/administer-cluster/namespaces/)](https://kubernetes.io/docs/tasks/administer-cluster/namespaces/](https://kubernetes.io/docs/tasks/administer-cluster/namespaces/))
     #
     # Possible enum values:
@@ -29,7 +29,7 @@ module K8S
     # :ditto:
     abstract def phase? : String?
     # :ditto:
-    abstract def phase=(value : String?)
+    abstract def phase=(value : String)
   end
 
   # NamespaceStatus is information about the current status of a Namespace.
@@ -39,56 +39,18 @@ module K8S
   )]
   class Api::Core::V1::NamespaceStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::NamespaceStatus
+    k8s_object_accessor("conditions", conditions : ::Array(::K8S::Api::Core::V1::NamespaceCondition), true, false, "Represents the latest available observations of a namespace's current state.")
+    k8s_object_accessor("phase", phase : String, true, false, "Phase is the current lifecycle phase of the namespace. More info: [https://kubernetes.io/docs/tasks/administer-cluster/namespaces/](https://kubernetes.io/docs/tasks/administer-cluster/namespaces/)\n\nPossible enum values:\n - `\"Active\"` means the namespace is available for use in the system\n - `\"Terminating\"` means the namespace is undergoing graceful termination")
 
-    # Represents the latest available observations of a namespace's current state.
-    def conditions : ::Array(::K8S::Api::Core::V1::NamespaceCondition)?
-      self.["conditions"].as(::Array(::K8S::Api::Core::V1::NamespaceCondition)?)
+    def initialize(*, conditions : ::Array(::K8S::Api::Core::V1::NamespaceCondition)? = nil, phase : String? = nil)
+      super()
+      self.["conditions"] = conditions
+      self.["phase"] = phase
     end
 
-    # :ditto:
-    def conditions! : ::Array(::K8S::Api::Core::V1::NamespaceCondition)
-      self.["conditions"].as(::Array(::K8S::Api::Core::V1::NamespaceCondition)?).not_nil!
-    end
-
-    # :ditto:
-    def conditions? : ::Array(::K8S::Api::Core::V1::NamespaceCondition)?
-      self.["conditions"]?.as(::Array(::K8S::Api::Core::V1::NamespaceCondition)?)
-    end
-
-    # :ditto:
-    def conditions=(value : ::Array(::K8S::Api::Core::V1::NamespaceCondition)?)
-      self.["conditions"] = value
-    end
-
-    # Phase is the current lifecycle phase of the namespace. More info: [[https://kubernetes.io/docs/tasks/administer-cluster/namespaces/](https://kubernetes.io/docs/tasks/administer-cluster/namespaces/)](https://kubernetes.io/docs/tasks/administer-cluster/namespaces/](https://kubernetes.io/docs/tasks/administer-cluster/namespaces/))
-    #
-    # Possible enum values:
-    #  - `"Active"` means the namespace is available for use in the system
-    #  - `"Terminating"` means the namespace is undergoing graceful termination
-    def phase : String?
-      self.["phase"].as(String?)
-    end
-
-    # :ditto:
-    def phase! : String
-      self.["phase"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def phase? : String?
-      self.["phase"]?.as(String?)
-    end
-
-    # :ditto:
-    def phase=(value : String?)
-      self.["phase"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "conditions", accessor: "conditions", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::NamespaceCondition) },
-        { key: "phase", accessor: "phase", nilable: true, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "conditions", accessor: "conditions", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::NamespaceCondition)},
+      {key: "phase", accessor: "phase", nilable: true, read_only: false, default: nil, kind: String},
+    ])
   end
 end

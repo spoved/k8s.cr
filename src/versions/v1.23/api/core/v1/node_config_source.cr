@@ -17,7 +17,7 @@ module K8S
     # :ditto:
     abstract def config_map? : ::K8S::Api::Core::V1::ConfigMapNodeConfigSource?
     # :ditto:
-    abstract def config_map=(value : ::K8S::Api::Core::V1::ConfigMapNodeConfigSource?)
+    abstract def config_map=(value : ::K8S::Api::Core::V1::ConfigMapNodeConfigSource)
   end
 
   # NodeConfigSource specifies a source of node configuration. Exactly one subfield (excluding metadata) must be non-nil. This API is deprecated since 1.22
@@ -26,31 +26,15 @@ module K8S
   )]
   class Api::Core::V1::NodeConfigSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::NodeConfigSource
+    k8s_object_accessor("configMap", config_map : ::K8S::Api::Core::V1::ConfigMapNodeConfigSource, true, false, "ConfigMap is a reference to a Node's ConfigMap")
 
-    # ConfigMap is a reference to a Node's ConfigMap
-    def config_map : ::K8S::Api::Core::V1::ConfigMapNodeConfigSource?
-      self.["configMap"].as(::K8S::Api::Core::V1::ConfigMapNodeConfigSource?)
+    def initialize(*, config_map : ::K8S::Api::Core::V1::ConfigMapNodeConfigSource? = nil)
+      super()
+      self.["configMap"] = config_map
     end
 
-    # :ditto:
-    def config_map! : ::K8S::Api::Core::V1::ConfigMapNodeConfigSource
-      self.["configMap"].as(::K8S::Api::Core::V1::ConfigMapNodeConfigSource?).not_nil!
-    end
-
-    # :ditto:
-    def config_map? : ::K8S::Api::Core::V1::ConfigMapNodeConfigSource?
-      self.["configMap"]?.as(::K8S::Api::Core::V1::ConfigMapNodeConfigSource?)
-    end
-
-    # :ditto:
-    def config_map=(value : ::K8S::Api::Core::V1::ConfigMapNodeConfigSource?)
-      self.["configMap"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "configMap", accessor: "config_map", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::ConfigMapNodeConfigSource },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "configMap", accessor: "config_map", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::ConfigMapNodeConfigSource},
+    ])
   end
 end

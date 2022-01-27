@@ -12,7 +12,7 @@ module K8S
   module Types::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceConversion
     # strategy specifies how custom resources are converted between versions. Allowed values are: - `None`: The converter only change the apiVersion and would not touch any other field in the custom resource. - `Webhook`: API Server will call to an external webhook to do the conversion. Additional information
     #   is needed for this option. This requires spec.preserveUnknownFields to be false, and spec.conversion.webhook to be set.
-    abstract def strategy : String
+    abstract def strategy : String?
     # :ditto:
     abstract def strategy! : String
     # :ditto:
@@ -26,7 +26,7 @@ module K8S
     # :ditto:
     abstract def webhook? : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::WebhookConversion?
     # :ditto:
-    abstract def webhook=(value : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::WebhookConversion?)
+    abstract def webhook=(value : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::WebhookConversion)
   end
 
   # CustomResourceConversion describes how to convert different versions of a CR.
@@ -36,53 +36,18 @@ module K8S
   )]
   class ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceConversion < ::K8S::GenericObject
     include ::K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceConversion
+    k8s_object_accessor("strategy", strategy : String, false, false, "strategy specifies how custom resources are converted between versions. Allowed values are: - `None`: The converter only change the apiVersion and would not touch any other field in the custom resource. - `Webhook`: API Server will call to an external webhook to do the conversion. Additional information\n  is needed for this option. This requires spec.preserveUnknownFields to be false, and spec.conversion.webhook to be set.")
+    k8s_object_accessor("webhook", webhook : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::WebhookConversion, true, false, "webhook describes how to call the conversion webhook. Required when `strategy` is set to `Webhook`.")
 
-    # strategy specifies how custom resources are converted between versions. Allowed values are: - `None`: The converter only change the apiVersion and would not touch any other field in the custom resource. - `Webhook`: API Server will call to an external webhook to do the conversion. Additional information
-    #   is needed for this option. This requires spec.preserveUnknownFields to be false, and spec.conversion.webhook to be set.
-    def strategy : String
-      self.["strategy"].as(String)
+    def initialize(*, strategy : String? = nil, webhook : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::WebhookConversion? = nil)
+      super()
+      self.["strategy"] = strategy
+      self.["webhook"] = webhook
     end
 
-    # :ditto:
-    def strategy! : String
-      self.["strategy"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def strategy? : String?
-      self.["strategy"]?.as(String?)
-    end
-
-    # :ditto:
-    def strategy=(value : String)
-      self.["strategy"] = value
-    end
-
-    # webhook describes how to call the conversion webhook. Required when `strategy` is set to `Webhook`.
-    def webhook : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::WebhookConversion?
-      self.["webhook"].as(::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::WebhookConversion?)
-    end
-
-    # :ditto:
-    def webhook! : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::WebhookConversion
-      self.["webhook"].as(::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::WebhookConversion?).not_nil!
-    end
-
-    # :ditto:
-    def webhook? : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::WebhookConversion?
-      self.["webhook"]?.as(::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::WebhookConversion?)
-    end
-
-    # :ditto:
-    def webhook=(value : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::WebhookConversion?)
-      self.["webhook"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "strategy", accessor: "strategy", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "webhook", accessor: "webhook", nilable: true, read_only: false, default: nil, kind: ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::WebhookConversion },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "strategy", accessor: "strategy", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "webhook", accessor: "webhook", nilable: true, read_only: false, default: nil, kind: ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::WebhookConversion},
+    ])
   end
 end

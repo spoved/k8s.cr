@@ -18,7 +18,7 @@ module K8S
     # :ditto:
     abstract def scale? : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresourceScale?
     # :ditto:
-    abstract def scale=(value : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresourceScale?)
+    abstract def scale=(value : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresourceScale)
     # Status denotes the status subresource for CustomResources
     abstract def status : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresourceStatus?
     # :ditto:
@@ -26,7 +26,7 @@ module K8S
     # :ditto:
     abstract def status? : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresourceStatus?
     # :ditto:
-    abstract def status=(value : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresourceStatus?)
+    abstract def status=(value : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresourceStatus)
   end
 
   # CustomResourceSubresources defines the status and scale subresources for CustomResources.
@@ -36,52 +36,18 @@ module K8S
   )]
   class ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresources < ::K8S::GenericObject
     include ::K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresources
+    k8s_object_accessor("scale", scale : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresourceScale, true, false, "Scale denotes the scale subresource for CustomResources")
+    k8s_object_accessor("status", status : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresourceStatus, true, false, "Status denotes the status subresource for CustomResources")
 
-    # Scale denotes the scale subresource for CustomResources
-    def scale : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresourceScale?
-      self.["scale"].as(::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresourceScale?)
+    def initialize(*, scale : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresourceScale? = nil, status : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresourceStatus? = nil)
+      super()
+      self.["scale"] = scale
+      self.["status"] = status
     end
 
-    # :ditto:
-    def scale! : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresourceScale
-      self.["scale"].as(::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresourceScale?).not_nil!
-    end
-
-    # :ditto:
-    def scale? : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresourceScale?
-      self.["scale"]?.as(::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresourceScale?)
-    end
-
-    # :ditto:
-    def scale=(value : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresourceScale?)
-      self.["scale"] = value
-    end
-
-    # Status denotes the status subresource for CustomResources
-    def status : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresourceStatus?
-      self.["status"].as(::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresourceStatus?)
-    end
-
-    # :ditto:
-    def status! : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresourceStatus
-      self.["status"].as(::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresourceStatus?).not_nil!
-    end
-
-    # :ditto:
-    def status? : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresourceStatus?
-      self.["status"]?.as(::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresourceStatus?)
-    end
-
-    # :ditto:
-    def status=(value : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresourceStatus?)
-      self.["status"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "scale", accessor: "scale", nilable: true, read_only: false, default: nil, kind: ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresourceScale },
-        { key: "status", accessor: "status", nilable: true, read_only: false, default: nil, kind: ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresourceStatus },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "scale", accessor: "scale", nilable: true, read_only: false, default: nil, kind: ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresourceScale},
+      {key: "status", accessor: "status", nilable: true, read_only: false, default: nil, kind: ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresourceStatus},
+    ])
   end
 end

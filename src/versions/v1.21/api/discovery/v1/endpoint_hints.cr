@@ -17,7 +17,7 @@ module K8S
     # :ditto:
     abstract def for_zones? : ::Array(::K8S::Api::Discovery::V1::ForZone)?
     # :ditto:
-    abstract def for_zones=(value : ::Array(::K8S::Api::Discovery::V1::ForZone)?)
+    abstract def for_zones=(value : ::Array(::K8S::Api::Discovery::V1::ForZone))
   end
 
   # EndpointHints provides hints describing how an endpoint should be consumed.
@@ -26,31 +26,15 @@ module K8S
   )]
   class Api::Discovery::V1::EndpointHints < ::K8S::GenericObject
     include ::K8S::Types::Api::Discovery::V1::EndpointHints
+    k8s_object_accessor("forZones", for_zones : ::Array(::K8S::Api::Discovery::V1::ForZone), true, false, "forZones indicates the zone(s) this endpoint should be consumed by to enable topology aware routing.")
 
-    # forZones indicates the zone(s) this endpoint should be consumed by to enable topology aware routing.
-    def for_zones : ::Array(::K8S::Api::Discovery::V1::ForZone)?
-      self.["forZones"].as(::Array(::K8S::Api::Discovery::V1::ForZone)?)
+    def initialize(*, for_zones : ::Array(::K8S::Api::Discovery::V1::ForZone)? = nil)
+      super()
+      self.["forZones"] = for_zones
     end
 
-    # :ditto:
-    def for_zones! : ::Array(::K8S::Api::Discovery::V1::ForZone)
-      self.["forZones"].as(::Array(::K8S::Api::Discovery::V1::ForZone)?).not_nil!
-    end
-
-    # :ditto:
-    def for_zones? : ::Array(::K8S::Api::Discovery::V1::ForZone)?
-      self.["forZones"]?.as(::Array(::K8S::Api::Discovery::V1::ForZone)?)
-    end
-
-    # :ditto:
-    def for_zones=(value : ::Array(::K8S::Api::Discovery::V1::ForZone)?)
-      self.["forZones"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "forZones", accessor: "for_zones", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Discovery::V1::ForZone) },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "forZones", accessor: "for_zones", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Discovery::V1::ForZone)},
+    ])
   end
 end

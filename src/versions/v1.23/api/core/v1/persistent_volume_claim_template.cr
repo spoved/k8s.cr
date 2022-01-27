@@ -18,9 +18,9 @@ module K8S
     # :ditto:
     abstract def metadata? : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?
     # :ditto:
-    abstract def metadata=(value : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?)
+    abstract def metadata=(value : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta)
     # The specification for the PersistentVolumeClaim. The entire content is copied unchanged into the PVC that gets created from this template. The same fields as in a PersistentVolumeClaim are also valid here.
-    abstract def spec : ::K8S::Api::Core::V1::PersistentVolumeClaimSpec
+    abstract def spec : ::K8S::Api::Core::V1::PersistentVolumeClaimSpec?
     # :ditto:
     abstract def spec! : ::K8S::Api::Core::V1::PersistentVolumeClaimSpec
     # :ditto:
@@ -36,52 +36,18 @@ module K8S
   )]
   class Api::Core::V1::PersistentVolumeClaimTemplate < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::PersistentVolumeClaimTemplate
+    k8s_object_accessor("metadata", metadata : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta, true, false, "May contain labels and annotations that will be copied into the PVC when creating it. No other fields are allowed and will be rejected during validation.")
+    k8s_object_accessor("spec", spec : ::K8S::Api::Core::V1::PersistentVolumeClaimSpec, false, false, "The specification for the PersistentVolumeClaim. The entire content is copied unchanged into the PVC that gets created from this template. The same fields as in a PersistentVolumeClaim are also valid here.")
 
-    # May contain labels and annotations that will be copied into the PVC when creating it. No other fields are allowed and will be rejected during validation.
-    def metadata : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?
-      self.["metadata"].as(::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?)
+    def initialize(*, metadata : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta? = nil, spec : ::K8S::Api::Core::V1::PersistentVolumeClaimSpec? = nil)
+      super()
+      self.["metadata"] = metadata
+      self.["spec"] = spec
     end
 
-    # :ditto:
-    def metadata! : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta
-      self.["metadata"].as(::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?).not_nil!
-    end
-
-    # :ditto:
-    def metadata? : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?
-      self.["metadata"]?.as(::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?)
-    end
-
-    # :ditto:
-    def metadata=(value : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?)
-      self.["metadata"] = value
-    end
-
-    # The specification for the PersistentVolumeClaim. The entire content is copied unchanged into the PVC that gets created from this template. The same fields as in a PersistentVolumeClaim are also valid here.
-    def spec : ::K8S::Api::Core::V1::PersistentVolumeClaimSpec
-      self.["spec"].as(::K8S::Api::Core::V1::PersistentVolumeClaimSpec)
-    end
-
-    # :ditto:
-    def spec! : ::K8S::Api::Core::V1::PersistentVolumeClaimSpec
-      self.["spec"].as(::K8S::Api::Core::V1::PersistentVolumeClaimSpec).not_nil!
-    end
-
-    # :ditto:
-    def spec? : ::K8S::Api::Core::V1::PersistentVolumeClaimSpec?
-      self.["spec"]?.as(::K8S::Api::Core::V1::PersistentVolumeClaimSpec?)
-    end
-
-    # :ditto:
-    def spec=(value : ::K8S::Api::Core::V1::PersistentVolumeClaimSpec)
-      self.["spec"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "metadata", accessor: "metadata", nilable: true, read_only: false, default: nil, kind: ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta },
-        { key: "spec", accessor: "spec", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::PersistentVolumeClaimSpec },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "metadata", accessor: "metadata", nilable: true, read_only: false, default: nil, kind: ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta},
+      {key: "spec", accessor: "spec", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::PersistentVolumeClaimSpec},
+    ])
   end
 end

@@ -18,7 +18,7 @@ module K8S
     # :ditto:
     abstract def scale? : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresourceScale?
     # :ditto:
-    abstract def scale=(value : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresourceScale?)
+    abstract def scale=(value : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresourceScale)
     # status indicates the custom resource should serve a [[`/status` subresource. When enabled: 1. requests to the custom resource primary endpoint ignore changes to the `status` stanza of the object. 2. requests to the custom resource `/status` subresource ignore changes to anything other than the `status` stanza of the object.](`/status` subresource. When enabled: 1. requests to the custom resource primary endpoint ignore changes to the `status` stanza of the object. 2. requests to the custom resource `/status` subresource ignore changes to anything other than the `status` stanza of the object.)]([`/status` subresource. When enabled: 1. requests to the custom resource primary endpoint ignore changes to the `status` stanza of the object. 2. requests to the custom resource `/status` subresource ignore changes to anything other than the `status` stanza of the object.](`/status` subresource. When enabled: 1. requests to the custom resource primary endpoint ignore changes to the `status` stanza of the object. 2. requests to the custom resource `/status` subresource ignore changes to anything other than the `status` stanza of the object.))
     abstract def status : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresourceStatus?
     # :ditto:
@@ -26,7 +26,7 @@ module K8S
     # :ditto:
     abstract def status? : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresourceStatus?
     # :ditto:
-    abstract def status=(value : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresourceStatus?)
+    abstract def status=(value : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresourceStatus)
   end
 
   # CustomResourceSubresources defines the status and scale subresources for CustomResources.
@@ -36,52 +36,18 @@ module K8S
   )]
   class ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresources < ::K8S::GenericObject
     include ::K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresources
+    k8s_object_accessor("scale", scale : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresourceScale, true, false, "scale indicates the custom resource should serve a [`/scale` subresource that returns an `autoscaling/v1` Scale object.](`/scale` subresource that returns an `autoscaling/v1` Scale object.)")
+    k8s_object_accessor("status", status : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresourceStatus, true, false, "status indicates the custom resource should serve a [`/status` subresource. When enabled: 1. requests to the custom resource primary endpoint ignore changes to the `status` stanza of the object. 2. requests to the custom resource `/status` subresource ignore changes to anything other than the `status` stanza of the object.](`/status` subresource. When enabled: 1. requests to the custom resource primary endpoint ignore changes to the `status` stanza of the object. 2. requests to the custom resource `/status` subresource ignore changes to anything other than the `status` stanza of the object.)")
 
-    # scale indicates the custom resource should serve a [[`/scale` subresource that returns an `autoscaling/v1` Scale object.](`/scale` subresource that returns an `autoscaling/v1` Scale object.)]([`/scale` subresource that returns an `autoscaling/v1` Scale object.](`/scale` subresource that returns an `autoscaling/v1` Scale object.))
-    def scale : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresourceScale?
-      self.["scale"].as(::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresourceScale?)
+    def initialize(*, scale : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresourceScale? = nil, status : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresourceStatus? = nil)
+      super()
+      self.["scale"] = scale
+      self.["status"] = status
     end
 
-    # :ditto:
-    def scale! : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresourceScale
-      self.["scale"].as(::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresourceScale?).not_nil!
-    end
-
-    # :ditto:
-    def scale? : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresourceScale?
-      self.["scale"]?.as(::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresourceScale?)
-    end
-
-    # :ditto:
-    def scale=(value : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresourceScale?)
-      self.["scale"] = value
-    end
-
-    # status indicates the custom resource should serve a [[`/status` subresource. When enabled: 1. requests to the custom resource primary endpoint ignore changes to the `status` stanza of the object. 2. requests to the custom resource `/status` subresource ignore changes to anything other than the `status` stanza of the object.](`/status` subresource. When enabled: 1. requests to the custom resource primary endpoint ignore changes to the `status` stanza of the object. 2. requests to the custom resource `/status` subresource ignore changes to anything other than the `status` stanza of the object.)]([`/status` subresource. When enabled: 1. requests to the custom resource primary endpoint ignore changes to the `status` stanza of the object. 2. requests to the custom resource `/status` subresource ignore changes to anything other than the `status` stanza of the object.](`/status` subresource. When enabled: 1. requests to the custom resource primary endpoint ignore changes to the `status` stanza of the object. 2. requests to the custom resource `/status` subresource ignore changes to anything other than the `status` stanza of the object.))
-    def status : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresourceStatus?
-      self.["status"].as(::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresourceStatus?)
-    end
-
-    # :ditto:
-    def status! : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresourceStatus
-      self.["status"].as(::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresourceStatus?).not_nil!
-    end
-
-    # :ditto:
-    def status? : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresourceStatus?
-      self.["status"]?.as(::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresourceStatus?)
-    end
-
-    # :ditto:
-    def status=(value : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresourceStatus?)
-      self.["status"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "scale", accessor: "scale", nilable: true, read_only: false, default: nil, kind: ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresourceScale },
-        { key: "status", accessor: "status", nilable: true, read_only: false, default: nil, kind: ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresourceStatus },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "scale", accessor: "scale", nilable: true, read_only: false, default: nil, kind: ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresourceScale},
+      {key: "status", accessor: "status", nilable: true, read_only: false, default: nil, kind: ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresourceStatus},
+    ])
   end
 end

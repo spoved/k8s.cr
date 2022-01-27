@@ -11,7 +11,7 @@ module K8S
   # Namespace holding the types for `Api::Core::V1::WeightedPodAffinityTerm`.
   module Types::Api::Core::V1::WeightedPodAffinityTerm
     # Required. A pod affinity term, associated with the corresponding weight.
-    abstract def pod_affinity_term : ::K8S::Api::Core::V1::PodAffinityTerm
+    abstract def pod_affinity_term : ::K8S::Api::Core::V1::PodAffinityTerm?
     # :ditto:
     abstract def pod_affinity_term! : ::K8S::Api::Core::V1::PodAffinityTerm
     # :ditto:
@@ -19,7 +19,7 @@ module K8S
     # :ditto:
     abstract def pod_affinity_term=(value : ::K8S::Api::Core::V1::PodAffinityTerm)
     # weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
-    abstract def weight : Int32
+    abstract def weight : Int32?
     # :ditto:
     abstract def weight! : Int32
     # :ditto:
@@ -35,52 +35,18 @@ module K8S
   )]
   class Api::Core::V1::WeightedPodAffinityTerm < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::WeightedPodAffinityTerm
+    k8s_object_accessor("podAffinityTerm", pod_affinity_term : ::K8S::Api::Core::V1::PodAffinityTerm, false, false, "Required. A pod affinity term, associated with the corresponding weight.")
+    k8s_object_accessor("weight", weight : Int32, false, false, "weight associated with matching the corresponding podAffinityTerm, in the range 1-100.")
 
-    # Required. A pod affinity term, associated with the corresponding weight.
-    def pod_affinity_term : ::K8S::Api::Core::V1::PodAffinityTerm
-      self.["podAffinityTerm"].as(::K8S::Api::Core::V1::PodAffinityTerm)
+    def initialize(*, pod_affinity_term : ::K8S::Api::Core::V1::PodAffinityTerm? = nil, weight : Int32? = nil)
+      super()
+      self.["podAffinityTerm"] = pod_affinity_term
+      self.["weight"] = weight
     end
 
-    # :ditto:
-    def pod_affinity_term! : ::K8S::Api::Core::V1::PodAffinityTerm
-      self.["podAffinityTerm"].as(::K8S::Api::Core::V1::PodAffinityTerm).not_nil!
-    end
-
-    # :ditto:
-    def pod_affinity_term? : ::K8S::Api::Core::V1::PodAffinityTerm?
-      self.["podAffinityTerm"]?.as(::K8S::Api::Core::V1::PodAffinityTerm?)
-    end
-
-    # :ditto:
-    def pod_affinity_term=(value : ::K8S::Api::Core::V1::PodAffinityTerm)
-      self.["podAffinityTerm"] = value
-    end
-
-    # weight associated with matching the corresponding podAffinityTerm, in the range 1-100.
-    def weight : Int32
-      self.["weight"].as(Int32)
-    end
-
-    # :ditto:
-    def weight! : Int32
-      self.["weight"].as(Int32).not_nil!
-    end
-
-    # :ditto:
-    def weight? : Int32?
-      self.["weight"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def weight=(value : Int32)
-      self.["weight"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "podAffinityTerm", accessor: "pod_affinity_term", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::PodAffinityTerm },
-        { key: "weight", accessor: "weight", nilable: false, read_only: false, default: nil, kind: Int32 },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "podAffinityTerm", accessor: "pod_affinity_term", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::PodAffinityTerm},
+      {key: "weight", accessor: "weight", nilable: false, read_only: false, default: nil, kind: Int32},
+    ])
   end
 end

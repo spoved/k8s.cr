@@ -12,7 +12,7 @@ module K8S
   # Namespace holding the types for `Api::Auditregistration::V1alpha1::Webhook`.
   module Types::Api::Auditregistration::V1alpha1::Webhook
     # ClientConfig holds the connection parameters for the webhook required
-    abstract def client_config : ::K8S::Api::Auditregistration::V1alpha1::WebhookClientConfig
+    abstract def client_config : ::K8S::Api::Auditregistration::V1alpha1::WebhookClientConfig?
     # :ditto:
     abstract def client_config! : ::K8S::Api::Auditregistration::V1alpha1::WebhookClientConfig
     # :ditto:
@@ -26,7 +26,7 @@ module K8S
     # :ditto:
     abstract def throttle? : ::K8S::Api::Auditregistration::V1alpha1::WebhookThrottleConfig?
     # :ditto:
-    abstract def throttle=(value : ::K8S::Api::Auditregistration::V1alpha1::WebhookThrottleConfig?)
+    abstract def throttle=(value : ::K8S::Api::Auditregistration::V1alpha1::WebhookThrottleConfig)
   end
 
   # Webhook holds the configuration of the webhook
@@ -36,52 +36,18 @@ module K8S
   )]
   class Api::Auditregistration::V1alpha1::Webhook < ::K8S::GenericObject
     include ::K8S::Types::Api::Auditregistration::V1alpha1::Webhook
+    k8s_object_accessor("clientConfig", client_config : ::K8S::Api::Auditregistration::V1alpha1::WebhookClientConfig, false, false, "ClientConfig holds the connection parameters for the webhook required")
+    k8s_object_accessor("throttle", throttle : ::K8S::Api::Auditregistration::V1alpha1::WebhookThrottleConfig, true, false, "Throttle holds the options for throttling the webhook")
 
-    # ClientConfig holds the connection parameters for the webhook required
-    def client_config : ::K8S::Api::Auditregistration::V1alpha1::WebhookClientConfig
-      self.["clientConfig"].as(::K8S::Api::Auditregistration::V1alpha1::WebhookClientConfig)
+    def initialize(*, client_config : ::K8S::Api::Auditregistration::V1alpha1::WebhookClientConfig? = nil, throttle : ::K8S::Api::Auditregistration::V1alpha1::WebhookThrottleConfig? = nil)
+      super()
+      self.["clientConfig"] = client_config
+      self.["throttle"] = throttle
     end
 
-    # :ditto:
-    def client_config! : ::K8S::Api::Auditregistration::V1alpha1::WebhookClientConfig
-      self.["clientConfig"].as(::K8S::Api::Auditregistration::V1alpha1::WebhookClientConfig).not_nil!
-    end
-
-    # :ditto:
-    def client_config? : ::K8S::Api::Auditregistration::V1alpha1::WebhookClientConfig?
-      self.["clientConfig"]?.as(::K8S::Api::Auditregistration::V1alpha1::WebhookClientConfig?)
-    end
-
-    # :ditto:
-    def client_config=(value : ::K8S::Api::Auditregistration::V1alpha1::WebhookClientConfig)
-      self.["clientConfig"] = value
-    end
-
-    # Throttle holds the options for throttling the webhook
-    def throttle : ::K8S::Api::Auditregistration::V1alpha1::WebhookThrottleConfig?
-      self.["throttle"].as(::K8S::Api::Auditregistration::V1alpha1::WebhookThrottleConfig?)
-    end
-
-    # :ditto:
-    def throttle! : ::K8S::Api::Auditregistration::V1alpha1::WebhookThrottleConfig
-      self.["throttle"].as(::K8S::Api::Auditregistration::V1alpha1::WebhookThrottleConfig?).not_nil!
-    end
-
-    # :ditto:
-    def throttle? : ::K8S::Api::Auditregistration::V1alpha1::WebhookThrottleConfig?
-      self.["throttle"]?.as(::K8S::Api::Auditregistration::V1alpha1::WebhookThrottleConfig?)
-    end
-
-    # :ditto:
-    def throttle=(value : ::K8S::Api::Auditregistration::V1alpha1::WebhookThrottleConfig?)
-      self.["throttle"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "clientConfig", accessor: "client_config", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Auditregistration::V1alpha1::WebhookClientConfig },
-        { key: "throttle", accessor: "throttle", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Auditregistration::V1alpha1::WebhookThrottleConfig },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "clientConfig", accessor: "client_config", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Auditregistration::V1alpha1::WebhookClientConfig},
+      {key: "throttle", accessor: "throttle", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Auditregistration::V1alpha1::WebhookThrottleConfig},
+    ])
   end
 end

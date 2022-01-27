@@ -9,7 +9,7 @@ module K8S
   # Namespace holding the types for `Api::Extensions::V1beta1::AllowedFlexVolume`.
   module Types::Api::Extensions::V1beta1::AllowedFlexVolume
     # driver is the name of the Flexvolume driver.
-    abstract def driver : String
+    abstract def driver : String?
     # :ditto:
     abstract def driver! : String
     # :ditto:
@@ -24,31 +24,15 @@ module K8S
   )]
   class Api::Extensions::V1beta1::AllowedFlexVolume < ::K8S::GenericObject
     include ::K8S::Types::Api::Extensions::V1beta1::AllowedFlexVolume
+    k8s_object_accessor("driver", driver : String, false, false, "driver is the name of the Flexvolume driver.")
 
-    # driver is the name of the Flexvolume driver.
-    def driver : String
-      self.["driver"].as(String)
+    def initialize(*, driver : String? = nil)
+      super()
+      self.["driver"] = driver
     end
 
-    # :ditto:
-    def driver! : String
-      self.["driver"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def driver? : String?
-      self.["driver"]?.as(String?)
-    end
-
-    # :ditto:
-    def driver=(value : String)
-      self.["driver"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "driver", accessor: "driver", nilable: false, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "driver", accessor: "driver", nilable: false, read_only: false, default: nil, kind: String},
+    ])
   end
 end

@@ -15,9 +15,9 @@ module K8S
     # :ditto:
     abstract def api_group? : String?
     # :ditto:
-    abstract def api_group=(value : String?)
+    abstract def api_group=(value : String)
     # Kind is the type of resource being referenced
-    abstract def kind : String
+    abstract def kind : String?
     # :ditto:
     abstract def kind! : String
     # :ditto:
@@ -25,7 +25,7 @@ module K8S
     # :ditto:
     abstract def kind=(value : String)
     # Name is the name of resource being referenced
-    abstract def name : String
+    abstract def name : String?
     # :ditto:
     abstract def name! : String
     # :ditto:
@@ -42,73 +42,21 @@ module K8S
   )]
   class Api::Core::V1::TypedLocalObjectReference < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::TypedLocalObjectReference
+    k8s_object_accessor("apiGroup", api_group : String, true, false, "APIGroup is the group for the resource being referenced. If APIGroup is not specified, the specified Kind must be in the core API group. For any other third-party types, APIGroup is required.")
+    k8s_object_accessor("kind", kind : String, false, false, "Kind is the type of resource being referenced")
+    k8s_object_accessor("name", name : String, false, false, "Name is the name of resource being referenced")
 
-    # APIGroup is the group for the resource being referenced. If APIGroup is not specified, the specified Kind must be in the core API group. For any other third-party types, APIGroup is required.
-    def api_group : String?
-      self.["apiGroup"].as(String?)
+    def initialize(*, api_group : String? = nil, kind : String? = nil, name : String? = nil)
+      super()
+      self.["apiGroup"] = api_group
+      self.["kind"] = kind
+      self.["name"] = name
     end
 
-    # :ditto:
-    def api_group! : String
-      self.["apiGroup"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def api_group? : String?
-      self.["apiGroup"]?.as(String?)
-    end
-
-    # :ditto:
-    def api_group=(value : String?)
-      self.["apiGroup"] = value
-    end
-
-    # Kind is the type of resource being referenced
-    def kind : String
-      self.["kind"].as(String)
-    end
-
-    # :ditto:
-    def kind! : String
-      self.["kind"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def kind? : String?
-      self.["kind"]?.as(String?)
-    end
-
-    # :ditto:
-    def kind=(value : String)
-      self.["kind"] = value
-    end
-
-    # Name is the name of resource being referenced
-    def name : String
-      self.["name"].as(String)
-    end
-
-    # :ditto:
-    def name! : String
-      self.["name"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def name? : String?
-      self.["name"]?.as(String?)
-    end
-
-    # :ditto:
-    def name=(value : String)
-      self.["name"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "apiGroup", accessor: "api_group", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "kind", accessor: "kind", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "name", accessor: "name", nilable: false, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "apiGroup", accessor: "api_group", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "kind", accessor: "kind", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "name", accessor: "name", nilable: false, read_only: false, default: nil, kind: String},
+    ])
   end
 end

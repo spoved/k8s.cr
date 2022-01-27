@@ -9,7 +9,7 @@ module K8S
   # Namespace holding the types for `Apimachinery::Apis::Meta::V1::Initializer`.
   module Types::Apimachinery::Apis::Meta::V1::Initializer
     # name of the process that is responsible for initializing this object.
-    abstract def name : String
+    abstract def name : String?
     # :ditto:
     abstract def name! : String
     # :ditto:
@@ -24,31 +24,15 @@ module K8S
   )]
   class Apimachinery::Apis::Meta::V1::Initializer < ::K8S::GenericObject
     include ::K8S::Types::Apimachinery::Apis::Meta::V1::Initializer
+    k8s_object_accessor("name", name : String, false, false, "name of the process that is responsible for initializing this object.")
 
-    # name of the process that is responsible for initializing this object.
-    def name : String
-      self.["name"].as(String)
+    def initialize(*, name : String? = nil)
+      super()
+      self.["name"] = name
     end
 
-    # :ditto:
-    def name! : String
-      self.["name"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def name? : String?
-      self.["name"]?.as(String?)
-    end
-
-    # :ditto:
-    def name=(value : String)
-      self.["name"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "name", accessor: "name", nilable: false, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "name", accessor: "name", nilable: false, read_only: false, default: nil, kind: String},
+    ])
   end
 end

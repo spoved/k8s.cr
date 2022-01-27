@@ -19,9 +19,9 @@ module K8S
     # :ditto:
     abstract def admission_review_versions? : ::Array(String)?
     # :ditto:
-    abstract def admission_review_versions=(value : ::Array(String)?)
+    abstract def admission_review_versions=(value : ::Array(String))
     # ClientConfig defines how to communicate with the hook. Required
-    abstract def client_config : ::K8S::Api::Admissionregistration::V1beta1::WebhookClientConfig
+    abstract def client_config : ::K8S::Api::Admissionregistration::V1beta1::WebhookClientConfig?
     # :ditto:
     abstract def client_config! : ::K8S::Api::Admissionregistration::V1beta1::WebhookClientConfig
     # :ditto:
@@ -35,7 +35,7 @@ module K8S
     # :ditto:
     abstract def failure_policy? : String?
     # :ditto:
-    abstract def failure_policy=(value : String?)
+    abstract def failure_policy=(value : String)
     # matchPolicy defines how the "rules" list is used to match incoming requests. Allowed values are "Exact" or "Equivalent".
     #
     # - Exact: match a request only if it exactly matches a specified rule. For example, if deployments can be modified via [[apps/v1, apps/v1beta1, and extensions/v1beta1, but "rules" only included `apiGroups:["apps"], apiVersions:["v1"], resources: ["deployments"]`, a request to apps/v1beta1 or extensions/v1beta1 would not be sent to the webhook.](apps/v1, apps/v1beta1, and extensions/v1beta1, but "rules" only included `apiGroups:["apps"], apiVersions:["v1"], resources: ["deployments"]`, a request to apps/v1beta1 or extensions/v1beta1 would not be sent to the webhook.)]([apps/v1, apps/v1beta1, and extensions/v1beta1, but "rules" only included `apiGroups:["apps"], apiVersions:["v1"], resources: ["deployments"]`, a request to apps/v1beta1 or extensions/v1beta1 would not be sent to the webhook.](apps/v1, apps/v1beta1, and extensions/v1beta1, but "rules" only included `apiGroups:["apps"], apiVersions:["v1"], resources: ["deployments"]`, a request to apps/v1beta1 or extensions/v1beta1 would not be sent to the webhook.))
@@ -49,9 +49,9 @@ module K8S
     # :ditto:
     abstract def match_policy? : String?
     # :ditto:
-    abstract def match_policy=(value : String?)
+    abstract def match_policy=(value : String)
     # The name of the admission webhook. Name should be fully qualified, e.g., imagepolicy.kubernetes.io, where "imagepolicy" is the name of the webhook, and kubernetes.io is the name of the organization. Required.
-    abstract def name : String
+    abstract def name : String?
     # :ditto:
     abstract def name! : String
     # :ditto:
@@ -95,7 +95,7 @@ module K8S
     # :ditto:
     abstract def namespace_selector? : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?
     # :ditto:
-    abstract def namespace_selector=(value : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?)
+    abstract def namespace_selector=(value : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector)
     # ObjectSelector decides whether to run the webhook based on if the object has matching labels. objectSelector is evaluated against both the oldObject and newObject that would be sent to the webhook, and is considered to match if either object matches the selector. A null object (oldObject in the case of create, or newObject in the case of delete) or an object that cannot have labels (like a DeploymentRollback or a PodProxyOptions object) is not considered to match. Use the object selector only if the webhook is opt-in, because end users may skip the admission webhook by setting the labels. Default to the empty LabelSelector, which matches everything.
     abstract def object_selector : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?
     # :ditto:
@@ -103,7 +103,7 @@ module K8S
     # :ditto:
     abstract def object_selector? : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?
     # :ditto:
-    abstract def object_selector=(value : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?)
+    abstract def object_selector=(value : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector)
     # reinvocationPolicy indicates whether this webhook should be called multiple times as part of a single admission evaluation. Allowed values are "Never" and "IfNeeded".
     #
     # Never: the webhook will not be called more than once in a single admission evaluation.
@@ -117,7 +117,7 @@ module K8S
     # :ditto:
     abstract def reinvocation_policy? : String?
     # :ditto:
-    abstract def reinvocation_policy=(value : String?)
+    abstract def reinvocation_policy=(value : String)
     # Rules describes what operations on what [[resources/subresources the webhook cares about. The webhook cares about an operation if it matches _any_ Rule. However, in order to prevent ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks from putting the cluster in a state which cannot be recovered from without completely disabling the plugin, ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks are never called on admission requests for ValidatingWebhookConfiguration and MutatingWebhookConfiguration objects.](resources/subresources the webhook cares about. The webhook cares about an operation if it matches _any_ Rule. However, in order to prevent ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks from putting the cluster in a state which cannot be recovered from without completely disabling the plugin, ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks are never called on admission requests for ValidatingWebhookConfiguration and MutatingWebhookConfiguration objects.)]([resources/subresources the webhook cares about. The webhook cares about an operation if it matches _any_ Rule. However, in order to prevent ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks from putting the cluster in a state which cannot be recovered from without completely disabling the plugin, ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks are never called on admission requests for ValidatingWebhookConfiguration and MutatingWebhookConfiguration objects.](resources/subresources the webhook cares about. The webhook cares about an operation if it matches _any_ Rule. However, in order to prevent ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks from putting the cluster in a state which cannot be recovered from without completely disabling the plugin, ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks are never called on admission requests for ValidatingWebhookConfiguration and MutatingWebhookConfiguration objects.))
     abstract def rules : ::Array(::K8S::Api::Admissionregistration::V1beta1::RuleWithOperations)?
     # :ditto:
@@ -125,7 +125,7 @@ module K8S
     # :ditto:
     abstract def rules? : ::Array(::K8S::Api::Admissionregistration::V1beta1::RuleWithOperations)?
     # :ditto:
-    abstract def rules=(value : ::Array(::K8S::Api::Admissionregistration::V1beta1::RuleWithOperations)?)
+    abstract def rules=(value : ::Array(::K8S::Api::Admissionregistration::V1beta1::RuleWithOperations))
     # SideEffects states whether this webhook has side effects. Acceptable values are: Unknown, None, Some, NoneOnDryRun Webhooks with side effects MUST implement a reconciliation system, since a request may be rejected by a future step in the admission change and the side effects therefore need to be undone. Requests with the dryRun attribute will be auto-rejected if they match a webhook with sideEffects == Unknown or Some. Defaults to Unknown.
     abstract def side_effects : String?
     # :ditto:
@@ -133,7 +133,7 @@ module K8S
     # :ditto:
     abstract def side_effects? : String?
     # :ditto:
-    abstract def side_effects=(value : String?)
+    abstract def side_effects=(value : String)
     # TimeoutSeconds specifies the timeout for this webhook. After the timeout passes, the webhook call will be ignored or the API call will fail based on the failure policy. The timeout value must be between 1 and 30 seconds. Default to 30 seconds.
     abstract def timeout_seconds : Int32?
     # :ditto:
@@ -141,7 +141,7 @@ module K8S
     # :ditto:
     abstract def timeout_seconds? : Int32?
     # :ditto:
-    abstract def timeout_seconds=(value : Int32?)
+    abstract def timeout_seconds=(value : Int32)
   end
 
   # MutatingWebhook describes an admission webhook and the resources and operations it applies to.
@@ -160,283 +160,45 @@ module K8S
   )]
   class Api::Admissionregistration::V1beta1::MutatingWebhook < ::K8S::GenericObject
     include ::K8S::Types::Api::Admissionregistration::V1beta1::MutatingWebhook
+    k8s_object_accessor("admissionReviewVersions", admission_review_versions : ::Array(String), true, false, "AdmissionReviewVersions is an ordered list of preferred `AdmissionReview` versions the Webhook expects. API server will try to use first version in the list which it supports. If none of the versions specified in this list supported by API server, validation will fail for this object. If a persisted webhook configuration specifies allowed versions and does not include any versions known to the API Server, calls to the webhook will fail and be subject to the failure policy. Default to `['v1beta1']`.")
+    k8s_object_accessor("clientConfig", client_config : ::K8S::Api::Admissionregistration::V1beta1::WebhookClientConfig, false, false, "ClientConfig defines how to communicate with the hook. Required")
+    k8s_object_accessor("failurePolicy", failure_policy : String, true, false, "FailurePolicy defines how unrecognized errors from the admission endpoint are handled - allowed values are Ignore or Fail. Defaults to Ignore.")
+    k8s_object_accessor("matchPolicy", match_policy : String, true, false, "matchPolicy defines how the \"rules\" list is used to match incoming requests. Allowed values are \"Exact\" or \"Equivalent\".\n\n- Exact: match a request only if it exactly matches a specified rule. For example, if deployments can be modified via [apps/v1, apps/v1beta1, and extensions/v1beta1, but \"rules\" only included `apiGroups:[\"apps\"], apiVersions:[\"v1\"], resources: [\"deployments\"]`, a request to apps/v1beta1 or extensions/v1beta1 would not be sent to the webhook.](apps/v1, apps/v1beta1, and extensions/v1beta1, but \"rules\" only included `apiGroups:[\"apps\"], apiVersions:[\"v1\"], resources: [\"deployments\"]`, a request to apps/v1beta1 or extensions/v1beta1 would not be sent to the webhook.)\n\n- Equivalent: match a request if modifies a resource listed in rules, even via another API group or version. For example, if deployments can be modified via [apps/v1, apps/v1beta1, and extensions/v1beta1, and \"rules\" only included `apiGroups:[\"apps\"], apiVersions:[\"v1\"], resources: [\"deployments\"]`, a request to apps/v1beta1 or extensions/v1beta1 would be converted to apps/v1 and sent to the webhook.](apps/v1, apps/v1beta1, and extensions/v1beta1, and \"rules\" only included `apiGroups:[\"apps\"], apiVersions:[\"v1\"], resources: [\"deployments\"]`, a request to apps/v1beta1 or extensions/v1beta1 would be converted to apps/v1 and sent to the webhook.)\n\nDefaults to \"Exact\"")
+    k8s_object_accessor("name", name : String, false, false, "The name of the admission webhook. Name should be fully qualified, e.g., imagepolicy.kubernetes.io, where \"imagepolicy\" is the name of the webhook, and kubernetes.io is the name of the organization. Required.")
+    k8s_object_accessor("namespaceSelector", namespace_selector : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector, true, false, "NamespaceSelector decides whether to run the webhook on an object based on whether the namespace for that object matches the selector. If the object itself is a namespace, the matching is performed on object.metadata.labels. If the object is another cluster scoped resource, it never skips the webhook.\n\nFor example, to run the webhook on any objects whose namespace is not associated with \"runlevel\" of \"0\" or \"1\";  you will set the selector as follows: \"namespaceSelector\": {\n  \"matchExpressions\": [\n    {\n      \"key\": \"runlevel\",\n      \"operator\": \"NotIn\",\n      \"values\": [\n        \"0\",\n        \"1\"\n      ]\n    }\n  ]\n}\n\nIf instead you want to only run the webhook on any objects whose namespace is associated with the \"environment\" of \"prod\" or \"staging\"; you will set the selector as follows: \"namespaceSelector\": {\n  \"matchExpressions\": [\n    {\n      \"key\": \"environment\",\n      \"operator\": \"In\",\n      \"values\": [\n        \"prod\",\n        \"staging\"\n      ]\n    }\n  ]\n}\n\nSee [https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/ for more examples of label selectors.](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/ for more examples of label selectors.)\n\nDefault to the empty LabelSelector, which matches everything.")
+    k8s_object_accessor("objectSelector", object_selector : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector, true, false, "ObjectSelector decides whether to run the webhook based on if the object has matching labels. objectSelector is evaluated against both the oldObject and newObject that would be sent to the webhook, and is considered to match if either object matches the selector. A null object (oldObject in the case of create, or newObject in the case of delete) or an object that cannot have labels (like a DeploymentRollback or a PodProxyOptions object) is not considered to match. Use the object selector only if the webhook is opt-in, because end users may skip the admission webhook by setting the labels. Default to the empty LabelSelector, which matches everything.")
+    k8s_object_accessor("reinvocationPolicy", reinvocation_policy : String, true, false, "reinvocationPolicy indicates whether this webhook should be called multiple times as part of a single admission evaluation. Allowed values are \"Never\" and \"IfNeeded\".\n\nNever: the webhook will not be called more than once in a single admission evaluation.\n\nIfNeeded: the webhook will be called at least one additional time as part of the admission evaluation if the object being admitted is modified by other admission plugins after the initial webhook call. Webhooks that specify this option *must* be idempotent, able to process objects they previously admitted. Note: * the number of additional invocations is not guaranteed to be exactly one. * if additional invocations result in further modifications to the object, webhooks are not guaranteed to be invoked again. * webhooks that use this option may be reordered to minimize the number of additional invocations. * to validate an object after all mutations are guaranteed complete, use a validating admission webhook instead.\n\nDefaults to \"Never\".")
+    k8s_object_accessor("rules", rules : ::Array(::K8S::Api::Admissionregistration::V1beta1::RuleWithOperations), true, false, "Rules describes what operations on what [resources/subresources the webhook cares about. The webhook cares about an operation if it matches _any_ Rule. However, in order to prevent ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks from putting the cluster in a state which cannot be recovered from without completely disabling the plugin, ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks are never called on admission requests for ValidatingWebhookConfiguration and MutatingWebhookConfiguration objects.](resources/subresources the webhook cares about. The webhook cares about an operation if it matches _any_ Rule. However, in order to prevent ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks from putting the cluster in a state which cannot be recovered from without completely disabling the plugin, ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks are never called on admission requests for ValidatingWebhookConfiguration and MutatingWebhookConfiguration objects.)")
+    k8s_object_accessor("sideEffects", side_effects : String, true, false, "SideEffects states whether this webhook has side effects. Acceptable values are: Unknown, None, Some, NoneOnDryRun Webhooks with side effects MUST implement a reconciliation system, since a request may be rejected by a future step in the admission change and the side effects therefore need to be undone. Requests with the dryRun attribute will be auto-rejected if they match a webhook with sideEffects == Unknown or Some. Defaults to Unknown.")
+    k8s_object_accessor("timeoutSeconds", timeout_seconds : Int32, true, false, "TimeoutSeconds specifies the timeout for this webhook. After the timeout passes, the webhook call will be ignored or the API call will fail based on the failure policy. The timeout value must be between 1 and 30 seconds. Default to 30 seconds.")
 
-    # AdmissionReviewVersions is an ordered list of preferred `AdmissionReview` versions the Webhook expects. API server will try to use first version in the list which it supports. If none of the versions specified in this list supported by API server, validation will fail for this object. If a persisted webhook configuration specifies allowed versions and does not include any versions known to the API Server, calls to the webhook will fail and be subject to the failure policy. Default to `['v1beta1']`.
-    def admission_review_versions : ::Array(String)?
-      self.["admissionReviewVersions"].as(::Array(String)?)
+    def initialize(*, admission_review_versions : ::Array(String)? = nil, client_config : ::K8S::Api::Admissionregistration::V1beta1::WebhookClientConfig? = nil, failure_policy : String? = nil, match_policy : String? = nil, name : String? = nil, namespace_selector : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector? = nil, object_selector : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector? = nil, reinvocation_policy : String? = nil, rules : ::Array(::K8S::Api::Admissionregistration::V1beta1::RuleWithOperations)? = nil, side_effects : String? = nil, timeout_seconds : Int32? = nil)
+      super()
+      self.["admissionReviewVersions"] = admission_review_versions
+      self.["clientConfig"] = client_config
+      self.["failurePolicy"] = failure_policy
+      self.["matchPolicy"] = match_policy
+      self.["name"] = name
+      self.["namespaceSelector"] = namespace_selector
+      self.["objectSelector"] = object_selector
+      self.["reinvocationPolicy"] = reinvocation_policy
+      self.["rules"] = rules
+      self.["sideEffects"] = side_effects
+      self.["timeoutSeconds"] = timeout_seconds
     end
 
-    # :ditto:
-    def admission_review_versions! : ::Array(String)
-      self.["admissionReviewVersions"].as(::Array(String)?).not_nil!
-    end
-
-    # :ditto:
-    def admission_review_versions? : ::Array(String)?
-      self.["admissionReviewVersions"]?.as(::Array(String)?)
-    end
-
-    # :ditto:
-    def admission_review_versions=(value : ::Array(String)?)
-      self.["admissionReviewVersions"] = value
-    end
-
-    # ClientConfig defines how to communicate with the hook. Required
-    def client_config : ::K8S::Api::Admissionregistration::V1beta1::WebhookClientConfig
-      self.["clientConfig"].as(::K8S::Api::Admissionregistration::V1beta1::WebhookClientConfig)
-    end
-
-    # :ditto:
-    def client_config! : ::K8S::Api::Admissionregistration::V1beta1::WebhookClientConfig
-      self.["clientConfig"].as(::K8S::Api::Admissionregistration::V1beta1::WebhookClientConfig).not_nil!
-    end
-
-    # :ditto:
-    def client_config? : ::K8S::Api::Admissionregistration::V1beta1::WebhookClientConfig?
-      self.["clientConfig"]?.as(::K8S::Api::Admissionregistration::V1beta1::WebhookClientConfig?)
-    end
-
-    # :ditto:
-    def client_config=(value : ::K8S::Api::Admissionregistration::V1beta1::WebhookClientConfig)
-      self.["clientConfig"] = value
-    end
-
-    # FailurePolicy defines how unrecognized errors from the admission endpoint are handled - allowed values are Ignore or Fail. Defaults to Ignore.
-    def failure_policy : String?
-      self.["failurePolicy"].as(String?)
-    end
-
-    # :ditto:
-    def failure_policy! : String
-      self.["failurePolicy"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def failure_policy? : String?
-      self.["failurePolicy"]?.as(String?)
-    end
-
-    # :ditto:
-    def failure_policy=(value : String?)
-      self.["failurePolicy"] = value
-    end
-
-    # matchPolicy defines how the "rules" list is used to match incoming requests. Allowed values are "Exact" or "Equivalent".
-    #
-    # - Exact: match a request only if it exactly matches a specified rule. For example, if deployments can be modified via [[apps/v1, apps/v1beta1, and extensions/v1beta1, but "rules" only included `apiGroups:["apps"], apiVersions:["v1"], resources: ["deployments"]`, a request to apps/v1beta1 or extensions/v1beta1 would not be sent to the webhook.](apps/v1, apps/v1beta1, and extensions/v1beta1, but "rules" only included `apiGroups:["apps"], apiVersions:["v1"], resources: ["deployments"]`, a request to apps/v1beta1 or extensions/v1beta1 would not be sent to the webhook.)]([apps/v1, apps/v1beta1, and extensions/v1beta1, but "rules" only included `apiGroups:["apps"], apiVersions:["v1"], resources: ["deployments"]`, a request to apps/v1beta1 or extensions/v1beta1 would not be sent to the webhook.](apps/v1, apps/v1beta1, and extensions/v1beta1, but "rules" only included `apiGroups:["apps"], apiVersions:["v1"], resources: ["deployments"]`, a request to apps/v1beta1 or extensions/v1beta1 would not be sent to the webhook.))
-    #
-    # - Equivalent: match a request if modifies a resource listed in rules, even via another API group or version. For example, if deployments can be modified via [[apps/v1, apps/v1beta1, and extensions/v1beta1, and "rules" only included `apiGroups:["apps"], apiVersions:["v1"], resources: ["deployments"]`, a request to apps/v1beta1 or extensions/v1beta1 would be converted to apps/v1 and sent to the webhook.](apps/v1, apps/v1beta1, and extensions/v1beta1, and "rules" only included `apiGroups:["apps"], apiVersions:["v1"], resources: ["deployments"]`, a request to apps/v1beta1 or extensions/v1beta1 would be converted to apps/v1 and sent to the webhook.)]([apps/v1, apps/v1beta1, and extensions/v1beta1, and "rules" only included `apiGroups:["apps"], apiVersions:["v1"], resources: ["deployments"]`, a request to apps/v1beta1 or extensions/v1beta1 would be converted to apps/v1 and sent to the webhook.](apps/v1, apps/v1beta1, and extensions/v1beta1, and "rules" only included `apiGroups:["apps"], apiVersions:["v1"], resources: ["deployments"]`, a request to apps/v1beta1 or extensions/v1beta1 would be converted to apps/v1 and sent to the webhook.))
-    #
-    # Defaults to "Exact"
-    def match_policy : String?
-      self.["matchPolicy"].as(String?)
-    end
-
-    # :ditto:
-    def match_policy! : String
-      self.["matchPolicy"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def match_policy? : String?
-      self.["matchPolicy"]?.as(String?)
-    end
-
-    # :ditto:
-    def match_policy=(value : String?)
-      self.["matchPolicy"] = value
-    end
-
-    # The name of the admission webhook. Name should be fully qualified, e.g., imagepolicy.kubernetes.io, where "imagepolicy" is the name of the webhook, and kubernetes.io is the name of the organization. Required.
-    def name : String
-      self.["name"].as(String)
-    end
-
-    # :ditto:
-    def name! : String
-      self.["name"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def name? : String?
-      self.["name"]?.as(String?)
-    end
-
-    # :ditto:
-    def name=(value : String)
-      self.["name"] = value
-    end
-
-    # NamespaceSelector decides whether to run the webhook on an object based on whether the namespace for that object matches the selector. If the object itself is a namespace, the matching is performed on object.metadata.labels. If the object is another cluster scoped resource, it never skips the webhook.
-    #
-    # For example, to run the webhook on any objects whose namespace is not associated with "runlevel" of "0" or "1";  you will set the selector as follows: "namespaceSelector": {
-    #   "matchExpressions": [
-    #     {
-    #       "key": "runlevel",
-    #       "operator": "NotIn",
-    #       "values": [
-    #         "0",
-    #         "1"
-    #       ]
-    #     }
-    #   ]
-    # }
-    #
-    # If instead you want to only run the webhook on any objects whose namespace is associated with the "environment" of "prod" or "staging"; you will set the selector as follows: "namespaceSelector": {
-    #   "matchExpressions": [
-    #     {
-    #       "key": "environment",
-    #       "operator": "In",
-    #       "values": [
-    #         "prod",
-    #         "staging"
-    #       ]
-    #     }
-    #   ]
-    # }
-    #
-    # See [[https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/ for more examples of label selectors.](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/ for more examples of label selectors.)](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/ for more examples of label selectors.](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/ for more examples of label selectors.))
-    #
-    # Default to the empty LabelSelector, which matches everything.
-    def namespace_selector : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?
-      self.["namespaceSelector"].as(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?)
-    end
-
-    # :ditto:
-    def namespace_selector! : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector
-      self.["namespaceSelector"].as(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?).not_nil!
-    end
-
-    # :ditto:
-    def namespace_selector? : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?
-      self.["namespaceSelector"]?.as(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?)
-    end
-
-    # :ditto:
-    def namespace_selector=(value : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?)
-      self.["namespaceSelector"] = value
-    end
-
-    # ObjectSelector decides whether to run the webhook based on if the object has matching labels. objectSelector is evaluated against both the oldObject and newObject that would be sent to the webhook, and is considered to match if either object matches the selector. A null object (oldObject in the case of create, or newObject in the case of delete) or an object that cannot have labels (like a DeploymentRollback or a PodProxyOptions object) is not considered to match. Use the object selector only if the webhook is opt-in, because end users may skip the admission webhook by setting the labels. Default to the empty LabelSelector, which matches everything.
-    def object_selector : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?
-      self.["objectSelector"].as(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?)
-    end
-
-    # :ditto:
-    def object_selector! : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector
-      self.["objectSelector"].as(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?).not_nil!
-    end
-
-    # :ditto:
-    def object_selector? : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?
-      self.["objectSelector"]?.as(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?)
-    end
-
-    # :ditto:
-    def object_selector=(value : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?)
-      self.["objectSelector"] = value
-    end
-
-    # reinvocationPolicy indicates whether this webhook should be called multiple times as part of a single admission evaluation. Allowed values are "Never" and "IfNeeded".
-    #
-    # Never: the webhook will not be called more than once in a single admission evaluation.
-    #
-    # IfNeeded: the webhook will be called at least one additional time as part of the admission evaluation if the object being admitted is modified by other admission plugins after the initial webhook call. Webhooks that specify this option *must* be idempotent, able to process objects they previously admitted. Note: * the number of additional invocations is not guaranteed to be exactly one. * if additional invocations result in further modifications to the object, webhooks are not guaranteed to be invoked again. * webhooks that use this option may be reordered to minimize the number of additional invocations. * to validate an object after all mutations are guaranteed complete, use a validating admission webhook instead.
-    #
-    # Defaults to "Never".
-    def reinvocation_policy : String?
-      self.["reinvocationPolicy"].as(String?)
-    end
-
-    # :ditto:
-    def reinvocation_policy! : String
-      self.["reinvocationPolicy"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def reinvocation_policy? : String?
-      self.["reinvocationPolicy"]?.as(String?)
-    end
-
-    # :ditto:
-    def reinvocation_policy=(value : String?)
-      self.["reinvocationPolicy"] = value
-    end
-
-    # Rules describes what operations on what [[resources/subresources the webhook cares about. The webhook cares about an operation if it matches _any_ Rule. However, in order to prevent ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks from putting the cluster in a state which cannot be recovered from without completely disabling the plugin, ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks are never called on admission requests for ValidatingWebhookConfiguration and MutatingWebhookConfiguration objects.](resources/subresources the webhook cares about. The webhook cares about an operation if it matches _any_ Rule. However, in order to prevent ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks from putting the cluster in a state which cannot be recovered from without completely disabling the plugin, ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks are never called on admission requests for ValidatingWebhookConfiguration and MutatingWebhookConfiguration objects.)]([resources/subresources the webhook cares about. The webhook cares about an operation if it matches _any_ Rule. However, in order to prevent ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks from putting the cluster in a state which cannot be recovered from without completely disabling the plugin, ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks are never called on admission requests for ValidatingWebhookConfiguration and MutatingWebhookConfiguration objects.](resources/subresources the webhook cares about. The webhook cares about an operation if it matches _any_ Rule. However, in order to prevent ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks from putting the cluster in a state which cannot be recovered from without completely disabling the plugin, ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks are never called on admission requests for ValidatingWebhookConfiguration and MutatingWebhookConfiguration objects.))
-    def rules : ::Array(::K8S::Api::Admissionregistration::V1beta1::RuleWithOperations)?
-      self.["rules"].as(::Array(::K8S::Api::Admissionregistration::V1beta1::RuleWithOperations)?)
-    end
-
-    # :ditto:
-    def rules! : ::Array(::K8S::Api::Admissionregistration::V1beta1::RuleWithOperations)
-      self.["rules"].as(::Array(::K8S::Api::Admissionregistration::V1beta1::RuleWithOperations)?).not_nil!
-    end
-
-    # :ditto:
-    def rules? : ::Array(::K8S::Api::Admissionregistration::V1beta1::RuleWithOperations)?
-      self.["rules"]?.as(::Array(::K8S::Api::Admissionregistration::V1beta1::RuleWithOperations)?)
-    end
-
-    # :ditto:
-    def rules=(value : ::Array(::K8S::Api::Admissionregistration::V1beta1::RuleWithOperations)?)
-      self.["rules"] = value
-    end
-
-    # SideEffects states whether this webhook has side effects. Acceptable values are: Unknown, None, Some, NoneOnDryRun Webhooks with side effects MUST implement a reconciliation system, since a request may be rejected by a future step in the admission change and the side effects therefore need to be undone. Requests with the dryRun attribute will be auto-rejected if they match a webhook with sideEffects == Unknown or Some. Defaults to Unknown.
-    def side_effects : String?
-      self.["sideEffects"].as(String?)
-    end
-
-    # :ditto:
-    def side_effects! : String
-      self.["sideEffects"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def side_effects? : String?
-      self.["sideEffects"]?.as(String?)
-    end
-
-    # :ditto:
-    def side_effects=(value : String?)
-      self.["sideEffects"] = value
-    end
-
-    # TimeoutSeconds specifies the timeout for this webhook. After the timeout passes, the webhook call will be ignored or the API call will fail based on the failure policy. The timeout value must be between 1 and 30 seconds. Default to 30 seconds.
-    def timeout_seconds : Int32?
-      self.["timeoutSeconds"].as(Int32?)
-    end
-
-    # :ditto:
-    def timeout_seconds! : Int32
-      self.["timeoutSeconds"].as(Int32?).not_nil!
-    end
-
-    # :ditto:
-    def timeout_seconds? : Int32?
-      self.["timeoutSeconds"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def timeout_seconds=(value : Int32?)
-      self.["timeoutSeconds"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "admissionReviewVersions", accessor: "admission_review_versions", nilable: true, read_only: false, default: nil, kind: ::Array(String) },
-        { key: "clientConfig", accessor: "client_config", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Admissionregistration::V1beta1::WebhookClientConfig },
-        { key: "failurePolicy", accessor: "failure_policy", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "matchPolicy", accessor: "match_policy", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "name", accessor: "name", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "namespaceSelector", accessor: "namespace_selector", nilable: true, read_only: false, default: nil, kind: ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector },
-        { key: "objectSelector", accessor: "object_selector", nilable: true, read_only: false, default: nil, kind: ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector },
-        { key: "reinvocationPolicy", accessor: "reinvocation_policy", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "rules", accessor: "rules", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Admissionregistration::V1beta1::RuleWithOperations) },
-        { key: "sideEffects", accessor: "side_effects", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "timeoutSeconds", accessor: "timeout_seconds", nilable: true, read_only: false, default: nil, kind: Int32 },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "admissionReviewVersions", accessor: "admission_review_versions", nilable: true, read_only: false, default: nil, kind: ::Array(String)},
+      {key: "clientConfig", accessor: "client_config", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Admissionregistration::V1beta1::WebhookClientConfig},
+      {key: "failurePolicy", accessor: "failure_policy", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "matchPolicy", accessor: "match_policy", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "name", accessor: "name", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "namespaceSelector", accessor: "namespace_selector", nilable: true, read_only: false, default: nil, kind: ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector},
+      {key: "objectSelector", accessor: "object_selector", nilable: true, read_only: false, default: nil, kind: ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector},
+      {key: "reinvocationPolicy", accessor: "reinvocation_policy", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "rules", accessor: "rules", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Admissionregistration::V1beta1::RuleWithOperations)},
+      {key: "sideEffects", accessor: "side_effects", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "timeoutSeconds", accessor: "timeout_seconds", nilable: true, read_only: false, default: nil, kind: Int32},
+    ])
   end
 end

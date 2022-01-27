@@ -43,7 +43,7 @@ class Generator
 
     @definitions = @schema.definitions.each_with_object({} of String => String) do |(name, definition), memo|
       next if definition._ref
-      parts = name.lchop("io.k8s.").sub(".pkg.", ".").lchop("io.").split(".").map(&.gsub('-', '_').camelcase)
+      parts = name.lchop("io.k8s.").sub(".pkg.", ".").lchop("io.").split(".").map(&.gsub('-', '_').camelcase.gsub("JSON", "Json"))
       # Remove the first part if it's 2 chars long. i.e "io", "us"
       parts.shift if parts[0].size == 2
 

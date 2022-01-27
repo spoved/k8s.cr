@@ -9,7 +9,7 @@ module K8S
   # Namespace holding the types for `Api::Autoscaling::V2beta1::PodsMetricSource`.
   module Types::Api::Autoscaling::V2beta1::PodsMetricSource
     # metricName is the name of the metric in question
-    abstract def metric_name : String
+    abstract def metric_name : String?
     # :ditto:
     abstract def metric_name! : String
     # :ditto:
@@ -17,7 +17,7 @@ module K8S
     # :ditto:
     abstract def metric_name=(value : String)
     # targetAverageValue is the target value of the average of the metric across all relevant pods (as a quantity)
-    abstract def target_average_value : ::Int32 | ::String
+    abstract def target_average_value : ::Int32 | ::String?
     # :ditto:
     abstract def target_average_value! : ::Int32 | ::String
     # :ditto:
@@ -33,52 +33,18 @@ module K8S
   )]
   class Api::Autoscaling::V2beta1::PodsMetricSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Autoscaling::V2beta1::PodsMetricSource
+    k8s_object_accessor("metricName", metric_name : String, false, false, "metricName is the name of the metric in question")
+    k8s_object_accessor("targetAverageValue", target_average_value : ::Int32 | ::String, false, false, "targetAverageValue is the target value of the average of the metric across all relevant pods (as a quantity)")
 
-    # metricName is the name of the metric in question
-    def metric_name : String
-      self.["metricName"].as(String)
+    def initialize(*, metric_name : String? = nil, target_average_value : ::Int32 | ::String? = nil)
+      super()
+      self.["metricName"] = metric_name
+      self.["targetAverageValue"] = target_average_value
     end
 
-    # :ditto:
-    def metric_name! : String
-      self.["metricName"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def metric_name? : String?
-      self.["metricName"]?.as(String?)
-    end
-
-    # :ditto:
-    def metric_name=(value : String)
-      self.["metricName"] = value
-    end
-
-    # targetAverageValue is the target value of the average of the metric across all relevant pods (as a quantity)
-    def target_average_value : ::Int32 | ::String
-      self.["targetAverageValue"].as(::Int32 | ::String)
-    end
-
-    # :ditto:
-    def target_average_value! : ::Int32 | ::String
-      self.["targetAverageValue"].as(::Int32 | ::String).not_nil!
-    end
-
-    # :ditto:
-    def target_average_value? : ::Int32 | ::String?
-      self.["targetAverageValue"]?.as(::Int32 | ::String?)
-    end
-
-    # :ditto:
-    def target_average_value=(value : ::Int32 | ::String)
-      self.["targetAverageValue"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "metricName", accessor: "metric_name", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "targetAverageValue", accessor: "target_average_value", nilable: false, read_only: false, default: nil, kind: ::Union(::Int32 | ::String) },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "metricName", accessor: "metric_name", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "targetAverageValue", accessor: "target_average_value", nilable: false, read_only: false, default: nil, kind: ::Union(::Int32 | ::String)},
+    ])
   end
 end

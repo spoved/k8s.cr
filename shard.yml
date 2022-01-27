@@ -13,3 +13,6 @@ development_dependencies:
     version: ~> 0.10.1
   open-api:
     github: spoved/open-api.cr
+  sentry:
+    github: samueleaton/sentry
+    version: ~> 0.5.0

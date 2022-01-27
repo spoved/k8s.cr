@@ -9,7 +9,7 @@ module K8S
   # Namespace holding the types for `Api::Authorization::V1::SubjectAccessReviewStatus`.
   module Types::Api::Authorization::V1::SubjectAccessReviewStatus
     # Allowed is required. True if the action would be allowed, false otherwise.
-    abstract def allowed : ::Bool
+    abstract def allowed : ::Bool?
     # :ditto:
     abstract def allowed! : ::Bool
     # :ditto:
@@ -23,7 +23,7 @@ module K8S
     # :ditto:
     abstract def denied? : ::Bool?
     # :ditto:
-    abstract def denied=(value : ::Bool?)
+    abstract def denied=(value : ::Bool)
     # EvaluationError is an indication that some error occurred during the authorization check. It is entirely possible to get an error and be able to continue determine authorization status in spite of it. For instance, RBAC can be missing a role, but enough roles are still present and bound to reason about the request.
     abstract def evaluation_error : String?
     # :ditto:
@@ -31,7 +31,7 @@ module K8S
     # :ditto:
     abstract def evaluation_error? : String?
     # :ditto:
-    abstract def evaluation_error=(value : String?)
+    abstract def evaluation_error=(value : String)
     # Reason is optional.  It indicates why a request was allowed or denied.
     abstract def reason : String?
     # :ditto:
@@ -39,7 +39,7 @@ module K8S
     # :ditto:
     abstract def reason? : String?
     # :ditto:
-    abstract def reason=(value : String?)
+    abstract def reason=(value : String)
   end
 
   # SubjectAccessReviewStatus
@@ -51,94 +51,24 @@ module K8S
   )]
   class Api::Authorization::V1::SubjectAccessReviewStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Authorization::V1::SubjectAccessReviewStatus
+    k8s_object_accessor("allowed", allowed : ::Bool, false, false, "Allowed is required. True if the action would be allowed, false otherwise.")
+    k8s_object_accessor("denied", denied : ::Bool, true, false, "Denied is optional. True if the action would be denied, otherwise false. If both allowed is false and denied is false, then the authorizer has no opinion on whether to authorize the action. Denied may not be true if Allowed is true.")
+    k8s_object_accessor("evaluationError", evaluation_error : String, true, false, "EvaluationError is an indication that some error occurred during the authorization check. It is entirely possible to get an error and be able to continue determine authorization status in spite of it. For instance, RBAC can be missing a role, but enough roles are still present and bound to reason about the request.")
+    k8s_object_accessor("reason", reason : String, true, false, "Reason is optional.  It indicates why a request was allowed or denied.")
 
-    # Allowed is required. True if the action would be allowed, false otherwise.
-    def allowed : ::Bool
-      self.["allowed"].as(::Bool)
+    def initialize(*, allowed : ::Bool? = nil, denied : ::Bool? = nil, evaluation_error : String? = nil, reason : String? = nil)
+      super()
+      self.["allowed"] = allowed
+      self.["denied"] = denied
+      self.["evaluationError"] = evaluation_error
+      self.["reason"] = reason
     end
 
-    # :ditto:
-    def allowed! : ::Bool
-      self.["allowed"].as(::Bool).not_nil!
-    end
-
-    # :ditto:
-    def allowed? : ::Bool?
-      self.["allowed"]?.as(::Bool?)
-    end
-
-    # :ditto:
-    def allowed=(value : ::Bool)
-      self.["allowed"] = value
-    end
-
-    # Denied is optional. True if the action would be denied, otherwise false. If both allowed is false and denied is false, then the authorizer has no opinion on whether to authorize the action. Denied may not be true if Allowed is true.
-    def denied : ::Bool?
-      self.["denied"].as(::Bool?)
-    end
-
-    # :ditto:
-    def denied! : ::Bool
-      self.["denied"].as(::Bool?).not_nil!
-    end
-
-    # :ditto:
-    def denied? : ::Bool?
-      self.["denied"]?.as(::Bool?)
-    end
-
-    # :ditto:
-    def denied=(value : ::Bool?)
-      self.["denied"] = value
-    end
-
-    # EvaluationError is an indication that some error occurred during the authorization check. It is entirely possible to get an error and be able to continue determine authorization status in spite of it. For instance, RBAC can be missing a role, but enough roles are still present and bound to reason about the request.
-    def evaluation_error : String?
-      self.["evaluationError"].as(String?)
-    end
-
-    # :ditto:
-    def evaluation_error! : String
-      self.["evaluationError"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def evaluation_error? : String?
-      self.["evaluationError"]?.as(String?)
-    end
-
-    # :ditto:
-    def evaluation_error=(value : String?)
-      self.["evaluationError"] = value
-    end
-
-    # Reason is optional.  It indicates why a request was allowed or denied.
-    def reason : String?
-      self.["reason"].as(String?)
-    end
-
-    # :ditto:
-    def reason! : String
-      self.["reason"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def reason? : String?
-      self.["reason"]?.as(String?)
-    end
-
-    # :ditto:
-    def reason=(value : String?)
-      self.["reason"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "allowed", accessor: "allowed", nilable: false, read_only: false, default: nil, kind: ::Bool },
-        { key: "denied", accessor: "denied", nilable: true, read_only: false, default: nil, kind: ::Bool },
-        { key: "evaluationError", accessor: "evaluation_error", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "reason", accessor: "reason", nilable: true, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "allowed", accessor: "allowed", nilable: false, read_only: false, default: nil, kind: ::Bool},
+      {key: "denied", accessor: "denied", nilable: true, read_only: false, default: nil, kind: ::Bool},
+      {key: "evaluationError", accessor: "evaluation_error", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "reason", accessor: "reason", nilable: true, read_only: false, default: nil, kind: String},
+    ])
   end
 end

@@ -11,7 +11,7 @@ module K8S
   # Namespace holding the types for `Api::Networking::V1::HTTPIngressRuleValue`.
   module Types::Api::Networking::V1::HTTPIngressRuleValue
     # A collection of paths that map requests to backends.
-    abstract def paths : ::Array(::K8S::Api::Networking::V1::HTTPIngressPath)
+    abstract def paths : ::Array(::K8S::Api::Networking::V1::HTTPIngressPath)?
     # :ditto:
     abstract def paths! : ::Array(::K8S::Api::Networking::V1::HTTPIngressPath)
     # :ditto:
@@ -26,31 +26,15 @@ module K8S
   )]
   class Api::Networking::V1::HTTPIngressRuleValue < ::K8S::GenericObject
     include ::K8S::Types::Api::Networking::V1::HTTPIngressRuleValue
+    k8s_object_accessor("paths", paths : ::Array(::K8S::Api::Networking::V1::HTTPIngressPath), false, false, "A collection of paths that map requests to backends.")
 
-    # A collection of paths that map requests to backends.
-    def paths : ::Array(::K8S::Api::Networking::V1::HTTPIngressPath)
-      self.["paths"].as(::Array(::K8S::Api::Networking::V1::HTTPIngressPath))
+    def initialize(*, paths : ::Array(::K8S::Api::Networking::V1::HTTPIngressPath)? = nil)
+      super()
+      self.["paths"] = paths
     end
 
-    # :ditto:
-    def paths! : ::Array(::K8S::Api::Networking::V1::HTTPIngressPath)
-      self.["paths"].as(::Array(::K8S::Api::Networking::V1::HTTPIngressPath)).not_nil!
-    end
-
-    # :ditto:
-    def paths? : ::Array(::K8S::Api::Networking::V1::HTTPIngressPath)?
-      self.["paths"]?.as(::Array(::K8S::Api::Networking::V1::HTTPIngressPath)?)
-    end
-
-    # :ditto:
-    def paths=(value : ::Array(::K8S::Api::Networking::V1::HTTPIngressPath))
-      self.["paths"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "paths", accessor: "paths", nilable: false, read_only: false, default: nil, kind: ::Array(::K8S::Api::Networking::V1::HTTPIngressPath) },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "paths", accessor: "paths", nilable: false, read_only: false, default: nil, kind: ::Array(::K8S::Api::Networking::V1::HTTPIngressPath)},
+    ])
   end
 end

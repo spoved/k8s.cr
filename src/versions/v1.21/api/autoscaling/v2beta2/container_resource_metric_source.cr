@@ -11,7 +11,7 @@ module K8S
   # Namespace holding the types for `Api::Autoscaling::V2beta2::ContainerResourceMetricSource`.
   module Types::Api::Autoscaling::V2beta2::ContainerResourceMetricSource
     # container is the name of the container in the pods of the scaling target
-    abstract def container : String
+    abstract def container : String?
     # :ditto:
     abstract def container! : String
     # :ditto:
@@ -19,7 +19,7 @@ module K8S
     # :ditto:
     abstract def container=(value : String)
     # name is the name of the resource in question.
-    abstract def name : String
+    abstract def name : String?
     # :ditto:
     abstract def name! : String
     # :ditto:
@@ -27,7 +27,7 @@ module K8S
     # :ditto:
     abstract def name=(value : String)
     # target specifies the target value for the given metric
-    abstract def target : ::K8S::Api::Autoscaling::V2beta2::MetricTarget
+    abstract def target : ::K8S::Api::Autoscaling::V2beta2::MetricTarget?
     # :ditto:
     abstract def target! : ::K8S::Api::Autoscaling::V2beta2::MetricTarget
     # :ditto:
@@ -44,73 +44,21 @@ module K8S
   )]
   class Api::Autoscaling::V2beta2::ContainerResourceMetricSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Autoscaling::V2beta2::ContainerResourceMetricSource
+    k8s_object_accessor("container", container : String, false, false, "container is the name of the container in the pods of the scaling target")
+    k8s_object_accessor("name", name : String, false, false, "name is the name of the resource in question.")
+    k8s_object_accessor("target", target : ::K8S::Api::Autoscaling::V2beta2::MetricTarget, false, false, "target specifies the target value for the given metric")
 
-    # container is the name of the container in the pods of the scaling target
-    def container : String
-      self.["container"].as(String)
+    def initialize(*, container : String? = nil, name : String? = nil, target : ::K8S::Api::Autoscaling::V2beta2::MetricTarget? = nil)
+      super()
+      self.["container"] = container
+      self.["name"] = name
+      self.["target"] = target
     end
 
-    # :ditto:
-    def container! : String
-      self.["container"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def container? : String?
-      self.["container"]?.as(String?)
-    end
-
-    # :ditto:
-    def container=(value : String)
-      self.["container"] = value
-    end
-
-    # name is the name of the resource in question.
-    def name : String
-      self.["name"].as(String)
-    end
-
-    # :ditto:
-    def name! : String
-      self.["name"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def name? : String?
-      self.["name"]?.as(String?)
-    end
-
-    # :ditto:
-    def name=(value : String)
-      self.["name"] = value
-    end
-
-    # target specifies the target value for the given metric
-    def target : ::K8S::Api::Autoscaling::V2beta2::MetricTarget
-      self.["target"].as(::K8S::Api::Autoscaling::V2beta2::MetricTarget)
-    end
-
-    # :ditto:
-    def target! : ::K8S::Api::Autoscaling::V2beta2::MetricTarget
-      self.["target"].as(::K8S::Api::Autoscaling::V2beta2::MetricTarget).not_nil!
-    end
-
-    # :ditto:
-    def target? : ::K8S::Api::Autoscaling::V2beta2::MetricTarget?
-      self.["target"]?.as(::K8S::Api::Autoscaling::V2beta2::MetricTarget?)
-    end
-
-    # :ditto:
-    def target=(value : ::K8S::Api::Autoscaling::V2beta2::MetricTarget)
-      self.["target"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "container", accessor: "container", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "name", accessor: "name", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "target", accessor: "target", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Autoscaling::V2beta2::MetricTarget },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "container", accessor: "container", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "name", accessor: "name", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "target", accessor: "target", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Autoscaling::V2beta2::MetricTarget},
+    ])
   end
 end

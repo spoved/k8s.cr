@@ -17,7 +17,7 @@ module K8S
     # :ditto:
     abstract def active? : ::Array(::K8S::Api::Core::V1::ObjectReference)?
     # :ditto:
-    abstract def active=(value : ::Array(::K8S::Api::Core::V1::ObjectReference)?)
+    abstract def active=(value : ::Array(::K8S::Api::Core::V1::ObjectReference))
     # Information when was the last time the job was successfully scheduled.
     abstract def last_schedule_time : ::Time?
     # :ditto:
@@ -25,7 +25,7 @@ module K8S
     # :ditto:
     abstract def last_schedule_time? : ::Time?
     # :ditto:
-    abstract def last_schedule_time=(value : ::Time?)
+    abstract def last_schedule_time=(value : ::Time)
   end
 
   # CronJobStatus represents the current state of a cron job.
@@ -35,52 +35,18 @@ module K8S
   )]
   class Api::Batch::V1beta1::CronJobStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Batch::V1beta1::CronJobStatus
+    k8s_object_accessor("active", active : ::Array(::K8S::Api::Core::V1::ObjectReference), true, false, "A list of pointers to currently running jobs.")
+    k8s_object_accessor("lastScheduleTime", last_schedule_time : ::Time, true, false, "Information when was the last time the job was successfully scheduled.")
 
-    # A list of pointers to currently running jobs.
-    def active : ::Array(::K8S::Api::Core::V1::ObjectReference)?
-      self.["active"].as(::Array(::K8S::Api::Core::V1::ObjectReference)?)
+    def initialize(*, active : ::Array(::K8S::Api::Core::V1::ObjectReference)? = nil, last_schedule_time : ::Time? = nil)
+      super()
+      self.["active"] = active
+      self.["lastScheduleTime"] = last_schedule_time
     end
 
-    # :ditto:
-    def active! : ::Array(::K8S::Api::Core::V1::ObjectReference)
-      self.["active"].as(::Array(::K8S::Api::Core::V1::ObjectReference)?).not_nil!
-    end
-
-    # :ditto:
-    def active? : ::Array(::K8S::Api::Core::V1::ObjectReference)?
-      self.["active"]?.as(::Array(::K8S::Api::Core::V1::ObjectReference)?)
-    end
-
-    # :ditto:
-    def active=(value : ::Array(::K8S::Api::Core::V1::ObjectReference)?)
-      self.["active"] = value
-    end
-
-    # Information when was the last time the job was successfully scheduled.
-    def last_schedule_time : ::Time?
-      self.["lastScheduleTime"].as(::Time?)
-    end
-
-    # :ditto:
-    def last_schedule_time! : ::Time
-      self.["lastScheduleTime"].as(::Time?).not_nil!
-    end
-
-    # :ditto:
-    def last_schedule_time? : ::Time?
-      self.["lastScheduleTime"]?.as(::Time?)
-    end
-
-    # :ditto:
-    def last_schedule_time=(value : ::Time?)
-      self.["lastScheduleTime"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "active", accessor: "active", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::ObjectReference) },
-        { key: "lastScheduleTime", accessor: "last_schedule_time", nilable: true, read_only: false, default: nil, kind: ::Time },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "active", accessor: "active", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::ObjectReference)},
+      {key: "lastScheduleTime", accessor: "last_schedule_time", nilable: true, read_only: false, default: nil, kind: ::Time},
+    ])
   end
 end

@@ -17,7 +17,7 @@ module K8S
     # :ditto:
     abstract def ca_bundle? : String?
     # :ditto:
-    abstract def ca_bundle=(value : String?)
+    abstract def ca_bundle=(value : String)
     # `service` is a reference to the service for this webhook. Either `service` or `url` must be specified.
     #
     # If the webhook is running within the cluster, then you should use `service`.
@@ -27,7 +27,7 @@ module K8S
     # :ditto:
     abstract def service? : ::K8S::Api::Admissionregistration::V1::ServiceReference?
     # :ditto:
-    abstract def service=(value : ::K8S::Api::Admissionregistration::V1::ServiceReference?)
+    abstract def service=(value : ::K8S::Api::Admissionregistration::V1::ServiceReference)
     # `url` gives the location of the webhook, in standard URL form (`scheme://host:[[port/path`). Exactly one of `url` or `service` must be specified.](port/path`). Exactly one of `url` or `service` must be specified.)]([port/path`). Exactly one of `url` or `service` must be specified.](port/path`). Exactly one of `url` or `service` must be specified.))
     #
     # The `host` should not refer to a service running in the cluster; use the `service` field instead. The host might be resolved via external DNS in some apiservers (e.g., `kube-apiserver` cannot resolve in-cluster DNS as that would be a layering violation). `host` may also be an IP address.
@@ -45,7 +45,7 @@ module K8S
     # :ditto:
     abstract def url? : String?
     # :ditto:
-    abstract def url=(value : String?)
+    abstract def url=(value : String)
   end
 
   # WebhookClientConfig contains the information to make a TLS connection with the webhook
@@ -56,85 +56,21 @@ module K8S
   )]
   class Api::Admissionregistration::V1::WebhookClientConfig < ::K8S::GenericObject
     include ::K8S::Types::Api::Admissionregistration::V1::WebhookClientConfig
+    k8s_object_accessor("caBundle", ca_bundle : String, true, false, "`caBundle` is a PEM encoded CA bundle which will be used to validate the webhook's server certificate. If unspecified, system trust roots on the apiserver are used.")
+    k8s_object_accessor("service", service : ::K8S::Api::Admissionregistration::V1::ServiceReference, true, false, "`service` is a reference to the service for this webhook. Either `service` or `url` must be specified.\n\nIf the webhook is running within the cluster, then you should use `service`.")
+    k8s_object_accessor("url", url : String, true, false, "`url` gives the location of the webhook, in standard URL form (`scheme://host:[port/path`). Exactly one of `url` or `service` must be specified.](port/path`). Exactly one of `url` or `service` must be specified.)\n\nThe `host` should not refer to a service running in the cluster; use the `service` field instead. The host might be resolved via external DNS in some apiservers (e.g., `kube-apiserver` cannot resolve in-cluster DNS as that would be a layering violation). `host` may also be an IP address.\n\nPlease note that using `localhost` or `127.0.0.1` as a `host` is risky unless you take great care to run this webhook on all hosts which run an apiserver which might need to make calls to this webhook. Such installs are likely to be non-portable, i.e., not easy to turn up in a new cluster.\n\nThe scheme must be \"https\"; the URL must begin with \"https://\".\n\nA path is optional, and if present may be any string permissible in a URL. You may use the path to pass an arbitrary string to the webhook, for example, a cluster identifier.\n\nAttempting to use a user or basic auth e.g. \"user:password@\" is not allowed. Fragments (\"#...\") and query parameters (\"?...\") are not allowed, either.")
 
-    # `caBundle` is a PEM encoded CA bundle which will be used to validate the webhook's server certificate. If unspecified, system trust roots on the apiserver are used.
-    def ca_bundle : String?
-      self.["caBundle"].as(String?)
+    def initialize(*, ca_bundle : String? = nil, service : ::K8S::Api::Admissionregistration::V1::ServiceReference? = nil, url : String? = nil)
+      super()
+      self.["caBundle"] = ca_bundle
+      self.["service"] = service
+      self.["url"] = url
     end
 
-    # :ditto:
-    def ca_bundle! : String
-      self.["caBundle"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def ca_bundle? : String?
-      self.["caBundle"]?.as(String?)
-    end
-
-    # :ditto:
-    def ca_bundle=(value : String?)
-      self.["caBundle"] = value
-    end
-
-    # `service` is a reference to the service for this webhook. Either `service` or `url` must be specified.
-    #
-    # If the webhook is running within the cluster, then you should use `service`.
-    def service : ::K8S::Api::Admissionregistration::V1::ServiceReference?
-      self.["service"].as(::K8S::Api::Admissionregistration::V1::ServiceReference?)
-    end
-
-    # :ditto:
-    def service! : ::K8S::Api::Admissionregistration::V1::ServiceReference
-      self.["service"].as(::K8S::Api::Admissionregistration::V1::ServiceReference?).not_nil!
-    end
-
-    # :ditto:
-    def service? : ::K8S::Api::Admissionregistration::V1::ServiceReference?
-      self.["service"]?.as(::K8S::Api::Admissionregistration::V1::ServiceReference?)
-    end
-
-    # :ditto:
-    def service=(value : ::K8S::Api::Admissionregistration::V1::ServiceReference?)
-      self.["service"] = value
-    end
-
-    # `url` gives the location of the webhook, in standard URL form (`scheme://host:[[port/path`). Exactly one of `url` or `service` must be specified.](port/path`). Exactly one of `url` or `service` must be specified.)]([port/path`). Exactly one of `url` or `service` must be specified.](port/path`). Exactly one of `url` or `service` must be specified.))
-    #
-    # The `host` should not refer to a service running in the cluster; use the `service` field instead. The host might be resolved via external DNS in some apiservers (e.g., `kube-apiserver` cannot resolve in-cluster DNS as that would be a layering violation). `host` may also be an IP address.
-    #
-    # Please note that using `localhost` or `127.0.0.1` as a `host` is risky unless you take great care to run this webhook on all hosts which run an apiserver which might need to make calls to this webhook. Such installs are likely to be non-portable, i.e., not easy to turn up in a new cluster.
-    #
-    # The scheme must be "https"; the URL must begin with "https://".
-    #
-    # A path is optional, and if present may be any string permissible in a URL. You may use the path to pass an arbitrary string to the webhook, for example, a cluster identifier.
-    #
-    # Attempting to use a user or basic auth e.g. "user:password@" is not allowed. Fragments ("#...") and query parameters ("?...") are not allowed, either.
-    def url : String?
-      self.["url"].as(String?)
-    end
-
-    # :ditto:
-    def url! : String
-      self.["url"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def url? : String?
-      self.["url"]?.as(String?)
-    end
-
-    # :ditto:
-    def url=(value : String?)
-      self.["url"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "caBundle", accessor: "ca_bundle", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "service", accessor: "service", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Admissionregistration::V1::ServiceReference },
-        { key: "url", accessor: "url", nilable: true, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "caBundle", accessor: "ca_bundle", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "service", accessor: "service", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Admissionregistration::V1::ServiceReference},
+      {key: "url", accessor: "url", nilable: true, read_only: false, default: nil, kind: String},
+    ])
   end
 end

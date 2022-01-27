@@ -9,7 +9,7 @@ module K8S
   # Namespace holding the types for `Api::Core::V1::KeyToPath`.
   module Types::Api::Core::V1::KeyToPath
     # The key to project.
-    abstract def key : String
+    abstract def key : String?
     # :ditto:
     abstract def key! : String
     # :ditto:
@@ -23,9 +23,9 @@ module K8S
     # :ditto:
     abstract def mode? : Int32?
     # :ditto:
-    abstract def mode=(value : Int32?)
+    abstract def mode=(value : Int32)
     # The relative path of the file to map the key to. May not be an absolute path. May not contain the path element '..'. May not start with the string '..'.
-    abstract def path : String
+    abstract def path : String?
     # :ditto:
     abstract def path! : String
     # :ditto:
@@ -42,73 +42,21 @@ module K8S
   )]
   class Api::Core::V1::KeyToPath < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::KeyToPath
+    k8s_object_accessor("key", key : String, false, false, "The key to project.")
+    k8s_object_accessor("mode", mode : Int32, true, false, "Optional: mode bits to use on this file, must be a value between 0 and 0777. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.")
+    k8s_object_accessor("path", path : String, false, false, "The relative path of the file to map the key to. May not be an absolute path. May not contain the path element '..'. May not start with the string '..'.")
 
-    # The key to project.
-    def key : String
-      self.["key"].as(String)
+    def initialize(*, key : String? = nil, mode : Int32? = nil, path : String? = nil)
+      super()
+      self.["key"] = key
+      self.["mode"] = mode
+      self.["path"] = path
     end
 
-    # :ditto:
-    def key! : String
-      self.["key"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def key? : String?
-      self.["key"]?.as(String?)
-    end
-
-    # :ditto:
-    def key=(value : String)
-      self.["key"] = value
-    end
-
-    # Optional: mode bits to use on this file, must be a value between 0 and 0777. If not specified, the volume defaultMode will be used. This might be in conflict with other options that affect the file mode, like fsGroup, and the result can be other mode bits set.
-    def mode : Int32?
-      self.["mode"].as(Int32?)
-    end
-
-    # :ditto:
-    def mode! : Int32
-      self.["mode"].as(Int32?).not_nil!
-    end
-
-    # :ditto:
-    def mode? : Int32?
-      self.["mode"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def mode=(value : Int32?)
-      self.["mode"] = value
-    end
-
-    # The relative path of the file to map the key to. May not be an absolute path. May not contain the path element '..'. May not start with the string '..'.
-    def path : String
-      self.["path"].as(String)
-    end
-
-    # :ditto:
-    def path! : String
-      self.["path"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def path? : String?
-      self.["path"]?.as(String?)
-    end
-
-    # :ditto:
-    def path=(value : String)
-      self.["path"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "key", accessor: "key", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "mode", accessor: "mode", nilable: true, read_only: false, default: nil, kind: Int32 },
-        { key: "path", accessor: "path", nilable: false, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "key", accessor: "key", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "mode", accessor: "mode", nilable: true, read_only: false, default: nil, kind: Int32},
+      {key: "path", accessor: "path", nilable: false, read_only: false, default: nil, kind: String},
+    ])
   end
 end

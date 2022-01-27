@@ -1,0 +1,9 @@
+display name: k8s-generator
+shard name: k8s
+install shards: false
+info: true
+build: crystal build ./bin/generate.cr -o ./bin/generate
+src_path: ./src/k8s.cr
+run: ./bin/generate
+watch: ["./bin/**/*.cr"]
+colorize: true

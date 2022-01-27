@@ -11,7 +11,7 @@ module K8S
   # Namespace holding the types for `Api::Networking::V1::IngressServiceBackend`.
   module Types::Api::Networking::V1::IngressServiceBackend
     # Name is the referenced service. The service must exist in the same namespace as the Ingress object.
-    abstract def name : String
+    abstract def name : String?
     # :ditto:
     abstract def name! : String
     # :ditto:
@@ -25,7 +25,7 @@ module K8S
     # :ditto:
     abstract def port? : ::K8S::Api::Networking::V1::ServiceBackendPort?
     # :ditto:
-    abstract def port=(value : ::K8S::Api::Networking::V1::ServiceBackendPort?)
+    abstract def port=(value : ::K8S::Api::Networking::V1::ServiceBackendPort)
   end
 
   # IngressServiceBackend references a Kubernetes Service as a Backend.
@@ -35,52 +35,18 @@ module K8S
   )]
   class Api::Networking::V1::IngressServiceBackend < ::K8S::GenericObject
     include ::K8S::Types::Api::Networking::V1::IngressServiceBackend
+    k8s_object_accessor("name", name : String, false, false, "Name is the referenced service. The service must exist in the same namespace as the Ingress object.")
+    k8s_object_accessor("port", port : ::K8S::Api::Networking::V1::ServiceBackendPort, true, false, "Port of the referenced service. A port name or port number is required for a IngressServiceBackend.")
 
-    # Name is the referenced service. The service must exist in the same namespace as the Ingress object.
-    def name : String
-      self.["name"].as(String)
+    def initialize(*, name : String? = nil, port : ::K8S::Api::Networking::V1::ServiceBackendPort? = nil)
+      super()
+      self.["name"] = name
+      self.["port"] = port
     end
 
-    # :ditto:
-    def name! : String
-      self.["name"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def name? : String?
-      self.["name"]?.as(String?)
-    end
-
-    # :ditto:
-    def name=(value : String)
-      self.["name"] = value
-    end
-
-    # Port of the referenced service. A port name or port number is required for a IngressServiceBackend.
-    def port : ::K8S::Api::Networking::V1::ServiceBackendPort?
-      self.["port"].as(::K8S::Api::Networking::V1::ServiceBackendPort?)
-    end
-
-    # :ditto:
-    def port! : ::K8S::Api::Networking::V1::ServiceBackendPort
-      self.["port"].as(::K8S::Api::Networking::V1::ServiceBackendPort?).not_nil!
-    end
-
-    # :ditto:
-    def port? : ::K8S::Api::Networking::V1::ServiceBackendPort?
-      self.["port"]?.as(::K8S::Api::Networking::V1::ServiceBackendPort?)
-    end
-
-    # :ditto:
-    def port=(value : ::K8S::Api::Networking::V1::ServiceBackendPort?)
-      self.["port"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "name", accessor: "name", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "port", accessor: "port", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Networking::V1::ServiceBackendPort },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "name", accessor: "name", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "port", accessor: "port", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Networking::V1::ServiceBackendPort},
+    ])
   end
 end

@@ -17,7 +17,7 @@ module K8S
     # :ditto:
     abstract def rolling_update? : ::K8S::Api::Apps::V1::RollingUpdateStatefulSetStrategy?
     # :ditto:
-    abstract def rolling_update=(value : ::K8S::Api::Apps::V1::RollingUpdateStatefulSetStrategy?)
+    abstract def rolling_update=(value : ::K8S::Api::Apps::V1::RollingUpdateStatefulSetStrategy)
     # Type indicates the type of the StatefulSetUpdateStrategy. Default is RollingUpdate.
     abstract def type : String?
     # :ditto:
@@ -25,7 +25,7 @@ module K8S
     # :ditto:
     abstract def type? : String?
     # :ditto:
-    abstract def type=(value : String?)
+    abstract def type=(value : String)
   end
 
   # StatefulSetUpdateStrategy indicates the strategy that the StatefulSet controller will use to perform updates. It includes any additional parameters necessary to perform the update for the indicated strategy.
@@ -35,52 +35,18 @@ module K8S
   )]
   class Api::Apps::V1::StatefulSetUpdateStrategy < ::K8S::GenericObject
     include ::K8S::Types::Api::Apps::V1::StatefulSetUpdateStrategy
+    k8s_object_accessor("rollingUpdate", rolling_update : ::K8S::Api::Apps::V1::RollingUpdateStatefulSetStrategy, true, false, "RollingUpdate is used to communicate parameters when Type is RollingUpdateStatefulSetStrategyType.")
+    k8s_object_accessor("type", type : String, true, false, "Type indicates the type of the StatefulSetUpdateStrategy. Default is RollingUpdate.")
 
-    # RollingUpdate is used to communicate parameters when Type is RollingUpdateStatefulSetStrategyType.
-    def rolling_update : ::K8S::Api::Apps::V1::RollingUpdateStatefulSetStrategy?
-      self.["rollingUpdate"].as(::K8S::Api::Apps::V1::RollingUpdateStatefulSetStrategy?)
+    def initialize(*, rolling_update : ::K8S::Api::Apps::V1::RollingUpdateStatefulSetStrategy? = nil, type : String? = nil)
+      super()
+      self.["rollingUpdate"] = rolling_update
+      self.["type"] = type
     end
 
-    # :ditto:
-    def rolling_update! : ::K8S::Api::Apps::V1::RollingUpdateStatefulSetStrategy
-      self.["rollingUpdate"].as(::K8S::Api::Apps::V1::RollingUpdateStatefulSetStrategy?).not_nil!
-    end
-
-    # :ditto:
-    def rolling_update? : ::K8S::Api::Apps::V1::RollingUpdateStatefulSetStrategy?
-      self.["rollingUpdate"]?.as(::K8S::Api::Apps::V1::RollingUpdateStatefulSetStrategy?)
-    end
-
-    # :ditto:
-    def rolling_update=(value : ::K8S::Api::Apps::V1::RollingUpdateStatefulSetStrategy?)
-      self.["rollingUpdate"] = value
-    end
-
-    # Type indicates the type of the StatefulSetUpdateStrategy. Default is RollingUpdate.
-    def type : String?
-      self.["type"].as(String?)
-    end
-
-    # :ditto:
-    def type! : String
-      self.["type"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def type? : String?
-      self.["type"]?.as(String?)
-    end
-
-    # :ditto:
-    def type=(value : String?)
-      self.["type"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "rollingUpdate", accessor: "rolling_update", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Apps::V1::RollingUpdateStatefulSetStrategy },
-        { key: "type", accessor: "type", nilable: true, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "rollingUpdate", accessor: "rolling_update", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Apps::V1::RollingUpdateStatefulSetStrategy},
+      {key: "type", accessor: "type", nilable: true, read_only: false, default: nil, kind: String},
+    ])
   end
 end

@@ -18,7 +18,7 @@ module K8S
     # :ditto:
     abstract def config_map_ref? : ::K8S::Api::Core::V1::ConfigMapEnvSource?
     # :ditto:
-    abstract def config_map_ref=(value : ::K8S::Api::Core::V1::ConfigMapEnvSource?)
+    abstract def config_map_ref=(value : ::K8S::Api::Core::V1::ConfigMapEnvSource)
     # An optional identifier to prepend to each key in the ConfigMap. Must be a C_IDENTIFIER.
     abstract def prefix : String?
     # :ditto:
@@ -26,7 +26,7 @@ module K8S
     # :ditto:
     abstract def prefix? : String?
     # :ditto:
-    abstract def prefix=(value : String?)
+    abstract def prefix=(value : String)
     # The Secret to select from
     abstract def secret_ref : ::K8S::Api::Core::V1::SecretEnvSource?
     # :ditto:
@@ -34,7 +34,7 @@ module K8S
     # :ditto:
     abstract def secret_ref? : ::K8S::Api::Core::V1::SecretEnvSource?
     # :ditto:
-    abstract def secret_ref=(value : ::K8S::Api::Core::V1::SecretEnvSource?)
+    abstract def secret_ref=(value : ::K8S::Api::Core::V1::SecretEnvSource)
   end
 
   # EnvFromSource represents the source of a set of ConfigMaps
@@ -45,73 +45,21 @@ module K8S
   )]
   class Api::Core::V1::EnvFromSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::EnvFromSource
+    k8s_object_accessor("configMapRef", config_map_ref : ::K8S::Api::Core::V1::ConfigMapEnvSource, true, false, "The ConfigMap to select from")
+    k8s_object_accessor("prefix", prefix : String, true, false, "An optional identifier to prepend to each key in the ConfigMap. Must be a C_IDENTIFIER.")
+    k8s_object_accessor("secretRef", secret_ref : ::K8S::Api::Core::V1::SecretEnvSource, true, false, "The Secret to select from")
 
-    # The ConfigMap to select from
-    def config_map_ref : ::K8S::Api::Core::V1::ConfigMapEnvSource?
-      self.["configMapRef"].as(::K8S::Api::Core::V1::ConfigMapEnvSource?)
+    def initialize(*, config_map_ref : ::K8S::Api::Core::V1::ConfigMapEnvSource? = nil, prefix : String? = nil, secret_ref : ::K8S::Api::Core::V1::SecretEnvSource? = nil)
+      super()
+      self.["configMapRef"] = config_map_ref
+      self.["prefix"] = prefix
+      self.["secretRef"] = secret_ref
     end
 
-    # :ditto:
-    def config_map_ref! : ::K8S::Api::Core::V1::ConfigMapEnvSource
-      self.["configMapRef"].as(::K8S::Api::Core::V1::ConfigMapEnvSource?).not_nil!
-    end
-
-    # :ditto:
-    def config_map_ref? : ::K8S::Api::Core::V1::ConfigMapEnvSource?
-      self.["configMapRef"]?.as(::K8S::Api::Core::V1::ConfigMapEnvSource?)
-    end
-
-    # :ditto:
-    def config_map_ref=(value : ::K8S::Api::Core::V1::ConfigMapEnvSource?)
-      self.["configMapRef"] = value
-    end
-
-    # An optional identifier to prepend to each key in the ConfigMap. Must be a C_IDENTIFIER.
-    def prefix : String?
-      self.["prefix"].as(String?)
-    end
-
-    # :ditto:
-    def prefix! : String
-      self.["prefix"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def prefix? : String?
-      self.["prefix"]?.as(String?)
-    end
-
-    # :ditto:
-    def prefix=(value : String?)
-      self.["prefix"] = value
-    end
-
-    # The Secret to select from
-    def secret_ref : ::K8S::Api::Core::V1::SecretEnvSource?
-      self.["secretRef"].as(::K8S::Api::Core::V1::SecretEnvSource?)
-    end
-
-    # :ditto:
-    def secret_ref! : ::K8S::Api::Core::V1::SecretEnvSource
-      self.["secretRef"].as(::K8S::Api::Core::V1::SecretEnvSource?).not_nil!
-    end
-
-    # :ditto:
-    def secret_ref? : ::K8S::Api::Core::V1::SecretEnvSource?
-      self.["secretRef"]?.as(::K8S::Api::Core::V1::SecretEnvSource?)
-    end
-
-    # :ditto:
-    def secret_ref=(value : ::K8S::Api::Core::V1::SecretEnvSource?)
-      self.["secretRef"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "configMapRef", accessor: "config_map_ref", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::ConfigMapEnvSource },
-        { key: "prefix", accessor: "prefix", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "secretRef", accessor: "secret_ref", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::SecretEnvSource },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "configMapRef", accessor: "config_map_ref", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::ConfigMapEnvSource},
+      {key: "prefix", accessor: "prefix", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "secretRef", accessor: "secret_ref", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::SecretEnvSource},
+    ])
   end
 end

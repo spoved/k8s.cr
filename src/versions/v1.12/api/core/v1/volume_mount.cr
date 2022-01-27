@@ -9,7 +9,7 @@ module K8S
   # Namespace holding the types for `Api::Core::V1::VolumeMount`.
   module Types::Api::Core::V1::VolumeMount
     # Path within the container at which the volume should be mounted.  Must not contain ':'.
-    abstract def mount_path : String
+    abstract def mount_path : String?
     # :ditto:
     abstract def mount_path! : String
     # :ditto:
@@ -23,9 +23,9 @@ module K8S
     # :ditto:
     abstract def mount_propagation? : String?
     # :ditto:
-    abstract def mount_propagation=(value : String?)
+    abstract def mount_propagation=(value : String)
     # This must match the Name of a Volume.
-    abstract def name : String
+    abstract def name : String?
     # :ditto:
     abstract def name! : String
     # :ditto:
@@ -39,7 +39,7 @@ module K8S
     # :ditto:
     abstract def read_only? : ::Bool?
     # :ditto:
-    abstract def read_only=(value : ::Bool?)
+    abstract def read_only=(value : ::Bool)
     # Path within the volume from which the container's volume should be mounted. Defaults to "" (volume's root).
     abstract def sub_path : String?
     # :ditto:
@@ -47,7 +47,7 @@ module K8S
     # :ditto:
     abstract def sub_path? : String?
     # :ditto:
-    abstract def sub_path=(value : String?)
+    abstract def sub_path=(value : String)
   end
 
   # VolumeMount describes a mounting of a Volume within a container.
@@ -60,115 +60,27 @@ module K8S
   )]
   class Api::Core::V1::VolumeMount < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::VolumeMount
+    k8s_object_accessor("mountPath", mount_path : String, false, false, "Path within the container at which the volume should be mounted.  Must not contain ':'.")
+    k8s_object_accessor("mountPropagation", mount_propagation : String, true, false, "mountPropagation determines how mounts are propagated from the host to container and the other way around. When not set, MountPropagationNone is used. This field is beta in 1.10.")
+    k8s_object_accessor("name", name : String, false, false, "This must match the Name of a Volume.")
+    k8s_object_accessor("readOnly", read_only : ::Bool, true, false, "Mounted read-only if true, read-write otherwise (false or unspecified). Defaults to false.")
+    k8s_object_accessor("subPath", sub_path : String, true, false, "Path within the volume from which the container's volume should be mounted. Defaults to \"\" (volume's root).")
 
-    # Path within the container at which the volume should be mounted.  Must not contain ':'.
-    def mount_path : String
-      self.["mountPath"].as(String)
+    def initialize(*, mount_path : String? = nil, mount_propagation : String? = nil, name : String? = nil, read_only : ::Bool? = nil, sub_path : String? = nil)
+      super()
+      self.["mountPath"] = mount_path
+      self.["mountPropagation"] = mount_propagation
+      self.["name"] = name
+      self.["readOnly"] = read_only
+      self.["subPath"] = sub_path
     end
 
-    # :ditto:
-    def mount_path! : String
-      self.["mountPath"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def mount_path? : String?
-      self.["mountPath"]?.as(String?)
-    end
-
-    # :ditto:
-    def mount_path=(value : String)
-      self.["mountPath"] = value
-    end
-
-    # mountPropagation determines how mounts are propagated from the host to container and the other way around. When not set, MountPropagationNone is used. This field is beta in 1.10.
-    def mount_propagation : String?
-      self.["mountPropagation"].as(String?)
-    end
-
-    # :ditto:
-    def mount_propagation! : String
-      self.["mountPropagation"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def mount_propagation? : String?
-      self.["mountPropagation"]?.as(String?)
-    end
-
-    # :ditto:
-    def mount_propagation=(value : String?)
-      self.["mountPropagation"] = value
-    end
-
-    # This must match the Name of a Volume.
-    def name : String
-      self.["name"].as(String)
-    end
-
-    # :ditto:
-    def name! : String
-      self.["name"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def name? : String?
-      self.["name"]?.as(String?)
-    end
-
-    # :ditto:
-    def name=(value : String)
-      self.["name"] = value
-    end
-
-    # Mounted read-only if true, read-write otherwise (false or unspecified). Defaults to false.
-    def read_only : ::Bool?
-      self.["readOnly"].as(::Bool?)
-    end
-
-    # :ditto:
-    def read_only! : ::Bool
-      self.["readOnly"].as(::Bool?).not_nil!
-    end
-
-    # :ditto:
-    def read_only? : ::Bool?
-      self.["readOnly"]?.as(::Bool?)
-    end
-
-    # :ditto:
-    def read_only=(value : ::Bool?)
-      self.["readOnly"] = value
-    end
-
-    # Path within the volume from which the container's volume should be mounted. Defaults to "" (volume's root).
-    def sub_path : String?
-      self.["subPath"].as(String?)
-    end
-
-    # :ditto:
-    def sub_path! : String
-      self.["subPath"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def sub_path? : String?
-      self.["subPath"]?.as(String?)
-    end
-
-    # :ditto:
-    def sub_path=(value : String?)
-      self.["subPath"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "mountPath", accessor: "mount_path", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "mountPropagation", accessor: "mount_propagation", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "name", accessor: "name", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "readOnly", accessor: "read_only", nilable: true, read_only: false, default: nil, kind: ::Bool },
-        { key: "subPath", accessor: "sub_path", nilable: true, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "mountPath", accessor: "mount_path", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "mountPropagation", accessor: "mount_propagation", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "name", accessor: "name", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "readOnly", accessor: "read_only", nilable: true, read_only: false, default: nil, kind: ::Bool},
+      {key: "subPath", accessor: "sub_path", nilable: true, read_only: false, default: nil, kind: String},
+    ])
   end
 end

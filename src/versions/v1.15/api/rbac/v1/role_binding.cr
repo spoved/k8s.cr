@@ -13,13 +13,13 @@ module K8S
   # Namespace holding the types for `Api::Rbac::V1::RoleBinding`.
   module Types::Api::Rbac::V1::RoleBinding
     # APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)))
-    abstract def api_version : String
+    abstract def api_version : String?
     # :ditto:
     abstract def api_version! : String
     # :ditto:
     abstract def api_version? : String?
     # Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)))
-    abstract def kind : String
+    abstract def kind : String?
     # :ditto:
     abstract def kind! : String
     # :ditto:
@@ -31,9 +31,9 @@ module K8S
     # :ditto:
     abstract def metadata? : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?
     # :ditto:
-    abstract def metadata=(value : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?)
+    abstract def metadata=(value : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta)
     # RoleRef can reference a Role in the current namespace or a ClusterRole in the global namespace. If the RoleRef cannot be resolved, the Authorizer must return an error.
-    abstract def role_ref : ::K8S::Api::Rbac::V1::RoleRef
+    abstract def role_ref : ::K8S::Api::Rbac::V1::RoleRef?
     # :ditto:
     abstract def role_ref! : ::K8S::Api::Rbac::V1::RoleRef
     # :ditto:
@@ -47,7 +47,7 @@ module K8S
     # :ditto:
     abstract def subjects? : ::Array(::K8S::Api::Rbac::V1::Subject)?
     # :ditto:
-    abstract def subjects=(value : ::Array(::K8S::Api::Rbac::V1::Subject)?)
+    abstract def subjects=(value : ::Array(::K8S::Api::Rbac::V1::Subject))
   end
 
   # RoleBinding references a role, but does not contain it.  It can reference a Role in the same namespace or a ClusterRole in the global namespace. It adds who information via Subjects and namespace information by which namespace it exists in.  RoleBindings in a given namespace only have effect in that namespace.
@@ -61,108 +61,30 @@ module K8S
   )]
   class Api::Rbac::V1::RoleBinding < ::K8S::Kubernetes::Resource::Object
     include ::K8S::Types::Api::Rbac::V1::RoleBinding
+    k8s_object_accessor("apiVersion", api_version : String = "rbac.authorization.k8s.io/v1", false, true, "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources))")
+    k8s_object_accessor("kind", kind : String = "RoleBinding", false, true, "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds))")
+    k8s_object_accessor("metadata", metadata : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta, true, false, "Standard object's metadata. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata))")
+    k8s_object_accessor("roleRef", role_ref : ::K8S::Api::Rbac::V1::RoleRef, false, false, "RoleRef can reference a Role in the current namespace or a ClusterRole in the global namespace. If the RoleRef cannot be resolved, the Authorizer must return an error.")
+    k8s_object_accessor("subjects", subjects : ::Array(::K8S::Api::Rbac::V1::Subject), true, false, "Subjects holds references to the objects the role applies to.")
 
-    # APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)))
-    def api_version : String
-      self.["apiVersion"] = "rbac.authorization.k8s.io/v1" unless self.["apiVersion"]?
-      self.["apiVersion"].as(String)
+    def initialize(*, api_version : String? = "rbac.authorization.k8s.io/v1", kind : String? = "RoleBinding", metadata : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta? = nil, role_ref : ::K8S::Api::Rbac::V1::RoleRef? = nil, subjects : ::Array(::K8S::Api::Rbac::V1::Subject)? = nil)
+      super()
+      raise "api_version cannot be nil" if api_version.nil?
+      self.["apiVersion"] = api_version
+      raise "kind cannot be nil" if kind.nil?
+      self.["kind"] = kind
+      self.["metadata"] = metadata
+      self.["roleRef"] = role_ref
+      self.["subjects"] = subjects
     end
 
-    # :ditto:
-    def api_version! : String
-      self.["apiVersion"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def api_version? : String?
-      self.["apiVersion"]?.as(String?)
-    end
-
-    # Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)))
-    def kind : String
-      self.["kind"] = "RoleBinding" unless self.["kind"]?
-      self.["kind"].as(String)
-    end
-
-    # :ditto:
-    def kind! : String
-      self.["kind"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def kind? : String?
-      self.["kind"]?.as(String?)
-    end
-
-    # Standard object's metadata. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)))
-    def metadata : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?
-      self.["metadata"].as(::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?)
-    end
-
-    # :ditto:
-    def metadata! : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta
-      self.["metadata"].as(::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?).not_nil!
-    end
-
-    # :ditto:
-    def metadata? : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?
-      self.["metadata"]?.as(::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?)
-    end
-
-    # :ditto:
-    def metadata=(value : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?)
-      self.["metadata"] = value
-    end
-
-    # RoleRef can reference a Role in the current namespace or a ClusterRole in the global namespace. If the RoleRef cannot be resolved, the Authorizer must return an error.
-    def role_ref : ::K8S::Api::Rbac::V1::RoleRef
-      self.["roleRef"].as(::K8S::Api::Rbac::V1::RoleRef)
-    end
-
-    # :ditto:
-    def role_ref! : ::K8S::Api::Rbac::V1::RoleRef
-      self.["roleRef"].as(::K8S::Api::Rbac::V1::RoleRef).not_nil!
-    end
-
-    # :ditto:
-    def role_ref? : ::K8S::Api::Rbac::V1::RoleRef?
-      self.["roleRef"]?.as(::K8S::Api::Rbac::V1::RoleRef?)
-    end
-
-    # :ditto:
-    def role_ref=(value : ::K8S::Api::Rbac::V1::RoleRef)
-      self.["roleRef"] = value
-    end
-
-    # Subjects holds references to the objects the role applies to.
-    def subjects : ::Array(::K8S::Api::Rbac::V1::Subject)?
-      self.["subjects"].as(::Array(::K8S::Api::Rbac::V1::Subject)?)
-    end
-
-    # :ditto:
-    def subjects! : ::Array(::K8S::Api::Rbac::V1::Subject)
-      self.["subjects"].as(::Array(::K8S::Api::Rbac::V1::Subject)?).not_nil!
-    end
-
-    # :ditto:
-    def subjects? : ::Array(::K8S::Api::Rbac::V1::Subject)?
-      self.["subjects"]?.as(::Array(::K8S::Api::Rbac::V1::Subject)?)
-    end
-
-    # :ditto:
-    def subjects=(value : ::Array(::K8S::Api::Rbac::V1::Subject)?)
-      self.["subjects"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "apiVersion", accessor: "api_version", nilable: false, read_only: true, default: "rbac.authorization.k8s.io/v1", kind: String },
-        { key: "kind", accessor: "kind", nilable: false, read_only: true, default: "RoleBinding", kind: String },
-        { key: "metadata", accessor: "metadata", nilable: true, read_only: false, default: nil, kind: ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta },
-        { key: "roleRef", accessor: "role_ref", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Rbac::V1::RoleRef },
-        { key: "subjects", accessor: "subjects", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Rbac::V1::Subject) },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "apiVersion", accessor: "api_version", nilable: false, read_only: true, default: "rbac.authorization.k8s.io/v1", kind: String},
+      {key: "kind", accessor: "kind", nilable: false, read_only: true, default: "RoleBinding", kind: String},
+      {key: "metadata", accessor: "metadata", nilable: true, read_only: false, default: nil, kind: ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta},
+      {key: "roleRef", accessor: "role_ref", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Rbac::V1::RoleRef},
+      {key: "subjects", accessor: "subjects", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Rbac::V1::Subject)},
+    ])
   end
 
   module Resources::Rbac::V1

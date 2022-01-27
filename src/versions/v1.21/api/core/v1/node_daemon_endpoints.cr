@@ -17,7 +17,7 @@ module K8S
     # :ditto:
     abstract def kubelet_endpoint? : ::K8S::Api::Core::V1::DaemonEndpoint?
     # :ditto:
-    abstract def kubelet_endpoint=(value : ::K8S::Api::Core::V1::DaemonEndpoint?)
+    abstract def kubelet_endpoint=(value : ::K8S::Api::Core::V1::DaemonEndpoint)
   end
 
   # NodeDaemonEndpoints lists ports opened by daemons running on the Node.
@@ -26,31 +26,15 @@ module K8S
   )]
   class Api::Core::V1::NodeDaemonEndpoints < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::NodeDaemonEndpoints
+    k8s_object_accessor("kubeletEndpoint", kubelet_endpoint : ::K8S::Api::Core::V1::DaemonEndpoint, true, false, "Endpoint on which Kubelet is listening.")
 
-    # Endpoint on which Kubelet is listening.
-    def kubelet_endpoint : ::K8S::Api::Core::V1::DaemonEndpoint?
-      self.["kubeletEndpoint"].as(::K8S::Api::Core::V1::DaemonEndpoint?)
+    def initialize(*, kubelet_endpoint : ::K8S::Api::Core::V1::DaemonEndpoint? = nil)
+      super()
+      self.["kubeletEndpoint"] = kubelet_endpoint
     end
 
-    # :ditto:
-    def kubelet_endpoint! : ::K8S::Api::Core::V1::DaemonEndpoint
-      self.["kubeletEndpoint"].as(::K8S::Api::Core::V1::DaemonEndpoint?).not_nil!
-    end
-
-    # :ditto:
-    def kubelet_endpoint? : ::K8S::Api::Core::V1::DaemonEndpoint?
-      self.["kubeletEndpoint"]?.as(::K8S::Api::Core::V1::DaemonEndpoint?)
-    end
-
-    # :ditto:
-    def kubelet_endpoint=(value : ::K8S::Api::Core::V1::DaemonEndpoint?)
-      self.["kubeletEndpoint"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "kubeletEndpoint", accessor: "kubelet_endpoint", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::DaemonEndpoint },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "kubeletEndpoint", accessor: "kubelet_endpoint", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::DaemonEndpoint},
+    ])
   end
 end

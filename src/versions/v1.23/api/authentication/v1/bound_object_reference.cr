@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def api_version? : String?
     # :ditto:
-    abstract def api_version=(value : String?)
+    abstract def api_version=(value : String)
     # Kind of the referent. Valid kinds are 'Pod' and 'Secret'.
     abstract def kind : String?
     # :ditto:
@@ -23,7 +23,7 @@ module K8S
     # :ditto:
     abstract def kind? : String?
     # :ditto:
-    abstract def kind=(value : String?)
+    abstract def kind=(value : String)
     # Name of the referent.
     abstract def name : String?
     # :ditto:
@@ -31,7 +31,7 @@ module K8S
     # :ditto:
     abstract def name? : String?
     # :ditto:
-    abstract def name=(value : String?)
+    abstract def name=(value : String)
     # UID of the referent.
     abstract def uid : String?
     # :ditto:
@@ -39,7 +39,7 @@ module K8S
     # :ditto:
     abstract def uid? : String?
     # :ditto:
-    abstract def uid=(value : String?)
+    abstract def uid=(value : String)
   end
 
   # BoundObjectReference is a reference to an object that a token is bound to.
@@ -51,94 +51,24 @@ module K8S
   )]
   class Api::Authentication::V1::BoundObjectReference < ::K8S::GenericObject
     include ::K8S::Types::Api::Authentication::V1::BoundObjectReference
+    k8s_object_accessor("apiVersion", api_version : String, true, false, "API version of the referent.")
+    k8s_object_accessor("kind", kind : String, true, false, "Kind of the referent. Valid kinds are 'Pod' and 'Secret'.")
+    k8s_object_accessor("name", name : String, true, false, "Name of the referent.")
+    k8s_object_accessor("uid", uid : String, true, false, "UID of the referent.")
 
-    # API version of the referent.
-    def api_version : String?
-      self.["apiVersion"].as(String?)
+    def initialize(*, api_version : String? = nil, kind : String? = nil, name : String? = nil, uid : String? = nil)
+      super()
+      self.["apiVersion"] = api_version
+      self.["kind"] = kind
+      self.["name"] = name
+      self.["uid"] = uid
     end
 
-    # :ditto:
-    def api_version! : String
-      self.["apiVersion"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def api_version? : String?
-      self.["apiVersion"]?.as(String?)
-    end
-
-    # :ditto:
-    def api_version=(value : String?)
-      self.["apiVersion"] = value
-    end
-
-    # Kind of the referent. Valid kinds are 'Pod' and 'Secret'.
-    def kind : String?
-      self.["kind"].as(String?)
-    end
-
-    # :ditto:
-    def kind! : String
-      self.["kind"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def kind? : String?
-      self.["kind"]?.as(String?)
-    end
-
-    # :ditto:
-    def kind=(value : String?)
-      self.["kind"] = value
-    end
-
-    # Name of the referent.
-    def name : String?
-      self.["name"].as(String?)
-    end
-
-    # :ditto:
-    def name! : String
-      self.["name"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def name? : String?
-      self.["name"]?.as(String?)
-    end
-
-    # :ditto:
-    def name=(value : String?)
-      self.["name"] = value
-    end
-
-    # UID of the referent.
-    def uid : String?
-      self.["uid"].as(String?)
-    end
-
-    # :ditto:
-    def uid! : String
-      self.["uid"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def uid? : String?
-      self.["uid"]?.as(String?)
-    end
-
-    # :ditto:
-    def uid=(value : String?)
-      self.["uid"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "apiVersion", accessor: "api_version", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "kind", accessor: "kind", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "name", accessor: "name", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "uid", accessor: "uid", nilable: true, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "apiVersion", accessor: "api_version", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "kind", accessor: "kind", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "name", accessor: "name", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "uid", accessor: "uid", nilable: true, read_only: false, default: nil, kind: String},
+    ])
   end
 end

@@ -18,7 +18,7 @@ module K8S
     # :ditto:
     abstract def non_resource_attributes? : ::K8S::Api::Authorization::V1::NonResourceAttributes?
     # :ditto:
-    abstract def non_resource_attributes=(value : ::K8S::Api::Authorization::V1::NonResourceAttributes?)
+    abstract def non_resource_attributes=(value : ::K8S::Api::Authorization::V1::NonResourceAttributes)
     # ResourceAuthorizationAttributes describes information for a resource access request
     abstract def resource_attributes : ::K8S::Api::Authorization::V1::ResourceAttributes?
     # :ditto:
@@ -26,7 +26,7 @@ module K8S
     # :ditto:
     abstract def resource_attributes? : ::K8S::Api::Authorization::V1::ResourceAttributes?
     # :ditto:
-    abstract def resource_attributes=(value : ::K8S::Api::Authorization::V1::ResourceAttributes?)
+    abstract def resource_attributes=(value : ::K8S::Api::Authorization::V1::ResourceAttributes)
   end
 
   # SelfSubjectAccessReviewSpec is a description of the access request.  Exactly one of ResourceAuthorizationAttributes and NonResourceAuthorizationAttributes must be set
@@ -36,52 +36,18 @@ module K8S
   )]
   class Api::Authorization::V1::SelfSubjectAccessReviewSpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Authorization::V1::SelfSubjectAccessReviewSpec
+    k8s_object_accessor("nonResourceAttributes", non_resource_attributes : ::K8S::Api::Authorization::V1::NonResourceAttributes, true, false, "NonResourceAttributes describes information for a non-resource access request")
+    k8s_object_accessor("resourceAttributes", resource_attributes : ::K8S::Api::Authorization::V1::ResourceAttributes, true, false, "ResourceAuthorizationAttributes describes information for a resource access request")
 
-    # NonResourceAttributes describes information for a non-resource access request
-    def non_resource_attributes : ::K8S::Api::Authorization::V1::NonResourceAttributes?
-      self.["nonResourceAttributes"].as(::K8S::Api::Authorization::V1::NonResourceAttributes?)
+    def initialize(*, non_resource_attributes : ::K8S::Api::Authorization::V1::NonResourceAttributes? = nil, resource_attributes : ::K8S::Api::Authorization::V1::ResourceAttributes? = nil)
+      super()
+      self.["nonResourceAttributes"] = non_resource_attributes
+      self.["resourceAttributes"] = resource_attributes
     end
 
-    # :ditto:
-    def non_resource_attributes! : ::K8S::Api::Authorization::V1::NonResourceAttributes
-      self.["nonResourceAttributes"].as(::K8S::Api::Authorization::V1::NonResourceAttributes?).not_nil!
-    end
-
-    # :ditto:
-    def non_resource_attributes? : ::K8S::Api::Authorization::V1::NonResourceAttributes?
-      self.["nonResourceAttributes"]?.as(::K8S::Api::Authorization::V1::NonResourceAttributes?)
-    end
-
-    # :ditto:
-    def non_resource_attributes=(value : ::K8S::Api::Authorization::V1::NonResourceAttributes?)
-      self.["nonResourceAttributes"] = value
-    end
-
-    # ResourceAuthorizationAttributes describes information for a resource access request
-    def resource_attributes : ::K8S::Api::Authorization::V1::ResourceAttributes?
-      self.["resourceAttributes"].as(::K8S::Api::Authorization::V1::ResourceAttributes?)
-    end
-
-    # :ditto:
-    def resource_attributes! : ::K8S::Api::Authorization::V1::ResourceAttributes
-      self.["resourceAttributes"].as(::K8S::Api::Authorization::V1::ResourceAttributes?).not_nil!
-    end
-
-    # :ditto:
-    def resource_attributes? : ::K8S::Api::Authorization::V1::ResourceAttributes?
-      self.["resourceAttributes"]?.as(::K8S::Api::Authorization::V1::ResourceAttributes?)
-    end
-
-    # :ditto:
-    def resource_attributes=(value : ::K8S::Api::Authorization::V1::ResourceAttributes?)
-      self.["resourceAttributes"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "nonResourceAttributes", accessor: "non_resource_attributes", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Authorization::V1::NonResourceAttributes },
-        { key: "resourceAttributes", accessor: "resource_attributes", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Authorization::V1::ResourceAttributes },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "nonResourceAttributes", accessor: "non_resource_attributes", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Authorization::V1::NonResourceAttributes},
+      {key: "resourceAttributes", accessor: "resource_attributes", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Authorization::V1::ResourceAttributes},
+    ])
   end
 end

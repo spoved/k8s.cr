@@ -17,9 +17,9 @@ module K8S
     # :ditto:
     abstract def client_config? : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::WebhookClientConfig?
     # :ditto:
-    abstract def client_config=(value : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::WebhookClientConfig?)
+    abstract def client_config=(value : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::WebhookClientConfig)
     # conversionReviewVersions is an ordered list of preferred `ConversionReview` versions the Webhook expects. The API server will use the first version in the list which it supports. If none of the versions specified in this list are supported by API server, conversion will fail for the custom resource. If a persisted Webhook configuration specifies allowed versions and does not include any versions known to the API Server, calls to the webhook will fail.
-    abstract def conversion_review_versions : ::Array(String)
+    abstract def conversion_review_versions : ::Array(String)?
     # :ditto:
     abstract def conversion_review_versions! : ::Array(String)
     # :ditto:
@@ -35,52 +35,18 @@ module K8S
   )]
   class ApiextensionsApiserver::Apis::Apiextensions::V1::WebhookConversion < ::K8S::GenericObject
     include ::K8S::Types::ApiextensionsApiserver::Apis::Apiextensions::V1::WebhookConversion
+    k8s_object_accessor("clientConfig", client_config : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::WebhookClientConfig, true, false, "clientConfig is the instructions for how to call the webhook if strategy is `Webhook`.")
+    k8s_object_accessor("conversionReviewVersions", conversion_review_versions : ::Array(String), false, false, "conversionReviewVersions is an ordered list of preferred `ConversionReview` versions the Webhook expects. The API server will use the first version in the list which it supports. If none of the versions specified in this list are supported by API server, conversion will fail for the custom resource. If a persisted Webhook configuration specifies allowed versions and does not include any versions known to the API Server, calls to the webhook will fail.")
 
-    # clientConfig is the instructions for how to call the webhook if strategy is `Webhook`.
-    def client_config : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::WebhookClientConfig?
-      self.["clientConfig"].as(::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::WebhookClientConfig?)
+    def initialize(*, client_config : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::WebhookClientConfig? = nil, conversion_review_versions : ::Array(String)? = nil)
+      super()
+      self.["clientConfig"] = client_config
+      self.["conversionReviewVersions"] = conversion_review_versions
     end
 
-    # :ditto:
-    def client_config! : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::WebhookClientConfig
-      self.["clientConfig"].as(::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::WebhookClientConfig?).not_nil!
-    end
-
-    # :ditto:
-    def client_config? : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::WebhookClientConfig?
-      self.["clientConfig"]?.as(::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::WebhookClientConfig?)
-    end
-
-    # :ditto:
-    def client_config=(value : ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::WebhookClientConfig?)
-      self.["clientConfig"] = value
-    end
-
-    # conversionReviewVersions is an ordered list of preferred `ConversionReview` versions the Webhook expects. The API server will use the first version in the list which it supports. If none of the versions specified in this list are supported by API server, conversion will fail for the custom resource. If a persisted Webhook configuration specifies allowed versions and does not include any versions known to the API Server, calls to the webhook will fail.
-    def conversion_review_versions : ::Array(String)
-      self.["conversionReviewVersions"].as(::Array(String))
-    end
-
-    # :ditto:
-    def conversion_review_versions! : ::Array(String)
-      self.["conversionReviewVersions"].as(::Array(String)).not_nil!
-    end
-
-    # :ditto:
-    def conversion_review_versions? : ::Array(String)?
-      self.["conversionReviewVersions"]?.as(::Array(String)?)
-    end
-
-    # :ditto:
-    def conversion_review_versions=(value : ::Array(String))
-      self.["conversionReviewVersions"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "clientConfig", accessor: "client_config", nilable: true, read_only: false, default: nil, kind: ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::WebhookClientConfig },
-        { key: "conversionReviewVersions", accessor: "conversion_review_versions", nilable: false, read_only: false, default: nil, kind: ::Array(String) },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "clientConfig", accessor: "client_config", nilable: true, read_only: false, default: nil, kind: ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::WebhookClientConfig},
+      {key: "conversionReviewVersions", accessor: "conversion_review_versions", nilable: false, read_only: false, default: nil, kind: ::Array(String)},
+    ])
   end
 end

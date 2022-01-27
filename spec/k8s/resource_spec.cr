@@ -5,13 +5,13 @@ require "../../src/k8s/resource"
 Spectator.describe K8S::Kubernetes::Resource do
   context "#initialize" do
     it "takes another K8S::GenericObject, Hash or NamedTuple as an initial value" do
-      expect_raises KeyError, %<Missing hash key: "apiVersion"> do
-        K8S::Kubernetes::Resource::Object.new(K8S::GenericObject.new({foo: {bar: true}}))
-      end
+      # expect_raises K8S::Kubernetes::Resource::Error, %<apiVersion must be defined> do
+      #   K8S::Kubernetes::Resource::Object.new(K8S::GenericObject.new({foo: {bar: true}}))
+      # end
 
-      expect_raises KeyError, %<Missing hash key: "kind"> do
-        K8S::Kubernetes::Resource::Object.new(K8S::GenericObject.new({apiVersion: "v1", foo: {bar: true}}))
-      end
+      # expect_raises K8S::Kubernetes::Resource::Error, %<kind must be defined> do
+      #   K8S::Kubernetes::Resource::Object.new(K8S::GenericObject.new({apiVersion: "v1", foo: {bar: true}}))
+      # end
 
       expect(K8S::Kubernetes::Resource::Object.new(K8S::GenericObject.new({
         apiVersion: "v1",

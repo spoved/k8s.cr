@@ -17,7 +17,7 @@ module K8S
     # :ditto:
     abstract def collision_count? : Int32?
     # :ditto:
-    abstract def collision_count=(value : Int32?)
+    abstract def collision_count=(value : Int32)
     # Represents the latest available observations of a DaemonSet's current state.
     abstract def conditions : ::Array(::K8S::Api::Apps::V1::DaemonSetCondition)?
     # :ditto:
@@ -25,9 +25,9 @@ module K8S
     # :ditto:
     abstract def conditions? : ::Array(::K8S::Api::Apps::V1::DaemonSetCondition)?
     # :ditto:
-    abstract def conditions=(value : ::Array(::K8S::Api::Apps::V1::DaemonSetCondition)?)
+    abstract def conditions=(value : ::Array(::K8S::Api::Apps::V1::DaemonSetCondition))
     # The number of nodes that are running at least 1 daemon pod and are supposed to run the daemon pod. More info: [[https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/)](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/))
-    abstract def current_number_scheduled : Int32
+    abstract def current_number_scheduled : Int32?
     # :ditto:
     abstract def current_number_scheduled! : Int32
     # :ditto:
@@ -35,7 +35,7 @@ module K8S
     # :ditto:
     abstract def current_number_scheduled=(value : Int32)
     # The total number of nodes that should be running the daemon pod (including nodes correctly running the daemon pod). More info: [[https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/)](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/))
-    abstract def desired_number_scheduled : Int32
+    abstract def desired_number_scheduled : Int32?
     # :ditto:
     abstract def desired_number_scheduled! : Int32
     # :ditto:
@@ -49,9 +49,9 @@ module K8S
     # :ditto:
     abstract def number_available? : Int32?
     # :ditto:
-    abstract def number_available=(value : Int32?)
+    abstract def number_available=(value : Int32)
     # The number of nodes that are running the daemon pod, but are not supposed to run the daemon pod. More info: [[https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/)](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/))
-    abstract def number_misscheduled : Int32
+    abstract def number_misscheduled : Int32?
     # :ditto:
     abstract def number_misscheduled! : Int32
     # :ditto:
@@ -59,7 +59,7 @@ module K8S
     # :ditto:
     abstract def number_misscheduled=(value : Int32)
     # numberReady is the number of nodes that should be running the daemon pod and have one or more of the daemon pod running with a Ready Condition.
-    abstract def number_ready : Int32
+    abstract def number_ready : Int32?
     # :ditto:
     abstract def number_ready! : Int32
     # :ditto:
@@ -73,7 +73,7 @@ module K8S
     # :ditto:
     abstract def number_unavailable? : Int32?
     # :ditto:
-    abstract def number_unavailable=(value : Int32?)
+    abstract def number_unavailable=(value : Int32)
     # The most recent generation observed by the daemon set controller.
     abstract def observed_generation : Int32?
     # :ditto:
@@ -81,7 +81,7 @@ module K8S
     # :ditto:
     abstract def observed_generation? : Int32?
     # :ditto:
-    abstract def observed_generation=(value : Int32?)
+    abstract def observed_generation=(value : Int32)
     # The total number of nodes that are running updated daemon pod
     abstract def updated_number_scheduled : Int32?
     # :ditto:
@@ -89,7 +89,7 @@ module K8S
     # :ditto:
     abstract def updated_number_scheduled? : Int32?
     # :ditto:
-    abstract def updated_number_scheduled=(value : Int32?)
+    abstract def updated_number_scheduled=(value : Int32)
   end
 
   # DaemonSetStatus represents the current status of a daemon set.
@@ -107,220 +107,42 @@ module K8S
   )]
   class Api::Apps::V1::DaemonSetStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Apps::V1::DaemonSetStatus
+    k8s_object_accessor("collisionCount", collision_count : Int32, true, false, "Count of hash collisions for the DaemonSet. The DaemonSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision.")
+    k8s_object_accessor("conditions", conditions : ::Array(::K8S::Api::Apps::V1::DaemonSetCondition), true, false, "Represents the latest available observations of a DaemonSet's current state.")
+    k8s_object_accessor("currentNumberScheduled", current_number_scheduled : Int32, false, false, "The number of nodes that are running at least 1 daemon pod and are supposed to run the daemon pod. More info: [https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/)")
+    k8s_object_accessor("desiredNumberScheduled", desired_number_scheduled : Int32, false, false, "The total number of nodes that should be running the daemon pod (including nodes correctly running the daemon pod). More info: [https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/)")
+    k8s_object_accessor("numberAvailable", number_available : Int32, true, false, "The number of nodes that should be running the daemon pod and have one or more of the daemon pod running and available (ready for at least spec.minReadySeconds)")
+    k8s_object_accessor("numberMisscheduled", number_misscheduled : Int32, false, false, "The number of nodes that are running the daemon pod, but are not supposed to run the daemon pod. More info: [https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/)")
+    k8s_object_accessor("numberReady", number_ready : Int32, false, false, "numberReady is the number of nodes that should be running the daemon pod and have one or more of the daemon pod running with a Ready Condition.")
+    k8s_object_accessor("numberUnavailable", number_unavailable : Int32, true, false, "The number of nodes that should be running the daemon pod and have none of the daemon pod running and available (ready for at least spec.minReadySeconds)")
+    k8s_object_accessor("observedGeneration", observed_generation : Int32, true, false, "The most recent generation observed by the daemon set controller.")
+    k8s_object_accessor("updatedNumberScheduled", updated_number_scheduled : Int32, true, false, "The total number of nodes that are running updated daemon pod")
 
-    # Count of hash collisions for the DaemonSet. The DaemonSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision.
-    def collision_count : Int32?
-      self.["collisionCount"].as(Int32?)
+    def initialize(*, collision_count : Int32? = nil, conditions : ::Array(::K8S::Api::Apps::V1::DaemonSetCondition)? = nil, current_number_scheduled : Int32? = nil, desired_number_scheduled : Int32? = nil, number_available : Int32? = nil, number_misscheduled : Int32? = nil, number_ready : Int32? = nil, number_unavailable : Int32? = nil, observed_generation : Int32? = nil, updated_number_scheduled : Int32? = nil)
+      super()
+      self.["collisionCount"] = collision_count
+      self.["conditions"] = conditions
+      self.["currentNumberScheduled"] = current_number_scheduled
+      self.["desiredNumberScheduled"] = desired_number_scheduled
+      self.["numberAvailable"] = number_available
+      self.["numberMisscheduled"] = number_misscheduled
+      self.["numberReady"] = number_ready
+      self.["numberUnavailable"] = number_unavailable
+      self.["observedGeneration"] = observed_generation
+      self.["updatedNumberScheduled"] = updated_number_scheduled
     end
 
-    # :ditto:
-    def collision_count! : Int32
-      self.["collisionCount"].as(Int32?).not_nil!
-    end
-
-    # :ditto:
-    def collision_count? : Int32?
-      self.["collisionCount"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def collision_count=(value : Int32?)
-      self.["collisionCount"] = value
-    end
-
-    # Represents the latest available observations of a DaemonSet's current state.
-    def conditions : ::Array(::K8S::Api::Apps::V1::DaemonSetCondition)?
-      self.["conditions"].as(::Array(::K8S::Api::Apps::V1::DaemonSetCondition)?)
-    end
-
-    # :ditto:
-    def conditions! : ::Array(::K8S::Api::Apps::V1::DaemonSetCondition)
-      self.["conditions"].as(::Array(::K8S::Api::Apps::V1::DaemonSetCondition)?).not_nil!
-    end
-
-    # :ditto:
-    def conditions? : ::Array(::K8S::Api::Apps::V1::DaemonSetCondition)?
-      self.["conditions"]?.as(::Array(::K8S::Api::Apps::V1::DaemonSetCondition)?)
-    end
-
-    # :ditto:
-    def conditions=(value : ::Array(::K8S::Api::Apps::V1::DaemonSetCondition)?)
-      self.["conditions"] = value
-    end
-
-    # The number of nodes that are running at least 1 daemon pod and are supposed to run the daemon pod. More info: [[https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/)](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/))
-    def current_number_scheduled : Int32
-      self.["currentNumberScheduled"].as(Int32)
-    end
-
-    # :ditto:
-    def current_number_scheduled! : Int32
-      self.["currentNumberScheduled"].as(Int32).not_nil!
-    end
-
-    # :ditto:
-    def current_number_scheduled? : Int32?
-      self.["currentNumberScheduled"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def current_number_scheduled=(value : Int32)
-      self.["currentNumberScheduled"] = value
-    end
-
-    # The total number of nodes that should be running the daemon pod (including nodes correctly running the daemon pod). More info: [[https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/)](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/))
-    def desired_number_scheduled : Int32
-      self.["desiredNumberScheduled"].as(Int32)
-    end
-
-    # :ditto:
-    def desired_number_scheduled! : Int32
-      self.["desiredNumberScheduled"].as(Int32).not_nil!
-    end
-
-    # :ditto:
-    def desired_number_scheduled? : Int32?
-      self.["desiredNumberScheduled"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def desired_number_scheduled=(value : Int32)
-      self.["desiredNumberScheduled"] = value
-    end
-
-    # The number of nodes that should be running the daemon pod and have one or more of the daemon pod running and available (ready for at least spec.minReadySeconds)
-    def number_available : Int32?
-      self.["numberAvailable"].as(Int32?)
-    end
-
-    # :ditto:
-    def number_available! : Int32
-      self.["numberAvailable"].as(Int32?).not_nil!
-    end
-
-    # :ditto:
-    def number_available? : Int32?
-      self.["numberAvailable"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def number_available=(value : Int32?)
-      self.["numberAvailable"] = value
-    end
-
-    # The number of nodes that are running the daemon pod, but are not supposed to run the daemon pod. More info: [[https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/)](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/))
-    def number_misscheduled : Int32
-      self.["numberMisscheduled"].as(Int32)
-    end
-
-    # :ditto:
-    def number_misscheduled! : Int32
-      self.["numberMisscheduled"].as(Int32).not_nil!
-    end
-
-    # :ditto:
-    def number_misscheduled? : Int32?
-      self.["numberMisscheduled"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def number_misscheduled=(value : Int32)
-      self.["numberMisscheduled"] = value
-    end
-
-    # numberReady is the number of nodes that should be running the daemon pod and have one or more of the daemon pod running with a Ready Condition.
-    def number_ready : Int32
-      self.["numberReady"].as(Int32)
-    end
-
-    # :ditto:
-    def number_ready! : Int32
-      self.["numberReady"].as(Int32).not_nil!
-    end
-
-    # :ditto:
-    def number_ready? : Int32?
-      self.["numberReady"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def number_ready=(value : Int32)
-      self.["numberReady"] = value
-    end
-
-    # The number of nodes that should be running the daemon pod and have none of the daemon pod running and available (ready for at least spec.minReadySeconds)
-    def number_unavailable : Int32?
-      self.["numberUnavailable"].as(Int32?)
-    end
-
-    # :ditto:
-    def number_unavailable! : Int32
-      self.["numberUnavailable"].as(Int32?).not_nil!
-    end
-
-    # :ditto:
-    def number_unavailable? : Int32?
-      self.["numberUnavailable"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def number_unavailable=(value : Int32?)
-      self.["numberUnavailable"] = value
-    end
-
-    # The most recent generation observed by the daemon set controller.
-    def observed_generation : Int32?
-      self.["observedGeneration"].as(Int32?)
-    end
-
-    # :ditto:
-    def observed_generation! : Int32
-      self.["observedGeneration"].as(Int32?).not_nil!
-    end
-
-    # :ditto:
-    def observed_generation? : Int32?
-      self.["observedGeneration"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def observed_generation=(value : Int32?)
-      self.["observedGeneration"] = value
-    end
-
-    # The total number of nodes that are running updated daemon pod
-    def updated_number_scheduled : Int32?
-      self.["updatedNumberScheduled"].as(Int32?)
-    end
-
-    # :ditto:
-    def updated_number_scheduled! : Int32
-      self.["updatedNumberScheduled"].as(Int32?).not_nil!
-    end
-
-    # :ditto:
-    def updated_number_scheduled? : Int32?
-      self.["updatedNumberScheduled"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def updated_number_scheduled=(value : Int32?)
-      self.["updatedNumberScheduled"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "collisionCount", accessor: "collision_count", nilable: true, read_only: false, default: nil, kind: Int32 },
-        { key: "conditions", accessor: "conditions", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Apps::V1::DaemonSetCondition) },
-        { key: "currentNumberScheduled", accessor: "current_number_scheduled", nilable: false, read_only: false, default: nil, kind: Int32 },
-        { key: "desiredNumberScheduled", accessor: "desired_number_scheduled", nilable: false, read_only: false, default: nil, kind: Int32 },
-        { key: "numberAvailable", accessor: "number_available", nilable: true, read_only: false, default: nil, kind: Int32 },
-        { key: "numberMisscheduled", accessor: "number_misscheduled", nilable: false, read_only: false, default: nil, kind: Int32 },
-        { key: "numberReady", accessor: "number_ready", nilable: false, read_only: false, default: nil, kind: Int32 },
-        { key: "numberUnavailable", accessor: "number_unavailable", nilable: true, read_only: false, default: nil, kind: Int32 },
-        { key: "observedGeneration", accessor: "observed_generation", nilable: true, read_only: false, default: nil, kind: Int32 },
-        { key: "updatedNumberScheduled", accessor: "updated_number_scheduled", nilable: true, read_only: false, default: nil, kind: Int32 },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "collisionCount", accessor: "collision_count", nilable: true, read_only: false, default: nil, kind: Int32},
+      {key: "conditions", accessor: "conditions", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Apps::V1::DaemonSetCondition)},
+      {key: "currentNumberScheduled", accessor: "current_number_scheduled", nilable: false, read_only: false, default: nil, kind: Int32},
+      {key: "desiredNumberScheduled", accessor: "desired_number_scheduled", nilable: false, read_only: false, default: nil, kind: Int32},
+      {key: "numberAvailable", accessor: "number_available", nilable: true, read_only: false, default: nil, kind: Int32},
+      {key: "numberMisscheduled", accessor: "number_misscheduled", nilable: false, read_only: false, default: nil, kind: Int32},
+      {key: "numberReady", accessor: "number_ready", nilable: false, read_only: false, default: nil, kind: Int32},
+      {key: "numberUnavailable", accessor: "number_unavailable", nilable: true, read_only: false, default: nil, kind: Int32},
+      {key: "observedGeneration", accessor: "observed_generation", nilable: true, read_only: false, default: nil, kind: Int32},
+      {key: "updatedNumberScheduled", accessor: "updated_number_scheduled", nilable: true, read_only: false, default: nil, kind: Int32},
+    ])
   end
 end

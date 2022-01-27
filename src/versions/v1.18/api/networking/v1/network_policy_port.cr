@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def port? : ::Int32 | ::String?
     # :ditto:
-    abstract def port=(value : ::Int32 | ::String?)
+    abstract def port=(value : ::Int32 | ::String)
     # The protocol (TCP, UDP, or SCTP) which traffic must match. If not specified, this field defaults to TCP.
     abstract def protocol : String?
     # :ditto:
@@ -23,7 +23,7 @@ module K8S
     # :ditto:
     abstract def protocol? : String?
     # :ditto:
-    abstract def protocol=(value : String?)
+    abstract def protocol=(value : String)
   end
 
   # NetworkPolicyPort describes a port to allow traffic on
@@ -33,52 +33,18 @@ module K8S
   )]
   class Api::Networking::V1::NetworkPolicyPort < ::K8S::GenericObject
     include ::K8S::Types::Api::Networking::V1::NetworkPolicyPort
+    k8s_object_accessor("port", port : ::Int32 | ::String, true, false, "The port on the given protocol. This can either be a numerical or named port on a pod. If this field is not provided, this matches all port names and numbers.")
+    k8s_object_accessor("protocol", protocol : String, true, false, "The protocol (TCP, UDP, or SCTP) which traffic must match. If not specified, this field defaults to TCP.")
 
-    # The port on the given protocol. This can either be a numerical or named port on a pod. If this field is not provided, this matches all port names and numbers.
-    def port : ::Int32 | ::String?
-      self.["port"].as(::Int32 | ::String?)
+    def initialize(*, port : ::Int32 | ::String? = nil, protocol : String? = nil)
+      super()
+      self.["port"] = port
+      self.["protocol"] = protocol
     end
 
-    # :ditto:
-    def port! : ::Int32 | ::String
-      self.["port"].as(::Int32 | ::String?).not_nil!
-    end
-
-    # :ditto:
-    def port? : ::Int32 | ::String?
-      self.["port"]?.as(::Int32 | ::String?)
-    end
-
-    # :ditto:
-    def port=(value : ::Int32 | ::String?)
-      self.["port"] = value
-    end
-
-    # The protocol (TCP, UDP, or SCTP) which traffic must match. If not specified, this field defaults to TCP.
-    def protocol : String?
-      self.["protocol"].as(String?)
-    end
-
-    # :ditto:
-    def protocol! : String
-      self.["protocol"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def protocol? : String?
-      self.["protocol"]?.as(String?)
-    end
-
-    # :ditto:
-    def protocol=(value : String?)
-      self.["protocol"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "port", accessor: "port", nilable: true, read_only: false, default: nil, kind: ::Union(::Int32 | ::String) },
-        { key: "protocol", accessor: "protocol", nilable: true, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "port", accessor: "port", nilable: true, read_only: false, default: nil, kind: ::Union(::Int32 | ::String)},
+      {key: "protocol", accessor: "protocol", nilable: true, read_only: false, default: nil, kind: String},
+    ])
   end
 end

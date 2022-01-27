@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def group? : String?
     # :ditto:
-    abstract def group=(value : String?)
+    abstract def group=(value : String)
     # Name is the name of the resource being requested for a "get" or deleted for a "delete". "" (empty) means all.
     abstract def name : String?
     # :ditto:
@@ -23,7 +23,7 @@ module K8S
     # :ditto:
     abstract def name? : String?
     # :ditto:
-    abstract def name=(value : String?)
+    abstract def name=(value : String)
     # Namespace is the namespace of the action being requested.  Currently, there is no distinction between no namespace and all namespaces "" (empty) is defaulted for LocalSubjectAccessReviews "" (empty) is empty for cluster-scoped resources "" (empty) means "all" for namespace scoped resources from a SubjectAccessReview or SelfSubjectAccessReview
     abstract def namespace : String?
     # :ditto:
@@ -31,7 +31,7 @@ module K8S
     # :ditto:
     abstract def namespace? : String?
     # :ditto:
-    abstract def namespace=(value : String?)
+    abstract def namespace=(value : String)
     # Resource is one of the existing resource types.  "*" means all.
     abstract def resource : String?
     # :ditto:
@@ -39,7 +39,7 @@ module K8S
     # :ditto:
     abstract def resource? : String?
     # :ditto:
-    abstract def resource=(value : String?)
+    abstract def resource=(value : String)
     # Subresource is one of the existing resource types.  "" means none.
     abstract def subresource : String?
     # :ditto:
@@ -47,7 +47,7 @@ module K8S
     # :ditto:
     abstract def subresource? : String?
     # :ditto:
-    abstract def subresource=(value : String?)
+    abstract def subresource=(value : String)
     # Verb is a kubernetes resource API verb, like: get, list, watch, create, update, delete, proxy.  "*" means all.
     abstract def verb : String?
     # :ditto:
@@ -55,7 +55,7 @@ module K8S
     # :ditto:
     abstract def verb? : String?
     # :ditto:
-    abstract def verb=(value : String?)
+    abstract def verb=(value : String)
     # Version is the API Version of the Resource.  "*" means all.
     abstract def version : String?
     # :ditto:
@@ -63,7 +63,7 @@ module K8S
     # :ditto:
     abstract def version? : String?
     # :ditto:
-    abstract def version=(value : String?)
+    abstract def version=(value : String)
   end
 
   # ResourceAttributes includes the authorization attributes available for resource requests to the Authorizer interface
@@ -78,157 +78,33 @@ module K8S
   )]
   class Api::Authorization::V1::ResourceAttributes < ::K8S::GenericObject
     include ::K8S::Types::Api::Authorization::V1::ResourceAttributes
+    k8s_object_accessor("group", group : String, true, false, "Group is the API Group of the Resource.  \"*\" means all.")
+    k8s_object_accessor("name", name : String, true, false, "Name is the name of the resource being requested for a \"get\" or deleted for a \"delete\". \"\" (empty) means all.")
+    k8s_object_accessor("namespace", namespace : String, true, false, "Namespace is the namespace of the action being requested.  Currently, there is no distinction between no namespace and all namespaces \"\" (empty) is defaulted for LocalSubjectAccessReviews \"\" (empty) is empty for cluster-scoped resources \"\" (empty) means \"all\" for namespace scoped resources from a SubjectAccessReview or SelfSubjectAccessReview")
+    k8s_object_accessor("resource", resource : String, true, false, "Resource is one of the existing resource types.  \"*\" means all.")
+    k8s_object_accessor("subresource", subresource : String, true, false, "Subresource is one of the existing resource types.  \"\" means none.")
+    k8s_object_accessor("verb", verb : String, true, false, "Verb is a kubernetes resource API verb, like: get, list, watch, create, update, delete, proxy.  \"*\" means all.")
+    k8s_object_accessor("version", version : String, true, false, "Version is the API Version of the Resource.  \"*\" means all.")
 
-    # Group is the API Group of the Resource.  "*" means all.
-    def group : String?
-      self.["group"].as(String?)
+    def initialize(*, group : String? = nil, name : String? = nil, namespace : String? = nil, resource : String? = nil, subresource : String? = nil, verb : String? = nil, version : String? = nil)
+      super()
+      self.["group"] = group
+      self.["name"] = name
+      self.["namespace"] = namespace
+      self.["resource"] = resource
+      self.["subresource"] = subresource
+      self.["verb"] = verb
+      self.["version"] = version
     end
 
-    # :ditto:
-    def group! : String
-      self.["group"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def group? : String?
-      self.["group"]?.as(String?)
-    end
-
-    # :ditto:
-    def group=(value : String?)
-      self.["group"] = value
-    end
-
-    # Name is the name of the resource being requested for a "get" or deleted for a "delete". "" (empty) means all.
-    def name : String?
-      self.["name"].as(String?)
-    end
-
-    # :ditto:
-    def name! : String
-      self.["name"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def name? : String?
-      self.["name"]?.as(String?)
-    end
-
-    # :ditto:
-    def name=(value : String?)
-      self.["name"] = value
-    end
-
-    # Namespace is the namespace of the action being requested.  Currently, there is no distinction between no namespace and all namespaces "" (empty) is defaulted for LocalSubjectAccessReviews "" (empty) is empty for cluster-scoped resources "" (empty) means "all" for namespace scoped resources from a SubjectAccessReview or SelfSubjectAccessReview
-    def namespace : String?
-      self.["namespace"].as(String?)
-    end
-
-    # :ditto:
-    def namespace! : String
-      self.["namespace"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def namespace? : String?
-      self.["namespace"]?.as(String?)
-    end
-
-    # :ditto:
-    def namespace=(value : String?)
-      self.["namespace"] = value
-    end
-
-    # Resource is one of the existing resource types.  "*" means all.
-    def resource : String?
-      self.["resource"].as(String?)
-    end
-
-    # :ditto:
-    def resource! : String
-      self.["resource"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def resource? : String?
-      self.["resource"]?.as(String?)
-    end
-
-    # :ditto:
-    def resource=(value : String?)
-      self.["resource"] = value
-    end
-
-    # Subresource is one of the existing resource types.  "" means none.
-    def subresource : String?
-      self.["subresource"].as(String?)
-    end
-
-    # :ditto:
-    def subresource! : String
-      self.["subresource"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def subresource? : String?
-      self.["subresource"]?.as(String?)
-    end
-
-    # :ditto:
-    def subresource=(value : String?)
-      self.["subresource"] = value
-    end
-
-    # Verb is a kubernetes resource API verb, like: get, list, watch, create, update, delete, proxy.  "*" means all.
-    def verb : String?
-      self.["verb"].as(String?)
-    end
-
-    # :ditto:
-    def verb! : String
-      self.["verb"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def verb? : String?
-      self.["verb"]?.as(String?)
-    end
-
-    # :ditto:
-    def verb=(value : String?)
-      self.["verb"] = value
-    end
-
-    # Version is the API Version of the Resource.  "*" means all.
-    def version : String?
-      self.["version"].as(String?)
-    end
-
-    # :ditto:
-    def version! : String
-      self.["version"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def version? : String?
-      self.["version"]?.as(String?)
-    end
-
-    # :ditto:
-    def version=(value : String?)
-      self.["version"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "group", accessor: "group", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "name", accessor: "name", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "namespace", accessor: "namespace", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "resource", accessor: "resource", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "subresource", accessor: "subresource", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "verb", accessor: "verb", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "version", accessor: "version", nilable: true, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "group", accessor: "group", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "name", accessor: "name", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "namespace", accessor: "namespace", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "resource", accessor: "resource", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "subresource", accessor: "subresource", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "verb", accessor: "verb", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "version", accessor: "version", nilable: true, read_only: false, default: nil, kind: String},
+    ])
   end
 end

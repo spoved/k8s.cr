@@ -11,7 +11,7 @@ module K8S
   # Namespace holding the types for `Api::Storage::V1::VolumeAttachmentSpec`.
   module Types::Api::Storage::V1::VolumeAttachmentSpec
     # Attacher indicates the name of the volume driver that MUST handle this request. This is the name returned by GetPluginName().
-    abstract def attacher : String
+    abstract def attacher : String?
     # :ditto:
     abstract def attacher! : String
     # :ditto:
@@ -19,7 +19,7 @@ module K8S
     # :ditto:
     abstract def attacher=(value : String)
     # The node that the volume should be attached to.
-    abstract def node_name : String
+    abstract def node_name : String?
     # :ditto:
     abstract def node_name! : String
     # :ditto:
@@ -27,7 +27,7 @@ module K8S
     # :ditto:
     abstract def node_name=(value : String)
     # Source represents the volume that should be attached.
-    abstract def source : ::K8S::Api::Storage::V1::VolumeAttachmentSource
+    abstract def source : ::K8S::Api::Storage::V1::VolumeAttachmentSource?
     # :ditto:
     abstract def source! : ::K8S::Api::Storage::V1::VolumeAttachmentSource
     # :ditto:
@@ -44,73 +44,21 @@ module K8S
   )]
   class Api::Storage::V1::VolumeAttachmentSpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Storage::V1::VolumeAttachmentSpec
+    k8s_object_accessor("attacher", attacher : String, false, false, "Attacher indicates the name of the volume driver that MUST handle this request. This is the name returned by GetPluginName().")
+    k8s_object_accessor("nodeName", node_name : String, false, false, "The node that the volume should be attached to.")
+    k8s_object_accessor("source", source : ::K8S::Api::Storage::V1::VolumeAttachmentSource, false, false, "Source represents the volume that should be attached.")
 
-    # Attacher indicates the name of the volume driver that MUST handle this request. This is the name returned by GetPluginName().
-    def attacher : String
-      self.["attacher"].as(String)
+    def initialize(*, attacher : String? = nil, node_name : String? = nil, source : ::K8S::Api::Storage::V1::VolumeAttachmentSource? = nil)
+      super()
+      self.["attacher"] = attacher
+      self.["nodeName"] = node_name
+      self.["source"] = source
     end
 
-    # :ditto:
-    def attacher! : String
-      self.["attacher"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def attacher? : String?
-      self.["attacher"]?.as(String?)
-    end
-
-    # :ditto:
-    def attacher=(value : String)
-      self.["attacher"] = value
-    end
-
-    # The node that the volume should be attached to.
-    def node_name : String
-      self.["nodeName"].as(String)
-    end
-
-    # :ditto:
-    def node_name! : String
-      self.["nodeName"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def node_name? : String?
-      self.["nodeName"]?.as(String?)
-    end
-
-    # :ditto:
-    def node_name=(value : String)
-      self.["nodeName"] = value
-    end
-
-    # Source represents the volume that should be attached.
-    def source : ::K8S::Api::Storage::V1::VolumeAttachmentSource
-      self.["source"].as(::K8S::Api::Storage::V1::VolumeAttachmentSource)
-    end
-
-    # :ditto:
-    def source! : ::K8S::Api::Storage::V1::VolumeAttachmentSource
-      self.["source"].as(::K8S::Api::Storage::V1::VolumeAttachmentSource).not_nil!
-    end
-
-    # :ditto:
-    def source? : ::K8S::Api::Storage::V1::VolumeAttachmentSource?
-      self.["source"]?.as(::K8S::Api::Storage::V1::VolumeAttachmentSource?)
-    end
-
-    # :ditto:
-    def source=(value : ::K8S::Api::Storage::V1::VolumeAttachmentSource)
-      self.["source"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "attacher", accessor: "attacher", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "nodeName", accessor: "node_name", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "source", accessor: "source", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Storage::V1::VolumeAttachmentSource },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "attacher", accessor: "attacher", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "nodeName", accessor: "node_name", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "source", accessor: "source", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Storage::V1::VolumeAttachmentSource},
+    ])
   end
 end

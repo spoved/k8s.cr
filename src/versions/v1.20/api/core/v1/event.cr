@@ -14,13 +14,13 @@ module K8S
   # Namespace holding the types for `Api::Core::V1::Event`.
   module Types::Api::Core::V1::Event
     # APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)))
-    abstract def api_version : String
+    abstract def api_version : String?
     # :ditto:
     abstract def api_version! : String
     # :ditto:
     abstract def api_version? : String?
     # Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)))
-    abstract def kind : String
+    abstract def kind : String?
     # :ditto:
     abstract def kind! : String
     # :ditto:
@@ -32,7 +32,7 @@ module K8S
     # :ditto:
     abstract def metadata? : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?
     # :ditto:
-    abstract def metadata=(value : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?)
+    abstract def metadata=(value : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta)
     # What action was [[taken/failed regarding to the Regarding object.](taken/failed regarding to the Regarding object.)]([taken/failed regarding to the Regarding object.](taken/failed regarding to the Regarding object.))
     abstract def action : String?
     # :ditto:
@@ -40,7 +40,7 @@ module K8S
     # :ditto:
     abstract def action? : String?
     # :ditto:
-    abstract def action=(value : String?)
+    abstract def action=(value : String)
     # The number of times this event has occurred.
     abstract def count : Int32?
     # :ditto:
@@ -48,7 +48,7 @@ module K8S
     # :ditto:
     abstract def count? : Int32?
     # :ditto:
-    abstract def count=(value : Int32?)
+    abstract def count=(value : Int32)
     # Time when this Event was first observed.
     abstract def event_time : ::Time?
     # :ditto:
@@ -56,7 +56,7 @@ module K8S
     # :ditto:
     abstract def event_time? : ::Time?
     # :ditto:
-    abstract def event_time=(value : ::Time?)
+    abstract def event_time=(value : ::Time)
     # The time at which the event was first recorded. (Time of server receipt is in TypeMeta.)
     abstract def first_timestamp : ::Time?
     # :ditto:
@@ -64,9 +64,9 @@ module K8S
     # :ditto:
     abstract def first_timestamp? : ::Time?
     # :ditto:
-    abstract def first_timestamp=(value : ::Time?)
+    abstract def first_timestamp=(value : ::Time)
     # The object that this event is about.
-    abstract def involved_object : ::K8S::Api::Core::V1::ObjectReference
+    abstract def involved_object : ::K8S::Api::Core::V1::ObjectReference?
     # :ditto:
     abstract def involved_object! : ::K8S::Api::Core::V1::ObjectReference
     # :ditto:
@@ -80,7 +80,7 @@ module K8S
     # :ditto:
     abstract def last_timestamp? : ::Time?
     # :ditto:
-    abstract def last_timestamp=(value : ::Time?)
+    abstract def last_timestamp=(value : ::Time)
     # A human-readable description of the status of this operation.
     abstract def message : String?
     # :ditto:
@@ -88,7 +88,7 @@ module K8S
     # :ditto:
     abstract def message? : String?
     # :ditto:
-    abstract def message=(value : String?)
+    abstract def message=(value : String)
     # This should be a short, machine understandable string that gives the reason for the transition into the object's current status.
     abstract def reason : String?
     # :ditto:
@@ -96,7 +96,7 @@ module K8S
     # :ditto:
     abstract def reason? : String?
     # :ditto:
-    abstract def reason=(value : String?)
+    abstract def reason=(value : String)
     # Optional secondary object for more complex actions.
     abstract def related : ::K8S::Api::Core::V1::ObjectReference?
     # :ditto:
@@ -104,7 +104,7 @@ module K8S
     # :ditto:
     abstract def related? : ::K8S::Api::Core::V1::ObjectReference?
     # :ditto:
-    abstract def related=(value : ::K8S::Api::Core::V1::ObjectReference?)
+    abstract def related=(value : ::K8S::Api::Core::V1::ObjectReference)
     # Name of the controller that emitted this Event, e.g. [[`kubernetes.io/kubelet`.](`kubernetes.io/kubelet`.)]([`kubernetes.io/kubelet`.](`kubernetes.io/kubelet`.))
     abstract def reporting_component : String?
     # :ditto:
@@ -112,7 +112,7 @@ module K8S
     # :ditto:
     abstract def reporting_component? : String?
     # :ditto:
-    abstract def reporting_component=(value : String?)
+    abstract def reporting_component=(value : String)
     # ID of the controller instance, e.g. `kubelet-xyzf`.
     abstract def reporting_instance : String?
     # :ditto:
@@ -120,7 +120,7 @@ module K8S
     # :ditto:
     abstract def reporting_instance? : String?
     # :ditto:
-    abstract def reporting_instance=(value : String?)
+    abstract def reporting_instance=(value : String)
     # Data about the Event series this event represents or nil if it's a singleton Event.
     abstract def series : ::K8S::Api::Core::V1::EventSeries?
     # :ditto:
@@ -128,7 +128,7 @@ module K8S
     # :ditto:
     abstract def series? : ::K8S::Api::Core::V1::EventSeries?
     # :ditto:
-    abstract def series=(value : ::K8S::Api::Core::V1::EventSeries?)
+    abstract def series=(value : ::K8S::Api::Core::V1::EventSeries)
     # The component reporting this event. Should be a short machine understandable string.
     abstract def source : ::K8S::Api::Core::V1::EventSource?
     # :ditto:
@@ -136,7 +136,7 @@ module K8S
     # :ditto:
     abstract def source? : ::K8S::Api::Core::V1::EventSource?
     # :ditto:
-    abstract def source=(value : ::K8S::Api::Core::V1::EventSource?)
+    abstract def source=(value : ::K8S::Api::Core::V1::EventSource)
     # Type of this event (Normal, Warning), new types could be added in the future
     abstract def type : String?
     # :ditto:
@@ -144,7 +144,7 @@ module K8S
     # :ditto:
     abstract def type? : String?
     # :ditto:
-    abstract def type=(value : String?)
+    abstract def type=(value : String)
   end
 
   # Event is a report of an event somewhere in the cluster.  Events have a limited retention time and triggers and messages may evolve with time.  Event consumers should not rely on the timing of an event with a given Reason reflecting a consistent underlying trigger, or the continued existence of events with that Reason.  Events should be treated as informative, best-effort, supplemental data.
@@ -170,360 +170,66 @@ module K8S
   )]
   class Api::Core::V1::Event < ::K8S::Kubernetes::Resource::Object
     include ::K8S::Types::Api::Core::V1::Event
-
-    # APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)))
-    def api_version : String
-      self.["apiVersion"] = "v1" unless self.["apiVersion"]?
-      self.["apiVersion"].as(String)
-    end
-
-    # :ditto:
-    def api_version! : String
-      self.["apiVersion"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def api_version? : String?
-      self.["apiVersion"]?.as(String?)
-    end
-
-    # Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)))
-    def kind : String
-      self.["kind"] = "Event" unless self.["kind"]?
-      self.["kind"].as(String)
-    end
-
-    # :ditto:
-    def kind! : String
-      self.["kind"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def kind? : String?
-      self.["kind"]?.as(String?)
-    end
-
-    # Standard object's metadata. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)))
-    def metadata : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?
-      self.["metadata"].as(::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?)
-    end
-
-    # :ditto:
-    def metadata! : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta
-      self.["metadata"].as(::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?).not_nil!
-    end
-
-    # :ditto:
-    def metadata? : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?
-      self.["metadata"]?.as(::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?)
-    end
-
-    # :ditto:
-    def metadata=(value : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?)
-      self.["metadata"] = value
-    end
-
-    # What action was [[taken/failed regarding to the Regarding object.](taken/failed regarding to the Regarding object.)]([taken/failed regarding to the Regarding object.](taken/failed regarding to the Regarding object.))
-    def action : String?
-      self.["action"].as(String?)
-    end
-
-    # :ditto:
-    def action! : String
-      self.["action"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def action? : String?
-      self.["action"]?.as(String?)
-    end
-
-    # :ditto:
-    def action=(value : String?)
-      self.["action"] = value
-    end
-
-    # The number of times this event has occurred.
-    def count : Int32?
-      self.["count"].as(Int32?)
-    end
-
-    # :ditto:
-    def count! : Int32
-      self.["count"].as(Int32?).not_nil!
-    end
-
-    # :ditto:
-    def count? : Int32?
-      self.["count"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def count=(value : Int32?)
-      self.["count"] = value
-    end
-
-    # Time when this Event was first observed.
-    def event_time : ::Time?
-      self.["eventTime"].as(::Time?)
-    end
-
-    # :ditto:
-    def event_time! : ::Time
-      self.["eventTime"].as(::Time?).not_nil!
-    end
-
-    # :ditto:
-    def event_time? : ::Time?
-      self.["eventTime"]?.as(::Time?)
-    end
-
-    # :ditto:
-    def event_time=(value : ::Time?)
-      self.["eventTime"] = value
-    end
-
-    # The time at which the event was first recorded. (Time of server receipt is in TypeMeta.)
-    def first_timestamp : ::Time?
-      self.["firstTimestamp"].as(::Time?)
-    end
-
-    # :ditto:
-    def first_timestamp! : ::Time
-      self.["firstTimestamp"].as(::Time?).not_nil!
-    end
-
-    # :ditto:
-    def first_timestamp? : ::Time?
-      self.["firstTimestamp"]?.as(::Time?)
-    end
-
-    # :ditto:
-    def first_timestamp=(value : ::Time?)
-      self.["firstTimestamp"] = value
-    end
-
-    # The object that this event is about.
-    def involved_object : ::K8S::Api::Core::V1::ObjectReference
-      self.["involvedObject"].as(::K8S::Api::Core::V1::ObjectReference)
-    end
-
-    # :ditto:
-    def involved_object! : ::K8S::Api::Core::V1::ObjectReference
-      self.["involvedObject"].as(::K8S::Api::Core::V1::ObjectReference).not_nil!
-    end
-
-    # :ditto:
-    def involved_object? : ::K8S::Api::Core::V1::ObjectReference?
-      self.["involvedObject"]?.as(::K8S::Api::Core::V1::ObjectReference?)
-    end
-
-    # :ditto:
-    def involved_object=(value : ::K8S::Api::Core::V1::ObjectReference)
-      self.["involvedObject"] = value
-    end
-
-    # The time at which the most recent occurrence of this event was recorded.
-    def last_timestamp : ::Time?
-      self.["lastTimestamp"].as(::Time?)
-    end
-
-    # :ditto:
-    def last_timestamp! : ::Time
-      self.["lastTimestamp"].as(::Time?).not_nil!
-    end
-
-    # :ditto:
-    def last_timestamp? : ::Time?
-      self.["lastTimestamp"]?.as(::Time?)
-    end
-
-    # :ditto:
-    def last_timestamp=(value : ::Time?)
-      self.["lastTimestamp"] = value
-    end
-
-    # A human-readable description of the status of this operation.
-    def message : String?
-      self.["message"].as(String?)
-    end
-
-    # :ditto:
-    def message! : String
-      self.["message"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def message? : String?
-      self.["message"]?.as(String?)
-    end
-
-    # :ditto:
-    def message=(value : String?)
-      self.["message"] = value
-    end
-
-    # This should be a short, machine understandable string that gives the reason for the transition into the object's current status.
-    def reason : String?
-      self.["reason"].as(String?)
-    end
-
-    # :ditto:
-    def reason! : String
-      self.["reason"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def reason? : String?
-      self.["reason"]?.as(String?)
-    end
-
-    # :ditto:
-    def reason=(value : String?)
-      self.["reason"] = value
-    end
-
-    # Optional secondary object for more complex actions.
-    def related : ::K8S::Api::Core::V1::ObjectReference?
-      self.["related"].as(::K8S::Api::Core::V1::ObjectReference?)
-    end
-
-    # :ditto:
-    def related! : ::K8S::Api::Core::V1::ObjectReference
-      self.["related"].as(::K8S::Api::Core::V1::ObjectReference?).not_nil!
-    end
-
-    # :ditto:
-    def related? : ::K8S::Api::Core::V1::ObjectReference?
-      self.["related"]?.as(::K8S::Api::Core::V1::ObjectReference?)
-    end
-
-    # :ditto:
-    def related=(value : ::K8S::Api::Core::V1::ObjectReference?)
-      self.["related"] = value
-    end
-
-    # Name of the controller that emitted this Event, e.g. [[`kubernetes.io/kubelet`.](`kubernetes.io/kubelet`.)]([`kubernetes.io/kubelet`.](`kubernetes.io/kubelet`.))
-    def reporting_component : String?
-      self.["reportingComponent"].as(String?)
-    end
-
-    # :ditto:
-    def reporting_component! : String
-      self.["reportingComponent"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def reporting_component? : String?
-      self.["reportingComponent"]?.as(String?)
-    end
-
-    # :ditto:
-    def reporting_component=(value : String?)
-      self.["reportingComponent"] = value
-    end
-
-    # ID of the controller instance, e.g. `kubelet-xyzf`.
-    def reporting_instance : String?
-      self.["reportingInstance"].as(String?)
-    end
-
-    # :ditto:
-    def reporting_instance! : String
-      self.["reportingInstance"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def reporting_instance? : String?
-      self.["reportingInstance"]?.as(String?)
-    end
-
-    # :ditto:
-    def reporting_instance=(value : String?)
-      self.["reportingInstance"] = value
-    end
-
-    # Data about the Event series this event represents or nil if it's a singleton Event.
-    def series : ::K8S::Api::Core::V1::EventSeries?
-      self.["series"].as(::K8S::Api::Core::V1::EventSeries?)
-    end
-
-    # :ditto:
-    def series! : ::K8S::Api::Core::V1::EventSeries
-      self.["series"].as(::K8S::Api::Core::V1::EventSeries?).not_nil!
-    end
-
-    # :ditto:
-    def series? : ::K8S::Api::Core::V1::EventSeries?
-      self.["series"]?.as(::K8S::Api::Core::V1::EventSeries?)
-    end
-
-    # :ditto:
-    def series=(value : ::K8S::Api::Core::V1::EventSeries?)
-      self.["series"] = value
-    end
-
-    # The component reporting this event. Should be a short machine understandable string.
-    def source : ::K8S::Api::Core::V1::EventSource?
-      self.["source"].as(::K8S::Api::Core::V1::EventSource?)
-    end
-
-    # :ditto:
-    def source! : ::K8S::Api::Core::V1::EventSource
-      self.["source"].as(::K8S::Api::Core::V1::EventSource?).not_nil!
-    end
-
-    # :ditto:
-    def source? : ::K8S::Api::Core::V1::EventSource?
-      self.["source"]?.as(::K8S::Api::Core::V1::EventSource?)
-    end
-
-    # :ditto:
-    def source=(value : ::K8S::Api::Core::V1::EventSource?)
-      self.["source"] = value
-    end
-
-    # Type of this event (Normal, Warning), new types could be added in the future
-    def type : String?
-      self.["type"].as(String?)
-    end
-
-    # :ditto:
-    def type! : String
-      self.["type"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def type? : String?
-      self.["type"]?.as(String?)
-    end
-
-    # :ditto:
-    def type=(value : String?)
-      self.["type"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "apiVersion", accessor: "api_version", nilable: false, read_only: true, default: "v1", kind: String },
-        { key: "kind", accessor: "kind", nilable: false, read_only: true, default: "Event", kind: String },
-        { key: "metadata", accessor: "metadata", nilable: true, read_only: false, default: nil, kind: ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta },
-        { key: "action", accessor: "action", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "count", accessor: "count", nilable: true, read_only: false, default: nil, kind: Int32 },
-        { key: "eventTime", accessor: "event_time", nilable: true, read_only: false, default: nil, kind: ::Time },
-        { key: "firstTimestamp", accessor: "first_timestamp", nilable: true, read_only: false, default: nil, kind: ::Time },
-        { key: "involvedObject", accessor: "involved_object", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::ObjectReference },
-        { key: "lastTimestamp", accessor: "last_timestamp", nilable: true, read_only: false, default: nil, kind: ::Time },
-        { key: "message", accessor: "message", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "reason", accessor: "reason", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "related", accessor: "related", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::ObjectReference },
-        { key: "reportingComponent", accessor: "reporting_component", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "reportingInstance", accessor: "reporting_instance", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "series", accessor: "series", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::EventSeries },
-        { key: "source", accessor: "source", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::EventSource },
-        { key: "type", accessor: "type", nilable: true, read_only: false, default: nil, kind: String },
-      ])
-end
+    k8s_object_accessor("apiVersion", api_version : String = "v1", false, true, "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources))")
+    k8s_object_accessor("kind", kind : String = "Event", false, true, "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds))")
+    k8s_object_accessor("metadata", metadata : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta, true, false, "Standard object's metadata. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata))")
+    k8s_object_accessor("action", action : String, true, false, "What action was [taken/failed regarding to the Regarding object.](taken/failed regarding to the Regarding object.)")
+    k8s_object_accessor("count", count : Int32, true, false, "The number of times this event has occurred.")
+    k8s_object_accessor("eventTime", event_time : ::Time, true, false, "Time when this Event was first observed.")
+    k8s_object_accessor("firstTimestamp", first_timestamp : ::Time, true, false, "The time at which the event was first recorded. (Time of server receipt is in TypeMeta.)")
+    k8s_object_accessor("involvedObject", involved_object : ::K8S::Api::Core::V1::ObjectReference, false, false, "The object that this event is about.")
+    k8s_object_accessor("lastTimestamp", last_timestamp : ::Time, true, false, "The time at which the most recent occurrence of this event was recorded.")
+    k8s_object_accessor("message", message : String, true, false, "A human-readable description of the status of this operation.")
+    k8s_object_accessor("reason", reason : String, true, false, "This should be a short, machine understandable string that gives the reason for the transition into the object's current status.")
+    k8s_object_accessor("related", related : ::K8S::Api::Core::V1::ObjectReference, true, false, "Optional secondary object for more complex actions.")
+    k8s_object_accessor("reportingComponent", reporting_component : String, true, false, "Name of the controller that emitted this Event, e.g. [`kubernetes.io/kubelet`.](`kubernetes.io/kubelet`.)")
+    k8s_object_accessor("reportingInstance", reporting_instance : String, true, false, "ID of the controller instance, e.g. `kubelet-xyzf`.")
+    k8s_object_accessor("series", series : ::K8S::Api::Core::V1::EventSeries, true, false, "Data about the Event series this event represents or nil if it's a singleton Event.")
+    k8s_object_accessor("source", source : ::K8S::Api::Core::V1::EventSource, true, false, "The component reporting this event. Should be a short machine understandable string.")
+    k8s_object_accessor("type", type : String, true, false, "Type of this event (Normal, Warning), new types could be added in the future")
+
+    def initialize(*, api_version : String? = "v1", kind : String? = "Event", metadata : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta? = nil, action : String? = nil, count : Int32? = nil, event_time : ::Time? = nil, first_timestamp : ::Time? = nil, involved_object : ::K8S::Api::Core::V1::ObjectReference? = nil, last_timestamp : ::Time? = nil, message : String? = nil, reason : String? = nil, related : ::K8S::Api::Core::V1::ObjectReference? = nil, reporting_component : String? = nil, reporting_instance : String? = nil, series : ::K8S::Api::Core::V1::EventSeries? = nil, source : ::K8S::Api::Core::V1::EventSource? = nil, type : String? = nil)
+      super()
+      raise "api_version cannot be nil" if api_version.nil?
+      self.["apiVersion"] = api_version
+      raise "kind cannot be nil" if kind.nil?
+      self.["kind"] = kind
+      self.["metadata"] = metadata
+      self.["action"] = action
+      self.["count"] = count
+      self.["eventTime"] = event_time
+      self.["firstTimestamp"] = first_timestamp
+      self.["involvedObject"] = involved_object
+      self.["lastTimestamp"] = last_timestamp
+      self.["message"] = message
+      self.["reason"] = reason
+      self.["related"] = related
+      self.["reportingComponent"] = reporting_component
+      self.["reportingInstance"] = reporting_instance
+      self.["series"] = series
+      self.["source"] = source
+      self.["type"] = type
+    end
+
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "apiVersion", accessor: "api_version", nilable: false, read_only: true, default: "v1", kind: String},
+      {key: "kind", accessor: "kind", nilable: false, read_only: true, default: "Event", kind: String},
+      {key: "metadata", accessor: "metadata", nilable: true, read_only: false, default: nil, kind: ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta},
+      {key: "action", accessor: "action", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "count", accessor: "count", nilable: true, read_only: false, default: nil, kind: Int32},
+      {key: "eventTime", accessor: "event_time", nilable: true, read_only: false, default: nil, kind: ::Time},
+      {key: "firstTimestamp", accessor: "first_timestamp", nilable: true, read_only: false, default: nil, kind: ::Time},
+      {key: "involvedObject", accessor: "involved_object", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::ObjectReference},
+      {key: "lastTimestamp", accessor: "last_timestamp", nilable: true, read_only: false, default: nil, kind: ::Time},
+      {key: "message", accessor: "message", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "reason", accessor: "reason", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "related", accessor: "related", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::ObjectReference},
+      {key: "reportingComponent", accessor: "reporting_component", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "reportingInstance", accessor: "reporting_instance", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "series", accessor: "series", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::EventSeries},
+      {key: "source", accessor: "source", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::EventSource},
+      {key: "type", accessor: "type", nilable: true, read_only: false, default: nil, kind: String},
+    ])
   end
 
   module Resources::V1

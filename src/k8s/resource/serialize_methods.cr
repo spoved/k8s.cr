@@ -1,5 +1,13 @@
 abstract class ::K8S::Kubernetes::Resource
   macro define_serialize_methods(props)
+
+    # :nodoc:
+    def __set_property(name, value : G, nilable = true) forall G
+      Log.trace { %<Setting key: "#{name}" to value: #{value.inspect}> }
+      self.[name] = value
+    end
+
+
     def self.new(pull : ::JSON::PullParser)
       hash = new
       pull.read_object do |key, key_location|
@@ -8,26 +16,14 @@ abstract class ::K8S::Kubernetes::Resource
         case parsed_key
         {% for prop in props %}
         when {{prop[:key].id.stringify}} {% if prop[:key] != prop[:accessor] %}, {{prop[:accessor].id.stringify}} {% end %}
-
           parsed_value = if {{prop[:kind].id}} >= Time
               K8S::TimeFormat.new.from_json(pull)
             else
               {{prop[:kind].id}}.new(pull)
             end
-
-          if parsed_value.nil?
-            hash[{{prop[:key].id.stringify}}] = nil
-          else
-            Log.trace { "Setting #{parsed_key} to #{parsed_value.inspect}" }
-            {% if prop[:read_only] %}
-            hash[{{prop[:key].id.stringify}}] = parsed_value.as({{prop[:kind].id}})
-            {% else %}
-            hash.{{prop[:accessor].id}} = parsed_value.as({{prop[:kind].id}}{% if prop[:nilable] %} | Nil{% end %})
-            {% end %}
-          end
+          hash.__set_property({{prop[:key].id.stringify}}, k8s_cast_type(parsed_value, {{*prop[:kind].resolve.union_types}}, Nil), {{prop[:nilable]}})
         {% end %}
         else
-          # raise ::JSON::ParseException.new("Unknown key #{parsed_key}", *key_location)
           Log.trace { "JSON::ParseException - Unknown key #{parsed_key} for #{self}" }
           pull.skip
         end
@@ -68,17 +64,8 @@ abstract class ::K8S::Kubernetes::Resource
             else
               {{prop[:kind].id}}.new(ctx, value)
             end
+            hash.__set_property({{prop[:key].id.stringify}}, k8s_cast_type(parsed_value, {{*prop[:kind].resolve.union_types}}, Nil), {{prop[:nilable]}})
 
-            if parsed_value.nil?
-              hash[{{prop[:key].id.stringify}}] = nil
-            else
-              Log.trace { "Setting #{parsed_key} to #{parsed_value.inspect}" }
-              {% if prop[:read_only] %}
-              hash[{{prop[:key].id.stringify}}] = parsed_value.as({{prop[:kind].id}})
-              {% else %}
-              hash.{{prop[:accessor].id}} = parsed_value.as({{prop[:kind].id}}{% if prop[:nilable] %} | Nil{% end %})
-              {% end %}
-            end
         {% end %}
         else
           # node.raise "Unknown key #{parsed_key}"

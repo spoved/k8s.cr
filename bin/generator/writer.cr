@@ -29,7 +29,7 @@ class Generator::Writer
     write_block "module #{base_class.lchop("::")}" do
       if definition.alias_of
         file.puts %<alias #{class_name} = #{@generator.definitions[definition.alias_of.not_nil!]}>
-      elsif class_name == "ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps"
+      elsif class_name == "ApiextensionsApiserver::Apis::Apiextensions::V1::JsonSchemaProps"
         write_class(definition, properties)
         write_alias(definition) if !definition.is_list? && definition.is_resource?
       elsif default_allias?(class_name)
@@ -138,8 +138,8 @@ class Generator::Writer
       kind
     end
 
-    if definition.class_name =~ /ApiextensionsApiserver::Apis::Apiextensions::(V1|V1beta1)::JSONSchemaProps/
-      val_types.map! { |kind| kind.gsub(/::K8S::ApiextensionsApiserver::Apis::Apiextensions::(V1|V1beta1)::JSONSchemaProps/, "::K8S::GenericObject") }
+    if definition.class_name =~ /ApiextensionsApiserver::Apis::Apiextensions::(V1|V1beta1)::JsonSchemaProps/
+      val_types.map! { |kind| kind.gsub(/::K8S::ApiextensionsApiserver::Apis::Apiextensions::(V1|V1beta1)::JsonSchemaProps/, "::K8S::GenericObject") }
     end
 
     val_types << "Nil"
@@ -173,28 +173,14 @@ class Generator::Writer
 
       write_properties(properties)
 
-      write_block "macro finished" do
-        file.puts "      ::K8S::Kubernetes::Resource.define_serialize_methods(["
-        properties.each do |prop|
-          kind = prop[:kind] =~ /\s\|\s/ ? "::Union(#{prop[:kind]})" : prop[:kind]
-          file.puts %<        { key: "#{prop[:key]}", accessor: "#{prop[:accessor]}", nilable: #{prop[:nilable]}, read_only: #{prop[:read_only]}, default: #{prop[:default].inspect}, kind: #{kind} },>
-        end
-        file.puts "      ])"
+      write_init(properties)
+
+      file.puts "      ::K8S::Kubernetes::Resource.define_serialize_methods(["
+      properties.each do |prop|
+        kind = prop[:kind] =~ /\s\|\s/ ? "::Union(#{prop[:kind]})" : prop[:kind]
+        file.puts %<        { key: "#{prop[:key]}", accessor: "#{prop[:accessor]}", nilable: #{prop[:nilable]}, read_only: #{prop[:read_only]}, default: #{prop[:default].inspect}, kind: #{kind} },>
       end
-
-      # file.puts <<-END
-      #   def [](key : Symbol)
-      #     dig key.to_s
-      #   end
-
-      #   def []?(key : Symbol)
-      #     dig? key.to_s
-      #   end
-
-      #   def []=(key : Symbol, value : T) forall T
-      #     @__hash__[key.to_s] = self.class.deep_cast_value(value)
-      #   end
-      # END
+      file.puts "      ])"
     end
   end
 
@@ -257,41 +243,21 @@ class Generator::Writer
   end
 
   private def write_property(prop)
-    _kind = prop[:nilable] ? "#{prop[:kind]}?" : prop[:kind]
-    # key = /[^a-zA-Z0-9_]/ === prop[:key] ? prop[:accessor] : prop[:key]
-    key = prop[:key]
+    _kind = prop[:kind].gsub(/\?+$/, "?")
+    typ_def = if !prop[:nilable] && !prop[:default].nil?
+                "#{prop[:accessor]} : #{prop[:kind]} = #{prop[:default].inspect}"
+              else
+                "#{prop[:accessor]} : #{prop[:kind]}"
+              end
 
-    write_description(prop[:description])
-    write_block "def #{prop[:accessor]} : #{_kind}" do
-      if !prop[:nilable] && !prop[:default].nil?
-        file.puts %<self.["#{key}"] = #{prop[:default].inspect} unless self.["#{key}"]?>
-      end
-      file.puts %<self.["#{key}"].as(#{_kind})>
-    end
-
-    write_description(":ditto:")
-    write_block "def #{prop[:accessor]}! : #{prop[:kind]}" do
-      file.puts %<self.["#{key}"].as(#{_kind}).not_nil!>
-    end
-
-    write_description(":ditto:")
-    write_block "def #{prop[:accessor]}? : #{prop[:kind]}?" do
-      file.puts %<self.["#{key}"]?.as(#{prop[:kind]}?)>
-    end
-
-    unless prop[:read_only]
-      write_description(":ditto:")
-      write_block "def #{prop[:accessor]}=(value : #{_kind})" do
-        file.puts %<self.["#{key}"] = value>
-      end
-    end
+    file.puts %<k8s_object_accessor("#{prop[:key]}", #{typ_def}, #{prop[:nilable].inspect}, #{prop[:read_only].inspect}, #{prop[:description].inspect})>
   end
 
   private def write_abstract_property(prop)
-    _kind = prop[:nilable] ? "#{prop[:kind]}?" : prop[:kind]
+    _kind = prop[:kind].gsub(/\?+$/, "?")
 
     write_description(prop[:description])
-    file.puts "abstract def #{prop[:accessor]} : #{_kind}"
+    file.puts "abstract def #{prop[:accessor]} : #{_kind}?"
 
     write_description(":ditto:")
     file.puts "abstract def #{prop[:accessor]}! : #{prop[:kind]}"
@@ -313,5 +279,59 @@ class Generator::Writer
 
   private def write_serialize_methods(definition : Definition, properties)
     file.puts "::K8S::Kubernetes::Resource.define_serialize_methods(#{properties.inspect})"
+  end
+
+  record FuncArg, name : String, key : String, kind : String, nilable : Bool, default : String?, read_only : Bool do
+    def first_value?
+      !nilable? && default?
+    end
+
+    def nilable?
+      nilable
+    end
+
+    def default?
+      !default.nil?
+    end
+  end
+
+  private def write_init(properties)
+    args = properties.map do |prop|
+      FuncArg.new(
+        name: prop[:accessor],
+        key: prop[:key],
+        kind: prop[:kind],
+        nilable: prop[:nilable],
+        default: prop[:default],
+        read_only: prop[:read_only],
+      )
+    end
+
+    write_function(name: "initialize", args: args, named_args: true) do
+      file.puts "super()"
+      args.each do |arg|
+        if arg.first_value?
+          file.puts %<raise "#{arg.name} cannot be nil" if #{arg.name}.nil?>
+        end
+        file.puts %<self.["#{arg.key}"] = #{arg.name}>
+      end
+    end
+  end
+
+  private def write_function(*, name : String, args, toplevel : Bool = false, named_args : Bool = false)
+    file.print "def #{"self." if toplevel}#{name}("
+    file.print "*, " if named_args && !args.empty?
+    arg_list = (args.select(&.first_value?) + args.reject(&.first_value?)).map do |a|
+      arg = a.name
+      arg += " : #{a.kind}?"
+      # arg += "?" if a.nilable
+      arg += " = #{a.default.inspect}" # if a.nilable || a.default
+      arg
+    end
+    file.print arg_list.join(", ")
+    file.puts ")"
+    yield
+    file.puts "end"
+    file.puts
   end
 end

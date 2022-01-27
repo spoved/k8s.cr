@@ -9,7 +9,7 @@ module K8S
   # Namespace holding the types for `Api::Core::V1::PodReadinessGate`.
   module Types::Api::Core::V1::PodReadinessGate
     # ConditionType refers to a condition in the pod's condition list with matching type.
-    abstract def condition_type : String
+    abstract def condition_type : String?
     # :ditto:
     abstract def condition_type! : String
     # :ditto:
@@ -24,31 +24,15 @@ module K8S
   )]
   class Api::Core::V1::PodReadinessGate < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::PodReadinessGate
+    k8s_object_accessor("conditionType", condition_type : String, false, false, "ConditionType refers to a condition in the pod's condition list with matching type.")
 
-    # ConditionType refers to a condition in the pod's condition list with matching type.
-    def condition_type : String
-      self.["conditionType"].as(String)
+    def initialize(*, condition_type : String? = nil)
+      super()
+      self.["conditionType"] = condition_type
     end
 
-    # :ditto:
-    def condition_type! : String
-      self.["conditionType"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def condition_type? : String?
-      self.["conditionType"]?.as(String?)
-    end
-
-    # :ditto:
-    def condition_type=(value : String)
-      self.["conditionType"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "conditionType", accessor: "condition_type", nilable: false, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "conditionType", accessor: "condition_type", nilable: false, read_only: false, default: nil, kind: String},
+    ])
   end
 end

@@ -20,7 +20,7 @@ module K8S
     # :ditto:
     abstract def pod_management_policy? : String?
     # :ditto:
-    abstract def pod_management_policy=(value : String?)
+    abstract def pod_management_policy=(value : String)
     # replicas is the desired number of replicas of the given Template. These are replicas in the sense that they are instantiations of the same Template, but individual replicas also have a consistent identity. If unspecified, defaults to 1.
     abstract def replicas : Int32?
     # :ditto:
@@ -28,7 +28,7 @@ module K8S
     # :ditto:
     abstract def replicas? : Int32?
     # :ditto:
-    abstract def replicas=(value : Int32?)
+    abstract def replicas=(value : Int32)
     # revisionHistoryLimit is the maximum number of revisions that will be maintained in the StatefulSet's revision history. The revision history consists of all revisions not represented by a currently applied StatefulSetSpec version. The default value is 10.
     abstract def revision_history_limit : Int32?
     # :ditto:
@@ -36,9 +36,9 @@ module K8S
     # :ditto:
     abstract def revision_history_limit? : Int32?
     # :ditto:
-    abstract def revision_history_limit=(value : Int32?)
+    abstract def revision_history_limit=(value : Int32)
     # selector is a label query over pods that should match the replica count. It must match the pod template's labels. More info: [[https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors)](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors))
-    abstract def selector : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector
+    abstract def selector : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?
     # :ditto:
     abstract def selector! : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector
     # :ditto:
@@ -46,7 +46,7 @@ module K8S
     # :ditto:
     abstract def selector=(value : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector)
     # serviceName is the name of the service that governs this StatefulSet. This service must exist before the StatefulSet, and is responsible for the network identity of the set. Pods get [[DNS/hostnames that follow the pattern: pod-specific-string.serviceName.default.svc.cluster.local where "pod-specific-string" is managed by the StatefulSet controller.](DNS/hostnames that follow the pattern: pod-specific-string.serviceName.default.svc.cluster.local where "pod-specific-string" is managed by the StatefulSet controller.)]([DNS/hostnames that follow the pattern: pod-specific-string.serviceName.default.svc.cluster.local where "pod-specific-string" is managed by the StatefulSet controller.](DNS/hostnames that follow the pattern: pod-specific-string.serviceName.default.svc.cluster.local where "pod-specific-string" is managed by the StatefulSet controller.))
-    abstract def service_name : String
+    abstract def service_name : String?
     # :ditto:
     abstract def service_name! : String
     # :ditto:
@@ -54,7 +54,7 @@ module K8S
     # :ditto:
     abstract def service_name=(value : String)
     # template is the object that describes the pod that will be created if insufficient replicas are detected. Each pod stamped out by the StatefulSet will fulfill this Template, but have a unique identity from the rest of the StatefulSet.
-    abstract def template : ::K8S::Api::Core::V1::PodTemplateSpec
+    abstract def template : ::K8S::Api::Core::V1::PodTemplateSpec?
     # :ditto:
     abstract def template! : ::K8S::Api::Core::V1::PodTemplateSpec
     # :ditto:
@@ -68,7 +68,7 @@ module K8S
     # :ditto:
     abstract def update_strategy? : ::K8S::Api::Apps::V1::StatefulSetUpdateStrategy?
     # :ditto:
-    abstract def update_strategy=(value : ::K8S::Api::Apps::V1::StatefulSetUpdateStrategy?)
+    abstract def update_strategy=(value : ::K8S::Api::Apps::V1::StatefulSetUpdateStrategy)
     # volumeClaimTemplates is a list of claims that pods are allowed to reference. The StatefulSet controller is responsible for mapping network identities to claims in a way that maintains the identity of a pod. Every claim in this list must have at least one matching (by name) volumeMount in one container in the template. A claim in this list takes precedence over any volumes in the template, with the same name.
     abstract def volume_claim_templates : ::Array(::K8S::Api::Core::V1::PersistentVolumeClaim)?
     # :ditto:
@@ -76,7 +76,7 @@ module K8S
     # :ditto:
     abstract def volume_claim_templates? : ::Array(::K8S::Api::Core::V1::PersistentVolumeClaim)?
     # :ditto:
-    abstract def volume_claim_templates=(value : ::Array(::K8S::Api::Core::V1::PersistentVolumeClaim)?)
+    abstract def volume_claim_templates=(value : ::Array(::K8S::Api::Core::V1::PersistentVolumeClaim))
   end
 
   # A StatefulSetSpec is the specification of a StatefulSet.
@@ -92,178 +92,36 @@ module K8S
   )]
   class Api::Apps::V1::StatefulSetSpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Apps::V1::StatefulSetSpec
+    k8s_object_accessor("podManagementPolicy", pod_management_policy : String, true, false, "podManagementPolicy controls how pods are created during initial scale up, when replacing pods on nodes, or when scaling down. The default policy is `OrderedReady`, where pods are created in increasing order (pod-0, then pod-1, etc) and the controller will wait until each pod is ready before continuing. When scaling down, the pods are removed in the opposite order. The alternative policy is `Parallel` which will create pods in parallel to match the desired scale without waiting, and on scale down will delete all pods at once.")
+    k8s_object_accessor("replicas", replicas : Int32, true, false, "replicas is the desired number of replicas of the given Template. These are replicas in the sense that they are instantiations of the same Template, but individual replicas also have a consistent identity. If unspecified, defaults to 1.")
+    k8s_object_accessor("revisionHistoryLimit", revision_history_limit : Int32, true, false, "revisionHistoryLimit is the maximum number of revisions that will be maintained in the StatefulSet's revision history. The revision history consists of all revisions not represented by a currently applied StatefulSetSpec version. The default value is 10.")
+    k8s_object_accessor("selector", selector : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector, false, false, "selector is a label query over pods that should match the replica count. It must match the pod template's labels. More info: [https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors)")
+    k8s_object_accessor("serviceName", service_name : String, false, false, "serviceName is the name of the service that governs this StatefulSet. This service must exist before the StatefulSet, and is responsible for the network identity of the set. Pods get [DNS/hostnames that follow the pattern: pod-specific-string.serviceName.default.svc.cluster.local where \"pod-specific-string\" is managed by the StatefulSet controller.](DNS/hostnames that follow the pattern: pod-specific-string.serviceName.default.svc.cluster.local where \"pod-specific-string\" is managed by the StatefulSet controller.)")
+    k8s_object_accessor("template", template : ::K8S::Api::Core::V1::PodTemplateSpec, false, false, "template is the object that describes the pod that will be created if insufficient replicas are detected. Each pod stamped out by the StatefulSet will fulfill this Template, but have a unique identity from the rest of the StatefulSet.")
+    k8s_object_accessor("updateStrategy", update_strategy : ::K8S::Api::Apps::V1::StatefulSetUpdateStrategy, true, false, "updateStrategy indicates the StatefulSetUpdateStrategy that will be employed to update Pods in the StatefulSet when a revision is made to Template.")
+    k8s_object_accessor("volumeClaimTemplates", volume_claim_templates : ::Array(::K8S::Api::Core::V1::PersistentVolumeClaim), true, false, "volumeClaimTemplates is a list of claims that pods are allowed to reference. The StatefulSet controller is responsible for mapping network identities to claims in a way that maintains the identity of a pod. Every claim in this list must have at least one matching (by name) volumeMount in one container in the template. A claim in this list takes precedence over any volumes in the template, with the same name.")
 
-    # podManagementPolicy controls how pods are created during initial scale up, when replacing pods on nodes, or when scaling down. The default policy is `OrderedReady`, where pods are created in increasing order (pod-0, then pod-1, etc) and the controller will wait until each pod is ready before continuing. When scaling down, the pods are removed in the opposite order. The alternative policy is `Parallel` which will create pods in parallel to match the desired scale without waiting, and on scale down will delete all pods at once.
-    def pod_management_policy : String?
-      self.["podManagementPolicy"].as(String?)
+    def initialize(*, pod_management_policy : String? = nil, replicas : Int32? = nil, revision_history_limit : Int32? = nil, selector : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector? = nil, service_name : String? = nil, template : ::K8S::Api::Core::V1::PodTemplateSpec? = nil, update_strategy : ::K8S::Api::Apps::V1::StatefulSetUpdateStrategy? = nil, volume_claim_templates : ::Array(::K8S::Api::Core::V1::PersistentVolumeClaim)? = nil)
+      super()
+      self.["podManagementPolicy"] = pod_management_policy
+      self.["replicas"] = replicas
+      self.["revisionHistoryLimit"] = revision_history_limit
+      self.["selector"] = selector
+      self.["serviceName"] = service_name
+      self.["template"] = template
+      self.["updateStrategy"] = update_strategy
+      self.["volumeClaimTemplates"] = volume_claim_templates
     end
 
-    # :ditto:
-    def pod_management_policy! : String
-      self.["podManagementPolicy"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def pod_management_policy? : String?
-      self.["podManagementPolicy"]?.as(String?)
-    end
-
-    # :ditto:
-    def pod_management_policy=(value : String?)
-      self.["podManagementPolicy"] = value
-    end
-
-    # replicas is the desired number of replicas of the given Template. These are replicas in the sense that they are instantiations of the same Template, but individual replicas also have a consistent identity. If unspecified, defaults to 1.
-    def replicas : Int32?
-      self.["replicas"].as(Int32?)
-    end
-
-    # :ditto:
-    def replicas! : Int32
-      self.["replicas"].as(Int32?).not_nil!
-    end
-
-    # :ditto:
-    def replicas? : Int32?
-      self.["replicas"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def replicas=(value : Int32?)
-      self.["replicas"] = value
-    end
-
-    # revisionHistoryLimit is the maximum number of revisions that will be maintained in the StatefulSet's revision history. The revision history consists of all revisions not represented by a currently applied StatefulSetSpec version. The default value is 10.
-    def revision_history_limit : Int32?
-      self.["revisionHistoryLimit"].as(Int32?)
-    end
-
-    # :ditto:
-    def revision_history_limit! : Int32
-      self.["revisionHistoryLimit"].as(Int32?).not_nil!
-    end
-
-    # :ditto:
-    def revision_history_limit? : Int32?
-      self.["revisionHistoryLimit"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def revision_history_limit=(value : Int32?)
-      self.["revisionHistoryLimit"] = value
-    end
-
-    # selector is a label query over pods that should match the replica count. It must match the pod template's labels. More info: [[https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors)](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors))
-    def selector : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector
-      self.["selector"].as(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector)
-    end
-
-    # :ditto:
-    def selector! : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector
-      self.["selector"].as(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector).not_nil!
-    end
-
-    # :ditto:
-    def selector? : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?
-      self.["selector"]?.as(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?)
-    end
-
-    # :ditto:
-    def selector=(value : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector)
-      self.["selector"] = value
-    end
-
-    # serviceName is the name of the service that governs this StatefulSet. This service must exist before the StatefulSet, and is responsible for the network identity of the set. Pods get [[DNS/hostnames that follow the pattern: pod-specific-string.serviceName.default.svc.cluster.local where "pod-specific-string" is managed by the StatefulSet controller.](DNS/hostnames that follow the pattern: pod-specific-string.serviceName.default.svc.cluster.local where "pod-specific-string" is managed by the StatefulSet controller.)]([DNS/hostnames that follow the pattern: pod-specific-string.serviceName.default.svc.cluster.local where "pod-specific-string" is managed by the StatefulSet controller.](DNS/hostnames that follow the pattern: pod-specific-string.serviceName.default.svc.cluster.local where "pod-specific-string" is managed by the StatefulSet controller.))
-    def service_name : String
-      self.["serviceName"].as(String)
-    end
-
-    # :ditto:
-    def service_name! : String
-      self.["serviceName"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def service_name? : String?
-      self.["serviceName"]?.as(String?)
-    end
-
-    # :ditto:
-    def service_name=(value : String)
-      self.["serviceName"] = value
-    end
-
-    # template is the object that describes the pod that will be created if insufficient replicas are detected. Each pod stamped out by the StatefulSet will fulfill this Template, but have a unique identity from the rest of the StatefulSet.
-    def template : ::K8S::Api::Core::V1::PodTemplateSpec
-      self.["template"].as(::K8S::Api::Core::V1::PodTemplateSpec)
-    end
-
-    # :ditto:
-    def template! : ::K8S::Api::Core::V1::PodTemplateSpec
-      self.["template"].as(::K8S::Api::Core::V1::PodTemplateSpec).not_nil!
-    end
-
-    # :ditto:
-    def template? : ::K8S::Api::Core::V1::PodTemplateSpec?
-      self.["template"]?.as(::K8S::Api::Core::V1::PodTemplateSpec?)
-    end
-
-    # :ditto:
-    def template=(value : ::K8S::Api::Core::V1::PodTemplateSpec)
-      self.["template"] = value
-    end
-
-    # updateStrategy indicates the StatefulSetUpdateStrategy that will be employed to update Pods in the StatefulSet when a revision is made to Template.
-    def update_strategy : ::K8S::Api::Apps::V1::StatefulSetUpdateStrategy?
-      self.["updateStrategy"].as(::K8S::Api::Apps::V1::StatefulSetUpdateStrategy?)
-    end
-
-    # :ditto:
-    def update_strategy! : ::K8S::Api::Apps::V1::StatefulSetUpdateStrategy
-      self.["updateStrategy"].as(::K8S::Api::Apps::V1::StatefulSetUpdateStrategy?).not_nil!
-    end
-
-    # :ditto:
-    def update_strategy? : ::K8S::Api::Apps::V1::StatefulSetUpdateStrategy?
-      self.["updateStrategy"]?.as(::K8S::Api::Apps::V1::StatefulSetUpdateStrategy?)
-    end
-
-    # :ditto:
-    def update_strategy=(value : ::K8S::Api::Apps::V1::StatefulSetUpdateStrategy?)
-      self.["updateStrategy"] = value
-    end
-
-    # volumeClaimTemplates is a list of claims that pods are allowed to reference. The StatefulSet controller is responsible for mapping network identities to claims in a way that maintains the identity of a pod. Every claim in this list must have at least one matching (by name) volumeMount in one container in the template. A claim in this list takes precedence over any volumes in the template, with the same name.
-    def volume_claim_templates : ::Array(::K8S::Api::Core::V1::PersistentVolumeClaim)?
-      self.["volumeClaimTemplates"].as(::Array(::K8S::Api::Core::V1::PersistentVolumeClaim)?)
-    end
-
-    # :ditto:
-    def volume_claim_templates! : ::Array(::K8S::Api::Core::V1::PersistentVolumeClaim)
-      self.["volumeClaimTemplates"].as(::Array(::K8S::Api::Core::V1::PersistentVolumeClaim)?).not_nil!
-    end
-
-    # :ditto:
-    def volume_claim_templates? : ::Array(::K8S::Api::Core::V1::PersistentVolumeClaim)?
-      self.["volumeClaimTemplates"]?.as(::Array(::K8S::Api::Core::V1::PersistentVolumeClaim)?)
-    end
-
-    # :ditto:
-    def volume_claim_templates=(value : ::Array(::K8S::Api::Core::V1::PersistentVolumeClaim)?)
-      self.["volumeClaimTemplates"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "podManagementPolicy", accessor: "pod_management_policy", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "replicas", accessor: "replicas", nilable: true, read_only: false, default: nil, kind: Int32 },
-        { key: "revisionHistoryLimit", accessor: "revision_history_limit", nilable: true, read_only: false, default: nil, kind: Int32 },
-        { key: "selector", accessor: "selector", nilable: false, read_only: false, default: nil, kind: ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector },
-        { key: "serviceName", accessor: "service_name", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "template", accessor: "template", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::PodTemplateSpec },
-        { key: "updateStrategy", accessor: "update_strategy", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Apps::V1::StatefulSetUpdateStrategy },
-        { key: "volumeClaimTemplates", accessor: "volume_claim_templates", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::PersistentVolumeClaim) },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "podManagementPolicy", accessor: "pod_management_policy", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "replicas", accessor: "replicas", nilable: true, read_only: false, default: nil, kind: Int32},
+      {key: "revisionHistoryLimit", accessor: "revision_history_limit", nilable: true, read_only: false, default: nil, kind: Int32},
+      {key: "selector", accessor: "selector", nilable: false, read_only: false, default: nil, kind: ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector},
+      {key: "serviceName", accessor: "service_name", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "template", accessor: "template", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::PodTemplateSpec},
+      {key: "updateStrategy", accessor: "update_strategy", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Apps::V1::StatefulSetUpdateStrategy},
+      {key: "volumeClaimTemplates", accessor: "volume_claim_templates", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::PersistentVolumeClaim)},
+    ])
   end
 end

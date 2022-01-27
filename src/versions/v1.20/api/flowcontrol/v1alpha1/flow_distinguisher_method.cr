@@ -9,7 +9,7 @@ module K8S
   # Namespace holding the types for `Api::Flowcontrol::V1alpha1::FlowDistinguisherMethod`.
   module Types::Api::Flowcontrol::V1alpha1::FlowDistinguisherMethod
     # `type` is the type of flow distinguisher method The supported types are "ByUser" and "ByNamespace". Required.
-    abstract def type : String
+    abstract def type : String?
     # :ditto:
     abstract def type! : String
     # :ditto:
@@ -24,31 +24,15 @@ module K8S
   )]
   class Api::Flowcontrol::V1alpha1::FlowDistinguisherMethod < ::K8S::GenericObject
     include ::K8S::Types::Api::Flowcontrol::V1alpha1::FlowDistinguisherMethod
+    k8s_object_accessor("type", type : String, false, false, "`type` is the type of flow distinguisher method The supported types are \"ByUser\" and \"ByNamespace\". Required.")
 
-    # `type` is the type of flow distinguisher method The supported types are "ByUser" and "ByNamespace". Required.
-    def type : String
-      self.["type"].as(String)
+    def initialize(*, type : String? = nil)
+      super()
+      self.["type"] = type
     end
 
-    # :ditto:
-    def type! : String
-      self.["type"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def type? : String?
-      self.["type"]?.as(String?)
-    end
-
-    # :ditto:
-    def type=(value : String)
-      self.["type"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "type", accessor: "type", nilable: false, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "type", accessor: "type", nilable: false, read_only: false, default: nil, kind: String},
+    ])
   end
 end

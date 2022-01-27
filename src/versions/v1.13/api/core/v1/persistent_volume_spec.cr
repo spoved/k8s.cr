@@ -40,7 +40,7 @@ module K8S
     # :ditto:
     abstract def access_modes? : ::Array(String)?
     # :ditto:
-    abstract def access_modes=(value : ::Array(String)?)
+    abstract def access_modes=(value : ::Array(String))
     # AWSElasticBlockStore represents an AWS Disk resource that is attached to a kubelet's host machine and then exposed to the pod. More info: [[https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore](https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore)](https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore](https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore))
     abstract def aws_elastic_block_store : ::K8S::Api::Core::V1::AWSElasticBlockStoreVolumeSource?
     # :ditto:
@@ -48,7 +48,7 @@ module K8S
     # :ditto:
     abstract def aws_elastic_block_store? : ::K8S::Api::Core::V1::AWSElasticBlockStoreVolumeSource?
     # :ditto:
-    abstract def aws_elastic_block_store=(value : ::K8S::Api::Core::V1::AWSElasticBlockStoreVolumeSource?)
+    abstract def aws_elastic_block_store=(value : ::K8S::Api::Core::V1::AWSElasticBlockStoreVolumeSource)
     # AzureDisk represents an Azure Data Disk mount on the host and bind mount to the pod.
     abstract def azure_disk : ::K8S::Api::Core::V1::AzureDiskVolumeSource?
     # :ditto:
@@ -56,7 +56,7 @@ module K8S
     # :ditto:
     abstract def azure_disk? : ::K8S::Api::Core::V1::AzureDiskVolumeSource?
     # :ditto:
-    abstract def azure_disk=(value : ::K8S::Api::Core::V1::AzureDiskVolumeSource?)
+    abstract def azure_disk=(value : ::K8S::Api::Core::V1::AzureDiskVolumeSource)
     # AzureFile represents an Azure File Service mount on the host and bind mount to the pod.
     abstract def azure_file : ::K8S::Api::Core::V1::AzureFilePersistentVolumeSource?
     # :ditto:
@@ -64,7 +64,7 @@ module K8S
     # :ditto:
     abstract def azure_file? : ::K8S::Api::Core::V1::AzureFilePersistentVolumeSource?
     # :ditto:
-    abstract def azure_file=(value : ::K8S::Api::Core::V1::AzureFilePersistentVolumeSource?)
+    abstract def azure_file=(value : ::K8S::Api::Core::V1::AzureFilePersistentVolumeSource)
     # A description of the persistent volume's resources and capacity. More info: [[https://kubernetes.io/docs/concepts/storage/persistent-volumes#capacity](https://kubernetes.io/docs/concepts/storage/persistent-volumes#capacity)](https://kubernetes.io/docs/concepts/storage/persistent-volumes#capacity](https://kubernetes.io/docs/concepts/storage/persistent-volumes#capacity))
     abstract def capacity : ::Hash(String, ::Int32 | ::String)?
     # :ditto:
@@ -72,7 +72,7 @@ module K8S
     # :ditto:
     abstract def capacity? : ::Hash(String, ::Int32 | ::String)?
     # :ditto:
-    abstract def capacity=(value : ::Hash(String, ::Int32 | ::String)?)
+    abstract def capacity=(value : ::Hash(String, ::Int32 | ::String))
     # CephFS represents a Ceph FS mount on the host that shares a pod's lifetime
     abstract def cephfs : ::K8S::Api::Core::V1::CephFSPersistentVolumeSource?
     # :ditto:
@@ -80,7 +80,7 @@ module K8S
     # :ditto:
     abstract def cephfs? : ::K8S::Api::Core::V1::CephFSPersistentVolumeSource?
     # :ditto:
-    abstract def cephfs=(value : ::K8S::Api::Core::V1::CephFSPersistentVolumeSource?)
+    abstract def cephfs=(value : ::K8S::Api::Core::V1::CephFSPersistentVolumeSource)
     # Cinder represents a cinder volume attached and mounted on kubelets host machine More info: [[https://releases.k8s.io/HEAD/examples/mysql-cinder-pd/README.md](https://releases.k8s.io/HEAD/examples/mysql-cinder-pd/README.md)](https://releases.k8s.io/HEAD/examples/mysql-cinder-pd/README.md](https://releases.k8s.io/HEAD/examples/mysql-cinder-pd/README.md))
     abstract def cinder : ::K8S::Api::Core::V1::CinderPersistentVolumeSource?
     # :ditto:
@@ -88,7 +88,7 @@ module K8S
     # :ditto:
     abstract def cinder? : ::K8S::Api::Core::V1::CinderPersistentVolumeSource?
     # :ditto:
-    abstract def cinder=(value : ::K8S::Api::Core::V1::CinderPersistentVolumeSource?)
+    abstract def cinder=(value : ::K8S::Api::Core::V1::CinderPersistentVolumeSource)
     # ClaimRef is part of a bi-directional binding between PersistentVolume and PersistentVolumeClaim. Expected to be non-nil when bound. claim.VolumeName is the authoritative bind between PV and PVC. More info: [[https://kubernetes.io/docs/concepts/storage/persistent-volumes#binding](https://kubernetes.io/docs/concepts/storage/persistent-volumes#binding)](https://kubernetes.io/docs/concepts/storage/persistent-volumes#binding](https://kubernetes.io/docs/concepts/storage/persistent-volumes#binding))
     abstract def claim_ref : ::K8S::Api::Core::V1::ObjectReference?
     # :ditto:
@@ -96,7 +96,7 @@ module K8S
     # :ditto:
     abstract def claim_ref? : ::K8S::Api::Core::V1::ObjectReference?
     # :ditto:
-    abstract def claim_ref=(value : ::K8S::Api::Core::V1::ObjectReference?)
+    abstract def claim_ref=(value : ::K8S::Api::Core::V1::ObjectReference)
     # CSI represents storage that handled by an external CSI driver (Beta feature).
     abstract def csi : ::K8S::Api::Core::V1::CSIPersistentVolumeSource?
     # :ditto:
@@ -104,7 +104,7 @@ module K8S
     # :ditto:
     abstract def csi? : ::K8S::Api::Core::V1::CSIPersistentVolumeSource?
     # :ditto:
-    abstract def csi=(value : ::K8S::Api::Core::V1::CSIPersistentVolumeSource?)
+    abstract def csi=(value : ::K8S::Api::Core::V1::CSIPersistentVolumeSource)
     # FC represents a Fibre Channel resource that is attached to a kubelet's host machine and then exposed to the pod.
     abstract def fc : ::K8S::Api::Core::V1::FCVolumeSource?
     # :ditto:
@@ -112,7 +112,7 @@ module K8S
     # :ditto:
     abstract def fc? : ::K8S::Api::Core::V1::FCVolumeSource?
     # :ditto:
-    abstract def fc=(value : ::K8S::Api::Core::V1::FCVolumeSource?)
+    abstract def fc=(value : ::K8S::Api::Core::V1::FCVolumeSource)
     # FlexVolume represents a generic volume resource that is [[provisioned/attached using an exec based plugin.](provisioned/attached using an exec based plugin.)]([provisioned/attached using an exec based plugin.](provisioned/attached using an exec based plugin.))
     abstract def flex_volume : ::K8S::Api::Core::V1::FlexPersistentVolumeSource?
     # :ditto:
@@ -120,7 +120,7 @@ module K8S
     # :ditto:
     abstract def flex_volume? : ::K8S::Api::Core::V1::FlexPersistentVolumeSource?
     # :ditto:
-    abstract def flex_volume=(value : ::K8S::Api::Core::V1::FlexPersistentVolumeSource?)
+    abstract def flex_volume=(value : ::K8S::Api::Core::V1::FlexPersistentVolumeSource)
     # Flocker represents a Flocker volume attached to a kubelet's host machine and exposed to the pod for its usage. This depends on the Flocker control service being running
     abstract def flocker : ::K8S::Api::Core::V1::FlockerVolumeSource?
     # :ditto:
@@ -128,7 +128,7 @@ module K8S
     # :ditto:
     abstract def flocker? : ::K8S::Api::Core::V1::FlockerVolumeSource?
     # :ditto:
-    abstract def flocker=(value : ::K8S::Api::Core::V1::FlockerVolumeSource?)
+    abstract def flocker=(value : ::K8S::Api::Core::V1::FlockerVolumeSource)
     # GCEPersistentDisk represents a GCE Disk resource that is attached to a kubelet's host machine and then exposed to the pod. Provisioned by an admin. More info: [[https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk](https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk)](https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk](https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk))
     abstract def gce_persistent_disk : ::K8S::Api::Core::V1::GCEPersistentDiskVolumeSource?
     # :ditto:
@@ -136,7 +136,7 @@ module K8S
     # :ditto:
     abstract def gce_persistent_disk? : ::K8S::Api::Core::V1::GCEPersistentDiskVolumeSource?
     # :ditto:
-    abstract def gce_persistent_disk=(value : ::K8S::Api::Core::V1::GCEPersistentDiskVolumeSource?)
+    abstract def gce_persistent_disk=(value : ::K8S::Api::Core::V1::GCEPersistentDiskVolumeSource)
     # Glusterfs represents a Glusterfs volume that is attached to a host and exposed to the pod. Provisioned by an admin. More info: [[https://releases.k8s.io/HEAD/examples/volumes/glusterfs/README.md](https://releases.k8s.io/HEAD/examples/volumes/glusterfs/README.md)](https://releases.k8s.io/HEAD/examples/volumes/glusterfs/README.md](https://releases.k8s.io/HEAD/examples/volumes/glusterfs/README.md))
     abstract def glusterfs : ::K8S::Api::Core::V1::GlusterfsPersistentVolumeSource?
     # :ditto:
@@ -144,7 +144,7 @@ module K8S
     # :ditto:
     abstract def glusterfs? : ::K8S::Api::Core::V1::GlusterfsPersistentVolumeSource?
     # :ditto:
-    abstract def glusterfs=(value : ::K8S::Api::Core::V1::GlusterfsPersistentVolumeSource?)
+    abstract def glusterfs=(value : ::K8S::Api::Core::V1::GlusterfsPersistentVolumeSource)
     # HostPath represents a directory on the host. Provisioned by a developer or tester. This is useful for single-node development and testing only! On-host storage is not supported in any way and WILL NOT WORK in a multi-node cluster. More info: [[https://kubernetes.io/docs/concepts/storage/volumes#hostpath](https://kubernetes.io/docs/concepts/storage/volumes#hostpath)](https://kubernetes.io/docs/concepts/storage/volumes#hostpath](https://kubernetes.io/docs/concepts/storage/volumes#hostpath))
     abstract def host_path : ::K8S::Api::Core::V1::HostPathVolumeSource?
     # :ditto:
@@ -152,7 +152,7 @@ module K8S
     # :ditto:
     abstract def host_path? : ::K8S::Api::Core::V1::HostPathVolumeSource?
     # :ditto:
-    abstract def host_path=(value : ::K8S::Api::Core::V1::HostPathVolumeSource?)
+    abstract def host_path=(value : ::K8S::Api::Core::V1::HostPathVolumeSource)
     # ISCSI represents an ISCSI Disk resource that is attached to a kubelet's host machine and then exposed to the pod. Provisioned by an admin.
     abstract def iscsi : ::K8S::Api::Core::V1::ISCSIPersistentVolumeSource?
     # :ditto:
@@ -160,7 +160,7 @@ module K8S
     # :ditto:
     abstract def iscsi? : ::K8S::Api::Core::V1::ISCSIPersistentVolumeSource?
     # :ditto:
-    abstract def iscsi=(value : ::K8S::Api::Core::V1::ISCSIPersistentVolumeSource?)
+    abstract def iscsi=(value : ::K8S::Api::Core::V1::ISCSIPersistentVolumeSource)
     # Local represents directly-attached storage with node affinity
     abstract def local : ::K8S::Api::Core::V1::LocalVolumeSource?
     # :ditto:
@@ -168,7 +168,7 @@ module K8S
     # :ditto:
     abstract def local? : ::K8S::Api::Core::V1::LocalVolumeSource?
     # :ditto:
-    abstract def local=(value : ::K8S::Api::Core::V1::LocalVolumeSource?)
+    abstract def local=(value : ::K8S::Api::Core::V1::LocalVolumeSource)
     # A list of mount options, e.g. ["ro", "soft"]. Not validated - mount will simply fail if one is invalid. More info: [[https://kubernetes.io/docs/concepts/storage/persistent-volumes/#mount-options](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#mount-options)](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#mount-options](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#mount-options))
     abstract def mount_options : ::Array(String)?
     # :ditto:
@@ -176,7 +176,7 @@ module K8S
     # :ditto:
     abstract def mount_options? : ::Array(String)?
     # :ditto:
-    abstract def mount_options=(value : ::Array(String)?)
+    abstract def mount_options=(value : ::Array(String))
     # NFS represents an NFS mount on the host. Provisioned by an admin. More info: [[https://kubernetes.io/docs/concepts/storage/volumes#nfs](https://kubernetes.io/docs/concepts/storage/volumes#nfs)](https://kubernetes.io/docs/concepts/storage/volumes#nfs](https://kubernetes.io/docs/concepts/storage/volumes#nfs))
     abstract def nfs : ::K8S::Api::Core::V1::NFSVolumeSource?
     # :ditto:
@@ -184,7 +184,7 @@ module K8S
     # :ditto:
     abstract def nfs? : ::K8S::Api::Core::V1::NFSVolumeSource?
     # :ditto:
-    abstract def nfs=(value : ::K8S::Api::Core::V1::NFSVolumeSource?)
+    abstract def nfs=(value : ::K8S::Api::Core::V1::NFSVolumeSource)
     # NodeAffinity defines constraints that limit what nodes this volume can be accessed from. This field influences the scheduling of pods that use this volume.
     abstract def node_affinity : ::K8S::Api::Core::V1::VolumeNodeAffinity?
     # :ditto:
@@ -192,7 +192,7 @@ module K8S
     # :ditto:
     abstract def node_affinity? : ::K8S::Api::Core::V1::VolumeNodeAffinity?
     # :ditto:
-    abstract def node_affinity=(value : ::K8S::Api::Core::V1::VolumeNodeAffinity?)
+    abstract def node_affinity=(value : ::K8S::Api::Core::V1::VolumeNodeAffinity)
     # What happens to a persistent volume when released from its claim. Valid options are Retain (default for manually created PersistentVolumes), Delete (default for dynamically provisioned PersistentVolumes), and Recycle (deprecated). Recycle must be supported by the volume plugin underlying this PersistentVolume. More info: [[https://kubernetes.io/docs/concepts/storage/persistent-volumes#reclaiming](https://kubernetes.io/docs/concepts/storage/persistent-volumes#reclaiming)](https://kubernetes.io/docs/concepts/storage/persistent-volumes#reclaiming](https://kubernetes.io/docs/concepts/storage/persistent-volumes#reclaiming))
     abstract def persistent_volume_reclaim_policy : String?
     # :ditto:
@@ -200,7 +200,7 @@ module K8S
     # :ditto:
     abstract def persistent_volume_reclaim_policy? : String?
     # :ditto:
-    abstract def persistent_volume_reclaim_policy=(value : String?)
+    abstract def persistent_volume_reclaim_policy=(value : String)
     # PhotonPersistentDisk represents a PhotonController persistent disk attached and mounted on kubelets host machine
     abstract def photon_persistent_disk : ::K8S::Api::Core::V1::PhotonPersistentDiskVolumeSource?
     # :ditto:
@@ -208,7 +208,7 @@ module K8S
     # :ditto:
     abstract def photon_persistent_disk? : ::K8S::Api::Core::V1::PhotonPersistentDiskVolumeSource?
     # :ditto:
-    abstract def photon_persistent_disk=(value : ::K8S::Api::Core::V1::PhotonPersistentDiskVolumeSource?)
+    abstract def photon_persistent_disk=(value : ::K8S::Api::Core::V1::PhotonPersistentDiskVolumeSource)
     # PortworxVolume represents a portworx volume attached and mounted on kubelets host machine
     abstract def portworx_volume : ::K8S::Api::Core::V1::PortworxVolumeSource?
     # :ditto:
@@ -216,7 +216,7 @@ module K8S
     # :ditto:
     abstract def portworx_volume? : ::K8S::Api::Core::V1::PortworxVolumeSource?
     # :ditto:
-    abstract def portworx_volume=(value : ::K8S::Api::Core::V1::PortworxVolumeSource?)
+    abstract def portworx_volume=(value : ::K8S::Api::Core::V1::PortworxVolumeSource)
     # Quobyte represents a Quobyte mount on the host that shares a pod's lifetime
     abstract def quobyte : ::K8S::Api::Core::V1::QuobyteVolumeSource?
     # :ditto:
@@ -224,7 +224,7 @@ module K8S
     # :ditto:
     abstract def quobyte? : ::K8S::Api::Core::V1::QuobyteVolumeSource?
     # :ditto:
-    abstract def quobyte=(value : ::K8S::Api::Core::V1::QuobyteVolumeSource?)
+    abstract def quobyte=(value : ::K8S::Api::Core::V1::QuobyteVolumeSource)
     # RBD represents a Rados Block Device mount on the host that shares a pod's lifetime. More info: [[https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md](https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md)](https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md](https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md))
     abstract def rbd : ::K8S::Api::Core::V1::RBDPersistentVolumeSource?
     # :ditto:
@@ -232,7 +232,7 @@ module K8S
     # :ditto:
     abstract def rbd? : ::K8S::Api::Core::V1::RBDPersistentVolumeSource?
     # :ditto:
-    abstract def rbd=(value : ::K8S::Api::Core::V1::RBDPersistentVolumeSource?)
+    abstract def rbd=(value : ::K8S::Api::Core::V1::RBDPersistentVolumeSource)
     # ScaleIO represents a ScaleIO persistent volume attached and mounted on Kubernetes nodes.
     abstract def scale_io : ::K8S::Api::Core::V1::ScaleIOPersistentVolumeSource?
     # :ditto:
@@ -240,7 +240,7 @@ module K8S
     # :ditto:
     abstract def scale_io? : ::K8S::Api::Core::V1::ScaleIOPersistentVolumeSource?
     # :ditto:
-    abstract def scale_io=(value : ::K8S::Api::Core::V1::ScaleIOPersistentVolumeSource?)
+    abstract def scale_io=(value : ::K8S::Api::Core::V1::ScaleIOPersistentVolumeSource)
     # Name of StorageClass to which this persistent volume belongs. Empty value means that this volume does not belong to any StorageClass.
     abstract def storage_class_name : String?
     # :ditto:
@@ -248,7 +248,7 @@ module K8S
     # :ditto:
     abstract def storage_class_name? : String?
     # :ditto:
-    abstract def storage_class_name=(value : String?)
+    abstract def storage_class_name=(value : String)
     # StorageOS represents a StorageOS volume that is attached to the kubelet's host machine and mounted into the pod More info: [[https://releases.k8s.io/HEAD/examples/volumes/storageos/README.md](https://releases.k8s.io/HEAD/examples/volumes/storageos/README.md)](https://releases.k8s.io/HEAD/examples/volumes/storageos/README.md](https://releases.k8s.io/HEAD/examples/volumes/storageos/README.md))
     abstract def storageos : ::K8S::Api::Core::V1::StorageOSPersistentVolumeSource?
     # :ditto:
@@ -256,7 +256,7 @@ module K8S
     # :ditto:
     abstract def storageos? : ::K8S::Api::Core::V1::StorageOSPersistentVolumeSource?
     # :ditto:
-    abstract def storageos=(value : ::K8S::Api::Core::V1::StorageOSPersistentVolumeSource?)
+    abstract def storageos=(value : ::K8S::Api::Core::V1::StorageOSPersistentVolumeSource)
     # volumeMode defines if a volume is intended to be used with a formatted filesystem or to remain in raw block state. Value of Filesystem is implied when not included in spec. This is a beta feature.
     abstract def volume_mode : String?
     # :ditto:
@@ -264,7 +264,7 @@ module K8S
     # :ditto:
     abstract def volume_mode? : String?
     # :ditto:
-    abstract def volume_mode=(value : String?)
+    abstract def volume_mode=(value : String)
     # VsphereVolume represents a vSphere volume attached and mounted on kubelets host machine
     abstract def vsphere_volume : ::K8S::Api::Core::V1::VsphereVirtualDiskVolumeSource?
     # :ditto:
@@ -272,7 +272,7 @@ module K8S
     # :ditto:
     abstract def vsphere_volume? : ::K8S::Api::Core::V1::VsphereVirtualDiskVolumeSource?
     # :ditto:
-    abstract def vsphere_volume=(value : ::K8S::Api::Core::V1::VsphereVirtualDiskVolumeSource?)
+    abstract def vsphere_volume=(value : ::K8S::Api::Core::V1::VsphereVirtualDiskVolumeSource)
   end
 
   # PersistentVolumeSpec is the specification of a persistent volume.
@@ -310,640 +310,102 @@ module K8S
   )]
   class Api::Core::V1::PersistentVolumeSpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::PersistentVolumeSpec
-
-    # AccessModes contains all ways the volume can be mounted. More info: [[https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes](https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes)](https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes](https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes))
-    def access_modes : ::Array(String)?
-      self.["accessModes"].as(::Array(String)?)
-    end
-
-    # :ditto:
-    def access_modes! : ::Array(String)
-      self.["accessModes"].as(::Array(String)?).not_nil!
-    end
-
-    # :ditto:
-    def access_modes? : ::Array(String)?
-      self.["accessModes"]?.as(::Array(String)?)
-    end
-
-    # :ditto:
-    def access_modes=(value : ::Array(String)?)
-      self.["accessModes"] = value
-    end
-
-    # AWSElasticBlockStore represents an AWS Disk resource that is attached to a kubelet's host machine and then exposed to the pod. More info: [[https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore](https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore)](https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore](https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore))
-    def aws_elastic_block_store : ::K8S::Api::Core::V1::AWSElasticBlockStoreVolumeSource?
-      self.["awsElasticBlockStore"].as(::K8S::Api::Core::V1::AWSElasticBlockStoreVolumeSource?)
-    end
-
-    # :ditto:
-    def aws_elastic_block_store! : ::K8S::Api::Core::V1::AWSElasticBlockStoreVolumeSource
-      self.["awsElasticBlockStore"].as(::K8S::Api::Core::V1::AWSElasticBlockStoreVolumeSource?).not_nil!
-    end
-
-    # :ditto:
-    def aws_elastic_block_store? : ::K8S::Api::Core::V1::AWSElasticBlockStoreVolumeSource?
-      self.["awsElasticBlockStore"]?.as(::K8S::Api::Core::V1::AWSElasticBlockStoreVolumeSource?)
-    end
-
-    # :ditto:
-    def aws_elastic_block_store=(value : ::K8S::Api::Core::V1::AWSElasticBlockStoreVolumeSource?)
-      self.["awsElasticBlockStore"] = value
-    end
-
-    # AzureDisk represents an Azure Data Disk mount on the host and bind mount to the pod.
-    def azure_disk : ::K8S::Api::Core::V1::AzureDiskVolumeSource?
-      self.["azureDisk"].as(::K8S::Api::Core::V1::AzureDiskVolumeSource?)
-    end
-
-    # :ditto:
-    def azure_disk! : ::K8S::Api::Core::V1::AzureDiskVolumeSource
-      self.["azureDisk"].as(::K8S::Api::Core::V1::AzureDiskVolumeSource?).not_nil!
-    end
-
-    # :ditto:
-    def azure_disk? : ::K8S::Api::Core::V1::AzureDiskVolumeSource?
-      self.["azureDisk"]?.as(::K8S::Api::Core::V1::AzureDiskVolumeSource?)
-    end
-
-    # :ditto:
-    def azure_disk=(value : ::K8S::Api::Core::V1::AzureDiskVolumeSource?)
-      self.["azureDisk"] = value
-    end
-
-    # AzureFile represents an Azure File Service mount on the host and bind mount to the pod.
-    def azure_file : ::K8S::Api::Core::V1::AzureFilePersistentVolumeSource?
-      self.["azureFile"].as(::K8S::Api::Core::V1::AzureFilePersistentVolumeSource?)
-    end
-
-    # :ditto:
-    def azure_file! : ::K8S::Api::Core::V1::AzureFilePersistentVolumeSource
-      self.["azureFile"].as(::K8S::Api::Core::V1::AzureFilePersistentVolumeSource?).not_nil!
-    end
-
-    # :ditto:
-    def azure_file? : ::K8S::Api::Core::V1::AzureFilePersistentVolumeSource?
-      self.["azureFile"]?.as(::K8S::Api::Core::V1::AzureFilePersistentVolumeSource?)
-    end
-
-    # :ditto:
-    def azure_file=(value : ::K8S::Api::Core::V1::AzureFilePersistentVolumeSource?)
-      self.["azureFile"] = value
-    end
-
-    # A description of the persistent volume's resources and capacity. More info: [[https://kubernetes.io/docs/concepts/storage/persistent-volumes#capacity](https://kubernetes.io/docs/concepts/storage/persistent-volumes#capacity)](https://kubernetes.io/docs/concepts/storage/persistent-volumes#capacity](https://kubernetes.io/docs/concepts/storage/persistent-volumes#capacity))
-    def capacity : ::Hash(String, ::Int32 | ::String)?
-      self.["capacity"].as(::Hash(String, ::Int32 | ::String)?)
-    end
-
-    # :ditto:
-    def capacity! : ::Hash(String, ::Int32 | ::String)
-      self.["capacity"].as(::Hash(String, ::Int32 | ::String)?).not_nil!
-    end
-
-    # :ditto:
-    def capacity? : ::Hash(String, ::Int32 | ::String)?
-      self.["capacity"]?.as(::Hash(String, ::Int32 | ::String)?)
-    end
-
-    # :ditto:
-    def capacity=(value : ::Hash(String, ::Int32 | ::String)?)
-      self.["capacity"] = value
-    end
-
-    # CephFS represents a Ceph FS mount on the host that shares a pod's lifetime
-    def cephfs : ::K8S::Api::Core::V1::CephFSPersistentVolumeSource?
-      self.["cephfs"].as(::K8S::Api::Core::V1::CephFSPersistentVolumeSource?)
-    end
-
-    # :ditto:
-    def cephfs! : ::K8S::Api::Core::V1::CephFSPersistentVolumeSource
-      self.["cephfs"].as(::K8S::Api::Core::V1::CephFSPersistentVolumeSource?).not_nil!
-    end
-
-    # :ditto:
-    def cephfs? : ::K8S::Api::Core::V1::CephFSPersistentVolumeSource?
-      self.["cephfs"]?.as(::K8S::Api::Core::V1::CephFSPersistentVolumeSource?)
-    end
-
-    # :ditto:
-    def cephfs=(value : ::K8S::Api::Core::V1::CephFSPersistentVolumeSource?)
-      self.["cephfs"] = value
-    end
-
-    # Cinder represents a cinder volume attached and mounted on kubelets host machine More info: [[https://releases.k8s.io/HEAD/examples/mysql-cinder-pd/README.md](https://releases.k8s.io/HEAD/examples/mysql-cinder-pd/README.md)](https://releases.k8s.io/HEAD/examples/mysql-cinder-pd/README.md](https://releases.k8s.io/HEAD/examples/mysql-cinder-pd/README.md))
-    def cinder : ::K8S::Api::Core::V1::CinderPersistentVolumeSource?
-      self.["cinder"].as(::K8S::Api::Core::V1::CinderPersistentVolumeSource?)
-    end
-
-    # :ditto:
-    def cinder! : ::K8S::Api::Core::V1::CinderPersistentVolumeSource
-      self.["cinder"].as(::K8S::Api::Core::V1::CinderPersistentVolumeSource?).not_nil!
-    end
-
-    # :ditto:
-    def cinder? : ::K8S::Api::Core::V1::CinderPersistentVolumeSource?
-      self.["cinder"]?.as(::K8S::Api::Core::V1::CinderPersistentVolumeSource?)
-    end
-
-    # :ditto:
-    def cinder=(value : ::K8S::Api::Core::V1::CinderPersistentVolumeSource?)
-      self.["cinder"] = value
-    end
-
-    # ClaimRef is part of a bi-directional binding between PersistentVolume and PersistentVolumeClaim. Expected to be non-nil when bound. claim.VolumeName is the authoritative bind between PV and PVC. More info: [[https://kubernetes.io/docs/concepts/storage/persistent-volumes#binding](https://kubernetes.io/docs/concepts/storage/persistent-volumes#binding)](https://kubernetes.io/docs/concepts/storage/persistent-volumes#binding](https://kubernetes.io/docs/concepts/storage/persistent-volumes#binding))
-    def claim_ref : ::K8S::Api::Core::V1::ObjectReference?
-      self.["claimRef"].as(::K8S::Api::Core::V1::ObjectReference?)
-    end
-
-    # :ditto:
-    def claim_ref! : ::K8S::Api::Core::V1::ObjectReference
-      self.["claimRef"].as(::K8S::Api::Core::V1::ObjectReference?).not_nil!
-    end
-
-    # :ditto:
-    def claim_ref? : ::K8S::Api::Core::V1::ObjectReference?
-      self.["claimRef"]?.as(::K8S::Api::Core::V1::ObjectReference?)
-    end
-
-    # :ditto:
-    def claim_ref=(value : ::K8S::Api::Core::V1::ObjectReference?)
-      self.["claimRef"] = value
-    end
-
-    # CSI represents storage that handled by an external CSI driver (Beta feature).
-    def csi : ::K8S::Api::Core::V1::CSIPersistentVolumeSource?
-      self.["csi"].as(::K8S::Api::Core::V1::CSIPersistentVolumeSource?)
-    end
-
-    # :ditto:
-    def csi! : ::K8S::Api::Core::V1::CSIPersistentVolumeSource
-      self.["csi"].as(::K8S::Api::Core::V1::CSIPersistentVolumeSource?).not_nil!
-    end
-
-    # :ditto:
-    def csi? : ::K8S::Api::Core::V1::CSIPersistentVolumeSource?
-      self.["csi"]?.as(::K8S::Api::Core::V1::CSIPersistentVolumeSource?)
-    end
-
-    # :ditto:
-    def csi=(value : ::K8S::Api::Core::V1::CSIPersistentVolumeSource?)
-      self.["csi"] = value
-    end
-
-    # FC represents a Fibre Channel resource that is attached to a kubelet's host machine and then exposed to the pod.
-    def fc : ::K8S::Api::Core::V1::FCVolumeSource?
-      self.["fc"].as(::K8S::Api::Core::V1::FCVolumeSource?)
-    end
-
-    # :ditto:
-    def fc! : ::K8S::Api::Core::V1::FCVolumeSource
-      self.["fc"].as(::K8S::Api::Core::V1::FCVolumeSource?).not_nil!
-    end
-
-    # :ditto:
-    def fc? : ::K8S::Api::Core::V1::FCVolumeSource?
-      self.["fc"]?.as(::K8S::Api::Core::V1::FCVolumeSource?)
-    end
-
-    # :ditto:
-    def fc=(value : ::K8S::Api::Core::V1::FCVolumeSource?)
-      self.["fc"] = value
-    end
-
-    # FlexVolume represents a generic volume resource that is [[provisioned/attached using an exec based plugin.](provisioned/attached using an exec based plugin.)]([provisioned/attached using an exec based plugin.](provisioned/attached using an exec based plugin.))
-    def flex_volume : ::K8S::Api::Core::V1::FlexPersistentVolumeSource?
-      self.["flexVolume"].as(::K8S::Api::Core::V1::FlexPersistentVolumeSource?)
-    end
-
-    # :ditto:
-    def flex_volume! : ::K8S::Api::Core::V1::FlexPersistentVolumeSource
-      self.["flexVolume"].as(::K8S::Api::Core::V1::FlexPersistentVolumeSource?).not_nil!
-    end
-
-    # :ditto:
-    def flex_volume? : ::K8S::Api::Core::V1::FlexPersistentVolumeSource?
-      self.["flexVolume"]?.as(::K8S::Api::Core::V1::FlexPersistentVolumeSource?)
-    end
-
-    # :ditto:
-    def flex_volume=(value : ::K8S::Api::Core::V1::FlexPersistentVolumeSource?)
-      self.["flexVolume"] = value
-    end
-
-    # Flocker represents a Flocker volume attached to a kubelet's host machine and exposed to the pod for its usage. This depends on the Flocker control service being running
-    def flocker : ::K8S::Api::Core::V1::FlockerVolumeSource?
-      self.["flocker"].as(::K8S::Api::Core::V1::FlockerVolumeSource?)
-    end
-
-    # :ditto:
-    def flocker! : ::K8S::Api::Core::V1::FlockerVolumeSource
-      self.["flocker"].as(::K8S::Api::Core::V1::FlockerVolumeSource?).not_nil!
-    end
-
-    # :ditto:
-    def flocker? : ::K8S::Api::Core::V1::FlockerVolumeSource?
-      self.["flocker"]?.as(::K8S::Api::Core::V1::FlockerVolumeSource?)
-    end
-
-    # :ditto:
-    def flocker=(value : ::K8S::Api::Core::V1::FlockerVolumeSource?)
-      self.["flocker"] = value
-    end
-
-    # GCEPersistentDisk represents a GCE Disk resource that is attached to a kubelet's host machine and then exposed to the pod. Provisioned by an admin. More info: [[https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk](https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk)](https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk](https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk))
-    def gce_persistent_disk : ::K8S::Api::Core::V1::GCEPersistentDiskVolumeSource?
-      self.["gcePersistentDisk"].as(::K8S::Api::Core::V1::GCEPersistentDiskVolumeSource?)
-    end
-
-    # :ditto:
-    def gce_persistent_disk! : ::K8S::Api::Core::V1::GCEPersistentDiskVolumeSource
-      self.["gcePersistentDisk"].as(::K8S::Api::Core::V1::GCEPersistentDiskVolumeSource?).not_nil!
-    end
-
-    # :ditto:
-    def gce_persistent_disk? : ::K8S::Api::Core::V1::GCEPersistentDiskVolumeSource?
-      self.["gcePersistentDisk"]?.as(::K8S::Api::Core::V1::GCEPersistentDiskVolumeSource?)
-    end
-
-    # :ditto:
-    def gce_persistent_disk=(value : ::K8S::Api::Core::V1::GCEPersistentDiskVolumeSource?)
-      self.["gcePersistentDisk"] = value
-    end
-
-    # Glusterfs represents a Glusterfs volume that is attached to a host and exposed to the pod. Provisioned by an admin. More info: [[https://releases.k8s.io/HEAD/examples/volumes/glusterfs/README.md](https://releases.k8s.io/HEAD/examples/volumes/glusterfs/README.md)](https://releases.k8s.io/HEAD/examples/volumes/glusterfs/README.md](https://releases.k8s.io/HEAD/examples/volumes/glusterfs/README.md))
-    def glusterfs : ::K8S::Api::Core::V1::GlusterfsPersistentVolumeSource?
-      self.["glusterfs"].as(::K8S::Api::Core::V1::GlusterfsPersistentVolumeSource?)
-    end
-
-    # :ditto:
-    def glusterfs! : ::K8S::Api::Core::V1::GlusterfsPersistentVolumeSource
-      self.["glusterfs"].as(::K8S::Api::Core::V1::GlusterfsPersistentVolumeSource?).not_nil!
-    end
-
-    # :ditto:
-    def glusterfs? : ::K8S::Api::Core::V1::GlusterfsPersistentVolumeSource?
-      self.["glusterfs"]?.as(::K8S::Api::Core::V1::GlusterfsPersistentVolumeSource?)
-    end
-
-    # :ditto:
-    def glusterfs=(value : ::K8S::Api::Core::V1::GlusterfsPersistentVolumeSource?)
-      self.["glusterfs"] = value
-    end
-
-    # HostPath represents a directory on the host. Provisioned by a developer or tester. This is useful for single-node development and testing only! On-host storage is not supported in any way and WILL NOT WORK in a multi-node cluster. More info: [[https://kubernetes.io/docs/concepts/storage/volumes#hostpath](https://kubernetes.io/docs/concepts/storage/volumes#hostpath)](https://kubernetes.io/docs/concepts/storage/volumes#hostpath](https://kubernetes.io/docs/concepts/storage/volumes#hostpath))
-    def host_path : ::K8S::Api::Core::V1::HostPathVolumeSource?
-      self.["hostPath"].as(::K8S::Api::Core::V1::HostPathVolumeSource?)
-    end
-
-    # :ditto:
-    def host_path! : ::K8S::Api::Core::V1::HostPathVolumeSource
-      self.["hostPath"].as(::K8S::Api::Core::V1::HostPathVolumeSource?).not_nil!
-    end
-
-    # :ditto:
-    def host_path? : ::K8S::Api::Core::V1::HostPathVolumeSource?
-      self.["hostPath"]?.as(::K8S::Api::Core::V1::HostPathVolumeSource?)
-    end
-
-    # :ditto:
-    def host_path=(value : ::K8S::Api::Core::V1::HostPathVolumeSource?)
-      self.["hostPath"] = value
-    end
-
-    # ISCSI represents an ISCSI Disk resource that is attached to a kubelet's host machine and then exposed to the pod. Provisioned by an admin.
-    def iscsi : ::K8S::Api::Core::V1::ISCSIPersistentVolumeSource?
-      self.["iscsi"].as(::K8S::Api::Core::V1::ISCSIPersistentVolumeSource?)
-    end
-
-    # :ditto:
-    def iscsi! : ::K8S::Api::Core::V1::ISCSIPersistentVolumeSource
-      self.["iscsi"].as(::K8S::Api::Core::V1::ISCSIPersistentVolumeSource?).not_nil!
-    end
-
-    # :ditto:
-    def iscsi? : ::K8S::Api::Core::V1::ISCSIPersistentVolumeSource?
-      self.["iscsi"]?.as(::K8S::Api::Core::V1::ISCSIPersistentVolumeSource?)
-    end
-
-    # :ditto:
-    def iscsi=(value : ::K8S::Api::Core::V1::ISCSIPersistentVolumeSource?)
-      self.["iscsi"] = value
-    end
-
-    # Local represents directly-attached storage with node affinity
-    def local : ::K8S::Api::Core::V1::LocalVolumeSource?
-      self.["local"].as(::K8S::Api::Core::V1::LocalVolumeSource?)
-    end
-
-    # :ditto:
-    def local! : ::K8S::Api::Core::V1::LocalVolumeSource
-      self.["local"].as(::K8S::Api::Core::V1::LocalVolumeSource?).not_nil!
-    end
-
-    # :ditto:
-    def local? : ::K8S::Api::Core::V1::LocalVolumeSource?
-      self.["local"]?.as(::K8S::Api::Core::V1::LocalVolumeSource?)
-    end
-
-    # :ditto:
-    def local=(value : ::K8S::Api::Core::V1::LocalVolumeSource?)
-      self.["local"] = value
-    end
-
-    # A list of mount options, e.g. ["ro", "soft"]. Not validated - mount will simply fail if one is invalid. More info: [[https://kubernetes.io/docs/concepts/storage/persistent-volumes/#mount-options](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#mount-options)](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#mount-options](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#mount-options))
-    def mount_options : ::Array(String)?
-      self.["mountOptions"].as(::Array(String)?)
-    end
-
-    # :ditto:
-    def mount_options! : ::Array(String)
-      self.["mountOptions"].as(::Array(String)?).not_nil!
-    end
-
-    # :ditto:
-    def mount_options? : ::Array(String)?
-      self.["mountOptions"]?.as(::Array(String)?)
-    end
-
-    # :ditto:
-    def mount_options=(value : ::Array(String)?)
-      self.["mountOptions"] = value
-    end
-
-    # NFS represents an NFS mount on the host. Provisioned by an admin. More info: [[https://kubernetes.io/docs/concepts/storage/volumes#nfs](https://kubernetes.io/docs/concepts/storage/volumes#nfs)](https://kubernetes.io/docs/concepts/storage/volumes#nfs](https://kubernetes.io/docs/concepts/storage/volumes#nfs))
-    def nfs : ::K8S::Api::Core::V1::NFSVolumeSource?
-      self.["nfs"].as(::K8S::Api::Core::V1::NFSVolumeSource?)
-    end
-
-    # :ditto:
-    def nfs! : ::K8S::Api::Core::V1::NFSVolumeSource
-      self.["nfs"].as(::K8S::Api::Core::V1::NFSVolumeSource?).not_nil!
-    end
-
-    # :ditto:
-    def nfs? : ::K8S::Api::Core::V1::NFSVolumeSource?
-      self.["nfs"]?.as(::K8S::Api::Core::V1::NFSVolumeSource?)
-    end
-
-    # :ditto:
-    def nfs=(value : ::K8S::Api::Core::V1::NFSVolumeSource?)
-      self.["nfs"] = value
-    end
-
-    # NodeAffinity defines constraints that limit what nodes this volume can be accessed from. This field influences the scheduling of pods that use this volume.
-    def node_affinity : ::K8S::Api::Core::V1::VolumeNodeAffinity?
-      self.["nodeAffinity"].as(::K8S::Api::Core::V1::VolumeNodeAffinity?)
-    end
-
-    # :ditto:
-    def node_affinity! : ::K8S::Api::Core::V1::VolumeNodeAffinity
-      self.["nodeAffinity"].as(::K8S::Api::Core::V1::VolumeNodeAffinity?).not_nil!
-    end
-
-    # :ditto:
-    def node_affinity? : ::K8S::Api::Core::V1::VolumeNodeAffinity?
-      self.["nodeAffinity"]?.as(::K8S::Api::Core::V1::VolumeNodeAffinity?)
-    end
-
-    # :ditto:
-    def node_affinity=(value : ::K8S::Api::Core::V1::VolumeNodeAffinity?)
-      self.["nodeAffinity"] = value
-    end
-
-    # What happens to a persistent volume when released from its claim. Valid options are Retain (default for manually created PersistentVolumes), Delete (default for dynamically provisioned PersistentVolumes), and Recycle (deprecated). Recycle must be supported by the volume plugin underlying this PersistentVolume. More info: [[https://kubernetes.io/docs/concepts/storage/persistent-volumes#reclaiming](https://kubernetes.io/docs/concepts/storage/persistent-volumes#reclaiming)](https://kubernetes.io/docs/concepts/storage/persistent-volumes#reclaiming](https://kubernetes.io/docs/concepts/storage/persistent-volumes#reclaiming))
-    def persistent_volume_reclaim_policy : String?
-      self.["persistentVolumeReclaimPolicy"].as(String?)
-    end
-
-    # :ditto:
-    def persistent_volume_reclaim_policy! : String
-      self.["persistentVolumeReclaimPolicy"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def persistent_volume_reclaim_policy? : String?
-      self.["persistentVolumeReclaimPolicy"]?.as(String?)
-    end
-
-    # :ditto:
-    def persistent_volume_reclaim_policy=(value : String?)
-      self.["persistentVolumeReclaimPolicy"] = value
-    end
-
-    # PhotonPersistentDisk represents a PhotonController persistent disk attached and mounted on kubelets host machine
-    def photon_persistent_disk : ::K8S::Api::Core::V1::PhotonPersistentDiskVolumeSource?
-      self.["photonPersistentDisk"].as(::K8S::Api::Core::V1::PhotonPersistentDiskVolumeSource?)
-    end
-
-    # :ditto:
-    def photon_persistent_disk! : ::K8S::Api::Core::V1::PhotonPersistentDiskVolumeSource
-      self.["photonPersistentDisk"].as(::K8S::Api::Core::V1::PhotonPersistentDiskVolumeSource?).not_nil!
-    end
-
-    # :ditto:
-    def photon_persistent_disk? : ::K8S::Api::Core::V1::PhotonPersistentDiskVolumeSource?
-      self.["photonPersistentDisk"]?.as(::K8S::Api::Core::V1::PhotonPersistentDiskVolumeSource?)
-    end
-
-    # :ditto:
-    def photon_persistent_disk=(value : ::K8S::Api::Core::V1::PhotonPersistentDiskVolumeSource?)
-      self.["photonPersistentDisk"] = value
-    end
-
-    # PortworxVolume represents a portworx volume attached and mounted on kubelets host machine
-    def portworx_volume : ::K8S::Api::Core::V1::PortworxVolumeSource?
-      self.["portworxVolume"].as(::K8S::Api::Core::V1::PortworxVolumeSource?)
-    end
-
-    # :ditto:
-    def portworx_volume! : ::K8S::Api::Core::V1::PortworxVolumeSource
-      self.["portworxVolume"].as(::K8S::Api::Core::V1::PortworxVolumeSource?).not_nil!
-    end
-
-    # :ditto:
-    def portworx_volume? : ::K8S::Api::Core::V1::PortworxVolumeSource?
-      self.["portworxVolume"]?.as(::K8S::Api::Core::V1::PortworxVolumeSource?)
-    end
-
-    # :ditto:
-    def portworx_volume=(value : ::K8S::Api::Core::V1::PortworxVolumeSource?)
-      self.["portworxVolume"] = value
-    end
-
-    # Quobyte represents a Quobyte mount on the host that shares a pod's lifetime
-    def quobyte : ::K8S::Api::Core::V1::QuobyteVolumeSource?
-      self.["quobyte"].as(::K8S::Api::Core::V1::QuobyteVolumeSource?)
-    end
-
-    # :ditto:
-    def quobyte! : ::K8S::Api::Core::V1::QuobyteVolumeSource
-      self.["quobyte"].as(::K8S::Api::Core::V1::QuobyteVolumeSource?).not_nil!
-    end
-
-    # :ditto:
-    def quobyte? : ::K8S::Api::Core::V1::QuobyteVolumeSource?
-      self.["quobyte"]?.as(::K8S::Api::Core::V1::QuobyteVolumeSource?)
-    end
-
-    # :ditto:
-    def quobyte=(value : ::K8S::Api::Core::V1::QuobyteVolumeSource?)
-      self.["quobyte"] = value
-    end
-
-    # RBD represents a Rados Block Device mount on the host that shares a pod's lifetime. More info: [[https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md](https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md)](https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md](https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md))
-    def rbd : ::K8S::Api::Core::V1::RBDPersistentVolumeSource?
-      self.["rbd"].as(::K8S::Api::Core::V1::RBDPersistentVolumeSource?)
-    end
-
-    # :ditto:
-    def rbd! : ::K8S::Api::Core::V1::RBDPersistentVolumeSource
-      self.["rbd"].as(::K8S::Api::Core::V1::RBDPersistentVolumeSource?).not_nil!
-    end
-
-    # :ditto:
-    def rbd? : ::K8S::Api::Core::V1::RBDPersistentVolumeSource?
-      self.["rbd"]?.as(::K8S::Api::Core::V1::RBDPersistentVolumeSource?)
-    end
-
-    # :ditto:
-    def rbd=(value : ::K8S::Api::Core::V1::RBDPersistentVolumeSource?)
-      self.["rbd"] = value
-    end
-
-    # ScaleIO represents a ScaleIO persistent volume attached and mounted on Kubernetes nodes.
-    def scale_io : ::K8S::Api::Core::V1::ScaleIOPersistentVolumeSource?
-      self.["scaleIO"].as(::K8S::Api::Core::V1::ScaleIOPersistentVolumeSource?)
-    end
-
-    # :ditto:
-    def scale_io! : ::K8S::Api::Core::V1::ScaleIOPersistentVolumeSource
-      self.["scaleIO"].as(::K8S::Api::Core::V1::ScaleIOPersistentVolumeSource?).not_nil!
-    end
-
-    # :ditto:
-    def scale_io? : ::K8S::Api::Core::V1::ScaleIOPersistentVolumeSource?
-      self.["scaleIO"]?.as(::K8S::Api::Core::V1::ScaleIOPersistentVolumeSource?)
-    end
-
-    # :ditto:
-    def scale_io=(value : ::K8S::Api::Core::V1::ScaleIOPersistentVolumeSource?)
-      self.["scaleIO"] = value
-    end
-
-    # Name of StorageClass to which this persistent volume belongs. Empty value means that this volume does not belong to any StorageClass.
-    def storage_class_name : String?
-      self.["storageClassName"].as(String?)
-    end
-
-    # :ditto:
-    def storage_class_name! : String
-      self.["storageClassName"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def storage_class_name? : String?
-      self.["storageClassName"]?.as(String?)
-    end
-
-    # :ditto:
-    def storage_class_name=(value : String?)
-      self.["storageClassName"] = value
-    end
-
-    # StorageOS represents a StorageOS volume that is attached to the kubelet's host machine and mounted into the pod More info: [[https://releases.k8s.io/HEAD/examples/volumes/storageos/README.md](https://releases.k8s.io/HEAD/examples/volumes/storageos/README.md)](https://releases.k8s.io/HEAD/examples/volumes/storageos/README.md](https://releases.k8s.io/HEAD/examples/volumes/storageos/README.md))
-    def storageos : ::K8S::Api::Core::V1::StorageOSPersistentVolumeSource?
-      self.["storageos"].as(::K8S::Api::Core::V1::StorageOSPersistentVolumeSource?)
-    end
-
-    # :ditto:
-    def storageos! : ::K8S::Api::Core::V1::StorageOSPersistentVolumeSource
-      self.["storageos"].as(::K8S::Api::Core::V1::StorageOSPersistentVolumeSource?).not_nil!
-    end
-
-    # :ditto:
-    def storageos? : ::K8S::Api::Core::V1::StorageOSPersistentVolumeSource?
-      self.["storageos"]?.as(::K8S::Api::Core::V1::StorageOSPersistentVolumeSource?)
-    end
-
-    # :ditto:
-    def storageos=(value : ::K8S::Api::Core::V1::StorageOSPersistentVolumeSource?)
-      self.["storageos"] = value
-    end
-
-    # volumeMode defines if a volume is intended to be used with a formatted filesystem or to remain in raw block state. Value of Filesystem is implied when not included in spec. This is a beta feature.
-    def volume_mode : String?
-      self.["volumeMode"].as(String?)
-    end
-
-    # :ditto:
-    def volume_mode! : String
-      self.["volumeMode"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def volume_mode? : String?
-      self.["volumeMode"]?.as(String?)
-    end
-
-    # :ditto:
-    def volume_mode=(value : String?)
-      self.["volumeMode"] = value
-    end
-
-    # VsphereVolume represents a vSphere volume attached and mounted on kubelets host machine
-    def vsphere_volume : ::K8S::Api::Core::V1::VsphereVirtualDiskVolumeSource?
-      self.["vsphereVolume"].as(::K8S::Api::Core::V1::VsphereVirtualDiskVolumeSource?)
-    end
-
-    # :ditto:
-    def vsphere_volume! : ::K8S::Api::Core::V1::VsphereVirtualDiskVolumeSource
-      self.["vsphereVolume"].as(::K8S::Api::Core::V1::VsphereVirtualDiskVolumeSource?).not_nil!
-    end
-
-    # :ditto:
-    def vsphere_volume? : ::K8S::Api::Core::V1::VsphereVirtualDiskVolumeSource?
-      self.["vsphereVolume"]?.as(::K8S::Api::Core::V1::VsphereVirtualDiskVolumeSource?)
-    end
-
-    # :ditto:
-    def vsphere_volume=(value : ::K8S::Api::Core::V1::VsphereVirtualDiskVolumeSource?)
-      self.["vsphereVolume"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "accessModes", accessor: "access_modes", nilable: true, read_only: false, default: nil, kind: ::Array(String) },
-        { key: "awsElasticBlockStore", accessor: "aws_elastic_block_store", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::AWSElasticBlockStoreVolumeSource },
-        { key: "azureDisk", accessor: "azure_disk", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::AzureDiskVolumeSource },
-        { key: "azureFile", accessor: "azure_file", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::AzureFilePersistentVolumeSource },
-        { key: "capacity", accessor: "capacity", nilable: true, read_only: false, default: nil, kind: ::Union(::Hash(String, ::Int32 | ::String)) },
-        { key: "cephfs", accessor: "cephfs", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::CephFSPersistentVolumeSource },
-        { key: "cinder", accessor: "cinder", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::CinderPersistentVolumeSource },
-        { key: "claimRef", accessor: "claim_ref", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::ObjectReference },
-        { key: "csi", accessor: "csi", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::CSIPersistentVolumeSource },
-        { key: "fc", accessor: "fc", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::FCVolumeSource },
-        { key: "flexVolume", accessor: "flex_volume", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::FlexPersistentVolumeSource },
-        { key: "flocker", accessor: "flocker", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::FlockerVolumeSource },
-        { key: "gcePersistentDisk", accessor: "gce_persistent_disk", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::GCEPersistentDiskVolumeSource },
-        { key: "glusterfs", accessor: "glusterfs", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::GlusterfsPersistentVolumeSource },
-        { key: "hostPath", accessor: "host_path", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::HostPathVolumeSource },
-        { key: "iscsi", accessor: "iscsi", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::ISCSIPersistentVolumeSource },
-        { key: "local", accessor: "local", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::LocalVolumeSource },
-        { key: "mountOptions", accessor: "mount_options", nilable: true, read_only: false, default: nil, kind: ::Array(String) },
-        { key: "nfs", accessor: "nfs", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::NFSVolumeSource },
-        { key: "nodeAffinity", accessor: "node_affinity", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::VolumeNodeAffinity },
-        { key: "persistentVolumeReclaimPolicy", accessor: "persistent_volume_reclaim_policy", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "photonPersistentDisk", accessor: "photon_persistent_disk", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::PhotonPersistentDiskVolumeSource },
-        { key: "portworxVolume", accessor: "portworx_volume", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::PortworxVolumeSource },
-        { key: "quobyte", accessor: "quobyte", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::QuobyteVolumeSource },
-        { key: "rbd", accessor: "rbd", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::RBDPersistentVolumeSource },
-        { key: "scaleIO", accessor: "scale_io", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::ScaleIOPersistentVolumeSource },
-        { key: "storageClassName", accessor: "storage_class_name", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "storageos", accessor: "storageos", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::StorageOSPersistentVolumeSource },
-        { key: "volumeMode", accessor: "volume_mode", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "vsphereVolume", accessor: "vsphere_volume", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::VsphereVirtualDiskVolumeSource },
-      ])
-end
+    k8s_object_accessor("accessModes", access_modes : ::Array(String), true, false, "AccessModes contains all ways the volume can be mounted. More info: [https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes](https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes)")
+    k8s_object_accessor("awsElasticBlockStore", aws_elastic_block_store : ::K8S::Api::Core::V1::AWSElasticBlockStoreVolumeSource, true, false, "AWSElasticBlockStore represents an AWS Disk resource that is attached to a kubelet's host machine and then exposed to the pod. More info: [https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore](https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore)")
+    k8s_object_accessor("azureDisk", azure_disk : ::K8S::Api::Core::V1::AzureDiskVolumeSource, true, false, "AzureDisk represents an Azure Data Disk mount on the host and bind mount to the pod.")
+    k8s_object_accessor("azureFile", azure_file : ::K8S::Api::Core::V1::AzureFilePersistentVolumeSource, true, false, "AzureFile represents an Azure File Service mount on the host and bind mount to the pod.")
+    k8s_object_accessor("capacity", capacity : ::Hash(String, ::Int32 | ::String), true, false, "A description of the persistent volume's resources and capacity. More info: [https://kubernetes.io/docs/concepts/storage/persistent-volumes#capacity](https://kubernetes.io/docs/concepts/storage/persistent-volumes#capacity)")
+    k8s_object_accessor("cephfs", cephfs : ::K8S::Api::Core::V1::CephFSPersistentVolumeSource, true, false, "CephFS represents a Ceph FS mount on the host that shares a pod's lifetime")
+    k8s_object_accessor("cinder", cinder : ::K8S::Api::Core::V1::CinderPersistentVolumeSource, true, false, "Cinder represents a cinder volume attached and mounted on kubelets host machine More info: [https://releases.k8s.io/HEAD/examples/mysql-cinder-pd/README.md](https://releases.k8s.io/HEAD/examples/mysql-cinder-pd/README.md)")
+    k8s_object_accessor("claimRef", claim_ref : ::K8S::Api::Core::V1::ObjectReference, true, false, "ClaimRef is part of a bi-directional binding between PersistentVolume and PersistentVolumeClaim. Expected to be non-nil when bound. claim.VolumeName is the authoritative bind between PV and PVC. More info: [https://kubernetes.io/docs/concepts/storage/persistent-volumes#binding](https://kubernetes.io/docs/concepts/storage/persistent-volumes#binding)")
+    k8s_object_accessor("csi", csi : ::K8S::Api::Core::V1::CSIPersistentVolumeSource, true, false, "CSI represents storage that handled by an external CSI driver (Beta feature).")
+    k8s_object_accessor("fc", fc : ::K8S::Api::Core::V1::FCVolumeSource, true, false, "FC represents a Fibre Channel resource that is attached to a kubelet's host machine and then exposed to the pod.")
+    k8s_object_accessor("flexVolume", flex_volume : ::K8S::Api::Core::V1::FlexPersistentVolumeSource, true, false, "FlexVolume represents a generic volume resource that is [provisioned/attached using an exec based plugin.](provisioned/attached using an exec based plugin.)")
+    k8s_object_accessor("flocker", flocker : ::K8S::Api::Core::V1::FlockerVolumeSource, true, false, "Flocker represents a Flocker volume attached to a kubelet's host machine and exposed to the pod for its usage. This depends on the Flocker control service being running")
+    k8s_object_accessor("gcePersistentDisk", gce_persistent_disk : ::K8S::Api::Core::V1::GCEPersistentDiskVolumeSource, true, false, "GCEPersistentDisk represents a GCE Disk resource that is attached to a kubelet's host machine and then exposed to the pod. Provisioned by an admin. More info: [https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk](https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk)")
+    k8s_object_accessor("glusterfs", glusterfs : ::K8S::Api::Core::V1::GlusterfsPersistentVolumeSource, true, false, "Glusterfs represents a Glusterfs volume that is attached to a host and exposed to the pod. Provisioned by an admin. More info: [https://releases.k8s.io/HEAD/examples/volumes/glusterfs/README.md](https://releases.k8s.io/HEAD/examples/volumes/glusterfs/README.md)")
+    k8s_object_accessor("hostPath", host_path : ::K8S::Api::Core::V1::HostPathVolumeSource, true, false, "HostPath represents a directory on the host. Provisioned by a developer or tester. This is useful for single-node development and testing only! On-host storage is not supported in any way and WILL NOT WORK in a multi-node cluster. More info: [https://kubernetes.io/docs/concepts/storage/volumes#hostpath](https://kubernetes.io/docs/concepts/storage/volumes#hostpath)")
+    k8s_object_accessor("iscsi", iscsi : ::K8S::Api::Core::V1::ISCSIPersistentVolumeSource, true, false, "ISCSI represents an ISCSI Disk resource that is attached to a kubelet's host machine and then exposed to the pod. Provisioned by an admin.")
+    k8s_object_accessor("local", local : ::K8S::Api::Core::V1::LocalVolumeSource, true, false, "Local represents directly-attached storage with node affinity")
+    k8s_object_accessor("mountOptions", mount_options : ::Array(String), true, false, "A list of mount options, e.g. [\"ro\", \"soft\"]. Not validated - mount will simply fail if one is invalid. More info: [https://kubernetes.io/docs/concepts/storage/persistent-volumes/#mount-options](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#mount-options)")
+    k8s_object_accessor("nfs", nfs : ::K8S::Api::Core::V1::NFSVolumeSource, true, false, "NFS represents an NFS mount on the host. Provisioned by an admin. More info: [https://kubernetes.io/docs/concepts/storage/volumes#nfs](https://kubernetes.io/docs/concepts/storage/volumes#nfs)")
+    k8s_object_accessor("nodeAffinity", node_affinity : ::K8S::Api::Core::V1::VolumeNodeAffinity, true, false, "NodeAffinity defines constraints that limit what nodes this volume can be accessed from. This field influences the scheduling of pods that use this volume.")
+    k8s_object_accessor("persistentVolumeReclaimPolicy", persistent_volume_reclaim_policy : String, true, false, "What happens to a persistent volume when released from its claim. Valid options are Retain (default for manually created PersistentVolumes), Delete (default for dynamically provisioned PersistentVolumes), and Recycle (deprecated). Recycle must be supported by the volume plugin underlying this PersistentVolume. More info: [https://kubernetes.io/docs/concepts/storage/persistent-volumes#reclaiming](https://kubernetes.io/docs/concepts/storage/persistent-volumes#reclaiming)")
+    k8s_object_accessor("photonPersistentDisk", photon_persistent_disk : ::K8S::Api::Core::V1::PhotonPersistentDiskVolumeSource, true, false, "PhotonPersistentDisk represents a PhotonController persistent disk attached and mounted on kubelets host machine")
+    k8s_object_accessor("portworxVolume", portworx_volume : ::K8S::Api::Core::V1::PortworxVolumeSource, true, false, "PortworxVolume represents a portworx volume attached and mounted on kubelets host machine")
+    k8s_object_accessor("quobyte", quobyte : ::K8S::Api::Core::V1::QuobyteVolumeSource, true, false, "Quobyte represents a Quobyte mount on the host that shares a pod's lifetime")
+    k8s_object_accessor("rbd", rbd : ::K8S::Api::Core::V1::RBDPersistentVolumeSource, true, false, "RBD represents a Rados Block Device mount on the host that shares a pod's lifetime. More info: [https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md](https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md)")
+    k8s_object_accessor("scaleIO", scale_io : ::K8S::Api::Core::V1::ScaleIOPersistentVolumeSource, true, false, "ScaleIO represents a ScaleIO persistent volume attached and mounted on Kubernetes nodes.")
+    k8s_object_accessor("storageClassName", storage_class_name : String, true, false, "Name of StorageClass to which this persistent volume belongs. Empty value means that this volume does not belong to any StorageClass.")
+    k8s_object_accessor("storageos", storageos : ::K8S::Api::Core::V1::StorageOSPersistentVolumeSource, true, false, "StorageOS represents a StorageOS volume that is attached to the kubelet's host machine and mounted into the pod More info: [https://releases.k8s.io/HEAD/examples/volumes/storageos/README.md](https://releases.k8s.io/HEAD/examples/volumes/storageos/README.md)")
+    k8s_object_accessor("volumeMode", volume_mode : String, true, false, "volumeMode defines if a volume is intended to be used with a formatted filesystem or to remain in raw block state. Value of Filesystem is implied when not included in spec. This is a beta feature.")
+    k8s_object_accessor("vsphereVolume", vsphere_volume : ::K8S::Api::Core::V1::VsphereVirtualDiskVolumeSource, true, false, "VsphereVolume represents a vSphere volume attached and mounted on kubelets host machine")
+
+    def initialize(*, access_modes : ::Array(String)? = nil, aws_elastic_block_store : ::K8S::Api::Core::V1::AWSElasticBlockStoreVolumeSource? = nil, azure_disk : ::K8S::Api::Core::V1::AzureDiskVolumeSource? = nil, azure_file : ::K8S::Api::Core::V1::AzureFilePersistentVolumeSource? = nil, capacity : ::Hash(String, ::Int32 | ::String)? = nil, cephfs : ::K8S::Api::Core::V1::CephFSPersistentVolumeSource? = nil, cinder : ::K8S::Api::Core::V1::CinderPersistentVolumeSource? = nil, claim_ref : ::K8S::Api::Core::V1::ObjectReference? = nil, csi : ::K8S::Api::Core::V1::CSIPersistentVolumeSource? = nil, fc : ::K8S::Api::Core::V1::FCVolumeSource? = nil, flex_volume : ::K8S::Api::Core::V1::FlexPersistentVolumeSource? = nil, flocker : ::K8S::Api::Core::V1::FlockerVolumeSource? = nil, gce_persistent_disk : ::K8S::Api::Core::V1::GCEPersistentDiskVolumeSource? = nil, glusterfs : ::K8S::Api::Core::V1::GlusterfsPersistentVolumeSource? = nil, host_path : ::K8S::Api::Core::V1::HostPathVolumeSource? = nil, iscsi : ::K8S::Api::Core::V1::ISCSIPersistentVolumeSource? = nil, local : ::K8S::Api::Core::V1::LocalVolumeSource? = nil, mount_options : ::Array(String)? = nil, nfs : ::K8S::Api::Core::V1::NFSVolumeSource? = nil, node_affinity : ::K8S::Api::Core::V1::VolumeNodeAffinity? = nil, persistent_volume_reclaim_policy : String? = nil, photon_persistent_disk : ::K8S::Api::Core::V1::PhotonPersistentDiskVolumeSource? = nil, portworx_volume : ::K8S::Api::Core::V1::PortworxVolumeSource? = nil, quobyte : ::K8S::Api::Core::V1::QuobyteVolumeSource? = nil, rbd : ::K8S::Api::Core::V1::RBDPersistentVolumeSource? = nil, scale_io : ::K8S::Api::Core::V1::ScaleIOPersistentVolumeSource? = nil, storage_class_name : String? = nil, storageos : ::K8S::Api::Core::V1::StorageOSPersistentVolumeSource? = nil, volume_mode : String? = nil, vsphere_volume : ::K8S::Api::Core::V1::VsphereVirtualDiskVolumeSource? = nil)
+      super()
+      self.["accessModes"] = access_modes
+      self.["awsElasticBlockStore"] = aws_elastic_block_store
+      self.["azureDisk"] = azure_disk
+      self.["azureFile"] = azure_file
+      self.["capacity"] = capacity
+      self.["cephfs"] = cephfs
+      self.["cinder"] = cinder
+      self.["claimRef"] = claim_ref
+      self.["csi"] = csi
+      self.["fc"] = fc
+      self.["flexVolume"] = flex_volume
+      self.["flocker"] = flocker
+      self.["gcePersistentDisk"] = gce_persistent_disk
+      self.["glusterfs"] = glusterfs
+      self.["hostPath"] = host_path
+      self.["iscsi"] = iscsi
+      self.["local"] = local
+      self.["mountOptions"] = mount_options
+      self.["nfs"] = nfs
+      self.["nodeAffinity"] = node_affinity
+      self.["persistentVolumeReclaimPolicy"] = persistent_volume_reclaim_policy
+      self.["photonPersistentDisk"] = photon_persistent_disk
+      self.["portworxVolume"] = portworx_volume
+      self.["quobyte"] = quobyte
+      self.["rbd"] = rbd
+      self.["scaleIO"] = scale_io
+      self.["storageClassName"] = storage_class_name
+      self.["storageos"] = storageos
+      self.["volumeMode"] = volume_mode
+      self.["vsphereVolume"] = vsphere_volume
+    end
+
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "accessModes", accessor: "access_modes", nilable: true, read_only: false, default: nil, kind: ::Array(String)},
+      {key: "awsElasticBlockStore", accessor: "aws_elastic_block_store", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::AWSElasticBlockStoreVolumeSource},
+      {key: "azureDisk", accessor: "azure_disk", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::AzureDiskVolumeSource},
+      {key: "azureFile", accessor: "azure_file", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::AzureFilePersistentVolumeSource},
+      {key: "capacity", accessor: "capacity", nilable: true, read_only: false, default: nil, kind: ::Union(::Hash(String, ::Int32 | ::String))},
+      {key: "cephfs", accessor: "cephfs", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::CephFSPersistentVolumeSource},
+      {key: "cinder", accessor: "cinder", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::CinderPersistentVolumeSource},
+      {key: "claimRef", accessor: "claim_ref", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::ObjectReference},
+      {key: "csi", accessor: "csi", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::CSIPersistentVolumeSource},
+      {key: "fc", accessor: "fc", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::FCVolumeSource},
+      {key: "flexVolume", accessor: "flex_volume", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::FlexPersistentVolumeSource},
+      {key: "flocker", accessor: "flocker", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::FlockerVolumeSource},
+      {key: "gcePersistentDisk", accessor: "gce_persistent_disk", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::GCEPersistentDiskVolumeSource},
+      {key: "glusterfs", accessor: "glusterfs", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::GlusterfsPersistentVolumeSource},
+      {key: "hostPath", accessor: "host_path", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::HostPathVolumeSource},
+      {key: "iscsi", accessor: "iscsi", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::ISCSIPersistentVolumeSource},
+      {key: "local", accessor: "local", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::LocalVolumeSource},
+      {key: "mountOptions", accessor: "mount_options", nilable: true, read_only: false, default: nil, kind: ::Array(String)},
+      {key: "nfs", accessor: "nfs", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::NFSVolumeSource},
+      {key: "nodeAffinity", accessor: "node_affinity", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::VolumeNodeAffinity},
+      {key: "persistentVolumeReclaimPolicy", accessor: "persistent_volume_reclaim_policy", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "photonPersistentDisk", accessor: "photon_persistent_disk", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::PhotonPersistentDiskVolumeSource},
+      {key: "portworxVolume", accessor: "portworx_volume", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::PortworxVolumeSource},
+      {key: "quobyte", accessor: "quobyte", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::QuobyteVolumeSource},
+      {key: "rbd", accessor: "rbd", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::RBDPersistentVolumeSource},
+      {key: "scaleIO", accessor: "scale_io", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::ScaleIOPersistentVolumeSource},
+      {key: "storageClassName", accessor: "storage_class_name", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "storageos", accessor: "storageos", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::StorageOSPersistentVolumeSource},
+      {key: "volumeMode", accessor: "volume_mode", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "vsphereVolume", accessor: "vsphere_volume", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::VsphereVirtualDiskVolumeSource},
+    ])
   end
 end

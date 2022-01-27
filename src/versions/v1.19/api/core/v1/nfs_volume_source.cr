@@ -9,7 +9,7 @@ module K8S
   # Namespace holding the types for `Api::Core::V1::NFSVolumeSource`.
   module Types::Api::Core::V1::NFSVolumeSource
     # Path that is exported by the NFS server. More info: [[https://kubernetes.io/docs/concepts/storage/volumes#nfs](https://kubernetes.io/docs/concepts/storage/volumes#nfs)](https://kubernetes.io/docs/concepts/storage/volumes#nfs](https://kubernetes.io/docs/concepts/storage/volumes#nfs))
-    abstract def path : String
+    abstract def path : String?
     # :ditto:
     abstract def path! : String
     # :ditto:
@@ -23,9 +23,9 @@ module K8S
     # :ditto:
     abstract def read_only? : ::Bool?
     # :ditto:
-    abstract def read_only=(value : ::Bool?)
+    abstract def read_only=(value : ::Bool)
     # Server is the hostname or IP address of the NFS server. More info: [[https://kubernetes.io/docs/concepts/storage/volumes#nfs](https://kubernetes.io/docs/concepts/storage/volumes#nfs)](https://kubernetes.io/docs/concepts/storage/volumes#nfs](https://kubernetes.io/docs/concepts/storage/volumes#nfs))
-    abstract def server : String
+    abstract def server : String?
     # :ditto:
     abstract def server! : String
     # :ditto:
@@ -42,73 +42,21 @@ module K8S
   )]
   class Api::Core::V1::NFSVolumeSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::NFSVolumeSource
+    k8s_object_accessor("path", path : String, false, false, "Path that is exported by the NFS server. More info: [https://kubernetes.io/docs/concepts/storage/volumes#nfs](https://kubernetes.io/docs/concepts/storage/volumes#nfs)")
+    k8s_object_accessor("readOnly", read_only : ::Bool, true, false, "ReadOnly here will force the NFS export to be mounted with read-only permissions. Defaults to false. More info: [https://kubernetes.io/docs/concepts/storage/volumes#nfs](https://kubernetes.io/docs/concepts/storage/volumes#nfs)")
+    k8s_object_accessor("server", server : String, false, false, "Server is the hostname or IP address of the NFS server. More info: [https://kubernetes.io/docs/concepts/storage/volumes#nfs](https://kubernetes.io/docs/concepts/storage/volumes#nfs)")
 
-    # Path that is exported by the NFS server. More info: [[https://kubernetes.io/docs/concepts/storage/volumes#nfs](https://kubernetes.io/docs/concepts/storage/volumes#nfs)](https://kubernetes.io/docs/concepts/storage/volumes#nfs](https://kubernetes.io/docs/concepts/storage/volumes#nfs))
-    def path : String
-      self.["path"].as(String)
+    def initialize(*, path : String? = nil, read_only : ::Bool? = nil, server : String? = nil)
+      super()
+      self.["path"] = path
+      self.["readOnly"] = read_only
+      self.["server"] = server
     end
 
-    # :ditto:
-    def path! : String
-      self.["path"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def path? : String?
-      self.["path"]?.as(String?)
-    end
-
-    # :ditto:
-    def path=(value : String)
-      self.["path"] = value
-    end
-
-    # ReadOnly here will force the NFS export to be mounted with read-only permissions. Defaults to false. More info: [[https://kubernetes.io/docs/concepts/storage/volumes#nfs](https://kubernetes.io/docs/concepts/storage/volumes#nfs)](https://kubernetes.io/docs/concepts/storage/volumes#nfs](https://kubernetes.io/docs/concepts/storage/volumes#nfs))
-    def read_only : ::Bool?
-      self.["readOnly"].as(::Bool?)
-    end
-
-    # :ditto:
-    def read_only! : ::Bool
-      self.["readOnly"].as(::Bool?).not_nil!
-    end
-
-    # :ditto:
-    def read_only? : ::Bool?
-      self.["readOnly"]?.as(::Bool?)
-    end
-
-    # :ditto:
-    def read_only=(value : ::Bool?)
-      self.["readOnly"] = value
-    end
-
-    # Server is the hostname or IP address of the NFS server. More info: [[https://kubernetes.io/docs/concepts/storage/volumes#nfs](https://kubernetes.io/docs/concepts/storage/volumes#nfs)](https://kubernetes.io/docs/concepts/storage/volumes#nfs](https://kubernetes.io/docs/concepts/storage/volumes#nfs))
-    def server : String
-      self.["server"].as(String)
-    end
-
-    # :ditto:
-    def server! : String
-      self.["server"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def server? : String?
-      self.["server"]?.as(String?)
-    end
-
-    # :ditto:
-    def server=(value : String)
-      self.["server"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "path", accessor: "path", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "readOnly", accessor: "read_only", nilable: true, read_only: false, default: nil, kind: ::Bool },
-        { key: "server", accessor: "server", nilable: false, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "path", accessor: "path", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "readOnly", accessor: "read_only", nilable: true, read_only: false, default: nil, kind: ::Bool},
+      {key: "server", accessor: "server", nilable: false, read_only: false, default: nil, kind: String},
+    ])
   end
 end

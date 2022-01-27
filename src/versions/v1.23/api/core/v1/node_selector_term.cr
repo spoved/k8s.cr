@@ -17,7 +17,7 @@ module K8S
     # :ditto:
     abstract def match_expressions? : ::Array(::K8S::Api::Core::V1::NodeSelectorRequirement)?
     # :ditto:
-    abstract def match_expressions=(value : ::Array(::K8S::Api::Core::V1::NodeSelectorRequirement)?)
+    abstract def match_expressions=(value : ::Array(::K8S::Api::Core::V1::NodeSelectorRequirement))
     # A list of node selector requirements by node's fields.
     abstract def match_fields : ::Array(::K8S::Api::Core::V1::NodeSelectorRequirement)?
     # :ditto:
@@ -25,7 +25,7 @@ module K8S
     # :ditto:
     abstract def match_fields? : ::Array(::K8S::Api::Core::V1::NodeSelectorRequirement)?
     # :ditto:
-    abstract def match_fields=(value : ::Array(::K8S::Api::Core::V1::NodeSelectorRequirement)?)
+    abstract def match_fields=(value : ::Array(::K8S::Api::Core::V1::NodeSelectorRequirement))
   end
 
   # A null or empty node selector term matches no objects. The requirements of them are ANDed. The TopologySelectorTerm type implements a subset of the NodeSelectorTerm.
@@ -35,52 +35,18 @@ module K8S
   )]
   class Api::Core::V1::NodeSelectorTerm < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::NodeSelectorTerm
+    k8s_object_accessor("matchExpressions", match_expressions : ::Array(::K8S::Api::Core::V1::NodeSelectorRequirement), true, false, "A list of node selector requirements by node's labels.")
+    k8s_object_accessor("matchFields", match_fields : ::Array(::K8S::Api::Core::V1::NodeSelectorRequirement), true, false, "A list of node selector requirements by node's fields.")
 
-    # A list of node selector requirements by node's labels.
-    def match_expressions : ::Array(::K8S::Api::Core::V1::NodeSelectorRequirement)?
-      self.["matchExpressions"].as(::Array(::K8S::Api::Core::V1::NodeSelectorRequirement)?)
+    def initialize(*, match_expressions : ::Array(::K8S::Api::Core::V1::NodeSelectorRequirement)? = nil, match_fields : ::Array(::K8S::Api::Core::V1::NodeSelectorRequirement)? = nil)
+      super()
+      self.["matchExpressions"] = match_expressions
+      self.["matchFields"] = match_fields
     end
 
-    # :ditto:
-    def match_expressions! : ::Array(::K8S::Api::Core::V1::NodeSelectorRequirement)
-      self.["matchExpressions"].as(::Array(::K8S::Api::Core::V1::NodeSelectorRequirement)?).not_nil!
-    end
-
-    # :ditto:
-    def match_expressions? : ::Array(::K8S::Api::Core::V1::NodeSelectorRequirement)?
-      self.["matchExpressions"]?.as(::Array(::K8S::Api::Core::V1::NodeSelectorRequirement)?)
-    end
-
-    # :ditto:
-    def match_expressions=(value : ::Array(::K8S::Api::Core::V1::NodeSelectorRequirement)?)
-      self.["matchExpressions"] = value
-    end
-
-    # A list of node selector requirements by node's fields.
-    def match_fields : ::Array(::K8S::Api::Core::V1::NodeSelectorRequirement)?
-      self.["matchFields"].as(::Array(::K8S::Api::Core::V1::NodeSelectorRequirement)?)
-    end
-
-    # :ditto:
-    def match_fields! : ::Array(::K8S::Api::Core::V1::NodeSelectorRequirement)
-      self.["matchFields"].as(::Array(::K8S::Api::Core::V1::NodeSelectorRequirement)?).not_nil!
-    end
-
-    # :ditto:
-    def match_fields? : ::Array(::K8S::Api::Core::V1::NodeSelectorRequirement)?
-      self.["matchFields"]?.as(::Array(::K8S::Api::Core::V1::NodeSelectorRequirement)?)
-    end
-
-    # :ditto:
-    def match_fields=(value : ::Array(::K8S::Api::Core::V1::NodeSelectorRequirement)?)
-      self.["matchFields"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "matchExpressions", accessor: "match_expressions", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::NodeSelectorRequirement) },
-        { key: "matchFields", accessor: "match_fields", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::NodeSelectorRequirement) },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "matchExpressions", accessor: "match_expressions", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::NodeSelectorRequirement)},
+      {key: "matchFields", accessor: "match_fields", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::NodeSelectorRequirement)},
+    ])
   end
 end

@@ -17,7 +17,7 @@ module K8S
     # :ditto:
     abstract def client_ip? : ::K8S::Api::Core::V1::ClientIPConfig?
     # :ditto:
-    abstract def client_ip=(value : ::K8S::Api::Core::V1::ClientIPConfig?)
+    abstract def client_ip=(value : ::K8S::Api::Core::V1::ClientIPConfig)
   end
 
   # SessionAffinityConfig represents the configurations of session affinity.
@@ -26,31 +26,15 @@ module K8S
   )]
   class Api::Core::V1::SessionAffinityConfig < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::SessionAffinityConfig
+    k8s_object_accessor("clientIP", client_ip : ::K8S::Api::Core::V1::ClientIPConfig, true, false, "clientIP contains the configurations of Client IP based session affinity.")
 
-    # clientIP contains the configurations of Client IP based session affinity.
-    def client_ip : ::K8S::Api::Core::V1::ClientIPConfig?
-      self.["clientIP"].as(::K8S::Api::Core::V1::ClientIPConfig?)
+    def initialize(*, client_ip : ::K8S::Api::Core::V1::ClientIPConfig? = nil)
+      super()
+      self.["clientIP"] = client_ip
     end
 
-    # :ditto:
-    def client_ip! : ::K8S::Api::Core::V1::ClientIPConfig
-      self.["clientIP"].as(::K8S::Api::Core::V1::ClientIPConfig?).not_nil!
-    end
-
-    # :ditto:
-    def client_ip? : ::K8S::Api::Core::V1::ClientIPConfig?
-      self.["clientIP"]?.as(::K8S::Api::Core::V1::ClientIPConfig?)
-    end
-
-    # :ditto:
-    def client_ip=(value : ::K8S::Api::Core::V1::ClientIPConfig?)
-      self.["clientIP"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "clientIP", accessor: "client_ip", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::ClientIPConfig },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "clientIP", accessor: "client_ip", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::ClientIPConfig},
+    ])
   end
 end

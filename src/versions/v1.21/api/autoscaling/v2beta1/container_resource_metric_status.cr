@@ -9,7 +9,7 @@ module K8S
   # Namespace holding the types for `Api::Autoscaling::V2beta1::ContainerResourceMetricStatus`.
   module Types::Api::Autoscaling::V2beta1::ContainerResourceMetricStatus
     # container is the name of the container in the pods of the scaling target
-    abstract def container : String
+    abstract def container : String?
     # :ditto:
     abstract def container! : String
     # :ditto:
@@ -23,9 +23,9 @@ module K8S
     # :ditto:
     abstract def current_average_utilization? : Int32?
     # :ditto:
-    abstract def current_average_utilization=(value : Int32?)
+    abstract def current_average_utilization=(value : Int32)
     # currentAverageValue is the current value of the average of the resource metric across all relevant pods, as a raw value (instead of as a percentage of the request), similar to the "pods" metric source type. It will always be set, regardless of the corresponding metric specification.
-    abstract def current_average_value : ::Int32 | ::String
+    abstract def current_average_value : ::Int32 | ::String?
     # :ditto:
     abstract def current_average_value! : ::Int32 | ::String
     # :ditto:
@@ -33,7 +33,7 @@ module K8S
     # :ditto:
     abstract def current_average_value=(value : ::Int32 | ::String)
     # name is the name of the resource in question.
-    abstract def name : String
+    abstract def name : String?
     # :ditto:
     abstract def name! : String
     # :ditto:
@@ -51,94 +51,24 @@ module K8S
   )]
   class Api::Autoscaling::V2beta1::ContainerResourceMetricStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Autoscaling::V2beta1::ContainerResourceMetricStatus
+    k8s_object_accessor("container", container : String, false, false, "container is the name of the container in the pods of the scaling target")
+    k8s_object_accessor("currentAverageUtilization", current_average_utilization : Int32, true, false, "currentAverageUtilization is the current value of the average of the resource metric across all relevant pods, represented as a percentage of the requested value of the resource for the pods.  It will only be present if `targetAverageValue` was set in the corresponding metric specification.")
+    k8s_object_accessor("currentAverageValue", current_average_value : ::Int32 | ::String, false, false, "currentAverageValue is the current value of the average of the resource metric across all relevant pods, as a raw value (instead of as a percentage of the request), similar to the \"pods\" metric source type. It will always be set, regardless of the corresponding metric specification.")
+    k8s_object_accessor("name", name : String, false, false, "name is the name of the resource in question.")
 
-    # container is the name of the container in the pods of the scaling target
-    def container : String
-      self.["container"].as(String)
+    def initialize(*, container : String? = nil, current_average_utilization : Int32? = nil, current_average_value : ::Int32 | ::String? = nil, name : String? = nil)
+      super()
+      self.["container"] = container
+      self.["currentAverageUtilization"] = current_average_utilization
+      self.["currentAverageValue"] = current_average_value
+      self.["name"] = name
     end
 
-    # :ditto:
-    def container! : String
-      self.["container"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def container? : String?
-      self.["container"]?.as(String?)
-    end
-
-    # :ditto:
-    def container=(value : String)
-      self.["container"] = value
-    end
-
-    # currentAverageUtilization is the current value of the average of the resource metric across all relevant pods, represented as a percentage of the requested value of the resource for the pods.  It will only be present if `targetAverageValue` was set in the corresponding metric specification.
-    def current_average_utilization : Int32?
-      self.["currentAverageUtilization"].as(Int32?)
-    end
-
-    # :ditto:
-    def current_average_utilization! : Int32
-      self.["currentAverageUtilization"].as(Int32?).not_nil!
-    end
-
-    # :ditto:
-    def current_average_utilization? : Int32?
-      self.["currentAverageUtilization"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def current_average_utilization=(value : Int32?)
-      self.["currentAverageUtilization"] = value
-    end
-
-    # currentAverageValue is the current value of the average of the resource metric across all relevant pods, as a raw value (instead of as a percentage of the request), similar to the "pods" metric source type. It will always be set, regardless of the corresponding metric specification.
-    def current_average_value : ::Int32 | ::String
-      self.["currentAverageValue"].as(::Int32 | ::String)
-    end
-
-    # :ditto:
-    def current_average_value! : ::Int32 | ::String
-      self.["currentAverageValue"].as(::Int32 | ::String).not_nil!
-    end
-
-    # :ditto:
-    def current_average_value? : ::Int32 | ::String?
-      self.["currentAverageValue"]?.as(::Int32 | ::String?)
-    end
-
-    # :ditto:
-    def current_average_value=(value : ::Int32 | ::String)
-      self.["currentAverageValue"] = value
-    end
-
-    # name is the name of the resource in question.
-    def name : String
-      self.["name"].as(String)
-    end
-
-    # :ditto:
-    def name! : String
-      self.["name"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def name? : String?
-      self.["name"]?.as(String?)
-    end
-
-    # :ditto:
-    def name=(value : String)
-      self.["name"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "container", accessor: "container", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "currentAverageUtilization", accessor: "current_average_utilization", nilable: true, read_only: false, default: nil, kind: Int32 },
-        { key: "currentAverageValue", accessor: "current_average_value", nilable: false, read_only: false, default: nil, kind: ::Union(::Int32 | ::String) },
-        { key: "name", accessor: "name", nilable: false, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "container", accessor: "container", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "currentAverageUtilization", accessor: "current_average_utilization", nilable: true, read_only: false, default: nil, kind: Int32},
+      {key: "currentAverageValue", accessor: "current_average_value", nilable: false, read_only: false, default: nil, kind: ::Union(::Int32 | ::String)},
+      {key: "name", accessor: "name", nilable: false, read_only: false, default: nil, kind: String},
+    ])
   end
 end

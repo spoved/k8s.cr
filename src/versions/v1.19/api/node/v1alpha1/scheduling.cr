@@ -17,7 +17,7 @@ module K8S
     # :ditto:
     abstract def node_selector? : ::Hash(String, String)?
     # :ditto:
-    abstract def node_selector=(value : ::Hash(String, String)?)
+    abstract def node_selector=(value : ::Hash(String, String))
     # tolerations are appended (excluding duplicates) to pods running with this RuntimeClass during admission, effectively unioning the set of nodes tolerated by the pod and the RuntimeClass.
     abstract def tolerations : ::Array(::K8S::Api::Core::V1::Toleration)?
     # :ditto:
@@ -25,7 +25,7 @@ module K8S
     # :ditto:
     abstract def tolerations? : ::Array(::K8S::Api::Core::V1::Toleration)?
     # :ditto:
-    abstract def tolerations=(value : ::Array(::K8S::Api::Core::V1::Toleration)?)
+    abstract def tolerations=(value : ::Array(::K8S::Api::Core::V1::Toleration))
   end
 
   # Scheduling specifies the scheduling constraints for nodes supporting a RuntimeClass.
@@ -35,52 +35,18 @@ module K8S
   )]
   class Api::Node::V1alpha1::Scheduling < ::K8S::GenericObject
     include ::K8S::Types::Api::Node::V1alpha1::Scheduling
+    k8s_object_accessor("nodeSelector", node_selector : ::Hash(String, String), true, false, "nodeSelector lists labels that must be present on nodes that support this RuntimeClass. Pods using this RuntimeClass can only be scheduled to a node matched by this selector. The RuntimeClass nodeSelector is merged with a pod's existing nodeSelector. Any conflicts will cause the pod to be rejected in admission.")
+    k8s_object_accessor("tolerations", tolerations : ::Array(::K8S::Api::Core::V1::Toleration), true, false, "tolerations are appended (excluding duplicates) to pods running with this RuntimeClass during admission, effectively unioning the set of nodes tolerated by the pod and the RuntimeClass.")
 
-    # nodeSelector lists labels that must be present on nodes that support this RuntimeClass. Pods using this RuntimeClass can only be scheduled to a node matched by this selector. The RuntimeClass nodeSelector is merged with a pod's existing nodeSelector. Any conflicts will cause the pod to be rejected in admission.
-    def node_selector : ::Hash(String, String)?
-      self.["nodeSelector"].as(::Hash(String, String)?)
+    def initialize(*, node_selector : ::Hash(String, String)? = nil, tolerations : ::Array(::K8S::Api::Core::V1::Toleration)? = nil)
+      super()
+      self.["nodeSelector"] = node_selector
+      self.["tolerations"] = tolerations
     end
 
-    # :ditto:
-    def node_selector! : ::Hash(String, String)
-      self.["nodeSelector"].as(::Hash(String, String)?).not_nil!
-    end
-
-    # :ditto:
-    def node_selector? : ::Hash(String, String)?
-      self.["nodeSelector"]?.as(::Hash(String, String)?)
-    end
-
-    # :ditto:
-    def node_selector=(value : ::Hash(String, String)?)
-      self.["nodeSelector"] = value
-    end
-
-    # tolerations are appended (excluding duplicates) to pods running with this RuntimeClass during admission, effectively unioning the set of nodes tolerated by the pod and the RuntimeClass.
-    def tolerations : ::Array(::K8S::Api::Core::V1::Toleration)?
-      self.["tolerations"].as(::Array(::K8S::Api::Core::V1::Toleration)?)
-    end
-
-    # :ditto:
-    def tolerations! : ::Array(::K8S::Api::Core::V1::Toleration)
-      self.["tolerations"].as(::Array(::K8S::Api::Core::V1::Toleration)?).not_nil!
-    end
-
-    # :ditto:
-    def tolerations? : ::Array(::K8S::Api::Core::V1::Toleration)?
-      self.["tolerations"]?.as(::Array(::K8S::Api::Core::V1::Toleration)?)
-    end
-
-    # :ditto:
-    def tolerations=(value : ::Array(::K8S::Api::Core::V1::Toleration)?)
-      self.["tolerations"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "nodeSelector", accessor: "node_selector", nilable: true, read_only: false, default: nil, kind: ::Hash(String, String) },
-        { key: "tolerations", accessor: "tolerations", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::Toleration) },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "nodeSelector", accessor: "node_selector", nilable: true, read_only: false, default: nil, kind: ::Hash(String, String)},
+      {key: "tolerations", accessor: "tolerations", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::Toleration)},
+    ])
   end
 end

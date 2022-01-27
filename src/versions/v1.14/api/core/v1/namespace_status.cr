@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def phase? : String?
     # :ditto:
-    abstract def phase=(value : String?)
+    abstract def phase=(value : String)
   end
 
   # NamespaceStatus is information about the current status of a Namespace.
@@ -24,31 +24,15 @@ module K8S
   )]
   class Api::Core::V1::NamespaceStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::NamespaceStatus
+    k8s_object_accessor("phase", phase : String, true, false, "Phase is the current lifecycle phase of the namespace. More info: [https://kubernetes.io/docs/tasks/administer-cluster/namespaces/](https://kubernetes.io/docs/tasks/administer-cluster/namespaces/)")
 
-    # Phase is the current lifecycle phase of the namespace. More info: [[https://kubernetes.io/docs/tasks/administer-cluster/namespaces/](https://kubernetes.io/docs/tasks/administer-cluster/namespaces/)](https://kubernetes.io/docs/tasks/administer-cluster/namespaces/](https://kubernetes.io/docs/tasks/administer-cluster/namespaces/))
-    def phase : String?
-      self.["phase"].as(String?)
+    def initialize(*, phase : String? = nil)
+      super()
+      self.["phase"] = phase
     end
 
-    # :ditto:
-    def phase! : String
-      self.["phase"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def phase? : String?
-      self.["phase"]?.as(String?)
-    end
-
-    # :ditto:
-    def phase=(value : String?)
-      self.["phase"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "phase", accessor: "phase", nilable: true, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "phase", accessor: "phase", nilable: true, read_only: false, default: nil, kind: String},
+    ])
   end
 end

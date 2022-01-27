@@ -18,7 +18,7 @@ module K8S
     # :ditto:
     abstract def active_deadline_seconds? : Int32?
     # :ditto:
-    abstract def active_deadline_seconds=(value : Int32?)
+    abstract def active_deadline_seconds=(value : Int32)
     # Specifies the number of retries before marking this job failed. Defaults to 6
     abstract def backoff_limit : Int32?
     # :ditto:
@@ -26,7 +26,7 @@ module K8S
     # :ditto:
     abstract def backoff_limit? : Int32?
     # :ditto:
-    abstract def backoff_limit=(value : Int32?)
+    abstract def backoff_limit=(value : Int32)
     # Specifies the desired number of successfully finished pods the job should be run with.  Setting to nil means that the success of any pod signals the success of all pods, and allows parallelism to have any positive value.  Setting to 1 means that parallelism is limited to 1 and the success of that pod signals the success of the job. More info: [[https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/)](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/))
     abstract def completions : Int32?
     # :ditto:
@@ -34,7 +34,7 @@ module K8S
     # :ditto:
     abstract def completions? : Int32?
     # :ditto:
-    abstract def completions=(value : Int32?)
+    abstract def completions=(value : Int32)
     # manualSelector controls generation of pod labels and pod selectors. Leave `manualSelector` unset unless you are certain what you are doing. When false or unset, the system pick labels unique to this job and appends those labels to the pod template.  When true, the user is responsible for picking unique labels and specifying the selector.  Failure to pick a unique label may cause this and other jobs to not function correctly.  However, You may see `manualSelector=true` in jobs that were created with the old [[`extensions/v1beta1` API. More info: https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#specifying-your-own-pod-selector](`extensions/v1beta1` API. More info: https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#specifying-your-own-pod-selector)]([`extensions/v1beta1` API. More info: https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#specifying-your-own-pod-selector](`extensions/v1beta1` API. More info: https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#specifying-your-own-pod-selector))
     abstract def manual_selector : ::Bool?
     # :ditto:
@@ -42,7 +42,7 @@ module K8S
     # :ditto:
     abstract def manual_selector? : ::Bool?
     # :ditto:
-    abstract def manual_selector=(value : ::Bool?)
+    abstract def manual_selector=(value : ::Bool)
     # Specifies the maximum desired number of pods the job should run at any given time. The actual number of pods running in steady state will be less than this number when ((.spec.completions - .status.successful) < .spec.parallelism), i.e. when the work left to do is less than max parallelism. More info: [[https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/)](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/))
     abstract def parallelism : Int32?
     # :ditto:
@@ -50,7 +50,7 @@ module K8S
     # :ditto:
     abstract def parallelism? : Int32?
     # :ditto:
-    abstract def parallelism=(value : Int32?)
+    abstract def parallelism=(value : Int32)
     # A label query over pods that should match the pod count. Normally, the system sets this field for you. More info: [[https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors)](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors))
     abstract def selector : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?
     # :ditto:
@@ -58,9 +58,9 @@ module K8S
     # :ditto:
     abstract def selector? : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?
     # :ditto:
-    abstract def selector=(value : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?)
+    abstract def selector=(value : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector)
     # Describes the pod that will be created when executing a job. More info: [[https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/)](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/))
-    abstract def template : ::K8S::Api::Core::V1::PodTemplateSpec
+    abstract def template : ::K8S::Api::Core::V1::PodTemplateSpec?
     # :ditto:
     abstract def template! : ::K8S::Api::Core::V1::PodTemplateSpec
     # :ditto:
@@ -81,157 +81,33 @@ module K8S
   )]
   class Api::Batch::V1::JobSpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Batch::V1::JobSpec
+    k8s_object_accessor("activeDeadlineSeconds", active_deadline_seconds : Int32, true, false, "Specifies the duration in seconds relative to the startTime that the job may be active before the system tries to terminate it; value must be positive integer")
+    k8s_object_accessor("backoffLimit", backoff_limit : Int32, true, false, "Specifies the number of retries before marking this job failed. Defaults to 6")
+    k8s_object_accessor("completions", completions : Int32, true, false, "Specifies the desired number of successfully finished pods the job should be run with.  Setting to nil means that the success of any pod signals the success of all pods, and allows parallelism to have any positive value.  Setting to 1 means that parallelism is limited to 1 and the success of that pod signals the success of the job. More info: [https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/)")
+    k8s_object_accessor("manualSelector", manual_selector : ::Bool, true, false, "manualSelector controls generation of pod labels and pod selectors. Leave `manualSelector` unset unless you are certain what you are doing. When false or unset, the system pick labels unique to this job and appends those labels to the pod template.  When true, the user is responsible for picking unique labels and specifying the selector.  Failure to pick a unique label may cause this and other jobs to not function correctly.  However, You may see `manualSelector=true` in jobs that were created with the old [`extensions/v1beta1` API. More info: https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#specifying-your-own-pod-selector](`extensions/v1beta1` API. More info: https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#specifying-your-own-pod-selector)")
+    k8s_object_accessor("parallelism", parallelism : Int32, true, false, "Specifies the maximum desired number of pods the job should run at any given time. The actual number of pods running in steady state will be less than this number when ((.spec.completions - .status.successful) < .spec.parallelism), i.e. when the work left to do is less than max parallelism. More info: [https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/)")
+    k8s_object_accessor("selector", selector : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector, true, false, "A label query over pods that should match the pod count. Normally, the system sets this field for you. More info: [https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors)")
+    k8s_object_accessor("template", template : ::K8S::Api::Core::V1::PodTemplateSpec, false, false, "Describes the pod that will be created when executing a job. More info: [https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/)")
 
-    # Specifies the duration in seconds relative to the startTime that the job may be active before the system tries to terminate it; value must be positive integer
-    def active_deadline_seconds : Int32?
-      self.["activeDeadlineSeconds"].as(Int32?)
+    def initialize(*, active_deadline_seconds : Int32? = nil, backoff_limit : Int32? = nil, completions : Int32? = nil, manual_selector : ::Bool? = nil, parallelism : Int32? = nil, selector : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector? = nil, template : ::K8S::Api::Core::V1::PodTemplateSpec? = nil)
+      super()
+      self.["activeDeadlineSeconds"] = active_deadline_seconds
+      self.["backoffLimit"] = backoff_limit
+      self.["completions"] = completions
+      self.["manualSelector"] = manual_selector
+      self.["parallelism"] = parallelism
+      self.["selector"] = selector
+      self.["template"] = template
     end
 
-    # :ditto:
-    def active_deadline_seconds! : Int32
-      self.["activeDeadlineSeconds"].as(Int32?).not_nil!
-    end
-
-    # :ditto:
-    def active_deadline_seconds? : Int32?
-      self.["activeDeadlineSeconds"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def active_deadline_seconds=(value : Int32?)
-      self.["activeDeadlineSeconds"] = value
-    end
-
-    # Specifies the number of retries before marking this job failed. Defaults to 6
-    def backoff_limit : Int32?
-      self.["backoffLimit"].as(Int32?)
-    end
-
-    # :ditto:
-    def backoff_limit! : Int32
-      self.["backoffLimit"].as(Int32?).not_nil!
-    end
-
-    # :ditto:
-    def backoff_limit? : Int32?
-      self.["backoffLimit"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def backoff_limit=(value : Int32?)
-      self.["backoffLimit"] = value
-    end
-
-    # Specifies the desired number of successfully finished pods the job should be run with.  Setting to nil means that the success of any pod signals the success of all pods, and allows parallelism to have any positive value.  Setting to 1 means that parallelism is limited to 1 and the success of that pod signals the success of the job. More info: [[https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/)](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/))
-    def completions : Int32?
-      self.["completions"].as(Int32?)
-    end
-
-    # :ditto:
-    def completions! : Int32
-      self.["completions"].as(Int32?).not_nil!
-    end
-
-    # :ditto:
-    def completions? : Int32?
-      self.["completions"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def completions=(value : Int32?)
-      self.["completions"] = value
-    end
-
-    # manualSelector controls generation of pod labels and pod selectors. Leave `manualSelector` unset unless you are certain what you are doing. When false or unset, the system pick labels unique to this job and appends those labels to the pod template.  When true, the user is responsible for picking unique labels and specifying the selector.  Failure to pick a unique label may cause this and other jobs to not function correctly.  However, You may see `manualSelector=true` in jobs that were created with the old [[`extensions/v1beta1` API. More info: https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#specifying-your-own-pod-selector](`extensions/v1beta1` API. More info: https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#specifying-your-own-pod-selector)]([`extensions/v1beta1` API. More info: https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#specifying-your-own-pod-selector](`extensions/v1beta1` API. More info: https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#specifying-your-own-pod-selector))
-    def manual_selector : ::Bool?
-      self.["manualSelector"].as(::Bool?)
-    end
-
-    # :ditto:
-    def manual_selector! : ::Bool
-      self.["manualSelector"].as(::Bool?).not_nil!
-    end
-
-    # :ditto:
-    def manual_selector? : ::Bool?
-      self.["manualSelector"]?.as(::Bool?)
-    end
-
-    # :ditto:
-    def manual_selector=(value : ::Bool?)
-      self.["manualSelector"] = value
-    end
-
-    # Specifies the maximum desired number of pods the job should run at any given time. The actual number of pods running in steady state will be less than this number when ((.spec.completions - .status.successful) < .spec.parallelism), i.e. when the work left to do is less than max parallelism. More info: [[https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/)](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/))
-    def parallelism : Int32?
-      self.["parallelism"].as(Int32?)
-    end
-
-    # :ditto:
-    def parallelism! : Int32
-      self.["parallelism"].as(Int32?).not_nil!
-    end
-
-    # :ditto:
-    def parallelism? : Int32?
-      self.["parallelism"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def parallelism=(value : Int32?)
-      self.["parallelism"] = value
-    end
-
-    # A label query over pods that should match the pod count. Normally, the system sets this field for you. More info: [[https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors)](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors))
-    def selector : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?
-      self.["selector"].as(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?)
-    end
-
-    # :ditto:
-    def selector! : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector
-      self.["selector"].as(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?).not_nil!
-    end
-
-    # :ditto:
-    def selector? : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?
-      self.["selector"]?.as(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?)
-    end
-
-    # :ditto:
-    def selector=(value : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?)
-      self.["selector"] = value
-    end
-
-    # Describes the pod that will be created when executing a job. More info: [[https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/)](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/))
-    def template : ::K8S::Api::Core::V1::PodTemplateSpec
-      self.["template"].as(::K8S::Api::Core::V1::PodTemplateSpec)
-    end
-
-    # :ditto:
-    def template! : ::K8S::Api::Core::V1::PodTemplateSpec
-      self.["template"].as(::K8S::Api::Core::V1::PodTemplateSpec).not_nil!
-    end
-
-    # :ditto:
-    def template? : ::K8S::Api::Core::V1::PodTemplateSpec?
-      self.["template"]?.as(::K8S::Api::Core::V1::PodTemplateSpec?)
-    end
-
-    # :ditto:
-    def template=(value : ::K8S::Api::Core::V1::PodTemplateSpec)
-      self.["template"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "activeDeadlineSeconds", accessor: "active_deadline_seconds", nilable: true, read_only: false, default: nil, kind: Int32 },
-        { key: "backoffLimit", accessor: "backoff_limit", nilable: true, read_only: false, default: nil, kind: Int32 },
-        { key: "completions", accessor: "completions", nilable: true, read_only: false, default: nil, kind: Int32 },
-        { key: "manualSelector", accessor: "manual_selector", nilable: true, read_only: false, default: nil, kind: ::Bool },
-        { key: "parallelism", accessor: "parallelism", nilable: true, read_only: false, default: nil, kind: Int32 },
-        { key: "selector", accessor: "selector", nilable: true, read_only: false, default: nil, kind: ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector },
-        { key: "template", accessor: "template", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::PodTemplateSpec },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "activeDeadlineSeconds", accessor: "active_deadline_seconds", nilable: true, read_only: false, default: nil, kind: Int32},
+      {key: "backoffLimit", accessor: "backoff_limit", nilable: true, read_only: false, default: nil, kind: Int32},
+      {key: "completions", accessor: "completions", nilable: true, read_only: false, default: nil, kind: Int32},
+      {key: "manualSelector", accessor: "manual_selector", nilable: true, read_only: false, default: nil, kind: ::Bool},
+      {key: "parallelism", accessor: "parallelism", nilable: true, read_only: false, default: nil, kind: Int32},
+      {key: "selector", accessor: "selector", nilable: true, read_only: false, default: nil, kind: ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector},
+      {key: "template", accessor: "template", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::PodTemplateSpec},
+    ])
   end
 end

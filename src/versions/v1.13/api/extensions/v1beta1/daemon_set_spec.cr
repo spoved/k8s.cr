@@ -19,7 +19,7 @@ module K8S
     # :ditto:
     abstract def min_ready_seconds? : Int32?
     # :ditto:
-    abstract def min_ready_seconds=(value : Int32?)
+    abstract def min_ready_seconds=(value : Int32)
     # The number of old history to retain to allow rollback. This is a pointer to distinguish between explicit zero and not specified. Defaults to 10.
     abstract def revision_history_limit : Int32?
     # :ditto:
@@ -27,7 +27,7 @@ module K8S
     # :ditto:
     abstract def revision_history_limit? : Int32?
     # :ditto:
-    abstract def revision_history_limit=(value : Int32?)
+    abstract def revision_history_limit=(value : Int32)
     # A label query over pods that are managed by the daemon set. Must match in order to be controlled. If empty, defaulted to labels on Pod template. More info: [[https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors)](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors))
     abstract def selector : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?
     # :ditto:
@@ -35,9 +35,9 @@ module K8S
     # :ditto:
     abstract def selector? : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?
     # :ditto:
-    abstract def selector=(value : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?)
+    abstract def selector=(value : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector)
     # An object that describes the pod that will be created. The DaemonSet will create exactly one copy of this pod on every node that matches the template's node selector (or on every node if no node selector is specified). More info: [[https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#pod-template](https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#pod-template)](https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#pod-template](https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#pod-template))
-    abstract def template : ::K8S::Api::Core::V1::PodTemplateSpec
+    abstract def template : ::K8S::Api::Core::V1::PodTemplateSpec?
     # :ditto:
     abstract def template! : ::K8S::Api::Core::V1::PodTemplateSpec
     # :ditto:
@@ -51,7 +51,7 @@ module K8S
     # :ditto:
     abstract def template_generation? : Int32?
     # :ditto:
-    abstract def template_generation=(value : Int32?)
+    abstract def template_generation=(value : Int32)
     # An update strategy to replace existing DaemonSet pods with new pods.
     abstract def update_strategy : ::K8S::Api::Extensions::V1beta1::DaemonSetUpdateStrategy?
     # :ditto:
@@ -59,7 +59,7 @@ module K8S
     # :ditto:
     abstract def update_strategy? : ::K8S::Api::Extensions::V1beta1::DaemonSetUpdateStrategy?
     # :ditto:
-    abstract def update_strategy=(value : ::K8S::Api::Extensions::V1beta1::DaemonSetUpdateStrategy?)
+    abstract def update_strategy=(value : ::K8S::Api::Extensions::V1beta1::DaemonSetUpdateStrategy)
   end
 
   # DaemonSetSpec is the specification of a daemon set.
@@ -73,136 +73,30 @@ module K8S
   )]
   class Api::Extensions::V1beta1::DaemonSetSpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Extensions::V1beta1::DaemonSetSpec
+    k8s_object_accessor("minReadySeconds", min_ready_seconds : Int32, true, false, "The minimum number of seconds for which a newly created DaemonSet pod should be ready without any of its container crashing, for it to be considered available. Defaults to 0 (pod will be considered available as soon as it is ready).")
+    k8s_object_accessor("revisionHistoryLimit", revision_history_limit : Int32, true, false, "The number of old history to retain to allow rollback. This is a pointer to distinguish between explicit zero and not specified. Defaults to 10.")
+    k8s_object_accessor("selector", selector : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector, true, false, "A label query over pods that are managed by the daemon set. Must match in order to be controlled. If empty, defaulted to labels on Pod template. More info: [https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors)")
+    k8s_object_accessor("template", template : ::K8S::Api::Core::V1::PodTemplateSpec, false, false, "An object that describes the pod that will be created. The DaemonSet will create exactly one copy of this pod on every node that matches the template's node selector (or on every node if no node selector is specified). More info: [https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#pod-template](https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#pod-template)")
+    k8s_object_accessor("templateGeneration", template_generation : Int32, true, false, "DEPRECATED. A sequence number representing a specific generation of the template. Populated by the system. It can be set only during the creation.")
+    k8s_object_accessor("updateStrategy", update_strategy : ::K8S::Api::Extensions::V1beta1::DaemonSetUpdateStrategy, true, false, "An update strategy to replace existing DaemonSet pods with new pods.")
 
-    # The minimum number of seconds for which a newly created DaemonSet pod should be ready without any of its container crashing, for it to be considered available. Defaults to 0 (pod will be considered available as soon as it is ready).
-    def min_ready_seconds : Int32?
-      self.["minReadySeconds"].as(Int32?)
+    def initialize(*, min_ready_seconds : Int32? = nil, revision_history_limit : Int32? = nil, selector : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector? = nil, template : ::K8S::Api::Core::V1::PodTemplateSpec? = nil, template_generation : Int32? = nil, update_strategy : ::K8S::Api::Extensions::V1beta1::DaemonSetUpdateStrategy? = nil)
+      super()
+      self.["minReadySeconds"] = min_ready_seconds
+      self.["revisionHistoryLimit"] = revision_history_limit
+      self.["selector"] = selector
+      self.["template"] = template
+      self.["templateGeneration"] = template_generation
+      self.["updateStrategy"] = update_strategy
     end
 
-    # :ditto:
-    def min_ready_seconds! : Int32
-      self.["minReadySeconds"].as(Int32?).not_nil!
-    end
-
-    # :ditto:
-    def min_ready_seconds? : Int32?
-      self.["minReadySeconds"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def min_ready_seconds=(value : Int32?)
-      self.["minReadySeconds"] = value
-    end
-
-    # The number of old history to retain to allow rollback. This is a pointer to distinguish between explicit zero and not specified. Defaults to 10.
-    def revision_history_limit : Int32?
-      self.["revisionHistoryLimit"].as(Int32?)
-    end
-
-    # :ditto:
-    def revision_history_limit! : Int32
-      self.["revisionHistoryLimit"].as(Int32?).not_nil!
-    end
-
-    # :ditto:
-    def revision_history_limit? : Int32?
-      self.["revisionHistoryLimit"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def revision_history_limit=(value : Int32?)
-      self.["revisionHistoryLimit"] = value
-    end
-
-    # A label query over pods that are managed by the daemon set. Must match in order to be controlled. If empty, defaulted to labels on Pod template. More info: [[https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors)](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors))
-    def selector : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?
-      self.["selector"].as(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?)
-    end
-
-    # :ditto:
-    def selector! : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector
-      self.["selector"].as(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?).not_nil!
-    end
-
-    # :ditto:
-    def selector? : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?
-      self.["selector"]?.as(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?)
-    end
-
-    # :ditto:
-    def selector=(value : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?)
-      self.["selector"] = value
-    end
-
-    # An object that describes the pod that will be created. The DaemonSet will create exactly one copy of this pod on every node that matches the template's node selector (or on every node if no node selector is specified). More info: [[https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#pod-template](https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#pod-template)](https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#pod-template](https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#pod-template))
-    def template : ::K8S::Api::Core::V1::PodTemplateSpec
-      self.["template"].as(::K8S::Api::Core::V1::PodTemplateSpec)
-    end
-
-    # :ditto:
-    def template! : ::K8S::Api::Core::V1::PodTemplateSpec
-      self.["template"].as(::K8S::Api::Core::V1::PodTemplateSpec).not_nil!
-    end
-
-    # :ditto:
-    def template? : ::K8S::Api::Core::V1::PodTemplateSpec?
-      self.["template"]?.as(::K8S::Api::Core::V1::PodTemplateSpec?)
-    end
-
-    # :ditto:
-    def template=(value : ::K8S::Api::Core::V1::PodTemplateSpec)
-      self.["template"] = value
-    end
-
-    # DEPRECATED. A sequence number representing a specific generation of the template. Populated by the system. It can be set only during the creation.
-    def template_generation : Int32?
-      self.["templateGeneration"].as(Int32?)
-    end
-
-    # :ditto:
-    def template_generation! : Int32
-      self.["templateGeneration"].as(Int32?).not_nil!
-    end
-
-    # :ditto:
-    def template_generation? : Int32?
-      self.["templateGeneration"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def template_generation=(value : Int32?)
-      self.["templateGeneration"] = value
-    end
-
-    # An update strategy to replace existing DaemonSet pods with new pods.
-    def update_strategy : ::K8S::Api::Extensions::V1beta1::DaemonSetUpdateStrategy?
-      self.["updateStrategy"].as(::K8S::Api::Extensions::V1beta1::DaemonSetUpdateStrategy?)
-    end
-
-    # :ditto:
-    def update_strategy! : ::K8S::Api::Extensions::V1beta1::DaemonSetUpdateStrategy
-      self.["updateStrategy"].as(::K8S::Api::Extensions::V1beta1::DaemonSetUpdateStrategy?).not_nil!
-    end
-
-    # :ditto:
-    def update_strategy? : ::K8S::Api::Extensions::V1beta1::DaemonSetUpdateStrategy?
-      self.["updateStrategy"]?.as(::K8S::Api::Extensions::V1beta1::DaemonSetUpdateStrategy?)
-    end
-
-    # :ditto:
-    def update_strategy=(value : ::K8S::Api::Extensions::V1beta1::DaemonSetUpdateStrategy?)
-      self.["updateStrategy"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "minReadySeconds", accessor: "min_ready_seconds", nilable: true, read_only: false, default: nil, kind: Int32 },
-        { key: "revisionHistoryLimit", accessor: "revision_history_limit", nilable: true, read_only: false, default: nil, kind: Int32 },
-        { key: "selector", accessor: "selector", nilable: true, read_only: false, default: nil, kind: ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector },
-        { key: "template", accessor: "template", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::PodTemplateSpec },
-        { key: "templateGeneration", accessor: "template_generation", nilable: true, read_only: false, default: nil, kind: Int32 },
-        { key: "updateStrategy", accessor: "update_strategy", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Extensions::V1beta1::DaemonSetUpdateStrategy },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "minReadySeconds", accessor: "min_ready_seconds", nilable: true, read_only: false, default: nil, kind: Int32},
+      {key: "revisionHistoryLimit", accessor: "revision_history_limit", nilable: true, read_only: false, default: nil, kind: Int32},
+      {key: "selector", accessor: "selector", nilable: true, read_only: false, default: nil, kind: ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector},
+      {key: "template", accessor: "template", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::PodTemplateSpec},
+      {key: "templateGeneration", accessor: "template_generation", nilable: true, read_only: false, default: nil, kind: Int32},
+      {key: "updateStrategy", accessor: "update_strategy", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Extensions::V1beta1::DaemonSetUpdateStrategy},
+    ])
   end
 end

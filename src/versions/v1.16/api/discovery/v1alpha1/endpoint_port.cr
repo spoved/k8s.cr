@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def name? : String?
     # :ditto:
-    abstract def name=(value : String?)
+    abstract def name=(value : String)
     # The port number of the endpoint. If this is not specified, ports are not restricted and must be interpreted in the context of the specific consumer.
     abstract def port : Int32?
     # :ditto:
@@ -23,7 +23,7 @@ module K8S
     # :ditto:
     abstract def port? : Int32?
     # :ditto:
-    abstract def port=(value : Int32?)
+    abstract def port=(value : Int32)
     # The IP protocol for this port. Must be UDP, TCP, or SCTP. Default is TCP.
     abstract def protocol : String?
     # :ditto:
@@ -31,7 +31,7 @@ module K8S
     # :ditto:
     abstract def protocol? : String?
     # :ditto:
-    abstract def protocol=(value : String?)
+    abstract def protocol=(value : String)
   end
 
   # EndpointPort represents a Port used by an EndpointSlice
@@ -42,73 +42,21 @@ module K8S
   )]
   class Api::Discovery::V1alpha1::EndpointPort < ::K8S::GenericObject
     include ::K8S::Types::Api::Discovery::V1alpha1::EndpointPort
+    k8s_object_accessor("name", name : String, true, false, "The name of this port. All ports in an EndpointSlice must have a unique name. If the EndpointSlice is dervied from a Kubernetes service, this corresponds to the Service.ports[].name. Name must either be an empty string or pass IANA_SVC_NAME validation: * must be no more than 15 characters long * may contain only [-a-z0-9] * must contain at least one letter [a-z] * it must not start or end with a hyphen, nor contain adjacent hyphens Default is empty string.")
+    k8s_object_accessor("port", port : Int32, true, false, "The port number of the endpoint. If this is not specified, ports are not restricted and must be interpreted in the context of the specific consumer.")
+    k8s_object_accessor("protocol", protocol : String, true, false, "The IP protocol for this port. Must be UDP, TCP, or SCTP. Default is TCP.")
 
-    # The name of this port. All ports in an EndpointSlice must have a unique name. If the EndpointSlice is dervied from a Kubernetes service, this corresponds to the Service.ports[].name. Name must either be an empty string or pass IANA_SVC_NAME validation: * must be no more than 15 characters long * may contain only [-a-z0-9] * must contain at least one letter [a-z] * it must not start or end with a hyphen, nor contain adjacent hyphens Default is empty string.
-    def name : String?
-      self.["name"].as(String?)
+    def initialize(*, name : String? = nil, port : Int32? = nil, protocol : String? = nil)
+      super()
+      self.["name"] = name
+      self.["port"] = port
+      self.["protocol"] = protocol
     end
 
-    # :ditto:
-    def name! : String
-      self.["name"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def name? : String?
-      self.["name"]?.as(String?)
-    end
-
-    # :ditto:
-    def name=(value : String?)
-      self.["name"] = value
-    end
-
-    # The port number of the endpoint. If this is not specified, ports are not restricted and must be interpreted in the context of the specific consumer.
-    def port : Int32?
-      self.["port"].as(Int32?)
-    end
-
-    # :ditto:
-    def port! : Int32
-      self.["port"].as(Int32?).not_nil!
-    end
-
-    # :ditto:
-    def port? : Int32?
-      self.["port"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def port=(value : Int32?)
-      self.["port"] = value
-    end
-
-    # The IP protocol for this port. Must be UDP, TCP, or SCTP. Default is TCP.
-    def protocol : String?
-      self.["protocol"].as(String?)
-    end
-
-    # :ditto:
-    def protocol! : String
-      self.["protocol"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def protocol? : String?
-      self.["protocol"]?.as(String?)
-    end
-
-    # :ditto:
-    def protocol=(value : String?)
-      self.["protocol"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "name", accessor: "name", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "port", accessor: "port", nilable: true, read_only: false, default: nil, kind: Int32 },
-        { key: "protocol", accessor: "protocol", nilable: true, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "name", accessor: "name", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "port", accessor: "port", nilable: true, read_only: false, default: nil, kind: Int32},
+      {key: "protocol", accessor: "protocol", nilable: true, read_only: false, default: nil, kind: String},
+    ])
   end
 end

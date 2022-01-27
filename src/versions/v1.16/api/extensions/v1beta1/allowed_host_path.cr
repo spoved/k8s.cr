@@ -17,7 +17,7 @@ module K8S
     # :ditto:
     abstract def path_prefix? : String?
     # :ditto:
-    abstract def path_prefix=(value : String?)
+    abstract def path_prefix=(value : String)
     # when set to true, will allow host volumes matching the pathPrefix only if all volume mounts are readOnly.
     abstract def read_only : ::Bool?
     # :ditto:
@@ -25,7 +25,7 @@ module K8S
     # :ditto:
     abstract def read_only? : ::Bool?
     # :ditto:
-    abstract def read_only=(value : ::Bool?)
+    abstract def read_only=(value : ::Bool)
   end
 
   # AllowedHostPath defines the host volume conditions that will be enabled by a policy for pods to use. It requires the path prefix to be defined. Deprecated: use AllowedHostPath from policy API Group instead.
@@ -35,54 +35,18 @@ module K8S
   )]
   class Api::Extensions::V1beta1::AllowedHostPath < ::K8S::GenericObject
     include ::K8S::Types::Api::Extensions::V1beta1::AllowedHostPath
+    k8s_object_accessor("pathPrefix", path_prefix : String, true, false, "pathPrefix is the path prefix that the host volume must match. It does not support `*`. Trailing slashes are trimmed when validating the path prefix with a host path.\n\nExamples: [`/foo` would allow `/foo`, `/foo/` and `/foo/bar` `/foo` would not allow `/food` or `/etc/foo`](`/foo` would allow `/foo`, `/foo/` and `/foo/bar` `/foo` would not allow `/food` or `/etc/foo`)")
+    k8s_object_accessor("readOnly", read_only : ::Bool, true, false, "when set to true, will allow host volumes matching the pathPrefix only if all volume mounts are readOnly.")
 
-    # pathPrefix is the path prefix that the host volume must match. It does not support `*`. Trailing slashes are trimmed when validating the path prefix with a host path.
-    #
-    # Examples: [[`/foo` would allow `/foo`, `/foo/` and `/foo/bar` `/foo` would not allow `/food` or `/etc/foo`](`/foo` would allow `/foo`, `/foo/` and `/foo/bar` `/foo` would not allow `/food` or `/etc/foo`)]([`/foo` would allow `/foo`, `/foo/` and `/foo/bar` `/foo` would not allow `/food` or `/etc/foo`](`/foo` would allow `/foo`, `/foo/` and `/foo/bar` `/foo` would not allow `/food` or `/etc/foo`))
-    def path_prefix : String?
-      self.["pathPrefix"].as(String?)
+    def initialize(*, path_prefix : String? = nil, read_only : ::Bool? = nil)
+      super()
+      self.["pathPrefix"] = path_prefix
+      self.["readOnly"] = read_only
     end
 
-    # :ditto:
-    def path_prefix! : String
-      self.["pathPrefix"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def path_prefix? : String?
-      self.["pathPrefix"]?.as(String?)
-    end
-
-    # :ditto:
-    def path_prefix=(value : String?)
-      self.["pathPrefix"] = value
-    end
-
-    # when set to true, will allow host volumes matching the pathPrefix only if all volume mounts are readOnly.
-    def read_only : ::Bool?
-      self.["readOnly"].as(::Bool?)
-    end
-
-    # :ditto:
-    def read_only! : ::Bool
-      self.["readOnly"].as(::Bool?).not_nil!
-    end
-
-    # :ditto:
-    def read_only? : ::Bool?
-      self.["readOnly"]?.as(::Bool?)
-    end
-
-    # :ditto:
-    def read_only=(value : ::Bool?)
-      self.["readOnly"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "pathPrefix", accessor: "path_prefix", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "readOnly", accessor: "read_only", nilable: true, read_only: false, default: nil, kind: ::Bool },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "pathPrefix", accessor: "path_prefix", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "readOnly", accessor: "read_only", nilable: true, read_only: false, default: nil, kind: ::Bool},
+    ])
   end
 end

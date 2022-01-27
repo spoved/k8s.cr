@@ -17,9 +17,9 @@ module K8S
     # :ditto:
     abstract def api_version? : String?
     # :ditto:
-    abstract def api_version=(value : String?)
+    abstract def api_version=(value : String)
     # groups is a list of APIGroup.
-    abstract def groups : ::Array(::K8S::Apimachinery::Apis::Meta::V1::APIGroup)
+    abstract def groups : ::Array(::K8S::Apimachinery::Apis::Meta::V1::APIGroup)?
     # :ditto:
     abstract def groups! : ::Array(::K8S::Apimachinery::Apis::Meta::V1::APIGroup)
     # :ditto:
@@ -33,7 +33,7 @@ module K8S
     # :ditto:
     abstract def kind? : String?
     # :ditto:
-    abstract def kind=(value : String?)
+    abstract def kind=(value : String)
   end
 
   # APIGroupList is a list of APIGroup, to allow clients to discover the API at /apis.
@@ -45,73 +45,21 @@ module K8S
   )]
   class Apimachinery::Apis::Meta::V1::APIGroupList < ::K8S::GenericObject
     include ::K8S::Types::Apimachinery::Apis::Meta::V1::APIGroupList
+    k8s_object_accessor("apiVersion", api_version : String, true, false, "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)")
+    k8s_object_accessor("groups", groups : ::Array(::K8S::Apimachinery::Apis::Meta::V1::APIGroup), false, false, "groups is a list of APIGroup.")
+    k8s_object_accessor("kind", kind : String, true, false, "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)")
 
-    # APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources))
-    def api_version : String?
-      self.["apiVersion"].as(String?)
+    def initialize(*, api_version : String? = nil, groups : ::Array(::K8S::Apimachinery::Apis::Meta::V1::APIGroup)? = nil, kind : String? = nil)
+      super()
+      self.["apiVersion"] = api_version
+      self.["groups"] = groups
+      self.["kind"] = kind
     end
 
-    # :ditto:
-    def api_version! : String
-      self.["apiVersion"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def api_version? : String?
-      self.["apiVersion"]?.as(String?)
-    end
-
-    # :ditto:
-    def api_version=(value : String?)
-      self.["apiVersion"] = value
-    end
-
-    # groups is a list of APIGroup.
-    def groups : ::Array(::K8S::Apimachinery::Apis::Meta::V1::APIGroup)
-      self.["groups"].as(::Array(::K8S::Apimachinery::Apis::Meta::V1::APIGroup))
-    end
-
-    # :ditto:
-    def groups! : ::Array(::K8S::Apimachinery::Apis::Meta::V1::APIGroup)
-      self.["groups"].as(::Array(::K8S::Apimachinery::Apis::Meta::V1::APIGroup)).not_nil!
-    end
-
-    # :ditto:
-    def groups? : ::Array(::K8S::Apimachinery::Apis::Meta::V1::APIGroup)?
-      self.["groups"]?.as(::Array(::K8S::Apimachinery::Apis::Meta::V1::APIGroup)?)
-    end
-
-    # :ditto:
-    def groups=(value : ::Array(::K8S::Apimachinery::Apis::Meta::V1::APIGroup))
-      self.["groups"] = value
-    end
-
-    # Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds))
-    def kind : String?
-      self.["kind"].as(String?)
-    end
-
-    # :ditto:
-    def kind! : String
-      self.["kind"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def kind? : String?
-      self.["kind"]?.as(String?)
-    end
-
-    # :ditto:
-    def kind=(value : String?)
-      self.["kind"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "apiVersion", accessor: "api_version", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "groups", accessor: "groups", nilable: false, read_only: false, default: nil, kind: ::Array(::K8S::Apimachinery::Apis::Meta::V1::APIGroup) },
-        { key: "kind", accessor: "kind", nilable: true, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "apiVersion", accessor: "api_version", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "groups", accessor: "groups", nilable: false, read_only: false, default: nil, kind: ::Array(::K8S::Apimachinery::Apis::Meta::V1::APIGroup)},
+      {key: "kind", accessor: "kind", nilable: true, read_only: false, default: nil, kind: String},
+    ])
   end
 end

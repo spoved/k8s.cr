@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def attach_required? : ::Bool?
     # :ditto:
-    abstract def attach_required=(value : ::Bool?)
+    abstract def attach_required=(value : ::Bool)
     # If set to true, podInfoOnMount indicates this CSI volume driver requires additional pod information (like podName, podUID, etc.) during mount operations. If set to false, pod information will not be passed on mount. Default is false. The CSI driver specifies podInfoOnMount as part of driver deployment. If true, Kubelet will pass pod information as VolumeContext in the CSI NodePublishVolume() calls. The CSI driver is responsible for parsing and validating the information passed in as VolumeContext. The following VolumeConext will be passed if podInfoOnMount is set to true. This list might grow, but the prefix will be used. [["csi.storage.k8s.io/pod.name": pod.Name "csi.storage.k8s.io/pod.namespace": pod.Namespace "csi.storage.k8s.io/pod.uid": string(pod.UID)]("csi.storage.k8s.io/pod.name": pod.Name "csi.storage.k8s.io/pod.namespace": pod.Namespace "csi.storage.k8s.io/pod.uid": string(pod.UID))](["csi.storage.k8s.io/pod.name": pod.Name "csi.storage.k8s.io/pod.namespace": pod.Namespace "csi.storage.k8s.io/pod.uid": string(pod.UID)]("csi.storage.k8s.io/pod.name": pod.Name "csi.storage.k8s.io/pod.namespace": pod.Namespace "csi.storage.k8s.io/pod.uid": string(pod.UID)))
     abstract def pod_info_on_mount : ::Bool?
     # :ditto:
@@ -23,7 +23,7 @@ module K8S
     # :ditto:
     abstract def pod_info_on_mount? : ::Bool?
     # :ditto:
-    abstract def pod_info_on_mount=(value : ::Bool?)
+    abstract def pod_info_on_mount=(value : ::Bool)
   end
 
   # CSIDriverSpec is the specification of a CSIDriver.
@@ -33,52 +33,18 @@ module K8S
   )]
   class Api::Storage::V1beta1::CSIDriverSpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Storage::V1beta1::CSIDriverSpec
+    k8s_object_accessor("attachRequired", attach_required : ::Bool, true, false, "attachRequired indicates this CSI volume driver requires an attach operation (because it implements the CSI ControllerPublishVolume() method), and that the Kubernetes attach detach controller should call the attach volume interface which checks the volumeattachment status and waits until the volume is attached before proceeding to mounting. The CSI external-attacher coordinates with CSI volume driver and updates the volumeattachment status when the attach operation is complete. If the CSIDriverRegistry feature gate is enabled and the value is specified to false, the attach operation will be skipped. Otherwise the attach operation will be called.")
+    k8s_object_accessor("podInfoOnMount", pod_info_on_mount : ::Bool, true, false, "If set to true, podInfoOnMount indicates this CSI volume driver requires additional pod information (like podName, podUID, etc.) during mount operations. If set to false, pod information will not be passed on mount. Default is false. The CSI driver specifies podInfoOnMount as part of driver deployment. If true, Kubelet will pass pod information as VolumeContext in the CSI NodePublishVolume() calls. The CSI driver is responsible for parsing and validating the information passed in as VolumeContext. The following VolumeConext will be passed if podInfoOnMount is set to true. This list might grow, but the prefix will be used. [\"csi.storage.k8s.io/pod.name\": pod.Name \"csi.storage.k8s.io/pod.namespace\": pod.Namespace \"csi.storage.k8s.io/pod.uid\": string(pod.UID)](\"csi.storage.k8s.io/pod.name\": pod.Name \"csi.storage.k8s.io/pod.namespace\": pod.Namespace \"csi.storage.k8s.io/pod.uid\": string(pod.UID))")
 
-    # attachRequired indicates this CSI volume driver requires an attach operation (because it implements the CSI ControllerPublishVolume() method), and that the Kubernetes attach detach controller should call the attach volume interface which checks the volumeattachment status and waits until the volume is attached before proceeding to mounting. The CSI external-attacher coordinates with CSI volume driver and updates the volumeattachment status when the attach operation is complete. If the CSIDriverRegistry feature gate is enabled and the value is specified to false, the attach operation will be skipped. Otherwise the attach operation will be called.
-    def attach_required : ::Bool?
-      self.["attachRequired"].as(::Bool?)
+    def initialize(*, attach_required : ::Bool? = nil, pod_info_on_mount : ::Bool? = nil)
+      super()
+      self.["attachRequired"] = attach_required
+      self.["podInfoOnMount"] = pod_info_on_mount
     end
 
-    # :ditto:
-    def attach_required! : ::Bool
-      self.["attachRequired"].as(::Bool?).not_nil!
-    end
-
-    # :ditto:
-    def attach_required? : ::Bool?
-      self.["attachRequired"]?.as(::Bool?)
-    end
-
-    # :ditto:
-    def attach_required=(value : ::Bool?)
-      self.["attachRequired"] = value
-    end
-
-    # If set to true, podInfoOnMount indicates this CSI volume driver requires additional pod information (like podName, podUID, etc.) during mount operations. If set to false, pod information will not be passed on mount. Default is false. The CSI driver specifies podInfoOnMount as part of driver deployment. If true, Kubelet will pass pod information as VolumeContext in the CSI NodePublishVolume() calls. The CSI driver is responsible for parsing and validating the information passed in as VolumeContext. The following VolumeConext will be passed if podInfoOnMount is set to true. This list might grow, but the prefix will be used. [["csi.storage.k8s.io/pod.name": pod.Name "csi.storage.k8s.io/pod.namespace": pod.Namespace "csi.storage.k8s.io/pod.uid": string(pod.UID)]("csi.storage.k8s.io/pod.name": pod.Name "csi.storage.k8s.io/pod.namespace": pod.Namespace "csi.storage.k8s.io/pod.uid": string(pod.UID))](["csi.storage.k8s.io/pod.name": pod.Name "csi.storage.k8s.io/pod.namespace": pod.Namespace "csi.storage.k8s.io/pod.uid": string(pod.UID)]("csi.storage.k8s.io/pod.name": pod.Name "csi.storage.k8s.io/pod.namespace": pod.Namespace "csi.storage.k8s.io/pod.uid": string(pod.UID)))
-    def pod_info_on_mount : ::Bool?
-      self.["podInfoOnMount"].as(::Bool?)
-    end
-
-    # :ditto:
-    def pod_info_on_mount! : ::Bool
-      self.["podInfoOnMount"].as(::Bool?).not_nil!
-    end
-
-    # :ditto:
-    def pod_info_on_mount? : ::Bool?
-      self.["podInfoOnMount"]?.as(::Bool?)
-    end
-
-    # :ditto:
-    def pod_info_on_mount=(value : ::Bool?)
-      self.["podInfoOnMount"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "attachRequired", accessor: "attach_required", nilable: true, read_only: false, default: nil, kind: ::Bool },
-        { key: "podInfoOnMount", accessor: "pod_info_on_mount", nilable: true, read_only: false, default: nil, kind: ::Bool },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "attachRequired", accessor: "attach_required", nilable: true, read_only: false, default: nil, kind: ::Bool},
+      {key: "podInfoOnMount", accessor: "pod_info_on_mount", nilable: true, read_only: false, default: nil, kind: ::Bool},
+    ])
   end
 end

@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def last_transition_time? : ::Time?
     # :ditto:
-    abstract def last_transition_time=(value : ::Time?)
+    abstract def last_transition_time=(value : ::Time)
     # The last time this condition was updated.
     abstract def last_update_time : ::Time?
     # :ditto:
@@ -23,7 +23,7 @@ module K8S
     # :ditto:
     abstract def last_update_time? : ::Time?
     # :ditto:
-    abstract def last_update_time=(value : ::Time?)
+    abstract def last_update_time=(value : ::Time)
     # A human readable message indicating details about the transition.
     abstract def message : String?
     # :ditto:
@@ -31,7 +31,7 @@ module K8S
     # :ditto:
     abstract def message? : String?
     # :ditto:
-    abstract def message=(value : String?)
+    abstract def message=(value : String)
     # The reason for the condition's last transition.
     abstract def reason : String?
     # :ditto:
@@ -39,9 +39,9 @@ module K8S
     # :ditto:
     abstract def reason? : String?
     # :ditto:
-    abstract def reason=(value : String?)
+    abstract def reason=(value : String)
     # Status of the condition, one of True, False, Unknown.
-    abstract def status : String
+    abstract def status : String?
     # :ditto:
     abstract def status! : String
     # :ditto:
@@ -49,7 +49,7 @@ module K8S
     # :ditto:
     abstract def status=(value : String)
     # Type of deployment condition.
-    abstract def type : String
+    abstract def type : String?
     # :ditto:
     abstract def type! : String
     # :ditto:
@@ -69,136 +69,30 @@ module K8S
   )]
   class Api::Apps::V1::DeploymentCondition < ::K8S::GenericObject
     include ::K8S::Types::Api::Apps::V1::DeploymentCondition
+    k8s_object_accessor("lastTransitionTime", last_transition_time : ::Time, true, false, "Last time the condition transitioned from one status to another.")
+    k8s_object_accessor("lastUpdateTime", last_update_time : ::Time, true, false, "The last time this condition was updated.")
+    k8s_object_accessor("message", message : String, true, false, "A human readable message indicating details about the transition.")
+    k8s_object_accessor("reason", reason : String, true, false, "The reason for the condition's last transition.")
+    k8s_object_accessor("status", status : String, false, false, "Status of the condition, one of True, False, Unknown.")
+    k8s_object_accessor("type", type : String, false, false, "Type of deployment condition.")
 
-    # Last time the condition transitioned from one status to another.
-    def last_transition_time : ::Time?
-      self.["lastTransitionTime"].as(::Time?)
+    def initialize(*, last_transition_time : ::Time? = nil, last_update_time : ::Time? = nil, message : String? = nil, reason : String? = nil, status : String? = nil, type : String? = nil)
+      super()
+      self.["lastTransitionTime"] = last_transition_time
+      self.["lastUpdateTime"] = last_update_time
+      self.["message"] = message
+      self.["reason"] = reason
+      self.["status"] = status
+      self.["type"] = type
     end
 
-    # :ditto:
-    def last_transition_time! : ::Time
-      self.["lastTransitionTime"].as(::Time?).not_nil!
-    end
-
-    # :ditto:
-    def last_transition_time? : ::Time?
-      self.["lastTransitionTime"]?.as(::Time?)
-    end
-
-    # :ditto:
-    def last_transition_time=(value : ::Time?)
-      self.["lastTransitionTime"] = value
-    end
-
-    # The last time this condition was updated.
-    def last_update_time : ::Time?
-      self.["lastUpdateTime"].as(::Time?)
-    end
-
-    # :ditto:
-    def last_update_time! : ::Time
-      self.["lastUpdateTime"].as(::Time?).not_nil!
-    end
-
-    # :ditto:
-    def last_update_time? : ::Time?
-      self.["lastUpdateTime"]?.as(::Time?)
-    end
-
-    # :ditto:
-    def last_update_time=(value : ::Time?)
-      self.["lastUpdateTime"] = value
-    end
-
-    # A human readable message indicating details about the transition.
-    def message : String?
-      self.["message"].as(String?)
-    end
-
-    # :ditto:
-    def message! : String
-      self.["message"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def message? : String?
-      self.["message"]?.as(String?)
-    end
-
-    # :ditto:
-    def message=(value : String?)
-      self.["message"] = value
-    end
-
-    # The reason for the condition's last transition.
-    def reason : String?
-      self.["reason"].as(String?)
-    end
-
-    # :ditto:
-    def reason! : String
-      self.["reason"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def reason? : String?
-      self.["reason"]?.as(String?)
-    end
-
-    # :ditto:
-    def reason=(value : String?)
-      self.["reason"] = value
-    end
-
-    # Status of the condition, one of True, False, Unknown.
-    def status : String
-      self.["status"].as(String)
-    end
-
-    # :ditto:
-    def status! : String
-      self.["status"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def status? : String?
-      self.["status"]?.as(String?)
-    end
-
-    # :ditto:
-    def status=(value : String)
-      self.["status"] = value
-    end
-
-    # Type of deployment condition.
-    def type : String
-      self.["type"].as(String)
-    end
-
-    # :ditto:
-    def type! : String
-      self.["type"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def type? : String?
-      self.["type"]?.as(String?)
-    end
-
-    # :ditto:
-    def type=(value : String)
-      self.["type"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "lastTransitionTime", accessor: "last_transition_time", nilable: true, read_only: false, default: nil, kind: ::Time },
-        { key: "lastUpdateTime", accessor: "last_update_time", nilable: true, read_only: false, default: nil, kind: ::Time },
-        { key: "message", accessor: "message", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "reason", accessor: "reason", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "status", accessor: "status", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "type", accessor: "type", nilable: false, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "lastTransitionTime", accessor: "last_transition_time", nilable: true, read_only: false, default: nil, kind: ::Time},
+      {key: "lastUpdateTime", accessor: "last_update_time", nilable: true, read_only: false, default: nil, kind: ::Time},
+      {key: "message", accessor: "message", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "reason", accessor: "reason", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "status", accessor: "status", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "type", accessor: "type", nilable: false, read_only: false, default: nil, kind: String},
+    ])
   end
 end

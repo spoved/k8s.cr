@@ -18,7 +18,7 @@ module K8S
     # :ditto:
     abstract def extra? : ::Hash(String, ::Array(String))?
     # :ditto:
-    abstract def extra=(value : ::Hash(String, ::Array(String))?)
+    abstract def extra=(value : ::Hash(String, ::Array(String)))
     # Groups is the groups you're testing for.
     abstract def group : ::Array(String)?
     # :ditto:
@@ -26,7 +26,7 @@ module K8S
     # :ditto:
     abstract def group? : ::Array(String)?
     # :ditto:
-    abstract def group=(value : ::Array(String)?)
+    abstract def group=(value : ::Array(String))
     # NonResourceAttributes describes information for a non-resource access request
     abstract def non_resource_attributes : ::K8S::Api::Authorization::V1beta1::NonResourceAttributes?
     # :ditto:
@@ -34,7 +34,7 @@ module K8S
     # :ditto:
     abstract def non_resource_attributes? : ::K8S::Api::Authorization::V1beta1::NonResourceAttributes?
     # :ditto:
-    abstract def non_resource_attributes=(value : ::K8S::Api::Authorization::V1beta1::NonResourceAttributes?)
+    abstract def non_resource_attributes=(value : ::K8S::Api::Authorization::V1beta1::NonResourceAttributes)
     # ResourceAuthorizationAttributes describes information for a resource access request
     abstract def resource_attributes : ::K8S::Api::Authorization::V1beta1::ResourceAttributes?
     # :ditto:
@@ -42,7 +42,7 @@ module K8S
     # :ditto:
     abstract def resource_attributes? : ::K8S::Api::Authorization::V1beta1::ResourceAttributes?
     # :ditto:
-    abstract def resource_attributes=(value : ::K8S::Api::Authorization::V1beta1::ResourceAttributes?)
+    abstract def resource_attributes=(value : ::K8S::Api::Authorization::V1beta1::ResourceAttributes)
     # UID information about the requesting user.
     abstract def uid : String?
     # :ditto:
@@ -50,7 +50,7 @@ module K8S
     # :ditto:
     abstract def uid? : String?
     # :ditto:
-    abstract def uid=(value : String?)
+    abstract def uid=(value : String)
     # User is the user you're testing for. If you specify "User" but not "Group", then is it interpreted as "What if User were not a member of any groups
     abstract def user : String?
     # :ditto:
@@ -58,7 +58,7 @@ module K8S
     # :ditto:
     abstract def user? : String?
     # :ditto:
-    abstract def user=(value : String?)
+    abstract def user=(value : String)
   end
 
   # SubjectAccessReviewSpec is a description of the access request.  Exactly one of ResourceAuthorizationAttributes and NonResourceAuthorizationAttributes must be set
@@ -72,136 +72,30 @@ module K8S
   )]
   class Api::Authorization::V1beta1::SubjectAccessReviewSpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Authorization::V1beta1::SubjectAccessReviewSpec
+    k8s_object_accessor("extra", extra : ::Hash(String, ::Array(String)), true, false, "Extra corresponds to the user.Info.GetExtra() method from the authenticator.  Since that is input to the authorizer it needs a reflection here.")
+    k8s_object_accessor("group", group : ::Array(String), true, false, "Groups is the groups you're testing for.")
+    k8s_object_accessor("nonResourceAttributes", non_resource_attributes : ::K8S::Api::Authorization::V1beta1::NonResourceAttributes, true, false, "NonResourceAttributes describes information for a non-resource access request")
+    k8s_object_accessor("resourceAttributes", resource_attributes : ::K8S::Api::Authorization::V1beta1::ResourceAttributes, true, false, "ResourceAuthorizationAttributes describes information for a resource access request")
+    k8s_object_accessor("uid", uid : String, true, false, "UID information about the requesting user.")
+    k8s_object_accessor("user", user : String, true, false, "User is the user you're testing for. If you specify \"User\" but not \"Group\", then is it interpreted as \"What if User were not a member of any groups")
 
-    # Extra corresponds to the user.Info.GetExtra() method from the authenticator.  Since that is input to the authorizer it needs a reflection here.
-    def extra : ::Hash(String, ::Array(String))?
-      self.["extra"].as(::Hash(String, ::Array(String))?)
+    def initialize(*, extra : ::Hash(String, ::Array(String))? = nil, group : ::Array(String)? = nil, non_resource_attributes : ::K8S::Api::Authorization::V1beta1::NonResourceAttributes? = nil, resource_attributes : ::K8S::Api::Authorization::V1beta1::ResourceAttributes? = nil, uid : String? = nil, user : String? = nil)
+      super()
+      self.["extra"] = extra
+      self.["group"] = group
+      self.["nonResourceAttributes"] = non_resource_attributes
+      self.["resourceAttributes"] = resource_attributes
+      self.["uid"] = uid
+      self.["user"] = user
     end
 
-    # :ditto:
-    def extra! : ::Hash(String, ::Array(String))
-      self.["extra"].as(::Hash(String, ::Array(String))?).not_nil!
-    end
-
-    # :ditto:
-    def extra? : ::Hash(String, ::Array(String))?
-      self.["extra"]?.as(::Hash(String, ::Array(String))?)
-    end
-
-    # :ditto:
-    def extra=(value : ::Hash(String, ::Array(String))?)
-      self.["extra"] = value
-    end
-
-    # Groups is the groups you're testing for.
-    def group : ::Array(String)?
-      self.["group"].as(::Array(String)?)
-    end
-
-    # :ditto:
-    def group! : ::Array(String)
-      self.["group"].as(::Array(String)?).not_nil!
-    end
-
-    # :ditto:
-    def group? : ::Array(String)?
-      self.["group"]?.as(::Array(String)?)
-    end
-
-    # :ditto:
-    def group=(value : ::Array(String)?)
-      self.["group"] = value
-    end
-
-    # NonResourceAttributes describes information for a non-resource access request
-    def non_resource_attributes : ::K8S::Api::Authorization::V1beta1::NonResourceAttributes?
-      self.["nonResourceAttributes"].as(::K8S::Api::Authorization::V1beta1::NonResourceAttributes?)
-    end
-
-    # :ditto:
-    def non_resource_attributes! : ::K8S::Api::Authorization::V1beta1::NonResourceAttributes
-      self.["nonResourceAttributes"].as(::K8S::Api::Authorization::V1beta1::NonResourceAttributes?).not_nil!
-    end
-
-    # :ditto:
-    def non_resource_attributes? : ::K8S::Api::Authorization::V1beta1::NonResourceAttributes?
-      self.["nonResourceAttributes"]?.as(::K8S::Api::Authorization::V1beta1::NonResourceAttributes?)
-    end
-
-    # :ditto:
-    def non_resource_attributes=(value : ::K8S::Api::Authorization::V1beta1::NonResourceAttributes?)
-      self.["nonResourceAttributes"] = value
-    end
-
-    # ResourceAuthorizationAttributes describes information for a resource access request
-    def resource_attributes : ::K8S::Api::Authorization::V1beta1::ResourceAttributes?
-      self.["resourceAttributes"].as(::K8S::Api::Authorization::V1beta1::ResourceAttributes?)
-    end
-
-    # :ditto:
-    def resource_attributes! : ::K8S::Api::Authorization::V1beta1::ResourceAttributes
-      self.["resourceAttributes"].as(::K8S::Api::Authorization::V1beta1::ResourceAttributes?).not_nil!
-    end
-
-    # :ditto:
-    def resource_attributes? : ::K8S::Api::Authorization::V1beta1::ResourceAttributes?
-      self.["resourceAttributes"]?.as(::K8S::Api::Authorization::V1beta1::ResourceAttributes?)
-    end
-
-    # :ditto:
-    def resource_attributes=(value : ::K8S::Api::Authorization::V1beta1::ResourceAttributes?)
-      self.["resourceAttributes"] = value
-    end
-
-    # UID information about the requesting user.
-    def uid : String?
-      self.["uid"].as(String?)
-    end
-
-    # :ditto:
-    def uid! : String
-      self.["uid"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def uid? : String?
-      self.["uid"]?.as(String?)
-    end
-
-    # :ditto:
-    def uid=(value : String?)
-      self.["uid"] = value
-    end
-
-    # User is the user you're testing for. If you specify "User" but not "Group", then is it interpreted as "What if User were not a member of any groups
-    def user : String?
-      self.["user"].as(String?)
-    end
-
-    # :ditto:
-    def user! : String
-      self.["user"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def user? : String?
-      self.["user"]?.as(String?)
-    end
-
-    # :ditto:
-    def user=(value : String?)
-      self.["user"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "extra", accessor: "extra", nilable: true, read_only: false, default: nil, kind: ::Hash(String, ::Array(String)) },
-        { key: "group", accessor: "group", nilable: true, read_only: false, default: nil, kind: ::Array(String) },
-        { key: "nonResourceAttributes", accessor: "non_resource_attributes", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Authorization::V1beta1::NonResourceAttributes },
-        { key: "resourceAttributes", accessor: "resource_attributes", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Authorization::V1beta1::ResourceAttributes },
-        { key: "uid", accessor: "uid", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "user", accessor: "user", nilable: true, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "extra", accessor: "extra", nilable: true, read_only: false, default: nil, kind: ::Hash(String, ::Array(String))},
+      {key: "group", accessor: "group", nilable: true, read_only: false, default: nil, kind: ::Array(String)},
+      {key: "nonResourceAttributes", accessor: "non_resource_attributes", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Authorization::V1beta1::NonResourceAttributes},
+      {key: "resourceAttributes", accessor: "resource_attributes", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Authorization::V1beta1::ResourceAttributes},
+      {key: "uid", accessor: "uid", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "user", accessor: "user", nilable: true, read_only: false, default: nil, kind: String},
+    ])
   end
 end

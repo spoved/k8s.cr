@@ -17,7 +17,7 @@ module K8S
     # :ditto:
     abstract def load_balancer? : ::K8S::Api::Core::V1::LoadBalancerStatus?
     # :ditto:
-    abstract def load_balancer=(value : ::K8S::Api::Core::V1::LoadBalancerStatus?)
+    abstract def load_balancer=(value : ::K8S::Api::Core::V1::LoadBalancerStatus)
   end
 
   # ServiceStatus represents the current status of a service.
@@ -26,31 +26,15 @@ module K8S
   )]
   class Api::Core::V1::ServiceStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::ServiceStatus
+    k8s_object_accessor("loadBalancer", load_balancer : ::K8S::Api::Core::V1::LoadBalancerStatus, true, false, "LoadBalancer contains the current status of the load-balancer, if one is present.")
 
-    # LoadBalancer contains the current status of the load-balancer, if one is present.
-    def load_balancer : ::K8S::Api::Core::V1::LoadBalancerStatus?
-      self.["loadBalancer"].as(::K8S::Api::Core::V1::LoadBalancerStatus?)
+    def initialize(*, load_balancer : ::K8S::Api::Core::V1::LoadBalancerStatus? = nil)
+      super()
+      self.["loadBalancer"] = load_balancer
     end
 
-    # :ditto:
-    def load_balancer! : ::K8S::Api::Core::V1::LoadBalancerStatus
-      self.["loadBalancer"].as(::K8S::Api::Core::V1::LoadBalancerStatus?).not_nil!
-    end
-
-    # :ditto:
-    def load_balancer? : ::K8S::Api::Core::V1::LoadBalancerStatus?
-      self.["loadBalancer"]?.as(::K8S::Api::Core::V1::LoadBalancerStatus?)
-    end
-
-    # :ditto:
-    def load_balancer=(value : ::K8S::Api::Core::V1::LoadBalancerStatus?)
-      self.["loadBalancer"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "loadBalancer", accessor: "load_balancer", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::LoadBalancerStatus },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "loadBalancer", accessor: "load_balancer", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::LoadBalancerStatus},
+    ])
   end
 end

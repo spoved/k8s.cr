@@ -9,7 +9,7 @@ module K8S
   # Namespace holding the types for `Api::Networking::V1::IPBlock`.
   module Types::Api::Networking::V1::IPBlock
     # CIDR is a string representing the IP Block Valid examples are [["192.168.1.1/24" or "2001:db9::/64"]("192.168.1.1/24" or "2001:db9::/64")](["192.168.1.1/24" or "2001:db9::/64"]("192.168.1.1/24" or "2001:db9::/64"))
-    abstract def cidr : String
+    abstract def cidr : String?
     # :ditto:
     abstract def cidr! : String
     # :ditto:
@@ -23,7 +23,7 @@ module K8S
     # :ditto:
     abstract def except? : ::Array(String)?
     # :ditto:
-    abstract def except=(value : ::Array(String)?)
+    abstract def except=(value : ::Array(String))
   end
 
   # IPBlock describes a particular CIDR (Ex. ["192.168.1.1/24","2001:db9::/64") that is allowed to the pods matched by a NetworkPolicySpec's podSelector. The except entry describes CIDRs that should not be included within this rule.]("192.168.1.1/24","2001:db9::/64") that is allowed to the pods matched by a NetworkPolicySpec's podSelector. The except entry describes CIDRs that should not be included within this rule.)
@@ -33,52 +33,18 @@ module K8S
   )]
   class Api::Networking::V1::IPBlock < ::K8S::GenericObject
     include ::K8S::Types::Api::Networking::V1::IPBlock
+    k8s_object_accessor("cidr", cidr : String, false, false, "CIDR is a string representing the IP Block Valid examples are [\"192.168.1.1/24\" or \"2001:db9::/64\"](\"192.168.1.1/24\" or \"2001:db9::/64\")")
+    k8s_object_accessor("except", except : ::Array(String), true, false, "Except is a slice of CIDRs that should not be included within an IP Block Valid examples are [\"192.168.1.1/24\" or \"2001:db9::/64\" Except values will be rejected if they are outside the CIDR range](\"192.168.1.1/24\" or \"2001:db9::/64\" Except values will be rejected if they are outside the CIDR range)")
 
-    # CIDR is a string representing the IP Block Valid examples are [["192.168.1.1/24" or "2001:db9::/64"]("192.168.1.1/24" or "2001:db9::/64")](["192.168.1.1/24" or "2001:db9::/64"]("192.168.1.1/24" or "2001:db9::/64"))
-    def cidr : String
-      self.["cidr"].as(String)
+    def initialize(*, cidr : String? = nil, except : ::Array(String)? = nil)
+      super()
+      self.["cidr"] = cidr
+      self.["except"] = except
     end
 
-    # :ditto:
-    def cidr! : String
-      self.["cidr"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def cidr? : String?
-      self.["cidr"]?.as(String?)
-    end
-
-    # :ditto:
-    def cidr=(value : String)
-      self.["cidr"] = value
-    end
-
-    # Except is a slice of CIDRs that should not be included within an IP Block Valid examples are [["192.168.1.1/24" or "2001:db9::/64" Except values will be rejected if they are outside the CIDR range]("192.168.1.1/24" or "2001:db9::/64" Except values will be rejected if they are outside the CIDR range)](["192.168.1.1/24" or "2001:db9::/64" Except values will be rejected if they are outside the CIDR range]("192.168.1.1/24" or "2001:db9::/64" Except values will be rejected if they are outside the CIDR range))
-    def except : ::Array(String)?
-      self.["except"].as(::Array(String)?)
-    end
-
-    # :ditto:
-    def except! : ::Array(String)
-      self.["except"].as(::Array(String)?).not_nil!
-    end
-
-    # :ditto:
-    def except? : ::Array(String)?
-      self.["except"]?.as(::Array(String)?)
-    end
-
-    # :ditto:
-    def except=(value : ::Array(String)?)
-      self.["except"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "cidr", accessor: "cidr", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "except", accessor: "except", nilable: true, read_only: false, default: nil, kind: ::Array(String) },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "cidr", accessor: "cidr", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "except", accessor: "except", nilable: true, read_only: false, default: nil, kind: ::Array(String)},
+    ])
   end
 end

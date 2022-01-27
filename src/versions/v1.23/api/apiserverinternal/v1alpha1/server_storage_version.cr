@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def api_server_id? : String?
     # :ditto:
-    abstract def api_server_id=(value : String?)
+    abstract def api_server_id=(value : String)
     # The API server can decode objects encoded in these versions. The encodingVersion must be included in the decodableVersions.
     abstract def decodable_versions : ::Set(String)?
     # :ditto:
@@ -23,7 +23,7 @@ module K8S
     # :ditto:
     abstract def decodable_versions? : ::Set(String)?
     # :ditto:
-    abstract def decodable_versions=(value : ::Set(String)?)
+    abstract def decodable_versions=(value : ::Set(String))
     # The API server encodes the object to this version when persisting it in the backend (e.g., etcd).
     abstract def encoding_version : String?
     # :ditto:
@@ -31,7 +31,7 @@ module K8S
     # :ditto:
     abstract def encoding_version? : String?
     # :ditto:
-    abstract def encoding_version=(value : String?)
+    abstract def encoding_version=(value : String)
   end
 
   # An API server instance reports the version it can decode and the version it encodes objects to when persisting objects in the backend.
@@ -42,73 +42,21 @@ module K8S
   )]
   class Api::Apiserverinternal::V1alpha1::ServerStorageVersion < ::K8S::GenericObject
     include ::K8S::Types::Api::Apiserverinternal::V1alpha1::ServerStorageVersion
+    k8s_object_accessor("apiServerID", api_server_id : String, true, false, "The ID of the reporting API server.")
+    k8s_object_accessor("decodableVersions", decodable_versions : ::Set(String), true, false, "The API server can decode objects encoded in these versions. The encodingVersion must be included in the decodableVersions.")
+    k8s_object_accessor("encodingVersion", encoding_version : String, true, false, "The API server encodes the object to this version when persisting it in the backend (e.g., etcd).")
 
-    # The ID of the reporting API server.
-    def api_server_id : String?
-      self.["apiServerID"].as(String?)
+    def initialize(*, api_server_id : String? = nil, decodable_versions : ::Set(String)? = nil, encoding_version : String? = nil)
+      super()
+      self.["apiServerID"] = api_server_id
+      self.["decodableVersions"] = decodable_versions
+      self.["encodingVersion"] = encoding_version
     end
 
-    # :ditto:
-    def api_server_id! : String
-      self.["apiServerID"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def api_server_id? : String?
-      self.["apiServerID"]?.as(String?)
-    end
-
-    # :ditto:
-    def api_server_id=(value : String?)
-      self.["apiServerID"] = value
-    end
-
-    # The API server can decode objects encoded in these versions. The encodingVersion must be included in the decodableVersions.
-    def decodable_versions : ::Set(String)?
-      self.["decodableVersions"].as(::Set(String)?)
-    end
-
-    # :ditto:
-    def decodable_versions! : ::Set(String)
-      self.["decodableVersions"].as(::Set(String)?).not_nil!
-    end
-
-    # :ditto:
-    def decodable_versions? : ::Set(String)?
-      self.["decodableVersions"]?.as(::Set(String)?)
-    end
-
-    # :ditto:
-    def decodable_versions=(value : ::Set(String)?)
-      self.["decodableVersions"] = value
-    end
-
-    # The API server encodes the object to this version when persisting it in the backend (e.g., etcd).
-    def encoding_version : String?
-      self.["encodingVersion"].as(String?)
-    end
-
-    # :ditto:
-    def encoding_version! : String
-      self.["encodingVersion"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def encoding_version? : String?
-      self.["encodingVersion"]?.as(String?)
-    end
-
-    # :ditto:
-    def encoding_version=(value : String?)
-      self.["encodingVersion"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "apiServerID", accessor: "api_server_id", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "decodableVersions", accessor: "decodable_versions", nilable: true, read_only: false, default: nil, kind: ::Set(String) },
-        { key: "encodingVersion", accessor: "encoding_version", nilable: true, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "apiServerID", accessor: "api_server_id", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "decodableVersions", accessor: "decodable_versions", nilable: true, read_only: false, default: nil, kind: ::Set(String)},
+      {key: "encodingVersion", accessor: "encoding_version", nilable: true, read_only: false, default: nil, kind: String},
+    ])
   end
 end

@@ -9,7 +9,7 @@ module K8S
   # Namespace holding the types for `Apimachinery::Apis::Meta::V1::ServerAddressByClientCIDR`.
   module Types::Apimachinery::Apis::Meta::V1::ServerAddressByClientCIDR
     # The CIDR with which clients can match their IP to figure out the server address that they should use.
-    abstract def client_cidr : String
+    abstract def client_cidr : String?
     # :ditto:
     abstract def client_cidr! : String
     # :ditto:
@@ -17,7 +17,7 @@ module K8S
     # :ditto:
     abstract def client_cidr=(value : String)
     # Address of this server, suitable for a client that matches the above CIDR. This can be a hostname, hostname:port, IP or IP:port.
-    abstract def server_address : String
+    abstract def server_address : String?
     # :ditto:
     abstract def server_address! : String
     # :ditto:
@@ -33,52 +33,18 @@ module K8S
   )]
   class Apimachinery::Apis::Meta::V1::ServerAddressByClientCIDR < ::K8S::GenericObject
     include ::K8S::Types::Apimachinery::Apis::Meta::V1::ServerAddressByClientCIDR
+    k8s_object_accessor("clientCIDR", client_cidr : String, false, false, "The CIDR with which clients can match their IP to figure out the server address that they should use.")
+    k8s_object_accessor("serverAddress", server_address : String, false, false, "Address of this server, suitable for a client that matches the above CIDR. This can be a hostname, hostname:port, IP or IP:port.")
 
-    # The CIDR with which clients can match their IP to figure out the server address that they should use.
-    def client_cidr : String
-      self.["clientCIDR"].as(String)
+    def initialize(*, client_cidr : String? = nil, server_address : String? = nil)
+      super()
+      self.["clientCIDR"] = client_cidr
+      self.["serverAddress"] = server_address
     end
 
-    # :ditto:
-    def client_cidr! : String
-      self.["clientCIDR"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def client_cidr? : String?
-      self.["clientCIDR"]?.as(String?)
-    end
-
-    # :ditto:
-    def client_cidr=(value : String)
-      self.["clientCIDR"] = value
-    end
-
-    # Address of this server, suitable for a client that matches the above CIDR. This can be a hostname, hostname:port, IP or IP:port.
-    def server_address : String
-      self.["serverAddress"].as(String)
-    end
-
-    # :ditto:
-    def server_address! : String
-      self.["serverAddress"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def server_address? : String?
-      self.["serverAddress"]?.as(String?)
-    end
-
-    # :ditto:
-    def server_address=(value : String)
-      self.["serverAddress"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "clientCIDR", accessor: "client_cidr", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "serverAddress", accessor: "server_address", nilable: false, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "clientCIDR", accessor: "client_cidr", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "serverAddress", accessor: "server_address", nilable: false, read_only: false, default: nil, kind: String},
+    ])
   end
 end

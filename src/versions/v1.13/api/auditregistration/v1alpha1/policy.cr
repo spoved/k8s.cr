@@ -9,7 +9,7 @@ module K8S
   # Namespace holding the types for `Api::Auditregistration::V1alpha1::Policy`.
   module Types::Api::Auditregistration::V1alpha1::Policy
     # The Level that all requests are recorded at. available options: None, Metadata, Request, RequestResponse required
-    abstract def level : String
+    abstract def level : String?
     # :ditto:
     abstract def level! : String
     # :ditto:
@@ -23,7 +23,7 @@ module K8S
     # :ditto:
     abstract def stages? : ::Array(String)?
     # :ditto:
-    abstract def stages=(value : ::Array(String)?)
+    abstract def stages=(value : ::Array(String))
   end
 
   # Policy defines the configuration of how audit events are logged
@@ -33,52 +33,18 @@ module K8S
   )]
   class Api::Auditregistration::V1alpha1::Policy < ::K8S::GenericObject
     include ::K8S::Types::Api::Auditregistration::V1alpha1::Policy
+    k8s_object_accessor("level", level : String, false, false, "The Level that all requests are recorded at. available options: None, Metadata, Request, RequestResponse required")
+    k8s_object_accessor("stages", stages : ::Array(String), true, false, "Stages is a list of stages for which events are created.")
 
-    # The Level that all requests are recorded at. available options: None, Metadata, Request, RequestResponse required
-    def level : String
-      self.["level"].as(String)
+    def initialize(*, level : String? = nil, stages : ::Array(String)? = nil)
+      super()
+      self.["level"] = level
+      self.["stages"] = stages
     end
 
-    # :ditto:
-    def level! : String
-      self.["level"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def level? : String?
-      self.["level"]?.as(String?)
-    end
-
-    # :ditto:
-    def level=(value : String)
-      self.["level"] = value
-    end
-
-    # Stages is a list of stages for which events are created.
-    def stages : ::Array(String)?
-      self.["stages"].as(::Array(String)?)
-    end
-
-    # :ditto:
-    def stages! : ::Array(String)
-      self.["stages"].as(::Array(String)?).not_nil!
-    end
-
-    # :ditto:
-    def stages? : ::Array(String)?
-      self.["stages"]?.as(::Array(String)?)
-    end
-
-    # :ditto:
-    def stages=(value : ::Array(String)?)
-      self.["stages"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "level", accessor: "level", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "stages", accessor: "stages", nilable: true, read_only: false, default: nil, kind: ::Array(String) },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "level", accessor: "level", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "stages", accessor: "stages", nilable: true, read_only: false, default: nil, kind: ::Array(String)},
+    ])
   end
 end

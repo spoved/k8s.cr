@@ -12,7 +12,7 @@ module K8S
   # Namespace holding the types for `Api::Autoscaling::V2::PodsMetricStatus`.
   module Types::Api::Autoscaling::V2::PodsMetricStatus
     # current contains the current value for the given metric
-    abstract def current : ::K8S::Api::Autoscaling::V2::MetricValueStatus
+    abstract def current : ::K8S::Api::Autoscaling::V2::MetricValueStatus?
     # :ditto:
     abstract def current! : ::K8S::Api::Autoscaling::V2::MetricValueStatus
     # :ditto:
@@ -20,7 +20,7 @@ module K8S
     # :ditto:
     abstract def current=(value : ::K8S::Api::Autoscaling::V2::MetricValueStatus)
     # metric identifies the target metric by name and selector
-    abstract def metric : ::K8S::Api::Autoscaling::V2::MetricIdentifier
+    abstract def metric : ::K8S::Api::Autoscaling::V2::MetricIdentifier?
     # :ditto:
     abstract def metric! : ::K8S::Api::Autoscaling::V2::MetricIdentifier
     # :ditto:
@@ -36,52 +36,18 @@ module K8S
   )]
   class Api::Autoscaling::V2::PodsMetricStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Autoscaling::V2::PodsMetricStatus
+    k8s_object_accessor("current", current : ::K8S::Api::Autoscaling::V2::MetricValueStatus, false, false, "current contains the current value for the given metric")
+    k8s_object_accessor("metric", metric : ::K8S::Api::Autoscaling::V2::MetricIdentifier, false, false, "metric identifies the target metric by name and selector")
 
-    # current contains the current value for the given metric
-    def current : ::K8S::Api::Autoscaling::V2::MetricValueStatus
-      self.["current"].as(::K8S::Api::Autoscaling::V2::MetricValueStatus)
+    def initialize(*, current : ::K8S::Api::Autoscaling::V2::MetricValueStatus? = nil, metric : ::K8S::Api::Autoscaling::V2::MetricIdentifier? = nil)
+      super()
+      self.["current"] = current
+      self.["metric"] = metric
     end
 
-    # :ditto:
-    def current! : ::K8S::Api::Autoscaling::V2::MetricValueStatus
-      self.["current"].as(::K8S::Api::Autoscaling::V2::MetricValueStatus).not_nil!
-    end
-
-    # :ditto:
-    def current? : ::K8S::Api::Autoscaling::V2::MetricValueStatus?
-      self.["current"]?.as(::K8S::Api::Autoscaling::V2::MetricValueStatus?)
-    end
-
-    # :ditto:
-    def current=(value : ::K8S::Api::Autoscaling::V2::MetricValueStatus)
-      self.["current"] = value
-    end
-
-    # metric identifies the target metric by name and selector
-    def metric : ::K8S::Api::Autoscaling::V2::MetricIdentifier
-      self.["metric"].as(::K8S::Api::Autoscaling::V2::MetricIdentifier)
-    end
-
-    # :ditto:
-    def metric! : ::K8S::Api::Autoscaling::V2::MetricIdentifier
-      self.["metric"].as(::K8S::Api::Autoscaling::V2::MetricIdentifier).not_nil!
-    end
-
-    # :ditto:
-    def metric? : ::K8S::Api::Autoscaling::V2::MetricIdentifier?
-      self.["metric"]?.as(::K8S::Api::Autoscaling::V2::MetricIdentifier?)
-    end
-
-    # :ditto:
-    def metric=(value : ::K8S::Api::Autoscaling::V2::MetricIdentifier)
-      self.["metric"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "current", accessor: "current", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Autoscaling::V2::MetricValueStatus },
-        { key: "metric", accessor: "metric", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Autoscaling::V2::MetricIdentifier },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "current", accessor: "current", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Autoscaling::V2::MetricValueStatus},
+      {key: "metric", accessor: "metric", nilable: false, read_only: false, default: nil, kind: ::K8S::Api::Autoscaling::V2::MetricIdentifier},
+    ])
   end
 end

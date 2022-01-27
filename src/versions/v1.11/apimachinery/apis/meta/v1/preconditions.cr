@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def uid? : String?
     # :ditto:
-    abstract def uid=(value : String?)
+    abstract def uid=(value : String)
   end
 
   # Preconditions must be fulfilled before an operation (update, delete, etc.) is carried out.
@@ -24,31 +24,15 @@ module K8S
   )]
   class Apimachinery::Apis::Meta::V1::Preconditions < ::K8S::GenericObject
     include ::K8S::Types::Apimachinery::Apis::Meta::V1::Preconditions
+    k8s_object_accessor("uid", uid : String, true, false, "Specifies the target UID.")
 
-    # Specifies the target UID.
-    def uid : String?
-      self.["uid"].as(String?)
+    def initialize(*, uid : String? = nil)
+      super()
+      self.["uid"] = uid
     end
 
-    # :ditto:
-    def uid! : String
-      self.["uid"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def uid? : String?
-      self.["uid"]?.as(String?)
-    end
-
-    # :ditto:
-    def uid=(value : String?)
-      self.["uid"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "uid", accessor: "uid", nilable: true, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "uid", accessor: "uid", nilable: true, read_only: false, default: nil, kind: String},
+    ])
   end
 end

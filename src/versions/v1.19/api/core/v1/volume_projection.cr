@@ -20,7 +20,7 @@ module K8S
     # :ditto:
     abstract def config_map? : ::K8S::Api::Core::V1::ConfigMapProjection?
     # :ditto:
-    abstract def config_map=(value : ::K8S::Api::Core::V1::ConfigMapProjection?)
+    abstract def config_map=(value : ::K8S::Api::Core::V1::ConfigMapProjection)
     # information about the downwardAPI data to project
     abstract def downward_api : ::K8S::Api::Core::V1::DownwardAPIProjection?
     # :ditto:
@@ -28,7 +28,7 @@ module K8S
     # :ditto:
     abstract def downward_api? : ::K8S::Api::Core::V1::DownwardAPIProjection?
     # :ditto:
-    abstract def downward_api=(value : ::K8S::Api::Core::V1::DownwardAPIProjection?)
+    abstract def downward_api=(value : ::K8S::Api::Core::V1::DownwardAPIProjection)
     # information about the secret data to project
     abstract def secret : ::K8S::Api::Core::V1::SecretProjection?
     # :ditto:
@@ -36,7 +36,7 @@ module K8S
     # :ditto:
     abstract def secret? : ::K8S::Api::Core::V1::SecretProjection?
     # :ditto:
-    abstract def secret=(value : ::K8S::Api::Core::V1::SecretProjection?)
+    abstract def secret=(value : ::K8S::Api::Core::V1::SecretProjection)
     # information about the serviceAccountToken data to project
     abstract def service_account_token : ::K8S::Api::Core::V1::ServiceAccountTokenProjection?
     # :ditto:
@@ -44,7 +44,7 @@ module K8S
     # :ditto:
     abstract def service_account_token? : ::K8S::Api::Core::V1::ServiceAccountTokenProjection?
     # :ditto:
-    abstract def service_account_token=(value : ::K8S::Api::Core::V1::ServiceAccountTokenProjection?)
+    abstract def service_account_token=(value : ::K8S::Api::Core::V1::ServiceAccountTokenProjection)
   end
 
   # Projection that may be projected along with other supported volume types
@@ -56,94 +56,24 @@ module K8S
   )]
   class Api::Core::V1::VolumeProjection < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::VolumeProjection
+    k8s_object_accessor("configMap", config_map : ::K8S::Api::Core::V1::ConfigMapProjection, true, false, "information about the configMap data to project")
+    k8s_object_accessor("downwardAPI", downward_api : ::K8S::Api::Core::V1::DownwardAPIProjection, true, false, "information about the downwardAPI data to project")
+    k8s_object_accessor("secret", secret : ::K8S::Api::Core::V1::SecretProjection, true, false, "information about the secret data to project")
+    k8s_object_accessor("serviceAccountToken", service_account_token : ::K8S::Api::Core::V1::ServiceAccountTokenProjection, true, false, "information about the serviceAccountToken data to project")
 
-    # information about the configMap data to project
-    def config_map : ::K8S::Api::Core::V1::ConfigMapProjection?
-      self.["configMap"].as(::K8S::Api::Core::V1::ConfigMapProjection?)
+    def initialize(*, config_map : ::K8S::Api::Core::V1::ConfigMapProjection? = nil, downward_api : ::K8S::Api::Core::V1::DownwardAPIProjection? = nil, secret : ::K8S::Api::Core::V1::SecretProjection? = nil, service_account_token : ::K8S::Api::Core::V1::ServiceAccountTokenProjection? = nil)
+      super()
+      self.["configMap"] = config_map
+      self.["downwardAPI"] = downward_api
+      self.["secret"] = secret
+      self.["serviceAccountToken"] = service_account_token
     end
 
-    # :ditto:
-    def config_map! : ::K8S::Api::Core::V1::ConfigMapProjection
-      self.["configMap"].as(::K8S::Api::Core::V1::ConfigMapProjection?).not_nil!
-    end
-
-    # :ditto:
-    def config_map? : ::K8S::Api::Core::V1::ConfigMapProjection?
-      self.["configMap"]?.as(::K8S::Api::Core::V1::ConfigMapProjection?)
-    end
-
-    # :ditto:
-    def config_map=(value : ::K8S::Api::Core::V1::ConfigMapProjection?)
-      self.["configMap"] = value
-    end
-
-    # information about the downwardAPI data to project
-    def downward_api : ::K8S::Api::Core::V1::DownwardAPIProjection?
-      self.["downwardAPI"].as(::K8S::Api::Core::V1::DownwardAPIProjection?)
-    end
-
-    # :ditto:
-    def downward_api! : ::K8S::Api::Core::V1::DownwardAPIProjection
-      self.["downwardAPI"].as(::K8S::Api::Core::V1::DownwardAPIProjection?).not_nil!
-    end
-
-    # :ditto:
-    def downward_api? : ::K8S::Api::Core::V1::DownwardAPIProjection?
-      self.["downwardAPI"]?.as(::K8S::Api::Core::V1::DownwardAPIProjection?)
-    end
-
-    # :ditto:
-    def downward_api=(value : ::K8S::Api::Core::V1::DownwardAPIProjection?)
-      self.["downwardAPI"] = value
-    end
-
-    # information about the secret data to project
-    def secret : ::K8S::Api::Core::V1::SecretProjection?
-      self.["secret"].as(::K8S::Api::Core::V1::SecretProjection?)
-    end
-
-    # :ditto:
-    def secret! : ::K8S::Api::Core::V1::SecretProjection
-      self.["secret"].as(::K8S::Api::Core::V1::SecretProjection?).not_nil!
-    end
-
-    # :ditto:
-    def secret? : ::K8S::Api::Core::V1::SecretProjection?
-      self.["secret"]?.as(::K8S::Api::Core::V1::SecretProjection?)
-    end
-
-    # :ditto:
-    def secret=(value : ::K8S::Api::Core::V1::SecretProjection?)
-      self.["secret"] = value
-    end
-
-    # information about the serviceAccountToken data to project
-    def service_account_token : ::K8S::Api::Core::V1::ServiceAccountTokenProjection?
-      self.["serviceAccountToken"].as(::K8S::Api::Core::V1::ServiceAccountTokenProjection?)
-    end
-
-    # :ditto:
-    def service_account_token! : ::K8S::Api::Core::V1::ServiceAccountTokenProjection
-      self.["serviceAccountToken"].as(::K8S::Api::Core::V1::ServiceAccountTokenProjection?).not_nil!
-    end
-
-    # :ditto:
-    def service_account_token? : ::K8S::Api::Core::V1::ServiceAccountTokenProjection?
-      self.["serviceAccountToken"]?.as(::K8S::Api::Core::V1::ServiceAccountTokenProjection?)
-    end
-
-    # :ditto:
-    def service_account_token=(value : ::K8S::Api::Core::V1::ServiceAccountTokenProjection?)
-      self.["serviceAccountToken"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "configMap", accessor: "config_map", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::ConfigMapProjection },
-        { key: "downwardAPI", accessor: "downward_api", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::DownwardAPIProjection },
-        { key: "secret", accessor: "secret", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::SecretProjection },
-        { key: "serviceAccountToken", accessor: "service_account_token", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::ServiceAccountTokenProjection },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "configMap", accessor: "config_map", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::ConfigMapProjection},
+      {key: "downwardAPI", accessor: "downward_api", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::DownwardAPIProjection},
+      {key: "secret", accessor: "secret", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::SecretProjection},
+      {key: "serviceAccountToken", accessor: "service_account_token", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::ServiceAccountTokenProjection},
+    ])
   end
 end

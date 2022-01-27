@@ -9,7 +9,7 @@ module K8S
   # Namespace holding the types for `Apimachinery::Apis::Meta::V1::GroupVersionForDiscovery`.
   module Types::Apimachinery::Apis::Meta::V1::GroupVersionForDiscovery
     # groupVersion specifies the API group and version in the form [["group/version"]("group/version")](["group/version"]("group/version"))
-    abstract def group_version : String
+    abstract def group_version : String?
     # :ditto:
     abstract def group_version! : String
     # :ditto:
@@ -17,7 +17,7 @@ module K8S
     # :ditto:
     abstract def group_version=(value : String)
     # version specifies the version in the form of "version". This is to save the clients the trouble of splitting the GroupVersion.
-    abstract def version : String
+    abstract def version : String?
     # :ditto:
     abstract def version! : String
     # :ditto:
@@ -33,52 +33,18 @@ module K8S
   )]
   class Apimachinery::Apis::Meta::V1::GroupVersionForDiscovery < ::K8S::GenericObject
     include ::K8S::Types::Apimachinery::Apis::Meta::V1::GroupVersionForDiscovery
+    k8s_object_accessor("groupVersion", group_version : String, false, false, "groupVersion specifies the API group and version in the form [\"group/version\"](\"group/version\")")
+    k8s_object_accessor("version", version : String, false, false, "version specifies the version in the form of \"version\". This is to save the clients the trouble of splitting the GroupVersion.")
 
-    # groupVersion specifies the API group and version in the form [["group/version"]("group/version")](["group/version"]("group/version"))
-    def group_version : String
-      self.["groupVersion"].as(String)
+    def initialize(*, group_version : String? = nil, version : String? = nil)
+      super()
+      self.["groupVersion"] = group_version
+      self.["version"] = version
     end
 
-    # :ditto:
-    def group_version! : String
-      self.["groupVersion"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def group_version? : String?
-      self.["groupVersion"]?.as(String?)
-    end
-
-    # :ditto:
-    def group_version=(value : String)
-      self.["groupVersion"] = value
-    end
-
-    # version specifies the version in the form of "version". This is to save the clients the trouble of splitting the GroupVersion.
-    def version : String
-      self.["version"].as(String)
-    end
-
-    # :ditto:
-    def version! : String
-      self.["version"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def version? : String?
-      self.["version"]?.as(String?)
-    end
-
-    # :ditto:
-    def version=(value : String)
-      self.["version"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "groupVersion", accessor: "group_version", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "version", accessor: "version", nilable: false, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "groupVersion", accessor: "group_version", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "version", accessor: "version", nilable: false, read_only: false, default: nil, kind: String},
+    ])
   end
 end

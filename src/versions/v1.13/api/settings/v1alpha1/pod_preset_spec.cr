@@ -21,7 +21,7 @@ module K8S
     # :ditto:
     abstract def env? : ::Array(::K8S::Api::Core::V1::EnvVar)?
     # :ditto:
-    abstract def env=(value : ::Array(::K8S::Api::Core::V1::EnvVar)?)
+    abstract def env=(value : ::Array(::K8S::Api::Core::V1::EnvVar))
     # EnvFrom defines the collection of EnvFromSource to inject into containers.
     abstract def env_from : ::Array(::K8S::Api::Core::V1::EnvFromSource)?
     # :ditto:
@@ -29,7 +29,7 @@ module K8S
     # :ditto:
     abstract def env_from? : ::Array(::K8S::Api::Core::V1::EnvFromSource)?
     # :ditto:
-    abstract def env_from=(value : ::Array(::K8S::Api::Core::V1::EnvFromSource)?)
+    abstract def env_from=(value : ::Array(::K8S::Api::Core::V1::EnvFromSource))
     # Selector is a label query over a set of resources, in this case pods. Required.
     abstract def selector : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?
     # :ditto:
@@ -37,7 +37,7 @@ module K8S
     # :ditto:
     abstract def selector? : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?
     # :ditto:
-    abstract def selector=(value : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?)
+    abstract def selector=(value : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector)
     # VolumeMounts defines the collection of VolumeMount to inject into containers.
     abstract def volume_mounts : ::Array(::K8S::Api::Core::V1::VolumeMount)?
     # :ditto:
@@ -45,7 +45,7 @@ module K8S
     # :ditto:
     abstract def volume_mounts? : ::Array(::K8S::Api::Core::V1::VolumeMount)?
     # :ditto:
-    abstract def volume_mounts=(value : ::Array(::K8S::Api::Core::V1::VolumeMount)?)
+    abstract def volume_mounts=(value : ::Array(::K8S::Api::Core::V1::VolumeMount))
     # Volumes defines the collection of Volume to inject into the pod.
     abstract def volumes : ::Array(::K8S::Api::Core::V1::Volume)?
     # :ditto:
@@ -53,7 +53,7 @@ module K8S
     # :ditto:
     abstract def volumes? : ::Array(::K8S::Api::Core::V1::Volume)?
     # :ditto:
-    abstract def volumes=(value : ::Array(::K8S::Api::Core::V1::Volume)?)
+    abstract def volumes=(value : ::Array(::K8S::Api::Core::V1::Volume))
   end
 
   # PodPresetSpec is a description of a pod preset.
@@ -66,115 +66,27 @@ module K8S
   )]
   class Api::Settings::V1alpha1::PodPresetSpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Settings::V1alpha1::PodPresetSpec
+    k8s_object_accessor("env", env : ::Array(::K8S::Api::Core::V1::EnvVar), true, false, "Env defines the collection of EnvVar to inject into containers.")
+    k8s_object_accessor("envFrom", env_from : ::Array(::K8S::Api::Core::V1::EnvFromSource), true, false, "EnvFrom defines the collection of EnvFromSource to inject into containers.")
+    k8s_object_accessor("selector", selector : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector, true, false, "Selector is a label query over a set of resources, in this case pods. Required.")
+    k8s_object_accessor("volumeMounts", volume_mounts : ::Array(::K8S::Api::Core::V1::VolumeMount), true, false, "VolumeMounts defines the collection of VolumeMount to inject into containers.")
+    k8s_object_accessor("volumes", volumes : ::Array(::K8S::Api::Core::V1::Volume), true, false, "Volumes defines the collection of Volume to inject into the pod.")
 
-    # Env defines the collection of EnvVar to inject into containers.
-    def env : ::Array(::K8S::Api::Core::V1::EnvVar)?
-      self.["env"].as(::Array(::K8S::Api::Core::V1::EnvVar)?)
+    def initialize(*, env : ::Array(::K8S::Api::Core::V1::EnvVar)? = nil, env_from : ::Array(::K8S::Api::Core::V1::EnvFromSource)? = nil, selector : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector? = nil, volume_mounts : ::Array(::K8S::Api::Core::V1::VolumeMount)? = nil, volumes : ::Array(::K8S::Api::Core::V1::Volume)? = nil)
+      super()
+      self.["env"] = env
+      self.["envFrom"] = env_from
+      self.["selector"] = selector
+      self.["volumeMounts"] = volume_mounts
+      self.["volumes"] = volumes
     end
 
-    # :ditto:
-    def env! : ::Array(::K8S::Api::Core::V1::EnvVar)
-      self.["env"].as(::Array(::K8S::Api::Core::V1::EnvVar)?).not_nil!
-    end
-
-    # :ditto:
-    def env? : ::Array(::K8S::Api::Core::V1::EnvVar)?
-      self.["env"]?.as(::Array(::K8S::Api::Core::V1::EnvVar)?)
-    end
-
-    # :ditto:
-    def env=(value : ::Array(::K8S::Api::Core::V1::EnvVar)?)
-      self.["env"] = value
-    end
-
-    # EnvFrom defines the collection of EnvFromSource to inject into containers.
-    def env_from : ::Array(::K8S::Api::Core::V1::EnvFromSource)?
-      self.["envFrom"].as(::Array(::K8S::Api::Core::V1::EnvFromSource)?)
-    end
-
-    # :ditto:
-    def env_from! : ::Array(::K8S::Api::Core::V1::EnvFromSource)
-      self.["envFrom"].as(::Array(::K8S::Api::Core::V1::EnvFromSource)?).not_nil!
-    end
-
-    # :ditto:
-    def env_from? : ::Array(::K8S::Api::Core::V1::EnvFromSource)?
-      self.["envFrom"]?.as(::Array(::K8S::Api::Core::V1::EnvFromSource)?)
-    end
-
-    # :ditto:
-    def env_from=(value : ::Array(::K8S::Api::Core::V1::EnvFromSource)?)
-      self.["envFrom"] = value
-    end
-
-    # Selector is a label query over a set of resources, in this case pods. Required.
-    def selector : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?
-      self.["selector"].as(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?)
-    end
-
-    # :ditto:
-    def selector! : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector
-      self.["selector"].as(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?).not_nil!
-    end
-
-    # :ditto:
-    def selector? : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?
-      self.["selector"]?.as(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?)
-    end
-
-    # :ditto:
-    def selector=(value : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?)
-      self.["selector"] = value
-    end
-
-    # VolumeMounts defines the collection of VolumeMount to inject into containers.
-    def volume_mounts : ::Array(::K8S::Api::Core::V1::VolumeMount)?
-      self.["volumeMounts"].as(::Array(::K8S::Api::Core::V1::VolumeMount)?)
-    end
-
-    # :ditto:
-    def volume_mounts! : ::Array(::K8S::Api::Core::V1::VolumeMount)
-      self.["volumeMounts"].as(::Array(::K8S::Api::Core::V1::VolumeMount)?).not_nil!
-    end
-
-    # :ditto:
-    def volume_mounts? : ::Array(::K8S::Api::Core::V1::VolumeMount)?
-      self.["volumeMounts"]?.as(::Array(::K8S::Api::Core::V1::VolumeMount)?)
-    end
-
-    # :ditto:
-    def volume_mounts=(value : ::Array(::K8S::Api::Core::V1::VolumeMount)?)
-      self.["volumeMounts"] = value
-    end
-
-    # Volumes defines the collection of Volume to inject into the pod.
-    def volumes : ::Array(::K8S::Api::Core::V1::Volume)?
-      self.["volumes"].as(::Array(::K8S::Api::Core::V1::Volume)?)
-    end
-
-    # :ditto:
-    def volumes! : ::Array(::K8S::Api::Core::V1::Volume)
-      self.["volumes"].as(::Array(::K8S::Api::Core::V1::Volume)?).not_nil!
-    end
-
-    # :ditto:
-    def volumes? : ::Array(::K8S::Api::Core::V1::Volume)?
-      self.["volumes"]?.as(::Array(::K8S::Api::Core::V1::Volume)?)
-    end
-
-    # :ditto:
-    def volumes=(value : ::Array(::K8S::Api::Core::V1::Volume)?)
-      self.["volumes"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "env", accessor: "env", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::EnvVar) },
-        { key: "envFrom", accessor: "env_from", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::EnvFromSource) },
-        { key: "selector", accessor: "selector", nilable: true, read_only: false, default: nil, kind: ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector },
-        { key: "volumeMounts", accessor: "volume_mounts", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::VolumeMount) },
-        { key: "volumes", accessor: "volumes", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::Volume) },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "env", accessor: "env", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::EnvVar)},
+      {key: "envFrom", accessor: "env_from", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::EnvFromSource)},
+      {key: "selector", accessor: "selector", nilable: true, read_only: false, default: nil, kind: ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector},
+      {key: "volumeMounts", accessor: "volume_mounts", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::VolumeMount)},
+      {key: "volumes", accessor: "volumes", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::Volume)},
+    ])
   end
 end

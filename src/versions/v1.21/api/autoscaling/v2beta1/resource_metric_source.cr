@@ -9,7 +9,7 @@ module K8S
   # Namespace holding the types for `Api::Autoscaling::V2beta1::ResourceMetricSource`.
   module Types::Api::Autoscaling::V2beta1::ResourceMetricSource
     # name is the name of the resource in question.
-    abstract def name : String
+    abstract def name : String?
     # :ditto:
     abstract def name! : String
     # :ditto:
@@ -23,7 +23,7 @@ module K8S
     # :ditto:
     abstract def target_average_utilization? : Int32?
     # :ditto:
-    abstract def target_average_utilization=(value : Int32?)
+    abstract def target_average_utilization=(value : Int32)
     # targetAverageValue is the target value of the average of the resource metric across all relevant pods, as a raw value (instead of as a percentage of the request), similar to the "pods" metric source type.
     abstract def target_average_value : ::Int32 | ::String?
     # :ditto:
@@ -31,7 +31,7 @@ module K8S
     # :ditto:
     abstract def target_average_value? : ::Int32 | ::String?
     # :ditto:
-    abstract def target_average_value=(value : ::Int32 | ::String?)
+    abstract def target_average_value=(value : ::Int32 | ::String)
   end
 
   # ResourceMetricSource indicates how to scale on a resource metric known to Kubernetes, as specified in requests and limits, describing each pod in the current scale target (e.g. CPU or memory).  The values will be averaged together before being compared to the target.  Such metrics are built in to Kubernetes, and have special scaling options on top of those available to normal per-pod metrics using the "pods" source.  Only one "target" type should be set.
@@ -42,73 +42,21 @@ module K8S
   )]
   class Api::Autoscaling::V2beta1::ResourceMetricSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Autoscaling::V2beta1::ResourceMetricSource
+    k8s_object_accessor("name", name : String, false, false, "name is the name of the resource in question.")
+    k8s_object_accessor("targetAverageUtilization", target_average_utilization : Int32, true, false, "targetAverageUtilization is the target value of the average of the resource metric across all relevant pods, represented as a percentage of the requested value of the resource for the pods.")
+    k8s_object_accessor("targetAverageValue", target_average_value : ::Int32 | ::String, true, false, "targetAverageValue is the target value of the average of the resource metric across all relevant pods, as a raw value (instead of as a percentage of the request), similar to the \"pods\" metric source type.")
 
-    # name is the name of the resource in question.
-    def name : String
-      self.["name"].as(String)
+    def initialize(*, name : String? = nil, target_average_utilization : Int32? = nil, target_average_value : ::Int32 | ::String? = nil)
+      super()
+      self.["name"] = name
+      self.["targetAverageUtilization"] = target_average_utilization
+      self.["targetAverageValue"] = target_average_value
     end
 
-    # :ditto:
-    def name! : String
-      self.["name"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def name? : String?
-      self.["name"]?.as(String?)
-    end
-
-    # :ditto:
-    def name=(value : String)
-      self.["name"] = value
-    end
-
-    # targetAverageUtilization is the target value of the average of the resource metric across all relevant pods, represented as a percentage of the requested value of the resource for the pods.
-    def target_average_utilization : Int32?
-      self.["targetAverageUtilization"].as(Int32?)
-    end
-
-    # :ditto:
-    def target_average_utilization! : Int32
-      self.["targetAverageUtilization"].as(Int32?).not_nil!
-    end
-
-    # :ditto:
-    def target_average_utilization? : Int32?
-      self.["targetAverageUtilization"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def target_average_utilization=(value : Int32?)
-      self.["targetAverageUtilization"] = value
-    end
-
-    # targetAverageValue is the target value of the average of the resource metric across all relevant pods, as a raw value (instead of as a percentage of the request), similar to the "pods" metric source type.
-    def target_average_value : ::Int32 | ::String?
-      self.["targetAverageValue"].as(::Int32 | ::String?)
-    end
-
-    # :ditto:
-    def target_average_value! : ::Int32 | ::String
-      self.["targetAverageValue"].as(::Int32 | ::String?).not_nil!
-    end
-
-    # :ditto:
-    def target_average_value? : ::Int32 | ::String?
-      self.["targetAverageValue"]?.as(::Int32 | ::String?)
-    end
-
-    # :ditto:
-    def target_average_value=(value : ::Int32 | ::String?)
-      self.["targetAverageValue"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "name", accessor: "name", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "targetAverageUtilization", accessor: "target_average_utilization", nilable: true, read_only: false, default: nil, kind: Int32 },
-        { key: "targetAverageValue", accessor: "target_average_value", nilable: true, read_only: false, default: nil, kind: ::Union(::Int32 | ::String) },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "name", accessor: "name", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "targetAverageUtilization", accessor: "target_average_utilization", nilable: true, read_only: false, default: nil, kind: Int32},
+      {key: "targetAverageValue", accessor: "target_average_value", nilable: true, read_only: false, default: nil, kind: ::Union(::Int32 | ::String)},
+    ])
   end
 end

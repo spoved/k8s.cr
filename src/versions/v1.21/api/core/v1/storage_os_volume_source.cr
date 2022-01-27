@@ -17,7 +17,7 @@ module K8S
     # :ditto:
     abstract def fs_type? : String?
     # :ditto:
-    abstract def fs_type=(value : String?)
+    abstract def fs_type=(value : String)
     # Defaults to false [[(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.)]([(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.))
     abstract def read_only : ::Bool?
     # :ditto:
@@ -25,7 +25,7 @@ module K8S
     # :ditto:
     abstract def read_only? : ::Bool?
     # :ditto:
-    abstract def read_only=(value : ::Bool?)
+    abstract def read_only=(value : ::Bool)
     # SecretRef specifies the secret to use for obtaining the StorageOS API credentials.  If not specified, default values will be attempted.
     abstract def secret_ref : ::K8S::Api::Core::V1::LocalObjectReference?
     # :ditto:
@@ -33,7 +33,7 @@ module K8S
     # :ditto:
     abstract def secret_ref? : ::K8S::Api::Core::V1::LocalObjectReference?
     # :ditto:
-    abstract def secret_ref=(value : ::K8S::Api::Core::V1::LocalObjectReference?)
+    abstract def secret_ref=(value : ::K8S::Api::Core::V1::LocalObjectReference)
     # VolumeName is the human-readable name of the StorageOS volume.  Volume names are only unique within a namespace.
     abstract def volume_name : String?
     # :ditto:
@@ -41,7 +41,7 @@ module K8S
     # :ditto:
     abstract def volume_name? : String?
     # :ditto:
-    abstract def volume_name=(value : String?)
+    abstract def volume_name=(value : String)
     # VolumeNamespace specifies the scope of the volume within StorageOS.  If no namespace is specified then the Pod's namespace will be used.  This allows the Kubernetes name scoping to be mirrored within StorageOS for tighter integration. Set VolumeName to any name to override the default behaviour. Set to "default" if you are not using namespaces within StorageOS. Namespaces that do not pre-exist within StorageOS will be created.
     abstract def volume_namespace : String?
     # :ditto:
@@ -49,7 +49,7 @@ module K8S
     # :ditto:
     abstract def volume_namespace? : String?
     # :ditto:
-    abstract def volume_namespace=(value : String?)
+    abstract def volume_namespace=(value : String)
   end
 
   # Represents a StorageOS persistent volume resource.
@@ -62,115 +62,27 @@ module K8S
   )]
   class Api::Core::V1::StorageOSVolumeSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::StorageOSVolumeSource
+    k8s_object_accessor("fsType", fs_type : String, true, false, "Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. \"ext4\", \"xfs\", \"ntfs\". Implicitly inferred to be \"ext4\" if unspecified.")
+    k8s_object_accessor("readOnly", read_only : ::Bool, true, false, "Defaults to false [(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.)")
+    k8s_object_accessor("secretRef", secret_ref : ::K8S::Api::Core::V1::LocalObjectReference, true, false, "SecretRef specifies the secret to use for obtaining the StorageOS API credentials.  If not specified, default values will be attempted.")
+    k8s_object_accessor("volumeName", volume_name : String, true, false, "VolumeName is the human-readable name of the StorageOS volume.  Volume names are only unique within a namespace.")
+    k8s_object_accessor("volumeNamespace", volume_namespace : String, true, false, "VolumeNamespace specifies the scope of the volume within StorageOS.  If no namespace is specified then the Pod's namespace will be used.  This allows the Kubernetes name scoping to be mirrored within StorageOS for tighter integration. Set VolumeName to any name to override the default behaviour. Set to \"default\" if you are not using namespaces within StorageOS. Namespaces that do not pre-exist within StorageOS will be created.")
 
-    # Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified.
-    def fs_type : String?
-      self.["fsType"].as(String?)
+    def initialize(*, fs_type : String? = nil, read_only : ::Bool? = nil, secret_ref : ::K8S::Api::Core::V1::LocalObjectReference? = nil, volume_name : String? = nil, volume_namespace : String? = nil)
+      super()
+      self.["fsType"] = fs_type
+      self.["readOnly"] = read_only
+      self.["secretRef"] = secret_ref
+      self.["volumeName"] = volume_name
+      self.["volumeNamespace"] = volume_namespace
     end
 
-    # :ditto:
-    def fs_type! : String
-      self.["fsType"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def fs_type? : String?
-      self.["fsType"]?.as(String?)
-    end
-
-    # :ditto:
-    def fs_type=(value : String?)
-      self.["fsType"] = value
-    end
-
-    # Defaults to false [[(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.)]([(read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.]((read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.))
-    def read_only : ::Bool?
-      self.["readOnly"].as(::Bool?)
-    end
-
-    # :ditto:
-    def read_only! : ::Bool
-      self.["readOnly"].as(::Bool?).not_nil!
-    end
-
-    # :ditto:
-    def read_only? : ::Bool?
-      self.["readOnly"]?.as(::Bool?)
-    end
-
-    # :ditto:
-    def read_only=(value : ::Bool?)
-      self.["readOnly"] = value
-    end
-
-    # SecretRef specifies the secret to use for obtaining the StorageOS API credentials.  If not specified, default values will be attempted.
-    def secret_ref : ::K8S::Api::Core::V1::LocalObjectReference?
-      self.["secretRef"].as(::K8S::Api::Core::V1::LocalObjectReference?)
-    end
-
-    # :ditto:
-    def secret_ref! : ::K8S::Api::Core::V1::LocalObjectReference
-      self.["secretRef"].as(::K8S::Api::Core::V1::LocalObjectReference?).not_nil!
-    end
-
-    # :ditto:
-    def secret_ref? : ::K8S::Api::Core::V1::LocalObjectReference?
-      self.["secretRef"]?.as(::K8S::Api::Core::V1::LocalObjectReference?)
-    end
-
-    # :ditto:
-    def secret_ref=(value : ::K8S::Api::Core::V1::LocalObjectReference?)
-      self.["secretRef"] = value
-    end
-
-    # VolumeName is the human-readable name of the StorageOS volume.  Volume names are only unique within a namespace.
-    def volume_name : String?
-      self.["volumeName"].as(String?)
-    end
-
-    # :ditto:
-    def volume_name! : String
-      self.["volumeName"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def volume_name? : String?
-      self.["volumeName"]?.as(String?)
-    end
-
-    # :ditto:
-    def volume_name=(value : String?)
-      self.["volumeName"] = value
-    end
-
-    # VolumeNamespace specifies the scope of the volume within StorageOS.  If no namespace is specified then the Pod's namespace will be used.  This allows the Kubernetes name scoping to be mirrored within StorageOS for tighter integration. Set VolumeName to any name to override the default behaviour. Set to "default" if you are not using namespaces within StorageOS. Namespaces that do not pre-exist within StorageOS will be created.
-    def volume_namespace : String?
-      self.["volumeNamespace"].as(String?)
-    end
-
-    # :ditto:
-    def volume_namespace! : String
-      self.["volumeNamespace"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def volume_namespace? : String?
-      self.["volumeNamespace"]?.as(String?)
-    end
-
-    # :ditto:
-    def volume_namespace=(value : String?)
-      self.["volumeNamespace"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "fsType", accessor: "fs_type", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "readOnly", accessor: "read_only", nilable: true, read_only: false, default: nil, kind: ::Bool },
-        { key: "secretRef", accessor: "secret_ref", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::LocalObjectReference },
-        { key: "volumeName", accessor: "volume_name", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "volumeNamespace", accessor: "volume_namespace", nilable: true, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "fsType", accessor: "fs_type", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "readOnly", accessor: "read_only", nilable: true, read_only: false, default: nil, kind: ::Bool},
+      {key: "secretRef", accessor: "secret_ref", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::LocalObjectReference},
+      {key: "volumeName", accessor: "volume_name", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "volumeNamespace", accessor: "volume_namespace", nilable: true, read_only: false, default: nil, kind: String},
+    ])
   end
 end

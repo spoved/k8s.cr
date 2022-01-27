@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def count? : Int32?
     # :ditto:
-    abstract def count=(value : Int32?)
+    abstract def count=(value : Int32)
     # Time of the last occurrence observed
     abstract def last_observed_time : ::Time?
     # :ditto:
@@ -23,7 +23,7 @@ module K8S
     # :ditto:
     abstract def last_observed_time? : ::Time?
     # :ditto:
-    abstract def last_observed_time=(value : ::Time?)
+    abstract def last_observed_time=(value : ::Time)
     # State of this Series: Ongoing or Finished
     abstract def state : String?
     # :ditto:
@@ -31,7 +31,7 @@ module K8S
     # :ditto:
     abstract def state? : String?
     # :ditto:
-    abstract def state=(value : String?)
+    abstract def state=(value : String)
   end
 
   # EventSeries contain information on series of events, i.e. thing that [was/is happening continuously for some time.](was/is happening continuously for some time.)
@@ -42,73 +42,21 @@ module K8S
   )]
   class Api::Core::V1::EventSeries < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::EventSeries
+    k8s_object_accessor("count", count : Int32, true, false, "Number of occurrences in this series up to the last heartbeat time")
+    k8s_object_accessor("lastObservedTime", last_observed_time : ::Time, true, false, "Time of the last occurrence observed")
+    k8s_object_accessor("state", state : String, true, false, "State of this Series: Ongoing or Finished")
 
-    # Number of occurrences in this series up to the last heartbeat time
-    def count : Int32?
-      self.["count"].as(Int32?)
+    def initialize(*, count : Int32? = nil, last_observed_time : ::Time? = nil, state : String? = nil)
+      super()
+      self.["count"] = count
+      self.["lastObservedTime"] = last_observed_time
+      self.["state"] = state
     end
 
-    # :ditto:
-    def count! : Int32
-      self.["count"].as(Int32?).not_nil!
-    end
-
-    # :ditto:
-    def count? : Int32?
-      self.["count"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def count=(value : Int32?)
-      self.["count"] = value
-    end
-
-    # Time of the last occurrence observed
-    def last_observed_time : ::Time?
-      self.["lastObservedTime"].as(::Time?)
-    end
-
-    # :ditto:
-    def last_observed_time! : ::Time
-      self.["lastObservedTime"].as(::Time?).not_nil!
-    end
-
-    # :ditto:
-    def last_observed_time? : ::Time?
-      self.["lastObservedTime"]?.as(::Time?)
-    end
-
-    # :ditto:
-    def last_observed_time=(value : ::Time?)
-      self.["lastObservedTime"] = value
-    end
-
-    # State of this Series: Ongoing or Finished
-    def state : String?
-      self.["state"].as(String?)
-    end
-
-    # :ditto:
-    def state! : String
-      self.["state"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def state? : String?
-      self.["state"]?.as(String?)
-    end
-
-    # :ditto:
-    def state=(value : String?)
-      self.["state"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "count", accessor: "count", nilable: true, read_only: false, default: nil, kind: Int32 },
-        { key: "lastObservedTime", accessor: "last_observed_time", nilable: true, read_only: false, default: nil, kind: ::Time },
-        { key: "state", accessor: "state", nilable: true, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "count", accessor: "count", nilable: true, read_only: false, default: nil, kind: Int32},
+      {key: "lastObservedTime", accessor: "last_observed_time", nilable: true, read_only: false, default: nil, kind: ::Time},
+      {key: "state", accessor: "state", nilable: true, read_only: false, default: nil, kind: String},
+    ])
   end
 end

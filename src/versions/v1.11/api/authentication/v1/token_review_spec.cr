@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def token? : String?
     # :ditto:
-    abstract def token=(value : String?)
+    abstract def token=(value : String)
   end
 
   # TokenReviewSpec is a description of the token authentication request.
@@ -24,31 +24,15 @@ module K8S
   )]
   class Api::Authentication::V1::TokenReviewSpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Authentication::V1::TokenReviewSpec
+    k8s_object_accessor("token", token : String, true, false, "Token is the opaque bearer token.")
 
-    # Token is the opaque bearer token.
-    def token : String?
-      self.["token"].as(String?)
+    def initialize(*, token : String? = nil)
+      super()
+      self.["token"] = token
     end
 
-    # :ditto:
-    def token! : String
-      self.["token"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def token? : String?
-      self.["token"]?.as(String?)
-    end
-
-    # :ditto:
-    def token=(value : String?)
-      self.["token"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "token", accessor: "token", nilable: true, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "token", accessor: "token", nilable: true, read_only: false, default: nil, kind: String},
+    ])
   end
 end

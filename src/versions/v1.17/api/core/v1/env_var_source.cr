@@ -20,7 +20,7 @@ module K8S
     # :ditto:
     abstract def config_map_key_ref? : ::K8S::Api::Core::V1::ConfigMapKeySelector?
     # :ditto:
-    abstract def config_map_key_ref=(value : ::K8S::Api::Core::V1::ConfigMapKeySelector?)
+    abstract def config_map_key_ref=(value : ::K8S::Api::Core::V1::ConfigMapKeySelector)
     # Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
     abstract def field_ref : ::K8S::Api::Core::V1::ObjectFieldSelector?
     # :ditto:
@@ -28,7 +28,7 @@ module K8S
     # :ditto:
     abstract def field_ref? : ::K8S::Api::Core::V1::ObjectFieldSelector?
     # :ditto:
-    abstract def field_ref=(value : ::K8S::Api::Core::V1::ObjectFieldSelector?)
+    abstract def field_ref=(value : ::K8S::Api::Core::V1::ObjectFieldSelector)
     # Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
     abstract def resource_field_ref : ::K8S::Api::Core::V1::ResourceFieldSelector?
     # :ditto:
@@ -36,7 +36,7 @@ module K8S
     # :ditto:
     abstract def resource_field_ref? : ::K8S::Api::Core::V1::ResourceFieldSelector?
     # :ditto:
-    abstract def resource_field_ref=(value : ::K8S::Api::Core::V1::ResourceFieldSelector?)
+    abstract def resource_field_ref=(value : ::K8S::Api::Core::V1::ResourceFieldSelector)
     # Selects a key of a secret in the pod's namespace
     abstract def secret_key_ref : ::K8S::Api::Core::V1::SecretKeySelector?
     # :ditto:
@@ -44,7 +44,7 @@ module K8S
     # :ditto:
     abstract def secret_key_ref? : ::K8S::Api::Core::V1::SecretKeySelector?
     # :ditto:
-    abstract def secret_key_ref=(value : ::K8S::Api::Core::V1::SecretKeySelector?)
+    abstract def secret_key_ref=(value : ::K8S::Api::Core::V1::SecretKeySelector)
   end
 
   # EnvVarSource represents a source for the value of an EnvVar.
@@ -56,94 +56,24 @@ module K8S
   )]
   class Api::Core::V1::EnvVarSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::EnvVarSource
+    k8s_object_accessor("configMapKeyRef", config_map_key_ref : ::K8S::Api::Core::V1::ConfigMapKeySelector, true, false, "Selects a key of a ConfigMap.")
+    k8s_object_accessor("fieldRef", field_ref : ::K8S::Api::Core::V1::ObjectFieldSelector, true, false, "Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.")
+    k8s_object_accessor("resourceFieldRef", resource_field_ref : ::K8S::Api::Core::V1::ResourceFieldSelector, true, false, "Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.")
+    k8s_object_accessor("secretKeyRef", secret_key_ref : ::K8S::Api::Core::V1::SecretKeySelector, true, false, "Selects a key of a secret in the pod's namespace")
 
-    # Selects a key of a ConfigMap.
-    def config_map_key_ref : ::K8S::Api::Core::V1::ConfigMapKeySelector?
-      self.["configMapKeyRef"].as(::K8S::Api::Core::V1::ConfigMapKeySelector?)
+    def initialize(*, config_map_key_ref : ::K8S::Api::Core::V1::ConfigMapKeySelector? = nil, field_ref : ::K8S::Api::Core::V1::ObjectFieldSelector? = nil, resource_field_ref : ::K8S::Api::Core::V1::ResourceFieldSelector? = nil, secret_key_ref : ::K8S::Api::Core::V1::SecretKeySelector? = nil)
+      super()
+      self.["configMapKeyRef"] = config_map_key_ref
+      self.["fieldRef"] = field_ref
+      self.["resourceFieldRef"] = resource_field_ref
+      self.["secretKeyRef"] = secret_key_ref
     end
 
-    # :ditto:
-    def config_map_key_ref! : ::K8S::Api::Core::V1::ConfigMapKeySelector
-      self.["configMapKeyRef"].as(::K8S::Api::Core::V1::ConfigMapKeySelector?).not_nil!
-    end
-
-    # :ditto:
-    def config_map_key_ref? : ::K8S::Api::Core::V1::ConfigMapKeySelector?
-      self.["configMapKeyRef"]?.as(::K8S::Api::Core::V1::ConfigMapKeySelector?)
-    end
-
-    # :ditto:
-    def config_map_key_ref=(value : ::K8S::Api::Core::V1::ConfigMapKeySelector?)
-      self.["configMapKeyRef"] = value
-    end
-
-    # Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
-    def field_ref : ::K8S::Api::Core::V1::ObjectFieldSelector?
-      self.["fieldRef"].as(::K8S::Api::Core::V1::ObjectFieldSelector?)
-    end
-
-    # :ditto:
-    def field_ref! : ::K8S::Api::Core::V1::ObjectFieldSelector
-      self.["fieldRef"].as(::K8S::Api::Core::V1::ObjectFieldSelector?).not_nil!
-    end
-
-    # :ditto:
-    def field_ref? : ::K8S::Api::Core::V1::ObjectFieldSelector?
-      self.["fieldRef"]?.as(::K8S::Api::Core::V1::ObjectFieldSelector?)
-    end
-
-    # :ditto:
-    def field_ref=(value : ::K8S::Api::Core::V1::ObjectFieldSelector?)
-      self.["fieldRef"] = value
-    end
-
-    # Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
-    def resource_field_ref : ::K8S::Api::Core::V1::ResourceFieldSelector?
-      self.["resourceFieldRef"].as(::K8S::Api::Core::V1::ResourceFieldSelector?)
-    end
-
-    # :ditto:
-    def resource_field_ref! : ::K8S::Api::Core::V1::ResourceFieldSelector
-      self.["resourceFieldRef"].as(::K8S::Api::Core::V1::ResourceFieldSelector?).not_nil!
-    end
-
-    # :ditto:
-    def resource_field_ref? : ::K8S::Api::Core::V1::ResourceFieldSelector?
-      self.["resourceFieldRef"]?.as(::K8S::Api::Core::V1::ResourceFieldSelector?)
-    end
-
-    # :ditto:
-    def resource_field_ref=(value : ::K8S::Api::Core::V1::ResourceFieldSelector?)
-      self.["resourceFieldRef"] = value
-    end
-
-    # Selects a key of a secret in the pod's namespace
-    def secret_key_ref : ::K8S::Api::Core::V1::SecretKeySelector?
-      self.["secretKeyRef"].as(::K8S::Api::Core::V1::SecretKeySelector?)
-    end
-
-    # :ditto:
-    def secret_key_ref! : ::K8S::Api::Core::V1::SecretKeySelector
-      self.["secretKeyRef"].as(::K8S::Api::Core::V1::SecretKeySelector?).not_nil!
-    end
-
-    # :ditto:
-    def secret_key_ref? : ::K8S::Api::Core::V1::SecretKeySelector?
-      self.["secretKeyRef"]?.as(::K8S::Api::Core::V1::SecretKeySelector?)
-    end
-
-    # :ditto:
-    def secret_key_ref=(value : ::K8S::Api::Core::V1::SecretKeySelector?)
-      self.["secretKeyRef"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "configMapKeyRef", accessor: "config_map_key_ref", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::ConfigMapKeySelector },
-        { key: "fieldRef", accessor: "field_ref", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::ObjectFieldSelector },
-        { key: "resourceFieldRef", accessor: "resource_field_ref", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::ResourceFieldSelector },
-        { key: "secretKeyRef", accessor: "secret_key_ref", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::SecretKeySelector },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "configMapKeyRef", accessor: "config_map_key_ref", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::ConfigMapKeySelector},
+      {key: "fieldRef", accessor: "field_ref", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::ObjectFieldSelector},
+      {key: "resourceFieldRef", accessor: "resource_field_ref", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::ResourceFieldSelector},
+      {key: "secretKeyRef", accessor: "secret_key_ref", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::SecretKeySelector},
+    ])
   end
 end

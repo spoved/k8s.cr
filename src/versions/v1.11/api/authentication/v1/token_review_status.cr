@@ -17,7 +17,7 @@ module K8S
     # :ditto:
     abstract def authenticated? : ::Bool?
     # :ditto:
-    abstract def authenticated=(value : ::Bool?)
+    abstract def authenticated=(value : ::Bool)
     # Error indicates that the token couldn't be checked
     abstract def error : String?
     # :ditto:
@@ -25,7 +25,7 @@ module K8S
     # :ditto:
     abstract def error? : String?
     # :ditto:
-    abstract def error=(value : String?)
+    abstract def error=(value : String)
     # User is the UserInfo associated with the provided token.
     abstract def user : ::K8S::Api::Authentication::V1::UserInfo?
     # :ditto:
@@ -33,7 +33,7 @@ module K8S
     # :ditto:
     abstract def user? : ::K8S::Api::Authentication::V1::UserInfo?
     # :ditto:
-    abstract def user=(value : ::K8S::Api::Authentication::V1::UserInfo?)
+    abstract def user=(value : ::K8S::Api::Authentication::V1::UserInfo)
   end
 
   # TokenReviewStatus is the result of the token authentication request.
@@ -44,73 +44,21 @@ module K8S
   )]
   class Api::Authentication::V1::TokenReviewStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Authentication::V1::TokenReviewStatus
+    k8s_object_accessor("authenticated", authenticated : ::Bool, true, false, "Authenticated indicates that the token was associated with a known user.")
+    k8s_object_accessor("error", error : String, true, false, "Error indicates that the token couldn't be checked")
+    k8s_object_accessor("user", user : ::K8S::Api::Authentication::V1::UserInfo, true, false, "User is the UserInfo associated with the provided token.")
 
-    # Authenticated indicates that the token was associated with a known user.
-    def authenticated : ::Bool?
-      self.["authenticated"].as(::Bool?)
+    def initialize(*, authenticated : ::Bool? = nil, error : String? = nil, user : ::K8S::Api::Authentication::V1::UserInfo? = nil)
+      super()
+      self.["authenticated"] = authenticated
+      self.["error"] = error
+      self.["user"] = user
     end
 
-    # :ditto:
-    def authenticated! : ::Bool
-      self.["authenticated"].as(::Bool?).not_nil!
-    end
-
-    # :ditto:
-    def authenticated? : ::Bool?
-      self.["authenticated"]?.as(::Bool?)
-    end
-
-    # :ditto:
-    def authenticated=(value : ::Bool?)
-      self.["authenticated"] = value
-    end
-
-    # Error indicates that the token couldn't be checked
-    def error : String?
-      self.["error"].as(String?)
-    end
-
-    # :ditto:
-    def error! : String
-      self.["error"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def error? : String?
-      self.["error"]?.as(String?)
-    end
-
-    # :ditto:
-    def error=(value : String?)
-      self.["error"] = value
-    end
-
-    # User is the UserInfo associated with the provided token.
-    def user : ::K8S::Api::Authentication::V1::UserInfo?
-      self.["user"].as(::K8S::Api::Authentication::V1::UserInfo?)
-    end
-
-    # :ditto:
-    def user! : ::K8S::Api::Authentication::V1::UserInfo
-      self.["user"].as(::K8S::Api::Authentication::V1::UserInfo?).not_nil!
-    end
-
-    # :ditto:
-    def user? : ::K8S::Api::Authentication::V1::UserInfo?
-      self.["user"]?.as(::K8S::Api::Authentication::V1::UserInfo?)
-    end
-
-    # :ditto:
-    def user=(value : ::K8S::Api::Authentication::V1::UserInfo?)
-      self.["user"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "authenticated", accessor: "authenticated", nilable: true, read_only: false, default: nil, kind: ::Bool },
-        { key: "error", accessor: "error", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "user", accessor: "user", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Authentication::V1::UserInfo },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "authenticated", accessor: "authenticated", nilable: true, read_only: false, default: nil, kind: ::Bool},
+      {key: "error", accessor: "error", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "user", accessor: "user", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Authentication::V1::UserInfo},
+    ])
   end
 end

@@ -17,9 +17,9 @@ module K8S
     # :ditto:
     abstract def fs_type? : String?
     # :ditto:
-    abstract def fs_type=(value : String?)
+    abstract def fs_type=(value : String)
     # The rados image name. More info: [[https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it](https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it)](https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it](https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it))
-    abstract def image : String
+    abstract def image : String?
     # :ditto:
     abstract def image! : String
     # :ditto:
@@ -33,9 +33,9 @@ module K8S
     # :ditto:
     abstract def keyring? : String?
     # :ditto:
-    abstract def keyring=(value : String?)
+    abstract def keyring=(value : String)
     # A collection of Ceph monitors. More info: [[https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it](https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it)](https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it](https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it))
-    abstract def monitors : ::Array(String)
+    abstract def monitors : ::Array(String)?
     # :ditto:
     abstract def monitors! : ::Array(String)
     # :ditto:
@@ -49,7 +49,7 @@ module K8S
     # :ditto:
     abstract def pool? : String?
     # :ditto:
-    abstract def pool=(value : String?)
+    abstract def pool=(value : String)
     # ReadOnly here will force the ReadOnly setting in VolumeMounts. Defaults to false. More info: [[https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it](https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it)](https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it](https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it))
     abstract def read_only : ::Bool?
     # :ditto:
@@ -57,7 +57,7 @@ module K8S
     # :ditto:
     abstract def read_only? : ::Bool?
     # :ditto:
-    abstract def read_only=(value : ::Bool?)
+    abstract def read_only=(value : ::Bool)
     # SecretRef is name of the authentication secret for RBDUser. If provided overrides keyring. Default is nil. More info: [[https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it](https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it)](https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it](https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it))
     abstract def secret_ref : ::K8S::Api::Core::V1::SecretReference?
     # :ditto:
@@ -65,7 +65,7 @@ module K8S
     # :ditto:
     abstract def secret_ref? : ::K8S::Api::Core::V1::SecretReference?
     # :ditto:
-    abstract def secret_ref=(value : ::K8S::Api::Core::V1::SecretReference?)
+    abstract def secret_ref=(value : ::K8S::Api::Core::V1::SecretReference)
     # The rados user name. Default is admin. More info: [[https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it](https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it)](https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it](https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it))
     abstract def user : String?
     # :ditto:
@@ -73,7 +73,7 @@ module K8S
     # :ditto:
     abstract def user? : String?
     # :ditto:
-    abstract def user=(value : String?)
+    abstract def user=(value : String)
   end
 
   # Represents a Rados Block Device mount that lasts the lifetime of a pod. RBD volumes support ownership management and SELinux relabeling.
@@ -89,178 +89,36 @@ module K8S
   )]
   class Api::Core::V1::RBDPersistentVolumeSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::RBDPersistentVolumeSource
+    k8s_object_accessor("fsType", fs_type : String, true, false, "Filesystem type of the volume that you want to mount. Tip: Ensure that the filesystem type is supported by the host operating system. Examples: \"ext4\", \"xfs\", \"ntfs\". Implicitly inferred to be \"ext4\" if unspecified. More info: [https://kubernetes.io/docs/concepts/storage/volumes#rbd](https://kubernetes.io/docs/concepts/storage/volumes#rbd)")
+    k8s_object_accessor("image", image : String, false, false, "The rados image name. More info: [https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it](https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it)")
+    k8s_object_accessor("keyring", keyring : String, true, false, "Keyring is the path to key ring for RBDUser. Default is [/etc/ceph/keyring. More info: https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it](/etc/ceph/keyring. More info: https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it)")
+    k8s_object_accessor("monitors", monitors : ::Array(String), false, false, "A collection of Ceph monitors. More info: [https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it](https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it)")
+    k8s_object_accessor("pool", pool : String, true, false, "The rados pool name. Default is rbd. More info: [https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it](https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it)")
+    k8s_object_accessor("readOnly", read_only : ::Bool, true, false, "ReadOnly here will force the ReadOnly setting in VolumeMounts. Defaults to false. More info: [https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it](https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it)")
+    k8s_object_accessor("secretRef", secret_ref : ::K8S::Api::Core::V1::SecretReference, true, false, "SecretRef is name of the authentication secret for RBDUser. If provided overrides keyring. Default is nil. More info: [https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it](https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it)")
+    k8s_object_accessor("user", user : String, true, false, "The rados user name. Default is admin. More info: [https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it](https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it)")
 
-    # Filesystem type of the volume that you want to mount. Tip: Ensure that the filesystem type is supported by the host operating system. Examples: "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified. More info: [[https://kubernetes.io/docs/concepts/storage/volumes#rbd](https://kubernetes.io/docs/concepts/storage/volumes#rbd)](https://kubernetes.io/docs/concepts/storage/volumes#rbd](https://kubernetes.io/docs/concepts/storage/volumes#rbd))
-    def fs_type : String?
-      self.["fsType"].as(String?)
+    def initialize(*, fs_type : String? = nil, image : String? = nil, keyring : String? = nil, monitors : ::Array(String)? = nil, pool : String? = nil, read_only : ::Bool? = nil, secret_ref : ::K8S::Api::Core::V1::SecretReference? = nil, user : String? = nil)
+      super()
+      self.["fsType"] = fs_type
+      self.["image"] = image
+      self.["keyring"] = keyring
+      self.["monitors"] = monitors
+      self.["pool"] = pool
+      self.["readOnly"] = read_only
+      self.["secretRef"] = secret_ref
+      self.["user"] = user
     end
 
-    # :ditto:
-    def fs_type! : String
-      self.["fsType"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def fs_type? : String?
-      self.["fsType"]?.as(String?)
-    end
-
-    # :ditto:
-    def fs_type=(value : String?)
-      self.["fsType"] = value
-    end
-
-    # The rados image name. More info: [[https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it](https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it)](https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it](https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it))
-    def image : String
-      self.["image"].as(String)
-    end
-
-    # :ditto:
-    def image! : String
-      self.["image"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def image? : String?
-      self.["image"]?.as(String?)
-    end
-
-    # :ditto:
-    def image=(value : String)
-      self.["image"] = value
-    end
-
-    # Keyring is the path to key ring for RBDUser. Default is [[/etc/ceph/keyring. More info: https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it](/etc/ceph/keyring. More info: https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it)]([/etc/ceph/keyring. More info: https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it](/etc/ceph/keyring. More info: https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it))
-    def keyring : String?
-      self.["keyring"].as(String?)
-    end
-
-    # :ditto:
-    def keyring! : String
-      self.["keyring"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def keyring? : String?
-      self.["keyring"]?.as(String?)
-    end
-
-    # :ditto:
-    def keyring=(value : String?)
-      self.["keyring"] = value
-    end
-
-    # A collection of Ceph monitors. More info: [[https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it](https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it)](https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it](https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it))
-    def monitors : ::Array(String)
-      self.["monitors"].as(::Array(String))
-    end
-
-    # :ditto:
-    def monitors! : ::Array(String)
-      self.["monitors"].as(::Array(String)).not_nil!
-    end
-
-    # :ditto:
-    def monitors? : ::Array(String)?
-      self.["monitors"]?.as(::Array(String)?)
-    end
-
-    # :ditto:
-    def monitors=(value : ::Array(String))
-      self.["monitors"] = value
-    end
-
-    # The rados pool name. Default is rbd. More info: [[https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it](https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it)](https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it](https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it))
-    def pool : String?
-      self.["pool"].as(String?)
-    end
-
-    # :ditto:
-    def pool! : String
-      self.["pool"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def pool? : String?
-      self.["pool"]?.as(String?)
-    end
-
-    # :ditto:
-    def pool=(value : String?)
-      self.["pool"] = value
-    end
-
-    # ReadOnly here will force the ReadOnly setting in VolumeMounts. Defaults to false. More info: [[https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it](https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it)](https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it](https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it))
-    def read_only : ::Bool?
-      self.["readOnly"].as(::Bool?)
-    end
-
-    # :ditto:
-    def read_only! : ::Bool
-      self.["readOnly"].as(::Bool?).not_nil!
-    end
-
-    # :ditto:
-    def read_only? : ::Bool?
-      self.["readOnly"]?.as(::Bool?)
-    end
-
-    # :ditto:
-    def read_only=(value : ::Bool?)
-      self.["readOnly"] = value
-    end
-
-    # SecretRef is name of the authentication secret for RBDUser. If provided overrides keyring. Default is nil. More info: [[https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it](https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it)](https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it](https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it))
-    def secret_ref : ::K8S::Api::Core::V1::SecretReference?
-      self.["secretRef"].as(::K8S::Api::Core::V1::SecretReference?)
-    end
-
-    # :ditto:
-    def secret_ref! : ::K8S::Api::Core::V1::SecretReference
-      self.["secretRef"].as(::K8S::Api::Core::V1::SecretReference?).not_nil!
-    end
-
-    # :ditto:
-    def secret_ref? : ::K8S::Api::Core::V1::SecretReference?
-      self.["secretRef"]?.as(::K8S::Api::Core::V1::SecretReference?)
-    end
-
-    # :ditto:
-    def secret_ref=(value : ::K8S::Api::Core::V1::SecretReference?)
-      self.["secretRef"] = value
-    end
-
-    # The rados user name. Default is admin. More info: [[https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it](https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it)](https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it](https://releases.k8s.io/HEAD/examples/volumes/rbd/README.md#how-to-use-it))
-    def user : String?
-      self.["user"].as(String?)
-    end
-
-    # :ditto:
-    def user! : String
-      self.["user"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def user? : String?
-      self.["user"]?.as(String?)
-    end
-
-    # :ditto:
-    def user=(value : String?)
-      self.["user"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "fsType", accessor: "fs_type", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "image", accessor: "image", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "keyring", accessor: "keyring", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "monitors", accessor: "monitors", nilable: false, read_only: false, default: nil, kind: ::Array(String) },
-        { key: "pool", accessor: "pool", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "readOnly", accessor: "read_only", nilable: true, read_only: false, default: nil, kind: ::Bool },
-        { key: "secretRef", accessor: "secret_ref", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::SecretReference },
-        { key: "user", accessor: "user", nilable: true, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "fsType", accessor: "fs_type", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "image", accessor: "image", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "keyring", accessor: "keyring", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "monitors", accessor: "monitors", nilable: false, read_only: false, default: nil, kind: ::Array(String)},
+      {key: "pool", accessor: "pool", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "readOnly", accessor: "read_only", nilable: true, read_only: false, default: nil, kind: ::Bool},
+      {key: "secretRef", accessor: "secret_ref", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Core::V1::SecretReference},
+      {key: "user", accessor: "user", nilable: true, read_only: false, default: nil, kind: String},
+    ])
   end
 end

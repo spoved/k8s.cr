@@ -9,7 +9,7 @@ module K8S
   # Namespace holding the types for `Apimachinery::Apis::Meta::V1::OwnerReference`.
   module Types::Apimachinery::Apis::Meta::V1::OwnerReference
     # API version of the referent.
-    abstract def api_version : String
+    abstract def api_version : String?
     # :ditto:
     abstract def api_version! : String
     # :ditto:
@@ -23,7 +23,7 @@ module K8S
     # :ditto:
     abstract def block_owner_deletion? : ::Bool?
     # :ditto:
-    abstract def block_owner_deletion=(value : ::Bool?)
+    abstract def block_owner_deletion=(value : ::Bool)
     # If true, this reference points to the managing controller.
     abstract def controller : ::Bool?
     # :ditto:
@@ -31,9 +31,9 @@ module K8S
     # :ditto:
     abstract def controller? : ::Bool?
     # :ditto:
-    abstract def controller=(value : ::Bool?)
+    abstract def controller=(value : ::Bool)
     # Kind of the referent. More info: [[https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds))
-    abstract def kind : String
+    abstract def kind : String?
     # :ditto:
     abstract def kind! : String
     # :ditto:
@@ -41,7 +41,7 @@ module K8S
     # :ditto:
     abstract def kind=(value : String)
     # Name of the referent. More info: [[http://kubernetes.io/docs/user-guide/identifiers#names](http://kubernetes.io/docs/user-guide/identifiers#names)](http://kubernetes.io/docs/user-guide/identifiers#names](http://kubernetes.io/docs/user-guide/identifiers#names))
-    abstract def name : String
+    abstract def name : String?
     # :ditto:
     abstract def name! : String
     # :ditto:
@@ -49,7 +49,7 @@ module K8S
     # :ditto:
     abstract def name=(value : String)
     # UID of the referent. More info: [[http://kubernetes.io/docs/user-guide/identifiers#uids](http://kubernetes.io/docs/user-guide/identifiers#uids)](http://kubernetes.io/docs/user-guide/identifiers#uids](http://kubernetes.io/docs/user-guide/identifiers#uids))
-    abstract def uid : String
+    abstract def uid : String?
     # :ditto:
     abstract def uid! : String
     # :ditto:
@@ -69,136 +69,30 @@ module K8S
   )]
   class Apimachinery::Apis::Meta::V1::OwnerReference < ::K8S::GenericObject
     include ::K8S::Types::Apimachinery::Apis::Meta::V1::OwnerReference
+    k8s_object_accessor("apiVersion", api_version : String, false, false, "API version of the referent.")
+    k8s_object_accessor("blockOwnerDeletion", block_owner_deletion : ::Bool, true, false, "If true, AND if the owner has the \"foregroundDeletion\" finalizer, then the owner cannot be deleted from the key-value store until this reference is removed. Defaults to false. To set this field, a user needs \"delete\" permission of the owner, otherwise 422 (Unprocessable Entity) will be returned.")
+    k8s_object_accessor("controller", controller : ::Bool, true, false, "If true, this reference points to the managing controller.")
+    k8s_object_accessor("kind", kind : String, false, false, "Kind of the referent. More info: [https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds)")
+    k8s_object_accessor("name", name : String, false, false, "Name of the referent. More info: [http://kubernetes.io/docs/user-guide/identifiers#names](http://kubernetes.io/docs/user-guide/identifiers#names)")
+    k8s_object_accessor("uid", uid : String, false, false, "UID of the referent. More info: [http://kubernetes.io/docs/user-guide/identifiers#uids](http://kubernetes.io/docs/user-guide/identifiers#uids)")
 
-    # API version of the referent.
-    def api_version : String
-      self.["apiVersion"].as(String)
+    def initialize(*, api_version : String? = nil, block_owner_deletion : ::Bool? = nil, controller : ::Bool? = nil, kind : String? = nil, name : String? = nil, uid : String? = nil)
+      super()
+      self.["apiVersion"] = api_version
+      self.["blockOwnerDeletion"] = block_owner_deletion
+      self.["controller"] = controller
+      self.["kind"] = kind
+      self.["name"] = name
+      self.["uid"] = uid
     end
 
-    # :ditto:
-    def api_version! : String
-      self.["apiVersion"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def api_version? : String?
-      self.["apiVersion"]?.as(String?)
-    end
-
-    # :ditto:
-    def api_version=(value : String)
-      self.["apiVersion"] = value
-    end
-
-    # If true, AND if the owner has the "foregroundDeletion" finalizer, then the owner cannot be deleted from the key-value store until this reference is removed. Defaults to false. To set this field, a user needs "delete" permission of the owner, otherwise 422 (Unprocessable Entity) will be returned.
-    def block_owner_deletion : ::Bool?
-      self.["blockOwnerDeletion"].as(::Bool?)
-    end
-
-    # :ditto:
-    def block_owner_deletion! : ::Bool
-      self.["blockOwnerDeletion"].as(::Bool?).not_nil!
-    end
-
-    # :ditto:
-    def block_owner_deletion? : ::Bool?
-      self.["blockOwnerDeletion"]?.as(::Bool?)
-    end
-
-    # :ditto:
-    def block_owner_deletion=(value : ::Bool?)
-      self.["blockOwnerDeletion"] = value
-    end
-
-    # If true, this reference points to the managing controller.
-    def controller : ::Bool?
-      self.["controller"].as(::Bool?)
-    end
-
-    # :ditto:
-    def controller! : ::Bool
-      self.["controller"].as(::Bool?).not_nil!
-    end
-
-    # :ditto:
-    def controller? : ::Bool?
-      self.["controller"]?.as(::Bool?)
-    end
-
-    # :ditto:
-    def controller=(value : ::Bool?)
-      self.["controller"] = value
-    end
-
-    # Kind of the referent. More info: [[https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds))
-    def kind : String
-      self.["kind"].as(String)
-    end
-
-    # :ditto:
-    def kind! : String
-      self.["kind"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def kind? : String?
-      self.["kind"]?.as(String?)
-    end
-
-    # :ditto:
-    def kind=(value : String)
-      self.["kind"] = value
-    end
-
-    # Name of the referent. More info: [[http://kubernetes.io/docs/user-guide/identifiers#names](http://kubernetes.io/docs/user-guide/identifiers#names)](http://kubernetes.io/docs/user-guide/identifiers#names](http://kubernetes.io/docs/user-guide/identifiers#names))
-    def name : String
-      self.["name"].as(String)
-    end
-
-    # :ditto:
-    def name! : String
-      self.["name"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def name? : String?
-      self.["name"]?.as(String?)
-    end
-
-    # :ditto:
-    def name=(value : String)
-      self.["name"] = value
-    end
-
-    # UID of the referent. More info: [[http://kubernetes.io/docs/user-guide/identifiers#uids](http://kubernetes.io/docs/user-guide/identifiers#uids)](http://kubernetes.io/docs/user-guide/identifiers#uids](http://kubernetes.io/docs/user-guide/identifiers#uids))
-    def uid : String
-      self.["uid"].as(String)
-    end
-
-    # :ditto:
-    def uid! : String
-      self.["uid"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def uid? : String?
-      self.["uid"]?.as(String?)
-    end
-
-    # :ditto:
-    def uid=(value : String)
-      self.["uid"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "apiVersion", accessor: "api_version", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "blockOwnerDeletion", accessor: "block_owner_deletion", nilable: true, read_only: false, default: nil, kind: ::Bool },
-        { key: "controller", accessor: "controller", nilable: true, read_only: false, default: nil, kind: ::Bool },
-        { key: "kind", accessor: "kind", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "name", accessor: "name", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "uid", accessor: "uid", nilable: false, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "apiVersion", accessor: "api_version", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "blockOwnerDeletion", accessor: "block_owner_deletion", nilable: true, read_only: false, default: nil, kind: ::Bool},
+      {key: "controller", accessor: "controller", nilable: true, read_only: false, default: nil, kind: ::Bool},
+      {key: "kind", accessor: "kind", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "name", accessor: "name", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "uid", accessor: "uid", nilable: false, read_only: false, default: nil, kind: String},
+    ])
   end
 end

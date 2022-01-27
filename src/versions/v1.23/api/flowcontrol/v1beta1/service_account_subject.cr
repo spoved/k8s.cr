@@ -9,7 +9,7 @@ module K8S
   # Namespace holding the types for `Api::Flowcontrol::V1beta1::ServiceAccountSubject`.
   module Types::Api::Flowcontrol::V1beta1::ServiceAccountSubject
     # `name` is the name of matching ServiceAccount objects, or "*" to match regardless of name. Required.
-    abstract def name : String
+    abstract def name : String?
     # :ditto:
     abstract def name! : String
     # :ditto:
@@ -17,7 +17,7 @@ module K8S
     # :ditto:
     abstract def name=(value : String)
     # `namespace` is the namespace of matching ServiceAccount objects. Required.
-    abstract def namespace : String
+    abstract def namespace : String?
     # :ditto:
     abstract def namespace! : String
     # :ditto:
@@ -33,52 +33,18 @@ module K8S
   )]
   class Api::Flowcontrol::V1beta1::ServiceAccountSubject < ::K8S::GenericObject
     include ::K8S::Types::Api::Flowcontrol::V1beta1::ServiceAccountSubject
+    k8s_object_accessor("name", name : String, false, false, "`name` is the name of matching ServiceAccount objects, or \"*\" to match regardless of name. Required.")
+    k8s_object_accessor("namespace", namespace : String, false, false, "`namespace` is the namespace of matching ServiceAccount objects. Required.")
 
-    # `name` is the name of matching ServiceAccount objects, or "*" to match regardless of name. Required.
-    def name : String
-      self.["name"].as(String)
+    def initialize(*, name : String? = nil, namespace : String? = nil)
+      super()
+      self.["name"] = name
+      self.["namespace"] = namespace
     end
 
-    # :ditto:
-    def name! : String
-      self.["name"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def name? : String?
-      self.["name"]?.as(String?)
-    end
-
-    # :ditto:
-    def name=(value : String)
-      self.["name"] = value
-    end
-
-    # `namespace` is the namespace of matching ServiceAccount objects. Required.
-    def namespace : String
-      self.["namespace"].as(String)
-    end
-
-    # :ditto:
-    def namespace! : String
-      self.["namespace"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def namespace? : String?
-      self.["namespace"]?.as(String?)
-    end
-
-    # :ditto:
-    def namespace=(value : String)
-      self.["namespace"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "name", accessor: "name", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "namespace", accessor: "namespace", nilable: false, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "name", accessor: "name", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "namespace", accessor: "namespace", nilable: false, read_only: false, default: nil, kind: String},
+    ])
   end
 end

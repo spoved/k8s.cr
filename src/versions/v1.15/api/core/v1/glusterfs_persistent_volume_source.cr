@@ -9,7 +9,7 @@ module K8S
   # Namespace holding the types for `Api::Core::V1::GlusterfsPersistentVolumeSource`.
   module Types::Api::Core::V1::GlusterfsPersistentVolumeSource
     # EndpointsName is the endpoint name that details Glusterfs topology. More info: [[https://releases.k8s.io/HEAD/examples/volumes/glusterfs/README.md#create-a-pod](https://releases.k8s.io/HEAD/examples/volumes/glusterfs/README.md#create-a-pod)](https://releases.k8s.io/HEAD/examples/volumes/glusterfs/README.md#create-a-pod](https://releases.k8s.io/HEAD/examples/volumes/glusterfs/README.md#create-a-pod))
-    abstract def endpoints : String
+    abstract def endpoints : String?
     # :ditto:
     abstract def endpoints! : String
     # :ditto:
@@ -23,9 +23,9 @@ module K8S
     # :ditto:
     abstract def endpoints_namespace? : String?
     # :ditto:
-    abstract def endpoints_namespace=(value : String?)
+    abstract def endpoints_namespace=(value : String)
     # Path is the Glusterfs volume path. More info: [[https://releases.k8s.io/HEAD/examples/volumes/glusterfs/README.md#create-a-pod](https://releases.k8s.io/HEAD/examples/volumes/glusterfs/README.md#create-a-pod)](https://releases.k8s.io/HEAD/examples/volumes/glusterfs/README.md#create-a-pod](https://releases.k8s.io/HEAD/examples/volumes/glusterfs/README.md#create-a-pod))
-    abstract def path : String
+    abstract def path : String?
     # :ditto:
     abstract def path! : String
     # :ditto:
@@ -39,7 +39,7 @@ module K8S
     # :ditto:
     abstract def read_only? : ::Bool?
     # :ditto:
-    abstract def read_only=(value : ::Bool?)
+    abstract def read_only=(value : ::Bool)
   end
 
   # Represents a Glusterfs mount that lasts the lifetime of a pod. Glusterfs volumes do not support ownership management or SELinux relabeling.
@@ -51,94 +51,24 @@ module K8S
   )]
   class Api::Core::V1::GlusterfsPersistentVolumeSource < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::GlusterfsPersistentVolumeSource
+    k8s_object_accessor("endpoints", endpoints : String, false, false, "EndpointsName is the endpoint name that details Glusterfs topology. More info: [https://releases.k8s.io/HEAD/examples/volumes/glusterfs/README.md#create-a-pod](https://releases.k8s.io/HEAD/examples/volumes/glusterfs/README.md#create-a-pod)")
+    k8s_object_accessor("endpointsNamespace", endpoints_namespace : String, true, false, "EndpointsNamespace is the namespace that contains Glusterfs endpoint. If this field is empty, the EndpointNamespace defaults to the same namespace as the bound PVC. More info: [https://releases.k8s.io/HEAD/examples/volumes/glusterfs/README.md#create-a-pod](https://releases.k8s.io/HEAD/examples/volumes/glusterfs/README.md#create-a-pod)")
+    k8s_object_accessor("path", path : String, false, false, "Path is the Glusterfs volume path. More info: [https://releases.k8s.io/HEAD/examples/volumes/glusterfs/README.md#create-a-pod](https://releases.k8s.io/HEAD/examples/volumes/glusterfs/README.md#create-a-pod)")
+    k8s_object_accessor("readOnly", read_only : ::Bool, true, false, "ReadOnly here will force the Glusterfs volume to be mounted with read-only permissions. Defaults to false. More info: [https://releases.k8s.io/HEAD/examples/volumes/glusterfs/README.md#create-a-pod](https://releases.k8s.io/HEAD/examples/volumes/glusterfs/README.md#create-a-pod)")
 
-    # EndpointsName is the endpoint name that details Glusterfs topology. More info: [[https://releases.k8s.io/HEAD/examples/volumes/glusterfs/README.md#create-a-pod](https://releases.k8s.io/HEAD/examples/volumes/glusterfs/README.md#create-a-pod)](https://releases.k8s.io/HEAD/examples/volumes/glusterfs/README.md#create-a-pod](https://releases.k8s.io/HEAD/examples/volumes/glusterfs/README.md#create-a-pod))
-    def endpoints : String
-      self.["endpoints"].as(String)
+    def initialize(*, endpoints : String? = nil, endpoints_namespace : String? = nil, path : String? = nil, read_only : ::Bool? = nil)
+      super()
+      self.["endpoints"] = endpoints
+      self.["endpointsNamespace"] = endpoints_namespace
+      self.["path"] = path
+      self.["readOnly"] = read_only
     end
 
-    # :ditto:
-    def endpoints! : String
-      self.["endpoints"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def endpoints? : String?
-      self.["endpoints"]?.as(String?)
-    end
-
-    # :ditto:
-    def endpoints=(value : String)
-      self.["endpoints"] = value
-    end
-
-    # EndpointsNamespace is the namespace that contains Glusterfs endpoint. If this field is empty, the EndpointNamespace defaults to the same namespace as the bound PVC. More info: [[https://releases.k8s.io/HEAD/examples/volumes/glusterfs/README.md#create-a-pod](https://releases.k8s.io/HEAD/examples/volumes/glusterfs/README.md#create-a-pod)](https://releases.k8s.io/HEAD/examples/volumes/glusterfs/README.md#create-a-pod](https://releases.k8s.io/HEAD/examples/volumes/glusterfs/README.md#create-a-pod))
-    def endpoints_namespace : String?
-      self.["endpointsNamespace"].as(String?)
-    end
-
-    # :ditto:
-    def endpoints_namespace! : String
-      self.["endpointsNamespace"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def endpoints_namespace? : String?
-      self.["endpointsNamespace"]?.as(String?)
-    end
-
-    # :ditto:
-    def endpoints_namespace=(value : String?)
-      self.["endpointsNamespace"] = value
-    end
-
-    # Path is the Glusterfs volume path. More info: [[https://releases.k8s.io/HEAD/examples/volumes/glusterfs/README.md#create-a-pod](https://releases.k8s.io/HEAD/examples/volumes/glusterfs/README.md#create-a-pod)](https://releases.k8s.io/HEAD/examples/volumes/glusterfs/README.md#create-a-pod](https://releases.k8s.io/HEAD/examples/volumes/glusterfs/README.md#create-a-pod))
-    def path : String
-      self.["path"].as(String)
-    end
-
-    # :ditto:
-    def path! : String
-      self.["path"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def path? : String?
-      self.["path"]?.as(String?)
-    end
-
-    # :ditto:
-    def path=(value : String)
-      self.["path"] = value
-    end
-
-    # ReadOnly here will force the Glusterfs volume to be mounted with read-only permissions. Defaults to false. More info: [[https://releases.k8s.io/HEAD/examples/volumes/glusterfs/README.md#create-a-pod](https://releases.k8s.io/HEAD/examples/volumes/glusterfs/README.md#create-a-pod)](https://releases.k8s.io/HEAD/examples/volumes/glusterfs/README.md#create-a-pod](https://releases.k8s.io/HEAD/examples/volumes/glusterfs/README.md#create-a-pod))
-    def read_only : ::Bool?
-      self.["readOnly"].as(::Bool?)
-    end
-
-    # :ditto:
-    def read_only! : ::Bool
-      self.["readOnly"].as(::Bool?).not_nil!
-    end
-
-    # :ditto:
-    def read_only? : ::Bool?
-      self.["readOnly"]?.as(::Bool?)
-    end
-
-    # :ditto:
-    def read_only=(value : ::Bool?)
-      self.["readOnly"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "endpoints", accessor: "endpoints", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "endpointsNamespace", accessor: "endpoints_namespace", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "path", accessor: "path", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "readOnly", accessor: "read_only", nilable: true, read_only: false, default: nil, kind: ::Bool },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "endpoints", accessor: "endpoints", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "endpointsNamespace", accessor: "endpoints_namespace", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "path", accessor: "path", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "readOnly", accessor: "read_only", nilable: true, read_only: false, default: nil, kind: ::Bool},
+    ])
   end
 end

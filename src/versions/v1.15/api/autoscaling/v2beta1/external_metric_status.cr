@@ -17,9 +17,9 @@ module K8S
     # :ditto:
     abstract def current_average_value? : ::Int32 | ::String?
     # :ditto:
-    abstract def current_average_value=(value : ::Int32 | ::String?)
+    abstract def current_average_value=(value : ::Int32 | ::String)
     # currentValue is the current value of the metric (as a quantity)
-    abstract def current_value : ::Int32 | ::String
+    abstract def current_value : ::Int32 | ::String?
     # :ditto:
     abstract def current_value! : ::Int32 | ::String
     # :ditto:
@@ -27,7 +27,7 @@ module K8S
     # :ditto:
     abstract def current_value=(value : ::Int32 | ::String)
     # metricName is the name of a metric used for autoscaling in metric system.
-    abstract def metric_name : String
+    abstract def metric_name : String?
     # :ditto:
     abstract def metric_name! : String
     # :ditto:
@@ -41,7 +41,7 @@ module K8S
     # :ditto:
     abstract def metric_selector? : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?
     # :ditto:
-    abstract def metric_selector=(value : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?)
+    abstract def metric_selector=(value : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector)
   end
 
   # ExternalMetricStatus indicates the current value of a global metric not associated with any Kubernetes object.
@@ -53,94 +53,24 @@ module K8S
   )]
   class Api::Autoscaling::V2beta1::ExternalMetricStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Autoscaling::V2beta1::ExternalMetricStatus
+    k8s_object_accessor("currentAverageValue", current_average_value : ::Int32 | ::String, true, false, "currentAverageValue is the current value of metric averaged over autoscaled pods.")
+    k8s_object_accessor("currentValue", current_value : ::Int32 | ::String, false, false, "currentValue is the current value of the metric (as a quantity)")
+    k8s_object_accessor("metricName", metric_name : String, false, false, "metricName is the name of a metric used for autoscaling in metric system.")
+    k8s_object_accessor("metricSelector", metric_selector : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector, true, false, "metricSelector is used to identify a specific time series within a given metric.")
 
-    # currentAverageValue is the current value of metric averaged over autoscaled pods.
-    def current_average_value : ::Int32 | ::String?
-      self.["currentAverageValue"].as(::Int32 | ::String?)
+    def initialize(*, current_average_value : ::Int32 | ::String? = nil, current_value : ::Int32 | ::String? = nil, metric_name : String? = nil, metric_selector : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector? = nil)
+      super()
+      self.["currentAverageValue"] = current_average_value
+      self.["currentValue"] = current_value
+      self.["metricName"] = metric_name
+      self.["metricSelector"] = metric_selector
     end
 
-    # :ditto:
-    def current_average_value! : ::Int32 | ::String
-      self.["currentAverageValue"].as(::Int32 | ::String?).not_nil!
-    end
-
-    # :ditto:
-    def current_average_value? : ::Int32 | ::String?
-      self.["currentAverageValue"]?.as(::Int32 | ::String?)
-    end
-
-    # :ditto:
-    def current_average_value=(value : ::Int32 | ::String?)
-      self.["currentAverageValue"] = value
-    end
-
-    # currentValue is the current value of the metric (as a quantity)
-    def current_value : ::Int32 | ::String
-      self.["currentValue"].as(::Int32 | ::String)
-    end
-
-    # :ditto:
-    def current_value! : ::Int32 | ::String
-      self.["currentValue"].as(::Int32 | ::String).not_nil!
-    end
-
-    # :ditto:
-    def current_value? : ::Int32 | ::String?
-      self.["currentValue"]?.as(::Int32 | ::String?)
-    end
-
-    # :ditto:
-    def current_value=(value : ::Int32 | ::String)
-      self.["currentValue"] = value
-    end
-
-    # metricName is the name of a metric used for autoscaling in metric system.
-    def metric_name : String
-      self.["metricName"].as(String)
-    end
-
-    # :ditto:
-    def metric_name! : String
-      self.["metricName"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def metric_name? : String?
-      self.["metricName"]?.as(String?)
-    end
-
-    # :ditto:
-    def metric_name=(value : String)
-      self.["metricName"] = value
-    end
-
-    # metricSelector is used to identify a specific time series within a given metric.
-    def metric_selector : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?
-      self.["metricSelector"].as(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?)
-    end
-
-    # :ditto:
-    def metric_selector! : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector
-      self.["metricSelector"].as(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?).not_nil!
-    end
-
-    # :ditto:
-    def metric_selector? : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?
-      self.["metricSelector"]?.as(::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?)
-    end
-
-    # :ditto:
-    def metric_selector=(value : ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector?)
-      self.["metricSelector"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "currentAverageValue", accessor: "current_average_value", nilable: true, read_only: false, default: nil, kind: ::Union(::Int32 | ::String) },
-        { key: "currentValue", accessor: "current_value", nilable: false, read_only: false, default: nil, kind: ::Union(::Int32 | ::String) },
-        { key: "metricName", accessor: "metric_name", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "metricSelector", accessor: "metric_selector", nilable: true, read_only: false, default: nil, kind: ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "currentAverageValue", accessor: "current_average_value", nilable: true, read_only: false, default: nil, kind: ::Union(::Int32 | ::String)},
+      {key: "currentValue", accessor: "current_value", nilable: false, read_only: false, default: nil, kind: ::Union(::Int32 | ::String)},
+      {key: "metricName", accessor: "metric_name", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "metricSelector", accessor: "metric_selector", nilable: true, read_only: false, default: nil, kind: ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector},
+    ])
   end
 end

@@ -21,7 +21,7 @@ module K8S
     # :ditto:
     abstract def container_resource? : ::K8S::Api::Autoscaling::V2beta1::ContainerResourceMetricSource?
     # :ditto:
-    abstract def container_resource=(value : ::K8S::Api::Autoscaling::V2beta1::ContainerResourceMetricSource?)
+    abstract def container_resource=(value : ::K8S::Api::Autoscaling::V2beta1::ContainerResourceMetricSource)
     # external refers to a global metric that is not associated with any Kubernetes object. It allows autoscaling based on information coming from components running outside of cluster (for example length of queue in cloud messaging service, or QPS from loadbalancer running outside of cluster).
     abstract def external : ::K8S::Api::Autoscaling::V2beta1::ExternalMetricSource?
     # :ditto:
@@ -29,7 +29,7 @@ module K8S
     # :ditto:
     abstract def external? : ::K8S::Api::Autoscaling::V2beta1::ExternalMetricSource?
     # :ditto:
-    abstract def external=(value : ::K8S::Api::Autoscaling::V2beta1::ExternalMetricSource?)
+    abstract def external=(value : ::K8S::Api::Autoscaling::V2beta1::ExternalMetricSource)
     # object refers to a metric describing a single kubernetes object (for example, hits-per-second on an Ingress object).
     abstract def object : ::K8S::Api::Autoscaling::V2beta1::ObjectMetricSource?
     # :ditto:
@@ -37,7 +37,7 @@ module K8S
     # :ditto:
     abstract def object? : ::K8S::Api::Autoscaling::V2beta1::ObjectMetricSource?
     # :ditto:
-    abstract def object=(value : ::K8S::Api::Autoscaling::V2beta1::ObjectMetricSource?)
+    abstract def object=(value : ::K8S::Api::Autoscaling::V2beta1::ObjectMetricSource)
     # pods refers to a metric describing each pod in the current scale target (for example, transactions-processed-per-second).  The values will be averaged together before being compared to the target value.
     abstract def pods : ::K8S::Api::Autoscaling::V2beta1::PodsMetricSource?
     # :ditto:
@@ -45,7 +45,7 @@ module K8S
     # :ditto:
     abstract def pods? : ::K8S::Api::Autoscaling::V2beta1::PodsMetricSource?
     # :ditto:
-    abstract def pods=(value : ::K8S::Api::Autoscaling::V2beta1::PodsMetricSource?)
+    abstract def pods=(value : ::K8S::Api::Autoscaling::V2beta1::PodsMetricSource)
     # resource refers to a resource metric (such as those specified in requests and limits) known to Kubernetes describing each pod in the current scale target (e.g. CPU or memory). Such metrics are built in to Kubernetes, and have special scaling options on top of those available to normal per-pod metrics using the "pods" source.
     abstract def resource : ::K8S::Api::Autoscaling::V2beta1::ResourceMetricSource?
     # :ditto:
@@ -53,9 +53,9 @@ module K8S
     # :ditto:
     abstract def resource? : ::K8S::Api::Autoscaling::V2beta1::ResourceMetricSource?
     # :ditto:
-    abstract def resource=(value : ::K8S::Api::Autoscaling::V2beta1::ResourceMetricSource?)
+    abstract def resource=(value : ::K8S::Api::Autoscaling::V2beta1::ResourceMetricSource)
     # type is the type of metric source.  It should be one of "ContainerResource", "External", "Object", "Pods" or "Resource", each mapping to a matching field in the object. Note: "ContainerResource" type is available on when the feature-gate HPAContainerMetrics is enabled
-    abstract def type : String
+    abstract def type : String?
     # :ditto:
     abstract def type! : String
     # :ditto:
@@ -75,136 +75,30 @@ module K8S
   )]
   class Api::Autoscaling::V2beta1::MetricSpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Autoscaling::V2beta1::MetricSpec
+    k8s_object_accessor("containerResource", container_resource : ::K8S::Api::Autoscaling::V2beta1::ContainerResourceMetricSource, true, false, "container resource refers to a resource metric (such as those specified in requests and limits) known to Kubernetes describing a single container in each pod of the current scale target (e.g. CPU or memory). Such metrics are built in to Kubernetes, and have special scaling options on top of those available to normal per-pod metrics using the \"pods\" source. This is an alpha feature and can be enabled by the HPAContainerMetrics feature flag.")
+    k8s_object_accessor("external", external : ::K8S::Api::Autoscaling::V2beta1::ExternalMetricSource, true, false, "external refers to a global metric that is not associated with any Kubernetes object. It allows autoscaling based on information coming from components running outside of cluster (for example length of queue in cloud messaging service, or QPS from loadbalancer running outside of cluster).")
+    k8s_object_accessor("object", object : ::K8S::Api::Autoscaling::V2beta1::ObjectMetricSource, true, false, "object refers to a metric describing a single kubernetes object (for example, hits-per-second on an Ingress object).")
+    k8s_object_accessor("pods", pods : ::K8S::Api::Autoscaling::V2beta1::PodsMetricSource, true, false, "pods refers to a metric describing each pod in the current scale target (for example, transactions-processed-per-second).  The values will be averaged together before being compared to the target value.")
+    k8s_object_accessor("resource", resource : ::K8S::Api::Autoscaling::V2beta1::ResourceMetricSource, true, false, "resource refers to a resource metric (such as those specified in requests and limits) known to Kubernetes describing each pod in the current scale target (e.g. CPU or memory). Such metrics are built in to Kubernetes, and have special scaling options on top of those available to normal per-pod metrics using the \"pods\" source.")
+    k8s_object_accessor("type", type : String, false, false, "type is the type of metric source.  It should be one of \"ContainerResource\", \"External\", \"Object\", \"Pods\" or \"Resource\", each mapping to a matching field in the object. Note: \"ContainerResource\" type is available on when the feature-gate HPAContainerMetrics is enabled")
 
-    # container resource refers to a resource metric (such as those specified in requests and limits) known to Kubernetes describing a single container in each pod of the current scale target (e.g. CPU or memory). Such metrics are built in to Kubernetes, and have special scaling options on top of those available to normal per-pod metrics using the "pods" source. This is an alpha feature and can be enabled by the HPAContainerMetrics feature flag.
-    def container_resource : ::K8S::Api::Autoscaling::V2beta1::ContainerResourceMetricSource?
-      self.["containerResource"].as(::K8S::Api::Autoscaling::V2beta1::ContainerResourceMetricSource?)
+    def initialize(*, container_resource : ::K8S::Api::Autoscaling::V2beta1::ContainerResourceMetricSource? = nil, external : ::K8S::Api::Autoscaling::V2beta1::ExternalMetricSource? = nil, object : ::K8S::Api::Autoscaling::V2beta1::ObjectMetricSource? = nil, pods : ::K8S::Api::Autoscaling::V2beta1::PodsMetricSource? = nil, resource : ::K8S::Api::Autoscaling::V2beta1::ResourceMetricSource? = nil, type : String? = nil)
+      super()
+      self.["containerResource"] = container_resource
+      self.["external"] = external
+      self.["object"] = object
+      self.["pods"] = pods
+      self.["resource"] = resource
+      self.["type"] = type
     end
 
-    # :ditto:
-    def container_resource! : ::K8S::Api::Autoscaling::V2beta1::ContainerResourceMetricSource
-      self.["containerResource"].as(::K8S::Api::Autoscaling::V2beta1::ContainerResourceMetricSource?).not_nil!
-    end
-
-    # :ditto:
-    def container_resource? : ::K8S::Api::Autoscaling::V2beta1::ContainerResourceMetricSource?
-      self.["containerResource"]?.as(::K8S::Api::Autoscaling::V2beta1::ContainerResourceMetricSource?)
-    end
-
-    # :ditto:
-    def container_resource=(value : ::K8S::Api::Autoscaling::V2beta1::ContainerResourceMetricSource?)
-      self.["containerResource"] = value
-    end
-
-    # external refers to a global metric that is not associated with any Kubernetes object. It allows autoscaling based on information coming from components running outside of cluster (for example length of queue in cloud messaging service, or QPS from loadbalancer running outside of cluster).
-    def external : ::K8S::Api::Autoscaling::V2beta1::ExternalMetricSource?
-      self.["external"].as(::K8S::Api::Autoscaling::V2beta1::ExternalMetricSource?)
-    end
-
-    # :ditto:
-    def external! : ::K8S::Api::Autoscaling::V2beta1::ExternalMetricSource
-      self.["external"].as(::K8S::Api::Autoscaling::V2beta1::ExternalMetricSource?).not_nil!
-    end
-
-    # :ditto:
-    def external? : ::K8S::Api::Autoscaling::V2beta1::ExternalMetricSource?
-      self.["external"]?.as(::K8S::Api::Autoscaling::V2beta1::ExternalMetricSource?)
-    end
-
-    # :ditto:
-    def external=(value : ::K8S::Api::Autoscaling::V2beta1::ExternalMetricSource?)
-      self.["external"] = value
-    end
-
-    # object refers to a metric describing a single kubernetes object (for example, hits-per-second on an Ingress object).
-    def object : ::K8S::Api::Autoscaling::V2beta1::ObjectMetricSource?
-      self.["object"].as(::K8S::Api::Autoscaling::V2beta1::ObjectMetricSource?)
-    end
-
-    # :ditto:
-    def object! : ::K8S::Api::Autoscaling::V2beta1::ObjectMetricSource
-      self.["object"].as(::K8S::Api::Autoscaling::V2beta1::ObjectMetricSource?).not_nil!
-    end
-
-    # :ditto:
-    def object? : ::K8S::Api::Autoscaling::V2beta1::ObjectMetricSource?
-      self.["object"]?.as(::K8S::Api::Autoscaling::V2beta1::ObjectMetricSource?)
-    end
-
-    # :ditto:
-    def object=(value : ::K8S::Api::Autoscaling::V2beta1::ObjectMetricSource?)
-      self.["object"] = value
-    end
-
-    # pods refers to a metric describing each pod in the current scale target (for example, transactions-processed-per-second).  The values will be averaged together before being compared to the target value.
-    def pods : ::K8S::Api::Autoscaling::V2beta1::PodsMetricSource?
-      self.["pods"].as(::K8S::Api::Autoscaling::V2beta1::PodsMetricSource?)
-    end
-
-    # :ditto:
-    def pods! : ::K8S::Api::Autoscaling::V2beta1::PodsMetricSource
-      self.["pods"].as(::K8S::Api::Autoscaling::V2beta1::PodsMetricSource?).not_nil!
-    end
-
-    # :ditto:
-    def pods? : ::K8S::Api::Autoscaling::V2beta1::PodsMetricSource?
-      self.["pods"]?.as(::K8S::Api::Autoscaling::V2beta1::PodsMetricSource?)
-    end
-
-    # :ditto:
-    def pods=(value : ::K8S::Api::Autoscaling::V2beta1::PodsMetricSource?)
-      self.["pods"] = value
-    end
-
-    # resource refers to a resource metric (such as those specified in requests and limits) known to Kubernetes describing each pod in the current scale target (e.g. CPU or memory). Such metrics are built in to Kubernetes, and have special scaling options on top of those available to normal per-pod metrics using the "pods" source.
-    def resource : ::K8S::Api::Autoscaling::V2beta1::ResourceMetricSource?
-      self.["resource"].as(::K8S::Api::Autoscaling::V2beta1::ResourceMetricSource?)
-    end
-
-    # :ditto:
-    def resource! : ::K8S::Api::Autoscaling::V2beta1::ResourceMetricSource
-      self.["resource"].as(::K8S::Api::Autoscaling::V2beta1::ResourceMetricSource?).not_nil!
-    end
-
-    # :ditto:
-    def resource? : ::K8S::Api::Autoscaling::V2beta1::ResourceMetricSource?
-      self.["resource"]?.as(::K8S::Api::Autoscaling::V2beta1::ResourceMetricSource?)
-    end
-
-    # :ditto:
-    def resource=(value : ::K8S::Api::Autoscaling::V2beta1::ResourceMetricSource?)
-      self.["resource"] = value
-    end
-
-    # type is the type of metric source.  It should be one of "ContainerResource", "External", "Object", "Pods" or "Resource", each mapping to a matching field in the object. Note: "ContainerResource" type is available on when the feature-gate HPAContainerMetrics is enabled
-    def type : String
-      self.["type"].as(String)
-    end
-
-    # :ditto:
-    def type! : String
-      self.["type"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def type? : String?
-      self.["type"]?.as(String?)
-    end
-
-    # :ditto:
-    def type=(value : String)
-      self.["type"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "containerResource", accessor: "container_resource", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Autoscaling::V2beta1::ContainerResourceMetricSource },
-        { key: "external", accessor: "external", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Autoscaling::V2beta1::ExternalMetricSource },
-        { key: "object", accessor: "object", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Autoscaling::V2beta1::ObjectMetricSource },
-        { key: "pods", accessor: "pods", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Autoscaling::V2beta1::PodsMetricSource },
-        { key: "resource", accessor: "resource", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Autoscaling::V2beta1::ResourceMetricSource },
-        { key: "type", accessor: "type", nilable: false, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "containerResource", accessor: "container_resource", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Autoscaling::V2beta1::ContainerResourceMetricSource},
+      {key: "external", accessor: "external", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Autoscaling::V2beta1::ExternalMetricSource},
+      {key: "object", accessor: "object", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Autoscaling::V2beta1::ObjectMetricSource},
+      {key: "pods", accessor: "pods", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Autoscaling::V2beta1::PodsMetricSource},
+      {key: "resource", accessor: "resource", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Autoscaling::V2beta1::ResourceMetricSource},
+      {key: "type", accessor: "type", nilable: false, read_only: false, default: nil, kind: String},
+    ])
   end
 end

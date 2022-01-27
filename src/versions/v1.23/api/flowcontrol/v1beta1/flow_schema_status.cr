@@ -17,7 +17,7 @@ module K8S
     # :ditto:
     abstract def conditions? : ::Array(::K8S::Api::Flowcontrol::V1beta1::FlowSchemaCondition)?
     # :ditto:
-    abstract def conditions=(value : ::Array(::K8S::Api::Flowcontrol::V1beta1::FlowSchemaCondition)?)
+    abstract def conditions=(value : ::Array(::K8S::Api::Flowcontrol::V1beta1::FlowSchemaCondition))
   end
 
   # FlowSchemaStatus represents the current state of a FlowSchema.
@@ -26,31 +26,15 @@ module K8S
   )]
   class Api::Flowcontrol::V1beta1::FlowSchemaStatus < ::K8S::GenericObject
     include ::K8S::Types::Api::Flowcontrol::V1beta1::FlowSchemaStatus
+    k8s_object_accessor("conditions", conditions : ::Array(::K8S::Api::Flowcontrol::V1beta1::FlowSchemaCondition), true, false, "`conditions` is a list of the current states of FlowSchema.")
 
-    # `conditions` is a list of the current states of FlowSchema.
-    def conditions : ::Array(::K8S::Api::Flowcontrol::V1beta1::FlowSchemaCondition)?
-      self.["conditions"].as(::Array(::K8S::Api::Flowcontrol::V1beta1::FlowSchemaCondition)?)
+    def initialize(*, conditions : ::Array(::K8S::Api::Flowcontrol::V1beta1::FlowSchemaCondition)? = nil)
+      super()
+      self.["conditions"] = conditions
     end
 
-    # :ditto:
-    def conditions! : ::Array(::K8S::Api::Flowcontrol::V1beta1::FlowSchemaCondition)
-      self.["conditions"].as(::Array(::K8S::Api::Flowcontrol::V1beta1::FlowSchemaCondition)?).not_nil!
-    end
-
-    # :ditto:
-    def conditions? : ::Array(::K8S::Api::Flowcontrol::V1beta1::FlowSchemaCondition)?
-      self.["conditions"]?.as(::Array(::K8S::Api::Flowcontrol::V1beta1::FlowSchemaCondition)?)
-    end
-
-    # :ditto:
-    def conditions=(value : ::Array(::K8S::Api::Flowcontrol::V1beta1::FlowSchemaCondition)?)
-      self.["conditions"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "conditions", accessor: "conditions", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Flowcontrol::V1beta1::FlowSchemaCondition) },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "conditions", accessor: "conditions", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Flowcontrol::V1beta1::FlowSchemaCondition)},
+    ])
   end
 end

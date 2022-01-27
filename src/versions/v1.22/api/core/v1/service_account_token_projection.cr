@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def audience? : String?
     # :ditto:
-    abstract def audience=(value : String?)
+    abstract def audience=(value : String)
     # ExpirationSeconds is the requested duration of validity of the service account token. As the token approaches expiration, the kubelet volume plugin will proactively rotate the service account token. The kubelet will start trying to rotate the token if the token is older than 80 percent of its time to live or if the token is older than 24 hours.Defaults to 1 hour and must be at least 10 minutes.
     abstract def expiration_seconds : Int32?
     # :ditto:
@@ -23,9 +23,9 @@ module K8S
     # :ditto:
     abstract def expiration_seconds? : Int32?
     # :ditto:
-    abstract def expiration_seconds=(value : Int32?)
+    abstract def expiration_seconds=(value : Int32)
     # Path is the path relative to the mount point of the file to project the token into.
-    abstract def path : String
+    abstract def path : String?
     # :ditto:
     abstract def path! : String
     # :ditto:
@@ -42,73 +42,21 @@ module K8S
   )]
   class Api::Core::V1::ServiceAccountTokenProjection < ::K8S::GenericObject
     include ::K8S::Types::Api::Core::V1::ServiceAccountTokenProjection
+    k8s_object_accessor("audience", audience : String, true, false, "Audience is the intended audience of the token. A recipient of a token must identify itself with an identifier specified in the audience of the token, and otherwise should reject the token. The audience defaults to the identifier of the apiserver.")
+    k8s_object_accessor("expirationSeconds", expiration_seconds : Int32, true, false, "ExpirationSeconds is the requested duration of validity of the service account token. As the token approaches expiration, the kubelet volume plugin will proactively rotate the service account token. The kubelet will start trying to rotate the token if the token is older than 80 percent of its time to live or if the token is older than 24 hours.Defaults to 1 hour and must be at least 10 minutes.")
+    k8s_object_accessor("path", path : String, false, false, "Path is the path relative to the mount point of the file to project the token into.")
 
-    # Audience is the intended audience of the token. A recipient of a token must identify itself with an identifier specified in the audience of the token, and otherwise should reject the token. The audience defaults to the identifier of the apiserver.
-    def audience : String?
-      self.["audience"].as(String?)
+    def initialize(*, audience : String? = nil, expiration_seconds : Int32? = nil, path : String? = nil)
+      super()
+      self.["audience"] = audience
+      self.["expirationSeconds"] = expiration_seconds
+      self.["path"] = path
     end
 
-    # :ditto:
-    def audience! : String
-      self.["audience"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def audience? : String?
-      self.["audience"]?.as(String?)
-    end
-
-    # :ditto:
-    def audience=(value : String?)
-      self.["audience"] = value
-    end
-
-    # ExpirationSeconds is the requested duration of validity of the service account token. As the token approaches expiration, the kubelet volume plugin will proactively rotate the service account token. The kubelet will start trying to rotate the token if the token is older than 80 percent of its time to live or if the token is older than 24 hours.Defaults to 1 hour and must be at least 10 minutes.
-    def expiration_seconds : Int32?
-      self.["expirationSeconds"].as(Int32?)
-    end
-
-    # :ditto:
-    def expiration_seconds! : Int32
-      self.["expirationSeconds"].as(Int32?).not_nil!
-    end
-
-    # :ditto:
-    def expiration_seconds? : Int32?
-      self.["expirationSeconds"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def expiration_seconds=(value : Int32?)
-      self.["expirationSeconds"] = value
-    end
-
-    # Path is the path relative to the mount point of the file to project the token into.
-    def path : String
-      self.["path"].as(String)
-    end
-
-    # :ditto:
-    def path! : String
-      self.["path"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def path? : String?
-      self.["path"]?.as(String?)
-    end
-
-    # :ditto:
-    def path=(value : String)
-      self.["path"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "audience", accessor: "audience", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "expirationSeconds", accessor: "expiration_seconds", nilable: true, read_only: false, default: nil, kind: Int32 },
-        { key: "path", accessor: "path", nilable: false, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "audience", accessor: "audience", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "expirationSeconds", accessor: "expiration_seconds", nilable: true, read_only: false, default: nil, kind: Int32},
+      {key: "path", accessor: "path", nilable: false, read_only: false, default: nil, kind: String},
+    ])
   end
 end

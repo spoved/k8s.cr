@@ -15,7 +15,7 @@ module K8S
     # :ditto:
     abstract def replicas? : Int32?
     # :ditto:
-    abstract def replicas=(value : Int32?)
+    abstract def replicas=(value : Int32)
   end
 
   # ScaleSpec describes the attributes of a scale subresource.
@@ -24,31 +24,15 @@ module K8S
   )]
   class Api::Autoscaling::V1::ScaleSpec < ::K8S::GenericObject
     include ::K8S::Types::Api::Autoscaling::V1::ScaleSpec
+    k8s_object_accessor("replicas", replicas : Int32, true, false, "desired number of instances for the scaled object.")
 
-    # desired number of instances for the scaled object.
-    def replicas : Int32?
-      self.["replicas"].as(Int32?)
+    def initialize(*, replicas : Int32? = nil)
+      super()
+      self.["replicas"] = replicas
     end
 
-    # :ditto:
-    def replicas! : Int32
-      self.["replicas"].as(Int32?).not_nil!
-    end
-
-    # :ditto:
-    def replicas? : Int32?
-      self.["replicas"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def replicas=(value : Int32?)
-      self.["replicas"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "replicas", accessor: "replicas", nilable: true, read_only: false, default: nil, kind: Int32 },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "replicas", accessor: "replicas", nilable: true, read_only: false, default: nil, kind: Int32},
+    ])
   end
 end

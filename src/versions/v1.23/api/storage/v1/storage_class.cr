@@ -12,13 +12,13 @@ module K8S
   # Namespace holding the types for `Api::Storage::V1::StorageClass`.
   module Types::Api::Storage::V1::StorageClass
     # APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)))
-    abstract def api_version : String
+    abstract def api_version : String?
     # :ditto:
     abstract def api_version! : String
     # :ditto:
     abstract def api_version? : String?
     # Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)))
-    abstract def kind : String
+    abstract def kind : String?
     # :ditto:
     abstract def kind! : String
     # :ditto:
@@ -30,7 +30,7 @@ module K8S
     # :ditto:
     abstract def metadata? : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?
     # :ditto:
-    abstract def metadata=(value : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?)
+    abstract def metadata=(value : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta)
     # AllowVolumeExpansion shows whether the storage class allow volume expand
     abstract def allow_volume_expansion : ::Bool?
     # :ditto:
@@ -38,7 +38,7 @@ module K8S
     # :ditto:
     abstract def allow_volume_expansion? : ::Bool?
     # :ditto:
-    abstract def allow_volume_expansion=(value : ::Bool?)
+    abstract def allow_volume_expansion=(value : ::Bool)
     # Restrict the node topologies where volumes can be dynamically provisioned. Each volume plugin defines its own supported topology specifications. An empty TopologySelectorTerm list means there is no topology restriction. This field is only honored by servers that enable the VolumeScheduling feature.
     abstract def allowed_topologies : ::Array(::K8S::Api::Core::V1::TopologySelectorTerm)?
     # :ditto:
@@ -46,7 +46,7 @@ module K8S
     # :ditto:
     abstract def allowed_topologies? : ::Array(::K8S::Api::Core::V1::TopologySelectorTerm)?
     # :ditto:
-    abstract def allowed_topologies=(value : ::Array(::K8S::Api::Core::V1::TopologySelectorTerm)?)
+    abstract def allowed_topologies=(value : ::Array(::K8S::Api::Core::V1::TopologySelectorTerm))
     # Dynamically provisioned PersistentVolumes of this storage class are created with these mountOptions, e.g. ["ro", "soft"]. Not validated - mount of the PVs will simply fail if one is invalid.
     abstract def mount_options : ::Array(String)?
     # :ditto:
@@ -54,7 +54,7 @@ module K8S
     # :ditto:
     abstract def mount_options? : ::Array(String)?
     # :ditto:
-    abstract def mount_options=(value : ::Array(String)?)
+    abstract def mount_options=(value : ::Array(String))
     # Parameters holds the parameters for the provisioner that should create volumes of this storage class.
     abstract def parameters : ::Hash(String, String)?
     # :ditto:
@@ -62,9 +62,9 @@ module K8S
     # :ditto:
     abstract def parameters? : ::Hash(String, String)?
     # :ditto:
-    abstract def parameters=(value : ::Hash(String, String)?)
+    abstract def parameters=(value : ::Hash(String, String))
     # Provisioner indicates the type of the provisioner.
-    abstract def provisioner : String
+    abstract def provisioner : String?
     # :ditto:
     abstract def provisioner! : String
     # :ditto:
@@ -78,7 +78,7 @@ module K8S
     # :ditto:
     abstract def reclaim_policy? : String?
     # :ditto:
-    abstract def reclaim_policy=(value : String?)
+    abstract def reclaim_policy=(value : String)
     # VolumeBindingMode indicates how PersistentVolumeClaims should be provisioned and bound.  When unset, VolumeBindingImmediate is used. This field is only honored by servers that enable the VolumeScheduling feature.
     abstract def volume_binding_mode : String?
     # :ditto:
@@ -86,7 +86,7 @@ module K8S
     # :ditto:
     abstract def volume_binding_mode? : String?
     # :ditto:
-    abstract def volume_binding_mode=(value : String?)
+    abstract def volume_binding_mode=(value : String)
   end
 
   # StorageClass describes the parameters for a class of storage for which PersistentVolumes can be dynamically provisioned.
@@ -107,213 +107,45 @@ module K8S
   )]
   class Api::Storage::V1::StorageClass < ::K8S::Kubernetes::Resource::Object
     include ::K8S::Types::Api::Storage::V1::StorageClass
+    k8s_object_accessor("apiVersion", api_version : String = "storage/v1", false, true, "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources))")
+    k8s_object_accessor("kind", kind : String = "StorageClass", false, true, "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds))")
+    k8s_object_accessor("metadata", metadata : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta, true, false, "Standard object's metadata. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata))")
+    k8s_object_accessor("allowVolumeExpansion", allow_volume_expansion : ::Bool, true, false, "AllowVolumeExpansion shows whether the storage class allow volume expand")
+    k8s_object_accessor("allowedTopologies", allowed_topologies : ::Array(::K8S::Api::Core::V1::TopologySelectorTerm), true, false, "Restrict the node topologies where volumes can be dynamically provisioned. Each volume plugin defines its own supported topology specifications. An empty TopologySelectorTerm list means there is no topology restriction. This field is only honored by servers that enable the VolumeScheduling feature.")
+    k8s_object_accessor("mountOptions", mount_options : ::Array(String), true, false, "Dynamically provisioned PersistentVolumes of this storage class are created with these mountOptions, e.g. [\"ro\", \"soft\"]. Not validated - mount of the PVs will simply fail if one is invalid.")
+    k8s_object_accessor("parameters", parameters : ::Hash(String, String), true, false, "Parameters holds the parameters for the provisioner that should create volumes of this storage class.")
+    k8s_object_accessor("provisioner", provisioner : String, false, false, "Provisioner indicates the type of the provisioner.")
+    k8s_object_accessor("reclaimPolicy", reclaim_policy : String, true, false, "Dynamically provisioned PersistentVolumes of this storage class are created with this reclaimPolicy. Defaults to Delete.")
+    k8s_object_accessor("volumeBindingMode", volume_binding_mode : String, true, false, "VolumeBindingMode indicates how PersistentVolumeClaims should be provisioned and bound.  When unset, VolumeBindingImmediate is used. This field is only honored by servers that enable the VolumeScheduling feature.")
 
-    # APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)))
-    def api_version : String
-      self.["apiVersion"] = "storage/v1" unless self.["apiVersion"]?
-      self.["apiVersion"].as(String)
+    def initialize(*, api_version : String? = "storage/v1", kind : String? = "StorageClass", metadata : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta? = nil, allow_volume_expansion : ::Bool? = nil, allowed_topologies : ::Array(::K8S::Api::Core::V1::TopologySelectorTerm)? = nil, mount_options : ::Array(String)? = nil, parameters : ::Hash(String, String)? = nil, provisioner : String? = nil, reclaim_policy : String? = nil, volume_binding_mode : String? = nil)
+      super()
+      raise "api_version cannot be nil" if api_version.nil?
+      self.["apiVersion"] = api_version
+      raise "kind cannot be nil" if kind.nil?
+      self.["kind"] = kind
+      self.["metadata"] = metadata
+      self.["allowVolumeExpansion"] = allow_volume_expansion
+      self.["allowedTopologies"] = allowed_topologies
+      self.["mountOptions"] = mount_options
+      self.["parameters"] = parameters
+      self.["provisioner"] = provisioner
+      self.["reclaimPolicy"] = reclaim_policy
+      self.["volumeBindingMode"] = volume_binding_mode
     end
 
-    # :ditto:
-    def api_version! : String
-      self.["apiVersion"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def api_version? : String?
-      self.["apiVersion"]?.as(String?)
-    end
-
-    # Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)))
-    def kind : String
-      self.["kind"] = "StorageClass" unless self.["kind"]?
-      self.["kind"].as(String)
-    end
-
-    # :ditto:
-    def kind! : String
-      self.["kind"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def kind? : String?
-      self.["kind"]?.as(String?)
-    end
-
-    # Standard object's metadata. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)))
-    def metadata : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?
-      self.["metadata"].as(::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?)
-    end
-
-    # :ditto:
-    def metadata! : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta
-      self.["metadata"].as(::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?).not_nil!
-    end
-
-    # :ditto:
-    def metadata? : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?
-      self.["metadata"]?.as(::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?)
-    end
-
-    # :ditto:
-    def metadata=(value : ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta?)
-      self.["metadata"] = value
-    end
-
-    # AllowVolumeExpansion shows whether the storage class allow volume expand
-    def allow_volume_expansion : ::Bool?
-      self.["allowVolumeExpansion"].as(::Bool?)
-    end
-
-    # :ditto:
-    def allow_volume_expansion! : ::Bool
-      self.["allowVolumeExpansion"].as(::Bool?).not_nil!
-    end
-
-    # :ditto:
-    def allow_volume_expansion? : ::Bool?
-      self.["allowVolumeExpansion"]?.as(::Bool?)
-    end
-
-    # :ditto:
-    def allow_volume_expansion=(value : ::Bool?)
-      self.["allowVolumeExpansion"] = value
-    end
-
-    # Restrict the node topologies where volumes can be dynamically provisioned. Each volume plugin defines its own supported topology specifications. An empty TopologySelectorTerm list means there is no topology restriction. This field is only honored by servers that enable the VolumeScheduling feature.
-    def allowed_topologies : ::Array(::K8S::Api::Core::V1::TopologySelectorTerm)?
-      self.["allowedTopologies"].as(::Array(::K8S::Api::Core::V1::TopologySelectorTerm)?)
-    end
-
-    # :ditto:
-    def allowed_topologies! : ::Array(::K8S::Api::Core::V1::TopologySelectorTerm)
-      self.["allowedTopologies"].as(::Array(::K8S::Api::Core::V1::TopologySelectorTerm)?).not_nil!
-    end
-
-    # :ditto:
-    def allowed_topologies? : ::Array(::K8S::Api::Core::V1::TopologySelectorTerm)?
-      self.["allowedTopologies"]?.as(::Array(::K8S::Api::Core::V1::TopologySelectorTerm)?)
-    end
-
-    # :ditto:
-    def allowed_topologies=(value : ::Array(::K8S::Api::Core::V1::TopologySelectorTerm)?)
-      self.["allowedTopologies"] = value
-    end
-
-    # Dynamically provisioned PersistentVolumes of this storage class are created with these mountOptions, e.g. ["ro", "soft"]. Not validated - mount of the PVs will simply fail if one is invalid.
-    def mount_options : ::Array(String)?
-      self.["mountOptions"].as(::Array(String)?)
-    end
-
-    # :ditto:
-    def mount_options! : ::Array(String)
-      self.["mountOptions"].as(::Array(String)?).not_nil!
-    end
-
-    # :ditto:
-    def mount_options? : ::Array(String)?
-      self.["mountOptions"]?.as(::Array(String)?)
-    end
-
-    # :ditto:
-    def mount_options=(value : ::Array(String)?)
-      self.["mountOptions"] = value
-    end
-
-    # Parameters holds the parameters for the provisioner that should create volumes of this storage class.
-    def parameters : ::Hash(String, String)?
-      self.["parameters"].as(::Hash(String, String)?)
-    end
-
-    # :ditto:
-    def parameters! : ::Hash(String, String)
-      self.["parameters"].as(::Hash(String, String)?).not_nil!
-    end
-
-    # :ditto:
-    def parameters? : ::Hash(String, String)?
-      self.["parameters"]?.as(::Hash(String, String)?)
-    end
-
-    # :ditto:
-    def parameters=(value : ::Hash(String, String)?)
-      self.["parameters"] = value
-    end
-
-    # Provisioner indicates the type of the provisioner.
-    def provisioner : String
-      self.["provisioner"].as(String)
-    end
-
-    # :ditto:
-    def provisioner! : String
-      self.["provisioner"].as(String).not_nil!
-    end
-
-    # :ditto:
-    def provisioner? : String?
-      self.["provisioner"]?.as(String?)
-    end
-
-    # :ditto:
-    def provisioner=(value : String)
-      self.["provisioner"] = value
-    end
-
-    # Dynamically provisioned PersistentVolumes of this storage class are created with this reclaimPolicy. Defaults to Delete.
-    def reclaim_policy : String?
-      self.["reclaimPolicy"].as(String?)
-    end
-
-    # :ditto:
-    def reclaim_policy! : String
-      self.["reclaimPolicy"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def reclaim_policy? : String?
-      self.["reclaimPolicy"]?.as(String?)
-    end
-
-    # :ditto:
-    def reclaim_policy=(value : String?)
-      self.["reclaimPolicy"] = value
-    end
-
-    # VolumeBindingMode indicates how PersistentVolumeClaims should be provisioned and bound.  When unset, VolumeBindingImmediate is used. This field is only honored by servers that enable the VolumeScheduling feature.
-    def volume_binding_mode : String?
-      self.["volumeBindingMode"].as(String?)
-    end
-
-    # :ditto:
-    def volume_binding_mode! : String
-      self.["volumeBindingMode"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def volume_binding_mode? : String?
-      self.["volumeBindingMode"]?.as(String?)
-    end
-
-    # :ditto:
-    def volume_binding_mode=(value : String?)
-      self.["volumeBindingMode"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "apiVersion", accessor: "api_version", nilable: false, read_only: true, default: "storage/v1", kind: String },
-        { key: "kind", accessor: "kind", nilable: false, read_only: true, default: "StorageClass", kind: String },
-        { key: "metadata", accessor: "metadata", nilable: true, read_only: false, default: nil, kind: ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta },
-        { key: "allowVolumeExpansion", accessor: "allow_volume_expansion", nilable: true, read_only: false, default: nil, kind: ::Bool },
-        { key: "allowedTopologies", accessor: "allowed_topologies", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::TopologySelectorTerm) },
-        { key: "mountOptions", accessor: "mount_options", nilable: true, read_only: false, default: nil, kind: ::Array(String) },
-        { key: "parameters", accessor: "parameters", nilable: true, read_only: false, default: nil, kind: ::Hash(String, String) },
-        { key: "provisioner", accessor: "provisioner", nilable: false, read_only: false, default: nil, kind: String },
-        { key: "reclaimPolicy", accessor: "reclaim_policy", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "volumeBindingMode", accessor: "volume_binding_mode", nilable: true, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "apiVersion", accessor: "api_version", nilable: false, read_only: true, default: "storage/v1", kind: String},
+      {key: "kind", accessor: "kind", nilable: false, read_only: true, default: "StorageClass", kind: String},
+      {key: "metadata", accessor: "metadata", nilable: true, read_only: false, default: nil, kind: ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta},
+      {key: "allowVolumeExpansion", accessor: "allow_volume_expansion", nilable: true, read_only: false, default: nil, kind: ::Bool},
+      {key: "allowedTopologies", accessor: "allowed_topologies", nilable: true, read_only: false, default: nil, kind: ::Array(::K8S::Api::Core::V1::TopologySelectorTerm)},
+      {key: "mountOptions", accessor: "mount_options", nilable: true, read_only: false, default: nil, kind: ::Array(String)},
+      {key: "parameters", accessor: "parameters", nilable: true, read_only: false, default: nil, kind: ::Hash(String, String)},
+      {key: "provisioner", accessor: "provisioner", nilable: false, read_only: false, default: nil, kind: String},
+      {key: "reclaimPolicy", accessor: "reclaim_policy", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "volumeBindingMode", accessor: "volume_binding_mode", nilable: true, read_only: false, default: nil, kind: String},
+    ])
   end
 
   module Resources::Storage::V1

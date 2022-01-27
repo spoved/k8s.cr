@@ -18,7 +18,7 @@ module K8S
     # :ditto:
     abstract def api_version? : String?
     # :ditto:
-    abstract def api_version=(value : String?)
+    abstract def api_version=(value : String)
     # Suggested HTTP return code for this status, 0 if not set.
     abstract def code : Int32?
     # :ditto:
@@ -26,7 +26,7 @@ module K8S
     # :ditto:
     abstract def code? : Int32?
     # :ditto:
-    abstract def code=(value : Int32?)
+    abstract def code=(value : Int32)
     # Extended data associated with the reason.  Each reason may define its own extended details. This field is optional and the data returned is not guaranteed to conform to any schema except that defined by the reason type.
     abstract def details : ::K8S::Apimachinery::Apis::Meta::V1::StatusDetails?
     # :ditto:
@@ -34,7 +34,7 @@ module K8S
     # :ditto:
     abstract def details? : ::K8S::Apimachinery::Apis::Meta::V1::StatusDetails?
     # :ditto:
-    abstract def details=(value : ::K8S::Apimachinery::Apis::Meta::V1::StatusDetails?)
+    abstract def details=(value : ::K8S::Apimachinery::Apis::Meta::V1::StatusDetails)
     # Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds))
     abstract def kind : String?
     # :ditto:
@@ -42,7 +42,7 @@ module K8S
     # :ditto:
     abstract def kind? : String?
     # :ditto:
-    abstract def kind=(value : String?)
+    abstract def kind=(value : String)
     # A human-readable description of the status of this operation.
     abstract def message : String?
     # :ditto:
@@ -50,7 +50,7 @@ module K8S
     # :ditto:
     abstract def message? : String?
     # :ditto:
-    abstract def message=(value : String?)
+    abstract def message=(value : String)
     # Standard list metadata. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds))
     abstract def metadata : ::K8S::Apimachinery::Apis::Meta::V1::ListMeta?
     # :ditto:
@@ -58,7 +58,7 @@ module K8S
     # :ditto:
     abstract def metadata? : ::K8S::Apimachinery::Apis::Meta::V1::ListMeta?
     # :ditto:
-    abstract def metadata=(value : ::K8S::Apimachinery::Apis::Meta::V1::ListMeta?)
+    abstract def metadata=(value : ::K8S::Apimachinery::Apis::Meta::V1::ListMeta)
     # A machine-readable description of why this operation is in the "Failure" status. If this value is empty there is no information available. A Reason clarifies an HTTP status code but does not override it.
     abstract def reason : String?
     # :ditto:
@@ -66,7 +66,7 @@ module K8S
     # :ditto:
     abstract def reason? : String?
     # :ditto:
-    abstract def reason=(value : String?)
+    abstract def reason=(value : String)
     # Status of the operation. One of: "Success" or "Failure". More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status))
     abstract def status : String?
     # :ditto:
@@ -74,7 +74,7 @@ module K8S
     # :ditto:
     abstract def status? : String?
     # :ditto:
-    abstract def status=(value : String?)
+    abstract def status=(value : String)
   end
 
   # Status is a return value for calls that don't return other objects.
@@ -91,178 +91,36 @@ module K8S
   )]
   class Apimachinery::Apis::Meta::V1::Status < ::K8S::GenericObject
     include ::K8S::Types::Apimachinery::Apis::Meta::V1::Status
+    k8s_object_accessor("apiVersion", api_version : String, true, false, "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)")
+    k8s_object_accessor("code", code : Int32, true, false, "Suggested HTTP return code for this status, 0 if not set.")
+    k8s_object_accessor("details", details : ::K8S::Apimachinery::Apis::Meta::V1::StatusDetails, true, false, "Extended data associated with the reason.  Each reason may define its own extended details. This field is optional and the data returned is not guaranteed to conform to any schema except that defined by the reason type.")
+    k8s_object_accessor("kind", kind : String, true, false, "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)")
+    k8s_object_accessor("message", message : String, true, false, "A human-readable description of the status of this operation.")
+    k8s_object_accessor("metadata", metadata : ::K8S::Apimachinery::Apis::Meta::V1::ListMeta, true, false, "Standard list metadata. More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)")
+    k8s_object_accessor("reason", reason : String, true, false, "A machine-readable description of why this operation is in the \"Failure\" status. If this value is empty there is no information available. A Reason clarifies an HTTP status code but does not override it.")
+    k8s_object_accessor("status", status : String, true, false, "Status of the operation. One of: \"Success\" or \"Failure\". More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status)")
 
-    # APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources))
-    def api_version : String?
-      self.["apiVersion"].as(String?)
+    def initialize(*, api_version : String? = nil, code : Int32? = nil, details : ::K8S::Apimachinery::Apis::Meta::V1::StatusDetails? = nil, kind : String? = nil, message : String? = nil, metadata : ::K8S::Apimachinery::Apis::Meta::V1::ListMeta? = nil, reason : String? = nil, status : String? = nil)
+      super()
+      self.["apiVersion"] = api_version
+      self.["code"] = code
+      self.["details"] = details
+      self.["kind"] = kind
+      self.["message"] = message
+      self.["metadata"] = metadata
+      self.["reason"] = reason
+      self.["status"] = status
     end
 
-    # :ditto:
-    def api_version! : String
-      self.["apiVersion"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def api_version? : String?
-      self.["apiVersion"]?.as(String?)
-    end
-
-    # :ditto:
-    def api_version=(value : String?)
-      self.["apiVersion"] = value
-    end
-
-    # Suggested HTTP return code for this status, 0 if not set.
-    def code : Int32?
-      self.["code"].as(Int32?)
-    end
-
-    # :ditto:
-    def code! : Int32
-      self.["code"].as(Int32?).not_nil!
-    end
-
-    # :ditto:
-    def code? : Int32?
-      self.["code"]?.as(Int32?)
-    end
-
-    # :ditto:
-    def code=(value : Int32?)
-      self.["code"] = value
-    end
-
-    # Extended data associated with the reason.  Each reason may define its own extended details. This field is optional and the data returned is not guaranteed to conform to any schema except that defined by the reason type.
-    def details : ::K8S::Apimachinery::Apis::Meta::V1::StatusDetails?
-      self.["details"].as(::K8S::Apimachinery::Apis::Meta::V1::StatusDetails?)
-    end
-
-    # :ditto:
-    def details! : ::K8S::Apimachinery::Apis::Meta::V1::StatusDetails
-      self.["details"].as(::K8S::Apimachinery::Apis::Meta::V1::StatusDetails?).not_nil!
-    end
-
-    # :ditto:
-    def details? : ::K8S::Apimachinery::Apis::Meta::V1::StatusDetails?
-      self.["details"]?.as(::K8S::Apimachinery::Apis::Meta::V1::StatusDetails?)
-    end
-
-    # :ditto:
-    def details=(value : ::K8S::Apimachinery::Apis::Meta::V1::StatusDetails?)
-      self.["details"] = value
-    end
-
-    # Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds))
-    def kind : String?
-      self.["kind"].as(String?)
-    end
-
-    # :ditto:
-    def kind! : String
-      self.["kind"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def kind? : String?
-      self.["kind"]?.as(String?)
-    end
-
-    # :ditto:
-    def kind=(value : String?)
-      self.["kind"] = value
-    end
-
-    # A human-readable description of the status of this operation.
-    def message : String?
-      self.["message"].as(String?)
-    end
-
-    # :ditto:
-    def message! : String
-      self.["message"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def message? : String?
-      self.["message"]?.as(String?)
-    end
-
-    # :ditto:
-    def message=(value : String?)
-      self.["message"] = value
-    end
-
-    # Standard list metadata. More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds))
-    def metadata : ::K8S::Apimachinery::Apis::Meta::V1::ListMeta?
-      self.["metadata"].as(::K8S::Apimachinery::Apis::Meta::V1::ListMeta?)
-    end
-
-    # :ditto:
-    def metadata! : ::K8S::Apimachinery::Apis::Meta::V1::ListMeta
-      self.["metadata"].as(::K8S::Apimachinery::Apis::Meta::V1::ListMeta?).not_nil!
-    end
-
-    # :ditto:
-    def metadata? : ::K8S::Apimachinery::Apis::Meta::V1::ListMeta?
-      self.["metadata"]?.as(::K8S::Apimachinery::Apis::Meta::V1::ListMeta?)
-    end
-
-    # :ditto:
-    def metadata=(value : ::K8S::Apimachinery::Apis::Meta::V1::ListMeta?)
-      self.["metadata"] = value
-    end
-
-    # A machine-readable description of why this operation is in the "Failure" status. If this value is empty there is no information available. A Reason clarifies an HTTP status code but does not override it.
-    def reason : String?
-      self.["reason"].as(String?)
-    end
-
-    # :ditto:
-    def reason! : String
-      self.["reason"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def reason? : String?
-      self.["reason"]?.as(String?)
-    end
-
-    # :ditto:
-    def reason=(value : String?)
-      self.["reason"] = value
-    end
-
-    # Status of the operation. One of: "Success" or "Failure". More info: [[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status))
-    def status : String?
-      self.["status"].as(String?)
-    end
-
-    # :ditto:
-    def status! : String
-      self.["status"].as(String?).not_nil!
-    end
-
-    # :ditto:
-    def status? : String?
-      self.["status"]?.as(String?)
-    end
-
-    # :ditto:
-    def status=(value : String?)
-      self.["status"] = value
-    end
-
-    macro finished
-      ::K8S::Kubernetes::Resource.define_serialize_methods([
-        { key: "apiVersion", accessor: "api_version", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "code", accessor: "code", nilable: true, read_only: false, default: nil, kind: Int32 },
-        { key: "details", accessor: "details", nilable: true, read_only: false, default: nil, kind: ::K8S::Apimachinery::Apis::Meta::V1::StatusDetails },
-        { key: "kind", accessor: "kind", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "message", accessor: "message", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "metadata", accessor: "metadata", nilable: true, read_only: false, default: nil, kind: ::K8S::Apimachinery::Apis::Meta::V1::ListMeta },
-        { key: "reason", accessor: "reason", nilable: true, read_only: false, default: nil, kind: String },
-        { key: "status", accessor: "status", nilable: true, read_only: false, default: nil, kind: String },
-      ])
-end
+    ::K8S::Kubernetes::Resource.define_serialize_methods([
+      {key: "apiVersion", accessor: "api_version", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "code", accessor: "code", nilable: true, read_only: false, default: nil, kind: Int32},
+      {key: "details", accessor: "details", nilable: true, read_only: false, default: nil, kind: ::K8S::Apimachinery::Apis::Meta::V1::StatusDetails},
+      {key: "kind", accessor: "kind", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "message", accessor: "message", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "metadata", accessor: "metadata", nilable: true, read_only: false, default: nil, kind: ::K8S::Apimachinery::Apis::Meta::V1::ListMeta},
+      {key: "reason", accessor: "reason", nilable: true, read_only: false, default: nil, kind: String},
+      {key: "status", accessor: "status", nilable: true, read_only: false, default: nil, kind: String},
+    ])
   end
 end
