@@ -173,7 +173,7 @@ class Generator::Writer
 
       write_properties(properties)
 
-      write_init(properties)
+      # write_init(properties)
 
       file.puts "      ::K8S::Kubernetes::Resource.define_serialize_methods(["
       properties.each do |prop|
@@ -265,10 +265,8 @@ class Generator::Writer
     write_description(":ditto:")
     file.puts "abstract def #{prop[:accessor]}? : #{prop[:kind]}?"
 
-    unless prop[:read_only]
-      write_description(":ditto:")
-      file.puts "abstract def #{prop[:accessor]}=(value : #{_kind})"
-    end
+    write_description(":ditto:")
+    file.puts "abstract def #{prop[:accessor]}=(value : #{_kind}?)"
   end
 
   private def write_alias(definition : Definition)
@@ -313,7 +311,7 @@ class Generator::Writer
         if arg.first_value?
           file.puts %<raise "#{arg.name} cannot be nil" if #{arg.name}.nil?>
         end
-        file.puts %<self.["#{arg.key}"] = #{arg.name}>
+        file.puts %<@#{arg.name} = #{arg.name}>
       end
     end
   end

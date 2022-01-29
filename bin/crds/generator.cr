@@ -18,7 +18,7 @@ class K8S::CRD::Generator
     when K8S::Resources::Apiextensions::V1::CustomResourceDefinition
       K8S::CRD::Parser.new(crd)
     when K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionList, K8S::Api::Core::V1::List
-      crd.items.flat_map do |c|
+      crd.items!.flat_map do |c|
         get_parser(c)
       end
     else
@@ -54,7 +54,7 @@ class K8S::CRD::Generator
     if data.is_a?(String)
       api_groups = self.groups.map &.split('.').reverse.join('.')
 
-      Log.trace { "Generating CRDs for #{api_groups}" }
+      Log.info { "Generating CRDs for #{api_groups}" }
       k3sgen = ::Generator.new(data, "v1.23")
       swagger.definitions.merge!(k3sgen.schema.definitions)
       crdgen = ::Generator.new(swagger, "K8S", output_dir, api_groups)

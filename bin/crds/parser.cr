@@ -99,6 +99,7 @@ class K8S::CRD::Parser
   def initialize(@crd_def); end
 
   def parse
+    Log.info { "Parsing CRD #{spec.group!} with #{versions.size} versions" }
     versions.map do |v|
       defs = v.to_swagger_defs
       {
@@ -119,25 +120,25 @@ class K8S::CRD::Parser
 
   def group_info
     {
-      group: spec.group,
-      kind:  spec.names.kind,
+      group: spec.group!,
+      kind:  spec.names!.kind!,
     }
   end
 
   def versions
-    @versions ||= spec.versions.map { |v| K8S::CRD::Version.new(**group_info, definition: v) }
+    @versions ||= spec.versions!.map { |v| K8S::CRD::Version.new(**group_info, definition: v) }
   end
 
   private def paths(ver : K8S::CRD::Version)
     {
-      "/apis/#{ver.api_base}/#{ver.version}/#{spec.names.plural}"                        => list_path(ver),
-      "/apis/#{ver.api_base}/#{ver.version}/namespaces/{namespace}/#{spec.names.plural}" => Swagger::Path.new(
+      "/apis/#{ver.api_base}/#{ver.version}/#{spec.names!.plural}"                        => list_path(ver),
+      "/apis/#{ver.api_base}/#{ver.version}/namespaces/{namespace}/#{spec.names!.plural}" => Swagger::Path.new(
         get: get_action(ver),
         post: post_action(ver),
         delete: delete_action(ver),
         parameters: NS_PARAMS,
       ),
-      "/apis/#{ver.api_base}/#{ver.version}/namespaces/{namespace}/#{spec.names.plural}/{name}" => Swagger::Path.new(
+      "/apis/#{ver.api_base}/#{ver.version}/namespaces/{namespace}/#{spec.names!.plural}/{name}" => Swagger::Path.new(
         get: get_single_action(ver),
         put: put_single_action(ver),
         delete: delete_single_action(ver),
@@ -148,7 +149,7 @@ class K8S::CRD::Parser
               {
                 "uniqueItems": true,
                 "type": "string",
-                "description": "name of the #{spec.names.kind}",
+                "description": "name of the #{spec.names!.kind}",
                 "name": "name",
                 "in": "path",
                 "required": true
@@ -188,7 +189,7 @@ class K8S::CRD::Parser
               "200": {
                 "description": "OK",
                 "schema": {
-                  "$ref": "#/definitions/#{ver.api_base}.#{ver.version}.#{spec.names.list_kind}"
+                  "$ref": "#/definitions/#{ver.api_base}.#{ver.version}.#{spec.names!.list_kind}"
                 }
               },
               "401": {
@@ -199,7 +200,7 @@ class K8S::CRD::Parser
         ),
         x_kubernetes_action: "list",
         parameters: LIST_PARAMS,
-        tags: spec.names.categories,
+        tags: spec.names!.categories!,
       )
     )
   end
@@ -214,7 +215,7 @@ class K8S::CRD::Parser
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/#{ver.api_base}.#{ver.version}.#{spec.names.list_kind}"
+              "$ref": "#/definitions/#{ver.api_base}.#{ver.version}.#{spec.names!.list_kind}"
             }
           },
           "401": {
@@ -225,14 +226,14 @@ class K8S::CRD::Parser
       ),
       x_kubernetes_action: "list",
       parameters: LIST_PARAMS,
-      tags: spec.names.categories,
+      tags: spec.names!.categories!,
     )
   end
 
   private def post_action(ver)
     Swagger::Path::Action.new(
       description: "create a #{ver.kind}",
-      tags: spec.names.categories,
+      tags: spec.names!.categories,
       operationId: "create#{ver.group}#{ver.version}Namespaced#{ver.kind}",
       x_kubernetes_action: "post",
       parameters: Array(Swagger::Path::Parameter).from_json(
@@ -282,7 +283,7 @@ class K8S::CRD::Parser
   private def delete_action(ver)
     Swagger::Path::Action.new(
       description: "delete collection of #{ver.kind}",
-      tags: spec.names.categories,
+      tags: spec.names!.categories!,
       operationId: "delete#{ver.group}#{ver.version}CollectionNamespaced#{ver.kind}",
       x_kubernetes_action: "deletecollection",
       parameters: LIST_PARAMS,
@@ -309,14 +310,14 @@ class K8S::CRD::Parser
       operationId: "read#{ver.group}#{ver.version}Namespaced#{ver.kind}",
       description: "read the specified #{ver.kind}",
       x_kubernetes_action: "get",
-      tags: spec.names.categories,
+      tags: spec.names!.categories!,
       responses: Hash(String, Swagger::Path::Action::Response).from_json(
         <<-RESP
         {
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/#{ver.api_base}.#{ver.version}.#{spec.names.kind}"
+              "$ref": "#/definitions/#{ver.api_base}.#{ver.version}.#{spec.names!.kind}"
             }
           },
           "401": {
@@ -353,20 +354,20 @@ class K8S::CRD::Parser
       operationId: "replace#{ver.group}#{ver.version}Namespaced#{ver.kind}",
       description: "replace the specified #{ver.kind}",
       x_kubernetes_action: "put",
-      tags: spec.names.categories,
+      tags: spec.names!.categories!,
       responses: Hash(String, Swagger::Path::Action::Response).from_json(
         <<-RESP
         {
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/#{ver.api_base}.#{ver.version}.#{spec.names.kind}"
+              "$ref": "#/definitions/#{ver.api_base}.#{ver.version}.#{spec.names!.kind}"
             }
           },
           "201": {
             "description": "Created",
             "schema": {
-              "$ref": "#/definitions/#{ver.api_base}.#{ver.version}.#{spec.names.kind}"
+              "$ref": "#/definitions/#{ver.api_base}.#{ver.version}.#{spec.names!.kind}"
             }
           },
           "401": {
@@ -383,7 +384,7 @@ class K8S::CRD::Parser
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/#{ver.api_base}.#{ver.version}.#{spec.names.kind}"
+              "$ref": "#/definitions/#{ver.api_base}.#{ver.version}.#{spec.names!.kind}"
             }
           }
         ]
@@ -397,7 +398,7 @@ class K8S::CRD::Parser
       operationId: "delete#{ver.group}#{ver.version}Namespaced#{ver.kind}",
       description: "delete a #{ver.kind}",
       x_kubernetes_action: "delete",
-      tags: spec.names.categories,
+      tags: spec.names!.categories!,
       responses: Hash(String, Swagger::Path::Action::Response).from_json(
         <<-'RESP'
         {
@@ -456,14 +457,14 @@ class K8S::CRD::Parser
       operationId: "patch#{ver.group}#{ver.version}Namespaced#{ver.kind}",
       description: "partially update the specified #{ver.kind}",
       x_kubernetes_action: "patch",
-      tags: spec.names.categories,
+      tags: spec.names!.categories!,
       responses: Hash(String, Swagger::Path::Action::Response).from_json(
         <<-RESP
         {
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/#{ver.api_base}.#{ver.version}.#{spec.names.kind}"
+              "$ref": "#/definitions/#{ver.api_base}.#{ver.version}.#{spec.names!.kind}"
             }
           },
           "401": {
@@ -480,7 +481,7 @@ class K8S::CRD::Parser
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/#{ver.api_base}.#{ver.version}.#{spec.names.kind}"
+              "$ref": "#/definitions/#{ver.api_base}.#{ver.version}.#{spec.names!.kind}"
             }
           }
         ]

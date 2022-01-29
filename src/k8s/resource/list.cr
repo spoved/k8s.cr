@@ -9,13 +9,5 @@ abstract class ::K8S::Kubernetes::Resource::List(K) < ::K8S::Kubernetes::Resourc
       raise Error.new("apiVersion must be defined") if api_version!.nil?
       raise Error.new("kind must be defined") if kind!.nil?
     end
-
-    def self.new(pull : ::JSON::PullParser)
-      self.new(Hash(String, ::JSON::Any).new(pull))
-    end
-
-    def self.new(ctx : ::YAML::ParseContext, node : ::YAML::Nodes::Node)
-      self.new(Hash(String, ::JSON::Any).new(ctx, node))
-    end
   end
 end

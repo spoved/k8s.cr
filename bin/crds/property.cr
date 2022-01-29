@@ -6,7 +6,7 @@ class K8S::CRD::Property
   property description : String? = nil
   property type : String? = nil
   property format : String? = nil
-  property default : ApiextensionsApiserver::Apis::Apiextensions::V1::JSON | Nil = nil
+  property default : ApiextensionsApiserver::Apis::Apiextensions::V1::Json | Nil = nil
   @[JSON::Field(key: "$ref")]
   property _ref : String? = nil
   property required : Array(String) = Array(String).new
@@ -92,28 +92,28 @@ class K8S::CRD::Property
     )
   end
 
-  def self.schema_props_to_def(props : Array(K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps)) : Array(Property)
+  def self.schema_props_to_def(props : Array(K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::JsonSchemaProps)) : Array(Property)
     props.map { |i| schema_props_to_def(i) }
   end
 
   def self.schema_props_to_def(obj : Bool) : Property
-    Property.new(type: "boolean", default: ::JSON::Any.new(true))
+    Property.new(type: "boolean", default: true)
   end
 
   def self.schema_props_to_def(obj : Nil) : Nil
     nil
   end
 
-  def self.schema_props_to_def(obj : K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps) : Property
-    properties = obj.properties.nil? ? Hash(String, K8S::CRD::Property).new : obj.properties.not_nil!.transform_values { |v| schema_props_to_def(v).as(K8S::CRD::Property) }
+  def self.schema_props_to_def(obj : K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::JsonSchemaProps) : Property
+    properties = obj.properties.nil? ? Hash(String, ::K8S::CRD::Property).new : obj.properties.not_nil!.transform_values { |v| schema_props_to_def(v).as(K8S::CRD::Property) }
 
-    unless obj.json_unmapped.empty?
-      Log.warn { "Unmapped JSON fields: #{obj.json_unmapped.inspect}" }
-    end
+    # unless obj.json_unmapped.empty?
+    #   Log.warn { "Unmapped JSON fields: #{obj.json_unmapped.inspect}" }
+    # end
 
-    unless obj.yaml_unmapped.empty?
-      Log.warn { "Unmapped YAML fields: #{obj.json_unmapped.inspect}" }
-    end
+    # unless obj.yaml_unmapped.empty?
+    #   Log.warn { "Unmapped YAML fields: #{obj.json_unmapped.inspect}" }
+    # end
 
     new(
       type: obj.type,
@@ -126,7 +126,7 @@ class K8S::CRD::Property
       properties: properties,
       items: obj.items.nil? ? nil : self.schema_props_to_def(obj.items.not_nil!).as(K8S::CRD::Property),
       additional_properties: obj.additional_properties.nil? ? nil : schema_props_to_def(obj.additional_properties),
-      _enum: obj.enum.nil? ? nil : obj.enum.not_nil!,
+      _enum: obj._enum.nil? ? nil : obj._enum.not_nil!.as(Array(JSON::Any::Type)).map { |i| JSON::Any.new(i) },
       x_kubernetes_embedded_resource: obj.x_kubernetes_embedded_resource,
       x_kubernetes_int_or_string: obj.x_kubernetes_int_or_string,
       x_kubernetes_preserve_unknown_fields: obj.x_kubernetes_preserve_unknown_fields,

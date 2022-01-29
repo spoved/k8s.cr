@@ -12,6 +12,21 @@
       "initCommands": [
         "command script import ${workspaceFolder}/.vscode/crystal_formatters.py"
       ]
+    },
+    {
+      "name": "Debug CRD Gen",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "preLaunchTask": "Compile CRD Gen (Debug)",
+      "type": "lldb",
+      "program": "${workspaceFolder}/bin/gen_crd",
+      "args": [
+        "${workspaceFolder}/spec/fixtures/resources/test/crds.yaml",
+        "${workspaceFolder}/tmp/crds"
+      ],
+      "initCommands": [
+        "command script import ${workspaceFolder}/.vscode/crystal_formatters.py"
+      ]
     }
   ]
 }
