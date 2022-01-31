@@ -250,7 +250,7 @@ class Generator::Writer
                 "#{prop[:accessor]} : #{prop[:kind]}"
               end
 
-    file.puts %<k8s_object_accessor("#{prop[:key]}", #{typ_def}, #{prop[:nilable].inspect}, #{prop[:read_only].inspect}, #{prop[:description].inspect})>
+    file.puts %<k8s_resource_property("#{prop[:key]}", #{typ_def}, #{prop[:nilable].inspect}, #{prop[:read_only].inspect}, #{prop[:description].inspect})>
   end
 
   private def write_abstract_property(prop)
