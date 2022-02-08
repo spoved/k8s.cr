@@ -1,6 +1,4 @@
-require "spectator"
-require "log"
-require "../../src/k8s/object"
+require "../spec_helper"
 
 alias TestHash = ::K8S::Internals::HashObject(Number::Primitive)
 

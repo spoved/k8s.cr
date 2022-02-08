@@ -1,3 +1,5 @@
+require "./object"
+
 class K8S::Internals::HashObject(V)
   include Enumerable({String, V})
   include Iterable({String, V})
@@ -7,33 +9,7 @@ class K8S::Internals::HashObject(V)
 end
 
 require "./hash_object/*"
-require "hashdiff"
-
-module ::K8S::Internals::Object
-  abstract def to_h
-  abstract def each
-  abstract def ==(value)
-  abstract def ===(value)
-
-  abstract def dup
-  abstract def clone
-  abstract def []=(*args)
-  abstract def []=(key, value)
-  abstract def []?(*keys)
-  abstract def [](*keys)
-
-  abstract def dig?(keys : Enumerable)
-  abstract def dig?(*keys)
-  abstract def dig(keys : Enumerable)
-  abstract def dig(*keys)
-
-  abstract def merge(*values, **options)
-  abstract def merge!(*values, **options)
-  abstract def reverse_merge(other = nil, *values, **options)
-  abstract def reverse_merge!(other = nil, *values, **options)
-
-  abstract def replace(other)
-end
+require "../../ext/hashdiff"
 
 class K8S::Internals::HashObject(V)
   extend ClassMethods(V)
@@ -75,7 +51,7 @@ class K8S::Internals::HashObject(V)
     self == self.class.deep_cast_value(other)
   end
 
-  # Initializes `K8S::Object` with the given *hash* object.
+  # Initializes `K8S::Internals::HashObject` with the given *hash* object.
   def initialize(hash : Enumerable | Iterable | NamedTuple | Nil = nil)
     @__hash__ = Hash(String, V).new
 
@@ -84,12 +60,12 @@ class K8S::Internals::HashObject(V)
     end
   end
 
-  def diff(other : K8S::Object)
-    ::HashDiff.diff(@__hash__, other.to_h)
+  def diff(other : K8S::Internals::HashObject)
+    ::Hashdiff.diff(@__hash__, other.to_h)
   end
 
   def diff(other)
-    ::HashDiff.diff(@__hash__, other)
+    ::Hashdiff.diff(@__hash__, other)
   end
 
   # Returns a new `K8S::Object`, with a shallow copy of the underlying `Hash`.
@@ -99,7 +75,7 @@ class K8S::Internals::HashObject(V)
     self.class.new @__hash__.dup
   end
 
-  # Returns a new `K8S::Object`, with a deep copy of the underlying `Hash`.
+  # Returns a new `K8S::Internals::HashObject`, with a deep copy of the underlying `Hash`.
   #
   # Use `#dup` if you want a shallow copy.
   def clone

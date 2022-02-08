@@ -160,7 +160,7 @@ abstract struct K8S::Kubernetes::Resource
   #   namespace: "::K8S::Api",
   # )
   # ```
-  macro define_object(group, version, kind, namespace = nil, properties = [] of NamedTupleLiteral)
+  macro define_object(group, version, kind, namespace = nil, properties = [] of NamedTupleLiteral, list = false, list_kind = nil)
     # Build the group string since we dont have reverse, this gets complicated.
     {%
       group_parts = group.split(".")
@@ -170,6 +170,7 @@ abstract struct K8S::Kubernetes::Resource
         new_group_parts << group_parts[index]
         index -= 1
       end
+
       r_group_full = new_group_parts.join(".")
       r_group = r_group_full
         .gsub(/^(io(\.k8s)?|com)\./, "")
@@ -177,7 +178,7 @@ abstract struct K8S::Kubernetes::Resource
         .gsub(/JSON/, "Json")
         .gsub(/\-/, "_")
 
-      mod_path = r_group.split(".").map(&.camelcase).join("::")
+      mod_path = (r_group + "." + version).split(".").map(&.camelcase).join("::")
       if namespace
         mod_path = "#{namespace.gsub(/^::/, "").id}::#{mod_path.id}"
       end
@@ -186,15 +187,20 @@ abstract struct K8S::Kubernetes::Resource
     %}
 
     module ::{{mod_path.id}}
-      @[::K8S::GroupVersionKind(group: {{r_group_full.id.stringify}}, kind: {{kind.id.stringify}}, version: {{version.id.stringify}}, full: "{{group.id}}.{{version.id}}.{{kind.id}}")]
+      @[::K8S::GroupVersionKind(group: {{r_group_full.id.stringify}}, version: {{version.id.stringify}}, kind: {{kind.id.stringify}}, full: "{{group.id}}.{{version.id}}.{{kind.id}}")]
       @[::K8S::ObjectProperties(
         api_version: {name: "api_version", kind: String, default: "{{r_group_full.id}}/{{version.id}}", key: "apiVersion", nilable: false, read_only: true, description: %<APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)))>},
         kind: { name: "kind", kind: String, default: "{{kind.id}}", nilable: false, read_only: true, description: %<Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)))>},
+        {% if list %}
+        metadata: {name: "metadata", kind: ::K8S::Apimachinery::Apis::Meta::V1::ListMeta, default: nil, nilable: true, read_only: false, description: %<Standard object's metadata. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)))>},
+        items: {name: "items", kind: Array({{list_kind.id}}), default: nil, nilable: false, read_only: false, description: %<Items is a list of `{list_kind.id}}`.>},
+        {% else %}
         metadata: {name: "metadata", kind: ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta, default: nil, nilable: true, read_only: false, description: %<Standard object's metadata. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)))>},
+        {% end %}
         {% for prop in properties %}{{prop[:name].id}}: {{prop}},
         {% end %}
       )]
-      struct {{c_kind.id}} < ::K8S::Kubernetes::Resource::Object
+      struct {{c_kind.id}} < ::K8S::Kubernetes::Resource::{% if list %}List({{list_kind.id}}){% else %}Object{% end %}
         {% for prop in properties %}
         define_prop({{**prop}})
         {% end %}
@@ -203,16 +209,37 @@ abstract struct K8S::Kubernetes::Resource
           self.new({
             apiVersion: "{{r_group_full.id}}/{{version.id}}",
             kind: "{{kind.id}}",
+            {% if list %}
+            items: Array({{list_kind.id}}).new,
+            {% end %}
           })
+        end
+
+        # :nodoc:
+        private def _init_validate!
+          raise K8S::Kubernetes::Resource::Error.new %<apiVersion: "#{self.api_version}" does not match expected: "{{r_group_full.id}}/{{version.id}}"> if self.api_version != "{{r_group_full.id}}/{{version.id}}"
+          raise K8S::Kubernetes::Resource::Error.new %<kind: "#{self.kind}" does not match expected: "{{kind.id}}"> if self.kind != "{{kind.id}}"
         end
 
         def initialize(hash : Enumerable | Iterable | NamedTuple)
           super
+          _init_validate!
         end
 
         def initialize(obj : K8S::Internals::GenericObject)
           super
+          _init_validate!
         end
+
+        {% if list %}
+        def initialize(items : Array)
+          super({
+            apiVersion: "{{r_group_full.id}}/{{version.id}}",
+            kind: "{{kind.id}}",
+            items: items,
+          })
+        end
+        {% end %}
       end
     end
   end

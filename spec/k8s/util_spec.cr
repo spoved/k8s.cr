@@ -1,6 +1,4 @@
-require "spectator"
-require "log"
-require "../../src/k8s/util"
+require "../spec_helper"
 
 Spectator.describe K8S::Util do
   let(described_class) { K8S::Util }

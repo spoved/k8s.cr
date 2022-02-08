@@ -23,4 +23,27 @@ abstract struct K8S::Kubernetes::Object
   def self.new(ctx : ::YAML::ParseContext, node : ::YAML::Nodes::Node)
     new(K8S::Internals::GenericObject.new(ctx, node))
   end
+
+  def ==(other : K8S::Internals::GenericObject)
+    @__object__ == other
+  end
+
+  def diff(other : K8S::Internals::HashObject | K8S::Kubernetes::Object)
+    ::Hashdiff.diff(@__object__.to_h, other.to_h)
+  end
+end
+
+def K8S::Internals::GenericObject.deep_cast_value(value : K8S::Kubernetes::Object)
+  self.deep_cast_value(value.to_h)
+end
+
+module Hashdiff
+  def similar?(obja : K8S::Kubernetes::Object | K8S::Internals::GenericObject, objb : K8S::Kubernetes::Object | K8S::Internals::GenericObject, **options) : Bool
+    true
+  end
+
+  def _diff(obj1 : ::K8S::Kubernetes::Object | ::K8S::Internals::HashObject, obj2 : ::K8S::Kubernetes::Object | ::K8S::Internals::HashObject, **options)
+    Log.debug { "OVERRIDEEE" }
+    _diff(obj1.to_h, obj2.to_h, **options)
+  end
 end

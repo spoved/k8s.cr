@@ -1,6 +1,4 @@
-require "spectator"
-require "log"
-require "../../src/k8s/resource"
+require "../spec_helper"
 
 struct TestObject < K8S::Kubernetes::Resource::Object; end
 
@@ -24,6 +22,10 @@ struct TestServiceList < K8S::Kubernetes::Resource::List(TestService); end
     {name: "spec", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Apps::V1::DaemonSetSpecTest, description: %<The desired behavior of this daemon set. ....>},
     {name: "status", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Apps::V1::DaemonSetStatusTest, description: %<The current status of this daemon set. ....>},
   ]
+)
+
+::K8S::Kubernetes::Resource.define_object("apps", "v1", "DaemonSetTestList",
+  namespace: "::K8S::Api", list: true, list_kind: ::K8S::Api::Apps::V1::DaemonSetTest,
 )
 
 Spectator.describe K8S::Kubernetes::Resource do
@@ -216,50 +218,50 @@ Spectator.describe K8S::Kubernetes::Resource do
   end
 
   context ".define_object" do
+    let(valid_data) { {
+      apiVersion: "apps/v1",
+      kind:       "DaemonSetTest",
+      metadata:   {
+        labels: {
+          app: "whoami",
+        },
+      },
+      spec: {
+        template: {
+          metadata: {
+            labels: {
+              app: "whoami",
+            },
+          },
+        },
+      },
+      status: {
+        currentNumberScheduled: 1,
+      },
+    } }
+
+    let(invalid_data) { {
+      apiVersion: "v1",
+      kind:       "Foo",
+      foo:        {bar: true},
+    } }
+
     context "#initialize" do
       context "without arguments" do
         it "sets the apiVersion" do
-          resource = ::K8S::Api::Apps::DaemonSetTest.new
+          resource = ::K8S::Api::Apps::V1::DaemonSetTest.new
           expect(resource.api_version).to eq("apps/v1")
         end
 
         it "sets the kind" do
-          resource = ::K8S::Api::Apps::DaemonSetTest.new
+          resource = ::K8S::Api::Apps::V1::DaemonSetTest.new
           expect(resource.kind).to eq("DaemonSetTest")
         end
       end
 
-      let(valid_data) { {
-        apiVersion: "apps/v1",
-        kind:       "DaemonSetTest",
-        metadata:   {
-          labels: {
-            app: "whoami",
-          },
-        },
-        spec: {
-          template: {
-            metadata: {
-              labels: {
-                app: "whoami",
-              },
-            },
-          },
-        },
-        status: {
-          currentNumberScheduled: 1,
-        },
-      } }
-
-      let(invalid_data) { {
-        apiVersion: "v1",
-        kind:       "Foo",
-        foo:        {bar: true},
-      } }
-
       context "with a valid" do
         context "NamedTuple" do
-          let(resource) { ::K8S::Api::Apps::DaemonSetTest.new(valid_data) }
+          let(resource) { ::K8S::Api::Apps::V1::DaemonSetTest.new(valid_data) }
           it "sets the apiVersion" do
             expect(resource.api_version).to eq("apps/v1")
           end
@@ -282,7 +284,7 @@ Spectator.describe K8S::Kubernetes::Resource do
         end
 
         context "Hash" do
-          let(resource) { ::K8S::Api::Apps::DaemonSetTest.new(valid_data.to_h) }
+          let(resource) { ::K8S::Api::Apps::V1::DaemonSetTest.new(valid_data.to_h) }
           it "sets the apiVersion" do
             expect(resource.api_version).to eq("apps/v1")
           end
@@ -305,7 +307,7 @@ Spectator.describe K8S::Kubernetes::Resource do
         end
 
         context "GenericObject" do
-          let(resource) { ::K8S::Api::Apps::DaemonSetTest.new(::K8S::Internals::GenericObject.new(valid_data)) }
+          let(resource) { ::K8S::Api::Apps::V1::DaemonSetTest.new(::K8S::Internals::GenericObject.new(valid_data)) }
           it "sets the apiVersion" do
             expect(resource.api_version).to eq("apps/v1")
           end
@@ -324,6 +326,115 @@ Spectator.describe K8S::Kubernetes::Resource do
 
           it "sets the status" do
             expect(resource.status![:currentNumberScheduled]).to eq(1)
+          end
+        end
+      end
+
+      context "with an invalid" do
+        context "NamedTuple" do
+          it "raises an error" do
+            expect_raises K8S::Kubernetes::Resource::Error, /^apiVersion: "v1" does not match expected: \"apps\/v1\"/ do
+              ::K8S::Api::Apps::V1::DaemonSetTest.new(invalid_data)
+            end
+          end
+        end
+
+        context "Hash" do
+          it "raises an error" do
+            expect_raises K8S::Kubernetes::Resource::Error, /^apiVersion: "v1" does not match expected: \"apps\/v1\"/ do
+              ::K8S::Api::Apps::V1::DaemonSetTest.new(invalid_data.to_h)
+            end
+          end
+        end
+
+        context "GenericObject" do
+          it "raises an error" do
+            expect_raises K8S::Kubernetes::Resource::Error, /^apiVersion: "v1" does not match expected: \"apps\/v1\"/ do
+              ::K8S::Api::Apps::V1::DaemonSetTest.new(::K8S::Internals::GenericObject.new(invalid_data))
+            end
+          end
+        end
+      end
+    end
+
+    context "list resource" do
+      # context "#<<" do
+      #   it "adds item to underlying array" do
+      #     list = ::K8S::Api::Apps::V1::DaemonSetTestList.new
+      #     list << ::K8S::Api::Apps::V1::DaemonSetTest.new(valid_data)
+      #     expect(list.items).to be_a(Array(::K8S::Api::Apps::V1::DaemonSetTest))
+      #     expect(list.items.size).to eq(1)
+      #   end
+      # end
+
+      context "#items" do
+        it "returns an empty array" do
+          list = ::K8S::Api::Apps::V1::DaemonSetTestList.new
+          expect(list.items).to be_a(Array(::K8S::Api::Apps::V1::DaemonSetTest))
+          expect(list.items).to be_empty
+        end
+
+        it "adds item to underlying array" do
+          list = ::K8S::Api::Apps::V1::DaemonSetTestList.new
+          list.items << ::K8S::Api::Apps::V1::DaemonSetTest.new(valid_data)
+          expect(list.items).to be_a(Array(::K8S::Api::Apps::V1::DaemonSetTest))
+          expect(list.items.size).to eq(1)
+        end
+      end
+
+      context "#items!" do
+        it "returns an empty array" do
+          list = ::K8S::Api::Apps::V1::DaemonSetTestList.new
+          expect(list.items!).to be_a(Array(::K8S::Api::Apps::V1::DaemonSetTest))
+          expect(list.items).to be_empty
+        end
+      end
+
+      context "#items=" do
+        it "sets an array of DaemonSetTest" do
+          list = ::K8S::Api::Apps::V1::DaemonSetTestList.new
+          list.items = [::K8S::Api::Apps::V1::DaemonSetTest.new(valid_data)]
+          expect(list.items!).to be_a(Array(::K8S::Api::Apps::V1::DaemonSetTest))
+          expect(list.items.first).to be_a(::K8S::Api::Apps::V1::DaemonSetTest)
+        end
+      end
+
+      context "#initialize" do
+        context "without arguments" do
+          it "sets the apiVersion" do
+            resource = ::K8S::Api::Apps::V1::DaemonSetTestList.new
+            expect(resource.api_version).to eq("apps/v1")
+          end
+
+          it "sets the kind" do
+            resource = ::K8S::Api::Apps::V1::DaemonSetTestList.new
+            expect(resource.kind).to eq("DaemonSetTestList")
+          end
+        end
+
+        context "with only items" do
+          it "sets the items" do
+            list = ::K8S::Api::Apps::V1::DaemonSetTestList.new([valid_data])
+            expect(list.items.size).to eq(1)
+            expect(list.items.first.api_version).to eq("apps/v1")
+            expect(list.items.first.kind).to eq("DaemonSetTest")
+          end
+        end
+
+        context "with items" do
+          context "that are valid" do
+            let(items) { [valid_data] }
+            let(list) { ::K8S::Api::Apps::V1::DaemonSetTestList.new({
+              apiVersion: "apps/v1",
+              kind:       "DaemonSetTestList",
+              items:      items,
+            }) }
+
+            it "sets the items" do
+              expect(list.items.size).to eq(1)
+              expect(list.items.first.api_version).to eq("apps/v1")
+              expect(list.items.first.kind).to eq("DaemonSetTest")
+            end
           end
         end
       end
