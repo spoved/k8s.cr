@@ -40,7 +40,7 @@ Spectator.describe K8S::Kubernetes::Resource::ListWrapper do
     let(list) { [K8S::Internals::GenericObject.new({foo: "bar"}), K8S::Internals::GenericObject.new({foo: "bazz"})] }
 
     context "with different underlying array" do
-      it "should not be equal", focus: true do
+      it "should not be equal" do
         # puts subject.new(list).diff(subject.new(list.reverse)).map(&.to_a)
         expect(subject.new(list)).not_to eq(subject.new(list.reverse))
       end
