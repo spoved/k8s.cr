@@ -204,7 +204,7 @@ Spectator.describe K8S::Kubernetes::Resource do
       })
 
       expect(list).to be_a(TestServiceList)
-      expect(list.items).to be_a(Array(TestService))
+      expect(list.items).to be_a(Indexable(TestService))
       expect(list.items.first).to be_a(TestService)
 
       svc1 = list.items.first
@@ -358,26 +358,26 @@ Spectator.describe K8S::Kubernetes::Resource do
     end
 
     context "list resource" do
-      # context "#<<" do
-      #   it "adds item to underlying array" do
-      #     list = ::K8S::Api::Apps::V1::DaemonSetTestList.new
-      #     list << ::K8S::Api::Apps::V1::DaemonSetTest.new(valid_data)
-      #     expect(list.items).to be_a(Array(::K8S::Api::Apps::V1::DaemonSetTest))
-      #     expect(list.items.size).to eq(1)
-      #   end
-      # end
+      context "#<<" do
+        it "adds item to underlying array" do
+          list = ::K8S::Api::Apps::V1::DaemonSetTestList.new
+          list << ::K8S::Api::Apps::V1::DaemonSetTest.new(valid_data)
+          expect(list.items).to be_a(Indexable(::K8S::Api::Apps::V1::DaemonSetTest))
+          expect(list.items.size).to eq(1)
+        end
+      end
 
       context "#items" do
         it "returns an empty array" do
           list = ::K8S::Api::Apps::V1::DaemonSetTestList.new
-          expect(list.items).to be_a(Array(::K8S::Api::Apps::V1::DaemonSetTest))
+          expect(list.items).to be_a(Indexable(::K8S::Api::Apps::V1::DaemonSetTest))
           expect(list.items).to be_empty
         end
 
         it "adds item to underlying array" do
           list = ::K8S::Api::Apps::V1::DaemonSetTestList.new
           list.items << ::K8S::Api::Apps::V1::DaemonSetTest.new(valid_data)
-          expect(list.items).to be_a(Array(::K8S::Api::Apps::V1::DaemonSetTest))
+          expect(list.items).to be_a(Indexable(::K8S::Api::Apps::V1::DaemonSetTest))
           expect(list.items.size).to eq(1)
         end
       end
@@ -385,7 +385,7 @@ Spectator.describe K8S::Kubernetes::Resource do
       context "#items!" do
         it "returns an empty array" do
           list = ::K8S::Api::Apps::V1::DaemonSetTestList.new
-          expect(list.items!).to be_a(Array(::K8S::Api::Apps::V1::DaemonSetTest))
+          expect(list.items!).to be_a(Indexable(::K8S::Api::Apps::V1::DaemonSetTest))
           expect(list.items).to be_empty
         end
       end
@@ -394,7 +394,7 @@ Spectator.describe K8S::Kubernetes::Resource do
         it "sets an array of DaemonSetTest" do
           list = ::K8S::Api::Apps::V1::DaemonSetTestList.new
           list.items = [::K8S::Api::Apps::V1::DaemonSetTest.new(valid_data)]
-          expect(list.items!).to be_a(Array(::K8S::Api::Apps::V1::DaemonSetTest))
+          expect(list.items!).to be_a(Indexable(::K8S::Api::Apps::V1::DaemonSetTest))
           expect(list.items.first).to be_a(::K8S::Api::Apps::V1::DaemonSetTest)
         end
       end

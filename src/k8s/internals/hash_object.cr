@@ -82,7 +82,7 @@ class K8S::Internals::HashObject(V)
     self.class.new.merge! @__hash__
   end
 
-  def delete(key : Symbol)
+  def delete(key)
     @__hash__.delete(key.to_s)
   end
 
@@ -247,5 +247,13 @@ class K8S::Internals::HashObject(V)
   rescue ex
     Log.error &.emit "Error parsing YAML: #{ex.message}", klass: self.to_s
     raise ex
+  end
+
+  def to_json(*args)
+    @__hash__.to_json(*args)
+  end
+
+  def to_yaml(*args)
+    @__hash__.to_yaml(*args)
   end
 end

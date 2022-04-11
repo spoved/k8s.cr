@@ -112,18 +112,96 @@ abstract struct K8S::Kubernetes::Resource
 
     {% if key.nil? %}{% key = accessor.id.stringify %}{% end %}
 
-    # :nodoc:
-    # Internal method to access the value of the given key and cast it to the appropriate type.
-    def __{{accessor.id}}
-      %value = self.[{{key}}]?
+    {% if kind < K8S::Kubernetes::Resource::ListWrapper %}
+      # :nodoc:
+      @[JSON::Field(ignore: true)]
+      @[YAML::Field(ignore: true)]
+      @_{{accessor.id}}_wrapper : {{kind}} = {{kind}}.new
 
-      {% if !nilable %}
-      if %value.nil?
-        raise K8S::Kubernetes::Resource::Error::NotNilable.new({{key}}, {{accessor.id.stringify}})
+      # :nodoc:
+      # Internal method to access the value of the given key and cast it to the appropriate type.
+      private def __{{accessor.id}} : {{kind}}
+        %tmp = self.@__object__.@__hash__[{{key}}]?
+
+        if %tmp.is_a?(Array(K8S::Internals::Types::GenericObject::Value))
+
+          # puts @_{{accessor.id}}_wrapper.object_id
+          # puts %tmp.object_id
+
+          unless @_{{accessor.id}}_wrapper.same?(%tmp)
+            @_{{accessor.id}}_wrapper.replace(%tmp)
+            self.@__object__.@__hash__[{{key}}] = @_{{accessor.id}}_wrapper.@__array__
+          end
+        else
+          # if its not set, set it now
+          self.@__object__.@__hash__[{{key}}] = @_{{accessor.id}}_wrapper.@__array__
+        end
+
+        @_{{accessor.id}}_wrapper
       end
-      {% end %}
-      k8s_cast_type(%value, {{*kind.union_types}}{% if nilable %}, Nil {% end %})
-    end
+
+      # :nodoc:
+      # Internal method to set the value of the given key.
+      private def __{{accessor.id}}=(value : {{kind}})
+        unless __{{accessor.id}}.same?(value)
+          __{{accessor.id}}.replace(value)
+        else
+          # puts "already the same"
+        end
+      end
+
+      private def __{{accessor.id}}=(value : Enumerable)
+        nv = value.map do |v|
+          case v
+          when {{kind.type_vars.first}}
+            v
+          when NamedTuple, Hash
+            {{kind.type_vars.first}}.new(v)
+          else
+            raise K8S::Kubernetes::Resource::Error::CastError.new(v, [{{kind.type_vars.first}}])
+          end
+        end
+        __{{accessor.id}}.replace(nv)
+      end
+
+      # :ditto:
+      {% if read_only %}private{% end %} def {{accessor.id}}=(value : Enumerable{% if nilable %} | Nil {% end %})
+        if value.nil?
+          self.[{{key}}] = nil
+        else
+          self.__{{accessor.id}} = value
+        end
+      end
+
+    {% else %}
+      # :nodoc:
+      # Internal method to access the value of the given key and cast it to the appropriate type.
+      def __{{accessor.id}} : {{kind}} {% if nilable %}| Nil {% end %}
+        %value = self.[{{key}}]?
+
+        {% if !nilable %}
+        if %value.nil?
+          raise K8S::Kubernetes::Resource::Error::NotNilable.new({{key}}, {{accessor.id.stringify}})
+        end
+        {% end %}
+        k8s_cast_type(%value, {{*kind.union_types}}{% if nilable %}, Nil {% end %})
+      end
+
+      # :nodoc:
+      # Internal method to set the value of the given key.
+      def __{{accessor.id}}=(value : {{kind}} | Nil)
+
+        {% if nilable %}
+        self.[{{key}}] = value
+        {% else %}
+        if value.nil?
+          self.delete {{key}}
+        else
+          self.[{{key}}] = value
+        end
+        {% end %}
+      end
+    {% end %}
 
     {% if description %}
     # {{description}}{% end %}
@@ -134,7 +212,7 @@ abstract struct K8S::Kubernetes::Resource
     # :ditto:
     def {{accessor.id}}? : {{kind}} | Nil
       return nil if self.[{{key}}]?.nil?
-      __{{accessor.id}}
+      self.__{{accessor.id}}
     end
 
     # :ditto:
@@ -142,12 +220,12 @@ abstract struct K8S::Kubernetes::Resource
       {% if !default.nil? %}
       self.{{accessor.id}} = {{default}} if self.{{accessor.id}}?.nil?
       {% end %}
-      __{{accessor.id}}.not_nil!
+      self.__{{accessor.id}}.not_nil!
     end
 
     # :ditto:
     {% if read_only %}private{% end %} def {{accessor.id}}=(value : {{kind}}{% if nilable %} | Nil {% end %})
-      self.[{{key}}] = value
+      self.__{{accessor.id}} = value
     end
   end
 
@@ -209,9 +287,6 @@ abstract struct K8S::Kubernetes::Resource
           self.new({
             apiVersion: "{{r_group_full.id}}/{{version.id}}",
             kind: "{{kind.id}}",
-            {% if list %}
-            items: Array({{list_kind.id}}).new,
-            {% end %}
           })
         end
 

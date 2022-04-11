@@ -37,7 +37,10 @@ Spectator.describe K8S::Kubernetes::Resource::ListWrapper do
   end
 
   context "multiple structs" do
-    let(list) { [K8S::Internals::GenericObject.new({foo: "bar"}), K8S::Internals::GenericObject.new({foo: "bazz"})] }
+    let(list) { [
+      Hash(String, K8S::Internals::Types::GenericObject::Value){"foo" => "bar"},
+      Hash(String, K8S::Internals::Types::GenericObject::Value){"foo" => "bazz"},
+    ] of K8S::Internals::Types::GenericObject::Value }
 
     context "with different underlying array" do
       it "should not be equal" do

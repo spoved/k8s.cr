@@ -36,8 +36,9 @@ end
 
 abstract struct K8S::Kubernetes::Resource::List(T) < K8S::Kubernetes::Resource
   define_prop metadata : ::K8S::Apimachinery::Apis::Meta::V1::ListMeta, true, false, %<Standard object's metadata. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)))>
+  define_prop items : ListWrapper(T) = ListWrapper(T).new, false, false, %<Items is a list of `#{T}`.>
 
-  macro inherited
-    define_prop items : ListWrapper(T) = ListWrapper(T).new, false, false, %<Items is a list of `#{T}`.>
+  def <<(value : T)
+    self.items << value
   end
 end
