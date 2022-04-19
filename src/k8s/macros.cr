@@ -44,7 +44,7 @@ macro k8s_resource_class(group, ver, kind)
   {% end %}
   else
     Log.warn &.emit %<Unknown api resource: "#{{{group}}}/#{{{ver}}}/#{{{kind}}}">,
-      group: {{group}}, version: {{ver}}, kind: {{kind}}
+      group: {{group}}.to_s, version: {{ver}}.to_s, kind: {{kind}}.to_s
     raise K8S::Error::UnknownResource.new("#{{{group}}}/#{{{ver}}}/#{{{kind}}}")
   end
 end

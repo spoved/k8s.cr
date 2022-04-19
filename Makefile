@@ -10,19 +10,19 @@ docs: ## Generate docs
 	crystal ./bin/gen_docs.cr
 
 spec: ## Run spec
-	@crystal spec -Dk8s_v1.11
-	@crystal spec -Dk8s_v1.12
-	@crystal spec -Dk8s_v1.13
-	@crystal spec -Dk8s_v1.14
-	@crystal spec -Dk8s_v1.15
-	@crystal spec -Dk8s_v1.16
-	@crystal spec -Dk8s_v1.17
-	@crystal spec -Dk8s_v1.18
-	@crystal spec -Dk8s_v1.19
-	@crystal spec -Dk8s_v1.20
-	@crystal spec -Dk8s_v1.21
-	@crystal spec -Dk8s_v1.22
-	@crystal spec -Dk8s_v1.23
+	@crystal spec -Dk8s_v1.11 --error-trace
+	@crystal spec -Dk8s_v1.12 --error-trace
+	@crystal spec -Dk8s_v1.13 --error-trace
+	@crystal spec -Dk8s_v1.14 --error-trace
+	@crystal spec -Dk8s_v1.15 --error-trace
+	@crystal spec -Dk8s_v1.16 --error-trace
+	@crystal spec -Dk8s_v1.17 --error-trace
+	@crystal spec -Dk8s_v1.18 --error-trace
+	@crystal spec -Dk8s_v1.19 --error-trace
+	@crystal spec -Dk8s_v1.20 --error-trace
+	@crystal spec -Dk8s_v1.21 --error-trace
+	@crystal spec -Dk8s_v1.22 --error-trace
+	@crystal spec -Dk8s_v1.23 --error-trace
 
 sentry: ## Compile sentry
 	@crystal build --release -o ./bin/sentry ./lib/sentry/src/sentry_cli.cr

@@ -2,11 +2,12 @@ require "./swagger"
 require "./helper"
 
 class Generator
-  URL_REGEX    = /(?<url>((http[s]?):\/)?\/?([^:\/\s]+)((\/\w+)*\/)([\w\-\.]+[^#?\s]+)(.*)?(#[\w\-]+)?)/
-  ROOT_NAME    = "K8S"
-  VERSIONS_DIR = "src/versions"
-  SCHEMAS_DIR  = "tmp/schemas"
-  DOCS_DIR     = "docs"
+  URL_REGEX     = /(?<url>((http[s]?):\/)?\/?([^:\/\s]+)((\/\w+)*\/)([\w\-\.]+[^#?\s]+)(.*)?(#[\w\-]+)?)/
+  ROOT_NAME     = "K8S"
+  VERSIONS_DIR  = "src/versions"
+  SCHEMAS_DIR   = "tmp/schemas"
+  DOCS_DIR      = "docs"
+  RESOURCE_TYPE = "struct"
 
   getter filename : String
   getter definitions : Hash(String, String)
@@ -126,7 +127,7 @@ class Generator
         " VERSION_MINOR = #{version.lchop("v").split(".").first}",
         " VERSION_MAJOR = #{version.lchop("v").split(".").last}",
         ""
-      file.puts "abstract class Resource"
+      file.puts "abstract #{RESOURCE_TYPE} Resource"
       write_mappings(file, definitions)
       file.puts "end", "", "end"
     end

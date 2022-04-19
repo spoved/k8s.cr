@@ -14,18 +14,18 @@ end
 
 struct TestServiceList < K8S::Kubernetes::Resource::List(TestService); end
 
-::K8S::Kubernetes::Resource.define_object("k3s.cattle.io", "v1", "Addon")
-::K8S::Kubernetes::Resource.define_object("helmcharts.helm.cattle.io", "v1", "HelmChart")
-::K8S::Kubernetes::Resource.define_object("apps", "v1", "DaemonSetTest",
-  namespace: "::K8S::Api",
+::K8S::Kubernetes::Resource.define_resource("k3s.cattle.io", "v1", "Addon")
+::K8S::Kubernetes::Resource.define_resource("helmcharts.helm.cattle.io", "v1", "HelmChart")
+::K8S::Kubernetes::Resource.define_resource("apps", "v1", "DaemonSetTest",
+  namespace: "::K8S::Api::Apps::V1",
   properties: [
     {name: "spec", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Apps::V1::DaemonSetSpecTest, description: %<The desired behavior of this daemon set. ....>},
     {name: "status", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Apps::V1::DaemonSetStatusTest, description: %<The current status of this daemon set. ....>},
   ]
 )
 
-::K8S::Kubernetes::Resource.define_object("apps", "v1", "DaemonSetTestList",
-  namespace: "::K8S::Api", list: true, list_kind: ::K8S::Api::Apps::V1::DaemonSetTest,
+::K8S::Kubernetes::Resource.define_resource("apps", "v1", "DaemonSetTestList",
+  namespace: "::K8S::Api::Apps::V1", list: true, list_kind: ::K8S::Api::Apps::V1::DaemonSetTest,
 )
 
 Spectator.describe K8S::Kubernetes::Resource do
@@ -217,7 +217,7 @@ Spectator.describe K8S::Kubernetes::Resource do
     end
   end
 
-  context ".define_object" do
+  context ".define_resource" do
     let(valid_data) { {
       apiVersion: "apps/v1",
       kind:       "DaemonSetTest",
@@ -439,5 +439,8 @@ Spectator.describe K8S::Kubernetes::Resource do
         end
       end
     end
+  end
+
+  context ".from_files" do
   end
 end

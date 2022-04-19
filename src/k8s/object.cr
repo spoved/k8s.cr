@@ -47,3 +47,5 @@ module Hashdiff
     _diff(obj1.to_h, obj2.to_h, **options)
   end
 end
+
+struct ::K8S::GenericObject < K8S::Kubernetes::Object; end
