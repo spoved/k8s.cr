@@ -323,14 +323,18 @@ abstract struct K8S::Kubernetes::Resource
 
       def self.new
         self.new({
-          apiVersion: "{{r_group_full.id}}/{{version.id}}",
+          apiVersion: "{{r_group_full.id}}".empty? ? "{{version.id}}" : "{{r_group_full.id}}/{{version.id}}",
           kind: "{{kind.id}}",
         })
       end
 
       # :nodoc:
       private def _init_validate!
-        raise K8S::Kubernetes::Resource::Error.new %<apiVersion: "#{self.api_version}" does not match expected: "{{r_group_full.id}}/{{version.id}}"> if self.api_version != "{{r_group_full.id}}/{{version.id}}"
+        if "{{r_group_full.id}}".empty?
+          raise K8S::Kubernetes::Resource::Error.new %<apiVersion: "#{self.api_version}" does not match expected: "{{version.id}}"> if self.api_version != "{{version.id}}"
+        else
+          raise K8S::Kubernetes::Resource::Error.new %<apiVersion: "#{self.api_version}" does not match expected: "{{r_group_full.id}}/{{version.id}}"> if self.api_version != "{{r_group_full.id}}/{{version.id}}"
+        end
         raise K8S::Kubernetes::Resource::Error.new %<kind: "#{self.kind}" does not match expected: "{{kind.id}}"> if self.kind != "{{kind.id}}"
       end
 

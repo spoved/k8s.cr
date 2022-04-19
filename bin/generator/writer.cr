@@ -115,7 +115,6 @@ class Generator::Writer
     file.puts "end"
   end
 
-
   private def _property_string(prop)
     _kind = prop[:kind].gsub(/\?+$/, "?")
     if _kind =~ /\|/

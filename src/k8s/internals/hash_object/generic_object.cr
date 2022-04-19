@@ -1,7 +1,7 @@
 module K8S::Internals
   module Types::GenericObject
     alias Key = String
-    alias ValueType = Nil | Number::Primitive | Bool | Symbol | String | Time | ::JSON::Any
+    alias ValueType = Nil | Number::Primitive | Bool | Symbol | String | Time
     alias Value = ValueType | Array(Value) | Set(Value) | Hash(Key, Value)
     alias Instance = ::K8S::Internals::HashObject(Value)
   end

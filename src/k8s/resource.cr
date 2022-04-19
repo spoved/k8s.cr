@@ -1,4 +1,5 @@
 require "./object"
+require "./util"
 
 abstract struct K8S::Kubernetes::Resource < K8S::Kubernetes::Object; end
 
@@ -23,11 +24,12 @@ abstract struct K8S::Kubernetes::Resource < K8S::Kubernetes::Object
 
   def self.new(pull : ::JSON::PullParser)
     obj = K8S::Internals::GenericObject.new(pull)
-    k8s_resource_class(obj[:group], obj[:version], obj[:kind]).new(obj)
+    K8S::Util.new_resource(obj)
   end
 
   def self.new(ctx : ::YAML::ParseContext, node : ::YAML::Nodes::Node)
-    new(K8S::Internals::GenericObject.new(ctx, node))
+    obj = K8S::Internals::GenericObject.new(ctx, node)
+    K8S::Util.new_resource(obj)
   end
 
   def self.from_file(file)
@@ -35,8 +37,8 @@ abstract struct K8S::Kubernetes::Resource < K8S::Kubernetes::Object
     if File.extname(file) == ".json"
       [from_json(File.read(file))]
     else
-      nodes = ::K8S::Kubernetes::Resource::YAMLParser.new(File.read(file), &.parse_all_nodes)
-      nodes.flat_map { |doc| doc.nodes.map { |n| ::K8S::Resource.new(YAML::ParseContext.new, n) } }
+      nodes = ::K8S::Util::YAMLParser.new(File.read(file), &.parse_all_nodes)
+      nodes.flat_map { |doc| doc.nodes.map { |n| ::K8S::Kubernetes::Resource.new(YAML::ParseContext.new, n) } }
     end
   end
 
@@ -68,5 +70,4 @@ abstract struct K8S::Kubernetes::Resource::List(T) < K8S::Kubernetes::Resource
 end
 
 struct K8S::Api::Core::V1::List < K8S::Kubernetes::Resource::List(K8S::Kubernetes::Resource::Object); end
-
-struct K8S::Resource < K8S::Kubernetes::Resource; end
+struct K8S::Kubernetes::Resource::Generic < K8S::Kubernetes::Resource; end

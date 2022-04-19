@@ -43,7 +43,6 @@ module Hashdiff
   end
 
   def _diff(obj1 : ::K8S::Kubernetes::Object | ::K8S::Internals::HashObject, obj2 : ::K8S::Kubernetes::Object | ::K8S::Internals::HashObject, **options)
-    Log.debug { "OVERRIDEEE" }
     _diff(obj1.to_h, obj2.to_h, **options)
   end
 end

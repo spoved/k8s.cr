@@ -3,6 +3,8 @@ require "json"
 module K8S::Internals::HashObject::ClassMethods(V)
   def deep_cast_value(value)
     case value
+    when JSON::Any                       then deep_cast_value(value.raw)
+    when YAML::Any                       then deep_cast_value(value.raw)
     when Array(V)                        then value
     when Array                           then value.map { |v| deep_cast_value(v).as(V) }
     when Set(V)                          then value
