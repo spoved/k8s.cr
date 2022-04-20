@@ -1,7 +1,17 @@
 name: k8s
 description: Kubernetes Object Mappings for Crystal
-version: 0.0.5
+authors:
+  - Holden Omans <holden.omans@gmail.com>
+repository: "https://github.com/spoved/k8s.cr"
+
+version: 0.1.0
 crystal: ">= 1.2.2, < 2.0.0"
+
+targets:
+  generate:
+    main: bin/generate.cr
+  gen_crd:
+    main: bin/gen_crd.cr
 
 dependencies:
   hashdiff:
