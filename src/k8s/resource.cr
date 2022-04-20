@@ -57,6 +57,28 @@ abstract struct K8S::Kubernetes::Resource::List(T) < K8S::Kubernetes::Resource
   end
 end
 
-struct K8S::Kubernetes::Resource::Generic < K8S::Kubernetes::Resource; end
+struct K8S::Kubernetes::Resource::Generic < K8S::Kubernetes::Resource
+  def initialize(hash : Enumerable | Iterable | NamedTuple | Nil = nil)
+    super
+    raise K8S::Kubernetes::Resource::Error.new "apiVersion must be defined" if @__object__["apiVersion"]?.nil?
+    raise K8S::Kubernetes::Resource::Error.new "kind must be defined" if @__object__["kind"]?.nil?
+  end
+
+  def initialize(obj : K8S::Internals::GenericObject)
+    super
+    raise K8S::Kubernetes::Resource::Error.new "apiVersion must be defined" if @__object__["apiVersion"]?.nil?
+    raise K8S::Kubernetes::Resource::Error.new "kind must be defined" if @__object__["kind"]?.nil?
+  end
+
+  def self.new(pull : ::JSON::PullParser)
+    obj = K8S::Internals::GenericObject.new(pull)
+    new(obj)
+  end
+
+  def self.new(ctx : ::YAML::ParseContext, node : ::YAML::Nodes::Node)
+    obj = K8S::Internals::GenericObject.new(ctx, node)
+    new(obj)
+  end
+end
 
 struct K8S::Api::Core::V1::List < K8S::Kubernetes::Resource::List(K8S::Kubernetes::Resource::Generic); end

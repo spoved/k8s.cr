@@ -1,6 +1,6 @@
 require "../spec_helper"
 
-struct TestObject < K8S::Kubernetes::Resource::Object; end
+::K8S::Kubernetes::Resource.define_resource(group: "", version: "v1", kind: "TestObject")
 
 struct ::K8S::Api::Apps::V1::DaemonSetSpecTest < K8S::Kubernetes::Object; end
 
@@ -54,32 +54,44 @@ Spectator.describe K8S::Kubernetes::Resource do
   }
 
   context "#initialize" do
-    it "raises error when no apiVersion is provided" do
-      expect_raises K8S::Kubernetes::Resource::Error, %<apiVersion must be defined> do
-        TestObject.new(K8S::Internals::GenericObject.new({foo: {bar: true}}))
+    context K8S::Kubernetes::Resource::Generic do
+      it "raises error when no apiVersion is provided" do
+        expect_raises K8S::Kubernetes::Resource::Error, %<apiVersion must be defined> do
+          K8S::Kubernetes::Resource::Generic.new(K8S::Internals::GenericObject.new({foo: {bar: true}}))
+        end
+      end
+
+      it "raises error when no kind is provided" do
+        expect_raises K8S::Kubernetes::Resource::Error, %<kind must be defined> do
+          K8S::Kubernetes::Resource::Generic.new(K8S::Internals::GenericObject.new({apiVersion: "v1", foo: {bar: true}}))
+        end
       end
     end
 
-    it "raises error when no kind is provided" do
-      expect_raises K8S::Kubernetes::Resource::Error, %<kind must be defined> do
-        TestObject.new(K8S::Internals::GenericObject.new({apiVersion: "v1", foo: {bar: true}}))
-      end
+    it "will set apiVersion when none is provided" do
+      obj = TestObject.new(K8S::Internals::GenericObject.new({foo: {bar: true}}))
+      expect(obj.api_version).to eq("v1")
+    end
+
+    it "will set kind when none is provided" do
+      obj = TestObject.new(K8S::Internals::GenericObject.new({apiVersion: "v1", foo: {bar: true}}))
+      expect(obj.kind).to eq("TestObject")
     end
 
     it "takes another K8S::Internals::GenericObject, Hash or NamedTuple as an initial value" do
-      expect(TestObject.new(K8S::Internals::GenericObject.new({
+      expect(K8S::Kubernetes::Resource::Generic.new(K8S::Internals::GenericObject.new({
         apiVersion: "v1",
         kind:       "Foo",
         foo:        {bar: true},
       })).to_h).to eq({"apiVersion" => "v1", "kind" => "Foo", "foo" => {"bar" => true}})
 
-      expect(TestObject.new({
+      expect(K8S::Kubernetes::Resource::Generic.new({
         apiVersion: "v1",
         kind:       "Foo",
         foo:        {bar: true},
       }).to_h).to eq({"apiVersion" => "v1", "kind" => "Foo", "foo" => {"bar" => true}})
 
-      expect(TestObject.new({
+      expect(K8S::Kubernetes::Resource::Generic.new({
         :apiVersion => "v1",
         :kind       => "Foo",
         :foo        => {:bar => true},
@@ -89,7 +101,7 @@ Spectator.describe K8S::Kubernetes::Resource do
 
   context ".method_missing" do
     it "passes method calls to the underlying object" do
-      resource = TestObject.new(service_resource)
+      resource = K8S::Kubernetes::Resource::Generic.new(service_resource)
       expect(resource[:metadata, :labels]).to eq({"app" => "whoami"})
       expect(resource[:metadata, :labels, :app] = "myapp").to eq("myapp")
       expect(resource[:metadata, :labels, :app]).to eq("myapp")
@@ -98,11 +110,11 @@ Spectator.describe K8S::Kubernetes::Resource do
 
   context "#api_version" do
     it "returns the apiVersion" do
-      expect(TestObject.new(service_resource).api_version).to eq("v1")
+      expect(K8S::Kubernetes::Resource::Generic.new(service_resource).api_version).to eq("v1")
     end
 
     it "raises error if apiVersion is not defined" do
-      resource = TestObject.new(service_resource)
+      resource = K8S::Kubernetes::Resource::Generic.new(service_resource)
       resource.delete(:apiVersion)
       expect_raises K8S::Kubernetes::Resource::Error::NotNilable, %<apiVersion cannot be nil, please set the value or use api_version? to check it first> do
         resource.api_version
@@ -112,11 +124,11 @@ Spectator.describe K8S::Kubernetes::Resource do
 
   context "#kind" do
     it "returns the kind" do
-      expect(TestObject.new(service_resource).kind).to eq("Service")
+      expect(K8S::Kubernetes::Resource::Generic.new(service_resource).kind).to eq("Service")
     end
 
     it "raises error if kind is not defined" do
-      resource = TestObject.new(service_resource)
+      resource = K8S::Kubernetes::Resource::Generic.new(service_resource)
       resource.delete(:kind)
       expect_raises K8S::Kubernetes::Resource::Error::NotNilable, /^kind cannot be nil/ do
         resource.kind
@@ -129,7 +141,7 @@ Spectator.describe K8S::Kubernetes::Resource do
     let(raw_yaml) { %<---\napiVersion: v1\nkind: Foo\nfoo:\n  bar: true\n> }
 
     it "serializes to JSON" do
-      expect(TestObject.new({
+      expect(K8S::Kubernetes::Resource::Generic.new({
         apiVersion: "v1",
         kind:       "Foo",
         foo:        {bar: true},
@@ -137,11 +149,11 @@ Spectator.describe K8S::Kubernetes::Resource do
     end
 
     it "serializes from JSON" do
-      expect(TestObject.from_json(raw_json).to_h).to eq({"apiVersion" => "v1", "kind" => "Foo", "foo" => {"bar" => true}})
+      expect(K8S::Kubernetes::Resource::Generic.from_json(raw_json).to_h).to eq({"apiVersion" => "v1", "kind" => "Foo", "foo" => {"bar" => true}})
     end
 
     it "serializes to YAML" do
-      expect(TestObject.new({
+      expect(K8S::Kubernetes::Resource::Generic.new({
         apiVersion: "v1",
         kind:       "Foo",
         foo:        {bar: true},
@@ -149,7 +161,7 @@ Spectator.describe K8S::Kubernetes::Resource do
     end
 
     it "serializes from YAML" do
-      expect(TestObject.from_yaml(raw_yaml).to_h).to eq({"apiVersion" => "v1", "kind" => "Foo", "foo" => {"bar" => true}})
+      expect(K8S::Kubernetes::Resource::Generic.from_yaml(raw_yaml).to_h).to eq({"apiVersion" => "v1", "kind" => "Foo", "foo" => {"bar" => true}})
     end
   end
 

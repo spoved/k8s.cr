@@ -309,6 +309,8 @@ abstract struct K8S::Kubernetes::Resource
       mod_path = (r_group + "." + version).split(".").reject(&.empty?).map(&.camelcase).join("::")
       if namespace
         mod_path = namespace.gsub(/^::/, "").id.stringify
+      else
+        mod_path = ""
       end
       c_kind = kind.gsub(/JSON/, "Json")
     %}
@@ -329,7 +331,7 @@ abstract struct K8S::Kubernetes::Resource
       {% for prop in properties %}{{prop[:name].id}}: {{prop}},
       {% end %}
     )]
-    struct ::{{mod_path.id}}::{{c_kind.id}} < ::K8S::Kubernetes::Resource::{% if list %}List({{list_kind.id}}){% else %}Object{% end %}
+    struct {{mod_path.id}}::{{c_kind.id}} < ::K8S::Kubernetes::Resource::{% if list %}List({{list_kind.id}}){% else %}Object{% end %}
 
       {% for prop in properties %}
       K8S::Kubernetes::Resource.define_prop({{**prop}})
