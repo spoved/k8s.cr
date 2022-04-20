@@ -33,6 +33,22 @@ Requiring more than one version at this time will result in an error.
 require "k8s/versions/v1.20"
 ```
 
+### Resources
+
+Some examples on the easier methods to grab/set variables:
+
+```crystal
+# Access a nested path
+resource.spec![:template, :metadata, :labels, :app]
+
+# Set a nested path
+resource.spec![:template, :metadata, :labels, :app] = "myapp"
+
+# Can use symbols or strings
+resource.spec![:template]
+resource.spec!["template"]
+```
+
 ### CRD Generation
 
 To generate resources for a CRD, you can use the crd_gen.cr file.
