@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.1.1">
+<meta name="generator" content="Crystal Docs 1.3.2">
 <meta name="crystal_docs.project_version" content="0.0.3">
 <meta name="crystal_docs.project_name" content="k8s.cr">
 
@@ -5037,16 +5037,16 @@
   <p>RawExtension is used to hold extensions in external versions.</p>
 <p>To use this, make a field which has RawExtension as its type in your external, versioned struct, and Object in your internal struct. You also need to register your various plugin types.</p>
 <p>// Internal package: type MyAPIObject struct {
-runtime.TypeMeta <code>json:",inline"</code>
-MyPlugin runtime.Object <code>json:"myPlugin"</code>
+runtime.TypeMeta <code>json:&quot;,inline&quot;</code>
+MyPlugin runtime.Object <code>json:&quot;myPlugin&quot;</code>
 } type PluginA struct {
-AOption string <code>json:"aOption"</code>
+AOption string <code>json:&quot;aOption&quot;</code>
 }</p>
 <p>// External package: type MyAPIObject struct {
-runtime.TypeMeta <code>json:",inline"</code>
-MyPlugin runtime.RawExtension <code>json:"myPlugin"</code>
+runtime.TypeMeta <code>json:&quot;,inline&quot;</code>
+MyPlugin runtime.RawExtension <code>json:&quot;myPlugin&quot;</code>
 } type PluginA struct {
-AOption string <code>json:"aOption"</code>
+AOption string <code>json:&quot;aOption&quot;</code>
 }</p>
 <p>// On the wire, the JSON will look something like this: {
 &quot;kind&quot;:&quot;MyAPIObject&quot;,

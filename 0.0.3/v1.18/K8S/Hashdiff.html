@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.1.1">
+<meta name="generator" content="Crystal Docs 1.3.2">
 <meta name="crystal_docs.project_version" content="0.0.3">
 <meta name="crystal_docs.project_name" content="k8s.cr">
 
@@ -5012,10 +5012,10 @@
 </ul>
 <p>returns an array of change tuples.
 e.g. [{ '+', 'a.b', '45' }, { '-', 'a.c', '5' }, { '~', 'a.x', '45', '63 }']</p>
-<pre><code class="language-crystal">  a = {'x' => [{'a' => 1, 'c' => 3, 'e' => 5}, {'y' => 3}]}
-  b = {'x' => [{'a' => 1, 'b' => 2, 'e' => 5}] }
+<pre><code class="language-crystal">  a = {&#39;x&#39; =&gt; [{&#39;a&#39; =&gt; 1, &#39;c&#39; =&gt; 3, &#39;e&#39; =&gt; 5}, {&#39;y&#39; =&gt; 3}]}
+  b = {&#39;x&#39; =&gt; [{&#39;a&#39; =&gt; 1, &#39;b&#39; =&gt; 2, &#39;e&#39; =&gt; 5}] }
   diff = Hashdiff.best_diff(a, b)
-  diff.should == [{'-', 'x[0].c', 3}, {'+', 'x[0].b', 2}, {'-', 'x[1].y', 3}, {'-', 'x[1]', {}}]</code></pre>
+  diff.should == [{&#39;-&#39;, &#39;x[0].c&#39;, 3}, {&#39;+&#39;, &#39;x[0].b&#39;, 2}, {&#39;-&#39;, &#39;x[1].y&#39;, 3}, {&#39;-&#39;, &#39;x[1]&#39;, {}}]</code></pre>
         </div>
       
       <br/>

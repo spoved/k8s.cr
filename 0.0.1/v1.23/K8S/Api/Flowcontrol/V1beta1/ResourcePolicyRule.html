@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.1.1">
+<meta name="generator" content="Crystal Docs 1.3.2">
 <meta name="crystal_docs.project_version" content="0.0.1">
 <meta name="crystal_docs.project_name" content="k8s.cr">
 
@@ -4469,7 +4469,7 @@
     Overview
   </h2>
 
-  <p>ResourcePolicyRule is a predicate that matches some resource requests, testing the request's verb and the target resource. A ResourcePolicyRule matches a resource request if and only if: (a) at least one member of verbs matches the request, (b) at least one member of apiGroups matches the request, (c) at least one member of resources matches the request, and (d) either (d1) the request does not specify a namespace (i.e., <code>Namespace==""</code>) and clusterScope is true or (d2) the request specifies a namespace and least one member of namespaces matches the request's namespace.</p>
+  <p>ResourcePolicyRule is a predicate that matches some resource requests, testing the request's verb and the target resource. A ResourcePolicyRule matches a resource request if and only if: (a) at least one member of verbs matches the request, (b) at least one member of apiGroups matches the request, (c) at least one member of resources matches the request, and (d) either (d1) the request does not specify a namespace (i.e., <code>Namespace==&quot;&quot;</code>) and clusterScope is true or (d2) the request specifies a namespace and least one member of namespaces matches the request's namespace.</p>
 
 
 

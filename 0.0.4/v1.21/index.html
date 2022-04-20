@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 1.1.1">
+<meta name="generator" content="Crystal Docs 1.3.2">
 <meta name="crystal_docs.project_version" content="0.0.4">
 <meta name="crystal_docs.project_name" content="k8s.cr">
 
@@ -5033,10 +5033,10 @@ Requiring more than one version at this time will result in an error.</p>
 </a>CRD Generation</h3>
 <p>To generate resources for a CRD, you can use the crd_gen.cr file.</p>
 <pre><code class="language-crystal"># First dump the CRDs to a file
-kubectl get crds -o yaml > crds.yaml
+kubectl get crds -o yaml &gt; crds.yaml
 
 # Then generate the resources
-./lib/k8s/bin/gen_crd.cr -- ./crds.yaml <output directory></code></pre>
+./lib/k8s/bin/gen_crd.cr -- ./crds.yaml &lt;output directory&gt;</code></pre>
 <h2><a id="contributing" class="anchor" href="#contributing">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
