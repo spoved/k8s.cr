@@ -200,7 +200,7 @@ class K8S::CRD::Parser
         ),
         x_kubernetes_action: "list",
         parameters: LIST_PARAMS,
-        tags: spec.names!.categories!,
+        tags: spec.names!.categories? || Array(String).new,
       )
     )
   end
@@ -226,7 +226,7 @@ class K8S::CRD::Parser
       ),
       x_kubernetes_action: "list",
       parameters: LIST_PARAMS,
-      tags: spec.names!.categories!,
+      tags: spec.names!.categories? || Array(String).new,
     )
   end
 
@@ -283,7 +283,7 @@ class K8S::CRD::Parser
   private def delete_action(ver)
     Swagger::Path::Action.new(
       description: "delete collection of #{ver.kind}",
-      tags: spec.names!.categories!,
+      tags: spec.names!.categories? || Array(String).new,
       operationId: "delete#{ver.group}#{ver.version}CollectionNamespaced#{ver.kind}",
       x_kubernetes_action: "deletecollection",
       parameters: LIST_PARAMS,
@@ -310,7 +310,7 @@ class K8S::CRD::Parser
       operationId: "read#{ver.group}#{ver.version}Namespaced#{ver.kind}",
       description: "read the specified #{ver.kind}",
       x_kubernetes_action: "get",
-      tags: spec.names!.categories!,
+      tags: spec.names!.categories? || Array(String).new,
       responses: Hash(String, Swagger::Path::Action::Response).from_json(
         <<-RESP
         {
@@ -354,7 +354,7 @@ class K8S::CRD::Parser
       operationId: "replace#{ver.group}#{ver.version}Namespaced#{ver.kind}",
       description: "replace the specified #{ver.kind}",
       x_kubernetes_action: "put",
-      tags: spec.names!.categories!,
+      tags: spec.names!.categories? || Array(String).new,
       responses: Hash(String, Swagger::Path::Action::Response).from_json(
         <<-RESP
         {
@@ -398,7 +398,7 @@ class K8S::CRD::Parser
       operationId: "delete#{ver.group}#{ver.version}Namespaced#{ver.kind}",
       description: "delete a #{ver.kind}",
       x_kubernetes_action: "delete",
-      tags: spec.names!.categories!,
+      tags: spec.names!.categories? || Array(String).new,
       responses: Hash(String, Swagger::Path::Action::Response).from_json(
         <<-'RESP'
         {
@@ -457,7 +457,7 @@ class K8S::CRD::Parser
       operationId: "patch#{ver.group}#{ver.version}Namespaced#{ver.kind}",
       description: "partially update the specified #{ver.kind}",
       x_kubernetes_action: "patch",
-      tags: spec.names!.categories!,
+      tags: spec.names!.categories? || Array(String).new,
       responses: Hash(String, Swagger::Path::Action::Response).from_json(
         <<-RESP
         {

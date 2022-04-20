@@ -69,5 +69,6 @@ abstract struct K8S::Kubernetes::Resource::List(T) < K8S::Kubernetes::Resource
   end
 end
 
-struct K8S::Api::Core::V1::List < K8S::Kubernetes::Resource::List(K8S::Kubernetes::Resource::Object); end
 struct K8S::Kubernetes::Resource::Generic < K8S::Kubernetes::Resource; end
+
+struct K8S::Api::Core::V1::List < K8S::Kubernetes::Resource::List(K8S::Kubernetes::Resource::Generic); end

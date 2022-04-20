@@ -1,88 +1,88 @@
 require "../annos"
 
-abstract struct K8S::Kubernetes::Resource
-  # :nodoc:
-  macro k8s_cast_array_typ(value, typ)
-    {% typ = typ.resolve %}
-    {{value}}.as(Array)
-          .map do |v|
-            k8s_cast_type(v, {{*typ.type_vars[0].union_types}})
-          end.as({{typ.id}})
-  end
+# :nodoc:
+macro k8s_cast_array_typ(value, typ)
+  {% typ = typ.resolve %}
+  {{value}}.as(Array)
+        .map do |v|
+          k8s_cast_type(v, {{*typ.type_vars[0].union_types}})
+        end.as({{typ.id}})
+end
 
-  # :nodoc:
-  macro k8s_cast_hash_typ(value, typ)
-    {% typ = typ.resolve %}
-    {{value}}.as(Hash)
-      .transform_values do |v|
-        k8s_cast_type(v, {{*typ.type_vars[1].union_types}})
-      end
-      .as({{typ.id}})
-  end
-
-  # :nodoc:
-  macro k8s_cast_type(value, *typs)
-    case {{value}}
-    {% for kind in typs.uniq %}
-    {% kind = kind.resolve %}
-    when {{kind.id}}
-      {% if kind <= Array %}
-        k8s_cast_array_typ({{value}}, {{kind.id}})
-      {% elsif kind <= Hash %}
-        k8s_cast_hash_typ({{value}}, {{kind.id}})
-      {% elsif kind.union_types.size > 1 %}
-        k8s_cast_type({{value}}, {{*kind.union_types}})
-      {% else %}
-        {{value}}.as({{kind.id}})
-      {% end %}
-    {% end %}
-
-    {% atyps = typs.uniq.select(&.resolve.<=(Array)) %}
-    {% if atyps.size >= 1 %}
-    when Array
-      {% if atyps.size == 1 %}
-        k8s_cast_array_typ({{value}}, {{atyps[0].id}})
-      {% else %}
-        k8s_cast_type({{value}}, {{*atyps}})
-      {% end %}
-    {% end %}
-
-    {% htyps = typs.uniq.select(&.resolve.<=(Hash)) %}
-    {% if htyps.size >= 1 %}
-    when Hash
-      {% if htyps.size == 1 %}
-        k8s_cast_hash_typ({{value}}, {{htyps[0].id}})
-      {% else %}
-        k8s_cast_type({{value}}, {{*htyps}})
-      {% end %}
-    {% end %}
-
-    {% rtyps = typs.uniq.select(&.resolve.<=(K8S::Kubernetes::Resource)) %}
-    {% if rtyps.size >= 1 %}
-    when Hash(String, K8S::Internals::Types::GenericObject::Value), Hash(String, ::K8S::Kubernetes::Resource::Field)
-      {% if rtyps.size == 1 %}
-        {{rtyps[0].id}}.new {{value}}
-      {% else %}
-        raise K8S::Kubernetes::Resource::Error::CastError.new({{value}}, [{{*rtyps.uniq}}])
-      {% end %}
-    {% end %}
-
-    {% gtyps = typs.uniq.select(&.resolve.<=(K8S::Kubernetes::Object)) %}
-    {% if rtyps.size == 0 && gtyps.size >= 1 %}
-    when Hash(String, K8S::Internals::Types::GenericObject::Value), Hash(String, ::K8S::Kubernetes::Resource::Field)
-      {% if gtyps.size == 1 %}
-        {{gtyps[0].id}}.new {{value}}
-      {% else %}
-        raise K8S::Kubernetes::Resource::Error::CastError.new({{value}}, [{{*gtyps.uniq}}])
-      {% end %}
-    {% end %}
-
-    else
-      Log.warn &.emit %<Unknown type: "#{{{value}}}">
-      raise K8S::Kubernetes::Resource::Error::CastError.new({{value}}, [{{*typs.uniq}}])
+# :nodoc:
+macro k8s_cast_hash_typ(value, typ)
+  {% typ = typ.resolve %}
+  {{value}}.as(Hash)
+    .transform_values do |v|
+      k8s_cast_type(v, {{*typ.type_vars[1].union_types}})
     end
-  end
+    .as({{typ.id}})
+end
 
+# :nodoc:
+macro k8s_cast_type(value, *typs)
+  case {{value}}
+  {% for kind in typs.uniq %}
+  {% kind = kind.resolve %}
+  when {{kind.id}}
+    {% if kind <= Array %}
+      k8s_cast_array_typ({{value}}, {{kind.id}})
+    {% elsif kind <= Hash %}
+      k8s_cast_hash_typ({{value}}, {{kind.id}})
+    {% elsif kind.union_types.size > 1 %}
+      k8s_cast_type({{value}}, {{*kind.union_types}})
+    {% else %}
+      {{value}}.as({{kind.id}})
+    {% end %}
+  {% end %}
+
+  {% atyps = typs.uniq.select(&.resolve.<=(Array)) %}
+  {% if atyps.size >= 1 %}
+  when Array
+    {% if atyps.size == 1 %}
+      k8s_cast_array_typ({{value}}, {{atyps[0].id}})
+    {% else %}
+      k8s_cast_type({{value}}, {{*atyps}})
+    {% end %}
+  {% end %}
+
+  {% htyps = typs.uniq.select(&.resolve.<=(Hash)) %}
+  {% if htyps.size >= 1 %}
+  when Hash
+    {% if htyps.size == 1 %}
+      k8s_cast_hash_typ({{value}}, {{htyps[0].id}})
+    {% else %}
+      k8s_cast_type({{value}}, {{*htyps}})
+    {% end %}
+  {% end %}
+
+  {% rtyps = typs.uniq.select(&.resolve.<=(K8S::Kubernetes::Resource)) %}
+  {% if rtyps.size >= 1 %}
+  when Hash(String, K8S::Internals::Types::GenericObject::Value), Hash(String, ::K8S::Kubernetes::Resource::Field)
+    {% if rtyps.size == 1 %}
+      {{rtyps[0].id}}.new {{value}}
+    {% else %}
+      raise K8S::Kubernetes::Resource::Error::CastError.new({{value}}, [{{*rtyps.uniq}}])
+    {% end %}
+  {% end %}
+
+  {% gtyps = typs.uniq.select(&.resolve.<=(K8S::Kubernetes::Object)) %}
+  {% if rtyps.size == 0 && gtyps.size >= 1 %}
+  when Hash(String, K8S::Internals::Types::GenericObject::Value), Hash(String, ::K8S::Kubernetes::Resource::Field)
+    {% if gtyps.size == 1 %}
+      {{gtyps[0].id}}.new {{value}}
+    {% else %}
+      raise K8S::Kubernetes::Resource::Error::CastError.new({{value}}, [{{*gtyps.uniq}}])
+    {% end %}
+  {% end %}
+
+  else
+    Log.warn &.emit %<Unknown type: "#{{{value}}}">
+    raise K8S::Kubernetes::Resource::Error::CastError.new({{value}}, [{{*typs.uniq}}])
+  end
+end
+
+abstract struct K8S::Kubernetes::Resource
   # Will define getter/setter for the provided field. The field must be a `K8S::Kubernetes::Resource` or a `K8S::Kubernetes::Resource::Field`.
   #
   # ```
@@ -272,19 +272,19 @@ abstract struct K8S::Kubernetes::Resource
   # )
   # ```
   macro define_resource(group, version, kind, namespace = nil, properties = [] of NamedTupleLiteral, list = false, list_kind = nil, description = nil)
-    # Build the group string since we dont have reverse, this gets complicated.
     {%
       r_group_full = ""
       if !group.empty?
-        group_parts = group.split(".")
-        index = group_parts.size - 1
-        new_group_parts = [] of StringLiteral
-        (0..index).each do |i|
-          new_group_parts << group_parts[index]
-          index -= 1
-        end
-
-        r_group_full = new_group_parts.join(".")
+        # Build the group string since we dont have reverse, this gets complicated.
+        # group_parts = group.split(".")
+        # index = group_parts.size - 1
+        # new_group_parts = [] of StringLiteral
+        # (0..index).each do |i|
+        #   new_group_parts << group_parts[index]
+        #   index -= 1
+        # end
+        # r_group_full = new_group_parts.join(".")
+        r_group_full = group
       end
 
       r_group = r_group_full
@@ -308,7 +308,7 @@ abstract struct K8S::Kubernetes::Resource
       kind: { name: "kind", kind: String, default: "{{kind.id}}", nilable: false, read_only: true, description: %<Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)))>},
       {% if list %}
       metadata: {name: "metadata", kind: ::K8S::Apimachinery::Apis::Meta::V1::ListMeta, default: nil, nilable: true, read_only: false, description: %<Standard object's metadata. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)))>},
-      items: {name: "items", kind: Array({{list_kind.id}}), default: nil, nilable: false, read_only: false, description: %<Items is a list of `{list_kind.id}}`.>},
+      items: {name: "items", kind: K8S::Kubernetes::Resource::ListWrapper({{list_kind.id}}), default: nil, nilable: false, read_only: false, description: %<Items is a list of `{list_kind.id}}`.>},
       {% else %}
       metadata: {name: "metadata", kind: ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta, default: nil, nilable: true, read_only: false, description: %<Standard object's metadata. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)))>},
       {% end %}

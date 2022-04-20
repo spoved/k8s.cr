@@ -6,7 +6,7 @@ class K8S::CRD::Generator
   def initialize(files, @output_dir)
     FileUtils.mkdir_p(@output_dir) unless Dir.exists?(@output_dir)
     Log.info { "Generating CRDs from #{files}" }
-    @parsers = K8S::Resource.from_files(files).flat_map do |crd|
+    @parsers = K8S::Kubernetes::Resource.from_files(files).flat_map do |crd|
       get_parser(crd)
     end.select(K8S::CRD::Parser)
     Log.info { "Found #{@parsers.size} CRDs" }
@@ -15,7 +15,7 @@ class K8S::CRD::Generator
   private def get_parser(crd)
     Log.debug { "Getting parser for #{crd.class}" }
     case crd
-    when K8S::Resources::Apiextensions::V1::CustomResourceDefinition
+    when K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinition
       K8S::CRD::Parser.new(crd)
     when K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionList, K8S::Api::Core::V1::List
       crd.items!.flat_map do |c|

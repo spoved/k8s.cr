@@ -13,5 +13,9 @@ module K8S::Internals
     def self.deep_cast_value(value : Hash(Symbol, L)) forall L
       self.deep_cast_value(value.transform_keys(&.to_s))
     end
+
+    def deep_cast_value(value)
+      self.class.deep_cast_value(value)
+    end
   end
 end
