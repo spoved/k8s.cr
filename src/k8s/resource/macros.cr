@@ -344,6 +344,9 @@ abstract struct K8S::Kubernetes::Resource
 
       # :nodoc:
       private def _init_validate!
+        @__object__["apiVersion"] = "{{r_group_full.id}}".empty? ? "{{version.id}}" : "{{r_group_full.id}}/{{version.id}}" if @__object__["apiVersion"]?.nil?
+        @__object__["kind"] = "{{kind.id}}" if @__object__["kind"]?.nil?
+
         if "{{r_group_full.id}}".empty?
           raise K8S::Kubernetes::Resource::Error.new %<apiVersion: "#{self.api_version}" does not match expected: "{{version.id}}"> if self.api_version != "{{version.id}}"
         else
@@ -379,11 +382,15 @@ abstract struct K8S::Kubernetes::Resource
 
       def self.new(pull : ::JSON::PullParser)
         obj = K8S::Internals::GenericObject.new(pull)
+        obj["apiVersion"] = "{{r_group_full.id}}".empty? ? "{{version.id}}" : "{{r_group_full.id}}/{{version.id}}" if obj["apiVersion"]?.nil?
+        obj["kind"] = "{{kind.id}}" if obj["kind"]?.nil?
         new(obj)
       end
 
       def self.new(ctx : ::YAML::ParseContext, node : ::YAML::Nodes::Node)
         obj = K8S::Internals::GenericObject.new(ctx, node)
+        obj["apiVersion"] = "{{r_group_full.id}}".empty? ? "{{version.id}}" : "{{r_group_full.id}}/{{version.id}}" if obj["apiVersion"]?.nil?
+        obj["kind"] = "{{kind.id}}" if obj["kind"]?.nil?
         new(obj)
       end
     end
