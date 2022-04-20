@@ -10,6 +10,10 @@ module K8S
     PATH_REGEX  = %r{(/|~(?!1))}
 
     def new_resource(obj)
+      if obj[:kind]? && obj[:kind] == "APIResourceList"
+        return K8S::Apimachinery::Apis::Meta::V1::APIResourceList.new(obj)
+      end
+
       api_ver = (obj[:apiVersion]? || obj[:api_version]?)
       api_ver = api_ver.as_s if api_ver.is_a?(JSON::Any) || api_ver.is_a?(YAML::Any)
 
