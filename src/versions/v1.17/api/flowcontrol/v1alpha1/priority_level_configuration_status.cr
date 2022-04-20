@@ -3,23 +3,13 @@
 require "yaml"
 require "json"
 
-module K8S
-  # PriorityLevelConfigurationStatus represents the current state of a "request-priority".
-  @[::K8S::Properties(
-    conditions: {type: Array(Api::Flowcontrol::V1alpha1::PriorityLevelConfigurationCondition), nilable: true, key: "conditions", getter: false, setter: false},
-  )]
-  class Api::Flowcontrol::V1alpha1::PriorityLevelConfigurationStatus
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+require "./priority_level_configuration_condition"
 
-    # `conditions` is the current state of "request-priority".
-    @[::JSON::Field(key: "conditions", emit_null: false)]
-    @[::YAML::Field(key: "conditions", emit_null: false)]
-    property conditions : Array(Api::Flowcontrol::V1alpha1::PriorityLevelConfigurationCondition) | Nil
+::K8S::Kubernetes::Resource.define_object("PriorityLevelConfigurationStatus",
+  namespace: "::K8S::Api::Flowcontrol::V1alpha1",
+  properties: [
 
-    def initialize(*, @conditions : Array(Api::Flowcontrol::V1alpha1::PriorityLevelConfigurationCondition) | Nil = nil)
-    end
-  end
-end
+    {name: "conditions", kind: ::Array(::K8S::Api::Flowcontrol::V1alpha1::PriorityLevelConfigurationCondition), key: "conditions", nilable: true, read_only: false, description: "`conditions` is the current state of \"request-priority\"."},
+
+  ]
+)

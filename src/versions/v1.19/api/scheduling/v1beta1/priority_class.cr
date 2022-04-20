@@ -3,6 +3,6 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Scheduling::V1beta1::PriorityClass = Api::Scheduling::V1::PriorityClass
-end
+require "../../../apimachinery/apis/meta/v1/object_meta"
+
+alias K8S::Api::Scheduling::V1beta1::PriorityClass = Api::Scheduling::V1::PriorityClass

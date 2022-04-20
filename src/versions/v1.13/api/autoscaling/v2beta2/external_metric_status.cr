@@ -3,29 +3,15 @@
 require "yaml"
 require "json"
 
-module K8S
-  # ExternalMetricStatus indicates the current value of a global metric not associated with any Kubernetes object.
-  @[::K8S::Properties(
-    current: {type: Api::Autoscaling::V2beta2::MetricValueStatus, nilable: false, key: "current", getter: false, setter: false},
-    metric: {type: Api::Autoscaling::V2beta2::MetricIdentifier, nilable: false, key: "metric", getter: false, setter: false},
-  )]
-  class Api::Autoscaling::V2beta2::ExternalMetricStatus
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+require "./metric_value_status"
+require "./metric_identifier"
 
-    # current contains the current value for the given metric
-    @[::JSON::Field(key: "current", emit_null: true)]
-    @[::YAML::Field(key: "current", emit_null: true)]
-    property current : Api::Autoscaling::V2beta2::MetricValueStatus
+::K8S::Kubernetes::Resource.define_object("ExternalMetricStatus",
+  namespace: "::K8S::Api::Autoscaling::V2beta2",
+  properties: [
 
-    # metric identifies the target metric by name and selector
-    @[::JSON::Field(key: "metric", emit_null: true)]
-    @[::YAML::Field(key: "metric", emit_null: true)]
-    property metric : Api::Autoscaling::V2beta2::MetricIdentifier
+    {name: "current", kind: ::K8S::Api::Autoscaling::V2beta2::MetricValueStatus, key: "current", nilable: false, read_only: false, description: "current contains the current value for the given metric"},
+    {name: "metric", kind: ::K8S::Api::Autoscaling::V2beta2::MetricIdentifier, key: "metric", nilable: false, read_only: false, description: "metric identifies the target metric by name and selector"},
 
-    def initialize(*, @current : Api::Autoscaling::V2beta2::MetricValueStatus, @metric : Api::Autoscaling::V2beta2::MetricIdentifier)
-    end
-  end
-end
+  ]
+)

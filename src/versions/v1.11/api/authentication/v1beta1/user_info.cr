@@ -3,6 +3,4 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Authentication::V1beta1::UserInfo = Api::Authentication::V1::UserInfo
-end
+alias K8S::Api::Authentication::V1beta1::UserInfo = Api::Authentication::V1::UserInfo

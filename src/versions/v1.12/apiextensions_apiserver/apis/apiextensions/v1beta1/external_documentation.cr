@@ -3,27 +3,12 @@
 require "yaml"
 require "json"
 
-module K8S
-  # ExternalDocumentation allows referencing an external resource for extended documentation.
-  @[::K8S::Properties(
-    description: {type: String, nilable: true, key: "description", getter: false, setter: false},
-    url: {type: String, nilable: true, key: "url", getter: false, setter: false},
-  )]
-  class ApiextensionsApiserver::Apis::Apiextensions::V1beta1::ExternalDocumentation
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+::K8S::Kubernetes::Resource.define_object("ExternalDocumentation",
+  namespace: "::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1",
+  properties: [
 
-    @[::JSON::Field(key: "description", emit_null: false)]
-    @[::YAML::Field(key: "description", emit_null: false)]
-    property description : String | Nil
+    {name: "description", kind: String, key: "description", nilable: true, read_only: false, description: nil},
+    {name: "url", kind: String, key: "url", nilable: true, read_only: false, description: nil},
 
-    @[::JSON::Field(key: "url", emit_null: false)]
-    @[::YAML::Field(key: "url", emit_null: false)]
-    property url : String | Nil
-
-    def initialize(*, @description : String | Nil = nil, @url : String | Nil = nil)
-    end
-  end
-end
+  ]
+)

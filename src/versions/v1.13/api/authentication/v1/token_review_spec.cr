@@ -3,29 +3,12 @@
 require "yaml"
 require "json"
 
-module K8S
-  # TokenReviewSpec is a description of the token authentication request.
-  @[::K8S::Properties(
-    audiences: {type: Array(String), nilable: true, key: "audiences", getter: false, setter: false},
-    token: {type: String, nilable: true, key: "token", getter: false, setter: false},
-  )]
-  class Api::Authentication::V1::TokenReviewSpec
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+::K8S::Kubernetes::Resource.define_object("TokenReviewSpec",
+  namespace: "::K8S::Api::Authentication::V1",
+  properties: [
 
-    # Audiences is a list of the identifiers that the resource server presented with the token identifies as. Audience-aware token authenticators will verify that the token was intended for at least one of the audiences in this list. If no audiences are provided, the audience will default to the audience of the Kubernetes apiserver.
-    @[::JSON::Field(key: "audiences", emit_null: false)]
-    @[::YAML::Field(key: "audiences", emit_null: false)]
-    property audiences : Array(String) | Nil
+    {name: "audiences", kind: ::Array(String), key: "audiences", nilable: true, read_only: false, description: "Audiences is a list of the identifiers that the resource server presented with the token identifies as. Audience-aware token authenticators will verify that the token was intended for at least one of the audiences in this list. If no audiences are provided, the audience will default to the audience of the Kubernetes apiserver."},
+    {name: "token", kind: String, key: "token", nilable: true, read_only: false, description: "Token is the opaque bearer token."},
 
-    # Token is the opaque bearer token.
-    @[::JSON::Field(key: "token", emit_null: false)]
-    @[::YAML::Field(key: "token", emit_null: false)]
-    property token : String | Nil
-
-    def initialize(*, @audiences : Array(String) | Nil = nil, @token : String | Nil = nil)
-    end
-  end
-end
+  ]
+)

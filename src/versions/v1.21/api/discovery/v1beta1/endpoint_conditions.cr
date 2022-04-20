@@ -3,6 +3,4 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Discovery::V1beta1::EndpointConditions = Api::Discovery::V1::EndpointConditions
-end
+alias K8S::Api::Discovery::V1beta1::EndpointConditions = Api::Discovery::V1::EndpointConditions

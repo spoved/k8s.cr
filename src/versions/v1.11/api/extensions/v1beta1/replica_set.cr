@@ -3,6 +3,8 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Extensions::V1beta1::ReplicaSet = Api::Apps::V1::ReplicaSet
-end
+require "../../../apimachinery/apis/meta/v1/object_meta"
+require "./replica_set_spec"
+require "./replica_set_status"
+
+alias K8S::Api::Extensions::V1beta1::ReplicaSet = Api::Apps::V1::ReplicaSet

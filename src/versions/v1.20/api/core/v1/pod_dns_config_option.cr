@@ -3,28 +3,12 @@
 require "yaml"
 require "json"
 
-module K8S
-  # PodDNSConfigOption defines DNS resolver options of a pod.
-  @[::K8S::Properties(
-    name: {type: String, nilable: true, key: "name", getter: false, setter: false},
-    value: {type: String, nilable: true, key: "value", getter: false, setter: false},
-  )]
-  class Api::Core::V1::PodDNSConfigOption
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+::K8S::Kubernetes::Resource.define_object("PodDNSConfigOption",
+  namespace: "::K8S::Api::Core::V1",
+  properties: [
 
-    # Required.
-    @[::JSON::Field(key: "name", emit_null: false)]
-    @[::YAML::Field(key: "name", emit_null: false)]
-    property name : String | Nil
+    {name: "name", kind: String, key: "name", nilable: true, read_only: false, description: "Required."},
+    {name: "value", kind: String, key: "value", nilable: true, read_only: false, description: nil},
 
-    @[::JSON::Field(key: "value", emit_null: false)]
-    @[::YAML::Field(key: "value", emit_null: false)]
-    property value : String | Nil
-
-    def initialize(*, @name : String | Nil = nil, @value : String | Nil = nil)
-    end
-  end
-end
+  ]
+)

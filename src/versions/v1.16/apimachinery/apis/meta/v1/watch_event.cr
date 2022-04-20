@@ -3,77 +3,499 @@
 require "yaml"
 require "json"
 
-module K8S
-  # Event represents a single event to a watched resource.
-  @[::K8S::GroupVersionKind(group: "", kind: "WatchEvent", version: "v1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent")]
-  @[::K8S::GroupVersionKind(group: "admission.k8s.io", kind: "WatchEvent", version: "v1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent")]
-  @[::K8S::GroupVersionKind(group: "admission.k8s.io", kind: "WatchEvent", version: "v1beta1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent")]
-  @[::K8S::GroupVersionKind(group: "admissionregistration.k8s.io", kind: "WatchEvent", version: "v1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent")]
-  @[::K8S::GroupVersionKind(group: "admissionregistration.k8s.io", kind: "WatchEvent", version: "v1beta1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent")]
-  @[::K8S::GroupVersionKind(group: "apiextensions.k8s.io", kind: "WatchEvent", version: "v1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent")]
-  @[::K8S::GroupVersionKind(group: "apiextensions.k8s.io", kind: "WatchEvent", version: "v1beta1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent")]
-  @[::K8S::GroupVersionKind(group: "apiregistration.k8s.io", kind: "WatchEvent", version: "v1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent")]
-  @[::K8S::GroupVersionKind(group: "apiregistration.k8s.io", kind: "WatchEvent", version: "v1beta1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent")]
-  @[::K8S::GroupVersionKind(group: "apps", kind: "WatchEvent", version: "v1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent")]
-  @[::K8S::GroupVersionKind(group: "apps", kind: "WatchEvent", version: "v1beta1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent")]
-  @[::K8S::GroupVersionKind(group: "apps", kind: "WatchEvent", version: "v1beta2", full: "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent")]
-  @[::K8S::GroupVersionKind(group: "auditregistration.k8s.io", kind: "WatchEvent", version: "v1alpha1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent")]
-  @[::K8S::GroupVersionKind(group: "authentication.k8s.io", kind: "WatchEvent", version: "v1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent")]
-  @[::K8S::GroupVersionKind(group: "authentication.k8s.io", kind: "WatchEvent", version: "v1beta1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent")]
-  @[::K8S::GroupVersionKind(group: "authorization.k8s.io", kind: "WatchEvent", version: "v1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent")]
-  @[::K8S::GroupVersionKind(group: "authorization.k8s.io", kind: "WatchEvent", version: "v1beta1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent")]
-  @[::K8S::GroupVersionKind(group: "autoscaling", kind: "WatchEvent", version: "v1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent")]
-  @[::K8S::GroupVersionKind(group: "autoscaling", kind: "WatchEvent", version: "v2beta1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent")]
-  @[::K8S::GroupVersionKind(group: "autoscaling", kind: "WatchEvent", version: "v2beta2", full: "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent")]
-  @[::K8S::GroupVersionKind(group: "batch", kind: "WatchEvent", version: "v1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent")]
-  @[::K8S::GroupVersionKind(group: "batch", kind: "WatchEvent", version: "v1beta1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent")]
-  @[::K8S::GroupVersionKind(group: "batch", kind: "WatchEvent", version: "v2alpha1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent")]
-  @[::K8S::GroupVersionKind(group: "certificates.k8s.io", kind: "WatchEvent", version: "v1beta1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent")]
-  @[::K8S::GroupVersionKind(group: "coordination.k8s.io", kind: "WatchEvent", version: "v1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent")]
-  @[::K8S::GroupVersionKind(group: "coordination.k8s.io", kind: "WatchEvent", version: "v1beta1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent")]
-  @[::K8S::GroupVersionKind(group: "discovery.k8s.io", kind: "WatchEvent", version: "v1alpha1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent")]
-  @[::K8S::GroupVersionKind(group: "events.k8s.io", kind: "WatchEvent", version: "v1beta1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent")]
-  @[::K8S::GroupVersionKind(group: "extensions", kind: "WatchEvent", version: "v1beta1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent")]
-  @[::K8S::GroupVersionKind(group: "imagepolicy.k8s.io", kind: "WatchEvent", version: "v1alpha1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent")]
-  @[::K8S::GroupVersionKind(group: "networking.k8s.io", kind: "WatchEvent", version: "v1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent")]
-  @[::K8S::GroupVersionKind(group: "networking.k8s.io", kind: "WatchEvent", version: "v1beta1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent")]
-  @[::K8S::GroupVersionKind(group: "node.k8s.io", kind: "WatchEvent", version: "v1alpha1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent")]
-  @[::K8S::GroupVersionKind(group: "node.k8s.io", kind: "WatchEvent", version: "v1beta1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent")]
-  @[::K8S::GroupVersionKind(group: "policy", kind: "WatchEvent", version: "v1beta1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent")]
-  @[::K8S::GroupVersionKind(group: "rbac.authorization.k8s.io", kind: "WatchEvent", version: "v1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent")]
-  @[::K8S::GroupVersionKind(group: "rbac.authorization.k8s.io", kind: "WatchEvent", version: "v1alpha1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent")]
-  @[::K8S::GroupVersionKind(group: "rbac.authorization.k8s.io", kind: "WatchEvent", version: "v1beta1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent")]
-  @[::K8S::GroupVersionKind(group: "scheduling.k8s.io", kind: "WatchEvent", version: "v1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent")]
-  @[::K8S::GroupVersionKind(group: "scheduling.k8s.io", kind: "WatchEvent", version: "v1alpha1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent")]
-  @[::K8S::GroupVersionKind(group: "scheduling.k8s.io", kind: "WatchEvent", version: "v1beta1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent")]
-  @[::K8S::GroupVersionKind(group: "settings.k8s.io", kind: "WatchEvent", version: "v1alpha1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent")]
-  @[::K8S::GroupVersionKind(group: "storage.k8s.io", kind: "WatchEvent", version: "v1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent")]
-  @[::K8S::GroupVersionKind(group: "storage.k8s.io", kind: "WatchEvent", version: "v1alpha1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent")]
-  @[::K8S::GroupVersionKind(group: "storage.k8s.io", kind: "WatchEvent", version: "v1beta1", full: "io.k8s.apimachinery.pkg.apis.meta.v1.WatchEvent")]
-  @[::K8S::Properties(
-    object: {type: Apimachinery::Runtime::RawExtension, nilable: false, key: "object", getter: false, setter: false},
-    type: {type: String, nilable: false, key: "type", getter: false, setter: false},
-  )]
-  class Apimachinery::Apis::Meta::V1::WatchEvent
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+require "../../../runtime/raw_extension"
 
-    # Object is:
-    #  * If Type is Added or Modified: the new state of the object.
-    #  * If Type is Deleted: the state of the object immediately before deletion.
-    #  * If Type is Error: *Status is recommended; other types may make sense
-    #    depending on context.
-    @[::JSON::Field(key: "object", emit_null: true)]
-    @[::YAML::Field(key: "object", emit_null: true)]
-    property object : Apimachinery::Runtime::RawExtension
+::K8S::Kubernetes::Resource.define_resource("", "v1", "WatchEvent",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
 
-    @[::JSON::Field(key: "type", emit_null: true)]
-    @[::YAML::Field(key: "type", emit_null: true)]
-    property type : String
+    {name: "object", kind: ::K8S::Apimachinery::Runtime::RawExtension, key: "object", nilable: false, read_only: false, description: "Object is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context."},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: nil},
 
-    def initialize(*, @object : Apimachinery::Runtime::RawExtension, @type : String)
-    end
-  end
-end
+  ],
+  description: "Event represents a single event to a watched resource.",
+)
+
+::K8S::Kubernetes::Resource.define_resource("admission.k8s.io", "v1", "WatchEvent",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
+
+    {name: "object", kind: ::K8S::Apimachinery::Runtime::RawExtension, key: "object", nilable: false, read_only: false, description: "Object is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context."},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: nil},
+
+  ],
+  description: "Event represents a single event to a watched resource.",
+)
+
+::K8S::Kubernetes::Resource.define_resource("admission.k8s.io", "v1beta1", "WatchEvent",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
+
+    {name: "object", kind: ::K8S::Apimachinery::Runtime::RawExtension, key: "object", nilable: false, read_only: false, description: "Object is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context."},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: nil},
+
+  ],
+  description: "Event represents a single event to a watched resource.",
+)
+
+::K8S::Kubernetes::Resource.define_resource("admissionregistration.k8s.io", "v1", "WatchEvent",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
+
+    {name: "object", kind: ::K8S::Apimachinery::Runtime::RawExtension, key: "object", nilable: false, read_only: false, description: "Object is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context."},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: nil},
+
+  ],
+  description: "Event represents a single event to a watched resource.",
+)
+
+::K8S::Kubernetes::Resource.define_resource("admissionregistration.k8s.io", "v1beta1", "WatchEvent",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
+
+    {name: "object", kind: ::K8S::Apimachinery::Runtime::RawExtension, key: "object", nilable: false, read_only: false, description: "Object is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context."},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: nil},
+
+  ],
+  description: "Event represents a single event to a watched resource.",
+)
+
+::K8S::Kubernetes::Resource.define_resource("apiextensions.k8s.io", "v1", "WatchEvent",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
+
+    {name: "object", kind: ::K8S::Apimachinery::Runtime::RawExtension, key: "object", nilable: false, read_only: false, description: "Object is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context."},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: nil},
+
+  ],
+  description: "Event represents a single event to a watched resource.",
+)
+
+::K8S::Kubernetes::Resource.define_resource("apiextensions.k8s.io", "v1beta1", "WatchEvent",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
+
+    {name: "object", kind: ::K8S::Apimachinery::Runtime::RawExtension, key: "object", nilable: false, read_only: false, description: "Object is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context."},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: nil},
+
+  ],
+  description: "Event represents a single event to a watched resource.",
+)
+
+::K8S::Kubernetes::Resource.define_resource("apiregistration.k8s.io", "v1", "WatchEvent",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
+
+    {name: "object", kind: ::K8S::Apimachinery::Runtime::RawExtension, key: "object", nilable: false, read_only: false, description: "Object is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context."},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: nil},
+
+  ],
+  description: "Event represents a single event to a watched resource.",
+)
+
+::K8S::Kubernetes::Resource.define_resource("apiregistration.k8s.io", "v1beta1", "WatchEvent",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
+
+    {name: "object", kind: ::K8S::Apimachinery::Runtime::RawExtension, key: "object", nilable: false, read_only: false, description: "Object is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context."},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: nil},
+
+  ],
+  description: "Event represents a single event to a watched resource.",
+)
+
+::K8S::Kubernetes::Resource.define_resource("apps", "v1", "WatchEvent",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
+
+    {name: "object", kind: ::K8S::Apimachinery::Runtime::RawExtension, key: "object", nilable: false, read_only: false, description: "Object is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context."},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: nil},
+
+  ],
+  description: "Event represents a single event to a watched resource.",
+)
+
+::K8S::Kubernetes::Resource.define_resource("apps", "v1beta1", "WatchEvent",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
+
+    {name: "object", kind: ::K8S::Apimachinery::Runtime::RawExtension, key: "object", nilable: false, read_only: false, description: "Object is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context."},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: nil},
+
+  ],
+  description: "Event represents a single event to a watched resource.",
+)
+
+::K8S::Kubernetes::Resource.define_resource("apps", "v1beta2", "WatchEvent",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
+
+    {name: "object", kind: ::K8S::Apimachinery::Runtime::RawExtension, key: "object", nilable: false, read_only: false, description: "Object is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context."},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: nil},
+
+  ],
+  description: "Event represents a single event to a watched resource.",
+)
+
+::K8S::Kubernetes::Resource.define_resource("auditregistration.k8s.io", "v1alpha1", "WatchEvent",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
+
+    {name: "object", kind: ::K8S::Apimachinery::Runtime::RawExtension, key: "object", nilable: false, read_only: false, description: "Object is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context."},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: nil},
+
+  ],
+  description: "Event represents a single event to a watched resource.",
+)
+
+::K8S::Kubernetes::Resource.define_resource("authentication.k8s.io", "v1", "WatchEvent",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
+
+    {name: "object", kind: ::K8S::Apimachinery::Runtime::RawExtension, key: "object", nilable: false, read_only: false, description: "Object is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context."},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: nil},
+
+  ],
+  description: "Event represents a single event to a watched resource.",
+)
+
+::K8S::Kubernetes::Resource.define_resource("authentication.k8s.io", "v1beta1", "WatchEvent",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
+
+    {name: "object", kind: ::K8S::Apimachinery::Runtime::RawExtension, key: "object", nilable: false, read_only: false, description: "Object is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context."},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: nil},
+
+  ],
+  description: "Event represents a single event to a watched resource.",
+)
+
+::K8S::Kubernetes::Resource.define_resource("authorization.k8s.io", "v1", "WatchEvent",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
+
+    {name: "object", kind: ::K8S::Apimachinery::Runtime::RawExtension, key: "object", nilable: false, read_only: false, description: "Object is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context."},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: nil},
+
+  ],
+  description: "Event represents a single event to a watched resource.",
+)
+
+::K8S::Kubernetes::Resource.define_resource("authorization.k8s.io", "v1beta1", "WatchEvent",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
+
+    {name: "object", kind: ::K8S::Apimachinery::Runtime::RawExtension, key: "object", nilable: false, read_only: false, description: "Object is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context."},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: nil},
+
+  ],
+  description: "Event represents a single event to a watched resource.",
+)
+
+::K8S::Kubernetes::Resource.define_resource("autoscaling", "v1", "WatchEvent",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
+
+    {name: "object", kind: ::K8S::Apimachinery::Runtime::RawExtension, key: "object", nilable: false, read_only: false, description: "Object is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context."},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: nil},
+
+  ],
+  description: "Event represents a single event to a watched resource.",
+)
+
+::K8S::Kubernetes::Resource.define_resource("autoscaling", "v2beta1", "WatchEvent",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
+
+    {name: "object", kind: ::K8S::Apimachinery::Runtime::RawExtension, key: "object", nilable: false, read_only: false, description: "Object is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context."},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: nil},
+
+  ],
+  description: "Event represents a single event to a watched resource.",
+)
+
+::K8S::Kubernetes::Resource.define_resource("autoscaling", "v2beta2", "WatchEvent",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
+
+    {name: "object", kind: ::K8S::Apimachinery::Runtime::RawExtension, key: "object", nilable: false, read_only: false, description: "Object is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context."},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: nil},
+
+  ],
+  description: "Event represents a single event to a watched resource.",
+)
+
+::K8S::Kubernetes::Resource.define_resource("batch", "v1", "WatchEvent",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
+
+    {name: "object", kind: ::K8S::Apimachinery::Runtime::RawExtension, key: "object", nilable: false, read_only: false, description: "Object is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context."},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: nil},
+
+  ],
+  description: "Event represents a single event to a watched resource.",
+)
+
+::K8S::Kubernetes::Resource.define_resource("batch", "v1beta1", "WatchEvent",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
+
+    {name: "object", kind: ::K8S::Apimachinery::Runtime::RawExtension, key: "object", nilable: false, read_only: false, description: "Object is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context."},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: nil},
+
+  ],
+  description: "Event represents a single event to a watched resource.",
+)
+
+::K8S::Kubernetes::Resource.define_resource("batch", "v2alpha1", "WatchEvent",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
+
+    {name: "object", kind: ::K8S::Apimachinery::Runtime::RawExtension, key: "object", nilable: false, read_only: false, description: "Object is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context."},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: nil},
+
+  ],
+  description: "Event represents a single event to a watched resource.",
+)
+
+::K8S::Kubernetes::Resource.define_resource("certificates.k8s.io", "v1beta1", "WatchEvent",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
+
+    {name: "object", kind: ::K8S::Apimachinery::Runtime::RawExtension, key: "object", nilable: false, read_only: false, description: "Object is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context."},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: nil},
+
+  ],
+  description: "Event represents a single event to a watched resource.",
+)
+
+::K8S::Kubernetes::Resource.define_resource("coordination.k8s.io", "v1", "WatchEvent",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
+
+    {name: "object", kind: ::K8S::Apimachinery::Runtime::RawExtension, key: "object", nilable: false, read_only: false, description: "Object is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context."},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: nil},
+
+  ],
+  description: "Event represents a single event to a watched resource.",
+)
+
+::K8S::Kubernetes::Resource.define_resource("coordination.k8s.io", "v1beta1", "WatchEvent",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
+
+    {name: "object", kind: ::K8S::Apimachinery::Runtime::RawExtension, key: "object", nilable: false, read_only: false, description: "Object is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context."},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: nil},
+
+  ],
+  description: "Event represents a single event to a watched resource.",
+)
+
+::K8S::Kubernetes::Resource.define_resource("discovery.k8s.io", "v1alpha1", "WatchEvent",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
+
+    {name: "object", kind: ::K8S::Apimachinery::Runtime::RawExtension, key: "object", nilable: false, read_only: false, description: "Object is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context."},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: nil},
+
+  ],
+  description: "Event represents a single event to a watched resource.",
+)
+
+::K8S::Kubernetes::Resource.define_resource("events.k8s.io", "v1beta1", "WatchEvent",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
+
+    {name: "object", kind: ::K8S::Apimachinery::Runtime::RawExtension, key: "object", nilable: false, read_only: false, description: "Object is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context."},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: nil},
+
+  ],
+  description: "Event represents a single event to a watched resource.",
+)
+
+::K8S::Kubernetes::Resource.define_resource("extensions", "v1beta1", "WatchEvent",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
+
+    {name: "object", kind: ::K8S::Apimachinery::Runtime::RawExtension, key: "object", nilable: false, read_only: false, description: "Object is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context."},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: nil},
+
+  ],
+  description: "Event represents a single event to a watched resource.",
+)
+
+::K8S::Kubernetes::Resource.define_resource("imagepolicy.k8s.io", "v1alpha1", "WatchEvent",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
+
+    {name: "object", kind: ::K8S::Apimachinery::Runtime::RawExtension, key: "object", nilable: false, read_only: false, description: "Object is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context."},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: nil},
+
+  ],
+  description: "Event represents a single event to a watched resource.",
+)
+
+::K8S::Kubernetes::Resource.define_resource("networking.k8s.io", "v1", "WatchEvent",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
+
+    {name: "object", kind: ::K8S::Apimachinery::Runtime::RawExtension, key: "object", nilable: false, read_only: false, description: "Object is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context."},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: nil},
+
+  ],
+  description: "Event represents a single event to a watched resource.",
+)
+
+::K8S::Kubernetes::Resource.define_resource("networking.k8s.io", "v1beta1", "WatchEvent",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
+
+    {name: "object", kind: ::K8S::Apimachinery::Runtime::RawExtension, key: "object", nilable: false, read_only: false, description: "Object is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context."},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: nil},
+
+  ],
+  description: "Event represents a single event to a watched resource.",
+)
+
+::K8S::Kubernetes::Resource.define_resource("node.k8s.io", "v1alpha1", "WatchEvent",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
+
+    {name: "object", kind: ::K8S::Apimachinery::Runtime::RawExtension, key: "object", nilable: false, read_only: false, description: "Object is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context."},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: nil},
+
+  ],
+  description: "Event represents a single event to a watched resource.",
+)
+
+::K8S::Kubernetes::Resource.define_resource("node.k8s.io", "v1beta1", "WatchEvent",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
+
+    {name: "object", kind: ::K8S::Apimachinery::Runtime::RawExtension, key: "object", nilable: false, read_only: false, description: "Object is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context."},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: nil},
+
+  ],
+  description: "Event represents a single event to a watched resource.",
+)
+
+::K8S::Kubernetes::Resource.define_resource("policy", "v1beta1", "WatchEvent",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
+
+    {name: "object", kind: ::K8S::Apimachinery::Runtime::RawExtension, key: "object", nilable: false, read_only: false, description: "Object is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context."},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: nil},
+
+  ],
+  description: "Event represents a single event to a watched resource.",
+)
+
+::K8S::Kubernetes::Resource.define_resource("rbac.authorization.k8s.io", "v1", "WatchEvent",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
+
+    {name: "object", kind: ::K8S::Apimachinery::Runtime::RawExtension, key: "object", nilable: false, read_only: false, description: "Object is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context."},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: nil},
+
+  ],
+  description: "Event represents a single event to a watched resource.",
+)
+
+::K8S::Kubernetes::Resource.define_resource("rbac.authorization.k8s.io", "v1alpha1", "WatchEvent",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
+
+    {name: "object", kind: ::K8S::Apimachinery::Runtime::RawExtension, key: "object", nilable: false, read_only: false, description: "Object is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context."},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: nil},
+
+  ],
+  description: "Event represents a single event to a watched resource.",
+)
+
+::K8S::Kubernetes::Resource.define_resource("rbac.authorization.k8s.io", "v1beta1", "WatchEvent",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
+
+    {name: "object", kind: ::K8S::Apimachinery::Runtime::RawExtension, key: "object", nilable: false, read_only: false, description: "Object is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context."},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: nil},
+
+  ],
+  description: "Event represents a single event to a watched resource.",
+)
+
+::K8S::Kubernetes::Resource.define_resource("scheduling.k8s.io", "v1", "WatchEvent",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
+
+    {name: "object", kind: ::K8S::Apimachinery::Runtime::RawExtension, key: "object", nilable: false, read_only: false, description: "Object is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context."},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: nil},
+
+  ],
+  description: "Event represents a single event to a watched resource.",
+)
+
+::K8S::Kubernetes::Resource.define_resource("scheduling.k8s.io", "v1alpha1", "WatchEvent",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
+
+    {name: "object", kind: ::K8S::Apimachinery::Runtime::RawExtension, key: "object", nilable: false, read_only: false, description: "Object is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context."},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: nil},
+
+  ],
+  description: "Event represents a single event to a watched resource.",
+)
+
+::K8S::Kubernetes::Resource.define_resource("scheduling.k8s.io", "v1beta1", "WatchEvent",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
+
+    {name: "object", kind: ::K8S::Apimachinery::Runtime::RawExtension, key: "object", nilable: false, read_only: false, description: "Object is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context."},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: nil},
+
+  ],
+  description: "Event represents a single event to a watched resource.",
+)
+
+::K8S::Kubernetes::Resource.define_resource("settings.k8s.io", "v1alpha1", "WatchEvent",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
+
+    {name: "object", kind: ::K8S::Apimachinery::Runtime::RawExtension, key: "object", nilable: false, read_only: false, description: "Object is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context."},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: nil},
+
+  ],
+  description: "Event represents a single event to a watched resource.",
+)
+
+::K8S::Kubernetes::Resource.define_resource("storage.k8s.io", "v1", "WatchEvent",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
+
+    {name: "object", kind: ::K8S::Apimachinery::Runtime::RawExtension, key: "object", nilable: false, read_only: false, description: "Object is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context."},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: nil},
+
+  ],
+  description: "Event represents a single event to a watched resource.",
+)
+
+::K8S::Kubernetes::Resource.define_resource("storage.k8s.io", "v1alpha1", "WatchEvent",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
+
+    {name: "object", kind: ::K8S::Apimachinery::Runtime::RawExtension, key: "object", nilable: false, read_only: false, description: "Object is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context."},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: nil},
+
+  ],
+  description: "Event represents a single event to a watched resource.",
+)
+
+::K8S::Kubernetes::Resource.define_resource("storage.k8s.io", "v1beta1", "WatchEvent",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
+
+    {name: "object", kind: ::K8S::Apimachinery::Runtime::RawExtension, key: "object", nilable: false, read_only: false, description: "Object is:\n * If Type is Added or Modified: the new state of the object.\n * If Type is Deleted: the state of the object immediately before deletion.\n * If Type is Error: *Status is recommended; other types may make sense\n   depending on context."},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: nil},
+
+  ],
+  description: "Event represents a single event to a watched resource.",
+)

@@ -3,6 +3,4 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Extensions::V1beta1::RollbackConfig = Api::Apps::V1beta1::RollbackConfig
-end
+alias K8S::Api::Extensions::V1beta1::RollbackConfig = Api::Apps::V1beta1::RollbackConfig

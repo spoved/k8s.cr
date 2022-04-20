@@ -3,6 +3,8 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Extensions::V1beta1::Scale = Api::Apps::V1beta1::Scale
-end
+require "../../../apimachinery/apis/meta/v1/object_meta"
+require "./scale_spec"
+require "./scale_status"
+
+alias K8S::Api::Extensions::V1beta1::Scale = Api::Apps::V1beta1::Scale

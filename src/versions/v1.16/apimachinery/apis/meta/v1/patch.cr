@@ -3,21 +3,4 @@
 require "yaml"
 require "json"
 
-module K8S
-  # Patch is provided to give a concrete name and type to the Kubernetes PATCH request body.
-  @[::K8S::Properties]
-  class Apimachinery::Apis::Meta::V1::Patch
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
-
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
-
-    def initialize
-    end
-  end
-end
+alias K8S::Apimachinery::Apis::Meta::V1::Patch = ::K8S::GenericObject

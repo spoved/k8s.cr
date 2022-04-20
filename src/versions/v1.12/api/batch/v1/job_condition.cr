@@ -3,53 +3,16 @@
 require "yaml"
 require "json"
 
-module K8S
-  # JobCondition describes current state of a job.
-  @[::K8S::Properties(
-    last_probe_time: {type: Time, nilable: true, key: "lastProbeTime", getter: false, setter: false},
-    last_transition_time: {type: Time, nilable: true, key: "lastTransitionTime", getter: false, setter: false},
-    message: {type: String, nilable: true, key: "message", getter: false, setter: false},
-    reason: {type: String, nilable: true, key: "reason", getter: false, setter: false},
-    status: {type: String, nilable: false, key: "status", getter: false, setter: false},
-    type: {type: String, nilable: false, key: "type", getter: false, setter: false},
-  )]
-  class Api::Batch::V1::JobCondition
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+::K8S::Kubernetes::Resource.define_object("JobCondition",
+  namespace: "::K8S::Api::Batch::V1",
+  properties: [
 
-    # Last time the condition was checked.
-    @[::JSON::Field(key: "lastProbeTime", emit_null: false, converter: K8S::TimeFormat.new)]
-    @[::YAML::Field(key: "lastProbeTime", emit_null: false, converter: K8S::TimeFormat.new)]
-    property last_probe_time : Time | Nil
+    {name: "last_probe_time", kind: ::Time, key: "lastProbeTime", nilable: true, read_only: false, description: "Last time the condition was checked."},
+    {name: "last_transition_time", kind: ::Time, key: "lastTransitionTime", nilable: true, read_only: false, description: "Last time the condition transit from one status to another."},
+    {name: "message", kind: String, key: "message", nilable: true, read_only: false, description: "Human readable message indicating details about last transition."},
+    {name: "reason", kind: String, key: "reason", nilable: true, read_only: false, description: "(brief) reason for the condition's last transition."},
+    {name: "status", kind: String, key: "status", nilable: false, read_only: false, description: "Status of the condition, one of True, False, Unknown."},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: "Type of job condition, Complete or Failed."},
 
-    # Last time the condition transit from one status to another.
-    @[::JSON::Field(key: "lastTransitionTime", emit_null: false, converter: K8S::TimeFormat.new)]
-    @[::YAML::Field(key: "lastTransitionTime", emit_null: false, converter: K8S::TimeFormat.new)]
-    property last_transition_time : Time | Nil
-
-    # Human readable message indicating details about last transition.
-    @[::JSON::Field(key: "message", emit_null: false)]
-    @[::YAML::Field(key: "message", emit_null: false)]
-    property message : String | Nil
-
-    # (brief) reason for the condition's last transition.
-    @[::JSON::Field(key: "reason", emit_null: false)]
-    @[::YAML::Field(key: "reason", emit_null: false)]
-    property reason : String | Nil
-
-    # Status of the condition, one of True, False, Unknown.
-    @[::JSON::Field(key: "status", emit_null: true)]
-    @[::YAML::Field(key: "status", emit_null: true)]
-    property status : String
-
-    # Type of job condition, Complete or Failed.
-    @[::JSON::Field(key: "type", emit_null: true)]
-    @[::YAML::Field(key: "type", emit_null: true)]
-    property type : String
-
-    def initialize(*, @status : String, @type : String, @last_probe_time : Time | Nil = nil, @last_transition_time : Time | Nil = nil, @message : String | Nil = nil, @reason : String | Nil = nil)
-    end
-  end
-end
+  ]
+)

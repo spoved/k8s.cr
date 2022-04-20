@@ -3,29 +3,14 @@
 require "yaml"
 require "json"
 
-module K8S
-  # SELinuxStrategyOptions defines the strategy type and any options used to create the strategy.
-  @[::K8S::Properties(
-    rule: {type: String, nilable: false, key: "rule", getter: false, setter: false},
-    se_linux_options: {type: Api::Core::V1::SELinuxOptions, nilable: true, key: "seLinuxOptions", getter: false, setter: false},
-  )]
-  class Api::Policy::V1beta1::SELinuxStrategyOptions
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+require "../../core/v1/se_linux_options"
 
-    # rule is the strategy that will dictate the allowable labels that may be set.
-    @[::JSON::Field(key: "rule", emit_null: true)]
-    @[::YAML::Field(key: "rule", emit_null: true)]
-    property rule : String
+::K8S::Kubernetes::Resource.define_object("SELinuxStrategyOptions",
+  namespace: "::K8S::Api::Policy::V1beta1",
+  properties: [
 
-    # seLinuxOptions required to run as; required for MustRunAs More info: [https://kubernetes.io/docs/tasks/configure-pod-container/security-context/](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
-    @[::JSON::Field(key: "seLinuxOptions", emit_null: false)]
-    @[::YAML::Field(key: "seLinuxOptions", emit_null: false)]
-    property se_linux_options : Api::Core::V1::SELinuxOptions | Nil
+    {name: "rule", kind: String, key: "rule", nilable: false, read_only: false, description: "rule is the strategy that will dictate the allowable labels that may be set."},
+    {name: "se_linux_options", kind: ::K8S::Api::Core::V1::SELinuxOptions, key: "seLinuxOptions", nilable: true, read_only: false, description: "seLinuxOptions required to run as; required for MustRunAs More info: [https://kubernetes.io/docs/tasks/configure-pod-container/security-context/](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)"},
 
-    def initialize(*, @rule : String, @se_linux_options : Api::Core::V1::SELinuxOptions | Nil = nil)
-    end
-  end
-end
+  ]
+)

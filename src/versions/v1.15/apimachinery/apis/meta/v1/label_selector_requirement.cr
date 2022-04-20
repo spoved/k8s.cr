@@ -3,35 +3,13 @@
 require "yaml"
 require "json"
 
-module K8S
-  # A label selector requirement is a selector that contains values, a key, and an operator that relates the key and values.
-  @[::K8S::Properties(
-    key: {type: String, nilable: false, key: "key", getter: false, setter: false},
-    operator: {type: String, nilable: false, key: "operator", getter: false, setter: false},
-    values: {type: Array(String), nilable: true, key: "values", getter: false, setter: false},
-  )]
-  class Apimachinery::Apis::Meta::V1::LabelSelectorRequirement
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+::K8S::Kubernetes::Resource.define_object("LabelSelectorRequirement",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
 
-    # key is the label key that the selector applies to.
-    @[::JSON::Field(key: "key", emit_null: true)]
-    @[::YAML::Field(key: "key", emit_null: true)]
-    property key : String
+    {name: "key", kind: String, key: "key", nilable: false, read_only: false, description: "key is the label key that the selector applies to."},
+    {name: "operator", kind: String, key: "operator", nilable: false, read_only: false, description: "operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist."},
+    {name: "values", kind: ::Array(String), key: "values", nilable: true, read_only: false, description: "values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch."},
 
-    # operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist.
-    @[::JSON::Field(key: "operator", emit_null: true)]
-    @[::YAML::Field(key: "operator", emit_null: true)]
-    property operator : String
-
-    # values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
-    @[::JSON::Field(key: "values", emit_null: false)]
-    @[::YAML::Field(key: "values", emit_null: false)]
-    property values : Array(String) | Nil
-
-    def initialize(*, @key : String, @operator : String, @values : Array(String) | Nil = nil)
-    end
-  end
-end
+  ]
+)

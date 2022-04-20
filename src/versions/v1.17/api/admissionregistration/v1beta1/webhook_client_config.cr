@@ -3,6 +3,6 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Admissionregistration::V1beta1::WebhookClientConfig = Api::Admissionregistration::V1::WebhookClientConfig
-end
+require "./service_reference"
+
+alias K8S::Api::Admissionregistration::V1beta1::WebhookClientConfig = Api::Admissionregistration::V1::WebhookClientConfig

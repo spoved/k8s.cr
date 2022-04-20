@@ -3,49 +3,13 @@
 require "yaml"
 require "json"
 
-module K8S
-  # A scoped-resource selector requirement is a selector that contains values, a scope name, and an operator that relates the scope name and values.
-  @[::K8S::Properties(
-    operator: {type: String, nilable: false, key: "operator", getter: false, setter: false},
-    scope_name: {type: String, nilable: false, key: "scopeName", getter: false, setter: false},
-    values: {type: Array(String), nilable: true, key: "values", getter: false, setter: false},
-  )]
-  class Api::Core::V1::ScopedResourceSelectorRequirement
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+::K8S::Kubernetes::Resource.define_object("ScopedResourceSelectorRequirement",
+  namespace: "::K8S::Api::Core::V1",
+  properties: [
 
-    # Represents a scope's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist.
-    #
-    # Possible enum values:
-    #  - `"DoesNotExist"`
-    #  - `"Exists"`
-    #  - `"In"`
-    #  - `"NotIn"`
-    @[::JSON::Field(key: "operator", emit_null: true)]
-    @[::YAML::Field(key: "operator", emit_null: true)]
-    property operator : String
+    {name: "operator", kind: String, key: "operator", nilable: false, read_only: false, description: "Represents a scope's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist.\n\nPossible enum values:\n - `\"DoesNotExist\"`\n - `\"Exists\"`\n - `\"In\"`\n - `\"NotIn\"`"},
+    {name: "scope_name", kind: String, key: "scopeName", nilable: false, read_only: false, description: "The name of the scope that the selector applies to.\n\nPossible enum values:\n - `\"BestEffort\"` Match all pod objects that have best effort quality of service\n - `\"CrossNamespacePodAffinity\"` Match all pod objects that have cross-namespace pod (anti)affinity mentioned. This is a beta feature enabled by the PodAffinityNamespaceSelector feature flag.\n - `\"NotBestEffort\"` Match all pod objects that do not have best effort quality of service\n - `\"NotTerminating\"` Match all pod objects where spec.activeDeadlineSeconds is nil\n - `\"PriorityClass\"` Match all pod objects that have priority class mentioned\n - `\"Terminating\"` Match all pod objects where spec.activeDeadlineSeconds >=0"},
+    {name: "values", kind: ::Array(String), key: "values", nilable: true, read_only: false, description: "An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch."},
 
-    # The name of the scope that the selector applies to.
-    #
-    # Possible enum values:
-    #  - `"BestEffort"` Match all pod objects that have best effort quality of service
-    #  - `"CrossNamespacePodAffinity"` Match all pod objects that have cross-namespace pod (anti)affinity mentioned. This is a beta feature enabled by the PodAffinityNamespaceSelector feature flag.
-    #  - `"NotBestEffort"` Match all pod objects that do not have best effort quality of service
-    #  - `"NotTerminating"` Match all pod objects where spec.activeDeadlineSeconds is nil
-    #  - `"PriorityClass"` Match all pod objects that have priority class mentioned
-    #  - `"Terminating"` Match all pod objects where spec.activeDeadlineSeconds >=0
-    @[::JSON::Field(key: "scopeName", emit_null: true)]
-    @[::YAML::Field(key: "scopeName", emit_null: true)]
-    property scope_name : String
-
-    # An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
-    @[::JSON::Field(key: "values", emit_null: false)]
-    @[::YAML::Field(key: "values", emit_null: false)]
-    property values : Array(String) | Nil
-
-    def initialize(*, @operator : String, @scope_name : String, @values : Array(String) | Nil = nil)
-    end
-  end
-end
+  ]
+)

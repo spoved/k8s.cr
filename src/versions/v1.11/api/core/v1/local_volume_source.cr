@@ -3,23 +3,11 @@
 require "yaml"
 require "json"
 
-module K8S
-  # Local represents directly-attached storage with node affinity (Beta feature)
-  @[::K8S::Properties(
-    path: {type: String, nilable: false, key: "path", getter: false, setter: false},
-  )]
-  class Api::Core::V1::LocalVolumeSource
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+::K8S::Kubernetes::Resource.define_object("LocalVolumeSource",
+  namespace: "::K8S::Api::Core::V1",
+  properties: [
 
-    # The full path to the volume on the node. It can be either a directory or block device (disk, partition, ...). Directories can be represented only by PersistentVolume with VolumeMode=Filesystem. Block devices can be represented only by VolumeMode=Block, which also requires the BlockVolume alpha feature gate to be enabled.
-    @[::JSON::Field(key: "path", emit_null: true)]
-    @[::YAML::Field(key: "path", emit_null: true)]
-    property path : String
+    {name: "path", kind: String, key: "path", nilable: false, read_only: false, description: "The full path to the volume on the node. It can be either a directory or block device (disk, partition, ...). Directories can be represented only by PersistentVolume with VolumeMode=Filesystem. Block devices can be represented only by VolumeMode=Block, which also requires the BlockVolume alpha feature gate to be enabled."},
 
-    def initialize(*, @path : String)
-    end
-  end
-end
+  ]
+)

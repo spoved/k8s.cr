@@ -3,29 +3,12 @@
 require "yaml"
 require "json"
 
-module K8S
-  # TCPSocketAction describes an action based on opening a socket
-  @[::K8S::Properties(
-    host: {type: String, nilable: true, key: "host", getter: false, setter: false},
-    port: {type: Int32 | String, nilable: false, key: "port", getter: false, setter: false},
-  )]
-  class Api::Core::V1::TCPSocketAction
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+::K8S::Kubernetes::Resource.define_object("TCPSocketAction",
+  namespace: "::K8S::Api::Core::V1",
+  properties: [
 
-    # Optional: Host name to connect to, defaults to the pod IP.
-    @[::JSON::Field(key: "host", emit_null: false)]
-    @[::YAML::Field(key: "host", emit_null: false)]
-    property host : String | Nil
+    {name: "host", kind: String, key: "host", nilable: true, read_only: false, description: "Optional: Host name to connect to, defaults to the pod IP."},
+    {name: "port", kind: Union(::Int32 | ::String), key: "port", nilable: false, read_only: false, description: "Number or name of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME."},
 
-    # Number or name of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME.
-    @[::JSON::Field(key: "port", emit_null: true)]
-    @[::YAML::Field(key: "port", emit_null: true)]
-    property port : Int32 | String
-
-    def initialize(*, @port : Int32 | String, @host : String | Nil = nil)
-    end
-  end
-end
+  ]
+)

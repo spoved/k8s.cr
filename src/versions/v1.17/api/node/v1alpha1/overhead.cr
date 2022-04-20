@@ -3,23 +3,11 @@
 require "yaml"
 require "json"
 
-module K8S
-  # Overhead structure represents the resource overhead associated with running a pod.
-  @[::K8S::Properties(
-    pod_fixed: {type: Hash(String, Int32 | String), nilable: true, key: "podFixed", getter: false, setter: false},
-  )]
-  class Api::Node::V1alpha1::Overhead
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+::K8S::Kubernetes::Resource.define_object("Overhead",
+  namespace: "::K8S::Api::Node::V1alpha1",
+  properties: [
 
-    # PodFixed represents the fixed resource overhead associated with running a pod.
-    @[::JSON::Field(key: "podFixed", emit_null: false)]
-    @[::YAML::Field(key: "podFixed", emit_null: false)]
-    property pod_fixed : Hash(String, Int32 | String) | Nil
+    {name: "pod_fixed", kind: Union(::Hash(String, ::Int32 | ::String)), key: "podFixed", nilable: true, read_only: false, description: "PodFixed represents the fixed resource overhead associated with running a pod."},
 
-    def initialize(*, @pod_fixed : Hash(String, Int32 | String) | Nil = nil)
-    end
-  end
-end
+  ]
+)

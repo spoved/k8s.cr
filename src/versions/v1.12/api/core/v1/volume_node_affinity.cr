@@ -3,23 +3,13 @@
 require "yaml"
 require "json"
 
-module K8S
-  # VolumeNodeAffinity defines constraints that limit what nodes this volume can be accessed from.
-  @[::K8S::Properties(
-    required: {type: Api::Core::V1::NodeSelector, nilable: true, key: "required", getter: false, setter: false},
-  )]
-  class Api::Core::V1::VolumeNodeAffinity
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+require "./node_selector"
 
-    # Required specifies hard node constraints that must be met.
-    @[::JSON::Field(key: "required", emit_null: false)]
-    @[::YAML::Field(key: "required", emit_null: false)]
-    property required : Api::Core::V1::NodeSelector | Nil
+::K8S::Kubernetes::Resource.define_object("VolumeNodeAffinity",
+  namespace: "::K8S::Api::Core::V1",
+  properties: [
 
-    def initialize(*, @required : Api::Core::V1::NodeSelector | Nil = nil)
-    end
-  end
-end
+    {name: "required", kind: ::K8S::Api::Core::V1::NodeSelector, key: "required", nilable: true, read_only: false, description: "Required specifies hard node constraints that must be met."},
+
+  ]
+)

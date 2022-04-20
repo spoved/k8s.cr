@@ -3,6 +3,8 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Discovery::V1beta1::EndpointSlice = Api::Discovery::V1::EndpointSlice
-end
+require "../../../apimachinery/apis/meta/v1/object_meta"
+require "./endpoint"
+require "./endpoint_port"
+
+alias K8S::Api::Discovery::V1beta1::EndpointSlice = Api::Discovery::V1::EndpointSlice

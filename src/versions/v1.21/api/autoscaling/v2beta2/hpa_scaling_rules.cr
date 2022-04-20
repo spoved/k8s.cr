@@ -3,35 +3,15 @@
 require "yaml"
 require "json"
 
-module K8S
-  # HPAScalingRules configures the scaling behavior for one direction. These Rules are applied after calculating DesiredReplicas from metrics for the HPA. They can limit the scaling velocity by specifying scaling policies. They can prevent flapping by specifying the stabilization window, so that the number of replicas is not set instantly, instead, the safest value from the stabilization window is chosen.
-  @[::K8S::Properties(
-    policies: {type: Array(Api::Autoscaling::V2beta2::HPAScalingPolicy), nilable: true, key: "policies", getter: false, setter: false},
-    select_policy: {type: String, nilable: true, key: "selectPolicy", getter: false, setter: false},
-    stabilization_window_seconds: {type: Int32, nilable: true, key: "stabilizationWindowSeconds", getter: false, setter: false},
-  )]
-  class Api::Autoscaling::V2beta2::HPAScalingRules
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+require "./hpa_scaling_policy"
 
-    # policies is a list of potential scaling polices which can be used during scaling. At least one policy must be specified, otherwise the HPAScalingRules will be discarded as invalid
-    @[::JSON::Field(key: "policies", emit_null: false)]
-    @[::YAML::Field(key: "policies", emit_null: false)]
-    property policies : Array(Api::Autoscaling::V2beta2::HPAScalingPolicy) | Nil
+::K8S::Kubernetes::Resource.define_object("HPAScalingRules",
+  namespace: "::K8S::Api::Autoscaling::V2beta2",
+  properties: [
 
-    # selectPolicy is used to specify which policy should be used. If not set, the default value MaxPolicySelect is used.
-    @[::JSON::Field(key: "selectPolicy", emit_null: false)]
-    @[::YAML::Field(key: "selectPolicy", emit_null: false)]
-    property select_policy : String | Nil
+    {name: "policies", kind: ::Array(::K8S::Api::Autoscaling::V2beta2::HPAScalingPolicy), key: "policies", nilable: true, read_only: false, description: "policies is a list of potential scaling polices which can be used during scaling. At least one policy must be specified, otherwise the HPAScalingRules will be discarded as invalid"},
+    {name: "select_policy", kind: String, key: "selectPolicy", nilable: true, read_only: false, description: "selectPolicy is used to specify which policy should be used. If not set, the default value MaxPolicySelect is used."},
+    {name: "stabilization_window_seconds", kind: Int32, key: "stabilizationWindowSeconds", nilable: true, read_only: false, description: "StabilizationWindowSeconds is the number of seconds for which past recommendations should be considered while scaling up or scaling down. StabilizationWindowSeconds must be greater than or equal to zero and less than or equal to 3600 (one hour). If not set, use the default values: - For scale up: 0 (i.e. no stabilization is done). - For scale down: 300 (i.e. the stabilization window is 300 seconds long)."},
 
-    # StabilizationWindowSeconds is the number of seconds for which past recommendations should be considered while scaling up or scaling down. StabilizationWindowSeconds must be greater than or equal to zero and less than or equal to 3600 (one hour). If not set, use the default values: - For scale up: 0 (i.e. no stabilization is done). - For scale down: 300 (i.e. the stabilization window is 300 seconds long).
-    @[::JSON::Field(key: "stabilizationWindowSeconds", emit_null: false)]
-    @[::YAML::Field(key: "stabilizationWindowSeconds", emit_null: false)]
-    property stabilization_window_seconds : Int32 | Nil
-
-    def initialize(*, @policies : Array(Api::Autoscaling::V2beta2::HPAScalingPolicy) | Nil = nil, @select_policy : String | Nil = nil, @stabilization_window_seconds : Int32 | Nil = nil)
-    end
-  end
-end
+  ]
+)

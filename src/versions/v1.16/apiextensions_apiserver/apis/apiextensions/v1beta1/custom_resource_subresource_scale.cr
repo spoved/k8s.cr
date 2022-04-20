@@ -3,6 +3,4 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresourceScale = ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresourceScale
-end
+alias K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresourceScale = ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceSubresourceScale

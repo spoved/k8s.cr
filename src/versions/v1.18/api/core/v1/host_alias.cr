@@ -3,29 +3,12 @@
 require "yaml"
 require "json"
 
-module K8S
-  # HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the pod's hosts file.
-  @[::K8S::Properties(
-    hostnames: {type: Array(String), nilable: true, key: "hostnames", getter: false, setter: false},
-    ip: {type: String, nilable: true, key: "ip", getter: false, setter: false},
-  )]
-  class Api::Core::V1::HostAlias
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+::K8S::Kubernetes::Resource.define_object("HostAlias",
+  namespace: "::K8S::Api::Core::V1",
+  properties: [
 
-    # Hostnames for the above IP address.
-    @[::JSON::Field(key: "hostnames", emit_null: false)]
-    @[::YAML::Field(key: "hostnames", emit_null: false)]
-    property hostnames : Array(String) | Nil
+    {name: "hostnames", kind: ::Array(String), key: "hostnames", nilable: true, read_only: false, description: "Hostnames for the above IP address."},
+    {name: "ip", kind: String, key: "ip", nilable: true, read_only: false, description: "IP address of the host file entry."},
 
-    # IP address of the host file entry.
-    @[::JSON::Field(key: "ip", emit_null: false)]
-    @[::YAML::Field(key: "ip", emit_null: false)]
-    property ip : String | Nil
-
-    def initialize(*, @hostnames : Array(String) | Nil = nil, @ip : String | Nil = nil)
-    end
-  end
-end
+  ]
+)

@@ -3,6 +3,4 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Apps::V1beta2::DaemonSetCondition = Api::Apps::V1::DaemonSetCondition
-end
+alias K8S::Api::Apps::V1beta2::DaemonSetCondition = Api::Apps::V1::DaemonSetCondition

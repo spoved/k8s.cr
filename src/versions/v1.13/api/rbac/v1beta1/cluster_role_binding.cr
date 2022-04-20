@@ -3,6 +3,8 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Rbac::V1beta1::ClusterRoleBinding = Api::Rbac::V1::ClusterRoleBinding
-end
+require "../../../apimachinery/apis/meta/v1/object_meta"
+require "./role_ref"
+require "./subject"
+
+alias K8S::Api::Rbac::V1beta1::ClusterRoleBinding = Api::Rbac::V1::ClusterRoleBinding

@@ -3,23 +3,11 @@
 require "yaml"
 require "json"
 
-module K8S
-  # DaemonEndpoint contains information about a single Daemon endpoint.
-  @[::K8S::Properties(
-    port: {type: Int32, nilable: false, key: "Port", getter: false, setter: false},
-  )]
-  class Api::Core::V1::DaemonEndpoint
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+::K8S::Kubernetes::Resource.define_object("DaemonEndpoint",
+  namespace: "::K8S::Api::Core::V1",
+  properties: [
 
-    # Port number of the given endpoint.
-    @[::JSON::Field(key: "Port", emit_null: true)]
-    @[::YAML::Field(key: "Port", emit_null: true)]
-    property port : Int32
+    {name: "port", kind: Int32, key: "Port", nilable: false, read_only: false, description: "Port number of the given endpoint."},
 
-    def initialize(*, @port : Int32)
-    end
-  end
-end
+  ]
+)

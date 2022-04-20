@@ -3,6 +3,6 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Autoscaling::V2beta2::HPAScalingRules = Api::Autoscaling::V2::HPAScalingRules
-end
+require "./hpa_scaling_policy"
+
+alias K8S::Api::Autoscaling::V2beta2::HPAScalingRules = Api::Autoscaling::V2::HPAScalingRules

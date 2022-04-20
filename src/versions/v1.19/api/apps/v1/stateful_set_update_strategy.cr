@@ -3,29 +3,14 @@
 require "yaml"
 require "json"
 
-module K8S
-  # StatefulSetUpdateStrategy indicates the strategy that the StatefulSet controller will use to perform updates. It includes any additional parameters necessary to perform the update for the indicated strategy.
-  @[::K8S::Properties(
-    rolling_update: {type: Api::Apps::V1::RollingUpdateStatefulSetStrategy, nilable: true, key: "rollingUpdate", getter: false, setter: false},
-    type: {type: String, nilable: true, key: "type", getter: false, setter: false},
-  )]
-  class Api::Apps::V1::StatefulSetUpdateStrategy
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+require "./rolling_update_stateful_set_strategy"
 
-    # RollingUpdate is used to communicate parameters when Type is RollingUpdateStatefulSetStrategyType.
-    @[::JSON::Field(key: "rollingUpdate", emit_null: false)]
-    @[::YAML::Field(key: "rollingUpdate", emit_null: false)]
-    property rolling_update : Api::Apps::V1::RollingUpdateStatefulSetStrategy | Nil
+::K8S::Kubernetes::Resource.define_object("StatefulSetUpdateStrategy",
+  namespace: "::K8S::Api::Apps::V1",
+  properties: [
 
-    # Type indicates the type of the StatefulSetUpdateStrategy. Default is RollingUpdate.
-    @[::JSON::Field(key: "type", emit_null: false)]
-    @[::YAML::Field(key: "type", emit_null: false)]
-    property type : String | Nil
+    {name: "rolling_update", kind: ::K8S::Api::Apps::V1::RollingUpdateStatefulSetStrategy, key: "rollingUpdate", nilable: true, read_only: false, description: "RollingUpdate is used to communicate parameters when Type is RollingUpdateStatefulSetStrategyType."},
+    {name: "type", kind: String, key: "type", nilable: true, read_only: false, description: "Type indicates the type of the StatefulSetUpdateStrategy. Default is RollingUpdate."},
 
-    def initialize(*, @rolling_update : Api::Apps::V1::RollingUpdateStatefulSetStrategy | Nil = nil, @type : String | Nil = nil)
-    end
-  end
-end
+  ]
+)

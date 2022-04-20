@@ -3,6 +3,7 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Storage::V1beta1::CSINode = Api::Storage::V1::CSINode
-end
+require "../../../apimachinery/apis/meta/v1/object_meta"
+require "./csi_node_spec"
+
+alias K8S::Api::Storage::V1beta1::CSINode = Api::Storage::V1::CSINode

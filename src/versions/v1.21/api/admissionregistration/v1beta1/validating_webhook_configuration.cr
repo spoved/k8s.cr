@@ -3,6 +3,7 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Admissionregistration::V1beta1::ValidatingWebhookConfiguration = Api::Admissionregistration::V1::ValidatingWebhookConfiguration
-end
+require "../../../apimachinery/apis/meta/v1/object_meta"
+require "./validating_webhook"
+
+alias K8S::Api::Admissionregistration::V1beta1::ValidatingWebhookConfiguration = Api::Admissionregistration::V1::ValidatingWebhookConfiguration

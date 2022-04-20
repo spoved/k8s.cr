@@ -3,69 +3,22 @@
 require "yaml"
 require "json"
 
-module K8S
-  # PodSecurityContext holds pod-level security attributes and common container settings. Some fields are also present in container.securityContext.  Field values of container.securityContext take precedence over field values of PodSecurityContext.
-  @[::K8S::Properties(
-    fs_group: {type: Int32, nilable: true, key: "fsGroup", getter: false, setter: false},
-    run_as_group: {type: Int32, nilable: true, key: "runAsGroup", getter: false, setter: false},
-    run_as_non_root: {type: Bool, nilable: true, key: "runAsNonRoot", getter: false, setter: false},
-    run_as_user: {type: Int32, nilable: true, key: "runAsUser", getter: false, setter: false},
-    se_linux_options: {type: Api::Core::V1::SELinuxOptions, nilable: true, key: "seLinuxOptions", getter: false, setter: false},
-    supplemental_groups: {type: Array(Int32), nilable: true, key: "supplementalGroups", getter: false, setter: false},
-    sysctls: {type: Array(Api::Core::V1::Sysctl), nilable: true, key: "sysctls", getter: false, setter: false},
-    windows_options: {type: Api::Core::V1::WindowsSecurityContextOptions, nilable: true, key: "windowsOptions", getter: false, setter: false},
-  )]
-  class Api::Core::V1::PodSecurityContext
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+require "./se_linux_options"
+require "./sysctl"
+require "./windows_security_context_options"
 
-    # A special supplemental group that applies to all containers in a pod. Some volume types allow the Kubelet to change the ownership of that volume to be owned by the pod:
-    #
-    # 1. The owning GID will be the FSGroup 2. The setgid bit is set (new files created in the volume will be owned by FSGroup) 3. The permission bits are OR'd with rw-rw----
-    #
-    # If unset, the Kubelet will not modify the ownership and permissions of any volume.
-    @[::JSON::Field(key: "fsGroup", emit_null: false)]
-    @[::YAML::Field(key: "fsGroup", emit_null: false)]
-    property fs_group : Int32 | Nil
+::K8S::Kubernetes::Resource.define_object("PodSecurityContext",
+  namespace: "::K8S::Api::Core::V1",
+  properties: [
 
-    # The GID to run the entrypoint of the container process. Uses runtime default if unset. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container.
-    @[::JSON::Field(key: "runAsGroup", emit_null: false)]
-    @[::YAML::Field(key: "runAsGroup", emit_null: false)]
-    property run_as_group : Int32 | Nil
+    {name: "fs_group", kind: Int32, key: "fsGroup", nilable: true, read_only: false, description: "A special supplemental group that applies to all containers in a pod. Some volume types allow the Kubelet to change the ownership of that volume to be owned by the pod:\n\n1. The owning GID will be the FSGroup 2. The setgid bit is set (new files created in the volume will be owned by FSGroup) 3. The permission bits are OR'd with rw-rw----\n\nIf unset, the Kubelet will not modify the ownership and permissions of any volume."},
+    {name: "run_as_group", kind: Int32, key: "runAsGroup", nilable: true, read_only: false, description: "The GID to run the entrypoint of the container process. Uses runtime default if unset. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container."},
+    {name: "run_as_non_root", kind: ::Bool, key: "runAsNonRoot", nilable: true, read_only: false, description: "Indicates that the container must run as a non-root user. If true, the Kubelet will validate the image at runtime to ensure that it does not run as UID 0 (root) and fail to start the container if it does. If unset or false, no such validation will be performed. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence."},
+    {name: "run_as_user", kind: Int32, key: "runAsUser", nilable: true, read_only: false, description: "The UID to run the entrypoint of the container process. Defaults to user specified in image metadata if unspecified. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container."},
+    {name: "se_linux_options", kind: ::K8S::Api::Core::V1::SELinuxOptions, key: "seLinuxOptions", nilable: true, read_only: false, description: "The SELinux context to be applied to all containers. If unspecified, the container runtime will allocate a random SELinux context for each container.  May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container."},
+    {name: "supplemental_groups", kind: ::Array(Int32), key: "supplementalGroups", nilable: true, read_only: false, description: "A list of groups applied to the first process run in each container, in addition to the container's primary GID.  If unspecified, no groups will be added to any container."},
+    {name: "sysctls", kind: ::Array(::K8S::Api::Core::V1::Sysctl), key: "sysctls", nilable: true, read_only: false, description: "Sysctls hold a list of namespaced sysctls used for the pod. Pods with unsupported sysctls (by the container runtime) might fail to launch."},
+    {name: "windows_options", kind: ::K8S::Api::Core::V1::WindowsSecurityContextOptions, key: "windowsOptions", nilable: true, read_only: false, description: "Windows security options."},
 
-    # Indicates that the container must run as a non-root user. If true, the Kubelet will validate the image at runtime to ensure that it does not run as UID 0 (root) and fail to start the container if it does. If unset or false, no such validation will be performed. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence.
-    @[::JSON::Field(key: "runAsNonRoot", emit_null: false)]
-    @[::YAML::Field(key: "runAsNonRoot", emit_null: false)]
-    property run_as_non_root : Bool | Nil
-
-    # The UID to run the entrypoint of the container process. Defaults to user specified in image metadata if unspecified. May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container.
-    @[::JSON::Field(key: "runAsUser", emit_null: false)]
-    @[::YAML::Field(key: "runAsUser", emit_null: false)]
-    property run_as_user : Int32 | Nil
-
-    # The SELinux context to be applied to all containers. If unspecified, the container runtime will allocate a random SELinux context for each container.  May also be set in SecurityContext.  If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence for that container.
-    @[::JSON::Field(key: "seLinuxOptions", emit_null: false)]
-    @[::YAML::Field(key: "seLinuxOptions", emit_null: false)]
-    property se_linux_options : Api::Core::V1::SELinuxOptions | Nil
-
-    # A list of groups applied to the first process run in each container, in addition to the container's primary GID.  If unspecified, no groups will be added to any container.
-    @[::JSON::Field(key: "supplementalGroups", emit_null: false)]
-    @[::YAML::Field(key: "supplementalGroups", emit_null: false)]
-    property supplemental_groups : Array(Int32) | Nil
-
-    # Sysctls hold a list of namespaced sysctls used for the pod. Pods with unsupported sysctls (by the container runtime) might fail to launch.
-    @[::JSON::Field(key: "sysctls", emit_null: false)]
-    @[::YAML::Field(key: "sysctls", emit_null: false)]
-    property sysctls : Array(Api::Core::V1::Sysctl) | Nil
-
-    # Windows security options.
-    @[::JSON::Field(key: "windowsOptions", emit_null: false)]
-    @[::YAML::Field(key: "windowsOptions", emit_null: false)]
-    property windows_options : Api::Core::V1::WindowsSecurityContextOptions | Nil
-
-    def initialize(*, @fs_group : Int32 | Nil = nil, @run_as_group : Int32 | Nil = nil, @run_as_non_root : Bool | Nil = nil, @run_as_user : Int32 | Nil = nil, @se_linux_options : Api::Core::V1::SELinuxOptions | Nil = nil, @supplemental_groups : Array(Int32) | Nil = nil, @sysctls : Array(Api::Core::V1::Sysctl) | Nil = nil, @windows_options : Api::Core::V1::WindowsSecurityContextOptions | Nil = nil)
-    end
-  end
-end
+  ]
+)

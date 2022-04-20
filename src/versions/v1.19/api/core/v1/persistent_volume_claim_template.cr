@@ -3,29 +3,15 @@
 require "yaml"
 require "json"
 
-module K8S
-  # PersistentVolumeClaimTemplate is used to produce PersistentVolumeClaim objects as part of an EphemeralVolumeSource.
-  @[::K8S::Properties(
-    metadata: {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-    spec: {type: Api::Core::V1::PersistentVolumeClaimSpec, nilable: false, key: "spec", getter: false, setter: false},
-  )]
-  class Api::Core::V1::PersistentVolumeClaimTemplate
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+require "../../../apimachinery/apis/meta/v1/object_meta"
+require "./persistent_volume_claim_spec"
 
-    # May contain labels and annotations that will be copied into the PVC when creating it. No other fields are allowed and will be rejected during validation.
-    @[::JSON::Field(key: "metadata", emit_null: false)]
-    @[::YAML::Field(key: "metadata", emit_null: false)]
-    property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil
+::K8S::Kubernetes::Resource.define_object("PersistentVolumeClaimTemplate",
+  namespace: "::K8S::Api::Core::V1",
+  properties: [
 
-    # The specification for the PersistentVolumeClaim. The entire content is copied unchanged into the PVC that gets created from this template. The same fields as in a PersistentVolumeClaim are also valid here.
-    @[::JSON::Field(key: "spec", emit_null: true)]
-    @[::YAML::Field(key: "spec", emit_null: true)]
-    property spec : Api::Core::V1::PersistentVolumeClaimSpec
+    {name: "metadata", kind: ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta, key: "metadata", nilable: true, read_only: false, description: "May contain labels and annotations that will be copied into the PVC when creating it. No other fields are allowed and will be rejected during validation."},
+    {name: "spec", kind: ::K8S::Api::Core::V1::PersistentVolumeClaimSpec, key: "spec", nilable: false, read_only: false, description: "The specification for the PersistentVolumeClaim. The entire content is copied unchanged into the PVC that gets created from this template. The same fields as in a PersistentVolumeClaim are also valid here."},
 
-    def initialize(*, @spec : Api::Core::V1::PersistentVolumeClaimSpec, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil)
-    end
-  end
-end
+  ]
+)

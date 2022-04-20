@@ -3,28 +3,14 @@
 require "yaml"
 require "json"
 
-module K8S
-  @[::K8S::Properties(
-    certificate: {type: String, nilable: true, key: "certificate", getter: false, setter: false},
-    conditions: {type: Array(Api::Certificates::V1beta1::CertificateSigningRequestCondition), nilable: true, key: "conditions", getter: false, setter: false},
-  )]
-  class Api::Certificates::V1beta1::CertificateSigningRequestStatus
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+require "./certificate_signing_request_condition"
 
-    # If request was approved, the controller will place the issued certificate here.
-    @[::JSON::Field(key: "certificate", emit_null: false)]
-    @[::YAML::Field(key: "certificate", emit_null: false)]
-    property certificate : String | Nil
+::K8S::Kubernetes::Resource.define_object("CertificateSigningRequestStatus",
+  namespace: "::K8S::Api::Certificates::V1beta1",
+  properties: [
 
-    # Conditions applied to the request, such as approval or denial.
-    @[::JSON::Field(key: "conditions", emit_null: false)]
-    @[::YAML::Field(key: "conditions", emit_null: false)]
-    property conditions : Array(Api::Certificates::V1beta1::CertificateSigningRequestCondition) | Nil
+    {name: "certificate", kind: String, key: "certificate", nilable: true, read_only: false, description: "If request was approved, the controller will place the issued certificate here."},
+    {name: "conditions", kind: ::Array(::K8S::Api::Certificates::V1beta1::CertificateSigningRequestCondition), key: "conditions", nilable: true, read_only: false, description: "Conditions applied to the request, such as approval or denial."},
 
-    def initialize(*, @certificate : String | Nil = nil, @conditions : Array(Api::Certificates::V1beta1::CertificateSigningRequestCondition) | Nil = nil)
-    end
-  end
-end
+  ]
+)

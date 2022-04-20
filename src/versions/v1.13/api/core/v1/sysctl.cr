@@ -3,29 +3,12 @@
 require "yaml"
 require "json"
 
-module K8S
-  # Sysctl defines a kernel parameter to be set
-  @[::K8S::Properties(
-    name: {type: String, nilable: false, key: "name", getter: false, setter: false},
-    value: {type: String, nilable: false, key: "value", getter: false, setter: false},
-  )]
-  class Api::Core::V1::Sysctl
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+::K8S::Kubernetes::Resource.define_object("Sysctl",
+  namespace: "::K8S::Api::Core::V1",
+  properties: [
 
-    # Name of a property to set
-    @[::JSON::Field(key: "name", emit_null: true)]
-    @[::YAML::Field(key: "name", emit_null: true)]
-    property name : String
+    {name: "name", kind: String, key: "name", nilable: false, read_only: false, description: "Name of a property to set"},
+    {name: "value", kind: String, key: "value", nilable: false, read_only: false, description: "Value of a property to set"},
 
-    # Value of a property to set
-    @[::JSON::Field(key: "value", emit_null: true)]
-    @[::YAML::Field(key: "value", emit_null: true)]
-    property value : String
-
-    def initialize(*, @name : String, @value : String)
-    end
-  end
-end
+  ]
+)

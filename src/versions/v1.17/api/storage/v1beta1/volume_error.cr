@@ -3,6 +3,4 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Storage::V1beta1::VolumeError = Api::Storage::V1::VolumeError
-end
+alias K8S::Api::Storage::V1beta1::VolumeError = Api::Storage::V1::VolumeError

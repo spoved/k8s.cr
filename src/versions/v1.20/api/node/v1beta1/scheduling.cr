@@ -3,6 +3,6 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Node::V1beta1::Scheduling = Api::Node::V1::Scheduling
-end
+require "../../core/v1/toleration"
+
+alias K8S::Api::Node::V1beta1::Scheduling = Api::Node::V1::Scheduling

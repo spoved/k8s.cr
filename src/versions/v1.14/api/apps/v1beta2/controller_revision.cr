@@ -3,6 +3,7 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Apps::V1beta2::ControllerRevision = Api::Apps::V1::ControllerRevision
-end
+require "../../../apimachinery/apis/meta/v1/object_meta"
+require "../../../apimachinery/runtime/raw_extension"
+
+alias K8S::Api::Apps::V1beta2::ControllerRevision = Api::Apps::V1::ControllerRevision

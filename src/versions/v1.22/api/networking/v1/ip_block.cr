@@ -3,29 +3,12 @@
 require "yaml"
 require "json"
 
-module K8S
-  # IPBlock describes a particular CIDR (Ex. ["192.168.1.1/24","2001:db9::/64") that is allowed to the pods matched by a NetworkPolicySpec's podSelector. The except entry describes CIDRs that should not be included within this rule.]("192.168.1.1/24","2001:db9::/64") that is allowed to the pods matched by a NetworkPolicySpec's podSelector. The except entry describes CIDRs that should not be included within this rule.)
-  @[::K8S::Properties(
-    cidr: {type: String, nilable: false, key: "cidr", getter: false, setter: false},
-    except: {type: Array(String), nilable: true, key: "except", getter: false, setter: false},
-  )]
-  class Api::Networking::V1::IPBlock
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+::K8S::Kubernetes::Resource.define_object("IPBlock",
+  namespace: "::K8S::Api::Networking::V1",
+  properties: [
 
-    # CIDR is a string representing the IP Block Valid examples are ["192.168.1.1/24" or "2001:db9::/64"]("192.168.1.1/24" or "2001:db9::/64")
-    @[::JSON::Field(key: "cidr", emit_null: true)]
-    @[::YAML::Field(key: "cidr", emit_null: true)]
-    property cidr : String
+    {name: "cidr", kind: String, key: "cidr", nilable: false, read_only: false, description: "CIDR is a string representing the IP Block Valid examples are [\"192.168.1.1/24\" or \"2001:db9::/64\"](\"192.168.1.1/24\" or \"2001:db9::/64\")"},
+    {name: "except", kind: ::Array(String), key: "except", nilable: true, read_only: false, description: "Except is a slice of CIDRs that should not be included within an IP Block Valid examples are [\"192.168.1.1/24\" or \"2001:db9::/64\" Except values will be rejected if they are outside the CIDR range](\"192.168.1.1/24\" or \"2001:db9::/64\" Except values will be rejected if they are outside the CIDR range)"},
 
-    # Except is a slice of CIDRs that should not be included within an IP Block Valid examples are ["192.168.1.1/24" or "2001:db9::/64" Except values will be rejected if they are outside the CIDR range]("192.168.1.1/24" or "2001:db9::/64" Except values will be rejected if they are outside the CIDR range)
-    @[::JSON::Field(key: "except", emit_null: false)]
-    @[::YAML::Field(key: "except", emit_null: false)]
-    property except : Array(String) | Nil
-
-    def initialize(*, @cidr : String, @except : Array(String) | Nil = nil)
-    end
-  end
-end
+  ]
+)

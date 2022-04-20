@@ -3,6 +3,6 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Extensions::V1beta1::ReplicaSetStatus = Api::Apps::V1::ReplicaSetStatus
-end
+require "./replica_set_condition"
+
+alias K8S::Api::Extensions::V1beta1::ReplicaSetStatus = Api::Apps::V1::ReplicaSetStatus

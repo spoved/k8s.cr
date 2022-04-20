@@ -3,6 +3,4 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Coordination::V1beta1::LeaseSpec = Api::Coordination::V1::LeaseSpec
-end
+alias K8S::Api::Coordination::V1beta1::LeaseSpec = Api::Coordination::V1::LeaseSpec

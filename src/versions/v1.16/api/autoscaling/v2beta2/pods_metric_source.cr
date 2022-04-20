@@ -3,29 +3,15 @@
 require "yaml"
 require "json"
 
-module K8S
-  # PodsMetricSource indicates how to scale on a metric describing each pod in the current scale target (for example, transactions-processed-per-second). The values will be averaged together before being compared to the target value.
-  @[::K8S::Properties(
-    metric: {type: Api::Autoscaling::V2beta2::MetricIdentifier, nilable: false, key: "metric", getter: false, setter: false},
-    target: {type: Api::Autoscaling::V2beta2::MetricTarget, nilable: false, key: "target", getter: false, setter: false},
-  )]
-  class Api::Autoscaling::V2beta2::PodsMetricSource
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+require "./metric_identifier"
+require "./metric_target"
 
-    # metric identifies the target metric by name and selector
-    @[::JSON::Field(key: "metric", emit_null: true)]
-    @[::YAML::Field(key: "metric", emit_null: true)]
-    property metric : Api::Autoscaling::V2beta2::MetricIdentifier
+::K8S::Kubernetes::Resource.define_object("PodsMetricSource",
+  namespace: "::K8S::Api::Autoscaling::V2beta2",
+  properties: [
 
-    # target specifies the target value for the given metric
-    @[::JSON::Field(key: "target", emit_null: true)]
-    @[::YAML::Field(key: "target", emit_null: true)]
-    property target : Api::Autoscaling::V2beta2::MetricTarget
+    {name: "metric", kind: ::K8S::Api::Autoscaling::V2beta2::MetricIdentifier, key: "metric", nilable: false, read_only: false, description: "metric identifies the target metric by name and selector"},
+    {name: "target", kind: ::K8S::Api::Autoscaling::V2beta2::MetricTarget, key: "target", nilable: false, read_only: false, description: "target specifies the target value for the given metric"},
 
-    def initialize(*, @metric : Api::Autoscaling::V2beta2::MetricIdentifier, @target : Api::Autoscaling::V2beta2::MetricTarget)
-    end
-  end
-end
+  ]
+)

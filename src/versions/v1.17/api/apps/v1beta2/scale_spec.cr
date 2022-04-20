@@ -3,6 +3,4 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Apps::V1beta2::ScaleSpec = Api::Apps::V1beta1::ScaleSpec
-end
+alias K8S::Api::Apps::V1beta2::ScaleSpec = Api::Apps::V1beta1::ScaleSpec

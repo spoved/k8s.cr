@@ -3,23 +3,13 @@
 require "yaml"
 require "json"
 
-module K8S
-  # FlowSchemaStatus represents the current state of a FlowSchema.
-  @[::K8S::Properties(
-    conditions: {type: Array(Api::Flowcontrol::V1beta1::FlowSchemaCondition), nilable: true, key: "conditions", getter: false, setter: false},
-  )]
-  class Api::Flowcontrol::V1beta1::FlowSchemaStatus
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+require "./flow_schema_condition"
 
-    # `conditions` is a list of the current states of FlowSchema.
-    @[::JSON::Field(key: "conditions", emit_null: false)]
-    @[::YAML::Field(key: "conditions", emit_null: false)]
-    property conditions : Array(Api::Flowcontrol::V1beta1::FlowSchemaCondition) | Nil
+::K8S::Kubernetes::Resource.define_object("FlowSchemaStatus",
+  namespace: "::K8S::Api::Flowcontrol::V1beta1",
+  properties: [
 
-    def initialize(*, @conditions : Array(Api::Flowcontrol::V1beta1::FlowSchemaCondition) | Nil = nil)
-    end
-  end
-end
+    {name: "conditions", kind: ::Array(::K8S::Api::Flowcontrol::V1beta1::FlowSchemaCondition), key: "conditions", nilable: true, read_only: false, description: "`conditions` is a list of the current states of FlowSchema."},
+
+  ]
+)

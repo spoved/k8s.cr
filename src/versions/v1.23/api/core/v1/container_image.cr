@@ -3,29 +3,12 @@
 require "yaml"
 require "json"
 
-module K8S
-  # Describe a container image
-  @[::K8S::Properties(
-    names: {type: Array(String), nilable: true, key: "names", getter: false, setter: false},
-    size_bytes: {type: Int32, nilable: true, key: "sizeBytes", getter: false, setter: false},
-  )]
-  class Api::Core::V1::ContainerImage
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+::K8S::Kubernetes::Resource.define_object("ContainerImage",
+  namespace: "::K8S::Api::Core::V1",
+  properties: [
 
-    # Names by which this image is known. e.g. [["k8s.gcr.io/hyperkube:v1.0.7", "dockerhub.io/google_containers/hyperkube:v1.0.7"]](["k8s.gcr.io/hyperkube:v1.0.7", "dockerhub.io/google_containers/hyperkube:v1.0.7"])
-    @[::JSON::Field(key: "names", emit_null: false)]
-    @[::YAML::Field(key: "names", emit_null: false)]
-    property names : Array(String) | Nil
+    {name: "names", kind: ::Array(String), key: "names", nilable: true, read_only: false, description: "Names by which this image is known. e.g. [[\"k8s.gcr.io/hyperkube:v1.0.7\", \"dockerhub.io/google_containers/hyperkube:v1.0.7\"]]([\"k8s.gcr.io/hyperkube:v1.0.7\", \"dockerhub.io/google_containers/hyperkube:v1.0.7\"])"},
+    {name: "size_bytes", kind: Int32, key: "sizeBytes", nilable: true, read_only: false, description: "The size of the image in bytes."},
 
-    # The size of the image in bytes.
-    @[::JSON::Field(key: "sizeBytes", emit_null: false)]
-    @[::YAML::Field(key: "sizeBytes", emit_null: false)]
-    property size_bytes : Int32 | Nil
-
-    def initialize(*, @names : Array(String) | Nil = nil, @size_bytes : Int32 | Nil = nil)
-    end
-  end
-end
+  ]
+)

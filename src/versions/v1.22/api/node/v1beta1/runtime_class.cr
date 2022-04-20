@@ -3,6 +3,8 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Node::V1beta1::RuntimeClass = Api::Node::V1::RuntimeClass
-end
+require "../../../apimachinery/apis/meta/v1/object_meta"
+require "./overhead"
+require "./scheduling"
+
+alias K8S::Api::Node::V1beta1::RuntimeClass = Api::Node::V1::RuntimeClass

@@ -3,29 +3,12 @@
 require "yaml"
 require "json"
 
-module K8S
-  # NonResourceAttributes includes the authorization attributes available for non-resource requests to the Authorizer interface
-  @[::K8S::Properties(
-    path: {type: String, nilable: true, key: "path", getter: false, setter: false},
-    verb: {type: String, nilable: true, key: "verb", getter: false, setter: false},
-  )]
-  class Api::Authorization::V1::NonResourceAttributes
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+::K8S::Kubernetes::Resource.define_object("NonResourceAttributes",
+  namespace: "::K8S::Api::Authorization::V1",
+  properties: [
 
-    # Path is the URL path of the request
-    @[::JSON::Field(key: "path", emit_null: false)]
-    @[::YAML::Field(key: "path", emit_null: false)]
-    property path : String | Nil
+    {name: "path", kind: String, key: "path", nilable: true, read_only: false, description: "Path is the URL path of the request"},
+    {name: "verb", kind: String, key: "verb", nilable: true, read_only: false, description: "Verb is the standard HTTP verb"},
 
-    # Verb is the standard HTTP verb
-    @[::JSON::Field(key: "verb", emit_null: false)]
-    @[::YAML::Field(key: "verb", emit_null: false)]
-    property verb : String | Nil
-
-    def initialize(*, @path : String | Nil = nil, @verb : String | Nil = nil)
-    end
-  end
-end
+  ]
+)

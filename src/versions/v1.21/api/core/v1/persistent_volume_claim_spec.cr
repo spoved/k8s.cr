@@ -3,59 +3,21 @@
 require "yaml"
 require "json"
 
-module K8S
-  # PersistentVolumeClaimSpec describes the common attributes of storage devices and allows a Source for provider-specific attributes
-  @[::K8S::Properties(
-    access_modes: {type: Array(String), nilable: true, key: "accessModes", getter: false, setter: false},
-    data_source: {type: Api::Core::V1::TypedLocalObjectReference, nilable: true, key: "dataSource", getter: false, setter: false},
-    resources: {type: Api::Core::V1::ResourceRequirements, nilable: true, key: "resources", getter: false, setter: false},
-    selector: {type: Apimachinery::Apis::Meta::V1::LabelSelector, nilable: true, key: "selector", getter: false, setter: false},
-    storage_class_name: {type: String, nilable: true, key: "storageClassName", getter: false, setter: false},
-    volume_mode: {type: String, nilable: true, key: "volumeMode", getter: false, setter: false},
-    volume_name: {type: String, nilable: true, key: "volumeName", getter: false, setter: false},
-  )]
-  class Api::Core::V1::PersistentVolumeClaimSpec
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+require "./typed_local_object_reference"
+require "./resource_requirements"
+require "../../../apimachinery/apis/meta/v1/label_selector"
 
-    # AccessModes contains the desired access modes the volume should have. More info: [https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1](https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1)
-    @[::JSON::Field(key: "accessModes", emit_null: false)]
-    @[::YAML::Field(key: "accessModes", emit_null: false)]
-    property access_modes : Array(String) | Nil
+::K8S::Kubernetes::Resource.define_object("PersistentVolumeClaimSpec",
+  namespace: "::K8S::Api::Core::V1",
+  properties: [
 
-    # This field can be used to specify either: * An existing VolumeSnapshot object [(snapshot.storage.k8s.io/VolumeSnapshot) * An existing PVC (PersistentVolumeClaim) * An existing custom resource that implements data population (Alpha) In order to use custom resource types that implement data population, the AnyVolumeDataSource feature gate must be enabled. If the provisioner or an external controller can support the specified data source, it will create a new volume based on the contents of the specified data source.]((snapshot.storage.k8s.io/VolumeSnapshot) * An existing PVC (PersistentVolumeClaim) * An existing custom resource that implements data population (Alpha) In order to use custom resource types that implement data population, the AnyVolumeDataSource feature gate must be enabled. If the provisioner or an external controller can support the specified data source, it will create a new volume based on the contents of the specified data source.)
-    @[::JSON::Field(key: "dataSource", emit_null: false)]
-    @[::YAML::Field(key: "dataSource", emit_null: false)]
-    property data_source : Api::Core::V1::TypedLocalObjectReference | Nil
+    {name: "access_modes", kind: ::Array(String), key: "accessModes", nilable: true, read_only: false, description: "AccessModes contains the desired access modes the volume should have. More info: [https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1](https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1)"},
+    {name: "data_source", kind: ::K8S::Api::Core::V1::TypedLocalObjectReference, key: "dataSource", nilable: true, read_only: false, description: "This field can be used to specify either: * An existing VolumeSnapshot object [(snapshot.storage.k8s.io/VolumeSnapshot) * An existing PVC (PersistentVolumeClaim) * An existing custom resource that implements data population (Alpha) In order to use custom resource types that implement data population, the AnyVolumeDataSource feature gate must be enabled. If the provisioner or an external controller can support the specified data source, it will create a new volume based on the contents of the specified data source.]((snapshot.storage.k8s.io/VolumeSnapshot) * An existing PVC (PersistentVolumeClaim) * An existing custom resource that implements data population (Alpha) In order to use custom resource types that implement data population, the AnyVolumeDataSource feature gate must be enabled. If the provisioner or an external controller can support the specified data source, it will create a new volume based on the contents of the specified data source.)"},
+    {name: "resources", kind: ::K8S::Api::Core::V1::ResourceRequirements, key: "resources", nilable: true, read_only: false, description: "Resources represents the minimum resources the volume should have. More info: [https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources](https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources)"},
+    {name: "selector", kind: ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector, key: "selector", nilable: true, read_only: false, description: "A label query over volumes to consider for binding."},
+    {name: "storage_class_name", kind: String, key: "storageClassName", nilable: true, read_only: false, description: "Name of the StorageClass required by the claim. More info: [https://kubernetes.io/docs/concepts/storage/persistent-volumes#class-1](https://kubernetes.io/docs/concepts/storage/persistent-volumes#class-1)"},
+    {name: "volume_mode", kind: String, key: "volumeMode", nilable: true, read_only: false, description: "volumeMode defines what type of volume is required by the claim. Value of Filesystem is implied when not included in claim spec."},
+    {name: "volume_name", kind: String, key: "volumeName", nilable: true, read_only: false, description: "VolumeName is the binding reference to the PersistentVolume backing this claim."},
 
-    # Resources represents the minimum resources the volume should have. More info: [https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources](https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources)
-    @[::JSON::Field(key: "resources", emit_null: false)]
-    @[::YAML::Field(key: "resources", emit_null: false)]
-    property resources : Api::Core::V1::ResourceRequirements | Nil
-
-    # A label query over volumes to consider for binding.
-    @[::JSON::Field(key: "selector", emit_null: false)]
-    @[::YAML::Field(key: "selector", emit_null: false)]
-    property selector : Apimachinery::Apis::Meta::V1::LabelSelector | Nil
-
-    # Name of the StorageClass required by the claim. More info: [https://kubernetes.io/docs/concepts/storage/persistent-volumes#class-1](https://kubernetes.io/docs/concepts/storage/persistent-volumes#class-1)
-    @[::JSON::Field(key: "storageClassName", emit_null: false)]
-    @[::YAML::Field(key: "storageClassName", emit_null: false)]
-    property storage_class_name : String | Nil
-
-    # volumeMode defines what type of volume is required by the claim. Value of Filesystem is implied when not included in claim spec.
-    @[::JSON::Field(key: "volumeMode", emit_null: false)]
-    @[::YAML::Field(key: "volumeMode", emit_null: false)]
-    property volume_mode : String | Nil
-
-    # VolumeName is the binding reference to the PersistentVolume backing this claim.
-    @[::JSON::Field(key: "volumeName", emit_null: false)]
-    @[::YAML::Field(key: "volumeName", emit_null: false)]
-    property volume_name : String | Nil
-
-    def initialize(*, @access_modes : Array(String) | Nil = nil, @data_source : Api::Core::V1::TypedLocalObjectReference | Nil = nil, @resources : Api::Core::V1::ResourceRequirements | Nil = nil, @selector : Apimachinery::Apis::Meta::V1::LabelSelector | Nil = nil, @storage_class_name : String | Nil = nil, @volume_mode : String | Nil = nil, @volume_name : String | Nil = nil)
-    end
-  end
-end
+  ]
+)

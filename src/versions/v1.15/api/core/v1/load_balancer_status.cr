@@ -3,23 +3,13 @@
 require "yaml"
 require "json"
 
-module K8S
-  # LoadBalancerStatus represents the status of a load-balancer.
-  @[::K8S::Properties(
-    ingress: {type: Array(Api::Core::V1::LoadBalancerIngress), nilable: true, key: "ingress", getter: false, setter: false},
-  )]
-  class Api::Core::V1::LoadBalancerStatus
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+require "./load_balancer_ingress"
 
-    # Ingress is a list containing ingress points for the load-balancer. Traffic intended for the service should be sent to these ingress points.
-    @[::JSON::Field(key: "ingress", emit_null: false)]
-    @[::YAML::Field(key: "ingress", emit_null: false)]
-    property ingress : Array(Api::Core::V1::LoadBalancerIngress) | Nil
+::K8S::Kubernetes::Resource.define_object("LoadBalancerStatus",
+  namespace: "::K8S::Api::Core::V1",
+  properties: [
 
-    def initialize(*, @ingress : Array(Api::Core::V1::LoadBalancerIngress) | Nil = nil)
-    end
-  end
-end
+    {name: "ingress", kind: ::Array(::K8S::Api::Core::V1::LoadBalancerIngress), key: "ingress", nilable: true, read_only: false, description: "Ingress is a list containing ingress points for the load-balancer. Traffic intended for the service should be sent to these ingress points."},
+
+  ]
+)

@@ -3,23 +3,13 @@
 require "yaml"
 require "json"
 
-module K8S
-  # EndpointHints provides hints describing how an endpoint should be consumed.
-  @[::K8S::Properties(
-    for_zones: {type: Array(Api::Discovery::V1::ForZone), nilable: true, key: "forZones", getter: false, setter: false},
-  )]
-  class Api::Discovery::V1::EndpointHints
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+require "./for_zone"
 
-    # forZones indicates the zone(s) this endpoint should be consumed by to enable topology aware routing.
-    @[::JSON::Field(key: "forZones", emit_null: false)]
-    @[::YAML::Field(key: "forZones", emit_null: false)]
-    property for_zones : Array(Api::Discovery::V1::ForZone) | Nil
+::K8S::Kubernetes::Resource.define_object("EndpointHints",
+  namespace: "::K8S::Api::Discovery::V1",
+  properties: [
 
-    def initialize(*, @for_zones : Array(Api::Discovery::V1::ForZone) | Nil = nil)
-    end
-  end
-end
+    {name: "for_zones", kind: ::Array(::K8S::Api::Discovery::V1::ForZone), key: "forZones", nilable: true, read_only: false, description: "forZones indicates the zone(s) this endpoint should be consumed by to enable topology aware routing."},
+
+  ]
+)

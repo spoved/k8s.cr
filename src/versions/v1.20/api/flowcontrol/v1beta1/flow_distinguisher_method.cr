@@ -3,6 +3,4 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Flowcontrol::V1beta1::FlowDistinguisherMethod = Api::Flowcontrol::V1alpha1::FlowDistinguisherMethod
-end
+alias K8S::Api::Flowcontrol::V1beta1::FlowDistinguisherMethod = Api::Flowcontrol::V1alpha1::FlowDistinguisherMethod

@@ -3,23 +3,11 @@
 require "yaml"
 require "json"
 
-module K8S
-  # SelfSubjectRulesReviewSpec defines the specification for SelfSubjectRulesReview.
-  @[::K8S::Properties(
-    namespace: {type: String, nilable: true, key: "namespace", getter: false, setter: false},
-  )]
-  class Api::Authorization::V1::SelfSubjectRulesReviewSpec
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+::K8S::Kubernetes::Resource.define_object("SelfSubjectRulesReviewSpec",
+  namespace: "::K8S::Api::Authorization::V1",
+  properties: [
 
-    # Namespace to evaluate rules for. Required.
-    @[::JSON::Field(key: "namespace", emit_null: false)]
-    @[::YAML::Field(key: "namespace", emit_null: false)]
-    property namespace : String | Nil
+    {name: "namespace", kind: String, key: "namespace", nilable: true, read_only: false, description: "Namespace to evaluate rules for. Required."},
 
-    def initialize(*, @namespace : String | Nil = nil)
-    end
-  end
-end
+  ]
+)

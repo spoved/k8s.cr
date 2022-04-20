@@ -3,29 +3,14 @@
 require "yaml"
 require "json"
 
-module K8S
-  # Scheduling specifies the scheduling constraints for nodes supporting a RuntimeClass.
-  @[::K8S::Properties(
-    node_selector: {type: Hash(String, String), nilable: true, key: "nodeSelector", getter: false, setter: false},
-    tolerations: {type: Array(Api::Core::V1::Toleration), nilable: true, key: "tolerations", getter: false, setter: false},
-  )]
-  class Api::Node::V1alpha1::Scheduling
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+require "../../core/v1/toleration"
 
-    # nodeSelector lists labels that must be present on nodes that support this RuntimeClass. Pods using this RuntimeClass can only be scheduled to a node matched by this selector. The RuntimeClass nodeSelector is merged with a pod's existing nodeSelector. Any conflicts will cause the pod to be rejected in admission.
-    @[::JSON::Field(key: "nodeSelector", emit_null: false)]
-    @[::YAML::Field(key: "nodeSelector", emit_null: false)]
-    property node_selector : Hash(String, String) | Nil
+::K8S::Kubernetes::Resource.define_object("Scheduling",
+  namespace: "::K8S::Api::Node::V1alpha1",
+  properties: [
 
-    # tolerations are appended (excluding duplicates) to pods running with this RuntimeClass during admission, effectively unioning the set of nodes tolerated by the pod and the RuntimeClass.
-    @[::JSON::Field(key: "tolerations", emit_null: false)]
-    @[::YAML::Field(key: "tolerations", emit_null: false)]
-    property tolerations : Array(Api::Core::V1::Toleration) | Nil
+    {name: "node_selector", kind: ::Hash(String, String), key: "nodeSelector", nilable: true, read_only: false, description: "nodeSelector lists labels that must be present on nodes that support this RuntimeClass. Pods using this RuntimeClass can only be scheduled to a node matched by this selector. The RuntimeClass nodeSelector is merged with a pod's existing nodeSelector. Any conflicts will cause the pod to be rejected in admission."},
+    {name: "tolerations", kind: ::Array(::K8S::Api::Core::V1::Toleration), key: "tolerations", nilable: true, read_only: false, description: "tolerations are appended (excluding duplicates) to pods running with this RuntimeClass during admission, effectively unioning the set of nodes tolerated by the pod and the RuntimeClass."},
 
-    def initialize(*, @node_selector : Hash(String, String) | Nil = nil, @tolerations : Array(Api::Core::V1::Toleration) | Nil = nil)
-    end
-  end
-end
+  ]
+)

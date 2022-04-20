@@ -3,29 +3,14 @@
 require "yaml"
 require "json"
 
-module K8S
-  # ResourceMetricSource indicates how to scale on a resource metric known to Kubernetes, as specified in requests and limits, describing each pod in the current scale target (e.g. CPU or memory).  The values will be averaged together before being compared to the target.  Such metrics are built in to Kubernetes, and have special scaling options on top of those available to normal per-pod metrics using the "pods" source.  Only one "target" type should be set.
-  @[::K8S::Properties(
-    name: {type: String, nilable: false, key: "name", getter: false, setter: false},
-    target: {type: Api::Autoscaling::V2beta2::MetricTarget, nilable: false, key: "target", getter: false, setter: false},
-  )]
-  class Api::Autoscaling::V2beta2::ResourceMetricSource
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+require "./metric_target"
 
-    # name is the name of the resource in question.
-    @[::JSON::Field(key: "name", emit_null: true)]
-    @[::YAML::Field(key: "name", emit_null: true)]
-    property name : String
+::K8S::Kubernetes::Resource.define_object("ResourceMetricSource",
+  namespace: "::K8S::Api::Autoscaling::V2beta2",
+  properties: [
 
-    # target specifies the target value for the given metric
-    @[::JSON::Field(key: "target", emit_null: true)]
-    @[::YAML::Field(key: "target", emit_null: true)]
-    property target : Api::Autoscaling::V2beta2::MetricTarget
+    {name: "name", kind: String, key: "name", nilable: false, read_only: false, description: "name is the name of the resource in question."},
+    {name: "target", kind: ::K8S::Api::Autoscaling::V2beta2::MetricTarget, key: "target", nilable: false, read_only: false, description: "target specifies the target value for the given metric"},
 
-    def initialize(*, @name : String, @target : Api::Autoscaling::V2beta2::MetricTarget)
-    end
-  end
-end
+  ]
+)

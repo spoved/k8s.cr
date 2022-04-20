@@ -3,6 +3,7 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Storage::V1beta1::CSIStorageCapacity = Api::Storage::V1alpha1::CSIStorageCapacity
-end
+require "../../../apimachinery/apis/meta/v1/object_meta"
+require "../../../apimachinery/apis/meta/v1/label_selector"
+
+alias K8S::Api::Storage::V1beta1::CSIStorageCapacity = Api::Storage::V1alpha1::CSIStorageCapacity

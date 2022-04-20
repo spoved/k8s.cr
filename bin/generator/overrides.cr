@@ -17,25 +17,4 @@ class Generator::Definition
     end
     {% end %}
   end
-
-  def apply_alliases
-    case class_name
-    when "ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaPropsOrArray"
-      file.puts %<alias #{class_name} = ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps | Array(ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps)>
-      true
-    when "ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaPropsOrBool"
-      file.puts %<alias #{class_name} = ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps | Bool>
-      true
-    when "ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaPropsOrStringArray"
-      file.puts %<alias #{class_name} = ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps | Array(String)>
-      true
-    when "Api::Core::V1::List"
-      true
-    when "ApiextensionsApiserver::Apis::Apiextensions::V1::JSON"
-      file.puts %<alias #{class_name} = ::JSON::Any>
-      true
-    else
-      false
-    end
-  end
 end

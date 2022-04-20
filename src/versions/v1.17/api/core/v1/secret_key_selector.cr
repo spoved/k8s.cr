@@ -3,35 +3,13 @@
 require "yaml"
 require "json"
 
-module K8S
-  # SecretKeySelector selects a key of a Secret.
-  @[::K8S::Properties(
-    key: {type: String, nilable: false, key: "key", getter: false, setter: false},
-    name: {type: String, nilable: true, key: "name", getter: false, setter: false},
-    optional: {type: Bool, nilable: true, key: "optional", getter: false, setter: false},
-  )]
-  class Api::Core::V1::SecretKeySelector
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+::K8S::Kubernetes::Resource.define_object("SecretKeySelector",
+  namespace: "::K8S::Api::Core::V1",
+  properties: [
 
-    # The key of the secret to select from.  Must be a valid secret key.
-    @[::JSON::Field(key: "key", emit_null: true)]
-    @[::YAML::Field(key: "key", emit_null: true)]
-    property key : String
+    {name: "key", kind: String, key: "key", nilable: false, read_only: false, description: "The key of the secret to select from.  Must be a valid secret key."},
+    {name: "name", kind: String, key: "name", nilable: true, read_only: false, description: "Name of the referent. More info: [https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names)"},
+    {name: "optional", kind: ::Bool, key: "optional", nilable: true, read_only: false, description: "Specify whether the Secret or its key must be defined"},
 
-    # Name of the referent. More info: [https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names)
-    @[::JSON::Field(key: "name", emit_null: false)]
-    @[::YAML::Field(key: "name", emit_null: false)]
-    property name : String | Nil
-
-    # Specify whether the Secret or its key must be defined
-    @[::JSON::Field(key: "optional", emit_null: false)]
-    @[::YAML::Field(key: "optional", emit_null: false)]
-    property optional : Bool | Nil
-
-    def initialize(*, @key : String, @name : String | Nil = nil, @optional : Bool | Nil = nil)
-    end
-  end
-end
+  ]
+)

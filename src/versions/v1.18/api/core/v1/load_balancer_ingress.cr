@@ -3,29 +3,12 @@
 require "yaml"
 require "json"
 
-module K8S
-  # LoadBalancerIngress represents the status of a load-balancer ingress point: traffic intended for the service should be sent to an ingress point.
-  @[::K8S::Properties(
-    hostname: {type: String, nilable: true, key: "hostname", getter: false, setter: false},
-    ip: {type: String, nilable: true, key: "ip", getter: false, setter: false},
-  )]
-  class Api::Core::V1::LoadBalancerIngress
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+::K8S::Kubernetes::Resource.define_object("LoadBalancerIngress",
+  namespace: "::K8S::Api::Core::V1",
+  properties: [
 
-    # Hostname is set for load-balancer ingress points that are DNS based (typically AWS load-balancers)
-    @[::JSON::Field(key: "hostname", emit_null: false)]
-    @[::YAML::Field(key: "hostname", emit_null: false)]
-    property hostname : String | Nil
+    {name: "hostname", kind: String, key: "hostname", nilable: true, read_only: false, description: "Hostname is set for load-balancer ingress points that are DNS based (typically AWS load-balancers)"},
+    {name: "ip", kind: String, key: "ip", nilable: true, read_only: false, description: "IP is set for load-balancer ingress points that are IP based (typically GCE or OpenStack load-balancers)"},
 
-    # IP is set for load-balancer ingress points that are IP based (typically GCE or OpenStack load-balancers)
-    @[::JSON::Field(key: "ip", emit_null: false)]
-    @[::YAML::Field(key: "ip", emit_null: false)]
-    property ip : String | Nil
-
-    def initialize(*, @hostname : String | Nil = nil, @ip : String | Nil = nil)
-    end
-  end
-end
+  ]
+)

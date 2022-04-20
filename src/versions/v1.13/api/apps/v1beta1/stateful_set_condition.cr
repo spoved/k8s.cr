@@ -3,6 +3,4 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Apps::V1beta1::StatefulSetCondition = Api::Apps::V1::StatefulSetCondition
-end
+alias K8S::Api::Apps::V1beta1::StatefulSetCondition = Api::Apps::V1::StatefulSetCondition

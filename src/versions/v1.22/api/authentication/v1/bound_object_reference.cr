@@ -3,41 +3,14 @@
 require "yaml"
 require "json"
 
-module K8S
-  # BoundObjectReference is a reference to an object that a token is bound to.
-  @[::K8S::Properties(
-    api_version: {type: String, nilable: true, key: "apiVersion", getter: false, setter: false},
-    kind: {type: String, nilable: true, key: "kind", getter: false, setter: false},
-    name: {type: String, nilable: true, key: "name", getter: false, setter: false},
-    uid: {type: String, nilable: true, key: "uid", getter: false, setter: false},
-  )]
-  class Api::Authentication::V1::BoundObjectReference
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+::K8S::Kubernetes::Resource.define_object("BoundObjectReference",
+  namespace: "::K8S::Api::Authentication::V1",
+  properties: [
 
-    # API version of the referent.
-    @[::JSON::Field(key: "apiVersion", emit_null: false)]
-    @[::YAML::Field(key: "apiVersion", emit_null: false)]
-    property api_version : String | Nil
+    {name: "api_version", kind: String, key: "apiVersion", nilable: true, read_only: false, description: "API version of the referent."},
+    {name: "kind", kind: String, key: "kind", nilable: true, read_only: false, description: "Kind of the referent. Valid kinds are 'Pod' and 'Secret'."},
+    {name: "name", kind: String, key: "name", nilable: true, read_only: false, description: "Name of the referent."},
+    {name: "uid", kind: String, key: "uid", nilable: true, read_only: false, description: "UID of the referent."},
 
-    # Kind of the referent. Valid kinds are 'Pod' and 'Secret'.
-    @[::JSON::Field(key: "kind", emit_null: false)]
-    @[::YAML::Field(key: "kind", emit_null: false)]
-    property kind : String | Nil
-
-    # Name of the referent.
-    @[::JSON::Field(key: "name", emit_null: false)]
-    @[::YAML::Field(key: "name", emit_null: false)]
-    property name : String | Nil
-
-    # UID of the referent.
-    @[::JSON::Field(key: "uid", emit_null: false)]
-    @[::YAML::Field(key: "uid", emit_null: false)]
-    property uid : String | Nil
-
-    def initialize(*, @api_version : String | Nil = nil, @kind : String | Nil = nil, @name : String | Nil = nil, @uid : String | Nil = nil)
-    end
-  end
-end
+  ]
+)

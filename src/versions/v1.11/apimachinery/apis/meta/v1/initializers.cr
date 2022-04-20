@@ -3,29 +3,15 @@
 require "yaml"
 require "json"
 
-module K8S
-  # Initializers tracks the progress of initialization.
-  @[::K8S::Properties(
-    pending: {type: Array(Apimachinery::Apis::Meta::V1::Initializer), nilable: false, key: "pending", getter: false, setter: false},
-    result: {type: Apimachinery::Apis::Meta::V1::Status, nilable: true, key: "result", getter: false, setter: false},
-  )]
-  class Apimachinery::Apis::Meta::V1::Initializers
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+require "./initializer"
+require "./status"
 
-    # Pending is a list of initializers that must execute in order before this object is visible. When the last pending initializer is removed, and no failing result is set, the initializers struct will be set to nil and the object is considered as initialized and visible to all clients.
-    @[::JSON::Field(key: "pending", emit_null: true)]
-    @[::YAML::Field(key: "pending", emit_null: true)]
-    property pending : Array(Apimachinery::Apis::Meta::V1::Initializer)
+::K8S::Kubernetes::Resource.define_object("Initializers",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
 
-    # If result is set with the Failure field, the object will be persisted to storage and then deleted, ensuring that other clients can observe the deletion.
-    @[::JSON::Field(key: "result", emit_null: false)]
-    @[::YAML::Field(key: "result", emit_null: false)]
-    property result : Apimachinery::Apis::Meta::V1::Status | Nil
+    {name: "pending", kind: ::Array(::K8S::Apimachinery::Apis::Meta::V1::Initializer), key: "pending", nilable: false, read_only: false, description: "Pending is a list of initializers that must execute in order before this object is visible. When the last pending initializer is removed, and no failing result is set, the initializers struct will be set to nil and the object is considered as initialized and visible to all clients."},
+    {name: "result", kind: ::K8S::Apimachinery::Apis::Meta::V1::Status, key: "result", nilable: true, read_only: false, description: "If result is set with the Failure field, the object will be persisted to storage and then deleted, ensuring that other clients can observe the deletion."},
 
-    def initialize(*, @pending : Array(Apimachinery::Apis::Meta::V1::Initializer), @result : Apimachinery::Apis::Meta::V1::Status | Nil = nil)
-    end
-  end
-end
+  ]
+)

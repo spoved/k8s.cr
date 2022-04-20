@@ -3,92 +3,17 @@
 require "yaml"
 require "json"
 
-module K8S
-  # CertificateSigningRequestSpec contains the certificate request.
-  @[::K8S::Properties(
-    extra: {type: Hash(String, Array(String)), nilable: true, key: "extra", getter: false, setter: false},
-    groups: {type: Array(String), nilable: true, key: "groups", getter: false, setter: false},
-    request: {type: String, nilable: false, key: "request", getter: false, setter: false},
-    signer_name: {type: String, nilable: false, key: "signerName", getter: false, setter: false},
-    uid: {type: String, nilable: true, key: "uid", getter: false, setter: false},
-    usages: {type: Array(String), nilable: true, key: "usages", getter: false, setter: false},
-    username: {type: String, nilable: true, key: "username", getter: false, setter: false},
-  )]
-  class Api::Certificates::V1::CertificateSigningRequestSpec
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+::K8S::Kubernetes::Resource.define_object("CertificateSigningRequestSpec",
+  namespace: "::K8S::Api::Certificates::V1",
+  properties: [
 
-    # extra contains extra attributes of the user that created the CertificateSigningRequest. Populated by the API server on creation and immutable.
-    @[::JSON::Field(key: "extra", emit_null: false)]
-    @[::YAML::Field(key: "extra", emit_null: false)]
-    property extra : Hash(String, Array(String)) | Nil
+    {name: "extra", kind: ::Hash(String, ::Array(String)), key: "extra", nilable: true, read_only: false, description: "extra contains extra attributes of the user that created the CertificateSigningRequest. Populated by the API server on creation and immutable."},
+    {name: "groups", kind: ::Array(String), key: "groups", nilable: true, read_only: false, description: "groups contains group membership of the user that created the CertificateSigningRequest. Populated by the API server on creation and immutable."},
+    {name: "request", kind: String, key: "request", nilable: false, read_only: false, description: "request contains an x509 certificate signing request encoded in a \"CERTIFICATE REQUEST\" PEM block. When serialized as JSON or YAML, the data is additionally base64-encoded."},
+    {name: "signer_name", kind: String, key: "signerName", nilable: false, read_only: false, description: "signerName indicates the requested signer, and is a qualified name.\n\n[List/watch requests for CertificateSigningRequests can filter on this field using a \"spec.signerName=NAME\" fieldSelector.](List/watch requests for CertificateSigningRequests can filter on this field using a \"spec.signerName=NAME\" fieldSelector.)\n\nWell-known Kubernetes signers are:\n 1. [\"kubernetes.io/kube-apiserver-client\": issues client certificates that can be used to authenticate to kube-apiserver.](\"kubernetes.io/kube-apiserver-client\": issues client certificates that can be used to authenticate to kube-apiserver.)\n  Requests for this signer are never auto-approved by kube-controller-manager, can be issued by the \"csrsigning\" controller in kube-controller-manager.\n 2. [\"kubernetes.io/kube-apiserver-client-kubelet\": issues client certificates that kubelets use to authenticate to kube-apiserver.](\"kubernetes.io/kube-apiserver-client-kubelet\": issues client certificates that kubelets use to authenticate to kube-apiserver.)\n  Requests for this signer can be auto-approved by the \"csrapproving\" controller in kube-controller-manager, and can be issued by the \"csrsigning\" controller in kube-controller-manager.\n 3. [\"kubernetes.io/kubelet-serving\" issues serving certificates that kubelets use to serve TLS endpoints, which kube-apiserver can connect to securely.](\"kubernetes.io/kubelet-serving\" issues serving certificates that kubelets use to serve TLS endpoints, which kube-apiserver can connect to securely.)\n  Requests for this signer are never auto-approved by kube-controller-manager, and can be issued by the \"csrsigning\" controller in kube-controller-manager.\n\nMore details are available at [https://k8s.io/docs/reference/access-authn-authz/certificate-signing-requests/#kubernetes-signers](https://k8s.io/docs/reference/access-authn-authz/certificate-signing-requests/#kubernetes-signers)\n\nCustom signerNames can also be specified. The signer defines:\n 1. Trust distribution: how trust (CA bundles) are distributed.\n 2. Permitted subjects: and behavior when a disallowed subject is requested.\n 3. Required, permitted, or forbidden x509 extensions in the request (including whether subjectAltNames are allowed, which types, restrictions on allowed values) and behavior when a disallowed extension is requested.\n 4. Required, permitted, or forbidden key usages / extended key usages.\n 5. [Expiration/certificate lifetime: whether it is fixed by the signer, configurable by the admin.](Expiration/certificate lifetime: whether it is fixed by the signer, configurable by the admin.)\n 6. Whether or not requests for CA certificates are allowed."},
+    {name: "uid", kind: String, key: "uid", nilable: true, read_only: false, description: "uid contains the uid of the user that created the CertificateSigningRequest. Populated by the API server on creation and immutable."},
+    {name: "usages", kind: ::Array(String), key: "usages", nilable: true, read_only: false, description: "usages specifies a set of key usages requested in the issued certificate.\n\nRequests for TLS client certificates typically request: \"digital signature\", \"key encipherment\", \"client auth\".\n\nRequests for TLS serving certificates typically request: \"key encipherment\", \"digital signature\", \"server auth\".\n\nValid values are:\n \"signing\", \"digital signature\", \"content commitment\",\n \"key encipherment\", \"key agreement\", \"data encipherment\",\n \"cert sign\", \"crl sign\", \"encipher only\", \"decipher only\", \"any\",\n \"server auth\", \"client auth\",\n \"code signing\", \"email protection\", [\"s/mime\",](\"s/mime\",)\n \"ipsec end system\", \"ipsec tunnel\", \"ipsec user\",\n \"timestamping\", \"ocsp signing\", \"microsoft sgc\", \"netscape sgc\""},
+    {name: "username", kind: String, key: "username", nilable: true, read_only: false, description: "username contains the name of the user that created the CertificateSigningRequest. Populated by the API server on creation and immutable."},
 
-    # groups contains group membership of the user that created the CertificateSigningRequest. Populated by the API server on creation and immutable.
-    @[::JSON::Field(key: "groups", emit_null: false)]
-    @[::YAML::Field(key: "groups", emit_null: false)]
-    property groups : Array(String) | Nil
-
-    # request contains an x509 certificate signing request encoded in a "CERTIFICATE REQUEST" PEM block. When serialized as JSON or YAML, the data is additionally base64-encoded.
-    @[::JSON::Field(key: "request", emit_null: true)]
-    @[::YAML::Field(key: "request", emit_null: true)]
-    property request : String
-
-    # signerName indicates the requested signer, and is a qualified name.
-    #
-    # [List/watch requests for CertificateSigningRequests can filter on this field using a "spec.signerName=NAME" fieldSelector.](List/watch requests for CertificateSigningRequests can filter on this field using a "spec.signerName=NAME" fieldSelector.)
-    #
-    # Well-known Kubernetes signers are:
-    #  1. ["kubernetes.io/kube-apiserver-client": issues client certificates that can be used to authenticate to kube-apiserver.]("kubernetes.io/kube-apiserver-client": issues client certificates that can be used to authenticate to kube-apiserver.)
-    #   Requests for this signer are never auto-approved by kube-controller-manager, can be issued by the "csrsigning" controller in kube-controller-manager.
-    #  2. ["kubernetes.io/kube-apiserver-client-kubelet": issues client certificates that kubelets use to authenticate to kube-apiserver.]("kubernetes.io/kube-apiserver-client-kubelet": issues client certificates that kubelets use to authenticate to kube-apiserver.)
-    #   Requests for this signer can be auto-approved by the "csrapproving" controller in kube-controller-manager, and can be issued by the "csrsigning" controller in kube-controller-manager.
-    #  3. ["kubernetes.io/kubelet-serving" issues serving certificates that kubelets use to serve TLS endpoints, which kube-apiserver can connect to securely.]("kubernetes.io/kubelet-serving" issues serving certificates that kubelets use to serve TLS endpoints, which kube-apiserver can connect to securely.)
-    #   Requests for this signer are never auto-approved by kube-controller-manager, and can be issued by the "csrsigning" controller in kube-controller-manager.
-    #
-    # More details are available at [https://k8s.io/docs/reference/access-authn-authz/certificate-signing-requests/#kubernetes-signers](https://k8s.io/docs/reference/access-authn-authz/certificate-signing-requests/#kubernetes-signers)
-    #
-    # Custom signerNames can also be specified. The signer defines:
-    #  1. Trust distribution: how trust (CA bundles) are distributed.
-    #  2. Permitted subjects: and behavior when a disallowed subject is requested.
-    #  3. Required, permitted, or forbidden x509 extensions in the request (including whether subjectAltNames are allowed, which types, restrictions on allowed values) and behavior when a disallowed extension is requested.
-    #  4. Required, permitted, or forbidden key usages / extended key usages.
-    #  5. [Expiration/certificate lifetime: whether it is fixed by the signer, configurable by the admin.](Expiration/certificate lifetime: whether it is fixed by the signer, configurable by the admin.)
-    #  6. Whether or not requests for CA certificates are allowed.
-    @[::JSON::Field(key: "signerName", emit_null: true)]
-    @[::YAML::Field(key: "signerName", emit_null: true)]
-    property signer_name : String
-
-    # uid contains the uid of the user that created the CertificateSigningRequest. Populated by the API server on creation and immutable.
-    @[::JSON::Field(key: "uid", emit_null: false)]
-    @[::YAML::Field(key: "uid", emit_null: false)]
-    property uid : String | Nil
-
-    # usages specifies a set of key usages requested in the issued certificate.
-    #
-    # Requests for TLS client certificates typically request: "digital signature", "key encipherment", "client auth".
-    #
-    # Requests for TLS serving certificates typically request: "key encipherment", "digital signature", "server auth".
-    #
-    # Valid values are:
-    #  "signing", "digital signature", "content commitment",
-    #  "key encipherment", "key agreement", "data encipherment",
-    #  "cert sign", "crl sign", "encipher only", "decipher only", "any",
-    #  "server auth", "client auth",
-    #  "code signing", "email protection", ["s/mime",]("s/mime",)
-    #  "ipsec end system", "ipsec tunnel", "ipsec user",
-    #  "timestamping", "ocsp signing", "microsoft sgc", "netscape sgc"
-    @[::JSON::Field(key: "usages", emit_null: false)]
-    @[::YAML::Field(key: "usages", emit_null: false)]
-    property usages : Array(String) | Nil
-
-    # username contains the name of the user that created the CertificateSigningRequest. Populated by the API server on creation and immutable.
-    @[::JSON::Field(key: "username", emit_null: false)]
-    @[::YAML::Field(key: "username", emit_null: false)]
-    property username : String | Nil
-
-    def initialize(*, @request : String, @signer_name : String, @extra : Hash(String, Array(String)) | Nil = nil, @groups : Array(String) | Nil = nil, @uid : String | Nil = nil, @usages : Array(String) | Nil = nil, @username : String | Nil = nil)
-    end
-  end
-end
+  ]
+)

@@ -3,98 +3,15 @@
 require "yaml"
 require "json"
 
-module K8S
-  # PodSecurityPolicy governs the ability to make requests that affect the Security Context that will be applied to a pod and container. Deprecated in 1.21.
-  @[::K8S::GroupVersionKind(group: "policy", kind: "PodSecurityPolicy", version: "v1beta1", full: "io.k8s.api.policy.v1beta1.PodSecurityPolicy")]
-  @[::K8S::Properties(
-    api_version: {type: String, nilable: true, key: "apiVersion", getter: false, setter: false},
-    kind: {type: String, nilable: true, key: "kind", getter: false, setter: false},
-    metadata: {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-    spec: {type: Api::Policy::V1beta1::PodSecurityPolicySpec, nilable: true, key: "spec", getter: false, setter: false},
-  )]
-  @[::K8S::Action(name: "post", verb: "post",
-    path: "/apis/policy/v1beta1/podsecuritypolicies", toplevel: false,
-    args: [{name: "context", type: String | Nil, default: nil},
-           {name: "dry_run", type: String | Nil, default: nil},
-           {name: "field_manager", type: String | Nil, default: nil}]
-  )]
-  @[::K8S::Action(name: "list", verb: "get",
-    path: "/apis/policy/v1beta1/podsecuritypolicies", toplevel: true,
-    args: [{name: "context", type: String | Nil, default: nil},
-           {name: "allow_watch_bookmarks", type: Bool | Nil, default: nil},
-           {name: "continue", type: String | Nil, default: nil},
-           {name: "field_selector", type: String | Nil, default: nil},
-           {name: "label_selector", type: String | Nil, default: nil},
-           {name: "limit", type: Int32 | Nil, default: nil},
-           {name: "resource_version", type: String | Nil, default: nil},
-           {name: "resource_version_match", type: String | Nil, default: nil},
-           {name: "timeout_seconds", type: Int32 | Nil, default: nil},
-           {name: "watch", type: Bool | Nil, default: nil}]
-  )]
-  @[::K8S::Action(name: "deletecollection", verb: "delete",
-    path: "/apis/policy/v1beta1/podsecuritypolicies", toplevel: true,
-    args: [{name: "context", type: String | Nil, default: nil},
-           {name: "continue", type: String | Nil, default: nil},
-           {name: "dry_run", type: String | Nil, default: nil},
-           {name: "field_selector", type: String | Nil, default: nil},
-           {name: "grace_period_seconds", type: Int32 | Nil, default: nil},
-           {name: "label_selector", type: String | Nil, default: nil},
-           {name: "limit", type: Int32 | Nil, default: nil},
-           {name: "orphan_dependents", type: Bool | Nil, default: nil},
-           {name: "propagation_policy", type: String | Nil, default: nil},
-           {name: "resource_version", type: String | Nil, default: nil},
-           {name: "resource_version_match", type: String | Nil, default: nil},
-           {name: "timeout_seconds", type: Int32 | Nil, default: nil}]
-  )]
-  @[::K8S::Action(name: "get", verb: "get",
-    path: "/apis/policy/v1beta1/podsecuritypolicies/{name}", toplevel: true,
-    args: [{name: "name", type: String},
-           {name: "context", type: String | Nil, default: nil}]
-  )]
-  @[::K8S::Action(name: "put", verb: "put",
-    path: "/apis/policy/v1beta1/podsecuritypolicies/{name}", toplevel: false,
-    args: [{name: "context", type: String | Nil, default: nil},
-           {name: "dry_run", type: String | Nil, default: nil},
-           {name: "field_manager", type: String | Nil, default: nil}]
-  )]
-  @[::K8S::Action(name: "patch", verb: "path",
-    path: "/apis/policy/v1beta1/podsecuritypolicies/{name}", toplevel: false,
-    args: [{name: "context", type: String | Nil, default: nil},
-           {name: "dry_run", type: String | Nil, default: nil},
-           {name: "field_manager", type: String | Nil, default: nil},
-           {name: "force", type: Bool | Nil, default: nil}]
-  )]
-  @[::K8S::Action(name: "delete", verb: "delete",
-    path: "/apis/policy/v1beta1/podsecuritypolicies/{name}", toplevel: false,
-    args: [{name: "context", type: String | Nil, default: nil},
-           {name: "dry_run", type: String | Nil, default: nil},
-           {name: "grace_period_seconds", type: Int32 | Nil, default: nil},
-           {name: "orphan_dependents", type: Bool | Nil, default: nil},
-           {name: "propagation_policy", type: String | Nil, default: nil}]
-  )]
-  class Api::Policy::V1beta1::PodSecurityPolicy < ::K8S::Kubernetes::Resource
-    include ::K8S::Kubernetes::Resource::Object
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+require "../../../apimachinery/apis/meta/v1/object_meta"
+require "./pod_security_policy_spec"
 
-    @[::JSON::Field(key: "apiVersion")]
-    @[::YAML::Field(key: "apiVersion")]
-    getter api_version : String = "policy/v1beta1"
-    getter kind : String = "PodSecurityPolicy"
-    # Standard object's metadata. More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)
-    property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta?
-    # spec defines the policy enforced.
-    @[::JSON::Field(key: "spec", emit_null: false)]
-    @[::YAML::Field(key: "spec", emit_null: false)]
-    property spec : Api::Policy::V1beta1::PodSecurityPolicySpec | Nil
+::K8S::Kubernetes::Resource.define_resource("policy", "v1beta1", "PodSecurityPolicy",
+  namespace: "::K8S::Api::Policy::V1beta1",
+  properties: [
 
-    def initialize(*, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil, @spec : Api::Policy::V1beta1::PodSecurityPolicySpec | Nil = nil)
-    end
-  end
+    {name: "spec", kind: ::K8S::Api::Policy::V1beta1::PodSecurityPolicySpec, key: "spec", nilable: true, read_only: false, description: "spec defines the policy enforced."},
 
-  module Resources::Policy::V1beta1
-    alias PodSecurityPolicy = ::K8S::Api::Policy::V1beta1::PodSecurityPolicy
-  end
-end
+  ],
+  description: "PodSecurityPolicy governs the ability to make requests that affect the Security Context that will be applied to a pod and container. Deprecated in 1.21.",
+)

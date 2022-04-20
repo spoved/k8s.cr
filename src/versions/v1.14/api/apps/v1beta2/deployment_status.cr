@@ -3,6 +3,6 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Apps::V1beta2::DeploymentStatus = Api::Apps::V1::DeploymentStatus
-end
+require "./deployment_condition"
+
+alias K8S::Api::Apps::V1beta2::DeploymentStatus = Api::Apps::V1::DeploymentStatus

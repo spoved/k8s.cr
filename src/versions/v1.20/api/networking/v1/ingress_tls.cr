@@ -3,6 +3,4 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Networking::V1::IngressTLS = Api::Extensions::V1beta1::IngressTLS
-end
+alias K8S::Api::Networking::V1::IngressTLS = Api::Extensions::V1beta1::IngressTLS

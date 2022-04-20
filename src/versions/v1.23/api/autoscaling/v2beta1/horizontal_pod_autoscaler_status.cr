@@ -3,53 +3,19 @@
 require "yaml"
 require "json"
 
-module K8S
-  # HorizontalPodAutoscalerStatus describes the current status of a horizontal pod autoscaler.
-  @[::K8S::Properties(
-    conditions: {type: Array(Api::Autoscaling::V2beta1::HorizontalPodAutoscalerCondition), nilable: true, key: "conditions", getter: false, setter: false},
-    current_metrics: {type: Array(Api::Autoscaling::V2beta1::MetricStatus), nilable: true, key: "currentMetrics", getter: false, setter: false},
-    current_replicas: {type: Int32, nilable: false, key: "currentReplicas", getter: false, setter: false},
-    desired_replicas: {type: Int32, nilable: false, key: "desiredReplicas", getter: false, setter: false},
-    last_scale_time: {type: Time, nilable: true, key: "lastScaleTime", getter: false, setter: false},
-    observed_generation: {type: Int32, nilable: true, key: "observedGeneration", getter: false, setter: false},
-  )]
-  class Api::Autoscaling::V2beta1::HorizontalPodAutoscalerStatus
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+require "./horizontal_pod_autoscaler_condition"
+require "./metric_status"
 
-    # conditions is the set of conditions required for this autoscaler to scale its target, and indicates whether or not those conditions are met.
-    @[::JSON::Field(key: "conditions", emit_null: false)]
-    @[::YAML::Field(key: "conditions", emit_null: false)]
-    property conditions : Array(Api::Autoscaling::V2beta1::HorizontalPodAutoscalerCondition) | Nil
+::K8S::Kubernetes::Resource.define_object("HorizontalPodAutoscalerStatus",
+  namespace: "::K8S::Api::Autoscaling::V2beta1",
+  properties: [
 
-    # currentMetrics is the last read state of the metrics used by this autoscaler.
-    @[::JSON::Field(key: "currentMetrics", emit_null: false)]
-    @[::YAML::Field(key: "currentMetrics", emit_null: false)]
-    property current_metrics : Array(Api::Autoscaling::V2beta1::MetricStatus) | Nil
+    {name: "conditions", kind: ::Array(::K8S::Api::Autoscaling::V2beta1::HorizontalPodAutoscalerCondition), key: "conditions", nilable: true, read_only: false, description: "conditions is the set of conditions required for this autoscaler to scale its target, and indicates whether or not those conditions are met."},
+    {name: "current_metrics", kind: ::Array(::K8S::Api::Autoscaling::V2beta1::MetricStatus), key: "currentMetrics", nilable: true, read_only: false, description: "currentMetrics is the last read state of the metrics used by this autoscaler."},
+    {name: "current_replicas", kind: Int32, key: "currentReplicas", nilable: false, read_only: false, description: "currentReplicas is current number of replicas of pods managed by this autoscaler, as last seen by the autoscaler."},
+    {name: "desired_replicas", kind: Int32, key: "desiredReplicas", nilable: false, read_only: false, description: "desiredReplicas is the desired number of replicas of pods managed by this autoscaler, as last calculated by the autoscaler."},
+    {name: "last_scale_time", kind: ::Time, key: "lastScaleTime", nilable: true, read_only: false, description: "lastScaleTime is the last time the HorizontalPodAutoscaler scaled the number of pods, used by the autoscaler to control how often the number of pods is changed."},
+    {name: "observed_generation", kind: Int32, key: "observedGeneration", nilable: true, read_only: false, description: "observedGeneration is the most recent generation observed by this autoscaler."},
 
-    # currentReplicas is current number of replicas of pods managed by this autoscaler, as last seen by the autoscaler.
-    @[::JSON::Field(key: "currentReplicas", emit_null: true)]
-    @[::YAML::Field(key: "currentReplicas", emit_null: true)]
-    property current_replicas : Int32
-
-    # desiredReplicas is the desired number of replicas of pods managed by this autoscaler, as last calculated by the autoscaler.
-    @[::JSON::Field(key: "desiredReplicas", emit_null: true)]
-    @[::YAML::Field(key: "desiredReplicas", emit_null: true)]
-    property desired_replicas : Int32
-
-    # lastScaleTime is the last time the HorizontalPodAutoscaler scaled the number of pods, used by the autoscaler to control how often the number of pods is changed.
-    @[::JSON::Field(key: "lastScaleTime", emit_null: false, converter: K8S::TimeFormat.new)]
-    @[::YAML::Field(key: "lastScaleTime", emit_null: false, converter: K8S::TimeFormat.new)]
-    property last_scale_time : Time | Nil
-
-    # observedGeneration is the most recent generation observed by this autoscaler.
-    @[::JSON::Field(key: "observedGeneration", emit_null: false)]
-    @[::YAML::Field(key: "observedGeneration", emit_null: false)]
-    property observed_generation : Int32 | Nil
-
-    def initialize(*, @current_replicas : Int32, @desired_replicas : Int32, @conditions : Array(Api::Autoscaling::V2beta1::HorizontalPodAutoscalerCondition) | Nil = nil, @current_metrics : Array(Api::Autoscaling::V2beta1::MetricStatus) | Nil = nil, @last_scale_time : Time | Nil = nil, @observed_generation : Int32 | Nil = nil)
-    end
-  end
-end
+  ]
+)

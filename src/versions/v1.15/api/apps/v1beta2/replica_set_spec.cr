@@ -3,6 +3,7 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Apps::V1beta2::ReplicaSetSpec = Api::Apps::V1::ReplicaSetSpec
-end
+require "../../../apimachinery/apis/meta/v1/label_selector"
+require "../../core/v1/pod_template_spec"
+
+alias K8S::Api::Apps::V1beta2::ReplicaSetSpec = Api::Apps::V1::ReplicaSetSpec

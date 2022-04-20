@@ -3,41 +3,16 @@
 require "yaml"
 require "json"
 
-module K8S
-  # VolumeAttachmentStatus is the status of a VolumeAttachment request.
-  @[::K8S::Properties(
-    attach_error: {type: Api::Storage::V1::VolumeError, nilable: true, key: "attachError", getter: false, setter: false},
-    attached: {type: Bool, nilable: false, key: "attached", getter: false, setter: false},
-    attachment_metadata: {type: Hash(String, String), nilable: true, key: "attachmentMetadata", getter: false, setter: false},
-    detach_error: {type: Api::Storage::V1::VolumeError, nilable: true, key: "detachError", getter: false, setter: false},
-  )]
-  class Api::Storage::V1::VolumeAttachmentStatus
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+require "./volume_error"
 
-    # The last error encountered during attach operation, if any. This field must only be set by the entity completing the attach operation, i.e. the external-attacher.
-    @[::JSON::Field(key: "attachError", emit_null: false)]
-    @[::YAML::Field(key: "attachError", emit_null: false)]
-    property attach_error : Api::Storage::V1::VolumeError | Nil
+::K8S::Kubernetes::Resource.define_object("VolumeAttachmentStatus",
+  namespace: "::K8S::Api::Storage::V1",
+  properties: [
 
-    # Indicates the volume is successfully attached. This field must only be set by the entity completing the attach operation, i.e. the external-attacher.
-    @[::JSON::Field(key: "attached", emit_null: true)]
-    @[::YAML::Field(key: "attached", emit_null: true)]
-    property attached : Bool
+    {name: "attach_error", kind: ::K8S::Api::Storage::V1::VolumeError, key: "attachError", nilable: true, read_only: false, description: "The last error encountered during attach operation, if any. This field must only be set by the entity completing the attach operation, i.e. the external-attacher."},
+    {name: "attached", kind: ::Bool, key: "attached", nilable: false, read_only: false, description: "Indicates the volume is successfully attached. This field must only be set by the entity completing the attach operation, i.e. the external-attacher."},
+    {name: "attachment_metadata", kind: ::Hash(String, String), key: "attachmentMetadata", nilable: true, read_only: false, description: "Upon successful attach, this field is populated with any information returned by the attach operation that must be passed into subsequent WaitForAttach or Mount calls. This field must only be set by the entity completing the attach operation, i.e. the external-attacher."},
+    {name: "detach_error", kind: ::K8S::Api::Storage::V1::VolumeError, key: "detachError", nilable: true, read_only: false, description: "The last error encountered during detach operation, if any. This field must only be set by the entity completing the detach operation, i.e. the external-attacher."},
 
-    # Upon successful attach, this field is populated with any information returned by the attach operation that must be passed into subsequent WaitForAttach or Mount calls. This field must only be set by the entity completing the attach operation, i.e. the external-attacher.
-    @[::JSON::Field(key: "attachmentMetadata", emit_null: false)]
-    @[::YAML::Field(key: "attachmentMetadata", emit_null: false)]
-    property attachment_metadata : Hash(String, String) | Nil
-
-    # The last error encountered during detach operation, if any. This field must only be set by the entity completing the detach operation, i.e. the external-attacher.
-    @[::JSON::Field(key: "detachError", emit_null: false)]
-    @[::YAML::Field(key: "detachError", emit_null: false)]
-    property detach_error : Api::Storage::V1::VolumeError | Nil
-
-    def initialize(*, @attached : Bool, @attach_error : Api::Storage::V1::VolumeError | Nil = nil, @attachment_metadata : Hash(String, String) | Nil = nil, @detach_error : Api::Storage::V1::VolumeError | Nil = nil)
-    end
-  end
-end
+  ]
+)

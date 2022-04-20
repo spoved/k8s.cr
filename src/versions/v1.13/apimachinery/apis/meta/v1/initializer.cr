@@ -3,23 +3,11 @@
 require "yaml"
 require "json"
 
-module K8S
-  # Initializer is information about an initializer that has not yet completed.
-  @[::K8S::Properties(
-    name: {type: String, nilable: false, key: "name", getter: false, setter: false},
-  )]
-  class Apimachinery::Apis::Meta::V1::Initializer
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+::K8S::Kubernetes::Resource.define_object("Initializer",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
 
-    # name of the process that is responsible for initializing this object.
-    @[::JSON::Field(key: "name", emit_null: true)]
-    @[::YAML::Field(key: "name", emit_null: true)]
-    property name : String
+    {name: "name", kind: String, key: "name", nilable: false, read_only: false, description: "name of the process that is responsible for initializing this object."},
 
-    def initialize(*, @name : String)
-    end
-  end
-end
+  ]
+)

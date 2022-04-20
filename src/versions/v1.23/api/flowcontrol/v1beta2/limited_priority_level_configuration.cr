@@ -3,6 +3,6 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Flowcontrol::V1beta2::LimitedPriorityLevelConfiguration = Api::Flowcontrol::V1beta1::LimitedPriorityLevelConfiguration
-end
+require "./limit_response"
+
+alias K8S::Api::Flowcontrol::V1beta2::LimitedPriorityLevelConfiguration = Api::Flowcontrol::V1beta1::LimitedPriorityLevelConfiguration

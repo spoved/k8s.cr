@@ -3,77 +3,19 @@
 require "yaml"
 require "json"
 
-module K8S
-  # Webhook describes an admission webhook and the resources and operations it applies to.
-  @[::K8S::Properties(
-    client_config: {type: Api::Admissionregistration::V1beta1::WebhookClientConfig, nilable: false, key: "clientConfig", getter: false, setter: false},
-    failure_policy: {type: String, nilable: true, key: "failurePolicy", getter: false, setter: false},
-    name: {type: String, nilable: false, key: "name", getter: false, setter: false},
-    namespace_selector: {type: Apimachinery::Apis::Meta::V1::LabelSelector, nilable: true, key: "namespaceSelector", getter: false, setter: false},
-    rules: {type: Array(Api::Admissionregistration::V1beta1::RuleWithOperations), nilable: true, key: "rules", getter: false, setter: false},
-  )]
-  class Api::Admissionregistration::V1beta1::Webhook
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+require "./webhook_client_config"
+require "../../../apimachinery/apis/meta/v1/label_selector"
+require "./rule_with_operations"
 
-    # ClientConfig defines how to communicate with the hook. Required
-    @[::JSON::Field(key: "clientConfig", emit_null: true)]
-    @[::YAML::Field(key: "clientConfig", emit_null: true)]
-    property client_config : Api::Admissionregistration::V1beta1::WebhookClientConfig
+::K8S::Kubernetes::Resource.define_object("Webhook",
+  namespace: "::K8S::Api::Admissionregistration::V1beta1",
+  properties: [
 
-    # FailurePolicy defines how unrecognized errors from the admission endpoint are handled - allowed values are Ignore or Fail. Defaults to Ignore.
-    @[::JSON::Field(key: "failurePolicy", emit_null: false)]
-    @[::YAML::Field(key: "failurePolicy", emit_null: false)]
-    property failure_policy : String | Nil
+    {name: "client_config", kind: ::K8S::Api::Admissionregistration::V1beta1::WebhookClientConfig, key: "clientConfig", nilable: false, read_only: false, description: "ClientConfig defines how to communicate with the hook. Required"},
+    {name: "failure_policy", kind: String, key: "failurePolicy", nilable: true, read_only: false, description: "FailurePolicy defines how unrecognized errors from the admission endpoint are handled - allowed values are Ignore or Fail. Defaults to Ignore."},
+    {name: "name", kind: String, key: "name", nilable: false, read_only: false, description: "The name of the admission webhook. Name should be fully qualified, e.g., imagepolicy.kubernetes.io, where \"imagepolicy\" is the name of the webhook, and kubernetes.io is the name of the organization. Required."},
+    {name: "namespace_selector", kind: ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector, key: "namespaceSelector", nilable: true, read_only: false, description: "NamespaceSelector decides whether to run the webhook on an object based on whether the namespace for that object matches the selector. If the object itself is a namespace, the matching is performed on object.metadata.labels. If the object is another cluster scoped resource, it never skips the webhook.\n\nFor example, to run the webhook on any objects whose namespace is not associated with \"runlevel\" of \"0\" or \"1\";  you will set the selector as follows: \"namespaceSelector\": {\n  \"matchExpressions\": [\n    {\n      \"key\": \"runlevel\",\n      \"operator\": \"NotIn\",\n      \"values\": [\n        \"0\",\n        \"1\"\n      ]\n    }\n  ]\n}\n\nIf instead you want to only run the webhook on any objects whose namespace is associated with the \"environment\" of \"prod\" or \"staging\"; you will set the selector as follows: \"namespaceSelector\": {\n  \"matchExpressions\": [\n    {\n      \"key\": \"environment\",\n      \"operator\": \"In\",\n      \"values\": [\n        \"prod\",\n        \"staging\"\n      ]\n    }\n  ]\n}\n\nSee [https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/ for more examples of label selectors.](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/ for more examples of label selectors.)\n\nDefault to the empty LabelSelector, which matches everything."},
+    {name: "rules", kind: ::Array(::K8S::Api::Admissionregistration::V1beta1::RuleWithOperations), key: "rules", nilable: true, read_only: false, description: "Rules describes what operations on what [resources/subresources the webhook cares about. The webhook cares about an operation if it matches _any_ Rule. However, in order to prevent ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks from putting the cluster in a state which cannot be recovered from without completely disabling the plugin, ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks are never called on admission requests for ValidatingWebhookConfiguration and MutatingWebhookConfiguration objects.](resources/subresources the webhook cares about. The webhook cares about an operation if it matches _any_ Rule. However, in order to prevent ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks from putting the cluster in a state which cannot be recovered from without completely disabling the plugin, ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks are never called on admission requests for ValidatingWebhookConfiguration and MutatingWebhookConfiguration objects.)"},
 
-    # The name of the admission webhook. Name should be fully qualified, e.g., imagepolicy.kubernetes.io, where "imagepolicy" is the name of the webhook, and kubernetes.io is the name of the organization. Required.
-    @[::JSON::Field(key: "name", emit_null: true)]
-    @[::YAML::Field(key: "name", emit_null: true)]
-    property name : String
-
-    # NamespaceSelector decides whether to run the webhook on an object based on whether the namespace for that object matches the selector. If the object itself is a namespace, the matching is performed on object.metadata.labels. If the object is another cluster scoped resource, it never skips the webhook.
-    #
-    # For example, to run the webhook on any objects whose namespace is not associated with "runlevel" of "0" or "1";  you will set the selector as follows: "namespaceSelector": {
-    #   "matchExpressions": [
-    #     {
-    #       "key": "runlevel",
-    #       "operator": "NotIn",
-    #       "values": [
-    #         "0",
-    #         "1"
-    #       ]
-    #     }
-    #   ]
-    # }
-    #
-    # If instead you want to only run the webhook on any objects whose namespace is associated with the "environment" of "prod" or "staging"; you will set the selector as follows: "namespaceSelector": {
-    #   "matchExpressions": [
-    #     {
-    #       "key": "environment",
-    #       "operator": "In",
-    #       "values": [
-    #         "prod",
-    #         "staging"
-    #       ]
-    #     }
-    #   ]
-    # }
-    #
-    # See [https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/ for more examples of label selectors.](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/ for more examples of label selectors.)
-    #
-    # Default to the empty LabelSelector, which matches everything.
-    @[::JSON::Field(key: "namespaceSelector", emit_null: false)]
-    @[::YAML::Field(key: "namespaceSelector", emit_null: false)]
-    property namespace_selector : Apimachinery::Apis::Meta::V1::LabelSelector | Nil
-
-    # Rules describes what operations on what [resources/subresources the webhook cares about. The webhook cares about an operation if it matches _any_ Rule. However, in order to prevent ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks from putting the cluster in a state which cannot be recovered from without completely disabling the plugin, ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks are never called on admission requests for ValidatingWebhookConfiguration and MutatingWebhookConfiguration objects.](resources/subresources the webhook cares about. The webhook cares about an operation if it matches _any_ Rule. However, in order to prevent ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks from putting the cluster in a state which cannot be recovered from without completely disabling the plugin, ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks are never called on admission requests for ValidatingWebhookConfiguration and MutatingWebhookConfiguration objects.)
-    @[::JSON::Field(key: "rules", emit_null: false)]
-    @[::YAML::Field(key: "rules", emit_null: false)]
-    property rules : Array(Api::Admissionregistration::V1beta1::RuleWithOperations) | Nil
-
-    def initialize(*, @client_config : Api::Admissionregistration::V1beta1::WebhookClientConfig, @name : String, @failure_policy : String | Nil = nil, @namespace_selector : Apimachinery::Apis::Meta::V1::LabelSelector | Nil = nil, @rules : Array(Api::Admissionregistration::V1beta1::RuleWithOperations) | Nil = nil)
-    end
-  end
-end
+  ]
+)

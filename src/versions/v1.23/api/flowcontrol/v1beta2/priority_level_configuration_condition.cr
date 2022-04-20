@@ -3,6 +3,4 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Flowcontrol::V1beta2::PriorityLevelConfigurationCondition = Api::Flowcontrol::V1beta1::PriorityLevelConfigurationCondition
-end
+alias K8S::Api::Flowcontrol::V1beta2::PriorityLevelConfigurationCondition = Api::Flowcontrol::V1beta1::PriorityLevelConfigurationCondition

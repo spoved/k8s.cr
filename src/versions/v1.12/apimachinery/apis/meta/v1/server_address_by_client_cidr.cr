@@ -3,29 +3,12 @@
 require "yaml"
 require "json"
 
-module K8S
-  # ServerAddressByClientCIDR helps the client to determine the server address that they should use, depending on the clientCIDR that they match.
-  @[::K8S::Properties(
-    client_cidr: {type: String, nilable: false, key: "clientCIDR", getter: false, setter: false},
-    server_address: {type: String, nilable: false, key: "serverAddress", getter: false, setter: false},
-  )]
-  class Apimachinery::Apis::Meta::V1::ServerAddressByClientCIDR
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+::K8S::Kubernetes::Resource.define_object("ServerAddressByClientCIDR",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
 
-    # The CIDR with which clients can match their IP to figure out the server address that they should use.
-    @[::JSON::Field(key: "clientCIDR", emit_null: true)]
-    @[::YAML::Field(key: "clientCIDR", emit_null: true)]
-    property client_cidr : String
+    {name: "client_cidr", kind: String, key: "clientCIDR", nilable: false, read_only: false, description: "The CIDR with which clients can match their IP to figure out the server address that they should use."},
+    {name: "server_address", kind: String, key: "serverAddress", nilable: false, read_only: false, description: "Address of this server, suitable for a client that matches the above CIDR. This can be a hostname, hostname:port, IP or IP:port."},
 
-    # Address of this server, suitable for a client that matches the above CIDR. This can be a hostname, hostname:port, IP or IP:port.
-    @[::JSON::Field(key: "serverAddress", emit_null: true)]
-    @[::YAML::Field(key: "serverAddress", emit_null: true)]
-    property server_address : String
-
-    def initialize(*, @client_cidr : String, @server_address : String)
-    end
-  end
-end
+  ]
+)

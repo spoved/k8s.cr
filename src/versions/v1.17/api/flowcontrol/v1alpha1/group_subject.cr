@@ -3,23 +3,11 @@
 require "yaml"
 require "json"
 
-module K8S
-  # GroupSubject holds detailed information for group-kind subject.
-  @[::K8S::Properties(
-    name: {type: String, nilable: false, key: "name", getter: false, setter: false},
-  )]
-  class Api::Flowcontrol::V1alpha1::GroupSubject
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+::K8S::Kubernetes::Resource.define_object("GroupSubject",
+  namespace: "::K8S::Api::Flowcontrol::V1alpha1",
+  properties: [
 
-    # name is the user group that matches, or "*" to match all user groups. See [https://github.com/kubernetes/apiserver/blob/master/pkg/authentication/user/user.go for some well-known group names. Required.](https://github.com/kubernetes/apiserver/blob/master/pkg/authentication/user/user.go for some well-known group names. Required.)
-    @[::JSON::Field(key: "name", emit_null: true)]
-    @[::YAML::Field(key: "name", emit_null: true)]
-    property name : String
+    {name: "name", kind: String, key: "name", nilable: false, read_only: false, description: "name is the user group that matches, or \"*\" to match all user groups. See [https://github.com/kubernetes/apiserver/blob/master/pkg/authentication/user/user.go for some well-known group names. Required.](https://github.com/kubernetes/apiserver/blob/master/pkg/authentication/user/user.go for some well-known group names. Required.)"},
 
-    def initialize(*, @name : String)
-    end
-  end
-end
+  ]
+)

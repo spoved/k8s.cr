@@ -3,6 +3,6 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Autoscaling::V2beta2::HorizontalPodAutoscalerBehavior = Api::Autoscaling::V2::HorizontalPodAutoscalerBehavior
-end
+require "./hpa_scaling_rules"
+
+alias K8S::Api::Autoscaling::V2beta2::HorizontalPodAutoscalerBehavior = Api::Autoscaling::V2::HorizontalPodAutoscalerBehavior

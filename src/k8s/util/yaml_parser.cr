@@ -1,7 +1,7 @@
 require "yaml"
 
 # :nodoc:
-class ::K8S::Kubernetes::Resource::YAMLParser < ::YAML::Nodes::Parser
+class ::K8S::Util::YAMLParser < ::YAML::Nodes::Parser
   def new_documents
     [] of Array(::YAML::Nodes::Document)
   end

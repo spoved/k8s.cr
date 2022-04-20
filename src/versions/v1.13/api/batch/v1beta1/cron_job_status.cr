@@ -3,29 +3,14 @@
 require "yaml"
 require "json"
 
-module K8S
-  # CronJobStatus represents the current state of a cron job.
-  @[::K8S::Properties(
-    active: {type: Array(Api::Core::V1::ObjectReference), nilable: true, key: "active", getter: false, setter: false},
-    last_schedule_time: {type: Time, nilable: true, key: "lastScheduleTime", getter: false, setter: false},
-  )]
-  class Api::Batch::V1beta1::CronJobStatus
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+require "../../core/v1/object_reference"
 
-    # A list of pointers to currently running jobs.
-    @[::JSON::Field(key: "active", emit_null: false)]
-    @[::YAML::Field(key: "active", emit_null: false)]
-    property active : Array(Api::Core::V1::ObjectReference) | Nil
+::K8S::Kubernetes::Resource.define_object("CronJobStatus",
+  namespace: "::K8S::Api::Batch::V1beta1",
+  properties: [
 
-    # Information when was the last time the job was successfully scheduled.
-    @[::JSON::Field(key: "lastScheduleTime", emit_null: false, converter: K8S::TimeFormat.new)]
-    @[::YAML::Field(key: "lastScheduleTime", emit_null: false, converter: K8S::TimeFormat.new)]
-    property last_schedule_time : Time | Nil
+    {name: "active", kind: ::Array(::K8S::Api::Core::V1::ObjectReference), key: "active", nilable: true, read_only: false, description: "A list of pointers to currently running jobs."},
+    {name: "last_schedule_time", kind: ::Time, key: "lastScheduleTime", nilable: true, read_only: false, description: "Information when was the last time the job was successfully scheduled."},
 
-    def initialize(*, @active : Array(Api::Core::V1::ObjectReference) | Nil = nil, @last_schedule_time : Time | Nil = nil)
-    end
-  end
-end
+  ]
+)

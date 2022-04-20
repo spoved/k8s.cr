@@ -3,29 +3,12 @@
 require "yaml"
 require "json"
 
-module K8S
-  # Preconditions must be fulfilled before an operation (update, delete, etc.) is carried out.
-  @[::K8S::Properties(
-    resource_version: {type: String, nilable: true, key: "resourceVersion", getter: false, setter: false},
-    uid: {type: String, nilable: true, key: "uid", getter: false, setter: false},
-  )]
-  class Apimachinery::Apis::Meta::V1::Preconditions
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+::K8S::Kubernetes::Resource.define_object("Preconditions",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
 
-    # Specifies the target ResourceVersion
-    @[::JSON::Field(key: "resourceVersion", emit_null: false)]
-    @[::YAML::Field(key: "resourceVersion", emit_null: false)]
-    property resource_version : String | Nil
+    {name: "resource_version", kind: String, key: "resourceVersion", nilable: true, read_only: false, description: "Specifies the target ResourceVersion"},
+    {name: "uid", kind: String, key: "uid", nilable: true, read_only: false, description: "Specifies the target UID."},
 
-    # Specifies the target UID.
-    @[::JSON::Field(key: "uid", emit_null: false)]
-    @[::YAML::Field(key: "uid", emit_null: false)]
-    property uid : String | Nil
-
-    def initialize(*, @resource_version : String | Nil = nil, @uid : String | Nil = nil)
-    end
-  end
-end
+  ]
+)

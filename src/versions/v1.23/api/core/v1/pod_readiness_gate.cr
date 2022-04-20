@@ -3,29 +3,11 @@
 require "yaml"
 require "json"
 
-module K8S
-  # PodReadinessGate contains the reference to a pod condition
-  @[::K8S::Properties(
-    condition_type: {type: String, nilable: false, key: "conditionType", getter: false, setter: false},
-  )]
-  class Api::Core::V1::PodReadinessGate
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+::K8S::Kubernetes::Resource.define_object("PodReadinessGate",
+  namespace: "::K8S::Api::Core::V1",
+  properties: [
 
-    # ConditionType refers to a condition in the pod's condition list with matching type.
-    #
-    # Possible enum values:
-    #  - `"ContainersReady"` indicates whether all containers in the pod are ready.
-    #  - `"Initialized"` means that all init containers in the pod have started successfully.
-    #  - `"PodScheduled"` represents status of the scheduling process for this pod.
-    #  - `"Ready"` means the pod is able to service requests and should be added to the load balancing pools of all matching services.
-    @[::JSON::Field(key: "conditionType", emit_null: true)]
-    @[::YAML::Field(key: "conditionType", emit_null: true)]
-    property condition_type : String
+    {name: "condition_type", kind: String, key: "conditionType", nilable: false, read_only: false, description: "ConditionType refers to a condition in the pod's condition list with matching type.\n\nPossible enum values:\n - `\"ContainersReady\"` indicates whether all containers in the pod are ready.\n - `\"Initialized\"` means that all init containers in the pod have started successfully.\n - `\"PodScheduled\"` represents status of the scheduling process for this pod.\n - `\"Ready\"` means the pod is able to service requests and should be added to the load balancing pools of all matching services."},
 
-    def initialize(*, @condition_type : String)
-    end
-  end
-end
+  ]
+)

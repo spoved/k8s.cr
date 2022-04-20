@@ -3,33 +3,14 @@
 require "yaml"
 require "json"
 
-module K8S
-  # DaemonSetUpdateStrategy is a struct used to control the update strategy for a DaemonSet.
-  @[::K8S::Properties(
-    rolling_update: {type: Api::Apps::V1::RollingUpdateDaemonSet, nilable: true, key: "rollingUpdate", getter: false, setter: false},
-    type: {type: String, nilable: true, key: "type", getter: false, setter: false},
-  )]
-  class Api::Apps::V1::DaemonSetUpdateStrategy
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+require "./rolling_update_daemon_set"
 
-    # Rolling update config params. Present only if type = "RollingUpdate".
-    @[::JSON::Field(key: "rollingUpdate", emit_null: false)]
-    @[::YAML::Field(key: "rollingUpdate", emit_null: false)]
-    property rolling_update : Api::Apps::V1::RollingUpdateDaemonSet | Nil
+::K8S::Kubernetes::Resource.define_object("DaemonSetUpdateStrategy",
+  namespace: "::K8S::Api::Apps::V1",
+  properties: [
 
-    # Type of daemon set update. Can be "RollingUpdate" or "OnDelete". Default is RollingUpdate.
-    #
-    # Possible enum values:
-    #  - `"OnDelete"` Replace the old daemons only when it's killed
-    #  - `"RollingUpdate"` Replace the old daemons by new ones using rolling update i.e replace them on each node one after the other.
-    @[::JSON::Field(key: "type", emit_null: false)]
-    @[::YAML::Field(key: "type", emit_null: false)]
-    property type : String | Nil
+    {name: "rolling_update", kind: ::K8S::Api::Apps::V1::RollingUpdateDaemonSet, key: "rollingUpdate", nilable: true, read_only: false, description: "Rolling update config params. Present only if type = \"RollingUpdate\"."},
+    {name: "type", kind: String, key: "type", nilable: true, read_only: false, description: "Type of daemon set update. Can be \"RollingUpdate\" or \"OnDelete\". Default is RollingUpdate.\n\nPossible enum values:\n - `\"OnDelete\"` Replace the old daemons only when it's killed\n - `\"RollingUpdate\"` Replace the old daemons by new ones using rolling update i.e replace them on each node one after the other."},
 
-    def initialize(*, @rolling_update : Api::Apps::V1::RollingUpdateDaemonSet | Nil = nil, @type : String | Nil = nil)
-    end
-  end
-end
+  ]
+)

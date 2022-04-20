@@ -3,53 +3,19 @@
 require "yaml"
 require "json"
 
-module K8S
-  # SubjectAccessReviewSpec is a description of the access request.  Exactly one of ResourceAuthorizationAttributes and NonResourceAuthorizationAttributes must be set
-  @[::K8S::Properties(
-    extra: {type: Hash(String, Array(String)), nilable: true, key: "extra", getter: false, setter: false},
-    group: {type: Array(String), nilable: true, key: "group", getter: false, setter: false},
-    non_resource_attributes: {type: Api::Authorization::V1beta1::NonResourceAttributes, nilable: true, key: "nonResourceAttributes", getter: false, setter: false},
-    resource_attributes: {type: Api::Authorization::V1beta1::ResourceAttributes, nilable: true, key: "resourceAttributes", getter: false, setter: false},
-    uid: {type: String, nilable: true, key: "uid", getter: false, setter: false},
-    user: {type: String, nilable: true, key: "user", getter: false, setter: false},
-  )]
-  class Api::Authorization::V1beta1::SubjectAccessReviewSpec
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+require "./non_resource_attributes"
+require "./resource_attributes"
 
-    # Extra corresponds to the user.Info.GetExtra() method from the authenticator.  Since that is input to the authorizer it needs a reflection here.
-    @[::JSON::Field(key: "extra", emit_null: false)]
-    @[::YAML::Field(key: "extra", emit_null: false)]
-    property extra : Hash(String, Array(String)) | Nil
+::K8S::Kubernetes::Resource.define_object("SubjectAccessReviewSpec",
+  namespace: "::K8S::Api::Authorization::V1beta1",
+  properties: [
 
-    # Groups is the groups you're testing for.
-    @[::JSON::Field(key: "group", emit_null: false)]
-    @[::YAML::Field(key: "group", emit_null: false)]
-    property group : Array(String) | Nil
+    {name: "extra", kind: ::Hash(String, ::Array(String)), key: "extra", nilable: true, read_only: false, description: "Extra corresponds to the user.Info.GetExtra() method from the authenticator.  Since that is input to the authorizer it needs a reflection here."},
+    {name: "group", kind: ::Array(String), key: "group", nilable: true, read_only: false, description: "Groups is the groups you're testing for."},
+    {name: "non_resource_attributes", kind: ::K8S::Api::Authorization::V1beta1::NonResourceAttributes, key: "nonResourceAttributes", nilable: true, read_only: false, description: "NonResourceAttributes describes information for a non-resource access request"},
+    {name: "resource_attributes", kind: ::K8S::Api::Authorization::V1beta1::ResourceAttributes, key: "resourceAttributes", nilable: true, read_only: false, description: "ResourceAuthorizationAttributes describes information for a resource access request"},
+    {name: "uid", kind: String, key: "uid", nilable: true, read_only: false, description: "UID information about the requesting user."},
+    {name: "user", kind: String, key: "user", nilable: true, read_only: false, description: "User is the user you're testing for. If you specify \"User\" but not \"Group\", then is it interpreted as \"What if User were not a member of any groups"},
 
-    # NonResourceAttributes describes information for a non-resource access request
-    @[::JSON::Field(key: "nonResourceAttributes", emit_null: false)]
-    @[::YAML::Field(key: "nonResourceAttributes", emit_null: false)]
-    property non_resource_attributes : Api::Authorization::V1beta1::NonResourceAttributes | Nil
-
-    # ResourceAuthorizationAttributes describes information for a resource access request
-    @[::JSON::Field(key: "resourceAttributes", emit_null: false)]
-    @[::YAML::Field(key: "resourceAttributes", emit_null: false)]
-    property resource_attributes : Api::Authorization::V1beta1::ResourceAttributes | Nil
-
-    # UID information about the requesting user.
-    @[::JSON::Field(key: "uid", emit_null: false)]
-    @[::YAML::Field(key: "uid", emit_null: false)]
-    property uid : String | Nil
-
-    # User is the user you're testing for. If you specify "User" but not "Group", then is it interpreted as "What if User were not a member of any groups
-    @[::JSON::Field(key: "user", emit_null: false)]
-    @[::YAML::Field(key: "user", emit_null: false)]
-    property user : String | Nil
-
-    def initialize(*, @extra : Hash(String, Array(String)) | Nil = nil, @group : Array(String) | Nil = nil, @non_resource_attributes : Api::Authorization::V1beta1::NonResourceAttributes | Nil = nil, @resource_attributes : Api::Authorization::V1beta1::ResourceAttributes | Nil = nil, @uid : String | Nil = nil, @user : String | Nil = nil)
-    end
-  end
-end
+  ]
+)

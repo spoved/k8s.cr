@@ -3,29 +3,15 @@
 require "yaml"
 require "json"
 
-module K8S
-  # JobTemplateSpec describes the data a Job should have when created from a template
-  @[::K8S::Properties(
-    metadata: {type: Apimachinery::Apis::Meta::V1::ObjectMeta, nilable: true, key: "metadata", getter: false, setter: false},
-    spec: {type: Api::Batch::V1::JobSpec, nilable: true, key: "spec", getter: false, setter: false},
-  )]
-  class Api::Batch::V1beta1::JobTemplateSpec
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+require "../../../apimachinery/apis/meta/v1/object_meta"
+require "../v1/job_spec"
 
-    # Standard object's metadata of the jobs created from this template. More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)
-    @[::JSON::Field(key: "metadata", emit_null: false)]
-    @[::YAML::Field(key: "metadata", emit_null: false)]
-    property metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil
+::K8S::Kubernetes::Resource.define_object("JobTemplateSpec",
+  namespace: "::K8S::Api::Batch::V1beta1",
+  properties: [
 
-    # Specification of the desired behavior of the job. More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status)
-    @[::JSON::Field(key: "spec", emit_null: false)]
-    @[::YAML::Field(key: "spec", emit_null: false)]
-    property spec : Api::Batch::V1::JobSpec | Nil
+    {name: "metadata", kind: ::K8S::Apimachinery::Apis::Meta::V1::ObjectMeta, key: "metadata", nilable: true, read_only: false, description: "Standard object's metadata of the jobs created from this template. More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata)"},
+    {name: "spec", kind: ::K8S::Api::Batch::V1::JobSpec, key: "spec", nilable: true, read_only: false, description: "Specification of the desired behavior of the job. More info: [https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status)"},
 
-    def initialize(*, @metadata : Apimachinery::Apis::Meta::V1::ObjectMeta | Nil = nil, @spec : Api::Batch::V1::JobSpec | Nil = nil)
-    end
-  end
-end
+  ]
+)

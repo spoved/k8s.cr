@@ -3,41 +3,16 @@
 require "yaml"
 require "json"
 
-module K8S
-  # ExternalMetricSource indicates how to scale on a metric not associated with any Kubernetes object (for example length of queue in cloud messaging service, or QPS from loadbalancer running outside of cluster). Exactly one "target" type should be set.
-  @[::K8S::Properties(
-    metric_name: {type: String, nilable: false, key: "metricName", getter: false, setter: false},
-    metric_selector: {type: Apimachinery::Apis::Meta::V1::LabelSelector, nilable: true, key: "metricSelector", getter: false, setter: false},
-    target_average_value: {type: Int32 | String, nilable: true, key: "targetAverageValue", getter: false, setter: false},
-    target_value: {type: Int32 | String, nilable: true, key: "targetValue", getter: false, setter: false},
-  )]
-  class Api::Autoscaling::V2beta1::ExternalMetricSource
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+require "../../../apimachinery/apis/meta/v1/label_selector"
 
-    # metricName is the name of the metric in question.
-    @[::JSON::Field(key: "metricName", emit_null: true)]
-    @[::YAML::Field(key: "metricName", emit_null: true)]
-    property metric_name : String
+::K8S::Kubernetes::Resource.define_object("ExternalMetricSource",
+  namespace: "::K8S::Api::Autoscaling::V2beta1",
+  properties: [
 
-    # metricSelector is used to identify a specific time series within a given metric.
-    @[::JSON::Field(key: "metricSelector", emit_null: false)]
-    @[::YAML::Field(key: "metricSelector", emit_null: false)]
-    property metric_selector : Apimachinery::Apis::Meta::V1::LabelSelector | Nil
+    {name: "metric_name", kind: String, key: "metricName", nilable: false, read_only: false, description: "metricName is the name of the metric in question."},
+    {name: "metric_selector", kind: ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector, key: "metricSelector", nilable: true, read_only: false, description: "metricSelector is used to identify a specific time series within a given metric."},
+    {name: "target_average_value", kind: Union(::Int32 | ::String), key: "targetAverageValue", nilable: true, read_only: false, description: "targetAverageValue is the target per-pod value of global metric (as a quantity). Mutually exclusive with TargetValue."},
+    {name: "target_value", kind: Union(::Int32 | ::String), key: "targetValue", nilable: true, read_only: false, description: "targetValue is the target value of the metric (as a quantity). Mutually exclusive with TargetAverageValue."},
 
-    # targetAverageValue is the target per-pod value of global metric (as a quantity). Mutually exclusive with TargetValue.
-    @[::JSON::Field(key: "targetAverageValue", emit_null: false)]
-    @[::YAML::Field(key: "targetAverageValue", emit_null: false)]
-    property target_average_value : Int32 | String | Nil
-
-    # targetValue is the target value of the metric (as a quantity). Mutually exclusive with TargetAverageValue.
-    @[::JSON::Field(key: "targetValue", emit_null: false)]
-    @[::YAML::Field(key: "targetValue", emit_null: false)]
-    property target_value : Int32 | String | Nil
-
-    def initialize(*, @metric_name : String, @metric_selector : Apimachinery::Apis::Meta::V1::LabelSelector | Nil = nil, @target_average_value : Int32 | String | Nil = nil, @target_value : Int32 | String | Nil = nil)
-    end
-  end
-end
+  ]
+)

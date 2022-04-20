@@ -3,6 +3,7 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Networking::V1::NetworkPolicyEgressRule = Api::Extensions::V1beta1::NetworkPolicyEgressRule
-end
+require "./network_policy_port"
+require "./network_policy_peer"
+
+alias K8S::Api::Networking::V1::NetworkPolicyEgressRule = Api::Extensions::V1beta1::NetworkPolicyEgressRule

@@ -3,6 +3,4 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Policy::V1beta1::AllowedFlexVolume = Api::Extensions::V1beta1::AllowedFlexVolume
-end
+alias K8S::Api::Policy::V1beta1::AllowedFlexVolume = Api::Extensions::V1beta1::AllowedFlexVolume

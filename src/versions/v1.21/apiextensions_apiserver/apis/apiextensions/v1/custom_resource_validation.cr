@@ -3,23 +3,13 @@
 require "yaml"
 require "json"
 
-module K8S
-  # CustomResourceValidation is a list of validation methods for CustomResources.
-  @[::K8S::Properties(
-    open_apiv3_schema: {type: ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps, nilable: true, key: "openAPIV3Schema", getter: false, setter: false},
-  )]
-  class ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceValidation
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+require "./json_schema_props"
 
-    # openAPIV3Schema is the OpenAPI v3 schema to use for validation and pruning.
-    @[::JSON::Field(key: "openAPIV3Schema", emit_null: false)]
-    @[::YAML::Field(key: "openAPIV3Schema", emit_null: false)]
-    property open_apiv3_schema : ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps | Nil
+::K8S::Kubernetes::Resource.define_object("CustomResourceValidation",
+  namespace: "::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1",
+  properties: [
 
-    def initialize(*, @open_apiv3_schema : ApiextensionsApiserver::Apis::Apiextensions::V1::JSONSchemaProps | Nil = nil)
-    end
-  end
-end
+    {name: "open_apiv3_schema", kind: ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::JsonSchemaProps, key: "openAPIV3Schema", nilable: true, read_only: false, description: "openAPIV3Schema is the OpenAPI v3 schema to use for validation and pruning."},
+
+  ]
+)

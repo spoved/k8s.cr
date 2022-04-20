@@ -3,6 +3,4 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Node::V1beta1::Overhead = Api::Node::V1alpha1::Overhead
-end
+alias K8S::Api::Node::V1beta1::Overhead = Api::Node::V1alpha1::Overhead

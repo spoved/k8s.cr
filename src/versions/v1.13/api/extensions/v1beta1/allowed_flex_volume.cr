@@ -3,23 +3,11 @@
 require "yaml"
 require "json"
 
-module K8S
-  # AllowedFlexVolume represents a single Flexvolume that is allowed to be used. Deprecated: use AllowedFlexVolume from policy API Group instead.
-  @[::K8S::Properties(
-    driver: {type: String, nilable: false, key: "driver", getter: false, setter: false},
-  )]
-  class Api::Extensions::V1beta1::AllowedFlexVolume
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+::K8S::Kubernetes::Resource.define_object("AllowedFlexVolume",
+  namespace: "::K8S::Api::Extensions::V1beta1",
+  properties: [
 
-    # driver is the name of the Flexvolume driver.
-    @[::JSON::Field(key: "driver", emit_null: true)]
-    @[::YAML::Field(key: "driver", emit_null: true)]
-    property driver : String
+    {name: "driver", kind: String, key: "driver", nilable: false, read_only: false, description: "driver is the name of the Flexvolume driver."},
 
-    def initialize(*, @driver : String)
-    end
-  end
-end
+  ]
+)

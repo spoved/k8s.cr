@@ -3,6 +3,10 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Autoscaling::V2beta1::MetricSpec = Api::Autoscaling::V2::MetricSpec
-end
+require "./container_resource_metric_source"
+require "./external_metric_source"
+require "./object_metric_source"
+require "./pods_metric_source"
+require "./resource_metric_source"
+
+alias K8S::Api::Autoscaling::V2beta1::MetricSpec = Api::Autoscaling::V2::MetricSpec

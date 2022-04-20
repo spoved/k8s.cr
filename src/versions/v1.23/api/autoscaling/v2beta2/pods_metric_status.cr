@@ -3,6 +3,7 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Autoscaling::V2beta2::PodsMetricStatus = Api::Autoscaling::V2::PodsMetricStatus
-end
+require "./metric_value_status"
+require "./metric_identifier"
+
+alias K8S::Api::Autoscaling::V2beta2::PodsMetricStatus = Api::Autoscaling::V2::PodsMetricStatus

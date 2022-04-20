@@ -3,23 +3,13 @@
 require "yaml"
 require "json"
 
-module K8S
-  # Represents downward API info for projecting into a projected volume. Note that this is identical to a downwardAPI volume source without the default mode.
-  @[::K8S::Properties(
-    items: {type: Array(Api::Core::V1::DownwardAPIVolumeFile), nilable: true, key: "items", getter: false, setter: false},
-  )]
-  class Api::Core::V1::DownwardAPIProjection
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+require "./downward_api_volume_file"
 
-    # Items is a list of DownwardAPIVolume file
-    @[::JSON::Field(key: "items", emit_null: false)]
-    @[::YAML::Field(key: "items", emit_null: false)]
-    property items : Array(Api::Core::V1::DownwardAPIVolumeFile) | Nil
+::K8S::Kubernetes::Resource.define_object("DownwardAPIProjection",
+  namespace: "::K8S::Api::Core::V1",
+  properties: [
 
-    def initialize(*, @items : Array(Api::Core::V1::DownwardAPIVolumeFile) | Nil = nil)
-    end
-  end
-end
+    {name: "items", kind: ::Array(::K8S::Api::Core::V1::DownwardAPIVolumeFile), key: "items", nilable: true, read_only: false, description: "Items is a list of DownwardAPIVolume file"},
+
+  ]
+)

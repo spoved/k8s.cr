@@ -3,6 +3,4 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Apps::V1beta1::RollingUpdateStatefulSetStrategy = Api::Apps::V1::RollingUpdateStatefulSetStrategy
-end
+alias K8S::Api::Apps::V1beta1::RollingUpdateStatefulSetStrategy = Api::Apps::V1::RollingUpdateStatefulSetStrategy

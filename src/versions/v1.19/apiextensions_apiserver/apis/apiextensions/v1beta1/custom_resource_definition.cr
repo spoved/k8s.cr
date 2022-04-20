@@ -3,6 +3,8 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceDefinition = ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinition
-end
+require "../../../../apimachinery/apis/meta/v1/object_meta"
+require "./custom_resource_definition_spec"
+require "./custom_resource_definition_status"
+
+alias K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceDefinition = ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinition

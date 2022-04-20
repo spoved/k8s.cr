@@ -3,6 +3,4 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias ApiextensionsApiserver::Apis::Apiextensions::V1::ServiceReference = Api::Admissionregistration::V1::ServiceReference
-end
+alias K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::ServiceReference = Api::Admissionregistration::V1::ServiceReference

@@ -3,6 +3,7 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Authorization::V1beta1::SelfSubjectAccessReviewSpec = Api::Authorization::V1::SelfSubjectAccessReviewSpec
-end
+require "./non_resource_attributes"
+require "./resource_attributes"
+
+alias K8S::Api::Authorization::V1beta1::SelfSubjectAccessReviewSpec = Api::Authorization::V1::SelfSubjectAccessReviewSpec

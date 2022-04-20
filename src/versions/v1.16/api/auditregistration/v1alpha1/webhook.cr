@@ -3,29 +3,15 @@
 require "yaml"
 require "json"
 
-module K8S
-  # Webhook holds the configuration of the webhook
-  @[::K8S::Properties(
-    client_config: {type: Api::Auditregistration::V1alpha1::WebhookClientConfig, nilable: false, key: "clientConfig", getter: false, setter: false},
-    throttle: {type: Api::Auditregistration::V1alpha1::WebhookThrottleConfig, nilable: true, key: "throttle", getter: false, setter: false},
-  )]
-  class Api::Auditregistration::V1alpha1::Webhook
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+require "./webhook_client_config"
+require "./webhook_throttle_config"
 
-    # ClientConfig holds the connection parameters for the webhook required
-    @[::JSON::Field(key: "clientConfig", emit_null: true)]
-    @[::YAML::Field(key: "clientConfig", emit_null: true)]
-    property client_config : Api::Auditregistration::V1alpha1::WebhookClientConfig
+::K8S::Kubernetes::Resource.define_object("Webhook",
+  namespace: "::K8S::Api::Auditregistration::V1alpha1",
+  properties: [
 
-    # Throttle holds the options for throttling the webhook
-    @[::JSON::Field(key: "throttle", emit_null: false)]
-    @[::YAML::Field(key: "throttle", emit_null: false)]
-    property throttle : Api::Auditregistration::V1alpha1::WebhookThrottleConfig | Nil
+    {name: "client_config", kind: ::K8S::Api::Auditregistration::V1alpha1::WebhookClientConfig, key: "clientConfig", nilable: false, read_only: false, description: "ClientConfig holds the connection parameters for the webhook required"},
+    {name: "throttle", kind: ::K8S::Api::Auditregistration::V1alpha1::WebhookThrottleConfig, key: "throttle", nilable: true, read_only: false, description: "Throttle holds the options for throttling the webhook"},
 
-    def initialize(*, @client_config : Api::Auditregistration::V1alpha1::WebhookClientConfig, @throttle : Api::Auditregistration::V1alpha1::WebhookThrottleConfig | Nil = nil)
-    end
-  end
-end
+  ]
+)

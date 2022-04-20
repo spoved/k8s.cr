@@ -3,41 +3,19 @@
 require "yaml"
 require "json"
 
-module K8S
-  # EnvVarSource represents a source for the value of an EnvVar.
-  @[::K8S::Properties(
-    config_map_key_ref: {type: Api::Core::V1::ConfigMapKeySelector, nilable: true, key: "configMapKeyRef", getter: false, setter: false},
-    field_ref: {type: Api::Core::V1::ObjectFieldSelector, nilable: true, key: "fieldRef", getter: false, setter: false},
-    resource_field_ref: {type: Api::Core::V1::ResourceFieldSelector, nilable: true, key: "resourceFieldRef", getter: false, setter: false},
-    secret_key_ref: {type: Api::Core::V1::SecretKeySelector, nilable: true, key: "secretKeyRef", getter: false, setter: false},
-  )]
-  class Api::Core::V1::EnvVarSource
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+require "./config_map_key_selector"
+require "./object_field_selector"
+require "./resource_field_selector"
+require "./secret_key_selector"
 
-    # Selects a key of a ConfigMap.
-    @[::JSON::Field(key: "configMapKeyRef", emit_null: false)]
-    @[::YAML::Field(key: "configMapKeyRef", emit_null: false)]
-    property config_map_key_ref : Api::Core::V1::ConfigMapKeySelector | Nil
+::K8S::Kubernetes::Resource.define_object("EnvVarSource",
+  namespace: "::K8S::Api::Core::V1",
+  properties: [
 
-    # Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
-    @[::JSON::Field(key: "fieldRef", emit_null: false)]
-    @[::YAML::Field(key: "fieldRef", emit_null: false)]
-    property field_ref : Api::Core::V1::ObjectFieldSelector | Nil
+    {name: "config_map_key_ref", kind: ::K8S::Api::Core::V1::ConfigMapKeySelector, key: "configMapKeyRef", nilable: true, read_only: false, description: "Selects a key of a ConfigMap."},
+    {name: "field_ref", kind: ::K8S::Api::Core::V1::ObjectFieldSelector, key: "fieldRef", nilable: true, read_only: false, description: "Selects a field of the pod: supports metadata.name, metadata.namespace, metadata.labels, metadata.annotations, spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs."},
+    {name: "resource_field_ref", kind: ::K8S::Api::Core::V1::ResourceFieldSelector, key: "resourceFieldRef", nilable: true, read_only: false, description: "Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported."},
+    {name: "secret_key_ref", kind: ::K8S::Api::Core::V1::SecretKeySelector, key: "secretKeyRef", nilable: true, read_only: false, description: "Selects a key of a secret in the pod's namespace"},
 
-    # Selects a resource of the container: only resources limits and requests (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
-    @[::JSON::Field(key: "resourceFieldRef", emit_null: false)]
-    @[::YAML::Field(key: "resourceFieldRef", emit_null: false)]
-    property resource_field_ref : Api::Core::V1::ResourceFieldSelector | Nil
-
-    # Selects a key of a secret in the pod's namespace
-    @[::JSON::Field(key: "secretKeyRef", emit_null: false)]
-    @[::YAML::Field(key: "secretKeyRef", emit_null: false)]
-    property secret_key_ref : Api::Core::V1::SecretKeySelector | Nil
-
-    def initialize(*, @config_map_key_ref : Api::Core::V1::ConfigMapKeySelector | Nil = nil, @field_ref : Api::Core::V1::ObjectFieldSelector | Nil = nil, @resource_field_ref : Api::Core::V1::ResourceFieldSelector | Nil = nil, @secret_key_ref : Api::Core::V1::SecretKeySelector | Nil = nil)
-    end
-  end
-end
+  ]
+)

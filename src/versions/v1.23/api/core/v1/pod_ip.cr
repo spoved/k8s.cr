@@ -3,24 +3,11 @@
 require "yaml"
 require "json"
 
-module K8S
-  # IP address information for entries in the (plural) PodIPs field. Each entry includes:
-  #    IP: An IP address allocated to the pod. Routable at least within the cluster.
-  @[::K8S::Properties(
-    ip: {type: String, nilable: true, key: "ip", getter: false, setter: false},
-  )]
-  class Api::Core::V1::PodIP
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+::K8S::Kubernetes::Resource.define_object("PodIP",
+  namespace: "::K8S::Api::Core::V1",
+  properties: [
 
-    # ip is an IP address (IPv4 or IPv6) assigned to the pod
-    @[::JSON::Field(key: "ip", emit_null: false)]
-    @[::YAML::Field(key: "ip", emit_null: false)]
-    property ip : String | Nil
+    {name: "ip", kind: String, key: "ip", nilable: true, read_only: false, description: "ip is an IP address (IPv4 or IPv6) assigned to the pod"},
 
-    def initialize(*, @ip : String | Nil = nil)
-    end
-  end
-end
+  ]
+)

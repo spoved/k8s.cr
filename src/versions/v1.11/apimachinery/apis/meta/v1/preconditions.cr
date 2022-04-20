@@ -3,23 +3,11 @@
 require "yaml"
 require "json"
 
-module K8S
-  # Preconditions must be fulfilled before an operation (update, delete, etc.) is carried out.
-  @[::K8S::Properties(
-    uid: {type: String, nilable: true, key: "uid", getter: false, setter: false},
-  )]
-  class Apimachinery::Apis::Meta::V1::Preconditions
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+::K8S::Kubernetes::Resource.define_object("Preconditions",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
 
-    # Specifies the target UID.
-    @[::JSON::Field(key: "uid", emit_null: false)]
-    @[::YAML::Field(key: "uid", emit_null: false)]
-    property uid : String | Nil
+    {name: "uid", kind: String, key: "uid", nilable: true, read_only: false, description: "Specifies the target UID."},
 
-    def initialize(*, @uid : String | Nil = nil)
-    end
-  end
-end
+  ]
+)

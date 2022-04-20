@@ -3,65 +3,20 @@
 require "yaml"
 require "json"
 
-module K8S
-  # Represents a Rados Block Device mount that lasts the lifetime of a pod. RBD volumes support ownership management and SELinux relabeling.
-  @[::K8S::Properties(
-    fs_type: {type: String, nilable: true, key: "fsType", getter: false, setter: false},
-    image: {type: String, nilable: false, key: "image", getter: false, setter: false},
-    keyring: {type: String, nilable: true, key: "keyring", getter: false, setter: false},
-    monitors: {type: Array(String), nilable: false, key: "monitors", getter: false, setter: false},
-    pool: {type: String, nilable: true, key: "pool", getter: false, setter: false},
-    read_only: {type: Bool, nilable: true, key: "readOnly", getter: false, setter: false},
-    secret_ref: {type: Api::Core::V1::LocalObjectReference, nilable: true, key: "secretRef", getter: false, setter: false},
-    user: {type: String, nilable: true, key: "user", getter: false, setter: false},
-  )]
-  class Api::Core::V1::RBDVolumeSource
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+require "./local_object_reference"
 
-    # Filesystem type of the volume that you want to mount. Tip: Ensure that the filesystem type is supported by the host operating system. Examples: "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified. More info: [https://kubernetes.io/docs/concepts/storage/volumes#rbd](https://kubernetes.io/docs/concepts/storage/volumes#rbd)
-    @[::JSON::Field(key: "fsType", emit_null: false)]
-    @[::YAML::Field(key: "fsType", emit_null: false)]
-    property fs_type : String | Nil
+::K8S::Kubernetes::Resource.define_object("RBDVolumeSource",
+  namespace: "::K8S::Api::Core::V1",
+  properties: [
 
-    # The rados image name. More info: [https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it](https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it)
-    @[::JSON::Field(key: "image", emit_null: true)]
-    @[::YAML::Field(key: "image", emit_null: true)]
-    property image : String
+    {name: "fs_type", kind: String, key: "fsType", nilable: true, read_only: false, description: "Filesystem type of the volume that you want to mount. Tip: Ensure that the filesystem type is supported by the host operating system. Examples: \"ext4\", \"xfs\", \"ntfs\". Implicitly inferred to be \"ext4\" if unspecified. More info: [https://kubernetes.io/docs/concepts/storage/volumes#rbd](https://kubernetes.io/docs/concepts/storage/volumes#rbd)"},
+    {name: "image", kind: String, key: "image", nilable: false, read_only: false, description: "The rados image name. More info: [https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it](https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it)"},
+    {name: "keyring", kind: String, key: "keyring", nilable: true, read_only: false, description: "Keyring is the path to key ring for RBDUser. Default is [/etc/ceph/keyring. More info: https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it](/etc/ceph/keyring. More info: https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it)"},
+    {name: "monitors", kind: ::Array(String), key: "monitors", nilable: false, read_only: false, description: "A collection of Ceph monitors. More info: [https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it](https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it)"},
+    {name: "pool", kind: String, key: "pool", nilable: true, read_only: false, description: "The rados pool name. Default is rbd. More info: [https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it](https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it)"},
+    {name: "read_only", kind: ::Bool, key: "readOnly", nilable: true, read_only: false, description: "ReadOnly here will force the ReadOnly setting in VolumeMounts. Defaults to false. More info: [https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it](https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it)"},
+    {name: "secret_ref", kind: ::K8S::Api::Core::V1::LocalObjectReference, key: "secretRef", nilable: true, read_only: false, description: "SecretRef is name of the authentication secret for RBDUser. If provided overrides keyring. Default is nil. More info: [https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it](https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it)"},
+    {name: "user", kind: String, key: "user", nilable: true, read_only: false, description: "The rados user name. Default is admin. More info: [https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it](https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it)"},
 
-    # Keyring is the path to key ring for RBDUser. Default is [/etc/ceph/keyring. More info: https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it](/etc/ceph/keyring. More info: https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it)
-    @[::JSON::Field(key: "keyring", emit_null: false)]
-    @[::YAML::Field(key: "keyring", emit_null: false)]
-    property keyring : String | Nil
-
-    # A collection of Ceph monitors. More info: [https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it](https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it)
-    @[::JSON::Field(key: "monitors", emit_null: true)]
-    @[::YAML::Field(key: "monitors", emit_null: true)]
-    property monitors : Array(String)
-
-    # The rados pool name. Default is rbd. More info: [https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it](https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it)
-    @[::JSON::Field(key: "pool", emit_null: false)]
-    @[::YAML::Field(key: "pool", emit_null: false)]
-    property pool : String | Nil
-
-    # ReadOnly here will force the ReadOnly setting in VolumeMounts. Defaults to false. More info: [https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it](https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it)
-    @[::JSON::Field(key: "readOnly", emit_null: false)]
-    @[::YAML::Field(key: "readOnly", emit_null: false)]
-    property read_only : Bool | Nil
-
-    # SecretRef is name of the authentication secret for RBDUser. If provided overrides keyring. Default is nil. More info: [https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it](https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it)
-    @[::JSON::Field(key: "secretRef", emit_null: false)]
-    @[::YAML::Field(key: "secretRef", emit_null: false)]
-    property secret_ref : Api::Core::V1::LocalObjectReference | Nil
-
-    # The rados user name. Default is admin. More info: [https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it](https://examples.k8s.io/volumes/rbd/README.md#how-to-use-it)
-    @[::JSON::Field(key: "user", emit_null: false)]
-    @[::YAML::Field(key: "user", emit_null: false)]
-    property user : String | Nil
-
-    def initialize(*, @image : String, @monitors : Array(String), @fs_type : String | Nil = nil, @keyring : String | Nil = nil, @pool : String | Nil = nil, @read_only : Bool | Nil = nil, @secret_ref : Api::Core::V1::LocalObjectReference | Nil = nil, @user : String | Nil = nil)
-    end
-  end
-end
+  ]
+)

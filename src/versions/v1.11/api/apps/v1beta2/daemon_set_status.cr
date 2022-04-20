@@ -3,6 +3,6 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Apps::V1beta2::DaemonSetStatus = Api::Apps::V1::DaemonSetStatus
-end
+require "./daemon_set_condition"
+
+alias K8S::Api::Apps::V1beta2::DaemonSetStatus = Api::Apps::V1::DaemonSetStatus

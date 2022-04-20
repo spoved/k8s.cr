@@ -3,53 +3,16 @@
 require "yaml"
 require "json"
 
-module K8S
-  # VolumeMount describes a mounting of a Volume within a container.
-  @[::K8S::Properties(
-    mount_path: {type: String, nilable: false, key: "mountPath", getter: false, setter: false},
-    mount_propagation: {type: String, nilable: true, key: "mountPropagation", getter: false, setter: false},
-    name: {type: String, nilable: false, key: "name", getter: false, setter: false},
-    read_only: {type: Bool, nilable: true, key: "readOnly", getter: false, setter: false},
-    sub_path: {type: String, nilable: true, key: "subPath", getter: false, setter: false},
-    sub_path_expr: {type: String, nilable: true, key: "subPathExpr", getter: false, setter: false},
-  )]
-  class Api::Core::V1::VolumeMount
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+::K8S::Kubernetes::Resource.define_object("VolumeMount",
+  namespace: "::K8S::Api::Core::V1",
+  properties: [
 
-    # Path within the container at which the volume should be mounted.  Must not contain ':'.
-    @[::JSON::Field(key: "mountPath", emit_null: true)]
-    @[::YAML::Field(key: "mountPath", emit_null: true)]
-    property mount_path : String
+    {name: "mount_path", kind: String, key: "mountPath", nilable: false, read_only: false, description: "Path within the container at which the volume should be mounted.  Must not contain ':'."},
+    {name: "mount_propagation", kind: String, key: "mountPropagation", nilable: true, read_only: false, description: "mountPropagation determines how mounts are propagated from the host to container and the other way around. When not set, MountPropagationNone is used. This field is beta in 1.10."},
+    {name: "name", kind: String, key: "name", nilable: false, read_only: false, description: "This must match the Name of a Volume."},
+    {name: "read_only", kind: ::Bool, key: "readOnly", nilable: true, read_only: false, description: "Mounted read-only if true, read-write otherwise (false or unspecified). Defaults to false."},
+    {name: "sub_path", kind: String, key: "subPath", nilable: true, read_only: false, description: "Path within the volume from which the container's volume should be mounted. Defaults to \"\" (volume's root)."},
+    {name: "sub_path_expr", kind: String, key: "subPathExpr", nilable: true, read_only: false, description: "Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to \"\" (volume's root). SubPathExpr and SubPath are mutually exclusive."},
 
-    # mountPropagation determines how mounts are propagated from the host to container and the other way around. When not set, MountPropagationNone is used. This field is beta in 1.10.
-    @[::JSON::Field(key: "mountPropagation", emit_null: false)]
-    @[::YAML::Field(key: "mountPropagation", emit_null: false)]
-    property mount_propagation : String | Nil
-
-    # This must match the Name of a Volume.
-    @[::JSON::Field(key: "name", emit_null: true)]
-    @[::YAML::Field(key: "name", emit_null: true)]
-    property name : String
-
-    # Mounted read-only if true, read-write otherwise (false or unspecified). Defaults to false.
-    @[::JSON::Field(key: "readOnly", emit_null: false)]
-    @[::YAML::Field(key: "readOnly", emit_null: false)]
-    property read_only : Bool | Nil
-
-    # Path within the volume from which the container's volume should be mounted. Defaults to "" (volume's root).
-    @[::JSON::Field(key: "subPath", emit_null: false)]
-    @[::YAML::Field(key: "subPath", emit_null: false)]
-    property sub_path : String | Nil
-
-    # Expanded path within the volume from which the container's volume should be mounted. Behaves similarly to SubPath but environment variable references $(VAR_NAME) are expanded using the container's environment. Defaults to "" (volume's root). SubPathExpr and SubPath are mutually exclusive.
-    @[::JSON::Field(key: "subPathExpr", emit_null: false)]
-    @[::YAML::Field(key: "subPathExpr", emit_null: false)]
-    property sub_path_expr : String | Nil
-
-    def initialize(*, @mount_path : String, @name : String, @mount_propagation : String | Nil = nil, @read_only : Bool | Nil = nil, @sub_path : String | Nil = nil, @sub_path_expr : String | Nil = nil)
-    end
-  end
-end
+  ]
+)

@@ -3,35 +3,13 @@
 require "yaml"
 require "json"
 
-module K8S
-  # HPAScalingPolicy is a single policy which must hold true for a specified past interval.
-  @[::K8S::Properties(
-    period_seconds: {type: Int32, nilable: false, key: "periodSeconds", getter: false, setter: false},
-    type: {type: String, nilable: false, key: "type", getter: false, setter: false},
-    value: {type: Int32, nilable: false, key: "value", getter: false, setter: false},
-  )]
-  class Api::Autoscaling::V2::HPAScalingPolicy
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+::K8S::Kubernetes::Resource.define_object("HPAScalingPolicy",
+  namespace: "::K8S::Api::Autoscaling::V2",
+  properties: [
 
-    # PeriodSeconds specifies the window of time for which the policy should hold true. PeriodSeconds must be greater than zero and less than or equal to 1800 (30 min).
-    @[::JSON::Field(key: "periodSeconds", emit_null: true)]
-    @[::YAML::Field(key: "periodSeconds", emit_null: true)]
-    property period_seconds : Int32
+    {name: "period_seconds", kind: Int32, key: "periodSeconds", nilable: false, read_only: false, description: "PeriodSeconds specifies the window of time for which the policy should hold true. PeriodSeconds must be greater than zero and less than or equal to 1800 (30 min)."},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: "Type is used to specify the scaling policy."},
+    {name: "value", kind: Int32, key: "value", nilable: false, read_only: false, description: "Value contains the amount of change which is permitted by the policy. It must be greater than zero"},
 
-    # Type is used to specify the scaling policy.
-    @[::JSON::Field(key: "type", emit_null: true)]
-    @[::YAML::Field(key: "type", emit_null: true)]
-    property type : String
-
-    # Value contains the amount of change which is permitted by the policy. It must be greater than zero
-    @[::JSON::Field(key: "value", emit_null: true)]
-    @[::YAML::Field(key: "value", emit_null: true)]
-    property value : Int32
-
-    def initialize(*, @period_seconds : Int32, @type : String, @value : Int32)
-    end
-  end
-end
+  ]
+)

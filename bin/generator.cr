@@ -2,10 +2,12 @@ require "./swagger"
 require "./helper"
 
 class Generator
-  ROOT_NAME    = "K8S"
-  VERSIONS_DIR = "src/versions"
-  SCHEMAS_DIR  = "tmp/schemas"
-  DOCS_DIR     = "docs"
+  URL_REGEX     = /(?<url>((http[s]?):\/)?\/?([^:\/\s]+)((\/\w+)*\/)([\w\-\.]+[^#?\s]+)(.*)?(#[\w\-]+)?)/
+  ROOT_NAME     = "K8S"
+  VERSIONS_DIR  = "src/versions"
+  SCHEMAS_DIR   = "tmp/schemas"
+  DOCS_DIR      = "docs"
+  RESOURCE_TYPE = "struct"
 
   getter filename : String
   getter definitions : Hash(String, String)
@@ -13,6 +15,11 @@ class Generator
   getter base_dir : String
   getter schema : Swagger
   getter only_groups : Array(String)? = nil
+  @writter : Generator::Writer? = nil
+
+  def writter
+    @writter ||= Generator::Writer.new(self)
+  end
 
   def self.generate(*args)
     new(*args).tap(&.generate)
@@ -37,7 +44,7 @@ class Generator
 
     @definitions = @schema.definitions.each_with_object({} of String => String) do |(name, definition), memo|
       next if definition._ref
-      parts = name.lchop("io.k8s.").sub(".pkg.", ".").lchop("io.").split(".").map(&.gsub('-', '_').camelcase)
+      parts = name.lchop("io.k8s.").sub(".pkg.", ".").lchop("io.").split(".").map(&.gsub('-', '_').camelcase.gsub("JSON", "Json"))
       # Remove the first part if it's 2 chars long. i.e "io", "us"
       parts.shift if parts[0].size == 2
 
@@ -56,10 +63,10 @@ class Generator
   end
 
   DEFAULT_DEFINITIONS = {
-    "io.k8s.apimachinery.pkg.util.intstr.IntOrString" => "Int32 | String",
-    "io.k8s.apimachinery.pkg.api.resource.Quantity"   => "Int32 | String",
-    "io.k8s.apimachinery.pkg.apis.meta.v1.Time"       => "Time",
-    "io.k8s.apimachinery.pkg.apis.meta.v1.MicroTime"  => "Time",
+    "io.k8s.apimachinery.pkg.util.intstr.IntOrString" => "::Int32 | ::String",
+    "io.k8s.apimachinery.pkg.api.resource.Quantity"   => "::Int32 | ::String",
+    "io.k8s.apimachinery.pkg.apis.meta.v1.Time"       => "::Time",
+    "io.k8s.apimachinery.pkg.apis.meta.v1.MicroTime"  => "::Time",
   }
 
   # Add any definitions that are missing
@@ -71,18 +78,19 @@ class Generator
 
   def generate
     api_map = @definitions.reject do |_, klass|
-      (["Int32", "Time", "String"] & klass.split("|").map(&.strip)).first?
+      (["::Int32", "::Time", "::String"] & klass.split("|").map(&.strip)).first?
     end
     find_aliases(api_map)
     definitions = api_map.map do |key, _|
       Definition.new(self, key)
     end
+    self.writter.definitions = definitions
 
     FileUtils.mkdir_p(base_dir)
     definitions.each do |definition|
       # if only_groups is defined, only generate the groups specified
       if only_groups.nil? || !(only_groups.not_nil!.find { |group| definition.name =~ /#{group}/ }.nil?)
-        definition.generate
+        self.writter.write(definition)
       end
     end
 
@@ -101,9 +109,7 @@ class Generator
     puts "Writing: #{filename}"
     File.open(filename, "w+") do |file|
       file.puts "# THIS FILE WAS AUTO GENERATED FROM THE K8S SWAGGER SPEC", "",
-        %<require "../k8s/*">, "",
-        "annotation ::#{base_class.lchop("::")}::GroupVersionKind; end",
-        "annotation ::#{base_class.lchop("::")}::Action; end", ""
+        %<require "../k8s/*">, ""
 
       file.puts "require \"./#{version}/kubernetes\""
       definitions.map(&.filename).each { |r| file.puts "require \"#{r.sub(base_dir, "./#{version}")}\"" }
@@ -121,8 +127,7 @@ class Generator
         " VERSION_MINOR = #{version.lchop("v").split(".").first}",
         " VERSION_MAJOR = #{version.lchop("v").split(".").last}",
         ""
-      file.puts "abstract class Resource"
-      file.puts "  include JSON::Serializable", ""
+      file.puts "abstract #{RESOURCE_TYPE} Resource"
       write_mappings(file, definitions)
       file.puts "end", "", "end"
     end
@@ -139,12 +144,27 @@ class Generator
       }.uniq!
       .each { |r| file.puts %<    {"#{r[0]}","#{r[1]}",K8S::#{r[2]}},> }
     file.puts %< ]>, ""
-    file.puts "k8s_json_discriminator(MAPPINGS)",
-      "k8s_yaml_discriminator(MAPPINGS)", ""
+    # file.puts "k8s_json_discriminator(MAPPINGS)",
+    #   "k8s_yaml_discriminator(MAPPINGS)", ""
   end
 
   private def version
     @schema.info.version.downcase.split('.').tap(&.pop).join('.')
+  end
+
+  def definition_ref(ref : String?)
+    return unless ref
+    _, kind, name = ref.split("/")
+    case kind
+    when "definitions"
+      if definitions[name] =~ /^::/
+        definitions[name]
+      else
+        "::#{base_class}::#{definitions[name]}"
+      end
+    else
+      # Do nothing
+    end
   end
 end
 

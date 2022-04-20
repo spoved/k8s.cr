@@ -3,47 +3,21 @@
 require "yaml"
 require "json"
 
-module K8S
-  # PodPresetSpec is a description of a pod preset.
-  @[::K8S::Properties(
-    env: {type: Array(Api::Core::V1::EnvVar), nilable: true, key: "env", getter: false, setter: false},
-    env_from: {type: Array(Api::Core::V1::EnvFromSource), nilable: true, key: "envFrom", getter: false, setter: false},
-    selector: {type: Apimachinery::Apis::Meta::V1::LabelSelector, nilable: true, key: "selector", getter: false, setter: false},
-    volume_mounts: {type: Array(Api::Core::V1::VolumeMount), nilable: true, key: "volumeMounts", getter: false, setter: false},
-    volumes: {type: Array(Api::Core::V1::Volume), nilable: true, key: "volumes", getter: false, setter: false},
-  )]
-  class Api::Settings::V1alpha1::PodPresetSpec
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+require "../../core/v1/env_var"
+require "../../core/v1/env_from_source"
+require "../../../apimachinery/apis/meta/v1/label_selector"
+require "../../core/v1/volume_mount"
+require "../../core/v1/volume"
 
-    # Env defines the collection of EnvVar to inject into containers.
-    @[::JSON::Field(key: "env", emit_null: false)]
-    @[::YAML::Field(key: "env", emit_null: false)]
-    property env : Array(Api::Core::V1::EnvVar) | Nil
+::K8S::Kubernetes::Resource.define_object("PodPresetSpec",
+  namespace: "::K8S::Api::Settings::V1alpha1",
+  properties: [
 
-    # EnvFrom defines the collection of EnvFromSource to inject into containers.
-    @[::JSON::Field(key: "envFrom", emit_null: false)]
-    @[::YAML::Field(key: "envFrom", emit_null: false)]
-    property env_from : Array(Api::Core::V1::EnvFromSource) | Nil
+    {name: "env", kind: ::Array(::K8S::Api::Core::V1::EnvVar), key: "env", nilable: true, read_only: false, description: "Env defines the collection of EnvVar to inject into containers."},
+    {name: "env_from", kind: ::Array(::K8S::Api::Core::V1::EnvFromSource), key: "envFrom", nilable: true, read_only: false, description: "EnvFrom defines the collection of EnvFromSource to inject into containers."},
+    {name: "selector", kind: ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector, key: "selector", nilable: true, read_only: false, description: "Selector is a label query over a set of resources, in this case pods. Required."},
+    {name: "volume_mounts", kind: ::Array(::K8S::Api::Core::V1::VolumeMount), key: "volumeMounts", nilable: true, read_only: false, description: "VolumeMounts defines the collection of VolumeMount to inject into containers."},
+    {name: "volumes", kind: ::Array(::K8S::Api::Core::V1::Volume), key: "volumes", nilable: true, read_only: false, description: "Volumes defines the collection of Volume to inject into the pod."},
 
-    # Selector is a label query over a set of resources, in this case pods. Required.
-    @[::JSON::Field(key: "selector", emit_null: false)]
-    @[::YAML::Field(key: "selector", emit_null: false)]
-    property selector : Apimachinery::Apis::Meta::V1::LabelSelector | Nil
-
-    # VolumeMounts defines the collection of VolumeMount to inject into containers.
-    @[::JSON::Field(key: "volumeMounts", emit_null: false)]
-    @[::YAML::Field(key: "volumeMounts", emit_null: false)]
-    property volume_mounts : Array(Api::Core::V1::VolumeMount) | Nil
-
-    # Volumes defines the collection of Volume to inject into the pod.
-    @[::JSON::Field(key: "volumes", emit_null: false)]
-    @[::YAML::Field(key: "volumes", emit_null: false)]
-    property volumes : Array(Api::Core::V1::Volume) | Nil
-
-    def initialize(*, @env : Array(Api::Core::V1::EnvVar) | Nil = nil, @env_from : Array(Api::Core::V1::EnvFromSource) | Nil = nil, @selector : Apimachinery::Apis::Meta::V1::LabelSelector | Nil = nil, @volume_mounts : Array(Api::Core::V1::VolumeMount) | Nil = nil, @volumes : Array(Api::Core::V1::Volume) | Nil = nil)
-    end
-  end
-end
+  ]
+)

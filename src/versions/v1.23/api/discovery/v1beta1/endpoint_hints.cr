@@ -3,6 +3,6 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Discovery::V1beta1::EndpointHints = Api::Discovery::V1::EndpointHints
-end
+require "./for_zone"
+
+alias K8S::Api::Discovery::V1beta1::EndpointHints = Api::Discovery::V1::EndpointHints

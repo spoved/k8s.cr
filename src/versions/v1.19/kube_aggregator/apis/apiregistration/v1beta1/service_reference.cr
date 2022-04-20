@@ -3,6 +3,4 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias KubeAggregator::Apis::Apiregistration::V1beta1::ServiceReference = KubeAggregator::Apis::Apiregistration::V1::ServiceReference
-end
+alias K8S::KubeAggregator::Apis::Apiregistration::V1beta1::ServiceReference = KubeAggregator::Apis::Apiregistration::V1::ServiceReference

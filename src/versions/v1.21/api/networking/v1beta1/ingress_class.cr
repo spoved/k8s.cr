@@ -3,6 +3,7 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Networking::V1beta1::IngressClass = Api::Networking::V1::IngressClass
-end
+require "../../../apimachinery/apis/meta/v1/object_meta"
+require "./ingress_class_spec"
+
+alias K8S::Api::Networking::V1beta1::IngressClass = Api::Networking::V1::IngressClass

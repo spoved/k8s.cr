@@ -3,6 +3,7 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Policy::V1beta1::PodSecurityPolicy = Api::Extensions::V1beta1::PodSecurityPolicy
-end
+require "../../../apimachinery/apis/meta/v1/object_meta"
+require "./pod_security_policy_spec"
+
+alias K8S::Api::Policy::V1beta1::PodSecurityPolicy = Api::Extensions::V1beta1::PodSecurityPolicy

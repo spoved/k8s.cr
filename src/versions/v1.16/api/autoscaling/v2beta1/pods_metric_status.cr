@@ -3,35 +3,15 @@
 require "yaml"
 require "json"
 
-module K8S
-  # PodsMetricStatus indicates the current value of a metric describing each pod in the current scale target (for example, transactions-processed-per-second).
-  @[::K8S::Properties(
-    current_average_value: {type: Int32 | String, nilable: false, key: "currentAverageValue", getter: false, setter: false},
-    metric_name: {type: String, nilable: false, key: "metricName", getter: false, setter: false},
-    selector: {type: Apimachinery::Apis::Meta::V1::LabelSelector, nilable: true, key: "selector", getter: false, setter: false},
-  )]
-  class Api::Autoscaling::V2beta1::PodsMetricStatus
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+require "../../../apimachinery/apis/meta/v1/label_selector"
 
-    # currentAverageValue is the current value of the average of the metric across all relevant pods (as a quantity)
-    @[::JSON::Field(key: "currentAverageValue", emit_null: true)]
-    @[::YAML::Field(key: "currentAverageValue", emit_null: true)]
-    property current_average_value : Int32 | String
+::K8S::Kubernetes::Resource.define_object("PodsMetricStatus",
+  namespace: "::K8S::Api::Autoscaling::V2beta1",
+  properties: [
 
-    # metricName is the name of the metric in question
-    @[::JSON::Field(key: "metricName", emit_null: true)]
-    @[::YAML::Field(key: "metricName", emit_null: true)]
-    property metric_name : String
+    {name: "current_average_value", kind: Union(::Int32 | ::String), key: "currentAverageValue", nilable: false, read_only: false, description: "currentAverageValue is the current value of the average of the metric across all relevant pods (as a quantity)"},
+    {name: "metric_name", kind: String, key: "metricName", nilable: false, read_only: false, description: "metricName is the name of the metric in question"},
+    {name: "selector", kind: ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector, key: "selector", nilable: true, read_only: false, description: "selector is the string-encoded form of a standard kubernetes label selector for the given metric When set in the PodsMetricSource, it is passed as an additional parameter to the metrics server for more specific metrics scoping. When unset, just the metricName will be used to gather metrics."},
 
-    # selector is the string-encoded form of a standard kubernetes label selector for the given metric When set in the PodsMetricSource, it is passed as an additional parameter to the metrics server for more specific metrics scoping. When unset, just the metricName will be used to gather metrics.
-    @[::JSON::Field(key: "selector", emit_null: false)]
-    @[::YAML::Field(key: "selector", emit_null: false)]
-    property selector : Apimachinery::Apis::Meta::V1::LabelSelector | Nil
-
-    def initialize(*, @current_average_value : Int32 | String, @metric_name : String, @selector : Apimachinery::Apis::Meta::V1::LabelSelector | Nil = nil)
-    end
-  end
-end
+  ]
+)

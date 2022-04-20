@@ -74,4 +74,31 @@ class Generator
     end
     nil
   end
+
+  # Will return the alias if the api is an alias, otherwise nil
+  def default_allias?(class_name)
+    case class_name
+    when "Api::Core::V1::List"
+      # TODO: Properly handle List alias
+      class_name
+    when "ApiextensionsApiserver::Apis::Apiextensions::V1::JsonSchemaPropsOrArray"
+      %<::#{base_class}::ApiextensionsApiserver::Apis::Apiextensions::V1::JsonSchemaProps | Array(::#{base_class}::ApiextensionsApiserver::Apis::Apiextensions::V1::JsonSchemaProps)>
+    when "ApiextensionsApiserver::Apis::Apiextensions::V1::JsonSchemaPropsOrBool"
+      %<::#{base_class}::ApiextensionsApiserver::Apis::Apiextensions::V1::JsonSchemaProps | Bool>
+    when "ApiextensionsApiserver::Apis::Apiextensions::V1::JsonSchemaPropsOrStringArray"
+      %<::#{base_class}::ApiextensionsApiserver::Apis::Apiextensions::V1::JsonSchemaProps | Array(String)>
+    when "ApiextensionsApiserver::Apis::Apiextensions::V1::Json"
+      %<::JSON::Any::Type>
+    when "ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JsonSchemaPropsOrArray"
+      %<::#{base_class}::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JsonSchemaProps | Array(::#{base_class}::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JsonSchemaProps)>
+    when "ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JsonSchemaPropsOrBool"
+      %<::#{base_class}::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JsonSchemaProps | Bool>
+    when "ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JsonSchemaPropsOrStringArray"
+      %<::#{base_class}::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::JsonSchemaProps | Array(String)>
+    when "ApiextensionsApiserver::Apis::Apiextensions::V1beta1::Json"
+      %<::JSON::Any::Type>
+    else
+      nil
+    end
+  end
 end

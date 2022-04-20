@@ -3,23 +3,11 @@
 require "yaml"
 require "json"
 
-module K8S
-  # AllowedCSIDriver represents a single inline CSI Driver that is allowed to be used.
-  @[::K8S::Properties(
-    name: {type: String, nilable: false, key: "name", getter: false, setter: false},
-  )]
-  class Api::Extensions::V1beta1::AllowedCSIDriver
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+::K8S::Kubernetes::Resource.define_object("AllowedCSIDriver",
+  namespace: "::K8S::Api::Extensions::V1beta1",
+  properties: [
 
-    # Name is the registered name of the CSI driver
-    @[::JSON::Field(key: "name", emit_null: true)]
-    @[::YAML::Field(key: "name", emit_null: true)]
-    property name : String
+    {name: "name", kind: String, key: "name", nilable: false, read_only: false, description: "Name is the registered name of the CSI driver"},
 
-    def initialize(*, @name : String)
-    end
-  end
-end
+  ]
+)

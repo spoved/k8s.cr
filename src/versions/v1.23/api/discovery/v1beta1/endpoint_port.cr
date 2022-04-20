@@ -3,6 +3,4 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Discovery::V1beta1::EndpointPort = Api::Discovery::V1::EndpointPort
-end
+alias K8S::Api::Discovery::V1beta1::EndpointPort = Api::Discovery::V1::EndpointPort

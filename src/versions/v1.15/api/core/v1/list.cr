@@ -3,5 +3,4 @@
 require "yaml"
 require "json"
 
-module K8S
-end
+require "../../../apimachinery/apis/meta/v1/list_meta"

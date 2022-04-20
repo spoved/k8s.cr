@@ -3,6 +3,4 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Policy::V1beta1::RuntimeClassStrategyOptions = Api::Extensions::V1beta1::RuntimeClassStrategyOptions
-end
+alias K8S::Api::Policy::V1beta1::RuntimeClassStrategyOptions = Api::Extensions::V1beta1::RuntimeClassStrategyOptions

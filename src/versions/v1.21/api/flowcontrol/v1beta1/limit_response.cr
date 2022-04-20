@@ -3,29 +3,14 @@
 require "yaml"
 require "json"
 
-module K8S
-  # LimitResponse defines how to handle requests that can not be executed right now.
-  @[::K8S::Properties(
-    queuing: {type: Api::Flowcontrol::V1beta1::QueuingConfiguration, nilable: true, key: "queuing", getter: false, setter: false},
-    type: {type: String, nilable: false, key: "type", getter: false, setter: false},
-  )]
-  class Api::Flowcontrol::V1beta1::LimitResponse
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+require "./queuing_configuration"
 
-    # `queuing` holds the configuration parameters for queuing. This field may be non-empty only if `type` is `"Queue"`.
-    @[::JSON::Field(key: "queuing", emit_null: false)]
-    @[::YAML::Field(key: "queuing", emit_null: false)]
-    property queuing : Api::Flowcontrol::V1beta1::QueuingConfiguration | Nil
+::K8S::Kubernetes::Resource.define_object("LimitResponse",
+  namespace: "::K8S::Api::Flowcontrol::V1beta1",
+  properties: [
 
-    # `type` is "Queue" or "Reject". "Queue" means that requests that can not be executed upon arrival are held in a queue until they can be executed or a queuing limit is reached. "Reject" means that requests that can not be executed upon arrival are rejected. Required.
-    @[::JSON::Field(key: "type", emit_null: true)]
-    @[::YAML::Field(key: "type", emit_null: true)]
-    property type : String
+    {name: "queuing", kind: ::K8S::Api::Flowcontrol::V1beta1::QueuingConfiguration, key: "queuing", nilable: true, read_only: false, description: "`queuing` holds the configuration parameters for queuing. This field may be non-empty only if `type` is `\"Queue\"`."},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: "`type` is \"Queue\" or \"Reject\". \"Queue\" means that requests that can not be executed upon arrival are held in a queue until they can be executed or a queuing limit is reached. \"Reject\" means that requests that can not be executed upon arrival are rejected. Required."},
 
-    def initialize(*, @type : String, @queuing : Api::Flowcontrol::V1beta1::QueuingConfiguration | Nil = nil)
-    end
-  end
-end
+  ]
+)

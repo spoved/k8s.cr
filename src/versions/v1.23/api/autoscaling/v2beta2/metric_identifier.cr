@@ -3,6 +3,6 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Autoscaling::V2beta2::MetricIdentifier = Api::Autoscaling::V2::MetricIdentifier
-end
+require "../../../apimachinery/apis/meta/v1/label_selector"
+
+alias K8S::Api::Autoscaling::V2beta2::MetricIdentifier = Api::Autoscaling::V2::MetricIdentifier

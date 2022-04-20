@@ -3,6 +3,7 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Coordination::V1beta1::Lease = Api::Coordination::V1::Lease
-end
+require "../../../apimachinery/apis/meta/v1/object_meta"
+require "./lease_spec"
+
+alias K8S::Api::Coordination::V1beta1::Lease = Api::Coordination::V1::Lease

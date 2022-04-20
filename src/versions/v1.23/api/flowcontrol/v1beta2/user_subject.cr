@@ -3,6 +3,4 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Flowcontrol::V1beta2::UserSubject = Api::Flowcontrol::V1beta1::UserSubject
-end
+alias K8S::Api::Flowcontrol::V1beta2::UserSubject = Api::Flowcontrol::V1beta1::UserSubject

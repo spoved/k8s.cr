@@ -3,6 +3,6 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Networking::V1beta1::IngressStatus = Api::Extensions::V1beta1::IngressStatus
-end
+require "../../core/v1/load_balancer_status"
+
+alias K8S::Api::Networking::V1beta1::IngressStatus = Api::Extensions::V1beta1::IngressStatus

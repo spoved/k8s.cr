@@ -3,6 +3,6 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Policy::V1beta1::RunAsUserStrategyOptions = Api::Extensions::V1beta1::RunAsUserStrategyOptions
-end
+require "./id_range"
+
+alias K8S::Api::Policy::V1beta1::RunAsUserStrategyOptions = Api::Extensions::V1beta1::RunAsUserStrategyOptions

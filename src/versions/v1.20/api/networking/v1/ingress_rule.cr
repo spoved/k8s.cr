@@ -3,6 +3,6 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Networking::V1::IngressRule = Api::Extensions::V1beta1::IngressRule
-end
+require "./http_ingress_rule_value"
+
+alias K8S::Api::Networking::V1::IngressRule = Api::Extensions::V1beta1::IngressRule

@@ -3,6 +3,4 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias KubeAggregator::Apis::Apiregistration::V1beta1::APIServiceCondition = KubeAggregator::Apis::Apiregistration::V1::APIServiceCondition
-end
+alias K8S::KubeAggregator::Apis::Apiregistration::V1beta1::APIServiceCondition = KubeAggregator::Apis::Apiregistration::V1::APIServiceCondition

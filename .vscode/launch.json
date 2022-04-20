@@ -1,0 +1,48 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "preLaunchTask": "Compile",
+      "type": "lldb",
+      "program": "${workspaceFolder}/bin/test",
+      "args": [],
+      "initCommands": [
+        "command script import ${workspaceFolder}/.vscode/crystal_formatters.py"
+      ]
+    },
+    {
+      "name": "Debug CRD Gen",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "preLaunchTask": "Compile CRD Gen (Debug)",
+      "type": "lldb",
+      "program": "${workspaceFolder}/bin/gen_crd",
+      "args": [
+        "${workspaceFolder}/spec/fixtures/resources/test/crds.yaml",
+        "${workspaceFolder}/tmp/crds"
+      ],
+      "initCommands": [
+        "command script import ${workspaceFolder}/.vscode/crystal_formatters.py"
+      ]
+    },
+    {
+      "name": "Debug Crystal",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "type": "lldb",
+      "env": {
+        "CRYSTAL_PATH": "lib:/usr/local/Cellar/crystal/1.3.1/libexec/../share/crystal/src:/usr/local/Cellar/crystal/1.3.1/src",
+        "CRYSTAL_LIBRARY_PATH": "/usr/local/lib"
+      },
+
+      "program": "/Users/homans/code/github.com/kalinon/crystal/.build/crystal",
+      "args": ["run", "--error-trace", "./tmp/test.cr"],
+      "initCommands": [
+        "command script import ${workspaceFolder}/.vscode/crystal_formatters.py"
+      ]
+    }
+  ]
+}

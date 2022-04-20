@@ -3,6 +3,4 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Rbac::V1beta1::Subject = Api::Rbac::V1::Subject
-end
+alias K8S::Api::Rbac::V1beta1::Subject = Api::Rbac::V1::Subject

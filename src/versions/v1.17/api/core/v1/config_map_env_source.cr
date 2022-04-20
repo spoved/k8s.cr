@@ -3,31 +3,12 @@
 require "yaml"
 require "json"
 
-module K8S
-  # ConfigMapEnvSource selects a ConfigMap to populate the environment variables with.
-  #
-  # The contents of the target ConfigMap's Data field will represent the key-value pairs as environment variables.
-  @[::K8S::Properties(
-    name: {type: String, nilable: true, key: "name", getter: false, setter: false},
-    optional: {type: Bool, nilable: true, key: "optional", getter: false, setter: false},
-  )]
-  class Api::Core::V1::ConfigMapEnvSource
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+::K8S::Kubernetes::Resource.define_object("ConfigMapEnvSource",
+  namespace: "::K8S::Api::Core::V1",
+  properties: [
 
-    # Name of the referent. More info: [https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names)
-    @[::JSON::Field(key: "name", emit_null: false)]
-    @[::YAML::Field(key: "name", emit_null: false)]
-    property name : String | Nil
+    {name: "name", kind: String, key: "name", nilable: true, read_only: false, description: "Name of the referent. More info: [https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names)"},
+    {name: "optional", kind: ::Bool, key: "optional", nilable: true, read_only: false, description: "Specify whether the ConfigMap must be defined"},
 
-    # Specify whether the ConfigMap must be defined
-    @[::JSON::Field(key: "optional", emit_null: false)]
-    @[::YAML::Field(key: "optional", emit_null: false)]
-    property optional : Bool | Nil
-
-    def initialize(*, @name : String | Nil = nil, @optional : Bool | Nil = nil)
-    end
-  end
-end
+  ]
+)

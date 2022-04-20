@@ -3,6 +3,8 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Apps::V1beta2::StatefulSet = Api::Apps::V1::StatefulSet
-end
+require "../../../apimachinery/apis/meta/v1/object_meta"
+require "./stateful_set_spec"
+require "./stateful_set_status"
+
+alias K8S::Api::Apps::V1beta2::StatefulSet = Api::Apps::V1::StatefulSet

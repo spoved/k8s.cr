@@ -3,53 +3,18 @@
 require "yaml"
 require "json"
 
-module K8S
-  # ReplicationControllerStatus represents the current status of a replication controller.
-  @[::K8S::Properties(
-    available_replicas: {type: Int32, nilable: true, key: "availableReplicas", getter: false, setter: false},
-    conditions: {type: Array(Api::Core::V1::ReplicationControllerCondition), nilable: true, key: "conditions", getter: false, setter: false},
-    fully_labeled_replicas: {type: Int32, nilable: true, key: "fullyLabeledReplicas", getter: false, setter: false},
-    observed_generation: {type: Int32, nilable: true, key: "observedGeneration", getter: false, setter: false},
-    ready_replicas: {type: Int32, nilable: true, key: "readyReplicas", getter: false, setter: false},
-    replicas: {type: Int32, nilable: false, key: "replicas", getter: false, setter: false},
-  )]
-  class Api::Core::V1::ReplicationControllerStatus
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+require "./replication_controller_condition"
 
-    # The number of available replicas (ready for at least minReadySeconds) for this replication controller.
-    @[::JSON::Field(key: "availableReplicas", emit_null: false)]
-    @[::YAML::Field(key: "availableReplicas", emit_null: false)]
-    property available_replicas : Int32 | Nil
+::K8S::Kubernetes::Resource.define_object("ReplicationControllerStatus",
+  namespace: "::K8S::Api::Core::V1",
+  properties: [
 
-    # Represents the latest available observations of a replication controller's current state.
-    @[::JSON::Field(key: "conditions", emit_null: false)]
-    @[::YAML::Field(key: "conditions", emit_null: false)]
-    property conditions : Array(Api::Core::V1::ReplicationControllerCondition) | Nil
+    {name: "available_replicas", kind: Int32, key: "availableReplicas", nilable: true, read_only: false, description: "The number of available replicas (ready for at least minReadySeconds) for this replication controller."},
+    {name: "conditions", kind: ::Array(::K8S::Api::Core::V1::ReplicationControllerCondition), key: "conditions", nilable: true, read_only: false, description: "Represents the latest available observations of a replication controller's current state."},
+    {name: "fully_labeled_replicas", kind: Int32, key: "fullyLabeledReplicas", nilable: true, read_only: false, description: "The number of pods that have labels matching the labels of the pod template of the replication controller."},
+    {name: "observed_generation", kind: Int32, key: "observedGeneration", nilable: true, read_only: false, description: "ObservedGeneration reflects the generation of the most recently observed replication controller."},
+    {name: "ready_replicas", kind: Int32, key: "readyReplicas", nilable: true, read_only: false, description: "The number of ready replicas for this replication controller."},
+    {name: "replicas", kind: Int32, key: "replicas", nilable: false, read_only: false, description: "Replicas is the most recently oberved number of replicas. More info: [https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#what-is-a-replicationcontroller](https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#what-is-a-replicationcontroller)"},
 
-    # The number of pods that have labels matching the labels of the pod template of the replication controller.
-    @[::JSON::Field(key: "fullyLabeledReplicas", emit_null: false)]
-    @[::YAML::Field(key: "fullyLabeledReplicas", emit_null: false)]
-    property fully_labeled_replicas : Int32 | Nil
-
-    # ObservedGeneration reflects the generation of the most recently observed replication controller.
-    @[::JSON::Field(key: "observedGeneration", emit_null: false)]
-    @[::YAML::Field(key: "observedGeneration", emit_null: false)]
-    property observed_generation : Int32 | Nil
-
-    # The number of ready replicas for this replication controller.
-    @[::JSON::Field(key: "readyReplicas", emit_null: false)]
-    @[::YAML::Field(key: "readyReplicas", emit_null: false)]
-    property ready_replicas : Int32 | Nil
-
-    # Replicas is the most recently oberved number of replicas. More info: [https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#what-is-a-replicationcontroller](https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#what-is-a-replicationcontroller)
-    @[::JSON::Field(key: "replicas", emit_null: true)]
-    @[::YAML::Field(key: "replicas", emit_null: true)]
-    property replicas : Int32
-
-    def initialize(*, @replicas : Int32, @available_replicas : Int32 | Nil = nil, @conditions : Array(Api::Core::V1::ReplicationControllerCondition) | Nil = nil, @fully_labeled_replicas : Int32 | Nil = nil, @observed_generation : Int32 | Nil = nil, @ready_replicas : Int32 | Nil = nil)
-    end
-  end
-end
+  ]
+)

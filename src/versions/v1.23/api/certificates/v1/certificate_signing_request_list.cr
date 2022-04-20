@@ -3,66 +3,12 @@
 require "yaml"
 require "json"
 
-module K8S
-  # CertificateSigningRequestList is a collection of CertificateSigningRequest objects
-  @[::K8S::GroupVersionKind(group: "certificates.k8s.io", kind: "CertificateSigningRequestList", version: "v1", full: "io.k8s.api.certificates.v1.CertificateSigningRequestList")]
-  @[::K8S::Properties(
-    api_version: {type: String, nilable: true, key: "apiVersion", getter: false, setter: false},
-    items: {type: Array(Api::Certificates::V1::CertificateSigningRequest), nilable: false, key: "items", getter: false, setter: false},
-    kind: {type: String, nilable: true, key: "kind", getter: false, setter: false},
-    metadata: {type: Apimachinery::Apis::Meta::V1::ListMeta, nilable: true, key: "metadata", getter: false, setter: false},
-  )]
-  @[::K8S::Action(name: "post", verb: "post",
-    path: "/apis/certificates.k8s.io/v1/certificatesigningrequests", toplevel: false,
-    args: [{name: "spec", type: Api::Certificates::V1::CertificateSigningRequestSpec},
-           {name: "metadata", type: Apimachinery::Apis::Meta::V1::ObjectMeta | Nil, default: nil},
-           {name: "status", type: Api::Certificates::V1::CertificateSigningRequestStatus | Nil, default: nil},
-           {name: "context", type: String | Nil, default: nil},
-           {name: "dry_run", type: String | Nil, default: nil},
-           {name: "field_manager", type: String | Nil, default: nil},
-           {name: "field_validation", type: String | Nil, default: nil}]
-  )]
-  @[::K8S::Action(name: "list", verb: "get",
-    path: "/apis/certificates.k8s.io/v1/certificatesigningrequests", toplevel: true,
-    args: [{name: "context", type: String | Nil, default: nil},
-           {name: "allow_watch_bookmarks", type: Bool | Nil, default: nil},
-           {name: "continue", type: String | Nil, default: nil},
-           {name: "field_selector", type: String | Nil, default: nil},
-           {name: "label_selector", type: String | Nil, default: nil},
-           {name: "limit", type: Int32 | Nil, default: nil},
-           {name: "resource_version", type: String | Nil, default: nil},
-           {name: "resource_version_match", type: String | Nil, default: nil},
-           {name: "timeout_seconds", type: Int32 | Nil, default: nil},
-           {name: "watch", type: Bool | Nil, default: nil}]
-  )]
-  @[::K8S::Action(name: "deletecollection", verb: "delete",
-    path: "/apis/certificates.k8s.io/v1/certificatesigningrequests", toplevel: true,
-    args: [{name: "context", type: String | Nil, default: nil},
-           {name: "continue", type: String | Nil, default: nil},
-           {name: "dry_run", type: String | Nil, default: nil},
-           {name: "field_selector", type: String | Nil, default: nil},
-           {name: "grace_period_seconds", type: Int32 | Nil, default: nil},
-           {name: "label_selector", type: String | Nil, default: nil},
-           {name: "limit", type: Int32 | Nil, default: nil},
-           {name: "orphan_dependents", type: Bool | Nil, default: nil},
-           {name: "propagation_policy", type: String | Nil, default: nil},
-           {name: "resource_version", type: String | Nil, default: nil},
-           {name: "resource_version_match", type: String | Nil, default: nil},
-           {name: "timeout_seconds", type: Int32 | Nil, default: nil}]
-  )]
-  class Api::Certificates::V1::CertificateSigningRequestList < ::K8S::Kubernetes::ResourceList(Api::Certificates::V1::CertificateSigningRequest)
-    include ::K8S::Kubernetes::Resource::List
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+require "../../../apimachinery/apis/meta/v1/list_meta"
+require "./certificate_signing_request"
 
-    @[::JSON::Field(key: "apiVersion")]
-    @[::YAML::Field(key: "apiVersion")]
-    getter api_version : String = "certificates/v1"
-    getter kind : String = "List"
-
-    def initialize(*, @items : Array(Api::Certificates::V1::CertificateSigningRequest), @metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil = nil)
-    end
-  end
-end
+::K8S::Kubernetes::Resource.define_resource("certificates.k8s.io", "v1", "CertificateSigningRequestList",
+  namespace: "::K8S::Api::Certificates::V1",
+  list: true,
+  list_kind: K8S::Api::Certificates::V1::CertificateSigningRequest,
+  description: "CertificateSigningRequestList is a collection of CertificateSigningRequest objects",
+)

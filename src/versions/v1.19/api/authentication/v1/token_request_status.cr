@@ -3,29 +3,12 @@
 require "yaml"
 require "json"
 
-module K8S
-  # TokenRequestStatus is the result of a token request.
-  @[::K8S::Properties(
-    expiration_timestamp: {type: Time, nilable: false, key: "expirationTimestamp", getter: false, setter: false},
-    token: {type: String, nilable: false, key: "token", getter: false, setter: false},
-  )]
-  class Api::Authentication::V1::TokenRequestStatus
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+::K8S::Kubernetes::Resource.define_object("TokenRequestStatus",
+  namespace: "::K8S::Api::Authentication::V1",
+  properties: [
 
-    # ExpirationTimestamp is the time of expiration of the returned token.
-    @[::JSON::Field(key: "expirationTimestamp", emit_null: true, converter: K8S::TimeFormat.new)]
-    @[::YAML::Field(key: "expirationTimestamp", emit_null: true, converter: K8S::TimeFormat.new)]
-    property expiration_timestamp : Time
+    {name: "expiration_timestamp", kind: ::Time, key: "expirationTimestamp", nilable: false, read_only: false, description: "ExpirationTimestamp is the time of expiration of the returned token."},
+    {name: "token", kind: String, key: "token", nilable: false, read_only: false, description: "Token is the opaque bearer token."},
 
-    # Token is the opaque bearer token.
-    @[::JSON::Field(key: "token", emit_null: true)]
-    @[::YAML::Field(key: "token", emit_null: true)]
-    property token : String
-
-    def initialize(*, @expiration_timestamp : Time, @token : String)
-    end
-  end
-end
+  ]
+)

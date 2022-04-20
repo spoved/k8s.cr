@@ -3,6 +3,4 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Policy::V1beta1::AllowedHostPath = Api::Extensions::V1beta1::AllowedHostPath
-end
+alias K8S::Api::Policy::V1beta1::AllowedHostPath = Api::Extensions::V1beta1::AllowedHostPath

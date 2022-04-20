@@ -3,36 +3,15 @@
 require "yaml"
 require "json"
 
-module K8S
-  # CustomResourceConversion describes how to convert different versions of a CR.
-  @[::K8S::Properties(
-    conversion_review_versions: {type: Array(String), nilable: true, key: "conversionReviewVersions", getter: false, setter: false},
-    strategy: {type: String, nilable: false, key: "strategy", getter: false, setter: false},
-    webhook_client_config: {type: ApiextensionsApiserver::Apis::Apiextensions::V1beta1::WebhookClientConfig, nilable: true, key: "webhookClientConfig", getter: false, setter: false},
-  )]
-  class ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceConversion
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+require "./webhook_client_config"
 
-    # ConversionReviewVersions is an ordered list of preferred `ConversionReview` versions the Webhook expects. API server will try to use first version in the list which it supports. If none of the versions specified in this list supported by API server, conversion will fail for this object. If a persisted Webhook configuration specifies allowed versions and does not include any versions known to the API Server, calls to the webhook will fail. Default to `['v1beta1']`.
-    @[::JSON::Field(key: "conversionReviewVersions", emit_null: false)]
-    @[::YAML::Field(key: "conversionReviewVersions", emit_null: false)]
-    property conversion_review_versions : Array(String) | Nil
+::K8S::Kubernetes::Resource.define_object("CustomResourceConversion",
+  namespace: "::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1",
+  properties: [
 
-    # `strategy` specifies the conversion strategy. Allowed values are: - `None`: The converter only change the apiVersion and would not touch any other field in the CR. - `Webhook`: API Server will call to an external webhook to do the conversion. Additional information
-    #   is needed for this option. This requires spec.preserveUnknownFields to be false.
-    @[::JSON::Field(key: "strategy", emit_null: true)]
-    @[::YAML::Field(key: "strategy", emit_null: true)]
-    property strategy : String
+    {name: "conversion_review_versions", kind: ::Array(String), key: "conversionReviewVersions", nilable: true, read_only: false, description: "ConversionReviewVersions is an ordered list of preferred `ConversionReview` versions the Webhook expects. API server will try to use first version in the list which it supports. If none of the versions specified in this list supported by API server, conversion will fail for this object. If a persisted Webhook configuration specifies allowed versions and does not include any versions known to the API Server, calls to the webhook will fail. Default to `['v1beta1']`."},
+    {name: "strategy", kind: String, key: "strategy", nilable: false, read_only: false, description: "`strategy` specifies the conversion strategy. Allowed values are: - `None`: The converter only change the apiVersion and would not touch any other field in the CR. - `Webhook`: API Server will call to an external webhook to do the conversion. Additional information\n  is needed for this option. This requires spec.preserveUnknownFields to be false."},
+    {name: "webhook_client_config", kind: ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::WebhookClientConfig, key: "webhookClientConfig", nilable: true, read_only: false, description: "`webhookClientConfig` is the instructions for how to call the webhook if strategy is `Webhook`. This field is alpha-level and is only honored by servers that enable the CustomResourceWebhookConversion feature."},
 
-    # `webhookClientConfig` is the instructions for how to call the webhook if strategy is `Webhook`. This field is alpha-level and is only honored by servers that enable the CustomResourceWebhookConversion feature.
-    @[::JSON::Field(key: "webhookClientConfig", emit_null: false)]
-    @[::YAML::Field(key: "webhookClientConfig", emit_null: false)]
-    property webhook_client_config : ApiextensionsApiserver::Apis::Apiextensions::V1beta1::WebhookClientConfig | Nil
-
-    def initialize(*, @strategy : String, @conversion_review_versions : Array(String) | Nil = nil, @webhook_client_config : ApiextensionsApiserver::Apis::Apiextensions::V1beta1::WebhookClientConfig | Nil = nil)
-    end
-  end
-end
+  ]
+)

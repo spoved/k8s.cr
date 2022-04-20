@@ -3,35 +3,15 @@
 require "yaml"
 require "json"
 
-module K8S
-  # ObjectMetricSource indicates how to scale on a metric describing a kubernetes object (for example, hits-per-second on an Ingress object).
-  @[::K8S::Properties(
-    metric_name: {type: String, nilable: false, key: "metricName", getter: false, setter: false},
-    target: {type: Api::Autoscaling::V2beta1::CrossVersionObjectReference, nilable: false, key: "target", getter: false, setter: false},
-    target_value: {type: Int32 | String, nilable: false, key: "targetValue", getter: false, setter: false},
-  )]
-  class Api::Autoscaling::V2beta1::ObjectMetricSource
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+require "./cross_version_object_reference"
 
-    # metricName is the name of the metric in question.
-    @[::JSON::Field(key: "metricName", emit_null: true)]
-    @[::YAML::Field(key: "metricName", emit_null: true)]
-    property metric_name : String
+::K8S::Kubernetes::Resource.define_object("ObjectMetricSource",
+  namespace: "::K8S::Api::Autoscaling::V2beta1",
+  properties: [
 
-    # target is the described Kubernetes object.
-    @[::JSON::Field(key: "target", emit_null: true)]
-    @[::YAML::Field(key: "target", emit_null: true)]
-    property target : Api::Autoscaling::V2beta1::CrossVersionObjectReference
+    {name: "metric_name", kind: String, key: "metricName", nilable: false, read_only: false, description: "metricName is the name of the metric in question."},
+    {name: "target", kind: ::K8S::Api::Autoscaling::V2beta1::CrossVersionObjectReference, key: "target", nilable: false, read_only: false, description: "target is the described Kubernetes object."},
+    {name: "target_value", kind: Union(::Int32 | ::String), key: "targetValue", nilable: false, read_only: false, description: "targetValue is the target value of the metric (as a quantity)."},
 
-    # targetValue is the target value of the metric (as a quantity).
-    @[::JSON::Field(key: "targetValue", emit_null: true)]
-    @[::YAML::Field(key: "targetValue", emit_null: true)]
-    property target_value : Int32 | String
-
-    def initialize(*, @metric_name : String, @target : Api::Autoscaling::V2beta1::CrossVersionObjectReference, @target_value : Int32 | String)
-    end
-  end
-end
+  ]
+)

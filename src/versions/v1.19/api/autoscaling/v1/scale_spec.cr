@@ -3,23 +3,11 @@
 require "yaml"
 require "json"
 
-module K8S
-  # ScaleSpec describes the attributes of a scale subresource.
-  @[::K8S::Properties(
-    replicas: {type: Int32, nilable: true, key: "replicas", getter: false, setter: false},
-  )]
-  class Api::Autoscaling::V1::ScaleSpec
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+::K8S::Kubernetes::Resource.define_object("ScaleSpec",
+  namespace: "::K8S::Api::Autoscaling::V1",
+  properties: [
 
-    # desired number of instances for the scaled object.
-    @[::JSON::Field(key: "replicas", emit_null: false)]
-    @[::YAML::Field(key: "replicas", emit_null: false)]
-    property replicas : Int32 | Nil
+    {name: "replicas", kind: Int32, key: "replicas", nilable: true, read_only: false, description: "desired number of instances for the scaled object."},
 
-    def initialize(*, @replicas : Int32 | Nil = nil)
-    end
-  end
-end
+  ]
+)

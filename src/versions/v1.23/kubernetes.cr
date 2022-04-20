@@ -3,9 +3,7 @@ module ::K8S::Kubernetes
   VERSION_MINOR =  1
   VERSION_MAJOR = 23
 
-  abstract class Resource
-    include JSON::Serializable
-
+  abstract struct Resource
     MAPPINGS = [
       {"admissionregistration/v1", "MutatingWebhookConfiguration", K8S::Api::Admissionregistration::V1::MutatingWebhookConfiguration},
       {"admissionregistration/v1", "MutatingWebhookConfigurationList", K8S::Api::Admissionregistration::V1::MutatingWebhookConfigurationList},
@@ -144,8 +142,5 @@ module ::K8S::Kubernetes
       {"apiregistration/v1", "APIServiceList", K8S::KubeAggregator::Apis::Apiregistration::V1::APIServiceList},
       {"v1", "List", K8S::Api::Core::V1::List},
     ]
-
-    k8s_json_discriminator(MAPPINGS)
-    k8s_yaml_discriminator(MAPPINGS)
   end
 end

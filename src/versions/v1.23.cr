@@ -2,9 +2,6 @@
 
 require "../k8s/*"
 
-annotation ::K8S::GroupVersionKind; end
-annotation ::K8S::Action; end
-
 require "./v1.23/kubernetes"
 require "./v1.23/api/admissionregistration/v1/mutating_webhook.cr"
 require "./v1.23/api/admissionregistration/v1/mutating_webhook_configuration.cr"

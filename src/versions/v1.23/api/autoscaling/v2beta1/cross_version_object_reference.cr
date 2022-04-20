@@ -3,6 +3,4 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Autoscaling::V2beta1::CrossVersionObjectReference = Api::Autoscaling::V1::CrossVersionObjectReference
-end
+alias K8S::Api::Autoscaling::V2beta1::CrossVersionObjectReference = Api::Autoscaling::V1::CrossVersionObjectReference

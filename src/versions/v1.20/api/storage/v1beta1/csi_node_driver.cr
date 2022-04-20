@@ -3,6 +3,6 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Storage::V1beta1::CSINodeDriver = Api::Storage::V1::CSINodeDriver
-end
+require "./volume_node_resources"
+
+alias K8S::Api::Storage::V1beta1::CSINodeDriver = Api::Storage::V1::CSINodeDriver

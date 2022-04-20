@@ -3,6 +3,7 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Authorization::V1beta1::SubjectRulesReviewStatus = Api::Authorization::V1::SubjectRulesReviewStatus
-end
+require "./non_resource_rule"
+require "./resource_rule"
+
+alias K8S::Api::Authorization::V1beta1::SubjectRulesReviewStatus = Api::Authorization::V1::SubjectRulesReviewStatus

@@ -3,6 +3,4 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias ApiextensionsApiserver::Apis::Apiextensions::V1beta1::ExternalDocumentation = ApiextensionsApiserver::Apis::Apiextensions::V1::ExternalDocumentation
-end
+alias K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::ExternalDocumentation = ApiextensionsApiserver::Apis::Apiextensions::V1::ExternalDocumentation

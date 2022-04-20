@@ -3,66 +3,12 @@
 require "yaml"
 require "json"
 
-module K8S
-  # RuntimeClassList is a list of RuntimeClass objects.
-  @[::K8S::GroupVersionKind(group: "node.k8s.io", kind: "RuntimeClassList", version: "v1", full: "io.k8s.api.node.v1.RuntimeClassList")]
-  @[::K8S::Properties(
-    api_version: {type: String, nilable: true, key: "apiVersion", getter: false, setter: false},
-    items: {type: Array(Api::Node::V1::RuntimeClass), nilable: false, key: "items", getter: false, setter: false},
-    kind: {type: String, nilable: true, key: "kind", getter: false, setter: false},
-    metadata: {type: Apimachinery::Apis::Meta::V1::ListMeta, nilable: true, key: "metadata", getter: false, setter: false},
-  )]
-  @[::K8S::Action(name: "post", verb: "post",
-    path: "/apis/node.k8s.io/v1/runtimeclasses", toplevel: false,
-    args: [{name: "handler", type: String},
-           {name: "metadata", type: Apimachinery::Apis::Meta::V1::ObjectMeta | Nil, default: nil},
-           {name: "overhead", type: Api::Node::V1::Overhead | Nil, default: nil},
-           {name: "scheduling", type: Api::Node::V1::Scheduling | Nil, default: nil},
-           {name: "context", type: String | Nil, default: nil},
-           {name: "dry_run", type: String | Nil, default: nil},
-           {name: "field_manager", type: String | Nil, default: nil}]
-  )]
-  @[::K8S::Action(name: "list", verb: "get",
-    path: "/apis/node.k8s.io/v1/runtimeclasses", toplevel: true,
-    args: [{name: "context", type: String | Nil, default: nil},
-           {name: "allow_watch_bookmarks", type: Bool | Nil, default: nil},
-           {name: "continue", type: String | Nil, default: nil},
-           {name: "field_selector", type: String | Nil, default: nil},
-           {name: "label_selector", type: String | Nil, default: nil},
-           {name: "limit", type: Int32 | Nil, default: nil},
-           {name: "resource_version", type: String | Nil, default: nil},
-           {name: "resource_version_match", type: String | Nil, default: nil},
-           {name: "timeout_seconds", type: Int32 | Nil, default: nil},
-           {name: "watch", type: Bool | Nil, default: nil}]
-  )]
-  @[::K8S::Action(name: "deletecollection", verb: "delete",
-    path: "/apis/node.k8s.io/v1/runtimeclasses", toplevel: true,
-    args: [{name: "context", type: String | Nil, default: nil},
-           {name: "continue", type: String | Nil, default: nil},
-           {name: "dry_run", type: String | Nil, default: nil},
-           {name: "field_selector", type: String | Nil, default: nil},
-           {name: "grace_period_seconds", type: Int32 | Nil, default: nil},
-           {name: "label_selector", type: String | Nil, default: nil},
-           {name: "limit", type: Int32 | Nil, default: nil},
-           {name: "orphan_dependents", type: Bool | Nil, default: nil},
-           {name: "propagation_policy", type: String | Nil, default: nil},
-           {name: "resource_version", type: String | Nil, default: nil},
-           {name: "resource_version_match", type: String | Nil, default: nil},
-           {name: "timeout_seconds", type: Int32 | Nil, default: nil}]
-  )]
-  class Api::Node::V1::RuntimeClassList < ::K8S::Kubernetes::ResourceList(Api::Node::V1::RuntimeClass)
-    include ::K8S::Kubernetes::Resource::List
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+require "../../../apimachinery/apis/meta/v1/list_meta"
+require "./runtime_class"
 
-    @[::JSON::Field(key: "apiVersion")]
-    @[::YAML::Field(key: "apiVersion")]
-    getter api_version : String = "node/v1"
-    getter kind : String = "List"
-
-    def initialize(*, @items : Array(Api::Node::V1::RuntimeClass), @metadata : Apimachinery::Apis::Meta::V1::ListMeta | Nil = nil)
-    end
-  end
-end
+::K8S::Kubernetes::Resource.define_resource("node.k8s.io", "v1", "RuntimeClassList",
+  namespace: "::K8S::Api::Node::V1",
+  list: true,
+  list_kind: K8S::Api::Node::V1::RuntimeClass,
+  description: "RuntimeClassList is a list of RuntimeClass objects.",
+)

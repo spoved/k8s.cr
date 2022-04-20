@@ -3,29 +3,12 @@
 require "yaml"
 require "json"
 
-module K8S
-  # A topology selector requirement is a selector that matches given label. This is an alpha feature and may change in the future.
-  @[::K8S::Properties(
-    key: {type: String, nilable: false, key: "key", getter: false, setter: false},
-    values: {type: Array(String), nilable: false, key: "values", getter: false, setter: false},
-  )]
-  class Api::Core::V1::TopologySelectorLabelRequirement
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+::K8S::Kubernetes::Resource.define_object("TopologySelectorLabelRequirement",
+  namespace: "::K8S::Api::Core::V1",
+  properties: [
 
-    # The label key that the selector applies to.
-    @[::JSON::Field(key: "key", emit_null: true)]
-    @[::YAML::Field(key: "key", emit_null: true)]
-    property key : String
+    {name: "key", kind: String, key: "key", nilable: false, read_only: false, description: "The label key that the selector applies to."},
+    {name: "values", kind: ::Array(String), key: "values", nilable: false, read_only: false, description: "An array of string values. One value must match the label to be selected. Each entry in Values is ORed."},
 
-    # An array of string values. One value must match the label to be selected. Each entry in Values is ORed.
-    @[::JSON::Field(key: "values", emit_null: true)]
-    @[::YAML::Field(key: "values", emit_null: true)]
-    property values : Array(String)
-
-    def initialize(*, @key : String, @values : Array(String))
-    end
-  end
-end
+  ]
+)

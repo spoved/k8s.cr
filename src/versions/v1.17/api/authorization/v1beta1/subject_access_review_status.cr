@@ -3,6 +3,4 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Authorization::V1beta1::SubjectAccessReviewStatus = Api::Authorization::V1::SubjectAccessReviewStatus
-end
+alias K8S::Api::Authorization::V1beta1::SubjectAccessReviewStatus = Api::Authorization::V1::SubjectAccessReviewStatus

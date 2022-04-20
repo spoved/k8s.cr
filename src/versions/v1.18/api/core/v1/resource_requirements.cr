@@ -3,29 +3,12 @@
 require "yaml"
 require "json"
 
-module K8S
-  # ResourceRequirements describes the compute resource requirements.
-  @[::K8S::Properties(
-    limits: {type: Hash(String, Int32 | String), nilable: true, key: "limits", getter: false, setter: false},
-    requests: {type: Hash(String, Int32 | String), nilable: true, key: "requests", getter: false, setter: false},
-  )]
-  class Api::Core::V1::ResourceRequirements
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+::K8S::Kubernetes::Resource.define_object("ResourceRequirements",
+  namespace: "::K8S::Api::Core::V1",
+  properties: [
 
-    # Limits describes the maximum amount of compute resources allowed. More info: [https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/)
-    @[::JSON::Field(key: "limits", emit_null: false)]
-    @[::YAML::Field(key: "limits", emit_null: false)]
-    property limits : Hash(String, Int32 | String) | Nil
+    {name: "limits", kind: Union(::Hash(String, ::Int32 | ::String)), key: "limits", nilable: true, read_only: false, description: "Limits describes the maximum amount of compute resources allowed. More info: [https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/)"},
+    {name: "requests", kind: Union(::Hash(String, ::Int32 | ::String)), key: "requests", nilable: true, read_only: false, description: "Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: [https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/)"},
 
-    # Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: [https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/)
-    @[::JSON::Field(key: "requests", emit_null: false)]
-    @[::YAML::Field(key: "requests", emit_null: false)]
-    property requests : Hash(String, Int32 | String) | Nil
-
-    def initialize(*, @limits : Hash(String, Int32 | String) | Nil = nil, @requests : Hash(String, Int32 | String) | Nil = nil)
-    end
-  end
-end
+  ]
+)

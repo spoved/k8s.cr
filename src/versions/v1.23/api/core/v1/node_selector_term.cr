@@ -3,29 +3,14 @@
 require "yaml"
 require "json"
 
-module K8S
-  # A null or empty node selector term matches no objects. The requirements of them are ANDed. The TopologySelectorTerm type implements a subset of the NodeSelectorTerm.
-  @[::K8S::Properties(
-    match_expressions: {type: Array(Api::Core::V1::NodeSelectorRequirement), nilable: true, key: "matchExpressions", getter: false, setter: false},
-    match_fields: {type: Array(Api::Core::V1::NodeSelectorRequirement), nilable: true, key: "matchFields", getter: false, setter: false},
-  )]
-  class Api::Core::V1::NodeSelectorTerm
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+require "./node_selector_requirement"
 
-    # A list of node selector requirements by node's labels.
-    @[::JSON::Field(key: "matchExpressions", emit_null: false)]
-    @[::YAML::Field(key: "matchExpressions", emit_null: false)]
-    property match_expressions : Array(Api::Core::V1::NodeSelectorRequirement) | Nil
+::K8S::Kubernetes::Resource.define_object("NodeSelectorTerm",
+  namespace: "::K8S::Api::Core::V1",
+  properties: [
 
-    # A list of node selector requirements by node's fields.
-    @[::JSON::Field(key: "matchFields", emit_null: false)]
-    @[::YAML::Field(key: "matchFields", emit_null: false)]
-    property match_fields : Array(Api::Core::V1::NodeSelectorRequirement) | Nil
+    {name: "match_expressions", kind: ::Array(::K8S::Api::Core::V1::NodeSelectorRequirement), key: "matchExpressions", nilable: true, read_only: false, description: "A list of node selector requirements by node's labels."},
+    {name: "match_fields", kind: ::Array(::K8S::Api::Core::V1::NodeSelectorRequirement), key: "matchFields", nilable: true, read_only: false, description: "A list of node selector requirements by node's fields."},
 
-    def initialize(*, @match_expressions : Array(Api::Core::V1::NodeSelectorRequirement) | Nil = nil, @match_fields : Array(Api::Core::V1::NodeSelectorRequirement) | Nil = nil)
-    end
-  end
-end
+  ]
+)

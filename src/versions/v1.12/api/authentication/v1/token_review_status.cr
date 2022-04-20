@@ -3,35 +3,15 @@
 require "yaml"
 require "json"
 
-module K8S
-  # TokenReviewStatus is the result of the token authentication request.
-  @[::K8S::Properties(
-    authenticated: {type: Bool, nilable: true, key: "authenticated", getter: false, setter: false},
-    error: {type: String, nilable: true, key: "error", getter: false, setter: false},
-    user: {type: Api::Authentication::V1::UserInfo, nilable: true, key: "user", getter: false, setter: false},
-  )]
-  class Api::Authentication::V1::TokenReviewStatus
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+require "./user_info"
 
-    # Authenticated indicates that the token was associated with a known user.
-    @[::JSON::Field(key: "authenticated", emit_null: false)]
-    @[::YAML::Field(key: "authenticated", emit_null: false)]
-    property authenticated : Bool | Nil
+::K8S::Kubernetes::Resource.define_object("TokenReviewStatus",
+  namespace: "::K8S::Api::Authentication::V1",
+  properties: [
 
-    # Error indicates that the token couldn't be checked
-    @[::JSON::Field(key: "error", emit_null: false)]
-    @[::YAML::Field(key: "error", emit_null: false)]
-    property error : String | Nil
+    {name: "authenticated", kind: ::Bool, key: "authenticated", nilable: true, read_only: false, description: "Authenticated indicates that the token was associated with a known user."},
+    {name: "error", kind: String, key: "error", nilable: true, read_only: false, description: "Error indicates that the token couldn't be checked"},
+    {name: "user", kind: ::K8S::Api::Authentication::V1::UserInfo, key: "user", nilable: true, read_only: false, description: "User is the UserInfo associated with the provided token."},
 
-    # User is the UserInfo associated with the provided token.
-    @[::JSON::Field(key: "user", emit_null: false)]
-    @[::YAML::Field(key: "user", emit_null: false)]
-    property user : Api::Authentication::V1::UserInfo | Nil
-
-    def initialize(*, @authenticated : Bool | Nil = nil, @error : String | Nil = nil, @user : Api::Authentication::V1::UserInfo | Nil = nil)
-    end
-  end
-end
+  ]
+)

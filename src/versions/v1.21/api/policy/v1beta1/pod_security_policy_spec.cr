@@ -3,165 +3,45 @@
 require "yaml"
 require "json"
 
-module K8S
-  # PodSecurityPolicySpec defines the policy enforced.
-  @[::K8S::Properties(
-    allow_privilege_escalation: {type: Bool, nilable: true, key: "allowPrivilegeEscalation", getter: false, setter: false},
-    allowed_csi_drivers: {type: Array(Api::Policy::V1beta1::AllowedCSIDriver), nilable: true, key: "allowedCSIDrivers", getter: false, setter: false},
-    allowed_capabilities: {type: Array(String), nilable: true, key: "allowedCapabilities", getter: false, setter: false},
-    allowed_flex_volumes: {type: Array(Api::Policy::V1beta1::AllowedFlexVolume), nilable: true, key: "allowedFlexVolumes", getter: false, setter: false},
-    allowed_host_paths: {type: Array(Api::Policy::V1beta1::AllowedHostPath), nilable: true, key: "allowedHostPaths", getter: false, setter: false},
-    allowed_proc_mount_types: {type: Array(String), nilable: true, key: "allowedProcMountTypes", getter: false, setter: false},
-    allowed_unsafe_sysctls: {type: Array(String), nilable: true, key: "allowedUnsafeSysctls", getter: false, setter: false},
-    default_add_capabilities: {type: Array(String), nilable: true, key: "defaultAddCapabilities", getter: false, setter: false},
-    default_allow_privilege_escalation: {type: Bool, nilable: true, key: "defaultAllowPrivilegeEscalation", getter: false, setter: false},
-    forbidden_sysctls: {type: Array(String), nilable: true, key: "forbiddenSysctls", getter: false, setter: false},
-    fs_group: {type: Api::Policy::V1beta1::FSGroupStrategyOptions, nilable: false, key: "fsGroup", getter: false, setter: false},
-    host_ipc: {type: Bool, nilable: true, key: "hostIPC", getter: false, setter: false},
-    host_network: {type: Bool, nilable: true, key: "hostNetwork", getter: false, setter: false},
-    host_pid: {type: Bool, nilable: true, key: "hostPID", getter: false, setter: false},
-    host_ports: {type: Array(Api::Policy::V1beta1::HostPortRange), nilable: true, key: "hostPorts", getter: false, setter: false},
-    privileged: {type: Bool, nilable: true, key: "privileged", getter: false, setter: false},
-    read_only_root_filesystem: {type: Bool, nilable: true, key: "readOnlyRootFilesystem", getter: false, setter: false},
-    required_drop_capabilities: {type: Array(String), nilable: true, key: "requiredDropCapabilities", getter: false, setter: false},
-    run_as_group: {type: Api::Policy::V1beta1::RunAsGroupStrategyOptions, nilable: true, key: "runAsGroup", getter: false, setter: false},
-    run_as_user: {type: Api::Policy::V1beta1::RunAsUserStrategyOptions, nilable: false, key: "runAsUser", getter: false, setter: false},
-    runtime_class: {type: Api::Policy::V1beta1::RuntimeClassStrategyOptions, nilable: true, key: "runtimeClass", getter: false, setter: false},
-    se_linux: {type: Api::Policy::V1beta1::SELinuxStrategyOptions, nilable: false, key: "seLinux", getter: false, setter: false},
-    supplemental_groups: {type: Api::Policy::V1beta1::SupplementalGroupsStrategyOptions, nilable: false, key: "supplementalGroups", getter: false, setter: false},
-    volumes: {type: Array(String), nilable: true, key: "volumes", getter: false, setter: false},
-  )]
-  class Api::Policy::V1beta1::PodSecurityPolicySpec
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+require "./allowed_csi_driver"
+require "./allowed_flex_volume"
+require "./allowed_host_path"
+require "./fs_group_strategy_options"
+require "./host_port_range"
+require "./run_as_group_strategy_options"
+require "./run_as_user_strategy_options"
+require "./runtime_class_strategy_options"
+require "./se_linux_strategy_options"
+require "./supplemental_groups_strategy_options"
 
-    # allowPrivilegeEscalation determines if a pod can request to allow privilege escalation. If unspecified, defaults to true.
-    @[::JSON::Field(key: "allowPrivilegeEscalation", emit_null: false)]
-    @[::YAML::Field(key: "allowPrivilegeEscalation", emit_null: false)]
-    property allow_privilege_escalation : Bool | Nil
+::K8S::Kubernetes::Resource.define_object("PodSecurityPolicySpec",
+  namespace: "::K8S::Api::Policy::V1beta1",
+  properties: [
 
-    # AllowedCSIDrivers is an allowlist of inline CSI drivers that must be explicitly set to be embedded within a pod spec. An empty value indicates that any CSI driver can be used for inline ephemeral volumes. This is a beta field, and is only honored if the API server enables the CSIInlineVolume feature gate.
-    @[::JSON::Field(key: "allowedCSIDrivers", emit_null: false)]
-    @[::YAML::Field(key: "allowedCSIDrivers", emit_null: false)]
-    property allowed_csi_drivers : Array(Api::Policy::V1beta1::AllowedCSIDriver) | Nil
+    {name: "allow_privilege_escalation", kind: ::Bool, key: "allowPrivilegeEscalation", nilable: true, read_only: false, description: "allowPrivilegeEscalation determines if a pod can request to allow privilege escalation. If unspecified, defaults to true."},
+    {name: "allowed_csi_drivers", kind: ::Array(::K8S::Api::Policy::V1beta1::AllowedCSIDriver), key: "allowedCSIDrivers", nilable: true, read_only: false, description: "AllowedCSIDrivers is an allowlist of inline CSI drivers that must be explicitly set to be embedded within a pod spec. An empty value indicates that any CSI driver can be used for inline ephemeral volumes. This is a beta field, and is only honored if the API server enables the CSIInlineVolume feature gate."},
+    {name: "allowed_capabilities", kind: ::Array(String), key: "allowedCapabilities", nilable: true, read_only: false, description: "allowedCapabilities is a list of capabilities that can be requested to add to the container. Capabilities in this field may be added at the pod author's discretion. You must not list a capability in both allowedCapabilities and requiredDropCapabilities."},
+    {name: "allowed_flex_volumes", kind: ::Array(::K8S::Api::Policy::V1beta1::AllowedFlexVolume), key: "allowedFlexVolumes", nilable: true, read_only: false, description: "allowedFlexVolumes is an allowlist of Flexvolumes.  Empty or nil indicates that all Flexvolumes may be used.  This parameter is effective only when the usage of the Flexvolumes is allowed in the \"volumes\" field."},
+    {name: "allowed_host_paths", kind: ::Array(::K8S::Api::Policy::V1beta1::AllowedHostPath), key: "allowedHostPaths", nilable: true, read_only: false, description: "allowedHostPaths is an allowlist of host paths. Empty indicates that all host paths may be used."},
+    {name: "allowed_proc_mount_types", kind: ::Array(String), key: "allowedProcMountTypes", nilable: true, read_only: false, description: "AllowedProcMountTypes is an allowlist of allowed ProcMountTypes. Empty or nil indicates that only the DefaultProcMountType may be used. This requires the ProcMountType feature flag to be enabled."},
+    {name: "allowed_unsafe_sysctls", kind: ::Array(String), key: "allowedUnsafeSysctls", nilable: true, read_only: false, description: "allowedUnsafeSysctls is a list of explicitly allowed unsafe sysctls, defaults to none. Each entry is either a plain sysctl name or ends in \"*\" in which case it is considered as a prefix of allowed sysctls. Single * means all unsafe sysctls are allowed. Kubelet has to allowlist all allowed unsafe sysctls explicitly to avoid rejection.\n\nExamples: e.g. \"foo/*\" allows [\"foo/bar\", \"foo/baz\", etc. e.g. \"foo.*\" allows \"foo.bar\", \"foo.baz\", etc.](\"foo/bar\", \"foo/baz\", etc. e.g. \"foo.*\" allows \"foo.bar\", \"foo.baz\", etc.)"},
+    {name: "default_add_capabilities", kind: ::Array(String), key: "defaultAddCapabilities", nilable: true, read_only: false, description: "defaultAddCapabilities is the default set of capabilities that will be added to the container unless the pod spec specifically drops the capability.  You may not list a capability in both defaultAddCapabilities and requiredDropCapabilities. Capabilities added here are implicitly allowed, and need not be included in the allowedCapabilities list."},
+    {name: "default_allow_privilege_escalation", kind: ::Bool, key: "defaultAllowPrivilegeEscalation", nilable: true, read_only: false, description: "defaultAllowPrivilegeEscalation controls the default setting for whether a process can gain more privileges than its parent process."},
+    {name: "forbidden_sysctls", kind: ::Array(String), key: "forbiddenSysctls", nilable: true, read_only: false, description: "forbiddenSysctls is a list of explicitly forbidden sysctls, defaults to none. Each entry is either a plain sysctl name or ends in \"*\" in which case it is considered as a prefix of forbidden sysctls. Single * means all sysctls are forbidden.\n\nExamples: e.g. \"foo/*\" forbids [\"foo/bar\", \"foo/baz\", etc. e.g. \"foo.*\" forbids \"foo.bar\", \"foo.baz\", etc.](\"foo/bar\", \"foo/baz\", etc. e.g. \"foo.*\" forbids \"foo.bar\", \"foo.baz\", etc.)"},
+    {name: "fs_group", kind: ::K8S::Api::Policy::V1beta1::FSGroupStrategyOptions, key: "fsGroup", nilable: false, read_only: false, description: "fsGroup is the strategy that will dictate what fs group is used by the SecurityContext."},
+    {name: "host_ipc", kind: ::Bool, key: "hostIPC", nilable: true, read_only: false, description: "hostIPC determines if the policy allows the use of HostIPC in the pod spec."},
+    {name: "host_network", kind: ::Bool, key: "hostNetwork", nilable: true, read_only: false, description: "hostNetwork determines if the policy allows the use of HostNetwork in the pod spec."},
+    {name: "host_pid", kind: ::Bool, key: "hostPID", nilable: true, read_only: false, description: "hostPID determines if the policy allows the use of HostPID in the pod spec."},
+    {name: "host_ports", kind: ::Array(::K8S::Api::Policy::V1beta1::HostPortRange), key: "hostPorts", nilable: true, read_only: false, description: "hostPorts determines which host port ranges are allowed to be exposed."},
+    {name: "privileged", kind: ::Bool, key: "privileged", nilable: true, read_only: false, description: "privileged determines if a pod can request to be run as privileged."},
+    {name: "read_only_root_filesystem", kind: ::Bool, key: "readOnlyRootFilesystem", nilable: true, read_only: false, description: "readOnlyRootFilesystem when set to true will force containers to run with a read only root file system.  If the container specifically requests to run with a non-read only root file system the PSP should deny the pod. If set to false the container may run with a read only root file system if it wishes but it will not be forced to."},
+    {name: "required_drop_capabilities", kind: ::Array(String), key: "requiredDropCapabilities", nilable: true, read_only: false, description: "requiredDropCapabilities are the capabilities that will be dropped from the container.  These are required to be dropped and cannot be added."},
+    {name: "run_as_group", kind: ::K8S::Api::Policy::V1beta1::RunAsGroupStrategyOptions, key: "runAsGroup", nilable: true, read_only: false, description: "RunAsGroup is the strategy that will dictate the allowable RunAsGroup values that may be set. If this field is omitted, the pod's RunAsGroup can take any value. This field requires the RunAsGroup feature gate to be enabled."},
+    {name: "run_as_user", kind: ::K8S::Api::Policy::V1beta1::RunAsUserStrategyOptions, key: "runAsUser", nilable: false, read_only: false, description: "runAsUser is the strategy that will dictate the allowable RunAsUser values that may be set."},
+    {name: "runtime_class", kind: ::K8S::Api::Policy::V1beta1::RuntimeClassStrategyOptions, key: "runtimeClass", nilable: true, read_only: false, description: "runtimeClass is the strategy that will dictate the allowable RuntimeClasses for a pod. If this field is omitted, the pod's runtimeClassName field is unrestricted. Enforcement of this field depends on the RuntimeClass feature gate being enabled."},
+    {name: "se_linux", kind: ::K8S::Api::Policy::V1beta1::SELinuxStrategyOptions, key: "seLinux", nilable: false, read_only: false, description: "seLinux is the strategy that will dictate the allowable labels that may be set."},
+    {name: "supplemental_groups", kind: ::K8S::Api::Policy::V1beta1::SupplementalGroupsStrategyOptions, key: "supplementalGroups", nilable: false, read_only: false, description: "supplementalGroups is the strategy that will dictate what supplemental groups are used by the SecurityContext."},
+    {name: "volumes", kind: ::Array(String), key: "volumes", nilable: true, read_only: false, description: "volumes is an allowlist of volume plugins. Empty indicates that no volumes may be used. To allow all volumes you may use '*'."},
 
-    # allowedCapabilities is a list of capabilities that can be requested to add to the container. Capabilities in this field may be added at the pod author's discretion. You must not list a capability in both allowedCapabilities and requiredDropCapabilities.
-    @[::JSON::Field(key: "allowedCapabilities", emit_null: false)]
-    @[::YAML::Field(key: "allowedCapabilities", emit_null: false)]
-    property allowed_capabilities : Array(String) | Nil
-
-    # allowedFlexVolumes is an allowlist of Flexvolumes.  Empty or nil indicates that all Flexvolumes may be used.  This parameter is effective only when the usage of the Flexvolumes is allowed in the "volumes" field.
-    @[::JSON::Field(key: "allowedFlexVolumes", emit_null: false)]
-    @[::YAML::Field(key: "allowedFlexVolumes", emit_null: false)]
-    property allowed_flex_volumes : Array(Api::Policy::V1beta1::AllowedFlexVolume) | Nil
-
-    # allowedHostPaths is an allowlist of host paths. Empty indicates that all host paths may be used.
-    @[::JSON::Field(key: "allowedHostPaths", emit_null: false)]
-    @[::YAML::Field(key: "allowedHostPaths", emit_null: false)]
-    property allowed_host_paths : Array(Api::Policy::V1beta1::AllowedHostPath) | Nil
-
-    # AllowedProcMountTypes is an allowlist of allowed ProcMountTypes. Empty or nil indicates that only the DefaultProcMountType may be used. This requires the ProcMountType feature flag to be enabled.
-    @[::JSON::Field(key: "allowedProcMountTypes", emit_null: false)]
-    @[::YAML::Field(key: "allowedProcMountTypes", emit_null: false)]
-    property allowed_proc_mount_types : Array(String) | Nil
-
-    # allowedUnsafeSysctls is a list of explicitly allowed unsafe sysctls, defaults to none. Each entry is either a plain sysctl name or ends in "*" in which case it is considered as a prefix of allowed sysctls. Single * means all unsafe sysctls are allowed. Kubelet has to allowlist all allowed unsafe sysctls explicitly to avoid rejection.
-    #
-    # Examples: e.g. "foo/*" allows ["foo/bar", "foo/baz", etc. e.g. "foo.*" allows "foo.bar", "foo.baz", etc.]("foo/bar", "foo/baz", etc. e.g. "foo.*" allows "foo.bar", "foo.baz", etc.)
-    @[::JSON::Field(key: "allowedUnsafeSysctls", emit_null: false)]
-    @[::YAML::Field(key: "allowedUnsafeSysctls", emit_null: false)]
-    property allowed_unsafe_sysctls : Array(String) | Nil
-
-    # defaultAddCapabilities is the default set of capabilities that will be added to the container unless the pod spec specifically drops the capability.  You may not list a capability in both defaultAddCapabilities and requiredDropCapabilities. Capabilities added here are implicitly allowed, and need not be included in the allowedCapabilities list.
-    @[::JSON::Field(key: "defaultAddCapabilities", emit_null: false)]
-    @[::YAML::Field(key: "defaultAddCapabilities", emit_null: false)]
-    property default_add_capabilities : Array(String) | Nil
-
-    # defaultAllowPrivilegeEscalation controls the default setting for whether a process can gain more privileges than its parent process.
-    @[::JSON::Field(key: "defaultAllowPrivilegeEscalation", emit_null: false)]
-    @[::YAML::Field(key: "defaultAllowPrivilegeEscalation", emit_null: false)]
-    property default_allow_privilege_escalation : Bool | Nil
-
-    # forbiddenSysctls is a list of explicitly forbidden sysctls, defaults to none. Each entry is either a plain sysctl name or ends in "*" in which case it is considered as a prefix of forbidden sysctls. Single * means all sysctls are forbidden.
-    #
-    # Examples: e.g. "foo/*" forbids ["foo/bar", "foo/baz", etc. e.g. "foo.*" forbids "foo.bar", "foo.baz", etc.]("foo/bar", "foo/baz", etc. e.g. "foo.*" forbids "foo.bar", "foo.baz", etc.)
-    @[::JSON::Field(key: "forbiddenSysctls", emit_null: false)]
-    @[::YAML::Field(key: "forbiddenSysctls", emit_null: false)]
-    property forbidden_sysctls : Array(String) | Nil
-
-    # fsGroup is the strategy that will dictate what fs group is used by the SecurityContext.
-    @[::JSON::Field(key: "fsGroup", emit_null: true)]
-    @[::YAML::Field(key: "fsGroup", emit_null: true)]
-    property fs_group : Api::Policy::V1beta1::FSGroupStrategyOptions
-
-    # hostIPC determines if the policy allows the use of HostIPC in the pod spec.
-    @[::JSON::Field(key: "hostIPC", emit_null: false)]
-    @[::YAML::Field(key: "hostIPC", emit_null: false)]
-    property host_ipc : Bool | Nil
-
-    # hostNetwork determines if the policy allows the use of HostNetwork in the pod spec.
-    @[::JSON::Field(key: "hostNetwork", emit_null: false)]
-    @[::YAML::Field(key: "hostNetwork", emit_null: false)]
-    property host_network : Bool | Nil
-
-    # hostPID determines if the policy allows the use of HostPID in the pod spec.
-    @[::JSON::Field(key: "hostPID", emit_null: false)]
-    @[::YAML::Field(key: "hostPID", emit_null: false)]
-    property host_pid : Bool | Nil
-
-    # hostPorts determines which host port ranges are allowed to be exposed.
-    @[::JSON::Field(key: "hostPorts", emit_null: false)]
-    @[::YAML::Field(key: "hostPorts", emit_null: false)]
-    property host_ports : Array(Api::Policy::V1beta1::HostPortRange) | Nil
-
-    # privileged determines if a pod can request to be run as privileged.
-    @[::JSON::Field(key: "privileged", emit_null: false)]
-    @[::YAML::Field(key: "privileged", emit_null: false)]
-    property privileged : Bool | Nil
-
-    # readOnlyRootFilesystem when set to true will force containers to run with a read only root file system.  If the container specifically requests to run with a non-read only root file system the PSP should deny the pod. If set to false the container may run with a read only root file system if it wishes but it will not be forced to.
-    @[::JSON::Field(key: "readOnlyRootFilesystem", emit_null: false)]
-    @[::YAML::Field(key: "readOnlyRootFilesystem", emit_null: false)]
-    property read_only_root_filesystem : Bool | Nil
-
-    # requiredDropCapabilities are the capabilities that will be dropped from the container.  These are required to be dropped and cannot be added.
-    @[::JSON::Field(key: "requiredDropCapabilities", emit_null: false)]
-    @[::YAML::Field(key: "requiredDropCapabilities", emit_null: false)]
-    property required_drop_capabilities : Array(String) | Nil
-
-    # RunAsGroup is the strategy that will dictate the allowable RunAsGroup values that may be set. If this field is omitted, the pod's RunAsGroup can take any value. This field requires the RunAsGroup feature gate to be enabled.
-    @[::JSON::Field(key: "runAsGroup", emit_null: false)]
-    @[::YAML::Field(key: "runAsGroup", emit_null: false)]
-    property run_as_group : Api::Policy::V1beta1::RunAsGroupStrategyOptions | Nil
-
-    # runAsUser is the strategy that will dictate the allowable RunAsUser values that may be set.
-    @[::JSON::Field(key: "runAsUser", emit_null: true)]
-    @[::YAML::Field(key: "runAsUser", emit_null: true)]
-    property run_as_user : Api::Policy::V1beta1::RunAsUserStrategyOptions
-
-    # runtimeClass is the strategy that will dictate the allowable RuntimeClasses for a pod. If this field is omitted, the pod's runtimeClassName field is unrestricted. Enforcement of this field depends on the RuntimeClass feature gate being enabled.
-    @[::JSON::Field(key: "runtimeClass", emit_null: false)]
-    @[::YAML::Field(key: "runtimeClass", emit_null: false)]
-    property runtime_class : Api::Policy::V1beta1::RuntimeClassStrategyOptions | Nil
-
-    # seLinux is the strategy that will dictate the allowable labels that may be set.
-    @[::JSON::Field(key: "seLinux", emit_null: true)]
-    @[::YAML::Field(key: "seLinux", emit_null: true)]
-    property se_linux : Api::Policy::V1beta1::SELinuxStrategyOptions
-
-    # supplementalGroups is the strategy that will dictate what supplemental groups are used by the SecurityContext.
-    @[::JSON::Field(key: "supplementalGroups", emit_null: true)]
-    @[::YAML::Field(key: "supplementalGroups", emit_null: true)]
-    property supplemental_groups : Api::Policy::V1beta1::SupplementalGroupsStrategyOptions
-
-    # volumes is an allowlist of volume plugins. Empty indicates that no volumes may be used. To allow all volumes you may use '*'.
-    @[::JSON::Field(key: "volumes", emit_null: false)]
-    @[::YAML::Field(key: "volumes", emit_null: false)]
-    property volumes : Array(String) | Nil
-
-    def initialize(*, @fs_group : Api::Policy::V1beta1::FSGroupStrategyOptions, @run_as_user : Api::Policy::V1beta1::RunAsUserStrategyOptions, @se_linux : Api::Policy::V1beta1::SELinuxStrategyOptions, @supplemental_groups : Api::Policy::V1beta1::SupplementalGroupsStrategyOptions, @allow_privilege_escalation : Bool | Nil = nil, @allowed_csi_drivers : Array(Api::Policy::V1beta1::AllowedCSIDriver) | Nil = nil, @allowed_capabilities : Array(String) | Nil = nil, @allowed_flex_volumes : Array(Api::Policy::V1beta1::AllowedFlexVolume) | Nil = nil, @allowed_host_paths : Array(Api::Policy::V1beta1::AllowedHostPath) | Nil = nil, @allowed_proc_mount_types : Array(String) | Nil = nil, @allowed_unsafe_sysctls : Array(String) | Nil = nil, @default_add_capabilities : Array(String) | Nil = nil, @default_allow_privilege_escalation : Bool | Nil = nil, @forbidden_sysctls : Array(String) | Nil = nil, @host_ipc : Bool | Nil = nil, @host_network : Bool | Nil = nil, @host_pid : Bool | Nil = nil, @host_ports : Array(Api::Policy::V1beta1::HostPortRange) | Nil = nil, @privileged : Bool | Nil = nil, @read_only_root_filesystem : Bool | Nil = nil, @required_drop_capabilities : Array(String) | Nil = nil, @run_as_group : Api::Policy::V1beta1::RunAsGroupStrategyOptions | Nil = nil, @runtime_class : Api::Policy::V1beta1::RuntimeClassStrategyOptions | Nil = nil, @volumes : Array(String) | Nil = nil)
-    end
-  end
-end
+  ]
+)

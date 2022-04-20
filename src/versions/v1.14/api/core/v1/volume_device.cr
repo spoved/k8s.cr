@@ -3,29 +3,12 @@
 require "yaml"
 require "json"
 
-module K8S
-  # volumeDevice describes a mapping of a raw block device within a container.
-  @[::K8S::Properties(
-    device_path: {type: String, nilable: false, key: "devicePath", getter: false, setter: false},
-    name: {type: String, nilable: false, key: "name", getter: false, setter: false},
-  )]
-  class Api::Core::V1::VolumeDevice
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+::K8S::Kubernetes::Resource.define_object("VolumeDevice",
+  namespace: "::K8S::Api::Core::V1",
+  properties: [
 
-    # devicePath is the path inside of the container that the device will be mapped to.
-    @[::JSON::Field(key: "devicePath", emit_null: true)]
-    @[::YAML::Field(key: "devicePath", emit_null: true)]
-    property device_path : String
+    {name: "device_path", kind: String, key: "devicePath", nilable: false, read_only: false, description: "devicePath is the path inside of the container that the device will be mapped to."},
+    {name: "name", kind: String, key: "name", nilable: false, read_only: false, description: "name must match the name of a persistentVolumeClaim in the pod"},
 
-    # name must match the name of a persistentVolumeClaim in the pod
-    @[::JSON::Field(key: "name", emit_null: true)]
-    @[::YAML::Field(key: "name", emit_null: true)]
-    property name : String
-
-    def initialize(*, @device_path : String, @name : String)
-    end
-  end
-end
+  ]
+)

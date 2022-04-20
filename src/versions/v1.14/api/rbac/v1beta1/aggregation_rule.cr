@@ -3,6 +3,6 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Rbac::V1beta1::AggregationRule = Api::Rbac::V1::AggregationRule
-end
+require "../../../apimachinery/apis/meta/v1/label_selector"
+
+alias K8S::Api::Rbac::V1beta1::AggregationRule = Api::Rbac::V1::AggregationRule

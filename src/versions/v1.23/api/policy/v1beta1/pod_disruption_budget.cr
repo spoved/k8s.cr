@@ -3,6 +3,8 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Policy::V1beta1::PodDisruptionBudget = Api::Policy::V1::PodDisruptionBudget
-end
+require "../../../apimachinery/apis/meta/v1/object_meta"
+require "./pod_disruption_budget_spec"
+require "./pod_disruption_budget_status"
+
+alias K8S::Api::Policy::V1beta1::PodDisruptionBudget = Api::Policy::V1::PodDisruptionBudget

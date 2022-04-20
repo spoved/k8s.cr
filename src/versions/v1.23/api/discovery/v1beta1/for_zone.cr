@@ -3,6 +3,4 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Discovery::V1beta1::ForZone = Api::Discovery::V1::ForZone
-end
+alias K8S::Api::Discovery::V1beta1::ForZone = Api::Discovery::V1::ForZone

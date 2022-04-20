@@ -3,6 +3,7 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Batch::V1beta1::JobTemplateSpec = Api::Batch::V1::JobTemplateSpec
-end
+require "../../../apimachinery/apis/meta/v1/object_meta"
+require "../v1/job_spec"
+
+alias K8S::Api::Batch::V1beta1::JobTemplateSpec = Api::Batch::V1::JobTemplateSpec

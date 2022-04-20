@@ -3,35 +3,16 @@
 require "yaml"
 require "json"
 
-module K8S
-  # API server instances report the versions they can decode and the version they encode objects to when persisting objects in the backend.
-  @[::K8S::Properties(
-    common_encoding_version: {type: String, nilable: true, key: "commonEncodingVersion", getter: false, setter: false},
-    conditions: {type: Array(Api::Apiserverinternal::V1alpha1::StorageVersionCondition), nilable: true, key: "conditions", getter: false, setter: false},
-    storage_versions: {type: Array(Api::Apiserverinternal::V1alpha1::ServerStorageVersion), nilable: true, key: "storageVersions", getter: false, setter: false},
-  )]
-  class Api::Apiserverinternal::V1alpha1::StorageVersionStatus
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+require "./storage_version_condition"
+require "./server_storage_version"
 
-    # If all API server instances agree on the same encoding storage version, then this field is set to that version. Otherwise this field is left empty. API servers should finish updating its storageVersionStatus entry before serving write operations, so that this field will be in sync with the reality.
-    @[::JSON::Field(key: "commonEncodingVersion", emit_null: false)]
-    @[::YAML::Field(key: "commonEncodingVersion", emit_null: false)]
-    property common_encoding_version : String | Nil
+::K8S::Kubernetes::Resource.define_object("StorageVersionStatus",
+  namespace: "::K8S::Api::Apiserverinternal::V1alpha1",
+  properties: [
 
-    # The latest available observations of the storageVersion's state.
-    @[::JSON::Field(key: "conditions", emit_null: false)]
-    @[::YAML::Field(key: "conditions", emit_null: false)]
-    property conditions : Array(Api::Apiserverinternal::V1alpha1::StorageVersionCondition) | Nil
+    {name: "common_encoding_version", kind: String, key: "commonEncodingVersion", nilable: true, read_only: false, description: "If all API server instances agree on the same encoding storage version, then this field is set to that version. Otherwise this field is left empty. API servers should finish updating its storageVersionStatus entry before serving write operations, so that this field will be in sync with the reality."},
+    {name: "conditions", kind: ::Array(::K8S::Api::Apiserverinternal::V1alpha1::StorageVersionCondition), key: "conditions", nilable: true, read_only: false, description: "The latest available observations of the storageVersion's state."},
+    {name: "storage_versions", kind: ::Array(::K8S::Api::Apiserverinternal::V1alpha1::ServerStorageVersion), key: "storageVersions", nilable: true, read_only: false, description: "The reported versions per API server instance."},
 
-    # The reported versions per API server instance.
-    @[::JSON::Field(key: "storageVersions", emit_null: false)]
-    @[::YAML::Field(key: "storageVersions", emit_null: false)]
-    property storage_versions : Array(Api::Apiserverinternal::V1alpha1::ServerStorageVersion) | Nil
-
-    def initialize(*, @common_encoding_version : String | Nil = nil, @conditions : Array(Api::Apiserverinternal::V1alpha1::StorageVersionCondition) | Nil = nil, @storage_versions : Array(Api::Apiserverinternal::V1alpha1::ServerStorageVersion) | Nil = nil)
-    end
-  end
-end
+  ]
+)

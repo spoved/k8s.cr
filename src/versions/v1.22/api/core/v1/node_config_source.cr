@@ -3,23 +3,13 @@
 require "yaml"
 require "json"
 
-module K8S
-  # NodeConfigSource specifies a source of node configuration. Exactly one subfield (excluding metadata) must be non-nil. This API is deprecated since 1.22
-  @[::K8S::Properties(
-    config_map: {type: Api::Core::V1::ConfigMapNodeConfigSource, nilable: true, key: "configMap", getter: false, setter: false},
-  )]
-  class Api::Core::V1::NodeConfigSource
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+require "./config_map_node_config_source"
 
-    # ConfigMap is a reference to a Node's ConfigMap
-    @[::JSON::Field(key: "configMap", emit_null: false)]
-    @[::YAML::Field(key: "configMap", emit_null: false)]
-    property config_map : Api::Core::V1::ConfigMapNodeConfigSource | Nil
+::K8S::Kubernetes::Resource.define_object("NodeConfigSource",
+  namespace: "::K8S::Api::Core::V1",
+  properties: [
 
-    def initialize(*, @config_map : Api::Core::V1::ConfigMapNodeConfigSource | Nil = nil)
-    end
-  end
-end
+    {name: "config_map", kind: ::K8S::Api::Core::V1::ConfigMapNodeConfigSource, key: "configMap", nilable: true, read_only: false, description: "ConfigMap is a reference to a Node's ConfigMap"},
+
+  ]
+)

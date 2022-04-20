@@ -3,6 +3,4 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Authorization::V1beta1::NonResourceRule = Api::Authorization::V1::NonResourceRule
-end
+alias K8S::Api::Authorization::V1beta1::NonResourceRule = Api::Authorization::V1::NonResourceRule

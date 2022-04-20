@@ -3,125 +3,25 @@
 require "yaml"
 require "json"
 
-module K8S
-  # MutatingWebhook describes an admission webhook and the resources and operations it applies to.
-  @[::K8S::Properties(
-    admission_review_versions: {type: Array(String), nilable: false, key: "admissionReviewVersions", getter: false, setter: false},
-    client_config: {type: Api::Admissionregistration::V1::WebhookClientConfig, nilable: false, key: "clientConfig", getter: false, setter: false},
-    failure_policy: {type: String, nilable: true, key: "failurePolicy", getter: false, setter: false},
-    match_policy: {type: String, nilable: true, key: "matchPolicy", getter: false, setter: false},
-    name: {type: String, nilable: false, key: "name", getter: false, setter: false},
-    namespace_selector: {type: Apimachinery::Apis::Meta::V1::LabelSelector, nilable: true, key: "namespaceSelector", getter: false, setter: false},
-    object_selector: {type: Apimachinery::Apis::Meta::V1::LabelSelector, nilable: true, key: "objectSelector", getter: false, setter: false},
-    reinvocation_policy: {type: String, nilable: true, key: "reinvocationPolicy", getter: false, setter: false},
-    rules: {type: Array(Api::Admissionregistration::V1::RuleWithOperations), nilable: true, key: "rules", getter: false, setter: false},
-    side_effects: {type: String, nilable: false, key: "sideEffects", getter: false, setter: false},
-    timeout_seconds: {type: Int32, nilable: true, key: "timeoutSeconds", getter: false, setter: false},
-  )]
-  class Api::Admissionregistration::V1::MutatingWebhook
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+require "./webhook_client_config"
+require "../../../apimachinery/apis/meta/v1/label_selector"
+require "./rule_with_operations"
 
-    # AdmissionReviewVersions is an ordered list of preferred `AdmissionReview` versions the Webhook expects. API server will try to use first version in the list which it supports. If none of the versions specified in this list supported by API server, validation will fail for this object. If a persisted webhook configuration specifies allowed versions and does not include any versions known to the API Server, calls to the webhook will fail and be subject to the failure policy.
-    @[::JSON::Field(key: "admissionReviewVersions", emit_null: true)]
-    @[::YAML::Field(key: "admissionReviewVersions", emit_null: true)]
-    property admission_review_versions : Array(String)
+::K8S::Kubernetes::Resource.define_object("MutatingWebhook",
+  namespace: "::K8S::Api::Admissionregistration::V1",
+  properties: [
 
-    # ClientConfig defines how to communicate with the hook. Required
-    @[::JSON::Field(key: "clientConfig", emit_null: true)]
-    @[::YAML::Field(key: "clientConfig", emit_null: true)]
-    property client_config : Api::Admissionregistration::V1::WebhookClientConfig
+    {name: "admission_review_versions", kind: ::Array(String), key: "admissionReviewVersions", nilable: false, read_only: false, description: "AdmissionReviewVersions is an ordered list of preferred `AdmissionReview` versions the Webhook expects. API server will try to use first version in the list which it supports. If none of the versions specified in this list supported by API server, validation will fail for this object. If a persisted webhook configuration specifies allowed versions and does not include any versions known to the API Server, calls to the webhook will fail and be subject to the failure policy."},
+    {name: "client_config", kind: ::K8S::Api::Admissionregistration::V1::WebhookClientConfig, key: "clientConfig", nilable: false, read_only: false, description: "ClientConfig defines how to communicate with the hook. Required"},
+    {name: "failure_policy", kind: String, key: "failurePolicy", nilable: true, read_only: false, description: "FailurePolicy defines how unrecognized errors from the admission endpoint are handled - allowed values are Ignore or Fail. Defaults to Fail."},
+    {name: "match_policy", kind: String, key: "matchPolicy", nilable: true, read_only: false, description: "matchPolicy defines how the \"rules\" list is used to match incoming requests. Allowed values are \"Exact\" or \"Equivalent\".\n\n- Exact: match a request only if it exactly matches a specified rule. For example, if deployments can be modified via [apps/v1, apps/v1beta1, and extensions/v1beta1, but \"rules\" only included `apiGroups:[\"apps\"], apiVersions:[\"v1\"], resources: [\"deployments\"]`, a request to apps/v1beta1 or extensions/v1beta1 would not be sent to the webhook.](apps/v1, apps/v1beta1, and extensions/v1beta1, but \"rules\" only included `apiGroups:[\"apps\"], apiVersions:[\"v1\"], resources: [\"deployments\"]`, a request to apps/v1beta1 or extensions/v1beta1 would not be sent to the webhook.)\n\n- Equivalent: match a request if modifies a resource listed in rules, even via another API group or version. For example, if deployments can be modified via [apps/v1, apps/v1beta1, and extensions/v1beta1, and \"rules\" only included `apiGroups:[\"apps\"], apiVersions:[\"v1\"], resources: [\"deployments\"]`, a request to apps/v1beta1 or extensions/v1beta1 would be converted to apps/v1 and sent to the webhook.](apps/v1, apps/v1beta1, and extensions/v1beta1, and \"rules\" only included `apiGroups:[\"apps\"], apiVersions:[\"v1\"], resources: [\"deployments\"]`, a request to apps/v1beta1 or extensions/v1beta1 would be converted to apps/v1 and sent to the webhook.)\n\nDefaults to \"Equivalent\""},
+    {name: "name", kind: String, key: "name", nilable: false, read_only: false, description: "The name of the admission webhook. Name should be fully qualified, e.g., imagepolicy.kubernetes.io, where \"imagepolicy\" is the name of the webhook, and kubernetes.io is the name of the organization. Required."},
+    {name: "namespace_selector", kind: ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector, key: "namespaceSelector", nilable: true, read_only: false, description: "NamespaceSelector decides whether to run the webhook on an object based on whether the namespace for that object matches the selector. If the object itself is a namespace, the matching is performed on object.metadata.labels. If the object is another cluster scoped resource, it never skips the webhook.\n\nFor example, to run the webhook on any objects whose namespace is not associated with \"runlevel\" of \"0\" or \"1\";  you will set the selector as follows: \"namespaceSelector\": {\n  \"matchExpressions\": [\n    {\n      \"key\": \"runlevel\",\n      \"operator\": \"NotIn\",\n      \"values\": [\n        \"0\",\n        \"1\"\n      ]\n    }\n  ]\n}\n\nIf instead you want to only run the webhook on any objects whose namespace is associated with the \"environment\" of \"prod\" or \"staging\"; you will set the selector as follows: \"namespaceSelector\": {\n  \"matchExpressions\": [\n    {\n      \"key\": \"environment\",\n      \"operator\": \"In\",\n      \"values\": [\n        \"prod\",\n        \"staging\"\n      ]\n    }\n  ]\n}\n\nSee [https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/ for more examples of label selectors.](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/ for more examples of label selectors.)\n\nDefault to the empty LabelSelector, which matches everything."},
+    {name: "object_selector", kind: ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector, key: "objectSelector", nilable: true, read_only: false, description: "ObjectSelector decides whether to run the webhook based on if the object has matching labels. objectSelector is evaluated against both the oldObject and newObject that would be sent to the webhook, and is considered to match if either object matches the selector. A null object (oldObject in the case of create, or newObject in the case of delete) or an object that cannot have labels (like a DeploymentRollback or a PodProxyOptions object) is not considered to match. Use the object selector only if the webhook is opt-in, because end users may skip the admission webhook by setting the labels. Default to the empty LabelSelector, which matches everything."},
+    {name: "reinvocation_policy", kind: String, key: "reinvocationPolicy", nilable: true, read_only: false, description: "reinvocationPolicy indicates whether this webhook should be called multiple times as part of a single admission evaluation. Allowed values are \"Never\" and \"IfNeeded\".\n\nNever: the webhook will not be called more than once in a single admission evaluation.\n\nIfNeeded: the webhook will be called at least one additional time as part of the admission evaluation if the object being admitted is modified by other admission plugins after the initial webhook call. Webhooks that specify this option *must* be idempotent, able to process objects they previously admitted. Note: * the number of additional invocations is not guaranteed to be exactly one. * if additional invocations result in further modifications to the object, webhooks are not guaranteed to be invoked again. * webhooks that use this option may be reordered to minimize the number of additional invocations. * to validate an object after all mutations are guaranteed complete, use a validating admission webhook instead.\n\nDefaults to \"Never\"."},
+    {name: "rules", kind: ::Array(::K8S::Api::Admissionregistration::V1::RuleWithOperations), key: "rules", nilable: true, read_only: false, description: "Rules describes what operations on what [resources/subresources the webhook cares about. The webhook cares about an operation if it matches _any_ Rule. However, in order to prevent ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks from putting the cluster in a state which cannot be recovered from without completely disabling the plugin, ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks are never called on admission requests for ValidatingWebhookConfiguration and MutatingWebhookConfiguration objects.](resources/subresources the webhook cares about. The webhook cares about an operation if it matches _any_ Rule. However, in order to prevent ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks from putting the cluster in a state which cannot be recovered from without completely disabling the plugin, ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks are never called on admission requests for ValidatingWebhookConfiguration and MutatingWebhookConfiguration objects.)"},
+    {name: "side_effects", kind: String, key: "sideEffects", nilable: false, read_only: false, description: "SideEffects states whether this webhook has side effects. Acceptable values are: None, NoneOnDryRun (webhooks created via v1beta1 may also specify Some or Unknown). Webhooks with side effects MUST implement a reconciliation system, since a request may be rejected by a future step in the admission change and the side effects therefore need to be undone. Requests with the dryRun attribute will be auto-rejected if they match a webhook with sideEffects == Unknown or Some."},
+    {name: "timeout_seconds", kind: Int32, key: "timeoutSeconds", nilable: true, read_only: false, description: "TimeoutSeconds specifies the timeout for this webhook. After the timeout passes, the webhook call will be ignored or the API call will fail based on the failure policy. The timeout value must be between 1 and 30 seconds. Default to 10 seconds."},
 
-    # FailurePolicy defines how unrecognized errors from the admission endpoint are handled - allowed values are Ignore or Fail. Defaults to Fail.
-    @[::JSON::Field(key: "failurePolicy", emit_null: false)]
-    @[::YAML::Field(key: "failurePolicy", emit_null: false)]
-    property failure_policy : String | Nil
-
-    # matchPolicy defines how the "rules" list is used to match incoming requests. Allowed values are "Exact" or "Equivalent".
-    #
-    # - Exact: match a request only if it exactly matches a specified rule. For example, if deployments can be modified via [apps/v1, apps/v1beta1, and extensions/v1beta1, but "rules" only included `apiGroups:["apps"], apiVersions:["v1"], resources: ["deployments"]`, a request to apps/v1beta1 or extensions/v1beta1 would not be sent to the webhook.](apps/v1, apps/v1beta1, and extensions/v1beta1, but "rules" only included `apiGroups:["apps"], apiVersions:["v1"], resources: ["deployments"]`, a request to apps/v1beta1 or extensions/v1beta1 would not be sent to the webhook.)
-    #
-    # - Equivalent: match a request if modifies a resource listed in rules, even via another API group or version. For example, if deployments can be modified via [apps/v1, apps/v1beta1, and extensions/v1beta1, and "rules" only included `apiGroups:["apps"], apiVersions:["v1"], resources: ["deployments"]`, a request to apps/v1beta1 or extensions/v1beta1 would be converted to apps/v1 and sent to the webhook.](apps/v1, apps/v1beta1, and extensions/v1beta1, and "rules" only included `apiGroups:["apps"], apiVersions:["v1"], resources: ["deployments"]`, a request to apps/v1beta1 or extensions/v1beta1 would be converted to apps/v1 and sent to the webhook.)
-    #
-    # Defaults to "Equivalent"
-    @[::JSON::Field(key: "matchPolicy", emit_null: false)]
-    @[::YAML::Field(key: "matchPolicy", emit_null: false)]
-    property match_policy : String | Nil
-
-    # The name of the admission webhook. Name should be fully qualified, e.g., imagepolicy.kubernetes.io, where "imagepolicy" is the name of the webhook, and kubernetes.io is the name of the organization. Required.
-    @[::JSON::Field(key: "name", emit_null: true)]
-    @[::YAML::Field(key: "name", emit_null: true)]
-    property name : String
-
-    # NamespaceSelector decides whether to run the webhook on an object based on whether the namespace for that object matches the selector. If the object itself is a namespace, the matching is performed on object.metadata.labels. If the object is another cluster scoped resource, it never skips the webhook.
-    #
-    # For example, to run the webhook on any objects whose namespace is not associated with "runlevel" of "0" or "1";  you will set the selector as follows: "namespaceSelector": {
-    #   "matchExpressions": [
-    #     {
-    #       "key": "runlevel",
-    #       "operator": "NotIn",
-    #       "values": [
-    #         "0",
-    #         "1"
-    #       ]
-    #     }
-    #   ]
-    # }
-    #
-    # If instead you want to only run the webhook on any objects whose namespace is associated with the "environment" of "prod" or "staging"; you will set the selector as follows: "namespaceSelector": {
-    #   "matchExpressions": [
-    #     {
-    #       "key": "environment",
-    #       "operator": "In",
-    #       "values": [
-    #         "prod",
-    #         "staging"
-    #       ]
-    #     }
-    #   ]
-    # }
-    #
-    # See [https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/ for more examples of label selectors.](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/ for more examples of label selectors.)
-    #
-    # Default to the empty LabelSelector, which matches everything.
-    @[::JSON::Field(key: "namespaceSelector", emit_null: false)]
-    @[::YAML::Field(key: "namespaceSelector", emit_null: false)]
-    property namespace_selector : Apimachinery::Apis::Meta::V1::LabelSelector | Nil
-
-    # ObjectSelector decides whether to run the webhook based on if the object has matching labels. objectSelector is evaluated against both the oldObject and newObject that would be sent to the webhook, and is considered to match if either object matches the selector. A null object (oldObject in the case of create, or newObject in the case of delete) or an object that cannot have labels (like a DeploymentRollback or a PodProxyOptions object) is not considered to match. Use the object selector only if the webhook is opt-in, because end users may skip the admission webhook by setting the labels. Default to the empty LabelSelector, which matches everything.
-    @[::JSON::Field(key: "objectSelector", emit_null: false)]
-    @[::YAML::Field(key: "objectSelector", emit_null: false)]
-    property object_selector : Apimachinery::Apis::Meta::V1::LabelSelector | Nil
-
-    # reinvocationPolicy indicates whether this webhook should be called multiple times as part of a single admission evaluation. Allowed values are "Never" and "IfNeeded".
-    #
-    # Never: the webhook will not be called more than once in a single admission evaluation.
-    #
-    # IfNeeded: the webhook will be called at least one additional time as part of the admission evaluation if the object being admitted is modified by other admission plugins after the initial webhook call. Webhooks that specify this option *must* be idempotent, able to process objects they previously admitted. Note: * the number of additional invocations is not guaranteed to be exactly one. * if additional invocations result in further modifications to the object, webhooks are not guaranteed to be invoked again. * webhooks that use this option may be reordered to minimize the number of additional invocations. * to validate an object after all mutations are guaranteed complete, use a validating admission webhook instead.
-    #
-    # Defaults to "Never".
-    @[::JSON::Field(key: "reinvocationPolicy", emit_null: false)]
-    @[::YAML::Field(key: "reinvocationPolicy", emit_null: false)]
-    property reinvocation_policy : String | Nil
-
-    # Rules describes what operations on what [resources/subresources the webhook cares about. The webhook cares about an operation if it matches _any_ Rule. However, in order to prevent ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks from putting the cluster in a state which cannot be recovered from without completely disabling the plugin, ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks are never called on admission requests for ValidatingWebhookConfiguration and MutatingWebhookConfiguration objects.](resources/subresources the webhook cares about. The webhook cares about an operation if it matches _any_ Rule. However, in order to prevent ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks from putting the cluster in a state which cannot be recovered from without completely disabling the plugin, ValidatingAdmissionWebhooks and MutatingAdmissionWebhooks are never called on admission requests for ValidatingWebhookConfiguration and MutatingWebhookConfiguration objects.)
-    @[::JSON::Field(key: "rules", emit_null: false)]
-    @[::YAML::Field(key: "rules", emit_null: false)]
-    property rules : Array(Api::Admissionregistration::V1::RuleWithOperations) | Nil
-
-    # SideEffects states whether this webhook has side effects. Acceptable values are: None, NoneOnDryRun (webhooks created via v1beta1 may also specify Some or Unknown). Webhooks with side effects MUST implement a reconciliation system, since a request may be rejected by a future step in the admission change and the side effects therefore need to be undone. Requests with the dryRun attribute will be auto-rejected if they match a webhook with sideEffects == Unknown or Some.
-    @[::JSON::Field(key: "sideEffects", emit_null: true)]
-    @[::YAML::Field(key: "sideEffects", emit_null: true)]
-    property side_effects : String
-
-    # TimeoutSeconds specifies the timeout for this webhook. After the timeout passes, the webhook call will be ignored or the API call will fail based on the failure policy. The timeout value must be between 1 and 30 seconds. Default to 10 seconds.
-    @[::JSON::Field(key: "timeoutSeconds", emit_null: false)]
-    @[::YAML::Field(key: "timeoutSeconds", emit_null: false)]
-    property timeout_seconds : Int32 | Nil
-
-    def initialize(*, @admission_review_versions : Array(String), @client_config : Api::Admissionregistration::V1::WebhookClientConfig, @name : String, @side_effects : String, @failure_policy : String | Nil = nil, @match_policy : String | Nil = nil, @namespace_selector : Apimachinery::Apis::Meta::V1::LabelSelector | Nil = nil, @object_selector : Apimachinery::Apis::Meta::V1::LabelSelector | Nil = nil, @reinvocation_policy : String | Nil = nil, @rules : Array(Api::Admissionregistration::V1::RuleWithOperations) | Nil = nil, @timeout_seconds : Int32 | Nil = nil)
-    end
-  end
-end
+  ]
+)

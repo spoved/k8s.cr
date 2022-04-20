@@ -3,29 +3,12 @@
 require "yaml"
 require "json"
 
-module K8S
-  # NodeAddress contains information for the node's address.
-  @[::K8S::Properties(
-    address: {type: String, nilable: false, key: "address", getter: false, setter: false},
-    type: {type: String, nilable: false, key: "type", getter: false, setter: false},
-  )]
-  class Api::Core::V1::NodeAddress
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+::K8S::Kubernetes::Resource.define_object("NodeAddress",
+  namespace: "::K8S::Api::Core::V1",
+  properties: [
 
-    # The node address.
-    @[::JSON::Field(key: "address", emit_null: true)]
-    @[::YAML::Field(key: "address", emit_null: true)]
-    property address : String
+    {name: "address", kind: String, key: "address", nilable: false, read_only: false, description: "The node address."},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: "Node address type, one of Hostname, ExternalIP or InternalIP."},
 
-    # Node address type, one of Hostname, ExternalIP or InternalIP.
-    @[::JSON::Field(key: "type", emit_null: true)]
-    @[::YAML::Field(key: "type", emit_null: true)]
-    property type : String
-
-    def initialize(*, @address : String, @type : String)
-    end
-  end
-end
+  ]
+)

@@ -3,35 +3,13 @@
 require "yaml"
 require "json"
 
-module K8S
-  # CustomResourceSubresourceScale defines how to serve the scale subresource for CustomResources.
-  @[::K8S::Properties(
-    label_selector_path: {type: String, nilable: true, key: "labelSelectorPath", getter: false, setter: false},
-    spec_replicas_path: {type: String, nilable: false, key: "specReplicasPath", getter: false, setter: false},
-    status_replicas_path: {type: String, nilable: false, key: "statusReplicasPath", getter: false, setter: false},
-  )]
-  class ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceSubresourceScale
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+::K8S::Kubernetes::Resource.define_object("CustomResourceSubresourceScale",
+  namespace: "::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1",
+  properties: [
 
-    # LabelSelectorPath defines the JSON path inside of a CustomResource that corresponds to Scale.Status.Selector. Only JSON paths without the array notation are allowed. Must be a JSON Path under .status or .spec. Must be set to work with HPA. The field pointed by this JSON path must be a string field (not a complex selector struct) which contains a serialized label selector in string form. More info: [https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions#scale-subresource If there is no value under the given path in the CustomResource, the status label selector value in the /scale subresource will default to the empty string.](https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions#scale-subresource If there is no value under the given path in the CustomResource, the status label selector value in the /scale subresource will default to the empty string.)
-    @[::JSON::Field(key: "labelSelectorPath", emit_null: false)]
-    @[::YAML::Field(key: "labelSelectorPath", emit_null: false)]
-    property label_selector_path : String | Nil
+    {name: "label_selector_path", kind: String, key: "labelSelectorPath", nilable: true, read_only: false, description: "LabelSelectorPath defines the JSON path inside of a CustomResource that corresponds to Scale.Status.Selector. Only JSON paths without the array notation are allowed. Must be a JSON Path under .status or .spec. Must be set to work with HPA. The field pointed by this JSON path must be a string field (not a complex selector struct) which contains a serialized label selector in string form. More info: [https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions#scale-subresource If there is no value under the given path in the CustomResource, the status label selector value in the /scale subresource will default to the empty string.](https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions#scale-subresource If there is no value under the given path in the CustomResource, the status label selector value in the /scale subresource will default to the empty string.)"},
+    {name: "spec_replicas_path", kind: String, key: "specReplicasPath", nilable: false, read_only: false, description: "SpecReplicasPath defines the JSON path inside of a CustomResource that corresponds to Scale.Spec.Replicas. Only JSON paths without the array notation are allowed. Must be a JSON Path under .spec. If there is no value under the given path in the CustomResource, the /scale subresource will return an error on GET."},
+    {name: "status_replicas_path", kind: String, key: "statusReplicasPath", nilable: false, read_only: false, description: "StatusReplicasPath defines the JSON path inside of a CustomResource that corresponds to Scale.Status.Replicas. Only JSON paths without the array notation are allowed. Must be a JSON Path under .status. If there is no value under the given path in the CustomResource, the status replica value in the /scale subresource will default to 0."},
 
-    # SpecReplicasPath defines the JSON path inside of a CustomResource that corresponds to Scale.Spec.Replicas. Only JSON paths without the array notation are allowed. Must be a JSON Path under .spec. If there is no value under the given path in the CustomResource, the /scale subresource will return an error on GET.
-    @[::JSON::Field(key: "specReplicasPath", emit_null: true)]
-    @[::YAML::Field(key: "specReplicasPath", emit_null: true)]
-    property spec_replicas_path : String
-
-    # StatusReplicasPath defines the JSON path inside of a CustomResource that corresponds to Scale.Status.Replicas. Only JSON paths without the array notation are allowed. Must be a JSON Path under .status. If there is no value under the given path in the CustomResource, the status replica value in the /scale subresource will default to 0.
-    @[::JSON::Field(key: "statusReplicasPath", emit_null: true)]
-    @[::YAML::Field(key: "statusReplicasPath", emit_null: true)]
-    property status_replicas_path : String
-
-    def initialize(*, @spec_replicas_path : String, @status_replicas_path : String, @label_selector_path : String | Nil = nil)
-    end
-  end
-end
+  ]
+)

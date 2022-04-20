@@ -3,23 +3,11 @@
 require "yaml"
 require "json"
 
-module K8S
-  # PodReadinessGate contains the reference to a pod condition
-  @[::K8S::Properties(
-    condition_type: {type: String, nilable: false, key: "conditionType", getter: false, setter: false},
-  )]
-  class Api::Core::V1::PodReadinessGate
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+::K8S::Kubernetes::Resource.define_object("PodReadinessGate",
+  namespace: "::K8S::Api::Core::V1",
+  properties: [
 
-    # ConditionType refers to a condition in the pod's condition list with matching type.
-    @[::JSON::Field(key: "conditionType", emit_null: true)]
-    @[::YAML::Field(key: "conditionType", emit_null: true)]
-    property condition_type : String
+    {name: "condition_type", kind: String, key: "conditionType", nilable: false, read_only: false, description: "ConditionType refers to a condition in the pod's condition list with matching type."},
 
-    def initialize(*, @condition_type : String)
-    end
-  end
-end
+  ]
+)

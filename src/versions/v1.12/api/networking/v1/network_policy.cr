@@ -3,6 +3,7 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Networking::V1::NetworkPolicy = Api::Extensions::V1beta1::NetworkPolicy
-end
+require "../../../apimachinery/apis/meta/v1/object_meta"
+require "./network_policy_spec"
+
+alias K8S::Api::Networking::V1::NetworkPolicy = Api::Extensions::V1beta1::NetworkPolicy

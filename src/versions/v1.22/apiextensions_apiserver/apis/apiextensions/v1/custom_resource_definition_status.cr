@@ -3,35 +3,16 @@
 require "yaml"
 require "json"
 
-module K8S
-  # CustomResourceDefinitionStatus indicates the state of the CustomResourceDefinition
-  @[::K8S::Properties(
-    accepted_names: {type: ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionNames, nilable: true, key: "acceptedNames", getter: false, setter: false},
-    conditions: {type: Array(ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionCondition), nilable: true, key: "conditions", getter: false, setter: false},
-    stored_versions: {type: Array(String), nilable: true, key: "storedVersions", getter: false, setter: false},
-  )]
-  class ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionStatus
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+require "./custom_resource_definition_names"
+require "./custom_resource_definition_condition"
 
-    # acceptedNames are the names that are actually being used to serve discovery. They may be different than the names in spec.
-    @[::JSON::Field(key: "acceptedNames", emit_null: false)]
-    @[::YAML::Field(key: "acceptedNames", emit_null: false)]
-    property accepted_names : ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionNames | Nil
+::K8S::Kubernetes::Resource.define_object("CustomResourceDefinitionStatus",
+  namespace: "::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1",
+  properties: [
 
-    # conditions indicate state for particular aspects of a CustomResourceDefinition
-    @[::JSON::Field(key: "conditions", emit_null: false)]
-    @[::YAML::Field(key: "conditions", emit_null: false)]
-    property conditions : Array(ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionCondition) | Nil
+    {name: "accepted_names", kind: ::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionNames, key: "acceptedNames", nilable: true, read_only: false, description: "acceptedNames are the names that are actually being used to serve discovery. They may be different than the names in spec."},
+    {name: "conditions", kind: ::Array(::K8S::ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionCondition), key: "conditions", nilable: true, read_only: false, description: "conditions indicate state for particular aspects of a CustomResourceDefinition"},
+    {name: "stored_versions", kind: ::Array(String), key: "storedVersions", nilable: true, read_only: false, description: "storedVersions lists all versions of CustomResources that were ever persisted. Tracking these versions allows a migration path for stored versions in etcd. The field is mutable so a migration controller can finish a migration to another version (ensuring no old objects are left in storage), and then remove the rest of the versions from this list. Versions may not be removed from `spec.versions` while they exist in this list."},
 
-    # storedVersions lists all versions of CustomResources that were ever persisted. Tracking these versions allows a migration path for stored versions in etcd. The field is mutable so a migration controller can finish a migration to another version (ensuring no old objects are left in storage), and then remove the rest of the versions from this list. Versions may not be removed from `spec.versions` while they exist in this list.
-    @[::JSON::Field(key: "storedVersions", emit_null: false)]
-    @[::YAML::Field(key: "storedVersions", emit_null: false)]
-    property stored_versions : Array(String) | Nil
-
-    def initialize(*, @accepted_names : ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionNames | Nil = nil, @conditions : Array(ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceDefinitionCondition) | Nil = nil, @stored_versions : Array(String) | Nil = nil)
-    end
-  end
-end
+  ]
+)

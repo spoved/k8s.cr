@@ -3,41 +3,16 @@
 require "yaml"
 require "json"
 
-module K8S
-  # ExternalMetricStatus indicates the current value of a global metric not associated with any Kubernetes object.
-  @[::K8S::Properties(
-    current_average_value: {type: Int32 | String, nilable: true, key: "currentAverageValue", getter: false, setter: false},
-    current_value: {type: Int32 | String, nilable: false, key: "currentValue", getter: false, setter: false},
-    metric_name: {type: String, nilable: false, key: "metricName", getter: false, setter: false},
-    metric_selector: {type: Apimachinery::Apis::Meta::V1::LabelSelector, nilable: true, key: "metricSelector", getter: false, setter: false},
-  )]
-  class Api::Autoscaling::V2beta1::ExternalMetricStatus
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+require "../../../apimachinery/apis/meta/v1/label_selector"
 
-    # currentAverageValue is the current value of metric averaged over autoscaled pods.
-    @[::JSON::Field(key: "currentAverageValue", emit_null: false)]
-    @[::YAML::Field(key: "currentAverageValue", emit_null: false)]
-    property current_average_value : Int32 | String | Nil
+::K8S::Kubernetes::Resource.define_object("ExternalMetricStatus",
+  namespace: "::K8S::Api::Autoscaling::V2beta1",
+  properties: [
 
-    # currentValue is the current value of the metric (as a quantity)
-    @[::JSON::Field(key: "currentValue", emit_null: true)]
-    @[::YAML::Field(key: "currentValue", emit_null: true)]
-    property current_value : Int32 | String
+    {name: "current_average_value", kind: Union(::Int32 | ::String), key: "currentAverageValue", nilable: true, read_only: false, description: "currentAverageValue is the current value of metric averaged over autoscaled pods."},
+    {name: "current_value", kind: Union(::Int32 | ::String), key: "currentValue", nilable: false, read_only: false, description: "currentValue is the current value of the metric (as a quantity)"},
+    {name: "metric_name", kind: String, key: "metricName", nilable: false, read_only: false, description: "metricName is the name of a metric used for autoscaling in metric system."},
+    {name: "metric_selector", kind: ::K8S::Apimachinery::Apis::Meta::V1::LabelSelector, key: "metricSelector", nilable: true, read_only: false, description: "metricSelector is used to identify a specific time series within a given metric."},
 
-    # metricName is the name of a metric used for autoscaling in metric system.
-    @[::JSON::Field(key: "metricName", emit_null: true)]
-    @[::YAML::Field(key: "metricName", emit_null: true)]
-    property metric_name : String
-
-    # metricSelector is used to identify a specific time series within a given metric.
-    @[::JSON::Field(key: "metricSelector", emit_null: false)]
-    @[::YAML::Field(key: "metricSelector", emit_null: false)]
-    property metric_selector : Apimachinery::Apis::Meta::V1::LabelSelector | Nil
-
-    def initialize(*, @current_value : Int32 | String, @metric_name : String, @current_average_value : Int32 | String | Nil = nil, @metric_selector : Apimachinery::Apis::Meta::V1::LabelSelector | Nil = nil)
-    end
-  end
-end
+  ]
+)

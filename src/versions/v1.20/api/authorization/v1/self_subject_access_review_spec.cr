@@ -3,29 +3,15 @@
 require "yaml"
 require "json"
 
-module K8S
-  # SelfSubjectAccessReviewSpec is a description of the access request.  Exactly one of ResourceAuthorizationAttributes and NonResourceAuthorizationAttributes must be set
-  @[::K8S::Properties(
-    non_resource_attributes: {type: Api::Authorization::V1::NonResourceAttributes, nilable: true, key: "nonResourceAttributes", getter: false, setter: false},
-    resource_attributes: {type: Api::Authorization::V1::ResourceAttributes, nilable: true, key: "resourceAttributes", getter: false, setter: false},
-  )]
-  class Api::Authorization::V1::SelfSubjectAccessReviewSpec
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+require "./non_resource_attributes"
+require "./resource_attributes"
 
-    # NonResourceAttributes describes information for a non-resource access request
-    @[::JSON::Field(key: "nonResourceAttributes", emit_null: false)]
-    @[::YAML::Field(key: "nonResourceAttributes", emit_null: false)]
-    property non_resource_attributes : Api::Authorization::V1::NonResourceAttributes | Nil
+::K8S::Kubernetes::Resource.define_object("SelfSubjectAccessReviewSpec",
+  namespace: "::K8S::Api::Authorization::V1",
+  properties: [
 
-    # ResourceAuthorizationAttributes describes information for a resource access request
-    @[::JSON::Field(key: "resourceAttributes", emit_null: false)]
-    @[::YAML::Field(key: "resourceAttributes", emit_null: false)]
-    property resource_attributes : Api::Authorization::V1::ResourceAttributes | Nil
+    {name: "non_resource_attributes", kind: ::K8S::Api::Authorization::V1::NonResourceAttributes, key: "nonResourceAttributes", nilable: true, read_only: false, description: "NonResourceAttributes describes information for a non-resource access request"},
+    {name: "resource_attributes", kind: ::K8S::Api::Authorization::V1::ResourceAttributes, key: "resourceAttributes", nilable: true, read_only: false, description: "ResourceAuthorizationAttributes describes information for a resource access request"},
 
-    def initialize(*, @non_resource_attributes : Api::Authorization::V1::NonResourceAttributes | Nil = nil, @resource_attributes : Api::Authorization::V1::ResourceAttributes | Nil = nil)
-    end
-  end
-end
+  ]
+)

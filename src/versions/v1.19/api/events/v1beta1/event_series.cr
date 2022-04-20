@@ -3,6 +3,4 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Events::V1beta1::EventSeries = Api::Events::V1::EventSeries
-end
+alias K8S::Api::Events::V1beta1::EventSeries = Api::Events::V1::EventSeries

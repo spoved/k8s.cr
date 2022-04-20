@@ -3,29 +3,15 @@
 require "yaml"
 require "json"
 
-module K8S
-  # IngressBackend describes all endpoints for a given service and port.
-  @[::K8S::Properties(
-    resource: {type: Api::Core::V1::TypedLocalObjectReference, nilable: true, key: "resource", getter: false, setter: false},
-    service: {type: Api::Networking::V1::IngressServiceBackend, nilable: true, key: "service", getter: false, setter: false},
-  )]
-  class Api::Networking::V1::IngressBackend
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+require "../../core/v1/typed_local_object_reference"
+require "./ingress_service_backend"
 
-    # Resource is an ObjectRef to another Kubernetes resource in the namespace of the Ingress object. If resource is specified, a service.Name and service.Port must not be specified. This is a mutually exclusive setting with "Service".
-    @[::JSON::Field(key: "resource", emit_null: false)]
-    @[::YAML::Field(key: "resource", emit_null: false)]
-    property resource : Api::Core::V1::TypedLocalObjectReference | Nil
+::K8S::Kubernetes::Resource.define_object("IngressBackend",
+  namespace: "::K8S::Api::Networking::V1",
+  properties: [
 
-    # Service references a Service as a Backend. This is a mutually exclusive setting with "Resource".
-    @[::JSON::Field(key: "service", emit_null: false)]
-    @[::YAML::Field(key: "service", emit_null: false)]
-    property service : Api::Networking::V1::IngressServiceBackend | Nil
+    {name: "resource", kind: ::K8S::Api::Core::V1::TypedLocalObjectReference, key: "resource", nilable: true, read_only: false, description: "Resource is an ObjectRef to another Kubernetes resource in the namespace of the Ingress object. If resource is specified, a service.Name and service.Port must not be specified. This is a mutually exclusive setting with \"Service\"."},
+    {name: "service", kind: ::K8S::Api::Networking::V1::IngressServiceBackend, key: "service", nilable: true, read_only: false, description: "Service references a Service as a Backend. This is a mutually exclusive setting with \"Resource\"."},
 
-    def initialize(*, @resource : Api::Core::V1::TypedLocalObjectReference | Nil = nil, @service : Api::Networking::V1::IngressServiceBackend | Nil = nil)
-    end
-  end
-end
+  ]
+)

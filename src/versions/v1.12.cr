@@ -2,9 +2,6 @@
 
 require "../k8s/*"
 
-annotation ::K8S::GroupVersionKind; end
-annotation ::K8S::Action; end
-
 require "./v1.12/kubernetes"
 require "./v1.12/api/admissionregistration/v1alpha1/initializer.cr"
 require "./v1.12/api/admissionregistration/v1alpha1/initializer_configuration.cr"

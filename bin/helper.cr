@@ -62,4 +62,5 @@ def crystalize_name(name : String)
     .gsub(/CIDR/, "Cidr").gsub(/CPU/, "Cpu").gsub(/CSI/, "Csi").gsub(/TLS/, "Tls")
     .gsub(/[A-Z]{2,3}/, &.capitalize).underscore.lchop("_").lchop("$")
     .gsub('-', '_')
+    .gsub(/^enum$/, "_enum")
 end

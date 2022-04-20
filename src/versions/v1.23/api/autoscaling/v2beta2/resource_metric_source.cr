@@ -3,6 +3,6 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Autoscaling::V2beta2::ResourceMetricSource = Api::Autoscaling::V2::ResourceMetricSource
-end
+require "./metric_target"
+
+alias K8S::Api::Autoscaling::V2beta2::ResourceMetricSource = Api::Autoscaling::V2::ResourceMetricSource

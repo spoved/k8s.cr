@@ -3,6 +3,6 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Flowcontrol::V1beta1::FlowSchemaStatus = Api::Flowcontrol::V1alpha1::FlowSchemaStatus
-end
+require "./flow_schema_condition"
+
+alias K8S::Api::Flowcontrol::V1beta1::FlowSchemaStatus = Api::Flowcontrol::V1alpha1::FlowSchemaStatus

@@ -3,29 +3,12 @@
 require "yaml"
 require "json"
 
-module K8S
-  # IngressBackend describes all endpoints for a given service and port.
-  @[::K8S::Properties(
-    service_name: {type: String, nilable: false, key: "serviceName", getter: false, setter: false},
-    service_port: {type: Int32 | String, nilable: false, key: "servicePort", getter: false, setter: false},
-  )]
-  class Api::Extensions::V1beta1::IngressBackend
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+::K8S::Kubernetes::Resource.define_object("IngressBackend",
+  namespace: "::K8S::Api::Extensions::V1beta1",
+  properties: [
 
-    # Specifies the name of the referenced service.
-    @[::JSON::Field(key: "serviceName", emit_null: true)]
-    @[::YAML::Field(key: "serviceName", emit_null: true)]
-    property service_name : String
+    {name: "service_name", kind: String, key: "serviceName", nilable: false, read_only: false, description: "Specifies the name of the referenced service."},
+    {name: "service_port", kind: Union(::Int32 | ::String), key: "servicePort", nilable: false, read_only: false, description: "Specifies the port of the referenced service."},
 
-    # Specifies the port of the referenced service.
-    @[::JSON::Field(key: "servicePort", emit_null: true)]
-    @[::YAML::Field(key: "servicePort", emit_null: true)]
-    property service_port : Int32 | String
-
-    def initialize(*, @service_name : String, @service_port : Int32 | String)
-    end
-  end
-end
+  ]
+)

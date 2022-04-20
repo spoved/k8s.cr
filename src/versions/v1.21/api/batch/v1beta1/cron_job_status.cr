@@ -3,6 +3,6 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Batch::V1beta1::CronJobStatus = Api::Batch::V1::CronJobStatus
-end
+require "../../core/v1/object_reference"
+
+alias K8S::Api::Batch::V1beta1::CronJobStatus = Api::Batch::V1::CronJobStatus

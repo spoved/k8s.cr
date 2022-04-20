@@ -3,6 +3,6 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Policy::V1beta1::SELinuxStrategyOptions = Api::Extensions::V1beta1::SELinuxStrategyOptions
-end
+require "../../core/v1/se_linux_options"
+
+alias K8S::Api::Policy::V1beta1::SELinuxStrategyOptions = Api::Extensions::V1beta1::SELinuxStrategyOptions

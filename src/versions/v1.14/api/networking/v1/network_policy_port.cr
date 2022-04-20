@@ -3,6 +3,4 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Networking::V1::NetworkPolicyPort = Api::Extensions::V1beta1::NetworkPolicyPort
-end
+alias K8S::Api::Networking::V1::NetworkPolicyPort = Api::Extensions::V1beta1::NetworkPolicyPort

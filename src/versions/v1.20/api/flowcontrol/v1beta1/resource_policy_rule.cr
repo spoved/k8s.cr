@@ -3,6 +3,4 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Flowcontrol::V1beta1::ResourcePolicyRule = Api::Flowcontrol::V1alpha1::ResourcePolicyRule
-end
+alias K8S::Api::Flowcontrol::V1beta1::ResourcePolicyRule = Api::Flowcontrol::V1alpha1::ResourcePolicyRule

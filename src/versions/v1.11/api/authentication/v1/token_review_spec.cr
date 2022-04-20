@@ -3,23 +3,11 @@
 require "yaml"
 require "json"
 
-module K8S
-  # TokenReviewSpec is a description of the token authentication request.
-  @[::K8S::Properties(
-    token: {type: String, nilable: true, key: "token", getter: false, setter: false},
-  )]
-  class Api::Authentication::V1::TokenReviewSpec
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+::K8S::Kubernetes::Resource.define_object("TokenReviewSpec",
+  namespace: "::K8S::Api::Authentication::V1",
+  properties: [
 
-    # Token is the opaque bearer token.
-    @[::JSON::Field(key: "token", emit_null: false)]
-    @[::YAML::Field(key: "token", emit_null: false)]
-    property token : String | Nil
+    {name: "token", kind: String, key: "token", nilable: true, read_only: false, description: "Token is the opaque bearer token."},
 
-    def initialize(*, @token : String | Nil = nil)
-    end
-  end
-end
+  ]
+)

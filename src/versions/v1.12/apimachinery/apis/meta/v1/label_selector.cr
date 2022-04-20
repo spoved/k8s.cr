@@ -3,29 +3,14 @@
 require "yaml"
 require "json"
 
-module K8S
-  # A label selector is a label query over a set of resources. The result of matchLabels and matchExpressions are ANDed. An empty label selector matches all objects. A null label selector matches no objects.
-  @[::K8S::Properties(
-    match_expressions: {type: Array(Apimachinery::Apis::Meta::V1::LabelSelectorRequirement), nilable: true, key: "matchExpressions", getter: false, setter: false},
-    match_labels: {type: Hash(String, String), nilable: true, key: "matchLabels", getter: false, setter: false},
-  )]
-  class Apimachinery::Apis::Meta::V1::LabelSelector
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+require "./label_selector_requirement"
 
-    # matchExpressions is a list of label selector requirements. The requirements are ANDed.
-    @[::JSON::Field(key: "matchExpressions", emit_null: false)]
-    @[::YAML::Field(key: "matchExpressions", emit_null: false)]
-    property match_expressions : Array(Apimachinery::Apis::Meta::V1::LabelSelectorRequirement) | Nil
+::K8S::Kubernetes::Resource.define_object("LabelSelector",
+  namespace: "::K8S::Apimachinery::Apis::Meta::V1",
+  properties: [
 
-    # matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed.
-    @[::JSON::Field(key: "matchLabels", emit_null: false)]
-    @[::YAML::Field(key: "matchLabels", emit_null: false)]
-    property match_labels : Hash(String, String) | Nil
+    {name: "match_expressions", kind: ::Array(::K8S::Apimachinery::Apis::Meta::V1::LabelSelectorRequirement), key: "matchExpressions", nilable: true, read_only: false, description: "matchExpressions is a list of label selector requirements. The requirements are ANDed."},
+    {name: "match_labels", kind: ::Hash(String, String), key: "matchLabels", nilable: true, read_only: false, description: "matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is \"key\", the operator is \"In\", and the values array contains only \"value\". The requirements are ANDed."},
 
-    def initialize(*, @match_expressions : Array(Apimachinery::Apis::Meta::V1::LabelSelectorRequirement) | Nil = nil, @match_labels : Hash(String, String) | Nil = nil)
-    end
-  end
-end
+  ]
+)

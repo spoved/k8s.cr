@@ -11,7 +11,7 @@ class K8S::CRD::Version
   @properties : Hash(String, K8S::CRD::Property)? = nil
 
   def initialize(@group, @kind, @definition)
-    @version = @definition.name
+    @version = @definition.name!
     @api_base = @group.split('.').reverse.join('.')
     @full_api = "#{@api_base}.#{@version}.#{@kind}"
   end

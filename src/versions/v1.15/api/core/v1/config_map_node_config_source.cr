@@ -3,47 +3,15 @@
 require "yaml"
 require "json"
 
-module K8S
-  # ConfigMapNodeConfigSource contains the information to reference a ConfigMap as a config source for the Node.
-  @[::K8S::Properties(
-    kubelet_config_key: {type: String, nilable: false, key: "kubeletConfigKey", getter: false, setter: false},
-    name: {type: String, nilable: false, key: "name", getter: false, setter: false},
-    namespace: {type: String, nilable: false, key: "namespace", getter: false, setter: false},
-    resource_version: {type: String, nilable: true, key: "resourceVersion", getter: false, setter: false},
-    uid: {type: String, nilable: true, key: "uid", getter: false, setter: false},
-  )]
-  class Api::Core::V1::ConfigMapNodeConfigSource
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+::K8S::Kubernetes::Resource.define_object("ConfigMapNodeConfigSource",
+  namespace: "::K8S::Api::Core::V1",
+  properties: [
 
-    # KubeletConfigKey declares which key of the referenced ConfigMap corresponds to the KubeletConfiguration structure This field is required in all cases.
-    @[::JSON::Field(key: "kubeletConfigKey", emit_null: true)]
-    @[::YAML::Field(key: "kubeletConfigKey", emit_null: true)]
-    property kubelet_config_key : String
+    {name: "kubelet_config_key", kind: String, key: "kubeletConfigKey", nilable: false, read_only: false, description: "KubeletConfigKey declares which key of the referenced ConfigMap corresponds to the KubeletConfiguration structure This field is required in all cases."},
+    {name: "name", kind: String, key: "name", nilable: false, read_only: false, description: "Name is the metadata.name of the referenced ConfigMap. This field is required in all cases."},
+    {name: "namespace", kind: String, key: "namespace", nilable: false, read_only: false, description: "Namespace is the metadata.namespace of the referenced ConfigMap. This field is required in all cases."},
+    {name: "resource_version", kind: String, key: "resourceVersion", nilable: true, read_only: false, description: "ResourceVersion is the metadata.ResourceVersion of the referenced ConfigMap. This field is forbidden in Node.Spec, and required in Node.Status."},
+    {name: "uid", kind: String, key: "uid", nilable: true, read_only: false, description: "UID is the metadata.UID of the referenced ConfigMap. This field is forbidden in Node.Spec, and required in Node.Status."},
 
-    # Name is the metadata.name of the referenced ConfigMap. This field is required in all cases.
-    @[::JSON::Field(key: "name", emit_null: true)]
-    @[::YAML::Field(key: "name", emit_null: true)]
-    property name : String
-
-    # Namespace is the metadata.namespace of the referenced ConfigMap. This field is required in all cases.
-    @[::JSON::Field(key: "namespace", emit_null: true)]
-    @[::YAML::Field(key: "namespace", emit_null: true)]
-    property namespace : String
-
-    # ResourceVersion is the metadata.ResourceVersion of the referenced ConfigMap. This field is forbidden in Node.Spec, and required in Node.Status.
-    @[::JSON::Field(key: "resourceVersion", emit_null: false)]
-    @[::YAML::Field(key: "resourceVersion", emit_null: false)]
-    property resource_version : String | Nil
-
-    # UID is the metadata.UID of the referenced ConfigMap. This field is forbidden in Node.Spec, and required in Node.Status.
-    @[::JSON::Field(key: "uid", emit_null: false)]
-    @[::YAML::Field(key: "uid", emit_null: false)]
-    property uid : String | Nil
-
-    def initialize(*, @kubelet_config_key : String, @name : String, @namespace : String, @resource_version : String | Nil = nil, @uid : String | Nil = nil)
-    end
-  end
-end
+  ]
+)

@@ -3,6 +3,8 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias Api::Extensions::V1beta1::Deployment = Api::Apps::V1::Deployment
-end
+require "../../../apimachinery/apis/meta/v1/object_meta"
+require "./deployment_spec"
+require "./deployment_status"
+
+alias K8S::Api::Extensions::V1beta1::Deployment = Api::Apps::V1::Deployment

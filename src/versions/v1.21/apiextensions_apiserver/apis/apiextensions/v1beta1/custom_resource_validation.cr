@@ -3,6 +3,6 @@
 require "yaml"
 require "json"
 
-module K8S
-  alias ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceValidation = ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceValidation
-end
+require "./json_schema_props"
+
+alias K8S::ApiextensionsApiserver::Apis::Apiextensions::V1beta1::CustomResourceValidation = ApiextensionsApiserver::Apis::Apiextensions::V1::CustomResourceValidation

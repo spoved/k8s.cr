@@ -3,23 +3,11 @@
 require "yaml"
 require "json"
 
-module K8S
-  # FlowDistinguisherMethod specifies the method of a flow distinguisher.
-  @[::K8S::Properties(
-    type: {type: String, nilable: false, key: "type", getter: false, setter: false},
-  )]
-  class Api::Flowcontrol::V1alpha1::FlowDistinguisherMethod
-    include ::JSON::Serializable
-    include ::JSON::Serializable::Unmapped
-    include ::YAML::Serializable
-    include ::YAML::Serializable::Unmapped
+::K8S::Kubernetes::Resource.define_object("FlowDistinguisherMethod",
+  namespace: "::K8S::Api::Flowcontrol::V1alpha1",
+  properties: [
 
-    # `type` is the type of flow distinguisher method The supported types are "ByUser" and "ByNamespace". Required.
-    @[::JSON::Field(key: "type", emit_null: true)]
-    @[::YAML::Field(key: "type", emit_null: true)]
-    property type : String
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: "`type` is the type of flow distinguisher method The supported types are \"ByUser\" and \"ByNamespace\". Required."},
 
-    def initialize(*, @type : String)
-    end
-  end
-end
+  ]
+)
