@@ -3841,6 +3841,21 @@ Forked due to possibly destructive changes to change namespaces and adapt for us
 the bindings, you will want to include the <a href="src/versions">VERSION</a> that best maps to your k8s api version.
 Requiring more than one version at this time will result in an error.</p>
 <pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;k8s/versions/v1.20&quot;</span></code></pre>
+<h3><a id="resources" class="anchor" href="#resources">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Resources</h3>
+<p>Some examples on the easier methods to grab/set variables:</p>
+<pre><code class="language-crystal"><span class="c"># Access a nested path</span>
+resource.spec![<span class="n">:template</span>, <span class="n">:metadata</span>, <span class="n">:labels</span>, <span class="n">:app</span>]
+
+<span class="c"># Set a nested path</span>
+resource.spec![<span class="n">:template</span>, <span class="n">:metadata</span>, <span class="n">:labels</span>, <span class="n">:app</span>] <span class="o">=</span> <span class="s">&quot;myapp&quot;</span>
+
+<span class="c"># Can use symbols or strings</span>
+resource.spec![<span class="n">:template</span>]
+resource.spec![<span class="s">&quot;template&quot;</span>]</code></pre>
 <h3><a id="crd-generation" class="anchor" href="#crd-generation">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
