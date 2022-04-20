@@ -33,7 +33,7 @@ abstract struct K8S::Kubernetes::Resource < K8S::Kubernetes::Object
   end
 
   def self.from_file(file)
-    Log.trace { "K8S::Resource: Loading: #{file}" }
+    Log.trace { "K8S::Kubernetes::Resource: Loading: #{file}" }
     if File.extname(file) == ".json"
       [from_json(File.read(file))]
     else
@@ -44,7 +44,7 @@ abstract struct K8S::Kubernetes::Resource < K8S::Kubernetes::Object
 
   def self.from_files(*paths)
     paths.flat_map do |path|
-      Log.trace { "K8S::Resource: Loading recursivly: #{path}" }
+      Log.trace { "K8S::Kubernetes::Resource: Loading recursivly: #{path}" }
       if File.directory?(path)
         Dir.glob(File.join(path, "**/*.yaml")).flat_map { |file| from_files(file) }
       elsif File.extname(path) == ".yaml" && File.exists?(path)

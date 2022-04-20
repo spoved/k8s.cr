@@ -13,6 +13,6 @@ module FixtureHelpers
   end
 
   def resource_fixture(*path)
-    K8S::Resource.from_file(fixture_path(*path))
+    K8S::Kubernetes::Resource.from_file(fixture_path(*path))
   end
 end

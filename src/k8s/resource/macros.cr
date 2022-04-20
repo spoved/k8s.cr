@@ -258,6 +258,20 @@ abstract struct K8S::Kubernetes::Resource
           super
           _init_validate!
         end
+
+        def self.new(**args)
+          new(args)
+        end
+
+        def self.new(pull : ::JSON::PullParser)
+          obj = K8S::Internals::GenericObject.new(pull)
+          new(obj)
+        end
+
+        def self.new(ctx : ::YAML::ParseContext, node : ::YAML::Nodes::Node)
+          obj = K8S::Internals::GenericObject.new(ctx, node)
+          new(obj)
+        end
       end
     end
   end
@@ -357,6 +371,21 @@ abstract struct K8S::Kubernetes::Resource
         })
       end
       {% end %}
+
+
+      def self.new(**args)
+        new(args)
+      end
+
+      def self.new(pull : ::JSON::PullParser)
+        obj = K8S::Internals::GenericObject.new(pull)
+        new(obj)
+      end
+
+      def self.new(ctx : ::YAML::ParseContext, node : ::YAML::Nodes::Node)
+        obj = K8S::Internals::GenericObject.new(ctx, node)
+        new(obj)
+      end
     end
   end
 end
