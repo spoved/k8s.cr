@@ -16,4 +16,5 @@ require "./resource_quota_status"
 
   ],
   description: "ResourceQuota sets aggregate quota restrictions enforced per namespace",
+  versions: [{group: "", kind: "ResourceQuota", version: "v1"}],
 )

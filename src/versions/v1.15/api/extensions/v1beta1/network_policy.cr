@@ -14,4 +14,5 @@ require "./network_policy_spec"
 
   ],
   description: "DEPRECATED 1.9 - This group version of NetworkPolicy is deprecated by networking/v1/NetworkPolicy. NetworkPolicy describes what network traffic is allowed for a set of Pods",
+  versions: [{group: "extensions", kind: "NetworkPolicy", version: "v1beta1"}],
 )

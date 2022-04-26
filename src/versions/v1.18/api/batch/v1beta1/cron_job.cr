@@ -16,4 +16,5 @@ require "./cron_job_status"
 
   ],
   description: "CronJob represents the configuration of a single cron job.",
+  versions: [{group: "batch", kind: "CronJob", version: "v1beta1"}],
 )

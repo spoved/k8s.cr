@@ -16,4 +16,5 @@ require "./pod_status"
 
   ],
   description: "Pod is a collection of containers that can run on a host. This resource is created by clients and scheduled onto hosts.",
+  versions: [{group: "", kind: "Pod", version: "v1"}],
 )

@@ -13,7 +13,7 @@ require "./http_header"
     {name: "http_headers", kind: ::Array(::K8S::Api::Core::V1::HTTPHeader), key: "httpHeaders", nilable: true, read_only: false, description: "Custom headers to set in the request. HTTP allows repeated headers."},
     {name: "path", kind: String, key: "path", nilable: true, read_only: false, description: "Path to access on the HTTP server."},
     {name: "port", kind: Union(::Int32 | ::String), key: "port", nilable: false, read_only: false, description: "Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME."},
-    {name: "scheme", kind: String, key: "scheme", nilable: true, read_only: false, description: "Scheme to use for connecting to the host. Defaults to HTTP.\n\nPossible enum values:\n - `\"HTTP\"` means that the scheme used will be http://\n - `\"HTTPS\"` means that the scheme used will be https://"},
+    {name: "scheme", kind: String, key: "scheme", nilable: true, read_only: false, description: "Scheme to use for connecting to the host. Defaults to HTTP.\n\n"},
 
   ]
 )

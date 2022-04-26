@@ -14,4 +14,5 @@ require "./server_address_by_client_cidr"
 
   ],
   description: "APIVersions lists the versions that are available, to allow clients to discover the API at /api, which is the root path of the legacy v1 API.",
+  versions: [{group: "", kind: "APIVersions", version: "v1"}],
 )

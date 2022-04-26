@@ -16,4 +16,5 @@ require "./daemon_set_status"
 
   ],
   description: "DaemonSet represents the configuration of a daemon set.",
+  versions: [{group: "apps", kind: "DaemonSet", version: "v1"}],
 )

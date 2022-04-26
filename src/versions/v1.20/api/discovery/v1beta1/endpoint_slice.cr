@@ -17,4 +17,5 @@ require "./endpoint_port"
 
   ],
   description: "EndpointSlice represents a subset of the endpoints that implement a service. For a given service there may be multiple EndpointSlice objects, selected by labels, which must be joined to produce the full set of endpoints.",
+  versions: [{group: "discovery.k8s.io", kind: "EndpointSlice", version: "v1beta1"}],
 )

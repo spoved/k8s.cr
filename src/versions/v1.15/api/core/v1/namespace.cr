@@ -16,4 +16,5 @@ require "./namespace_status"
 
   ],
   description: "Namespace provides a scope for Names. Use of multiple namespaces is optional.",
+  versions: [{group: "", kind: "Namespace", version: "v1"}],
 )

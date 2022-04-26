@@ -16,4 +16,5 @@ require "./api_service_status"
 
   ],
   description: "APIService represents a server for a particular GroupVersion. Name must be \"version.group\".",
+  versions: [{group: "apiregistration.k8s.io", kind: "APIService", version: "v1"}],
 )

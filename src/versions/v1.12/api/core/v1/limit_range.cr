@@ -14,4 +14,5 @@ require "./limit_range_spec"
 
   ],
   description: "LimitRange sets resource usage limits for each kind of resource in a Namespace.",
+  versions: [{group: "", kind: "LimitRange", version: "v1"}],
 )

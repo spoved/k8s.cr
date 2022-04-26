@@ -16,4 +16,5 @@ require "./persistent_volume_claim_status"
 
   ],
   description: "PersistentVolumeClaim is a user's request for and claim to a persistent volume",
+  versions: [{group: "", kind: "PersistentVolumeClaim", version: "v1"}],
 )

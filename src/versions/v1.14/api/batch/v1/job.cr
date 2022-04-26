@@ -16,4 +16,5 @@ require "./job_status"
 
   ],
   description: "Job represents the configuration of a single job.",
+  versions: [{group: "batch", kind: "Job", version: "v1"}],
 )

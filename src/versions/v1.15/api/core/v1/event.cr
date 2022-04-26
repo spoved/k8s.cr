@@ -29,4 +29,5 @@ require "./event_source"
 
   ],
   description: "Event is a report of an event somewhere in the cluster.",
+  versions: [{group: "", kind: "Event", version: "v1"}],
 )

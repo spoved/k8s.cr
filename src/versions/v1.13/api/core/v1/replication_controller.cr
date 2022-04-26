@@ -16,4 +16,5 @@ require "./replication_controller_status"
 
   ],
   description: "ReplicationController represents the configuration of a replication controller.",
+  versions: [{group: "", kind: "ReplicationController", version: "v1"}],
 )

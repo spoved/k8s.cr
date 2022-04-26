@@ -16,4 +16,5 @@ require "./pod_disruption_budget_status"
 
   ],
   description: "PodDisruptionBudget is an object to define the max disruption that can be caused to a collection of pods",
+  versions: [{group: "policy", kind: "PodDisruptionBudget", version: "v1"}],
 )

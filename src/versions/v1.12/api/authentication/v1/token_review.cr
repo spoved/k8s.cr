@@ -16,4 +16,5 @@ require "./token_review_status"
 
   ],
   description: "TokenReview attempts to authenticate a token to a known user. Note: TokenReview requests may be cached by the webhook token authenticator plugin in the kube-apiserver.",
+  versions: [{group: "authentication.k8s.io", kind: "TokenReview", version: "v1"}],
 )

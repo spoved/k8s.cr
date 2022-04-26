@@ -15,4 +15,5 @@ require "../../../apimachinery/apis/meta/v1/object_meta"
 
   ],
   description: "ConfigMap holds configuration data for pods to consume.",
+  versions: [{group: "", kind: "ConfigMap", version: "v1"}],
 )

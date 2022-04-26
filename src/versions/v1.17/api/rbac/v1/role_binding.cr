@@ -16,4 +16,5 @@ require "./subject"
 
   ],
   description: "RoleBinding references a role, but does not contain it.  It can reference a Role in the same namespace or a ClusterRole in the global namespace. It adds who information via Subjects and namespace information by which namespace it exists in.  RoleBindings in a given namespace only have effect in that namespace.",
+  versions: [{group: "rbac.authorization.k8s.io", kind: "RoleBinding", version: "v1"}],
 )

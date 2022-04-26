@@ -16,4 +16,5 @@ require "./replica_set_status"
 
   ],
   description: "ReplicaSet ensures that a specified number of pod replicas are running at any given time.",
+  versions: [{group: "apps", kind: "ReplicaSet", version: "v1"}],
 )

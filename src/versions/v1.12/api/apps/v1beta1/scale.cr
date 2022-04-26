@@ -16,4 +16,5 @@ require "./scale_status"
 
   ],
   description: "Scale represents a scaling request for a resource.",
+  versions: [{group: "apps", kind: "Scale", version: "v1beta1"}],
 )

@@ -15,4 +15,5 @@ require "./rollback_config"
 
   ],
   description: "DEPRECATED. DeploymentRollback stores the information required to rollback a deployment.",
+  versions: [{group: "apps", kind: "DeploymentRollback", version: "v1beta1"}],
 )

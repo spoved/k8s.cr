@@ -12,7 +12,7 @@ require "json"
     {name: "message", kind: String, key: "message", nilable: true, read_only: false, description: "Human-readable message indicating details about last transition."},
     {name: "reason", kind: String, key: "reason", nilable: true, read_only: false, description: "Unique, one-word, CamelCase reason for the condition's last transition."},
     {name: "status", kind: String, key: "status", nilable: false, read_only: false, description: "Status is the status of the condition. Can be True, False, Unknown. More info: [https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-conditions](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-conditions)"},
-    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: "Type is the type of the condition. More info: [https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-conditions](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-conditions)\n\nPossible enum values:\n - `\"ContainersReady\"` indicates whether all containers in the pod are ready.\n - `\"Initialized\"` means that all init containers in the pod have started successfully.\n - `\"PodScheduled\"` represents status of the scheduling process for this pod.\n - `\"Ready\"` means the pod is able to service requests and should be added to the load balancing pools of all matching services."},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: "Type is the type of the condition. More info: [https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-conditions](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-conditions)"},
 
   ]
 )

@@ -16,4 +16,5 @@ require "./node_status"
 
   ],
   description: "Node is a worker node in Kubernetes. Each node will have a unique identifier in the cache (i.e. in etcd).",
+  versions: [{group: "", kind: "Node", version: "v1"}],
 )

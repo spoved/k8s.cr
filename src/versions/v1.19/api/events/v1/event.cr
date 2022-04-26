@@ -29,4 +29,5 @@ require "./event_series"
 
   ],
   description: "Event is a report of an event somewhere in the cluster. It generally denotes some state change in the system.",
+  versions: [{group: "events.k8s.io", kind: "Event", version: "v1"}],
 )

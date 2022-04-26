@@ -17,4 +17,5 @@ require "./server_address_by_client_cidr"
 
   ],
   description: "APIGroup contains the name, the supported versions, and the preferred version of a group.",
+  versions: [{group: "", kind: "APIGroup", version: "v1"}],
 )

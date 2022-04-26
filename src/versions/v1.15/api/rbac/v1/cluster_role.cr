@@ -16,4 +16,5 @@ require "./policy_rule"
 
   ],
   description: "ClusterRole is a cluster level, logical grouping of PolicyRules that can be referenced as a unit by a RoleBinding or ClusterRoleBinding.",
+  versions: [{group: "rbac.authorization.k8s.io", kind: "ClusterRole", version: "v1"}],
 )

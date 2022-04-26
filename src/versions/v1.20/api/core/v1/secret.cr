@@ -16,4 +16,5 @@ require "../../../apimachinery/apis/meta/v1/object_meta"
 
   ],
   description: "Secret holds secret data of a certain type. The total bytes of the values in the Data field must be less than MaxSecretSize bytes.",
+  versions: [{group: "", kind: "Secret", version: "v1"}],
 )

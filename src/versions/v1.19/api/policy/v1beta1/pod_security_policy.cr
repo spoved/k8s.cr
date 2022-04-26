@@ -14,4 +14,5 @@ require "./pod_security_policy_spec"
 
   ],
   description: "PodSecurityPolicy governs the ability to make requests that affect the Security Context that will be applied to a pod and container.",
+  versions: [{group: "policy", kind: "PodSecurityPolicy", version: "v1beta1"}],
 )

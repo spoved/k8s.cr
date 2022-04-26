@@ -14,4 +14,5 @@ require "./policy_rule"
 
   ],
   description: "Role is a namespaced, logical grouping of PolicyRules that can be referenced as a unit by a RoleBinding.",
+  versions: [{group: "rbac.authorization.k8s.io", kind: "Role", version: "v1"}],
 )

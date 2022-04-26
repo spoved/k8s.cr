@@ -16,4 +16,5 @@ require "./priority_level_configuration_status"
 
   ],
   description: "PriorityLevelConfiguration represents the configuration of a priority level.",
+  versions: [{group: "flowcontrol.apiserver.k8s.io", kind: "PriorityLevelConfiguration", version: "v1alpha1"}],
 )

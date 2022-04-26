@@ -14,4 +14,5 @@ require "./validating_webhook"
 
   ],
   description: "ValidatingWebhookConfiguration describes the configuration of and admission webhook that accept or reject and object without changing it.",
+  versions: [{group: "admissionregistration.k8s.io", kind: "ValidatingWebhookConfiguration", version: "v1"}],
 )

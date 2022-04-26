@@ -8,4 +8,12 @@ class XKubernetesGroupVersionKind
   property version : String?
 
   def initialize(@group, @kind, @version); end
+
+  def to_t
+    {
+      group:   group,
+      kind:    kind,
+      version: version,
+    }
+  end
 end

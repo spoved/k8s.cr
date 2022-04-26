@@ -16,4 +16,5 @@ require "./subject"
 
   ],
   description: "ClusterRoleBinding references a ClusterRole, but not contain it.  It can reference a ClusterRole in the global namespace, and adds who information via Subject.",
+  versions: [{group: "rbac.authorization.k8s.io", kind: "ClusterRoleBinding", version: "v1"}],
 )

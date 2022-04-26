@@ -16,4 +16,5 @@ require "./subject_access_review_status"
 
   ],
   description: "SubjectAccessReview checks whether or not a user or group can perform an action.",
+  versions: [{group: "authorization.k8s.io", kind: "SubjectAccessReview", version: "v1"}],
 )

@@ -14,4 +14,5 @@ require "./ephemeral_container"
 
   ],
   description: "A list of ephemeral containers used with the Pod ephemeralcontainers subresource.",
+  versions: [{group: "", kind: "EphemeralContainers", version: "v1"}],
 )

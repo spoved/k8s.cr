@@ -14,4 +14,5 @@ require "./mutating_webhook"
 
   ],
   description: "MutatingWebhookConfiguration describes the configuration of and admission webhook that accept or reject and may change the object.",
+  versions: [{group: "admissionregistration.k8s.io", kind: "MutatingWebhookConfiguration", version: "v1"}],
 )

@@ -12,7 +12,7 @@ require "json"
     {name: "message", kind: String, key: "message", nilable: true, read_only: false, description: "Human-readable message indicating details about last transition."},
     {name: "reason", kind: String, key: "reason", nilable: true, read_only: false, description: "Unique, this should be a short, machine understandable string that gives the reason for condition's last transition. If it reports \"ResizeStarted\" that means the underlying persistent volume is being resized."},
     {name: "status", kind: String, key: "status", nilable: false, read_only: false, description: nil},
-    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: "\n\n\nPossible enum values:\n - `\"FileSystemResizePending\"` - controller resize is finished and a file system resize is pending on node\n - `\"Resizing\"` - a user trigger resize of pvc has been started"},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: nil},
 
   ]
 )

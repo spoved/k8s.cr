@@ -16,4 +16,5 @@ require "./horizontal_pod_autoscaler_status"
 
   ],
   description: "configuration of a horizontal pod autoscaler.",
+  versions: [{group: "autoscaling", kind: "HorizontalPodAutoscaler", version: "v1"}],
 )

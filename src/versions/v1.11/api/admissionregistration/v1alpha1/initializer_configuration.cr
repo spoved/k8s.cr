@@ -14,4 +14,5 @@ require "./initializer"
 
   ],
   description: "InitializerConfiguration describes the configuration of initializers.",
+  versions: [{group: "admissionregistration.k8s.io", kind: "InitializerConfiguration", version: "v1alpha1"}],
 )

@@ -14,4 +14,5 @@ require "./lease_spec"
 
   ],
   description: "Lease defines a lease concept.",
+  versions: [{group: "coordination.k8s.io", kind: "Lease", version: "v1beta1"}],
 )

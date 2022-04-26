@@ -16,4 +16,5 @@ require "./volume_attachment_status"
 
   ],
   description: "VolumeAttachment captures the intent to attach or detach the specified volume to/from the specified node.\n\nVolumeAttachment objects are non-namespaced.",
+  versions: [{group: "storage.k8s.io", kind: "VolumeAttachment", version: "v1"}],
 )

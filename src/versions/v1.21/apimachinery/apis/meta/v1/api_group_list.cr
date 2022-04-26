@@ -13,4 +13,5 @@ require "./api_group"
 
   ],
   description: "APIGroupList is a list of APIGroup, to allow clients to discover the API at /apis.",
+  versions: [{group: "", kind: "APIGroupList", version: "v1"}],
 )

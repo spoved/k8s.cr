@@ -14,4 +14,5 @@ require "./pod_template_spec"
 
   ],
   description: "PodTemplate describes a template for creating copies of a predefined pod.",
+  versions: [{group: "", kind: "PodTemplate", version: "v1"}],
 )

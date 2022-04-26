@@ -145,10 +145,42 @@ class Generator::Writer
     )>
   end
 
+  private def _get_module_path(ver : XKubernetesGroupVersionKind, namespace : String? = nil)
+    r_group_full = ver.group.not_nil!
+    r_group = r_group_full.split(".").reverse.join(".")
+      .gsub(/^(io(\.k8s)?|com)\./, "")
+      .gsub(/\.pkg\./, ".")
+      .gsub(/JSON/, "Json")
+      .gsub(/\-/, "_")
+
+    mod_path = ([base_class] + (r_group + "." + ver.version.not_nil!).split(".")).reject(&.empty?).map(&.camelcase).join("::")
+
+    {
+      module_path: namespace.nil? ? mod_path : namespace,
+      group:       r_group,
+      group_full:  r_group_full,
+      kind:        ver.kind,
+    }
+  end
+
+  private def _write_class_alias(definition : Definition, properties, ver_info : XKubernetesGroupVersionKind, target_info : XKubernetesGroupVersionKind)
+    namespace = base_class + "::" + definition.class_name
+      .chomp(ver_info.kind.not_nil!).chomp("::")
+
+    alias_info = _get_module_path(ver_info)
+    target_info = _get_module_path(target_info, namespace)
+
+    alias_name = [alias_info[:module_path], alias_info[:kind]].join("::")
+    target_name = [target_info[:module_path], target_info[:kind]].join("::")
+
+    file.puts "alias #{alias_name} = ::#{target_name}"
+  end
+
   private def _write_class(definition : Definition, properties, ver_info : XKubernetesGroupVersionKind)
     # puts definition.class_name
     namespace = base_class + "::" + definition.class_name
       .chomp(ver_info.kind.not_nil!).chomp("::")
+    versions = definition.x_kubernetes_group_version_kind || Array(XKubernetesGroupVersionKind).new
 
     if definition.is_list?
       file.puts %<
@@ -172,6 +204,7 @@ class Generator::Writer
       file.puts %<
         ],
         description: #{definition.description.inspect},
+        versions: #{versions.empty? ? nil : versions.map(&.to_t).inspect},
       )>
     end
   end
@@ -186,13 +219,17 @@ class Generator::Writer
     end
     # _old_write_class(definition, properties)
 
-    group_versions = definition.x_kubernetes_group_version_kind
+    group_versions = definition.x_kubernetes_group_version_kind.dup
     if group_versions.nil?
       _write_generic(definition, properties)
     else
+      first = group_versions.shift
+      raise "No group version" if first.group.nil? || first.kind.nil? || first.version.nil?
+      _write_class(definition, properties, first)
+
       group_versions.each do |ver|
         raise "No group version" if ver.group.nil? || ver.kind.nil? || ver.version.nil?
-        _write_class(definition, properties, ver)
+        _write_class_alias(definition, properties, ver, first)
       end
     end
   end

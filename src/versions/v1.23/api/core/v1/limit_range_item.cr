@@ -12,7 +12,7 @@ require "json"
     {name: "max", kind: Union(::Hash(String, ::Int32 | ::String)), key: "max", nilable: true, read_only: false, description: "Max usage constraints on this kind by resource name."},
     {name: "max_limit_request_ratio", kind: Union(::Hash(String, ::Int32 | ::String)), key: "maxLimitRequestRatio", nilable: true, read_only: false, description: "MaxLimitRequestRatio if specified, the named resource must have a request and limit that are both non-zero where limit divided by request is less than or equal to the enumerated value; this represents the max burst for the named resource."},
     {name: "min", kind: Union(::Hash(String, ::Int32 | ::String)), key: "min", nilable: true, read_only: false, description: "Min usage constraints on this kind by resource name."},
-    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: "Type of resource that this limit applies to.\n\nPossible enum values:\n - `\"Container\"` Limit that applies to all containers in a namespace\n - `\"PersistentVolumeClaim\"` Limit that applies to all persistent volume claims in a namespace\n - `\"Pod\"` Limit that applies to all pods in a namespace"},
+    {name: "type", kind: String, key: "type", nilable: false, read_only: false, description: "Type of resource that this limit applies to."},
 
   ]
 )

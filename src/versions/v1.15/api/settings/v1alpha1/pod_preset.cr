@@ -14,4 +14,5 @@ require "./pod_preset_spec"
 
   ],
   description: "PodPreset is a policy resource that defines additional runtime requirements for a Pod.",
+  versions: [{group: "settings.k8s.io", kind: "PodPreset", version: "v1alpha1"}],
 )

@@ -16,4 +16,5 @@ require "./subject_access_review_status"
 
   ],
   description: "LocalSubjectAccessReview checks whether or not a user or group can perform an action in a given namespace. Having a namespace scoped resource makes it much easier to grant namespace scoped policy that includes permissions checking.",
+  versions: [{group: "authorization.k8s.io", kind: "LocalSubjectAccessReview", version: "v1"}],
 )

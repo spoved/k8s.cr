@@ -16,4 +16,5 @@ require "./custom_resource_definition_status"
 
   ],
   description: "CustomResourceDefinition represents a resource that should be exposed on the API server.  Its name MUST be in the format <.spec.name>.<.spec.group>.",
+  versions: [{group: "apiextensions.k8s.io", kind: "CustomResourceDefinition", version: "v1beta1"}],
 )

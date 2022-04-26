@@ -14,4 +14,5 @@ require "./audit_sink_spec"
 
   ],
   description: "AuditSink represents a cluster level audit sink",
+  versions: [{group: "auditregistration.k8s.io", kind: "AuditSink", version: "v1alpha1"}],
 )

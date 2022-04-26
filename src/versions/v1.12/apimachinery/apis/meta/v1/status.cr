@@ -18,4 +18,5 @@ require "./list_meta"
 
   ],
   description: "Status is a return value for calls that don't return other objects.",
+  versions: [{group: "", kind: "Status", version: "v1"}],
 )

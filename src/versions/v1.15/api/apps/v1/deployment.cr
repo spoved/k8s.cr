@@ -16,4 +16,5 @@ require "./deployment_status"
 
   ],
   description: "Deployment enables declarative updates for Pods and ReplicaSets.",
+  versions: [{group: "apps", kind: "Deployment", version: "v1"}],
 )

@@ -16,4 +16,5 @@ require "./token_request_status"
 
   ],
   description: "TokenRequest requests a token for a given service account.",
+  versions: [{group: "authentication.k8s.io", kind: "TokenRequest", version: "v1"}],
 )

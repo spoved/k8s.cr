@@ -14,4 +14,5 @@ require "./api_resource"
 
   ],
   description: "APIResourceList is a list of APIResource, it is used to expose the name of the resources supported in a specific group and version, and if the resource is namespaced.",
+  versions: [{group: "", kind: "APIResourceList", version: "v1"}],
 )

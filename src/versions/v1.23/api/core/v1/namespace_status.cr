@@ -10,7 +10,7 @@ require "./namespace_condition"
   properties: [
 
     {name: "conditions", kind: ::Array(::K8S::Api::Core::V1::NamespaceCondition), key: "conditions", nilable: true, read_only: false, description: "Represents the latest available observations of a namespace's current state."},
-    {name: "phase", kind: String, key: "phase", nilable: true, read_only: false, description: "Phase is the current lifecycle phase of the namespace. More info: [https://kubernetes.io/docs/tasks/administer-cluster/namespaces/](https://kubernetes.io/docs/tasks/administer-cluster/namespaces/)\n\nPossible enum values:\n - `\"Active\"` means the namespace is available for use in the system\n - `\"Terminating\"` means the namespace is undergoing graceful termination"},
+    {name: "phase", kind: String, key: "phase", nilable: true, read_only: false, description: "Phase is the current lifecycle phase of the namespace. More info: [https://kubernetes.io/docs/tasks/administer-cluster/namespaces/](https://kubernetes.io/docs/tasks/administer-cluster/namespaces/)\n\n"},
 
   ]
 )

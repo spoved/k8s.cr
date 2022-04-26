@@ -14,4 +14,5 @@ require "./component_condition"
 
   ],
   description: "ComponentStatus (and ComponentStatusList) holds the cluster validation info.",
+  versions: [{group: "", kind: "ComponentStatus", version: "v1"}],
 )

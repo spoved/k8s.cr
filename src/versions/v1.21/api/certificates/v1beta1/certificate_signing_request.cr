@@ -16,4 +16,5 @@ require "./certificate_signing_request_status"
 
   ],
   description: "Describes a certificate signing request",
+  versions: [{group: "certificates.k8s.io", kind: "CertificateSigningRequest", version: "v1beta1"}],
 )

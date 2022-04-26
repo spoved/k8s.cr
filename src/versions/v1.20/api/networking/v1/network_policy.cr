@@ -14,4 +14,5 @@ require "./network_policy_spec"
 
   ],
   description: "NetworkPolicy describes what network traffic is allowed for a set of Pods",
+  versions: [{group: "networking.k8s.io", kind: "NetworkPolicy", version: "v1"}],
 )

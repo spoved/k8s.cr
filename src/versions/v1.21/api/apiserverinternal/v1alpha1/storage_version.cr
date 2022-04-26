@@ -16,4 +16,5 @@ require "./storage_version_status"
 
   ],
   description: "\n Storage version of a specific resource.",
+  versions: [{group: "internal.apiserver.k8s.io", kind: "StorageVersion", version: "v1alpha1"}],
 )

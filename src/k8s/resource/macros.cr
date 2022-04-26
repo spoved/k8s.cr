@@ -285,19 +285,10 @@ abstract struct K8S::Kubernetes::Resource
   #   namespace: "::K8S::Api",
   # )
   # ```
-  macro define_resource(group, version, kind, namespace = nil, properties = [] of NamedTupleLiteral, list = false, list_kind = nil, description = nil)
+  macro define_resource(group, version, kind, namespace = nil, properties = [] of NamedTupleLiteral, list = false, list_kind = nil, description = nil, versions = nil)
     {%
       r_group_full = ""
       if !group.empty?
-        # Build the group string since we dont have reverse, this gets complicated.
-        # group_parts = group.split(".")
-        # index = group_parts.size - 1
-        # new_group_parts = [] of StringLiteral
-        # (0..index).each do |i|
-        #   new_group_parts << group_parts[index]
-        #   index -= 1
-        # end
-        # r_group_full = new_group_parts.join(".")
         r_group_full = group
       end
 
@@ -306,7 +297,7 @@ abstract struct K8S::Kubernetes::Resource
         .gsub(/\.pkg\./, ".")
         .gsub(/JSON/, "Json")
         .gsub(/\-/, "_")
-      mod_path = (r_group + "." + version).split(".").reject(&.empty?).map(&.camelcase).join("::")
+
       if namespace
         mod_path = namespace.gsub(/^::/, "").id.stringify
       else
@@ -315,10 +306,10 @@ abstract struct K8S::Kubernetes::Resource
       c_kind = kind.gsub(/JSON/, "Json")
     %}
 
-    {% if description %}{% for line in description.split("\n") %}
-    # {{line}}
-    {% end %}{% end %}
     @[::K8S::GroupVersionKind(group: {{r_group_full.id.stringify}}, version: {{version.id.stringify}}, kind: {{kind.id.stringify}}, full: "{{group.id}}.{{version.id}}.{{kind.id}}")]
+    {% if versions %}{% for v in versions %}{% if !(v[:group] == group && v[:version] != version) && v[:kind] == kind %}
+    @[::K8S::GroupVersionKind(group: {{v[:group].id.stringify}}, version: {{v[:version].id.stringify}}, kind: {{v[:kind].id.stringify}}, full: "{{v[:group].id}}.{{v[:version].id}}.{{v[:kind].id}}")]
+    {% end %}{% end %}{% end %}
     @[::K8S::ObjectProperties(
       api_version: {name: "api_version", kind: String, default: "{{r_group_full.id}}/{{version.id}}", key: "apiVersion", nilable: false, read_only: true, description: %<APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)))>},
       kind: { name: "kind", kind: String, default: "{{kind.id}}", nilable: false, read_only: true, description: %<Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [[[https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)))>},
@@ -331,6 +322,8 @@ abstract struct K8S::Kubernetes::Resource
       {% for prop in properties %}{{prop[:name].id}}: {{prop}},
       {% end %}
     )]
+    {% if description %}{% for line in description.split("\n") %}
+    # {{line}} {% end %}{% end %}
     struct {{mod_path.id}}::{{c_kind.id}} < ::K8S::Kubernetes::Resource::{% if list %}List({{list_kind.id}}){% else %}Object{% end %}
 
       {% for prop in properties %}
