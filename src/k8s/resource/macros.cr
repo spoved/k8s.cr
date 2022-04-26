@@ -370,6 +370,9 @@ abstract struct K8S::Kubernetes::Resource
       end
       {% end %}
 
+      def self.new(obj : K8S::GenericObject)
+        new(obj.@__object__)
+      end
 
       def self.new(**args)
         new(args)

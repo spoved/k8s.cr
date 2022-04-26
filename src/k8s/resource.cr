@@ -12,11 +12,19 @@ abstract struct K8S::Kubernetes::Resource < K8S::Kubernetes::Object
 
   def self.new(pull : ::JSON::PullParser)
     obj = K8S::Internals::GenericObject.new(pull)
-    K8S::Util.new_resource(obj)
+    new_resource(obj)
   end
 
   def self.new(ctx : ::YAML::ParseContext, node : ::YAML::Nodes::Node)
     obj = K8S::Internals::GenericObject.new(ctx, node)
+    new_resource(obj)
+  end
+
+  def self.new(obj : K8S::GenericObject)
+    new_resource(obj.@__object__)
+  end
+
+  def self.new_resource(obj : K8S::Internals::GenericObject)
     K8S::Util.new_resource(obj)
   end
 

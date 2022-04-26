@@ -1,0 +1,424 @@
+{
+  "type": "ADDED",
+  "object": {
+    "kind": "Pod",
+    "apiVersion": "v1",
+    "metadata": {
+      "name": "helm-install-traefik--1-k8zd2",
+      "generateName": "helm-install-traefik--1-",
+      "namespace": "kube-system",
+      "uid": "94154af0-2e71-451d-ba47-42d1d3520b98",
+      "resourceVersion": "733",
+      "creationTimestamp": "2022-04-26T17:35:26Z",
+      "labels": {
+        "controller-uid": "57336750-9d26-44b5-b3e5-86e84645b052",
+        "helmcharts.helm.cattle.io/chart": "traefik",
+        "job-name": "helm-install-traefik"
+      },
+      "annotations": {
+        "helmcharts.helm.cattle.io/configHash": "SHA256=538C3E85FA4A1CBDCF113C02CD1CF3E91A59CE5AAC190232A93ECF7D1F2CD2DD"
+      },
+      "ownerReferences": [
+        {
+          "apiVersion": "batch/v1",
+          "kind": "Job",
+          "name": "helm-install-traefik",
+          "uid": "57336750-9d26-44b5-b3e5-86e84645b052",
+          "controller": true,
+          "blockOwnerDeletion": true
+        }
+      ],
+      "managedFields": [
+        {
+          "manager": "k3s",
+          "operation": "Update",
+          "apiVersion": "v1",
+          "time": "2022-04-26T17:35:26Z",
+          "fieldsType": "FieldsV1",
+          "fieldsV1": {
+            "f:metadata": {
+              "f:annotations": {
+                ".": {},
+                "f:helmcharts.helm.cattle.io/configHash": {}
+              },
+              "f:generateName": {},
+              "f:labels": {
+                ".": {},
+                "f:controller-uid": {},
+                "f:helmcharts.helm.cattle.io/chart": {},
+                "f:job-name": {}
+              },
+              "f:ownerReferences": {
+                ".": {},
+                "k:{\"uid\":\"57336750-9d26-44b5-b3e5-86e84645b052\"}": {}
+              }
+            },
+            "f:spec": {
+              "f:containers": {
+                "k:{\"name\":\"helm\"}": {
+                  ".": {},
+                  "f:args": {},
+                  "f:env": {
+                    ".": {},
+                    "k:{\"name\":\"CHART\"}": {
+                      ".": {},
+                      "f:name": {},
+                      "f:value": {}
+                    },
+                    "k:{\"name\":\"CHART_NAMESPACE\"}": {
+                      ".": {},
+                      "f:name": {},
+                      "f:value": {}
+                    },
+                    "k:{\"name\":\"HELM_DRIVER\"}": {
+                      ".": {},
+                      "f:name": {},
+                      "f:value": {}
+                    },
+                    "k:{\"name\":\"HELM_VERSION\"}": {
+                      ".": {},
+                      "f:name": {}
+                    },
+                    "k:{\"name\":\"NAME\"}": {
+                      ".": {},
+                      "f:name": {},
+                      "f:value": {}
+                    },
+                    "k:{\"name\":\"NO_PROXY\"}": {
+                      ".": {},
+                      "f:name": {},
+                      "f:value": {}
+                    },
+                    "k:{\"name\":\"REPO\"}": {
+                      ".": {},
+                      "f:name": {}
+                    },
+                    "k:{\"name\":\"TARGET_NAMESPACE\"}": {
+                      ".": {},
+                      "f:name": {},
+                      "f:value": {}
+                    },
+                    "k:{\"name\":\"VERSION\"}": {
+                      ".": {},
+                      "f:name": {}
+                    }
+                  },
+                  "f:image": {},
+                  "f:imagePullPolicy": {},
+                  "f:name": {},
+                  "f:resources": {},
+                  "f:terminationMessagePath": {},
+                  "f:terminationMessagePolicy": {},
+                  "f:volumeMounts": {
+                    ".": {},
+                    "k:{\"mountPath\":\"/chart\"}": {
+                      ".": {},
+                      "f:mountPath": {},
+                      "f:name": {}
+                    },
+                    "k:{\"mountPath\":\"/config\"}": {
+                      ".": {},
+                      "f:mountPath": {},
+                      "f:name": {}
+                    }
+                  }
+                }
+              },
+              "f:dnsPolicy": {},
+              "f:enableServiceLinks": {},
+              "f:nodeSelector": {},
+              "f:restartPolicy": {},
+              "f:schedulerName": {},
+              "f:securityContext": {},
+              "f:serviceAccount": {},
+              "f:serviceAccountName": {},
+              "f:terminationGracePeriodSeconds": {},
+              "f:volumes": {
+                ".": {},
+                "k:{\"name\":\"content\"}": {
+                  ".": {},
+                  "f:configMap": {
+                    ".": {},
+                    "f:defaultMode": {},
+                    "f:name": {}
+                  },
+                  "f:name": {}
+                },
+                "k:{\"name\":\"values\"}": {
+                  ".": {},
+                  "f:configMap": {
+                    ".": {},
+                    "f:defaultMode": {},
+                    "f:name": {}
+                  },
+                  "f:name": {}
+                }
+              }
+            }
+          }
+        },
+        {
+          "manager": "k3s",
+          "operation": "Update",
+          "apiVersion": "v1",
+          "time": "2022-04-26T17:36:56Z",
+          "fieldsType": "FieldsV1",
+          "fieldsV1": {
+            "f:status": {
+              "f:conditions": {
+                "k:{\"type\":\"ContainersReady\"}": {
+                  ".": {},
+                  "f:lastProbeTime": {},
+                  "f:lastTransitionTime": {},
+                  "f:reason": {},
+                  "f:status": {},
+                  "f:type": {}
+                },
+                "k:{\"type\":\"Initialized\"}": {
+                  ".": {},
+                  "f:lastProbeTime": {},
+                  "f:lastTransitionTime": {},
+                  "f:reason": {},
+                  "f:status": {},
+                  "f:type": {}
+                },
+                "k:{\"type\":\"Ready\"}": {
+                  ".": {},
+                  "f:lastProbeTime": {},
+                  "f:lastTransitionTime": {},
+                  "f:reason": {},
+                  "f:status": {},
+                  "f:type": {}
+                }
+              },
+              "f:containerStatuses": {},
+              "f:hostIP": {},
+              "f:phase": {},
+              "f:podIP": {},
+              "f:podIPs": {
+                ".": {},
+                "k:{\"ip\":\"10.42.0.2\"}": {
+                  ".": {},
+                  "f:ip": {}
+                }
+              },
+              "f:startTime": {}
+            }
+          },
+          "subresource": "status"
+        }
+      ]
+    },
+    "spec": {
+      "volumes": [
+        {
+          "name": "values",
+          "configMap": {
+            "name": "chart-values-traefik",
+            "defaultMode": 420
+          }
+        },
+        {
+          "name": "content",
+          "configMap": {
+            "name": "chart-content-traefik",
+            "defaultMode": 420
+          }
+        },
+        {
+          "name": "kube-api-access-g52jg",
+          "projected": {
+            "sources": [
+              {
+                "serviceAccountToken": {
+                  "expirationSeconds": 3607,
+                  "path": "token"
+                }
+              },
+              {
+                "configMap": {
+                  "name": "kube-root-ca.crt",
+                  "items": [
+                    {
+                      "key": "ca.crt",
+                      "path": "ca.crt"
+                    }
+                  ]
+                }
+              },
+              {
+                "downwardAPI": {
+                  "items": [
+                    {
+                      "path": "namespace",
+                      "fieldRef": {
+                        "apiVersion": "v1",
+                        "fieldPath": "metadata.namespace"
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            "defaultMode": 420
+          }
+        }
+      ],
+      "containers": [
+        {
+          "name": "helm",
+          "image": "rancher/klipper-helm:v0.6.6-build20211022",
+          "args": [
+            "install",
+            "--set-string",
+            "global.systemDefaultRegistry="
+          ],
+          "env": [
+            {
+              "name": "NAME",
+              "value": "traefik"
+            },
+            {
+              "name": "VERSION"
+            },
+            {
+              "name": "REPO"
+            },
+            {
+              "name": "HELM_DRIVER",
+              "value": "secret"
+            },
+            {
+              "name": "CHART_NAMESPACE",
+              "value": "kube-system"
+            },
+            {
+              "name": "CHART",
+              "value": "https://%{KUBERNETES_API}%/static/charts/traefik-10.3.001.tgz"
+            },
+            {
+              "name": "HELM_VERSION"
+            },
+            {
+              "name": "TARGET_NAMESPACE",
+              "value": "kube-system"
+            },
+            {
+              "name": "NO_PROXY",
+              "value": ".svc,.cluster.local,10.42.0.0/16,10.43.0.0/16"
+            }
+          ],
+          "resources": {},
+          "volumeMounts": [
+            {
+              "name": "values",
+              "mountPath": "/config"
+            },
+            {
+              "name": "content",
+              "mountPath": "/chart"
+            },
+            {
+              "name": "kube-api-access-g52jg",
+              "readOnly": true,
+              "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+            }
+          ],
+          "terminationMessagePath": "/dev/termination-log",
+          "terminationMessagePolicy": "File",
+          "imagePullPolicy": "IfNotPresent"
+        }
+      ],
+      "restartPolicy": "OnFailure",
+      "terminationGracePeriodSeconds": 30,
+      "dnsPolicy": "ClusterFirst",
+      "nodeSelector": {
+        "kubernetes.io/os": "linux"
+      },
+      "serviceAccountName": "helm-traefik",
+      "serviceAccount": "helm-traefik",
+      "nodeName": "k3d-k3d-cluster-test-server-0",
+      "securityContext": {},
+      "schedulerName": "default-scheduler",
+      "tolerations": [
+        {
+          "key": "node.kubernetes.io/not-ready",
+          "operator": "Exists",
+          "effect": "NoExecute",
+          "tolerationSeconds": 300
+        },
+        {
+          "key": "node.kubernetes.io/unreachable",
+          "operator": "Exists",
+          "effect": "NoExecute",
+          "tolerationSeconds": 300
+        }
+      ],
+      "priority": 0,
+      "enableServiceLinks": true,
+      "preemptionPolicy": "PreemptLowerPriority"
+    },
+    "status": {
+      "phase": "Succeeded",
+      "conditions": [
+        {
+          "type": "Initialized",
+          "status": "True",
+          "lastProbeTime": null,
+          "lastTransitionTime": "2022-04-26T17:35:26Z",
+          "reason": "PodCompleted"
+        },
+        {
+          "type": "Ready",
+          "status": "False",
+          "lastProbeTime": null,
+          "lastTransitionTime": "2022-04-26T17:36:56Z",
+          "reason": "PodCompleted"
+        },
+        {
+          "type": "ContainersReady",
+          "status": "False",
+          "lastProbeTime": null,
+          "lastTransitionTime": "2022-04-26T17:36:56Z",
+          "reason": "PodCompleted"
+        },
+        {
+          "type": "PodScheduled",
+          "status": "True",
+          "lastProbeTime": null,
+          "lastTransitionTime": "2022-04-26T17:35:26Z"
+        }
+      ],
+      "hostIP": "172.21.0.2",
+      "podIP": "10.42.0.2",
+      "podIPs": [
+        {
+          "ip": "10.42.0.2"
+        }
+      ],
+      "startTime": "2022-04-26T17:35:26Z",
+      "containerStatuses": [
+        {
+          "name": "helm",
+          "state": {
+            "terminated": {
+              "exitCode": 0,
+              "reason": "Completed",
+              "startedAt": "2022-04-26T17:36:49Z",
+              "finishedAt": "2022-04-26T17:36:55Z",
+              "containerID": "containerd://3f591273601a810f50c7d9aa18e36b765bcbdffe021757d4ad7c140f7d9a9cff"
+            }
+          },
+          "lastState": {},
+          "ready": false,
+          "restartCount": 1,
+          "image": "docker.io/rancher/klipper-helm:v0.6.6-build20211022",
+          "imageID": "docker.io/rancher/klipper-helm@sha256:961459b8641aa77dae39c96ba8efba88805a8949dcaafa131d1aecc1510128bf",
+          "containerID": "containerd://3f591273601a810f50c7d9aa18e36b765bcbdffe021757d4ad7c140f7d9a9cff",
+          "started": false
+        }
+      ],
+      "qosClass": "BestEffort"
+    }
+  }
+}
