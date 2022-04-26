@@ -1,6 +1,7 @@
 require "../spec_helper"
 require "../load_version"
 
+{% if ::K8S::Kubernetes::VERSION_MINOR == 1 && ::K8S::Kubernetes::VERSION_MAJOR >= 16 %}
 Spectator.describe ::K8S::Kubernetes::WatchEvent do
   let(:raw_event) { ::K8S::Apimachinery::Apis::Meta::V1::WatchEvent.from_json(fixture("api", "watch-event.json")) }
   let(:subject) { ::K8S::Kubernetes::WatchEvent(K8S::Kubernetes::Resource) }
@@ -17,3 +18,4 @@ Spectator.describe ::K8S::Kubernetes::WatchEvent do
     end
   end
 end
+{% end %}

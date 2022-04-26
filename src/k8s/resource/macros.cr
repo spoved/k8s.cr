@@ -203,8 +203,8 @@ abstract struct K8S::Kubernetes::Resource
       end
     {% end %}
 
-    {% if description %}
-    # {{description}}{% end %}
+    {% if description %}{% for line in description.id.split("\n") %}
+    # {{line.id}} {% end %}{% end %}
     def {{accessor.id}} : {{kind}} {% if nilable %} | Nil {% end %}
       __{{accessor.id}}
     end
@@ -322,9 +322,21 @@ abstract struct K8S::Kubernetes::Resource
       {% for prop in properties %}{{prop[:name].id}}: {{prop}},
       {% end %}
     )]
-    {% if description %}{% for line in description.split("\n") %}
-    # {{line}} {% end %}{% end %}
+    {% if description %}{% for line in description.id.split("\n") %}
+    # {{line.id}} {% end %}{% end %}
     struct {{mod_path.id}}::{{c_kind.id}} < ::K8S::Kubernetes::Resource::{% if list %}List({{list_kind.id}}){% else %}Object{% end %}
+
+      def self.group
+        {{r_group_full.id.stringify}}
+      end
+
+      def self.api_version
+        {{version.id.stringify}}
+      end
+
+      def self.kind
+        {{kind.id.stringify}}
+      end
 
       {% for prop in properties %}
       K8S::Kubernetes::Resource.define_prop({{**prop}})
