@@ -5609,9 +5609,8 @@
     Overview
   </h2>
 
-  <p>&quot;StorageClass describes the parameters for a class of storage for which PersistentVolumes can be dynamically provisioned.&quot;
-&quot;&quot;
-&quot;StorageClasses are non-namespaced; the name of the storage class according to etcd is in ObjectMeta.Name.&quot;</p>
+  <p>StorageClass describes the parameters for a class of storage for which PersistentVolumes can be dynamically provisioned.</p>
+<p>StorageClasses are non-namespaced; the name of the storage class according to etcd is in ObjectMeta.Name.</p>
 
 
 
@@ -5636,7 +5635,7 @@
   </h2>
   
     
-      <a href="https://github.com/spoved/k8s.cr/blob/715c803800ff8561114633d8bff021fd1f4300a8/src/versions/v1.20/api/storage/v1/storage_class.cr#L9" target="_blank">
+      <a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.20/api/storage/v1/storage_class.cr#L9" target="_blank">
         versions/v1.20/api/storage/v1/storage_class.cr
       </a>
     
@@ -5696,6 +5695,37 @@
 
 
 
+  <h2>
+    <a id="class-method-summary" class="anchor" href="#class-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#api_version-class-method" class="signature"><strong>.api_version</strong></a>
+        
+          <div class="summary"><p>APIVersion defines the versioned schema of this representation of an object.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#group-class-method" class="signature"><strong>.group</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#kind-class-method" class="signature"><strong>.kind</strong></a>
+        
+          <div class="summary"><p>Kind is a string value representing the REST resource this object represents.</p></div>
+        
+      </li>
+    
+  </ul>
+
 
 
   <h2>
@@ -5711,196 +5741,196 @@
       <li class="entry-summary">
         <a href="#allow_volume_expansion%3ABool%3F-instance-method" class="signature"><strong>#allow_volume_expansion</strong> : Bool?</a>
         
-          <div class="summary"><p>&quot;AllowVolumeExpansion shows whether the storage class allow volume expand&quot;</p></div>
+          <div class="summary"><p>AllowVolumeExpansion shows whether the storage class allow volume expand</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#allow_volume_expansion%21%3ABool-instance-method" class="signature"><strong>#allow_volume_expansion!</strong> : Bool</a>
         
-          <div class="summary"><p>&quot;AllowVolumeExpansion shows whether the storage class allow volume expand&quot;</p></div>
+          <div class="summary"><p>AllowVolumeExpansion shows whether the storage class allow volume expand</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#allow_volume_expansion%3D%28value%3ABool%3F%29-instance-method" class="signature"><strong>#allow_volume_expansion=</strong>(value : Bool?)</a>
         
-          <div class="summary"><p>&quot;AllowVolumeExpansion shows whether the storage class allow volume expand&quot;</p></div>
+          <div class="summary"><p>AllowVolumeExpansion shows whether the storage class allow volume expand</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#allow_volume_expansion%3F%3ABool%3F-instance-method" class="signature"><strong>#allow_volume_expansion?</strong> : Bool?</a>
         
-          <div class="summary"><p>&quot;AllowVolumeExpansion shows whether the storage class allow volume expand&quot;</p></div>
+          <div class="summary"><p>AllowVolumeExpansion shows whether the storage class allow volume expand</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#allowed_topologies%3AArray%28K8S%3A%3AApi%3A%3ACore%3A%3AV1%3A%3ATopologySelectorTerm%29%3F-instance-method" class="signature"><strong>#allowed_topologies</strong> : Array(K8S::Api::Core::V1::TopologySelectorTerm)?</a>
         
-          <div class="summary"><p>&quot;Restrict the node topologies where volumes can be dynamically provisioned.</p></div>
+          <div class="summary"><p>Restrict the node topologies where volumes can be dynamically provisioned.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#allowed_topologies%21%3AArray%28K8S%3A%3AApi%3A%3ACore%3A%3AV1%3A%3ATopologySelectorTerm%29-instance-method" class="signature"><strong>#allowed_topologies!</strong> : Array(K8S::Api::Core::V1::TopologySelectorTerm)</a>
         
-          <div class="summary"><p>&quot;Restrict the node topologies where volumes can be dynamically provisioned.</p></div>
+          <div class="summary"><p>Restrict the node topologies where volumes can be dynamically provisioned.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#allowed_topologies%3D%28value%3AArray%28K8S%3A%3AApi%3A%3ACore%3A%3AV1%3A%3ATopologySelectorTerm%29%3F%29-instance-method" class="signature"><strong>#allowed_topologies=</strong>(value : Array(K8S::Api::Core::V1::TopologySelectorTerm)?)</a>
         
-          <div class="summary"><p>&quot;Restrict the node topologies where volumes can be dynamically provisioned.</p></div>
+          <div class="summary"><p>Restrict the node topologies where volumes can be dynamically provisioned.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#allowed_topologies%3F%3AArray%28K8S%3A%3AApi%3A%3ACore%3A%3AV1%3A%3ATopologySelectorTerm%29%3F-instance-method" class="signature"><strong>#allowed_topologies?</strong> : Array(K8S::Api::Core::V1::TopologySelectorTerm)?</a>
         
-          <div class="summary"><p>&quot;Restrict the node topologies where volumes can be dynamically provisioned.</p></div>
+          <div class="summary"><p>Restrict the node topologies where volumes can be dynamically provisioned.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#mount_options%3AArray%28String%29%3F-instance-method" class="signature"><strong>#mount_options</strong> : Array(String)?</a>
         
-          <div class="summary"><p>&quot;Dynamically provisioned PersistentVolumes of this storage class are created with these mountOptions, e.g.</p></div>
+          <div class="summary"><p>Dynamically provisioned PersistentVolumes of this storage class are created with these mountOptions, e.g.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#mount_options%21%3AArray%28String%29-instance-method" class="signature"><strong>#mount_options!</strong> : Array(String)</a>
         
-          <div class="summary"><p>&quot;Dynamically provisioned PersistentVolumes of this storage class are created with these mountOptions, e.g.</p></div>
+          <div class="summary"><p>Dynamically provisioned PersistentVolumes of this storage class are created with these mountOptions, e.g.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#mount_options%3D%28value%3AArray%28String%29%3F%29-instance-method" class="signature"><strong>#mount_options=</strong>(value : Array(String)?)</a>
         
-          <div class="summary"><p>&quot;Dynamically provisioned PersistentVolumes of this storage class are created with these mountOptions, e.g.</p></div>
+          <div class="summary"><p>Dynamically provisioned PersistentVolumes of this storage class are created with these mountOptions, e.g.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#mount_options%3F%3AArray%28String%29%3F-instance-method" class="signature"><strong>#mount_options?</strong> : Array(String)?</a>
         
-          <div class="summary"><p>&quot;Dynamically provisioned PersistentVolumes of this storage class are created with these mountOptions, e.g.</p></div>
+          <div class="summary"><p>Dynamically provisioned PersistentVolumes of this storage class are created with these mountOptions, e.g.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#parameters%3AHash%28String%2CString%29%3F-instance-method" class="signature"><strong>#parameters</strong> : Hash(String, String)?</a>
         
-          <div class="summary"><p>&quot;Parameters holds the parameters for the provisioner that should create volumes of this storage class.&quot;</p></div>
+          <div class="summary"><p>Parameters holds the parameters for the provisioner that should create volumes of this storage class.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#parameters%21%3AHash%28String%2CString%29-instance-method" class="signature"><strong>#parameters!</strong> : Hash(String, String)</a>
         
-          <div class="summary"><p>&quot;Parameters holds the parameters for the provisioner that should create volumes of this storage class.&quot;</p></div>
+          <div class="summary"><p>Parameters holds the parameters for the provisioner that should create volumes of this storage class.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#parameters%3D%28value%3AHash%28String%2CString%29%3F%29-instance-method" class="signature"><strong>#parameters=</strong>(value : Hash(String, String)?)</a>
         
-          <div class="summary"><p>&quot;Parameters holds the parameters for the provisioner that should create volumes of this storage class.&quot;</p></div>
+          <div class="summary"><p>Parameters holds the parameters for the provisioner that should create volumes of this storage class.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#parameters%3F%3AHash%28String%2CString%29%3F-instance-method" class="signature"><strong>#parameters?</strong> : Hash(String, String)?</a>
         
-          <div class="summary"><p>&quot;Parameters holds the parameters for the provisioner that should create volumes of this storage class.&quot;</p></div>
+          <div class="summary"><p>Parameters holds the parameters for the provisioner that should create volumes of this storage class.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#provisioner%3AString-instance-method" class="signature"><strong>#provisioner</strong> : String</a>
         
-          <div class="summary"><p>&quot;Provisioner indicates the type of the provisioner.&quot;</p></div>
+          <div class="summary"><p>Provisioner indicates the type of the provisioner.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#provisioner%21%3AString-instance-method" class="signature"><strong>#provisioner!</strong> : String</a>
         
-          <div class="summary"><p>&quot;Provisioner indicates the type of the provisioner.&quot;</p></div>
+          <div class="summary"><p>Provisioner indicates the type of the provisioner.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#provisioner%3D%28value%3AString%29-instance-method" class="signature"><strong>#provisioner=</strong>(value : String)</a>
         
-          <div class="summary"><p>&quot;Provisioner indicates the type of the provisioner.&quot;</p></div>
+          <div class="summary"><p>Provisioner indicates the type of the provisioner.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#provisioner%3F%3AString%3F-instance-method" class="signature"><strong>#provisioner?</strong> : String?</a>
         
-          <div class="summary"><p>&quot;Provisioner indicates the type of the provisioner.&quot;</p></div>
+          <div class="summary"><p>Provisioner indicates the type of the provisioner.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#reclaim_policy%3AString%3F-instance-method" class="signature"><strong>#reclaim_policy</strong> : String?</a>
         
-          <div class="summary"><p>&quot;Dynamically provisioned PersistentVolumes of this storage class are created with this reclaimPolicy.</p></div>
+          <div class="summary"><p>Dynamically provisioned PersistentVolumes of this storage class are created with this reclaimPolicy.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#reclaim_policy%21%3AString-instance-method" class="signature"><strong>#reclaim_policy!</strong> : String</a>
         
-          <div class="summary"><p>&quot;Dynamically provisioned PersistentVolumes of this storage class are created with this reclaimPolicy.</p></div>
+          <div class="summary"><p>Dynamically provisioned PersistentVolumes of this storage class are created with this reclaimPolicy.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#reclaim_policy%3D%28value%3AString%3F%29-instance-method" class="signature"><strong>#reclaim_policy=</strong>(value : String?)</a>
         
-          <div class="summary"><p>&quot;Dynamically provisioned PersistentVolumes of this storage class are created with this reclaimPolicy.</p></div>
+          <div class="summary"><p>Dynamically provisioned PersistentVolumes of this storage class are created with this reclaimPolicy.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#reclaim_policy%3F%3AString%3F-instance-method" class="signature"><strong>#reclaim_policy?</strong> : String?</a>
         
-          <div class="summary"><p>&quot;Dynamically provisioned PersistentVolumes of this storage class are created with this reclaimPolicy.</p></div>
+          <div class="summary"><p>Dynamically provisioned PersistentVolumes of this storage class are created with this reclaimPolicy.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#volume_binding_mode%3AString%3F-instance-method" class="signature"><strong>#volume_binding_mode</strong> : String?</a>
         
-          <div class="summary"><p>&quot;VolumeBindingMode indicates how PersistentVolumeClaims should be provisioned and bound.</p></div>
+          <div class="summary"><p>VolumeBindingMode indicates how PersistentVolumeClaims should be provisioned and bound.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#volume_binding_mode%21%3AString-instance-method" class="signature"><strong>#volume_binding_mode!</strong> : String</a>
         
-          <div class="summary"><p>&quot;VolumeBindingMode indicates how PersistentVolumeClaims should be provisioned and bound.</p></div>
+          <div class="summary"><p>VolumeBindingMode indicates how PersistentVolumeClaims should be provisioned and bound.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#volume_binding_mode%3D%28value%3AString%3F%29-instance-method" class="signature"><strong>#volume_binding_mode=</strong>(value : String?)</a>
         
-          <div class="summary"><p>&quot;VolumeBindingMode indicates how PersistentVolumeClaims should be provisioned and bound.</p></div>
+          <div class="summary"><p>VolumeBindingMode indicates how PersistentVolumeClaims should be provisioned and bound.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#volume_binding_mode%3F%3AString%3F-instance-method" class="signature"><strong>#volume_binding_mode?</strong> : String?</a>
         
-          <div class="summary"><p>&quot;VolumeBindingMode indicates how PersistentVolumeClaims should be provisioned and bound.</p></div>
+          <div class="summary"><p>VolumeBindingMode indicates how PersistentVolumeClaims should be provisioned and bound.</p></div>
         
       </li>
     
@@ -6104,7 +6134,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/715c803800ff8561114633d8bff021fd1f4300a8/src/versions/v1.20/api/storage/v1/storage_class.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.20/api/storage/v1/storage_class.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -6120,7 +6150,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/715c803800ff8561114633d8bff021fd1f4300a8/src/versions/v1.20/api/storage/v1/storage_class.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.20/api/storage/v1/storage_class.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -6136,7 +6166,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/715c803800ff8561114633d8bff021fd1f4300a8/src/versions/v1.20/api/storage/v1/storage_class.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.20/api/storage/v1/storage_class.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -6152,7 +6182,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/715c803800ff8561114633d8bff021fd1f4300a8/src/versions/v1.20/api/storage/v1/storage_class.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.20/api/storage/v1/storage_class.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -6168,7 +6198,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/715c803800ff8561114633d8bff021fd1f4300a8/src/versions/v1.20/api/storage/v1/storage_class.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.20/api/storage/v1/storage_class.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -6184,7 +6214,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/715c803800ff8561114633d8bff021fd1f4300a8/src/versions/v1.20/api/storage/v1/storage_class.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.20/api/storage/v1/storage_class.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -6200,13 +6230,89 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/715c803800ff8561114633d8bff021fd1f4300a8/src/versions/v1.20/api/storage/v1/storage_class.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.20/api/storage/v1/storage_class.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
   
 
 
+
+  <h2>
+    <a id="class-method-detail" class="anchor" href="#class-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="api_version-class-method">
+      <div class="signature">
+        
+        def self.<strong>api_version</strong>
+
+        <a class="method-permalink" href="#api_version-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+            <div class="doc-inherited">
+              Description copied from struct <a href="../../../../K8S/Kubernetes/Resource.html">K8S::Kubernetes::Resource</a>
+            </div>
+          
+          <p>APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[<a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources</a>](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)))</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.20/api/storage/v1/storage_class.cr#L9" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="group-class-method">
+      <div class="signature">
+        
+        def self.<strong>group</strong>
+
+        <a class="method-permalink" href="#group-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.20/api/storage/v1/storage_class.cr#L9" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="kind-class-method">
+      <div class="signature">
+        
+        def self.<strong>kind</strong>
+
+        <a class="method-permalink" href="#kind-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+            <div class="doc-inherited">
+              Description copied from struct <a href="../../../../K8S/Kubernetes/Resource.html">K8S::Kubernetes::Resource</a>
+            </div>
+          
+          <p>Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [[<a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds</a>](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)))</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.20/api/storage/v1/storage_class.cr#L9" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
 
 
 
@@ -6229,7 +6335,7 @@
       
         <div class="doc">
           
-          <p>&quot;AllowVolumeExpansion shows whether the storage class allow volume expand&quot;</p>
+          <p>AllowVolumeExpansion shows whether the storage class allow volume expand</p>
         </div>
       
       <br/>
@@ -6248,7 +6354,7 @@
       
         <div class="doc">
           
-          <p>&quot;AllowVolumeExpansion shows whether the storage class allow volume expand&quot;</p>
+          <p>AllowVolumeExpansion shows whether the storage class allow volume expand</p>
         </div>
       
       <br/>
@@ -6267,7 +6373,7 @@
       
         <div class="doc">
           
-          <p>&quot;AllowVolumeExpansion shows whether the storage class allow volume expand&quot;</p>
+          <p>AllowVolumeExpansion shows whether the storage class allow volume expand</p>
         </div>
       
       <br/>
@@ -6286,7 +6392,7 @@
       
         <div class="doc">
           
-          <p>&quot;AllowVolumeExpansion shows whether the storage class allow volume expand&quot;</p>
+          <p>AllowVolumeExpansion shows whether the storage class allow volume expand</p>
         </div>
       
       <br/>
@@ -6305,7 +6411,7 @@
       
         <div class="doc">
           
-          <p>&quot;Restrict the node topologies where volumes can be dynamically provisioned. Each volume plugin defines its own supported topology specifications. An empty TopologySelectorTerm list means there is no topology restriction. This field is only honored by servers that enable the VolumeScheduling feature.&quot;</p>
+          <p>Restrict the node topologies where volumes can be dynamically provisioned. Each volume plugin defines its own supported topology specifications. An empty TopologySelectorTerm list means there is no topology restriction. This field is only honored by servers that enable the VolumeScheduling feature.</p>
         </div>
       
       <br/>
@@ -6324,7 +6430,7 @@
       
         <div class="doc">
           
-          <p>&quot;Restrict the node topologies where volumes can be dynamically provisioned. Each volume plugin defines its own supported topology specifications. An empty TopologySelectorTerm list means there is no topology restriction. This field is only honored by servers that enable the VolumeScheduling feature.&quot;</p>
+          <p>Restrict the node topologies where volumes can be dynamically provisioned. Each volume plugin defines its own supported topology specifications. An empty TopologySelectorTerm list means there is no topology restriction. This field is only honored by servers that enable the VolumeScheduling feature.</p>
         </div>
       
       <br/>
@@ -6343,7 +6449,7 @@
       
         <div class="doc">
           
-          <p>&quot;Restrict the node topologies where volumes can be dynamically provisioned. Each volume plugin defines its own supported topology specifications. An empty TopologySelectorTerm list means there is no topology restriction. This field is only honored by servers that enable the VolumeScheduling feature.&quot;</p>
+          <p>Restrict the node topologies where volumes can be dynamically provisioned. Each volume plugin defines its own supported topology specifications. An empty TopologySelectorTerm list means there is no topology restriction. This field is only honored by servers that enable the VolumeScheduling feature.</p>
         </div>
       
       <br/>
@@ -6362,7 +6468,7 @@
       
         <div class="doc">
           
-          <p>&quot;Restrict the node topologies where volumes can be dynamically provisioned. Each volume plugin defines its own supported topology specifications. An empty TopologySelectorTerm list means there is no topology restriction. This field is only honored by servers that enable the VolumeScheduling feature.&quot;</p>
+          <p>Restrict the node topologies where volumes can be dynamically provisioned. Each volume plugin defines its own supported topology specifications. An empty TopologySelectorTerm list means there is no topology restriction. This field is only honored by servers that enable the VolumeScheduling feature.</p>
         </div>
       
       <br/>
@@ -6381,7 +6487,7 @@
       
         <div class="doc">
           
-          <p>&quot;Dynamically provisioned PersistentVolumes of this storage class are created with these mountOptions, e.g. [&quot;ro&quot;, &quot;soft&quot;]. Not validated - mount of the PVs will simply fail if one is invalid.&quot;</p>
+          <p>Dynamically provisioned PersistentVolumes of this storage class are created with these mountOptions, e.g. [&quot;ro&quot;, &quot;soft&quot;]. Not validated - mount of the PVs will simply fail if one is invalid.</p>
         </div>
       
       <br/>
@@ -6400,7 +6506,7 @@
       
         <div class="doc">
           
-          <p>&quot;Dynamically provisioned PersistentVolumes of this storage class are created with these mountOptions, e.g. [&quot;ro&quot;, &quot;soft&quot;]. Not validated - mount of the PVs will simply fail if one is invalid.&quot;</p>
+          <p>Dynamically provisioned PersistentVolumes of this storage class are created with these mountOptions, e.g. [&quot;ro&quot;, &quot;soft&quot;]. Not validated - mount of the PVs will simply fail if one is invalid.</p>
         </div>
       
       <br/>
@@ -6419,7 +6525,7 @@
       
         <div class="doc">
           
-          <p>&quot;Dynamically provisioned PersistentVolumes of this storage class are created with these mountOptions, e.g. [&quot;ro&quot;, &quot;soft&quot;]. Not validated - mount of the PVs will simply fail if one is invalid.&quot;</p>
+          <p>Dynamically provisioned PersistentVolumes of this storage class are created with these mountOptions, e.g. [&quot;ro&quot;, &quot;soft&quot;]. Not validated - mount of the PVs will simply fail if one is invalid.</p>
         </div>
       
       <br/>
@@ -6438,7 +6544,7 @@
       
         <div class="doc">
           
-          <p>&quot;Dynamically provisioned PersistentVolumes of this storage class are created with these mountOptions, e.g. [&quot;ro&quot;, &quot;soft&quot;]. Not validated - mount of the PVs will simply fail if one is invalid.&quot;</p>
+          <p>Dynamically provisioned PersistentVolumes of this storage class are created with these mountOptions, e.g. [&quot;ro&quot;, &quot;soft&quot;]. Not validated - mount of the PVs will simply fail if one is invalid.</p>
         </div>
       
       <br/>
@@ -6457,7 +6563,7 @@
       
         <div class="doc">
           
-          <p>&quot;Parameters holds the parameters for the provisioner that should create volumes of this storage class.&quot;</p>
+          <p>Parameters holds the parameters for the provisioner that should create volumes of this storage class.</p>
         </div>
       
       <br/>
@@ -6476,7 +6582,7 @@
       
         <div class="doc">
           
-          <p>&quot;Parameters holds the parameters for the provisioner that should create volumes of this storage class.&quot;</p>
+          <p>Parameters holds the parameters for the provisioner that should create volumes of this storage class.</p>
         </div>
       
       <br/>
@@ -6495,7 +6601,7 @@
       
         <div class="doc">
           
-          <p>&quot;Parameters holds the parameters for the provisioner that should create volumes of this storage class.&quot;</p>
+          <p>Parameters holds the parameters for the provisioner that should create volumes of this storage class.</p>
         </div>
       
       <br/>
@@ -6514,7 +6620,7 @@
       
         <div class="doc">
           
-          <p>&quot;Parameters holds the parameters for the provisioner that should create volumes of this storage class.&quot;</p>
+          <p>Parameters holds the parameters for the provisioner that should create volumes of this storage class.</p>
         </div>
       
       <br/>
@@ -6533,7 +6639,7 @@
       
         <div class="doc">
           
-          <p>&quot;Provisioner indicates the type of the provisioner.&quot;</p>
+          <p>Provisioner indicates the type of the provisioner.</p>
         </div>
       
       <br/>
@@ -6552,7 +6658,7 @@
       
         <div class="doc">
           
-          <p>&quot;Provisioner indicates the type of the provisioner.&quot;</p>
+          <p>Provisioner indicates the type of the provisioner.</p>
         </div>
       
       <br/>
@@ -6571,7 +6677,7 @@
       
         <div class="doc">
           
-          <p>&quot;Provisioner indicates the type of the provisioner.&quot;</p>
+          <p>Provisioner indicates the type of the provisioner.</p>
         </div>
       
       <br/>
@@ -6590,7 +6696,7 @@
       
         <div class="doc">
           
-          <p>&quot;Provisioner indicates the type of the provisioner.&quot;</p>
+          <p>Provisioner indicates the type of the provisioner.</p>
         </div>
       
       <br/>
@@ -6609,7 +6715,7 @@
       
         <div class="doc">
           
-          <p>&quot;Dynamically provisioned PersistentVolumes of this storage class are created with this reclaimPolicy. Defaults to Delete.&quot;</p>
+          <p>Dynamically provisioned PersistentVolumes of this storage class are created with this reclaimPolicy. Defaults to Delete.</p>
         </div>
       
       <br/>
@@ -6628,7 +6734,7 @@
       
         <div class="doc">
           
-          <p>&quot;Dynamically provisioned PersistentVolumes of this storage class are created with this reclaimPolicy. Defaults to Delete.&quot;</p>
+          <p>Dynamically provisioned PersistentVolumes of this storage class are created with this reclaimPolicy. Defaults to Delete.</p>
         </div>
       
       <br/>
@@ -6647,7 +6753,7 @@
       
         <div class="doc">
           
-          <p>&quot;Dynamically provisioned PersistentVolumes of this storage class are created with this reclaimPolicy. Defaults to Delete.&quot;</p>
+          <p>Dynamically provisioned PersistentVolumes of this storage class are created with this reclaimPolicy. Defaults to Delete.</p>
         </div>
       
       <br/>
@@ -6666,7 +6772,7 @@
       
         <div class="doc">
           
-          <p>&quot;Dynamically provisioned PersistentVolumes of this storage class are created with this reclaimPolicy. Defaults to Delete.&quot;</p>
+          <p>Dynamically provisioned PersistentVolumes of this storage class are created with this reclaimPolicy. Defaults to Delete.</p>
         </div>
       
       <br/>
@@ -6685,7 +6791,7 @@
       
         <div class="doc">
           
-          <p>&quot;VolumeBindingMode indicates how PersistentVolumeClaims should be provisioned and bound.  When unset, VolumeBindingImmediate is used. This field is only honored by servers that enable the VolumeScheduling feature.&quot;</p>
+          <p>VolumeBindingMode indicates how PersistentVolumeClaims should be provisioned and bound.  When unset, VolumeBindingImmediate is used. This field is only honored by servers that enable the VolumeScheduling feature.</p>
         </div>
       
       <br/>
@@ -6704,7 +6810,7 @@
       
         <div class="doc">
           
-          <p>&quot;VolumeBindingMode indicates how PersistentVolumeClaims should be provisioned and bound.  When unset, VolumeBindingImmediate is used. This field is only honored by servers that enable the VolumeScheduling feature.&quot;</p>
+          <p>VolumeBindingMode indicates how PersistentVolumeClaims should be provisioned and bound.  When unset, VolumeBindingImmediate is used. This field is only honored by servers that enable the VolumeScheduling feature.</p>
         </div>
       
       <br/>
@@ -6723,7 +6829,7 @@
       
         <div class="doc">
           
-          <p>&quot;VolumeBindingMode indicates how PersistentVolumeClaims should be provisioned and bound.  When unset, VolumeBindingImmediate is used. This field is only honored by servers that enable the VolumeScheduling feature.&quot;</p>
+          <p>VolumeBindingMode indicates how PersistentVolumeClaims should be provisioned and bound.  When unset, VolumeBindingImmediate is used. This field is only honored by servers that enable the VolumeScheduling feature.</p>
         </div>
       
       <br/>
@@ -6742,7 +6848,7 @@
       
         <div class="doc">
           
-          <p>&quot;VolumeBindingMode indicates how PersistentVolumeClaims should be provisioned and bound.  When unset, VolumeBindingImmediate is used. This field is only honored by servers that enable the VolumeScheduling feature.&quot;</p>
+          <p>VolumeBindingMode indicates how PersistentVolumeClaims should be provisioned and bound.  When unset, VolumeBindingImmediate is used. This field is only honored by servers that enable the VolumeScheduling feature.</p>
         </div>
       
       <br/>

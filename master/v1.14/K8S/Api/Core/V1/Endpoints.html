@@ -5134,18 +5134,18 @@
     Overview
   </h2>
 
-  <p>&quot;Endpoints is a collection of endpoints that implement the actual service. Example:&quot;
-&quot;  Name: &quot;mysvc&quot;,&quot;
-&quot;  Subsets: [&quot;
-&quot;    {&quot;
-&quot;      Addresses: [{&quot;ip&quot;: &quot;10.10.1.1&quot;}, {&quot;ip&quot;: &quot;10.10.2.2&quot;}],&quot;
-&quot;      Ports: [{&quot;name&quot;: &quot;a&quot;, &quot;port&quot;: 8675}, {&quot;name&quot;: &quot;b&quot;, &quot;port&quot;: 309}]&quot;
-&quot;    },&quot;
-&quot;    {&quot;
-&quot;      Addresses: [{&quot;ip&quot;: &quot;10.10.3.3&quot;}],&quot;
-&quot;      Ports: [{&quot;name&quot;: &quot;a&quot;, &quot;port&quot;: 93}, {&quot;name&quot;: &quot;b&quot;, &quot;port&quot;: 76}]&quot;
-&quot;    },&quot;
-&quot; ]&quot;</p>
+  <p>Endpoints is a collection of endpoints that implement the actual service. Example:
+Name: &quot;mysvc&quot;,
+Subsets: [
+{
+Addresses: [{&quot;ip&quot;: &quot;10.10.1.1&quot;}, {&quot;ip&quot;: &quot;10.10.2.2&quot;}],
+Ports: [{&quot;name&quot;: &quot;a&quot;, &quot;port&quot;: 8675}, {&quot;name&quot;: &quot;b&quot;, &quot;port&quot;: 309}]
+},
+{
+Addresses: [{&quot;ip&quot;: &quot;10.10.3.3&quot;}],
+Ports: [{&quot;name&quot;: &quot;a&quot;, &quot;port&quot;: 93}, {&quot;name&quot;: &quot;b&quot;, &quot;port&quot;: 76}]
+},
+]</p>
 
 
 
@@ -5170,7 +5170,7 @@
   </h2>
   
     
-      <a href="https://github.com/spoved/k8s.cr/blob/715c803800ff8561114633d8bff021fd1f4300a8/src/versions/v1.14/api/core/v1/endpoints.cr#L9" target="_blank">
+      <a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.14/api/core/v1/endpoints.cr#L9" target="_blank">
         versions/v1.14/api/core/v1/endpoints.cr
       </a>
     
@@ -5230,6 +5230,37 @@
 
 
 
+  <h2>
+    <a id="class-method-summary" class="anchor" href="#class-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#api_version-class-method" class="signature"><strong>.api_version</strong></a>
+        
+          <div class="summary"><p>APIVersion defines the versioned schema of this representation of an object.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#group-class-method" class="signature"><strong>.group</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#kind-class-method" class="signature"><strong>.kind</strong></a>
+        
+          <div class="summary"><p>Kind is a string value representing the REST resource this object represents.</p></div>
+        
+      </li>
+    
+  </ul>
+
 
 
   <h2>
@@ -5245,28 +5276,28 @@
       <li class="entry-summary">
         <a href="#subsets%3AArray%28K8S%3A%3AApi%3A%3ACore%3A%3AV1%3A%3AEndpointSubset%29%3F-instance-method" class="signature"><strong>#subsets</strong> : Array(K8S::Api::Core::V1::EndpointSubset)?</a>
         
-          <div class="summary"><p>&quot;The set of all endpoints is the union of all subsets.</p></div>
+          <div class="summary"><p>The set of all endpoints is the union of all subsets.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#subsets%21%3AArray%28K8S%3A%3AApi%3A%3ACore%3A%3AV1%3A%3AEndpointSubset%29-instance-method" class="signature"><strong>#subsets!</strong> : Array(K8S::Api::Core::V1::EndpointSubset)</a>
         
-          <div class="summary"><p>&quot;The set of all endpoints is the union of all subsets.</p></div>
+          <div class="summary"><p>The set of all endpoints is the union of all subsets.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#subsets%3D%28value%3AArray%28K8S%3A%3AApi%3A%3ACore%3A%3AV1%3A%3AEndpointSubset%29%3F%29-instance-method" class="signature"><strong>#subsets=</strong>(value : Array(K8S::Api::Core::V1::EndpointSubset)?)</a>
         
-          <div class="summary"><p>&quot;The set of all endpoints is the union of all subsets.</p></div>
+          <div class="summary"><p>The set of all endpoints is the union of all subsets.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#subsets%3F%3AArray%28K8S%3A%3AApi%3A%3ACore%3A%3AV1%3A%3AEndpointSubset%29%3F-instance-method" class="signature"><strong>#subsets?</strong> : Array(K8S::Api::Core::V1::EndpointSubset)?</a>
         
-          <div class="summary"><p>&quot;The set of all endpoints is the union of all subsets.</p></div>
+          <div class="summary"><p>The set of all endpoints is the union of all subsets.</p></div>
         
       </li>
     
@@ -5470,7 +5501,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/715c803800ff8561114633d8bff021fd1f4300a8/src/versions/v1.14/api/core/v1/endpoints.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.14/api/core/v1/endpoints.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5486,7 +5517,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/715c803800ff8561114633d8bff021fd1f4300a8/src/versions/v1.14/api/core/v1/endpoints.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.14/api/core/v1/endpoints.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5502,7 +5533,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/715c803800ff8561114633d8bff021fd1f4300a8/src/versions/v1.14/api/core/v1/endpoints.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.14/api/core/v1/endpoints.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5518,7 +5549,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/715c803800ff8561114633d8bff021fd1f4300a8/src/versions/v1.14/api/core/v1/endpoints.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.14/api/core/v1/endpoints.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5534,7 +5565,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/715c803800ff8561114633d8bff021fd1f4300a8/src/versions/v1.14/api/core/v1/endpoints.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.14/api/core/v1/endpoints.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5550,7 +5581,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/715c803800ff8561114633d8bff021fd1f4300a8/src/versions/v1.14/api/core/v1/endpoints.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.14/api/core/v1/endpoints.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5566,13 +5597,89 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/715c803800ff8561114633d8bff021fd1f4300a8/src/versions/v1.14/api/core/v1/endpoints.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.14/api/core/v1/endpoints.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
   
 
 
+
+  <h2>
+    <a id="class-method-detail" class="anchor" href="#class-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="api_version-class-method">
+      <div class="signature">
+        
+        def self.<strong>api_version</strong>
+
+        <a class="method-permalink" href="#api_version-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+            <div class="doc-inherited">
+              Description copied from struct <a href="../../../../K8S/Kubernetes/Resource.html">K8S::Kubernetes::Resource</a>
+            </div>
+          
+          <p>APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[<a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources</a>](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)))</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.14/api/core/v1/endpoints.cr#L9" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="group-class-method">
+      <div class="signature">
+        
+        def self.<strong>group</strong>
+
+        <a class="method-permalink" href="#group-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.14/api/core/v1/endpoints.cr#L9" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="kind-class-method">
+      <div class="signature">
+        
+        def self.<strong>kind</strong>
+
+        <a class="method-permalink" href="#kind-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+            <div class="doc-inherited">
+              Description copied from struct <a href="../../../../K8S/Kubernetes/Resource.html">K8S::Kubernetes::Resource</a>
+            </div>
+          
+          <p>Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [[<a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds</a>](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)))</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.14/api/core/v1/endpoints.cr#L9" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
 
 
 
@@ -5595,7 +5702,7 @@
       
         <div class="doc">
           
-          <p>&quot;The set of all endpoints is the union of all subsets. Addresses are placed into subsets according to the IPs they share. A single address with multiple ports, some of which are ready and some of which are not (because they come from different containers) will result in the address being displayed in different subsets for the different ports. No address will appear in both Addresses and NotReadyAddresses in the same subset. Sets of addresses and ports that comprise a service.&quot;</p>
+          <p>The set of all endpoints is the union of all subsets. Addresses are placed into subsets according to the IPs they share. A single address with multiple ports, some of which are ready and some of which are not (because they come from different containers) will result in the address being displayed in different subsets for the different ports. No address will appear in both Addresses and NotReadyAddresses in the same subset. Sets of addresses and ports that comprise a service.</p>
         </div>
       
       <br/>
@@ -5614,7 +5721,7 @@
       
         <div class="doc">
           
-          <p>&quot;The set of all endpoints is the union of all subsets. Addresses are placed into subsets according to the IPs they share. A single address with multiple ports, some of which are ready and some of which are not (because they come from different containers) will result in the address being displayed in different subsets for the different ports. No address will appear in both Addresses and NotReadyAddresses in the same subset. Sets of addresses and ports that comprise a service.&quot;</p>
+          <p>The set of all endpoints is the union of all subsets. Addresses are placed into subsets according to the IPs they share. A single address with multiple ports, some of which are ready and some of which are not (because they come from different containers) will result in the address being displayed in different subsets for the different ports. No address will appear in both Addresses and NotReadyAddresses in the same subset. Sets of addresses and ports that comprise a service.</p>
         </div>
       
       <br/>
@@ -5633,7 +5740,7 @@
       
         <div class="doc">
           
-          <p>&quot;The set of all endpoints is the union of all subsets. Addresses are placed into subsets according to the IPs they share. A single address with multiple ports, some of which are ready and some of which are not (because they come from different containers) will result in the address being displayed in different subsets for the different ports. No address will appear in both Addresses and NotReadyAddresses in the same subset. Sets of addresses and ports that comprise a service.&quot;</p>
+          <p>The set of all endpoints is the union of all subsets. Addresses are placed into subsets according to the IPs they share. A single address with multiple ports, some of which are ready and some of which are not (because they come from different containers) will result in the address being displayed in different subsets for the different ports. No address will appear in both Addresses and NotReadyAddresses in the same subset. Sets of addresses and ports that comprise a service.</p>
         </div>
       
       <br/>
@@ -5652,7 +5759,7 @@
       
         <div class="doc">
           
-          <p>&quot;The set of all endpoints is the union of all subsets. Addresses are placed into subsets according to the IPs they share. A single address with multiple ports, some of which are ready and some of which are not (because they come from different containers) will result in the address being displayed in different subsets for the different ports. No address will appear in both Addresses and NotReadyAddresses in the same subset. Sets of addresses and ports that comprise a service.&quot;</p>
+          <p>The set of all endpoints is the union of all subsets. Addresses are placed into subsets according to the IPs they share. A single address with multiple ports, some of which are ready and some of which are not (because they come from different containers) will result in the address being displayed in different subsets for the different ports. No address will appear in both Addresses and NotReadyAddresses in the same subset. Sets of addresses and ports that comprise a service.</p>
         </div>
       
       <br/>

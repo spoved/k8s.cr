@@ -5269,7 +5269,7 @@
     Overview
   </h2>
 
-  <p>&quot;EndpointSlice represents a subset of the endpoints that implement a service. For a given service there may be multiple EndpointSlice objects, selected by labels, which must be joined to produce the full set of endpoints.&quot;</p>
+  <p>EndpointSlice represents a subset of the endpoints that implement a service. For a given service there may be multiple EndpointSlice objects, selected by labels, which must be joined to produce the full set of endpoints.</p>
 
 
 
@@ -5294,7 +5294,7 @@
   </h2>
   
     
-      <a href="https://github.com/spoved/k8s.cr/blob/715c803800ff8561114633d8bff021fd1f4300a8/src/versions/v1.18/api/discovery/v1beta1/endpoint_slice.cr#L10" target="_blank">
+      <a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.18/api/discovery/v1beta1/endpoint_slice.cr#L10" target="_blank">
         versions/v1.18/api/discovery/v1beta1/endpoint_slice.cr
       </a>
     
@@ -5354,6 +5354,37 @@
 
 
 
+  <h2>
+    <a id="class-method-summary" class="anchor" href="#class-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#api_version-class-method" class="signature"><strong>.api_version</strong></a>
+        
+          <div class="summary"><p>APIVersion defines the versioned schema of this representation of an object.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#group-class-method" class="signature"><strong>.group</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#kind-class-method" class="signature"><strong>.kind</strong></a>
+        
+          <div class="summary"><p>Kind is a string value representing the REST resource this object represents.</p></div>
+        
+      </li>
+    
+  </ul>
+
 
 
   <h2>
@@ -5369,84 +5400,84 @@
       <li class="entry-summary">
         <a href="#address_type%3AString-instance-method" class="signature"><strong>#address_type</strong> : String</a>
         
-          <div class="summary"><p>&quot;addressType specifies the type of address carried by this EndpointSlice.</p></div>
+          <div class="summary"><p>addressType specifies the type of address carried by this EndpointSlice.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#address_type%21%3AString-instance-method" class="signature"><strong>#address_type!</strong> : String</a>
         
-          <div class="summary"><p>&quot;addressType specifies the type of address carried by this EndpointSlice.</p></div>
+          <div class="summary"><p>addressType specifies the type of address carried by this EndpointSlice.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#address_type%3D%28value%3AString%29-instance-method" class="signature"><strong>#address_type=</strong>(value : String)</a>
         
-          <div class="summary"><p>&quot;addressType specifies the type of address carried by this EndpointSlice.</p></div>
+          <div class="summary"><p>addressType specifies the type of address carried by this EndpointSlice.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#address_type%3F%3AString%3F-instance-method" class="signature"><strong>#address_type?</strong> : String?</a>
         
-          <div class="summary"><p>&quot;addressType specifies the type of address carried by this EndpointSlice.</p></div>
+          <div class="summary"><p>addressType specifies the type of address carried by this EndpointSlice.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#endpoints%3AArray%28K8S%3A%3AApi%3A%3ADiscovery%3A%3AV1beta1%3A%3AEndpoint%29%3F-instance-method" class="signature"><strong>#endpoints</strong> : Array(K8S::Api::Discovery::V1beta1::Endpoint)?</a>
         
-          <div class="summary"><p>&quot;endpoints is a list of unique endpoints in this slice.</p></div>
+          <div class="summary"><p>endpoints is a list of unique endpoints in this slice.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#endpoints%21%3AArray%28K8S%3A%3AApi%3A%3ADiscovery%3A%3AV1beta1%3A%3AEndpoint%29-instance-method" class="signature"><strong>#endpoints!</strong> : Array(K8S::Api::Discovery::V1beta1::Endpoint)</a>
         
-          <div class="summary"><p>&quot;endpoints is a list of unique endpoints in this slice.</p></div>
+          <div class="summary"><p>endpoints is a list of unique endpoints in this slice.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#endpoints%3D%28value%3AArray%28K8S%3A%3AApi%3A%3ADiscovery%3A%3AV1beta1%3A%3AEndpoint%29%3F%29-instance-method" class="signature"><strong>#endpoints=</strong>(value : Array(K8S::Api::Discovery::V1beta1::Endpoint)?)</a>
         
-          <div class="summary"><p>&quot;endpoints is a list of unique endpoints in this slice.</p></div>
+          <div class="summary"><p>endpoints is a list of unique endpoints in this slice.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#endpoints%3F%3AArray%28K8S%3A%3AApi%3A%3ADiscovery%3A%3AV1beta1%3A%3AEndpoint%29%3F-instance-method" class="signature"><strong>#endpoints?</strong> : Array(K8S::Api::Discovery::V1beta1::Endpoint)?</a>
         
-          <div class="summary"><p>&quot;endpoints is a list of unique endpoints in this slice.</p></div>
+          <div class="summary"><p>endpoints is a list of unique endpoints in this slice.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#ports%3AArray%28K8S%3A%3AApi%3A%3ADiscovery%3A%3AV1beta1%3A%3AEndpointPort%29%3F-instance-method" class="signature"><strong>#ports</strong> : Array(K8S::Api::Discovery::V1beta1::EndpointPort)?</a>
         
-          <div class="summary"><p>&quot;ports specifies the list of network ports exposed by each endpoint in this slice.</p></div>
+          <div class="summary"><p>ports specifies the list of network ports exposed by each endpoint in this slice.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#ports%21%3AArray%28K8S%3A%3AApi%3A%3ADiscovery%3A%3AV1beta1%3A%3AEndpointPort%29-instance-method" class="signature"><strong>#ports!</strong> : Array(K8S::Api::Discovery::V1beta1::EndpointPort)</a>
         
-          <div class="summary"><p>&quot;ports specifies the list of network ports exposed by each endpoint in this slice.</p></div>
+          <div class="summary"><p>ports specifies the list of network ports exposed by each endpoint in this slice.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#ports%3D%28value%3AArray%28K8S%3A%3AApi%3A%3ADiscovery%3A%3AV1beta1%3A%3AEndpointPort%29%3F%29-instance-method" class="signature"><strong>#ports=</strong>(value : Array(K8S::Api::Discovery::V1beta1::EndpointPort)?)</a>
         
-          <div class="summary"><p>&quot;ports specifies the list of network ports exposed by each endpoint in this slice.</p></div>
+          <div class="summary"><p>ports specifies the list of network ports exposed by each endpoint in this slice.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#ports%3F%3AArray%28K8S%3A%3AApi%3A%3ADiscovery%3A%3AV1beta1%3A%3AEndpointPort%29%3F-instance-method" class="signature"><strong>#ports?</strong> : Array(K8S::Api::Discovery::V1beta1::EndpointPort)?</a>
         
-          <div class="summary"><p>&quot;ports specifies the list of network ports exposed by each endpoint in this slice.</p></div>
+          <div class="summary"><p>ports specifies the list of network ports exposed by each endpoint in this slice.</p></div>
         
       </li>
     
@@ -5650,7 +5681,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/715c803800ff8561114633d8bff021fd1f4300a8/src/versions/v1.18/api/discovery/v1beta1/endpoint_slice.cr#L10" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.18/api/discovery/v1beta1/endpoint_slice.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5666,7 +5697,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/715c803800ff8561114633d8bff021fd1f4300a8/src/versions/v1.18/api/discovery/v1beta1/endpoint_slice.cr#L10" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.18/api/discovery/v1beta1/endpoint_slice.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5682,7 +5713,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/715c803800ff8561114633d8bff021fd1f4300a8/src/versions/v1.18/api/discovery/v1beta1/endpoint_slice.cr#L10" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.18/api/discovery/v1beta1/endpoint_slice.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5698,7 +5729,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/715c803800ff8561114633d8bff021fd1f4300a8/src/versions/v1.18/api/discovery/v1beta1/endpoint_slice.cr#L10" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.18/api/discovery/v1beta1/endpoint_slice.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5714,7 +5745,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/715c803800ff8561114633d8bff021fd1f4300a8/src/versions/v1.18/api/discovery/v1beta1/endpoint_slice.cr#L10" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.18/api/discovery/v1beta1/endpoint_slice.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5730,7 +5761,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/715c803800ff8561114633d8bff021fd1f4300a8/src/versions/v1.18/api/discovery/v1beta1/endpoint_slice.cr#L10" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.18/api/discovery/v1beta1/endpoint_slice.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5746,13 +5777,89 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/715c803800ff8561114633d8bff021fd1f4300a8/src/versions/v1.18/api/discovery/v1beta1/endpoint_slice.cr#L10" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.18/api/discovery/v1beta1/endpoint_slice.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
   
 
 
+
+  <h2>
+    <a id="class-method-detail" class="anchor" href="#class-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="api_version-class-method">
+      <div class="signature">
+        
+        def self.<strong>api_version</strong>
+
+        <a class="method-permalink" href="#api_version-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+            <div class="doc-inherited">
+              Description copied from struct <a href="../../../../K8S/Kubernetes/Resource.html">K8S::Kubernetes::Resource</a>
+            </div>
+          
+          <p>APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[<a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources</a>](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)))</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.18/api/discovery/v1beta1/endpoint_slice.cr#L10" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="group-class-method">
+      <div class="signature">
+        
+        def self.<strong>group</strong>
+
+        <a class="method-permalink" href="#group-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.18/api/discovery/v1beta1/endpoint_slice.cr#L10" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="kind-class-method">
+      <div class="signature">
+        
+        def self.<strong>kind</strong>
+
+        <a class="method-permalink" href="#kind-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+            <div class="doc-inherited">
+              Description copied from struct <a href="../../../../K8S/Kubernetes/Resource.html">K8S::Kubernetes::Resource</a>
+            </div>
+          
+          <p>Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [[<a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds</a>](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)))</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.18/api/discovery/v1beta1/endpoint_slice.cr#L10" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
 
 
 
@@ -5775,7 +5882,7 @@
       
         <div class="doc">
           
-          <p>&quot;addressType specifies the type of address carried by this EndpointSlice. All addresses in this slice must be the same type. This field is immutable after creation. The following address types are currently supported: * IPv4: Represents an IPv4 Address. * IPv6: Represents an IPv6 Address. * FQDN: Represents a Fully Qualified Domain Name.&quot;</p>
+          <p>addressType specifies the type of address carried by this EndpointSlice. All addresses in this slice must be the same type. This field is immutable after creation. The following address types are currently supported: * IPv4: Represents an IPv4 Address. * IPv6: Represents an IPv6 Address. * FQDN: Represents a Fully Qualified Domain Name.</p>
         </div>
       
       <br/>
@@ -5794,7 +5901,7 @@
       
         <div class="doc">
           
-          <p>&quot;addressType specifies the type of address carried by this EndpointSlice. All addresses in this slice must be the same type. This field is immutable after creation. The following address types are currently supported: * IPv4: Represents an IPv4 Address. * IPv6: Represents an IPv6 Address. * FQDN: Represents a Fully Qualified Domain Name.&quot;</p>
+          <p>addressType specifies the type of address carried by this EndpointSlice. All addresses in this slice must be the same type. This field is immutable after creation. The following address types are currently supported: * IPv4: Represents an IPv4 Address. * IPv6: Represents an IPv6 Address. * FQDN: Represents a Fully Qualified Domain Name.</p>
         </div>
       
       <br/>
@@ -5813,7 +5920,7 @@
       
         <div class="doc">
           
-          <p>&quot;addressType specifies the type of address carried by this EndpointSlice. All addresses in this slice must be the same type. This field is immutable after creation. The following address types are currently supported: * IPv4: Represents an IPv4 Address. * IPv6: Represents an IPv6 Address. * FQDN: Represents a Fully Qualified Domain Name.&quot;</p>
+          <p>addressType specifies the type of address carried by this EndpointSlice. All addresses in this slice must be the same type. This field is immutable after creation. The following address types are currently supported: * IPv4: Represents an IPv4 Address. * IPv6: Represents an IPv6 Address. * FQDN: Represents a Fully Qualified Domain Name.</p>
         </div>
       
       <br/>
@@ -5832,7 +5939,7 @@
       
         <div class="doc">
           
-          <p>&quot;addressType specifies the type of address carried by this EndpointSlice. All addresses in this slice must be the same type. This field is immutable after creation. The following address types are currently supported: * IPv4: Represents an IPv4 Address. * IPv6: Represents an IPv6 Address. * FQDN: Represents a Fully Qualified Domain Name.&quot;</p>
+          <p>addressType specifies the type of address carried by this EndpointSlice. All addresses in this slice must be the same type. This field is immutable after creation. The following address types are currently supported: * IPv4: Represents an IPv4 Address. * IPv6: Represents an IPv6 Address. * FQDN: Represents a Fully Qualified Domain Name.</p>
         </div>
       
       <br/>
@@ -5851,7 +5958,7 @@
       
         <div class="doc">
           
-          <p>&quot;endpoints is a list of unique endpoints in this slice. Each slice may include a maximum of 1000 endpoints.&quot;</p>
+          <p>endpoints is a list of unique endpoints in this slice. Each slice may include a maximum of 1000 endpoints.</p>
         </div>
       
       <br/>
@@ -5870,7 +5977,7 @@
       
         <div class="doc">
           
-          <p>&quot;endpoints is a list of unique endpoints in this slice. Each slice may include a maximum of 1000 endpoints.&quot;</p>
+          <p>endpoints is a list of unique endpoints in this slice. Each slice may include a maximum of 1000 endpoints.</p>
         </div>
       
       <br/>
@@ -5889,7 +5996,7 @@
       
         <div class="doc">
           
-          <p>&quot;endpoints is a list of unique endpoints in this slice. Each slice may include a maximum of 1000 endpoints.&quot;</p>
+          <p>endpoints is a list of unique endpoints in this slice. Each slice may include a maximum of 1000 endpoints.</p>
         </div>
       
       <br/>
@@ -5908,7 +6015,7 @@
       
         <div class="doc">
           
-          <p>&quot;endpoints is a list of unique endpoints in this slice. Each slice may include a maximum of 1000 endpoints.&quot;</p>
+          <p>endpoints is a list of unique endpoints in this slice. Each slice may include a maximum of 1000 endpoints.</p>
         </div>
       
       <br/>
@@ -5927,7 +6034,7 @@
       
         <div class="doc">
           
-          <p>&quot;ports specifies the list of network ports exposed by each endpoint in this slice. Each port must have a unique name. When ports is empty, it indicates that there are no defined ports. When a port is defined with a nil port value, it indicates &quot;all ports&quot;. Each slice may include a maximum of 100 ports.&quot;</p>
+          <p>ports specifies the list of network ports exposed by each endpoint in this slice. Each port must have a unique name. When ports is empty, it indicates that there are no defined ports. When a port is defined with a nil port value, it indicates &quot;all ports&quot;. Each slice may include a maximum of 100 ports.</p>
         </div>
       
       <br/>
@@ -5946,7 +6053,7 @@
       
         <div class="doc">
           
-          <p>&quot;ports specifies the list of network ports exposed by each endpoint in this slice. Each port must have a unique name. When ports is empty, it indicates that there are no defined ports. When a port is defined with a nil port value, it indicates &quot;all ports&quot;. Each slice may include a maximum of 100 ports.&quot;</p>
+          <p>ports specifies the list of network ports exposed by each endpoint in this slice. Each port must have a unique name. When ports is empty, it indicates that there are no defined ports. When a port is defined with a nil port value, it indicates &quot;all ports&quot;. Each slice may include a maximum of 100 ports.</p>
         </div>
       
       <br/>
@@ -5965,7 +6072,7 @@
       
         <div class="doc">
           
-          <p>&quot;ports specifies the list of network ports exposed by each endpoint in this slice. Each port must have a unique name. When ports is empty, it indicates that there are no defined ports. When a port is defined with a nil port value, it indicates &quot;all ports&quot;. Each slice may include a maximum of 100 ports.&quot;</p>
+          <p>ports specifies the list of network ports exposed by each endpoint in this slice. Each port must have a unique name. When ports is empty, it indicates that there are no defined ports. When a port is defined with a nil port value, it indicates &quot;all ports&quot;. Each slice may include a maximum of 100 ports.</p>
         </div>
       
       <br/>
@@ -5984,7 +6091,7 @@
       
         <div class="doc">
           
-          <p>&quot;ports specifies the list of network ports exposed by each endpoint in this slice. Each port must have a unique name. When ports is empty, it indicates that there are no defined ports. When a port is defined with a nil port value, it indicates &quot;all ports&quot;. Each slice may include a maximum of 100 ports.&quot;</p>
+          <p>ports specifies the list of network ports exposed by each endpoint in this slice. Each port must have a unique name. When ports is empty, it indicates that there are no defined ports. When a port is defined with a nil port value, it indicates &quot;all ports&quot;. Each slice may include a maximum of 100 ports.</p>
         </div>
       
       <br/>

@@ -5599,15 +5599,11 @@
     Overview
   </h2>
 
-  <p>&quot;CSIStorageCapacity stores the result of one CSI GetCapacity call. For a given StorageClass, this describes the available capacity in a particular topology segment.  This can be used when considering where to instantiate new PersistentVolumes.&quot;
-&quot;&quot;
-&quot;For example this can express things like: - StorageClass &quot;standard&quot; has &quot;1234 GiB&quot; available in &quot;topology.kubernetes.io/zone=us-east1&quot; - StorageClass &quot;localssd&quot; has &quot;10 GiB&quot; available in &quot;kubernetes.io/hostname=knode-abc123&quot;&quot;
-&quot;&quot;
-&quot;The following three cases all imply that no capacity is available for a certain combination: - no object exists with suitable topology and storage class name - such an object exists, but the capacity is unset - such an object exists, but the capacity is zero&quot;
-&quot;&quot;
-&quot;The producer of these objects can decide which approach is more suitable.&quot;
-&quot;&quot;
-&quot;They are consumed by the kube-scheduler if the CSIStorageCapacity beta feature gate is enabled there and a CSI driver opts into capacity-aware scheduling with CSIDriver.StorageCapacity.&quot;</p>
+  <p>CSIStorageCapacity stores the result of one CSI GetCapacity call. For a given StorageClass, this describes the available capacity in a particular topology segment.  This can be used when considering where to instantiate new PersistentVolumes.</p>
+<p>For example this can express things like: - StorageClass &quot;standard&quot; has &quot;1234 GiB&quot; available in &quot;topology.kubernetes.io/zone=us-east1&quot; - StorageClass &quot;localssd&quot; has &quot;10 GiB&quot; available in &quot;kubernetes.io/hostname=knode-abc123&quot;</p>
+<p>The following three cases all imply that no capacity is available for a certain combination: - no object exists with suitable topology and storage class name - such an object exists, but the capacity is unset - such an object exists, but the capacity is zero</p>
+<p>The producer of these objects can decide which approach is more suitable.</p>
+<p>They are consumed by the kube-scheduler if the CSIStorageCapacity beta feature gate is enabled there and a CSI driver opts into capacity-aware scheduling with CSIDriver.StorageCapacity.</p>
 
 
 
@@ -5632,7 +5628,7 @@
   </h2>
   
     
-      <a href="https://github.com/spoved/k8s.cr/blob/715c803800ff8561114633d8bff021fd1f4300a8/src/versions/v1.21/api/storage/v1alpha1/csi_storage_capacity.cr#L9" target="_blank">
+      <a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.21/api/storage/v1alpha1/csi_storage_capacity.cr#L9" target="_blank">
         versions/v1.21/api/storage/v1alpha1/csi_storage_capacity.cr
       </a>
     
@@ -5692,6 +5688,37 @@
 
 
 
+  <h2>
+    <a id="class-method-summary" class="anchor" href="#class-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#api_version-class-method" class="signature"><strong>.api_version</strong></a>
+        
+          <div class="summary"><p>APIVersion defines the versioned schema of this representation of an object.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#group-class-method" class="signature"><strong>.group</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#kind-class-method" class="signature"><strong>.kind</strong></a>
+        
+          <div class="summary"><p>Kind is a string value representing the REST resource this object represents.</p></div>
+        
+      </li>
+    
+  </ul>
+
 
 
   <h2>
@@ -5707,112 +5734,112 @@
       <li class="entry-summary">
         <a href="#capacity%3AInt32%7CString%3F-instance-method" class="signature"><strong>#capacity</strong> : Int32 | String?</a>
         
-          <div class="summary"><p>&quot;Capacity is the value reported by the CSI driver in its GetCapacityResponse for a GetCapacityRequest with topology and parameters that match the previous fields.\n\nThe semantic is currently (CSI spec 1.2) defined as: The available capacity, in bytes, of the storage that can be used to provision volumes.</p></div>
+          <div class="summary"><p>Capacity is the value reported by the CSI driver in its GetCapacityResponse for a GetCapacityRequest with topology and parameters that match the previous fields.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#capacity%21%3AInt32%7CString-instance-method" class="signature"><strong>#capacity!</strong> : Int32 | String</a>
         
-          <div class="summary"><p>&quot;Capacity is the value reported by the CSI driver in its GetCapacityResponse for a GetCapacityRequest with topology and parameters that match the previous fields.\n\nThe semantic is currently (CSI spec 1.2) defined as: The available capacity, in bytes, of the storage that can be used to provision volumes.</p></div>
+          <div class="summary"><p>Capacity is the value reported by the CSI driver in its GetCapacityResponse for a GetCapacityRequest with topology and parameters that match the previous fields.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#capacity%3D%28value%3AInt32%7CString%3F%29-instance-method" class="signature"><strong>#capacity=</strong>(value : Int32 | String?)</a>
         
-          <div class="summary"><p>&quot;Capacity is the value reported by the CSI driver in its GetCapacityResponse for a GetCapacityRequest with topology and parameters that match the previous fields.\n\nThe semantic is currently (CSI spec 1.2) defined as: The available capacity, in bytes, of the storage that can be used to provision volumes.</p></div>
+          <div class="summary"><p>Capacity is the value reported by the CSI driver in its GetCapacityResponse for a GetCapacityRequest with topology and parameters that match the previous fields.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#capacity%3F%3AInt32%7CString%3F-instance-method" class="signature"><strong>#capacity?</strong> : Int32 | String?</a>
         
-          <div class="summary"><p>&quot;Capacity is the value reported by the CSI driver in its GetCapacityResponse for a GetCapacityRequest with topology and parameters that match the previous fields.\n\nThe semantic is currently (CSI spec 1.2) defined as: The available capacity, in bytes, of the storage that can be used to provision volumes.</p></div>
+          <div class="summary"><p>Capacity is the value reported by the CSI driver in its GetCapacityResponse for a GetCapacityRequest with topology and parameters that match the previous fields.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#maximum_volume_size%3AInt32%7CString%3F-instance-method" class="signature"><strong>#maximum_volume_size</strong> : Int32 | String?</a>
         
-          <div class="summary"><p>&quot;MaximumVolumeSize is the value reported by the CSI driver in its GetCapacityResponse for a GetCapacityRequest with topology and parameters that match the previous fields.\n\nThis is defined since CSI spec 1.4.0 as the largest size that may be used in a CreateVolumeRequest.capacity_range.required_bytes field to create a volume with the same parameters as those in GetCapacityRequest.</p></div>
+          <div class="summary"><p>MaximumVolumeSize is the value reported by the CSI driver in its GetCapacityResponse for a GetCapacityRequest with topology and parameters that match the previous fields.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#maximum_volume_size%21%3AInt32%7CString-instance-method" class="signature"><strong>#maximum_volume_size!</strong> : Int32 | String</a>
         
-          <div class="summary"><p>&quot;MaximumVolumeSize is the value reported by the CSI driver in its GetCapacityResponse for a GetCapacityRequest with topology and parameters that match the previous fields.\n\nThis is defined since CSI spec 1.4.0 as the largest size that may be used in a CreateVolumeRequest.capacity_range.required_bytes field to create a volume with the same parameters as those in GetCapacityRequest.</p></div>
+          <div class="summary"><p>MaximumVolumeSize is the value reported by the CSI driver in its GetCapacityResponse for a GetCapacityRequest with topology and parameters that match the previous fields.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#maximum_volume_size%3D%28value%3AInt32%7CString%3F%29-instance-method" class="signature"><strong>#maximum_volume_size=</strong>(value : Int32 | String?)</a>
         
-          <div class="summary"><p>&quot;MaximumVolumeSize is the value reported by the CSI driver in its GetCapacityResponse for a GetCapacityRequest with topology and parameters that match the previous fields.\n\nThis is defined since CSI spec 1.4.0 as the largest size that may be used in a CreateVolumeRequest.capacity_range.required_bytes field to create a volume with the same parameters as those in GetCapacityRequest.</p></div>
+          <div class="summary"><p>MaximumVolumeSize is the value reported by the CSI driver in its GetCapacityResponse for a GetCapacityRequest with topology and parameters that match the previous fields.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#maximum_volume_size%3F%3AInt32%7CString%3F-instance-method" class="signature"><strong>#maximum_volume_size?</strong> : Int32 | String?</a>
         
-          <div class="summary"><p>&quot;MaximumVolumeSize is the value reported by the CSI driver in its GetCapacityResponse for a GetCapacityRequest with topology and parameters that match the previous fields.\n\nThis is defined since CSI spec 1.4.0 as the largest size that may be used in a CreateVolumeRequest.capacity_range.required_bytes field to create a volume with the same parameters as those in GetCapacityRequest.</p></div>
+          <div class="summary"><p>MaximumVolumeSize is the value reported by the CSI driver in its GetCapacityResponse for a GetCapacityRequest with topology and parameters that match the previous fields.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#node_topology%3AK8S%3A%3AApimachinery%3A%3AApis%3A%3AMeta%3A%3AV1%3A%3ALabelSelector%3F-instance-method" class="signature"><strong>#node_topology</strong> : K8S::Apimachinery::Apis::Meta::V1::LabelSelector?</a>
         
-          <div class="summary"><p>&quot;NodeTopology defines which nodes have access to the storage for which capacity was reported.</p></div>
+          <div class="summary"><p>NodeTopology defines which nodes have access to the storage for which capacity was reported.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#node_topology%21%3AK8S%3A%3AApimachinery%3A%3AApis%3A%3AMeta%3A%3AV1%3A%3ALabelSelector-instance-method" class="signature"><strong>#node_topology!</strong> : K8S::Apimachinery::Apis::Meta::V1::LabelSelector</a>
         
-          <div class="summary"><p>&quot;NodeTopology defines which nodes have access to the storage for which capacity was reported.</p></div>
+          <div class="summary"><p>NodeTopology defines which nodes have access to the storage for which capacity was reported.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#node_topology%3D%28value%3AK8S%3A%3AApimachinery%3A%3AApis%3A%3AMeta%3A%3AV1%3A%3ALabelSelector%3F%29-instance-method" class="signature"><strong>#node_topology=</strong>(value : K8S::Apimachinery::Apis::Meta::V1::LabelSelector?)</a>
         
-          <div class="summary"><p>&quot;NodeTopology defines which nodes have access to the storage for which capacity was reported.</p></div>
+          <div class="summary"><p>NodeTopology defines which nodes have access to the storage for which capacity was reported.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#node_topology%3F%3AK8S%3A%3AApimachinery%3A%3AApis%3A%3AMeta%3A%3AV1%3A%3ALabelSelector%3F-instance-method" class="signature"><strong>#node_topology?</strong> : K8S::Apimachinery::Apis::Meta::V1::LabelSelector?</a>
         
-          <div class="summary"><p>&quot;NodeTopology defines which nodes have access to the storage for which capacity was reported.</p></div>
+          <div class="summary"><p>NodeTopology defines which nodes have access to the storage for which capacity was reported.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#storage_class_name%3AString-instance-method" class="signature"><strong>#storage_class_name</strong> : String</a>
         
-          <div class="summary"><p>&quot;The name of the StorageClass that the reported capacity applies to.</p></div>
+          <div class="summary"><p>The name of the StorageClass that the reported capacity applies to.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#storage_class_name%21%3AString-instance-method" class="signature"><strong>#storage_class_name!</strong> : String</a>
         
-          <div class="summary"><p>&quot;The name of the StorageClass that the reported capacity applies to.</p></div>
+          <div class="summary"><p>The name of the StorageClass that the reported capacity applies to.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#storage_class_name%3D%28value%3AString%29-instance-method" class="signature"><strong>#storage_class_name=</strong>(value : String)</a>
         
-          <div class="summary"><p>&quot;The name of the StorageClass that the reported capacity applies to.</p></div>
+          <div class="summary"><p>The name of the StorageClass that the reported capacity applies to.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#storage_class_name%3F%3AString%3F-instance-method" class="signature"><strong>#storage_class_name?</strong> : String?</a>
         
-          <div class="summary"><p>&quot;The name of the StorageClass that the reported capacity applies to.</p></div>
+          <div class="summary"><p>The name of the StorageClass that the reported capacity applies to.</p></div>
         
       </li>
     
@@ -6016,7 +6043,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/715c803800ff8561114633d8bff021fd1f4300a8/src/versions/v1.21/api/storage/v1alpha1/csi_storage_capacity.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.21/api/storage/v1alpha1/csi_storage_capacity.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -6032,7 +6059,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/715c803800ff8561114633d8bff021fd1f4300a8/src/versions/v1.21/api/storage/v1alpha1/csi_storage_capacity.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.21/api/storage/v1alpha1/csi_storage_capacity.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -6048,7 +6075,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/715c803800ff8561114633d8bff021fd1f4300a8/src/versions/v1.21/api/storage/v1alpha1/csi_storage_capacity.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.21/api/storage/v1alpha1/csi_storage_capacity.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -6064,7 +6091,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/715c803800ff8561114633d8bff021fd1f4300a8/src/versions/v1.21/api/storage/v1alpha1/csi_storage_capacity.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.21/api/storage/v1alpha1/csi_storage_capacity.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -6080,7 +6107,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/715c803800ff8561114633d8bff021fd1f4300a8/src/versions/v1.21/api/storage/v1alpha1/csi_storage_capacity.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.21/api/storage/v1alpha1/csi_storage_capacity.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -6096,7 +6123,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/715c803800ff8561114633d8bff021fd1f4300a8/src/versions/v1.21/api/storage/v1alpha1/csi_storage_capacity.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.21/api/storage/v1alpha1/csi_storage_capacity.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -6112,13 +6139,89 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/715c803800ff8561114633d8bff021fd1f4300a8/src/versions/v1.21/api/storage/v1alpha1/csi_storage_capacity.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.21/api/storage/v1alpha1/csi_storage_capacity.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
   
 
 
+
+  <h2>
+    <a id="class-method-detail" class="anchor" href="#class-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="api_version-class-method">
+      <div class="signature">
+        
+        def self.<strong>api_version</strong>
+
+        <a class="method-permalink" href="#api_version-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+            <div class="doc-inherited">
+              Description copied from struct <a href="../../../../K8S/Kubernetes/Resource.html">K8S::Kubernetes::Resource</a>
+            </div>
+          
+          <p>APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[<a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources</a>](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)))</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.21/api/storage/v1alpha1/csi_storage_capacity.cr#L9" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="group-class-method">
+      <div class="signature">
+        
+        def self.<strong>group</strong>
+
+        <a class="method-permalink" href="#group-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.21/api/storage/v1alpha1/csi_storage_capacity.cr#L9" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="kind-class-method">
+      <div class="signature">
+        
+        def self.<strong>kind</strong>
+
+        <a class="method-permalink" href="#kind-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+            <div class="doc-inherited">
+              Description copied from struct <a href="../../../../K8S/Kubernetes/Resource.html">K8S::Kubernetes::Resource</a>
+            </div>
+          
+          <p>Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [[<a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds</a>](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)))</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.21/api/storage/v1alpha1/csi_storage_capacity.cr#L9" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
 
 
 
@@ -6141,7 +6244,8 @@
       
         <div class="doc">
           
-          <p>&quot;Capacity is the value reported by the CSI driver in its GetCapacityResponse for a GetCapacityRequest with topology and parameters that match the previous fields.\n\nThe semantic is currently (CSI spec 1.2) defined as: The available capacity, in bytes, of the storage that can be used to provision volumes. If not set, that information is currently unavailable and treated like zero capacity.&quot;</p>
+          <p>Capacity is the value reported by the CSI driver in its GetCapacityResponse for a GetCapacityRequest with topology and parameters that match the previous fields.</p>
+<p>The semantic is currently (CSI spec 1.2) defined as: The available capacity, in bytes, of the storage that can be used to provision volumes. If not set, that information is currently unavailable and treated like zero capacity.</p>
         </div>
       
       <br/>
@@ -6160,7 +6264,8 @@
       
         <div class="doc">
           
-          <p>&quot;Capacity is the value reported by the CSI driver in its GetCapacityResponse for a GetCapacityRequest with topology and parameters that match the previous fields.\n\nThe semantic is currently (CSI spec 1.2) defined as: The available capacity, in bytes, of the storage that can be used to provision volumes. If not set, that information is currently unavailable and treated like zero capacity.&quot;</p>
+          <p>Capacity is the value reported by the CSI driver in its GetCapacityResponse for a GetCapacityRequest with topology and parameters that match the previous fields.</p>
+<p>The semantic is currently (CSI spec 1.2) defined as: The available capacity, in bytes, of the storage that can be used to provision volumes. If not set, that information is currently unavailable and treated like zero capacity.</p>
         </div>
       
       <br/>
@@ -6179,7 +6284,8 @@
       
         <div class="doc">
           
-          <p>&quot;Capacity is the value reported by the CSI driver in its GetCapacityResponse for a GetCapacityRequest with topology and parameters that match the previous fields.\n\nThe semantic is currently (CSI spec 1.2) defined as: The available capacity, in bytes, of the storage that can be used to provision volumes. If not set, that information is currently unavailable and treated like zero capacity.&quot;</p>
+          <p>Capacity is the value reported by the CSI driver in its GetCapacityResponse for a GetCapacityRequest with topology and parameters that match the previous fields.</p>
+<p>The semantic is currently (CSI spec 1.2) defined as: The available capacity, in bytes, of the storage that can be used to provision volumes. If not set, that information is currently unavailable and treated like zero capacity.</p>
         </div>
       
       <br/>
@@ -6198,7 +6304,8 @@
       
         <div class="doc">
           
-          <p>&quot;Capacity is the value reported by the CSI driver in its GetCapacityResponse for a GetCapacityRequest with topology and parameters that match the previous fields.\n\nThe semantic is currently (CSI spec 1.2) defined as: The available capacity, in bytes, of the storage that can be used to provision volumes. If not set, that information is currently unavailable and treated like zero capacity.&quot;</p>
+          <p>Capacity is the value reported by the CSI driver in its GetCapacityResponse for a GetCapacityRequest with topology and parameters that match the previous fields.</p>
+<p>The semantic is currently (CSI spec 1.2) defined as: The available capacity, in bytes, of the storage that can be used to provision volumes. If not set, that information is currently unavailable and treated like zero capacity.</p>
         </div>
       
       <br/>
@@ -6217,7 +6324,8 @@
       
         <div class="doc">
           
-          <p>&quot;MaximumVolumeSize is the value reported by the CSI driver in its GetCapacityResponse for a GetCapacityRequest with topology and parameters that match the previous fields.\n\nThis is defined since CSI spec 1.4.0 as the largest size that may be used in a CreateVolumeRequest.capacity_range.required_bytes field to create a volume with the same parameters as those in GetCapacityRequest. The corresponding value in the Kubernetes API is ResourceRequirements.Requests in a volume claim.&quot;</p>
+          <p>MaximumVolumeSize is the value reported by the CSI driver in its GetCapacityResponse for a GetCapacityRequest with topology and parameters that match the previous fields.</p>
+<p>This is defined since CSI spec 1.4.0 as the largest size that may be used in a CreateVolumeRequest.capacity_range.required_bytes field to create a volume with the same parameters as those in GetCapacityRequest. The corresponding value in the Kubernetes API is ResourceRequirements.Requests in a volume claim.</p>
         </div>
       
       <br/>
@@ -6236,7 +6344,8 @@
       
         <div class="doc">
           
-          <p>&quot;MaximumVolumeSize is the value reported by the CSI driver in its GetCapacityResponse for a GetCapacityRequest with topology and parameters that match the previous fields.\n\nThis is defined since CSI spec 1.4.0 as the largest size that may be used in a CreateVolumeRequest.capacity_range.required_bytes field to create a volume with the same parameters as those in GetCapacityRequest. The corresponding value in the Kubernetes API is ResourceRequirements.Requests in a volume claim.&quot;</p>
+          <p>MaximumVolumeSize is the value reported by the CSI driver in its GetCapacityResponse for a GetCapacityRequest with topology and parameters that match the previous fields.</p>
+<p>This is defined since CSI spec 1.4.0 as the largest size that may be used in a CreateVolumeRequest.capacity_range.required_bytes field to create a volume with the same parameters as those in GetCapacityRequest. The corresponding value in the Kubernetes API is ResourceRequirements.Requests in a volume claim.</p>
         </div>
       
       <br/>
@@ -6255,7 +6364,8 @@
       
         <div class="doc">
           
-          <p>&quot;MaximumVolumeSize is the value reported by the CSI driver in its GetCapacityResponse for a GetCapacityRequest with topology and parameters that match the previous fields.\n\nThis is defined since CSI spec 1.4.0 as the largest size that may be used in a CreateVolumeRequest.capacity_range.required_bytes field to create a volume with the same parameters as those in GetCapacityRequest. The corresponding value in the Kubernetes API is ResourceRequirements.Requests in a volume claim.&quot;</p>
+          <p>MaximumVolumeSize is the value reported by the CSI driver in its GetCapacityResponse for a GetCapacityRequest with topology and parameters that match the previous fields.</p>
+<p>This is defined since CSI spec 1.4.0 as the largest size that may be used in a CreateVolumeRequest.capacity_range.required_bytes field to create a volume with the same parameters as those in GetCapacityRequest. The corresponding value in the Kubernetes API is ResourceRequirements.Requests in a volume claim.</p>
         </div>
       
       <br/>
@@ -6274,7 +6384,8 @@
       
         <div class="doc">
           
-          <p>&quot;MaximumVolumeSize is the value reported by the CSI driver in its GetCapacityResponse for a GetCapacityRequest with topology and parameters that match the previous fields.\n\nThis is defined since CSI spec 1.4.0 as the largest size that may be used in a CreateVolumeRequest.capacity_range.required_bytes field to create a volume with the same parameters as those in GetCapacityRequest. The corresponding value in the Kubernetes API is ResourceRequirements.Requests in a volume claim.&quot;</p>
+          <p>MaximumVolumeSize is the value reported by the CSI driver in its GetCapacityResponse for a GetCapacityRequest with topology and parameters that match the previous fields.</p>
+<p>This is defined since CSI spec 1.4.0 as the largest size that may be used in a CreateVolumeRequest.capacity_range.required_bytes field to create a volume with the same parameters as those in GetCapacityRequest. The corresponding value in the Kubernetes API is ResourceRequirements.Requests in a volume claim.</p>
         </div>
       
       <br/>
@@ -6293,7 +6404,7 @@
       
         <div class="doc">
           
-          <p>&quot;NodeTopology defines which nodes have access to the storage for which capacity was reported. If not set, the storage is not accessible from any node in the cluster. If empty, the storage is accessible from all nodes. This field is immutable.&quot;</p>
+          <p>NodeTopology defines which nodes have access to the storage for which capacity was reported. If not set, the storage is not accessible from any node in the cluster. If empty, the storage is accessible from all nodes. This field is immutable.</p>
         </div>
       
       <br/>
@@ -6312,7 +6423,7 @@
       
         <div class="doc">
           
-          <p>&quot;NodeTopology defines which nodes have access to the storage for which capacity was reported. If not set, the storage is not accessible from any node in the cluster. If empty, the storage is accessible from all nodes. This field is immutable.&quot;</p>
+          <p>NodeTopology defines which nodes have access to the storage for which capacity was reported. If not set, the storage is not accessible from any node in the cluster. If empty, the storage is accessible from all nodes. This field is immutable.</p>
         </div>
       
       <br/>
@@ -6331,7 +6442,7 @@
       
         <div class="doc">
           
-          <p>&quot;NodeTopology defines which nodes have access to the storage for which capacity was reported. If not set, the storage is not accessible from any node in the cluster. If empty, the storage is accessible from all nodes. This field is immutable.&quot;</p>
+          <p>NodeTopology defines which nodes have access to the storage for which capacity was reported. If not set, the storage is not accessible from any node in the cluster. If empty, the storage is accessible from all nodes. This field is immutable.</p>
         </div>
       
       <br/>
@@ -6350,7 +6461,7 @@
       
         <div class="doc">
           
-          <p>&quot;NodeTopology defines which nodes have access to the storage for which capacity was reported. If not set, the storage is not accessible from any node in the cluster. If empty, the storage is accessible from all nodes. This field is immutable.&quot;</p>
+          <p>NodeTopology defines which nodes have access to the storage for which capacity was reported. If not set, the storage is not accessible from any node in the cluster. If empty, the storage is accessible from all nodes. This field is immutable.</p>
         </div>
       
       <br/>
@@ -6369,7 +6480,7 @@
       
         <div class="doc">
           
-          <p>&quot;The name of the StorageClass that the reported capacity applies to. It must meet the same requirements as the name of a StorageClass object (non-empty, DNS subdomain). If that object no longer exists, the CSIStorageCapacity object is obsolete and should be removed by its creator. This field is immutable.&quot;</p>
+          <p>The name of the StorageClass that the reported capacity applies to. It must meet the same requirements as the name of a StorageClass object (non-empty, DNS subdomain). If that object no longer exists, the CSIStorageCapacity object is obsolete and should be removed by its creator. This field is immutable.</p>
         </div>
       
       <br/>
@@ -6388,7 +6499,7 @@
       
         <div class="doc">
           
-          <p>&quot;The name of the StorageClass that the reported capacity applies to. It must meet the same requirements as the name of a StorageClass object (non-empty, DNS subdomain). If that object no longer exists, the CSIStorageCapacity object is obsolete and should be removed by its creator. This field is immutable.&quot;</p>
+          <p>The name of the StorageClass that the reported capacity applies to. It must meet the same requirements as the name of a StorageClass object (non-empty, DNS subdomain). If that object no longer exists, the CSIStorageCapacity object is obsolete and should be removed by its creator. This field is immutable.</p>
         </div>
       
       <br/>
@@ -6407,7 +6518,7 @@
       
         <div class="doc">
           
-          <p>&quot;The name of the StorageClass that the reported capacity applies to. It must meet the same requirements as the name of a StorageClass object (non-empty, DNS subdomain). If that object no longer exists, the CSIStorageCapacity object is obsolete and should be removed by its creator. This field is immutable.&quot;</p>
+          <p>The name of the StorageClass that the reported capacity applies to. It must meet the same requirements as the name of a StorageClass object (non-empty, DNS subdomain). If that object no longer exists, the CSIStorageCapacity object is obsolete and should be removed by its creator. This field is immutable.</p>
         </div>
       
       <br/>
@@ -6426,7 +6537,7 @@
       
         <div class="doc">
           
-          <p>&quot;The name of the StorageClass that the reported capacity applies to. It must meet the same requirements as the name of a StorageClass object (non-empty, DNS subdomain). If that object no longer exists, the CSIStorageCapacity object is obsolete and should be removed by its creator. This field is immutable.&quot;</p>
+          <p>The name of the StorageClass that the reported capacity applies to. It must meet the same requirements as the name of a StorageClass object (non-empty, DNS subdomain). If that object no longer exists, the CSIStorageCapacity object is obsolete and should be removed by its creator. This field is immutable.</p>
         </div>
       
       <br/>

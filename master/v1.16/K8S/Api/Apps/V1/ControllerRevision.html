@@ -5519,7 +5519,7 @@
     Overview
   </h2>
 
-  <p>&quot;ControllerRevision implements an immutable snapshot of state data. Clients are responsible for serializing and deserializing the objects that contain their internal state. Once a ControllerRevision has been successfully created, it can not be updated. The API Server will fail validation of all requests that attempt to mutate the Data field. ControllerRevisions may, however, be deleted. Note that, due to its use by both the DaemonSet and StatefulSet controllers for update and rollback, this object is beta. However, it may be subject to name and representation changes in future releases, and clients should not depend on its stability. It is primarily for internal use by controllers.&quot;</p>
+  <p>ControllerRevision implements an immutable snapshot of state data. Clients are responsible for serializing and deserializing the objects that contain their internal state. Once a ControllerRevision has been successfully created, it can not be updated. The API Server will fail validation of all requests that attempt to mutate the Data field. ControllerRevisions may, however, be deleted. Note that, due to its use by both the DaemonSet and StatefulSet controllers for update and rollback, this object is beta. However, it may be subject to name and representation changes in future releases, and clients should not depend on its stability. It is primarily for internal use by controllers.</p>
 
 
 
@@ -5544,7 +5544,7 @@
   </h2>
   
     
-      <a href="https://github.com/spoved/k8s.cr/blob/715c803800ff8561114633d8bff021fd1f4300a8/src/versions/v1.16/api/apps/v1/controller_revision.cr#L9" target="_blank">
+      <a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.16/api/apps/v1/controller_revision.cr#L9" target="_blank">
         versions/v1.16/api/apps/v1/controller_revision.cr
       </a>
     
@@ -5604,6 +5604,37 @@
 
 
 
+  <h2>
+    <a id="class-method-summary" class="anchor" href="#class-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#api_version-class-method" class="signature"><strong>.api_version</strong></a>
+        
+          <div class="summary"><p>APIVersion defines the versioned schema of this representation of an object.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#group-class-method" class="signature"><strong>.group</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#kind-class-method" class="signature"><strong>.kind</strong></a>
+        
+          <div class="summary"><p>Kind is a string value representing the REST resource this object represents.</p></div>
+        
+      </li>
+    
+  </ul>
+
 
 
   <h2>
@@ -5619,56 +5650,56 @@
       <li class="entry-summary">
         <a href="#data%3AK8S%3A%3AGenericObject%3F-instance-method" class="signature"><strong>#data</strong> : K8S::GenericObject?</a>
         
-          <div class="summary"><p>&quot;Data is the serialized representation of the state.&quot;</p></div>
+          <div class="summary"><p>Data is the serialized representation of the state.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#data%21%3AK8S%3A%3AGenericObject-instance-method" class="signature"><strong>#data!</strong> : K8S::GenericObject</a>
         
-          <div class="summary"><p>&quot;Data is the serialized representation of the state.&quot;</p></div>
+          <div class="summary"><p>Data is the serialized representation of the state.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#data%3D%28value%3AK8S%3A%3AGenericObject%3F%29-instance-method" class="signature"><strong>#data=</strong>(value : K8S::GenericObject?)</a>
         
-          <div class="summary"><p>&quot;Data is the serialized representation of the state.&quot;</p></div>
+          <div class="summary"><p>Data is the serialized representation of the state.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#data%3F%3AK8S%3A%3AGenericObject%3F-instance-method" class="signature"><strong>#data?</strong> : K8S::GenericObject?</a>
         
-          <div class="summary"><p>&quot;Data is the serialized representation of the state.&quot;</p></div>
+          <div class="summary"><p>Data is the serialized representation of the state.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#revision%3AInt32-instance-method" class="signature"><strong>#revision</strong> : Int32</a>
         
-          <div class="summary"><p>&quot;Revision indicates the revision of the state represented by Data.&quot;</p></div>
+          <div class="summary"><p>Revision indicates the revision of the state represented by Data.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#revision%21%3AInt32-instance-method" class="signature"><strong>#revision!</strong> : Int32</a>
         
-          <div class="summary"><p>&quot;Revision indicates the revision of the state represented by Data.&quot;</p></div>
+          <div class="summary"><p>Revision indicates the revision of the state represented by Data.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#revision%3D%28value%3AInt32%29-instance-method" class="signature"><strong>#revision=</strong>(value : Int32)</a>
         
-          <div class="summary"><p>&quot;Revision indicates the revision of the state represented by Data.&quot;</p></div>
+          <div class="summary"><p>Revision indicates the revision of the state represented by Data.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#revision%3F%3AInt32%3F-instance-method" class="signature"><strong>#revision?</strong> : Int32?</a>
         
-          <div class="summary"><p>&quot;Revision indicates the revision of the state represented by Data.&quot;</p></div>
+          <div class="summary"><p>Revision indicates the revision of the state represented by Data.</p></div>
         
       </li>
     
@@ -5872,7 +5903,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/715c803800ff8561114633d8bff021fd1f4300a8/src/versions/v1.16/api/apps/v1/controller_revision.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.16/api/apps/v1/controller_revision.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5888,7 +5919,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/715c803800ff8561114633d8bff021fd1f4300a8/src/versions/v1.16/api/apps/v1/controller_revision.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.16/api/apps/v1/controller_revision.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5904,7 +5935,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/715c803800ff8561114633d8bff021fd1f4300a8/src/versions/v1.16/api/apps/v1/controller_revision.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.16/api/apps/v1/controller_revision.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5920,7 +5951,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/715c803800ff8561114633d8bff021fd1f4300a8/src/versions/v1.16/api/apps/v1/controller_revision.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.16/api/apps/v1/controller_revision.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5936,7 +5967,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/715c803800ff8561114633d8bff021fd1f4300a8/src/versions/v1.16/api/apps/v1/controller_revision.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.16/api/apps/v1/controller_revision.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5952,7 +5983,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/715c803800ff8561114633d8bff021fd1f4300a8/src/versions/v1.16/api/apps/v1/controller_revision.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.16/api/apps/v1/controller_revision.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5968,13 +5999,89 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/715c803800ff8561114633d8bff021fd1f4300a8/src/versions/v1.16/api/apps/v1/controller_revision.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.16/api/apps/v1/controller_revision.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
   
 
 
+
+  <h2>
+    <a id="class-method-detail" class="anchor" href="#class-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="api_version-class-method">
+      <div class="signature">
+        
+        def self.<strong>api_version</strong>
+
+        <a class="method-permalink" href="#api_version-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+            <div class="doc-inherited">
+              Description copied from struct <a href="../../../../K8S/Kubernetes/Resource.html">K8S::Kubernetes::Resource</a>
+            </div>
+          
+          <p>APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: [[<a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources</a>](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources)))</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.16/api/apps/v1/controller_revision.cr#L9" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="group-class-method">
+      <div class="signature">
+        
+        def self.<strong>group</strong>
+
+        <a class="method-permalink" href="#group-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.16/api/apps/v1/controller_revision.cr#L9" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="kind-class-method">
+      <div class="signature">
+        
+        def self.<strong>kind</strong>
+
+        <a class="method-permalink" href="#kind-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+            <div class="doc-inherited">
+              Description copied from struct <a href="../../../../K8S/Kubernetes/Resource.html">K8S::Kubernetes::Resource</a>
+            </div>
+          
+          <p>Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: [[<a href="https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds">https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds</a>](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds))](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds](https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds)))</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/spoved/k8s.cr/blob/59b2f0ff1c4679191e798897f9486e42641b38c3/src/versions/v1.16/api/apps/v1/controller_revision.cr#L9" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
 
 
 
@@ -5997,7 +6104,7 @@
       
         <div class="doc">
           
-          <p>&quot;Data is the serialized representation of the state.&quot;</p>
+          <p>Data is the serialized representation of the state.</p>
         </div>
       
       <br/>
@@ -6016,7 +6123,7 @@
       
         <div class="doc">
           
-          <p>&quot;Data is the serialized representation of the state.&quot;</p>
+          <p>Data is the serialized representation of the state.</p>
         </div>
       
       <br/>
@@ -6035,7 +6142,7 @@
       
         <div class="doc">
           
-          <p>&quot;Data is the serialized representation of the state.&quot;</p>
+          <p>Data is the serialized representation of the state.</p>
         </div>
       
       <br/>
@@ -6054,7 +6161,7 @@
       
         <div class="doc">
           
-          <p>&quot;Data is the serialized representation of the state.&quot;</p>
+          <p>Data is the serialized representation of the state.</p>
         </div>
       
       <br/>
@@ -6073,7 +6180,7 @@
       
         <div class="doc">
           
-          <p>&quot;Revision indicates the revision of the state represented by Data.&quot;</p>
+          <p>Revision indicates the revision of the state represented by Data.</p>
         </div>
       
       <br/>
@@ -6092,7 +6199,7 @@
       
         <div class="doc">
           
-          <p>&quot;Revision indicates the revision of the state represented by Data.&quot;</p>
+          <p>Revision indicates the revision of the state represented by Data.</p>
         </div>
       
       <br/>
@@ -6111,7 +6218,7 @@
       
         <div class="doc">
           
-          <p>&quot;Revision indicates the revision of the state represented by Data.&quot;</p>
+          <p>Revision indicates the revision of the state represented by Data.</p>
         </div>
       
       <br/>
@@ -6130,7 +6237,7 @@
       
         <div class="doc">
           
-          <p>&quot;Revision indicates the revision of the state represented by Data.&quot;</p>
+          <p>Revision indicates the revision of the state represented by Data.</p>
         </div>
       
       <br/>
