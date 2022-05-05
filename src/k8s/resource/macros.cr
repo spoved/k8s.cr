@@ -245,20 +245,6 @@ abstract struct K8S::Kubernetes::Resource
         K8S::Kubernetes::Resource.define_prop({{**prop}})
         {% end %}
 
-        # :nodoc:
-        private def _init_validate!
-        end
-
-        def initialize(hash : Enumerable | Iterable | NamedTuple)
-          super
-          _init_validate!
-        end
-
-        def initialize(obj : K8S::Internals::GenericObject)
-          super
-          _init_validate!
-        end
-
         def self.new(**args)
           new(args)
         end

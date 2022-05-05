@@ -8,9 +8,16 @@ abstract struct K8S::Kubernetes::Object
 
   def initialize(hash : Enumerable | Iterable | NamedTuple | Nil = nil)
     @__object__ = K8S::Internals::GenericObject.new(hash)
+    _init_validate!
   end
 
-  def initialize(@__object__ : K8S::Internals::GenericObject); end
+  # :nodoc:
+  protected def _init_validate!
+  end
+
+  def initialize(@__object__ : K8S::Internals::GenericObject)
+    _init_validate!
+  end
 
   macro method_missing(call)
     @__object__.{{call}}
@@ -48,3 +55,29 @@ module Hashdiff
 end
 
 struct ::K8S::GenericObject < K8S::Kubernetes::Object; end
+
+# Cycle through all object subclasses and create initializers
+macro finished
+  {% for klass in K8S::Kubernetes::Object.all_subclasses %}{% if !klass.abstract? %}
+  {% annos = klass.annotations(::K8S::ObjectProperties) %}
+  {% if annos.size > 0 %}
+  struct {{klass.id}}
+    def initialize(hash : Enumerable | Iterable | NamedTuple | Nil = nil)
+      @__object__ = K8S::Internals::GenericObject.new(hash)
+
+      # Check to see if the values are stored under the correct key,
+      # if they are not, then we need to move them to the correct key
+      {% for anno in annos %}{% for name, value in anno.named_args %}
+      {% if value[:key] && value[:key] != value[:name] %}
+      if @__object__[{{value[:name]}}]?
+        @__object__[{{value[:key]}}] = @__object__.delete({{value[:name]}})
+      end
+      {% end %}
+      {% end %}{% end %}
+
+      _init_validate!
+    end
+  end
+  {% end %}
+  {% end %}{% end %}
+end
