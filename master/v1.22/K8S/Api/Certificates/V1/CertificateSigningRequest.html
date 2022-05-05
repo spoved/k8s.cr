@@ -4909,13 +4909,7 @@
     Overview
   </h2>
 
-  <p>CertificateSigningRequest objects provide a mechanism to obtain x509 certificates by submitting a certificate signing request, and having it asynchronously approved and issued.</p>
-<p>Kubelets use this API to obtain:</p>
-<ol>
-<li>client certificates to authenticate to kube-apiserver (with the &quot;kubernetes.io/kube-apiserver-client-kubelet&quot; signerName).</li>
-<li>serving certificates for TLS endpoints kube-apiserver can connect to securely (with the &quot;kubernetes.io/kubelet-serving&quot; signerName).</li>
-</ol>
-<p>This API can be used to request client certificates to authenticate to kube-apiserver (with the &quot;kubernetes.io/kube-apiserver-client&quot; signerName), or to obtain certificates from custom non-Kubernetes signers.</p>
+  <p>Cycle through all object subclasses and create initializers</p>
 
 
 
@@ -4940,7 +4934,14 @@
   </h2>
   
     
-      <a href="https://github.com/spoved/k8s.cr/blob/b5d15abd6a7c069725626803f47e388c138fea5f/src/versions/v1.22/api/certificates/v1/certificate_signing_request.cr#L10" target="_blank">
+      <a href="https://github.com/spoved/k8s.cr/blob/2f8f2e71c4c3a9f0416200492e76efe6bd4ea3e6/src/k8s/object.cr#L60" target="_blank">
+        k8s/object.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/spoved/k8s.cr/blob/2f8f2e71c4c3a9f0416200492e76efe6bd4ea3e6/src/versions/v1.22/api/certificates/v1/certificate_signing_request.cr#L10" target="_blank">
         versions/v1.22/api/certificates/v1/certificate_signing_request.cr
       </a>
     
@@ -4987,7 +4988,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#new-class-method" class="signature"><strong>.new</strong></a>
+        <a href="#new%28hash%3AEnumerable%7CIterable%7CNamedTuple%7CNil%3Dnil%29-class-method" class="signature"><strong>.new</strong>(hash : Enumerable | Iterable | NamedTuple | Nil = <span class="n">nil</span>)</a>
         
       </li>
     
@@ -5299,7 +5300,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/b5d15abd6a7c069725626803f47e388c138fea5f/src/versions/v1.22/api/certificates/v1/certificate_signing_request.cr#L10" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/2f8f2e71c4c3a9f0416200492e76efe6bd4ea3e6/src/versions/v1.22/api/certificates/v1/certificate_signing_request.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5315,7 +5316,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/b5d15abd6a7c069725626803f47e388c138fea5f/src/versions/v1.22/api/certificates/v1/certificate_signing_request.cr#L10" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/2f8f2e71c4c3a9f0416200492e76efe6bd4ea3e6/src/versions/v1.22/api/certificates/v1/certificate_signing_request.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5331,7 +5332,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/b5d15abd6a7c069725626803f47e388c138fea5f/src/versions/v1.22/api/certificates/v1/certificate_signing_request.cr#L10" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/2f8f2e71c4c3a9f0416200492e76efe6bd4ea3e6/src/versions/v1.22/api/certificates/v1/certificate_signing_request.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5347,7 +5348,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/b5d15abd6a7c069725626803f47e388c138fea5f/src/versions/v1.22/api/certificates/v1/certificate_signing_request.cr#L10" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/2f8f2e71c4c3a9f0416200492e76efe6bd4ea3e6/src/versions/v1.22/api/certificates/v1/certificate_signing_request.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5363,23 +5364,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/b5d15abd6a7c069725626803f47e388c138fea5f/src/versions/v1.22/api/certificates/v1/certificate_signing_request.cr#L10" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/2f8f2e71c4c3a9f0416200492e76efe6bd4ea3e6/src/versions/v1.22/api/certificates/v1/certificate_signing_request.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="new-class-method">
+    <div class="entry-detail" id="new(hash:Enumerable|Iterable|NamedTuple|Nil=nil)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>
+        def self.<strong>new</strong>(hash : Enumerable | Iterable | NamedTuple | Nil = <span class="n">nil</span>)
 
-        <a class="method-permalink" href="#new-class-method">#</a>
+        <a class="method-permalink" href="#new%28hash%3AEnumerable%7CIterable%7CNamedTuple%7CNil%3Dnil%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/b5d15abd6a7c069725626803f47e388c138fea5f/src/versions/v1.22/api/certificates/v1/certificate_signing_request.cr#L10" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/2f8f2e71c4c3a9f0416200492e76efe6bd4ea3e6/src/k8s/object.cr#L60" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5395,7 +5396,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/b5d15abd6a7c069725626803f47e388c138fea5f/src/versions/v1.22/api/certificates/v1/certificate_signing_request.cr#L10" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/2f8f2e71c4c3a9f0416200492e76efe6bd4ea3e6/src/versions/v1.22/api/certificates/v1/certificate_signing_request.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5432,7 +5433,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/b5d15abd6a7c069725626803f47e388c138fea5f/src/versions/v1.22/api/certificates/v1/certificate_signing_request.cr#L10" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/2f8f2e71c4c3a9f0416200492e76efe6bd4ea3e6/src/versions/v1.22/api/certificates/v1/certificate_signing_request.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5448,7 +5449,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/b5d15abd6a7c069725626803f47e388c138fea5f/src/versions/v1.22/api/certificates/v1/certificate_signing_request.cr#L10" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/2f8f2e71c4c3a9f0416200492e76efe6bd4ea3e6/src/versions/v1.22/api/certificates/v1/certificate_signing_request.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5473,7 +5474,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/b5d15abd6a7c069725626803f47e388c138fea5f/src/versions/v1.22/api/certificates/v1/certificate_signing_request.cr#L10" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/2f8f2e71c4c3a9f0416200492e76efe6bd4ea3e6/src/versions/v1.22/api/certificates/v1/certificate_signing_request.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>

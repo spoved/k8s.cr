@@ -5099,11 +5099,7 @@
     Overview
   </h2>
 
-  <p>CSIStorageCapacity stores the result of one CSI GetCapacity call. For a given StorageClass, this describes the available capacity in a particular topology segment.  This can be used when considering where to instantiate new PersistentVolumes.</p>
-<p>For example this can express things like: - StorageClass &quot;standard&quot; has &quot;1234 GiB&quot; available in &quot;topology.kubernetes.io/zone=us-east1&quot; - StorageClass &quot;localssd&quot; has &quot;10 GiB&quot; available in &quot;kubernetes.io/hostname=knode-abc123&quot;</p>
-<p>The following three cases all imply that no capacity is available for a certain combination: - no object exists with suitable topology and storage class name - such an object exists, but the capacity is unset - such an object exists, but the capacity is zero</p>
-<p>The producer of these objects can decide which approach is more suitable.</p>
-<p>They are consumed by the kube-scheduler if the CSIStorageCapacity beta feature gate is enabled there and a CSI driver opts into capacity-aware scheduling with CSIDriver.StorageCapacity.</p>
+  <p>Cycle through all object subclasses and create initializers</p>
 
 
 
@@ -5128,7 +5124,14 @@
   </h2>
   
     
-      <a href="https://github.com/spoved/k8s.cr/blob/b5d15abd6a7c069725626803f47e388c138fea5f/src/versions/v1.23/api/storage/v1alpha1/csi_storage_capacity.cr#L9" target="_blank">
+      <a href="https://github.com/spoved/k8s.cr/blob/2f8f2e71c4c3a9f0416200492e76efe6bd4ea3e6/src/k8s/object.cr#L60" target="_blank">
+        k8s/object.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/spoved/k8s.cr/blob/2f8f2e71c4c3a9f0416200492e76efe6bd4ea3e6/src/versions/v1.23/api/storage/v1alpha1/csi_storage_capacity.cr#L9" target="_blank">
         versions/v1.23/api/storage/v1alpha1/csi_storage_capacity.cr
       </a>
     
@@ -5175,7 +5178,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#new-class-method" class="signature"><strong>.new</strong></a>
+        <a href="#new%28hash%3AEnumerable%7CIterable%7CNamedTuple%7CNil%3Dnil%29-class-method" class="signature"><strong>.new</strong>(hash : Enumerable | Iterable | NamedTuple | Nil = <span class="n">nil</span>)</a>
         
       </li>
     
@@ -5543,7 +5546,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/b5d15abd6a7c069725626803f47e388c138fea5f/src/versions/v1.23/api/storage/v1alpha1/csi_storage_capacity.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/2f8f2e71c4c3a9f0416200492e76efe6bd4ea3e6/src/versions/v1.23/api/storage/v1alpha1/csi_storage_capacity.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5559,7 +5562,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/b5d15abd6a7c069725626803f47e388c138fea5f/src/versions/v1.23/api/storage/v1alpha1/csi_storage_capacity.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/2f8f2e71c4c3a9f0416200492e76efe6bd4ea3e6/src/versions/v1.23/api/storage/v1alpha1/csi_storage_capacity.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5575,7 +5578,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/b5d15abd6a7c069725626803f47e388c138fea5f/src/versions/v1.23/api/storage/v1alpha1/csi_storage_capacity.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/2f8f2e71c4c3a9f0416200492e76efe6bd4ea3e6/src/versions/v1.23/api/storage/v1alpha1/csi_storage_capacity.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5591,7 +5594,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/b5d15abd6a7c069725626803f47e388c138fea5f/src/versions/v1.23/api/storage/v1alpha1/csi_storage_capacity.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/2f8f2e71c4c3a9f0416200492e76efe6bd4ea3e6/src/versions/v1.23/api/storage/v1alpha1/csi_storage_capacity.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5607,23 +5610,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/b5d15abd6a7c069725626803f47e388c138fea5f/src/versions/v1.23/api/storage/v1alpha1/csi_storage_capacity.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/2f8f2e71c4c3a9f0416200492e76efe6bd4ea3e6/src/versions/v1.23/api/storage/v1alpha1/csi_storage_capacity.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="new-class-method">
+    <div class="entry-detail" id="new(hash:Enumerable|Iterable|NamedTuple|Nil=nil)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>
+        def self.<strong>new</strong>(hash : Enumerable | Iterable | NamedTuple | Nil = <span class="n">nil</span>)
 
-        <a class="method-permalink" href="#new-class-method">#</a>
+        <a class="method-permalink" href="#new%28hash%3AEnumerable%7CIterable%7CNamedTuple%7CNil%3Dnil%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/b5d15abd6a7c069725626803f47e388c138fea5f/src/versions/v1.23/api/storage/v1alpha1/csi_storage_capacity.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/2f8f2e71c4c3a9f0416200492e76efe6bd4ea3e6/src/k8s/object.cr#L60" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5639,7 +5642,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/b5d15abd6a7c069725626803f47e388c138fea5f/src/versions/v1.23/api/storage/v1alpha1/csi_storage_capacity.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/2f8f2e71c4c3a9f0416200492e76efe6bd4ea3e6/src/versions/v1.23/api/storage/v1alpha1/csi_storage_capacity.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5676,7 +5679,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/b5d15abd6a7c069725626803f47e388c138fea5f/src/versions/v1.23/api/storage/v1alpha1/csi_storage_capacity.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/2f8f2e71c4c3a9f0416200492e76efe6bd4ea3e6/src/versions/v1.23/api/storage/v1alpha1/csi_storage_capacity.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5692,7 +5695,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/b5d15abd6a7c069725626803f47e388c138fea5f/src/versions/v1.23/api/storage/v1alpha1/csi_storage_capacity.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/2f8f2e71c4c3a9f0416200492e76efe6bd4ea3e6/src/versions/v1.23/api/storage/v1alpha1/csi_storage_capacity.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -5717,7 +5720,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/spoved/k8s.cr/blob/b5d15abd6a7c069725626803f47e388c138fea5f/src/versions/v1.23/api/storage/v1alpha1/csi_storage_capacity.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/spoved/k8s.cr/blob/2f8f2e71c4c3a9f0416200492e76efe6bd4ea3e6/src/versions/v1.23/api/storage/v1alpha1/csi_storage_capacity.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
