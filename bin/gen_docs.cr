@@ -15,14 +15,15 @@ end
 
 def get_git_tags
   `git show-ref --tags -d`.chomp.split("\n")
-    .select(&.=~(/\^\{\}$/)).map do |line|
+    .reject(&.=~(/\^\{\}$/)).map do |line|
     parts = line.split(" ")
     {parts[1].gsub("refs/tags/", "").gsub("^{}", ""), parts[0]}
   end
 end
 
 def get_release_version
-  tag = get_git_tags.find(&.[1].==(git_commit))
+  tags = get_git_tags
+  tag = tags.find(&.[1].==(git_commit))
   if tag
     tag[0].lchop('v')
   else
@@ -130,4 +131,5 @@ def gen_index(title, docs)
   end
 end
 
+pp get_git_tags
 generate_release_docs
