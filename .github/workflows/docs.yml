@@ -10,6 +10,8 @@ jobs:
     steps:
       - name: Download source
         uses: actions/checkout@v2
+      - name: Print tags
+        run: git show-ref --tags
       - name: Install Crystal
         uses: crystal-lang/install-crystal@v1
         with:
@@ -17,7 +19,7 @@ jobs:
       - name: Install shards
         run: shards update --ignore-crystal-version
       - name: Build docs
-        run: make docs
+        run: crystal ./bin/gen_docs.cr
       - name: Deploy docs
         uses: JamesIves/github-pages-deploy-action@4.1.7
         with:
