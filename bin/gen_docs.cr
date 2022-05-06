@@ -131,5 +131,6 @@ def gen_index(title, docs)
   end
 end
 
+`git fetch -P -p -t`
 pp get_git_tags
 generate_release_docs
