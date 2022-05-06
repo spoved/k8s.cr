@@ -101,7 +101,11 @@ abstract struct K8S::Kubernetes::Resource
       else
         accessor = name
         if kind.is_a?(Path) || kind.is_a?(Generic)
-          kind = kind.resolve
+          if options[:namespace] && options[:subresource]
+            kind = parse_type("#{options[:namespace].id}::#{kind}").resolve
+          else
+            kind = kind.resolve
+          end
         else
           puts name.class_name
           puts kind.class_name
@@ -203,6 +207,10 @@ abstract struct K8S::Kubernetes::Resource
       end
     {% end %}
 
+    {% not_nilable_type = kind.is_a?(Union) ? kind.types.reject(&.resolve.nilable?).first : (kind.is_a?(TypeNode) && kind.union? ? kind.union_types.reject(&.resolve.nilable?).first : kind) %}
+    @[::K8S::ObjectProperty({{accessor.id}}: {
+      name: "{{accessor.id}}", key: {{key}}, kind: {{not_nilable_type.id}}, nilable: {{nilable}}, read_only: {{read_only}}, description: {{description}}, default: {{default.nil? ? "nil" : default}}, {{**options}}
+    })]
     {% if description %}{% for line in description.id.split("\n") %}
     # {{line.id}} {% end %}{% end %}
     def {{accessor.id}} : {{kind}} {% if nilable %} | Nil {% end %}
@@ -231,8 +239,8 @@ abstract struct K8S::Kubernetes::Resource
 
   macro define_object(kind, namespace, properties = [] of NamedTupleLiteral)
     {%
-      c_kind = kind.gsub(/JSON/, "Json")
-      mod_id = namespace.gsub(/^::/, "").id
+      c_kind = kind.id.gsub(/JSON/, "Json")
+      mod_id = namespace.id.gsub(/^::/, "").id
     %}
 
     module ::{{mod_id}}
@@ -266,8 +274,10 @@ abstract struct K8S::Kubernetes::Resource
   #
   # ```
   # ::K8S::Kubernetes::Resource.define_resource("apps", "v1", "DaemonSetTest",
-  #   {accessor: "spec", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Apps::V1::DaemonSetSpec, description: %<The desired behavior of this daemon set. ....>},
-  #   {accessor: "status", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Apps::V1::DaemonSetStatus, description: %<The current status of this daemon set. ....>},
+  #   properties: [
+  #     {name: "spec", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Apps::V1::DaemonSetSpec, description: %<The desired behavior of this daemon set. ....>},
+  #     {name: "status", nilable: true, read_only: false, default: nil, kind: ::K8S::Api::Apps::V1::DaemonSetStatus, description: %<The current status of this daemon set. ....>},
+  #   ],
   #   namespace: "::K8S::Api",
   # )
   # ```
@@ -285,11 +295,11 @@ abstract struct K8S::Kubernetes::Resource
         .gsub(/\-/, "_")
 
       if namespace
-        mod_path = namespace.gsub(/^::/, "").id.stringify
+        mod_path = namespace.id.gsub(/^::/, "").id.stringify
       else
         mod_path = ""
       end
-      c_kind = kind.gsub(/JSON/, "Json")
+      c_kind = kind.id.gsub(/JSON/, "Json")
     %}
 
     @[::K8S::GroupVersionKind(group: {{r_group_full.id.stringify}}, version: {{version.id.stringify}}, kind: {{kind.id.stringify}}, full: "{{group.id}}.{{version.id}}.{{kind.id}}")]

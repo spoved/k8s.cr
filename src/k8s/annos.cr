@@ -9,3 +9,5 @@ annotation ::K8S::GroupVersionKind; end
 # )]
 # ```
 annotation ::K8S::ObjectProperties; end
+
+annotation ::K8S::ObjectProperty; end

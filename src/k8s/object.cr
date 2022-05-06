@@ -70,7 +70,12 @@ macro finished
       {% for anno in annos %}{% for name, value in anno.named_args %}
       {% if value[:key] && value[:key] != value[:name] %}
       if @__object__[{{value[:name]}}]?
+        {% if value[:nilable] %}
         @__object__[{{value[:key]}}] = @__object__.delete({{value[:name]}})
+        {% else %}
+        %val = @__object__.delete({{value[:name]}})
+        @__object__[{{value[:key]}}] = %val unless %val.nil?
+        {% end %}
       end
       {% end %}
       {% end %}{% end %}
