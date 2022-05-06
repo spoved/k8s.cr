@@ -14,7 +14,10 @@ def git_commit
 end
 
 def get_git_tags
-  `git show-ref --tags`.chomp.split("\n").map do |line|
+  tags = `git show-ref --tags -d`.chomp.split("\n")
+    .reject(&.=~(/\^\{\}$/))
+  pp tags
+  tags.map do |line|
     parts = line.split(" ")
     {parts[1].gsub("refs/tags/", "").gsub("^{}", ""), parts[0]}
   end
@@ -130,6 +133,4 @@ def gen_index(title, docs)
   end
 end
 
-`git fetch -P -p -t`
-pp get_git_tags
 generate_release_docs

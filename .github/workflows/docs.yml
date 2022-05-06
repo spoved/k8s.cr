@@ -10,8 +10,6 @@ jobs:
     steps:
       - name: Download source
         uses: actions/checkout@v2
-      - name: Print tags
-        run: git show-ref --tags -d
       - name: Install Crystal
         uses: crystal-lang/install-crystal@v1
         with:
