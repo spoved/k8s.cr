@@ -87,7 +87,7 @@ class K8S::CRD::Generator
           end
         end
       end
-      crdgen.generate
+      crdgen.generate(skip_depends: true)
     else
       Log.error { "No patch data found for v1.23" }
     end

@@ -11,7 +11,7 @@ class Generator::Writer
     @current_file.not_nil!
   end
 
-  def write(definition : Definition)
+  def write(definition : Definition, skip_depends = false)
     file_path = definition.filename
     STDOUT.puts "Writing: #{file_path}"
     FileUtils.mkdir_p(File.dirname(file_path))
@@ -22,7 +22,7 @@ class Generator::Writer
 
     write_preamble
 
-    write_depends(definition, properties)
+    write_depends(definition, properties) unless skip_depends
 
     if definition.alias_of
       file.puts %<alias #{base_class}::#{class_name} = #{@generator.definitions[definition.alias_of.not_nil!]}>

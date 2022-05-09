@@ -76,7 +76,7 @@ class Generator
     end
   end
 
-  def generate
+  def generate(skip_depends = false)
     api_map = @definitions.reject do |_, klass|
       (["::Int32", "::Time", "::String"] & klass.split("|").map(&.strip)).first?
     end
@@ -90,7 +90,7 @@ class Generator
     definitions.each do |definition|
       # if only_groups is defined, only generate the groups specified
       if only_groups.nil? || !(only_groups.not_nil!.find { |group| definition.name =~ /#{group}/ }.nil?)
-        self.writter.write(definition)
+        self.writter.write(definition, skip_depends)
       end
     end
 
