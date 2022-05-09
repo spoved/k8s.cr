@@ -82,4 +82,16 @@ struct K8S::Kubernetes::Resource::Generic < K8S::Kubernetes::Resource
   end
 end
 
-struct K8S::Api::Core::V1::List < K8S::Kubernetes::Resource::List(K8S::Kubernetes::Resource::Generic); end
+struct K8S::Api::Core::V1::List < K8S::Kubernetes::Resource::List(K8S::Kubernetes::Resource::Generic)
+  def self.group : String
+    ""
+  end
+
+  def self.api_version : String
+    "v1"
+  end
+
+  def self.kind : String
+    "List"
+  end
+end
