@@ -50,6 +50,18 @@ abstract struct K8S::Kubernetes::Resource < K8S::Kubernetes::Object
       end
     end
   end
+
+  def self.group : String
+    raise "#{self.class}: group is not defined"
+  end
+
+  def self.api_version : String
+    raise "#{self.class}: api_version is not defined"
+  end
+
+  def self.kind : String
+    raise "#{self.class}: kind is not defined"
+  end
 end
 
 abstract struct K8S::Kubernetes::Resource::Object < K8S::Kubernetes::Resource
