@@ -1,9 +1,6 @@
 require "./object"
 
 abstract struct K8S::Internals::ArrayObject(V, T)
-  # include Enumerable(T)
-  # include Iterable(T)
-
   include Indexable(T)
 
   # Deep casts *value* to the `V` type.

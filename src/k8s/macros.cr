@@ -44,13 +44,13 @@ macro k8s_new_resource(group, ver, kind, obj)
     {{resource.id}}.new({{obj}})
   {% end %}
   else
-    Log.warn &.emit %<Unknown api resource: "#{{{group}}}/#{{{ver}}}/#{{{kind}}}">,
+    Log.trace &.emit %<Unknown api resource: "#{{{group}}}/#{{{ver}}}/#{{{kind}}}">,
       group: {{group}}.to_s, version: {{ver}}.to_s, kind: {{kind}}.to_s
 
     if {{kind}} =~ /List$/ && {{obj}}[:items]?
-      K8S::Api::Core::V1::List.new({{obj}})
+      raise K8S::Error::UnknownResource.new("#{{{group}}}/#{{{ver}}}/#{{{kind}}}", K8S::Api::Core::V1::List.new({{obj}}))
     else
-      K8S::Kubernetes::Resource::Generic.new({{obj}})
+      raise K8S::Error::UnknownResource.new("#{{{group}}}/#{{{ver}}}/#{{{kind}}}", K8S::Kubernetes::Resource::Generic.new({{obj}}))
     end
   end
 end
@@ -91,7 +91,7 @@ macro k8s_resource_class(group, ver, kind)
     {{resource.id}}
   {% end %}
   else
-    Log.warn &.emit %<Unknown api resource: "#{{{group}}}/#{{{ver}}}/#{{{kind}}}">,
+    Log.trace &.emit %<Unknown api resource: "#{{{group}}}/#{{{ver}}}/#{{{kind}}}">,
       group: {{group}}.to_s, version: {{ver}}.to_s, kind: {{kind}}.to_s
 
     raise K8S::Error::UnknownResource.new("#{{{group}}}/#{{{ver}}}/#{{{kind}}}")

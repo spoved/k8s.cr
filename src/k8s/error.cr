@@ -7,7 +7,9 @@ module K8S
     end
 
     class UnknownResource < Error
-      def initialize(resource)
+      @generic : K8S::Kubernetes::Resource::Generic | K8S::Api::Core::V1::List | Nil = nil
+
+      def initialize(resource, @generic = nil)
         super("Unknown resource: #{resource}")
       end
     end
