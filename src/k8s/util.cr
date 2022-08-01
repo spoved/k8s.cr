@@ -17,6 +17,14 @@ module K8S
       api_ver = (obj[:apiVersion]? || obj[:api_version]?)
       api_ver = api_ver.as_s if api_ver.is_a?(JSON::Any) || api_ver.is_a?(YAML::Any)
 
+      # NOTE: This may be rancher specific api behavior.
+      if obj[:type]? == "error" && obj[:status]? =~ /^4\d\d/ && api_ver.nil?
+        return K8S::Apimachinery::Apis::Meta::V1::Status.new(
+          code: obj[:status].as(String).to_i,
+          message: obj[:message].as(String),
+        )
+      end
+
       api_ver = api_ver.as(String?)
       raise K8S::Kubernetes::Resource::Error.new "Undefined api version" if api_ver.nil?
 

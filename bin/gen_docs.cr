@@ -16,7 +16,6 @@ end
 def get_git_tags
   tags = `git show-ref --tags -d`.chomp.split("\n")
     .reject(&.=~(/\^\{\}$/))
-  pp tags
   tags.map do |line|
     parts = line.split(" ")
     {parts[1].gsub("refs/tags/", "").gsub("^{}", ""), parts[0]}
