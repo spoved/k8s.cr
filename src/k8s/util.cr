@@ -39,18 +39,22 @@ module K8S
     end
 
     def get_resource_klass(obj)
+      Log.trace &.emit "get_resource_klass", **obj
       api_ver = (obj[:apiVersion]? || obj[:api_version]?)
       api_ver = api_ver.as_s if api_ver.is_a?(JSON::Any) || api_ver.is_a?(YAML::Any)
 
       api_ver = api_ver.as(String?)
       return nil if api_ver.nil?
+      api_ver = k8s_sanitize_api(api_ver)
 
       if api_ver =~ /\//
         parts = api_ver.split("/")
         ver = parts.pop
         group = parts.empty? ? "" : parts.shift
+        Log.trace &.emit "get_resource_klass", group: group, ver: ver, kind: obj[:kind]
         k8s_resource_class(group: group, ver: ver, kind: obj[:kind])
       else
+        Log.trace &.emit "get_resource_klass", group: "", ver: api_ver, kind: obj[:kind]
         k8s_resource_class(group: "", ver: api_ver, kind: obj[:kind])
       end
     end
