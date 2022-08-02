@@ -21,37 +21,29 @@ macro k8s_new_resource(group, ver, kind, obj)
         if !others[value]
           others[value] = resource
         end
-      %}
-      {% end %}
-    {% end %}
-  {% end %}
-  {% for resource in K8S::Kubernetes::Resource.all_subclasses %}
-    {% if !resource.abstract? && resource.annotation(::K8S::GroupVersionKind) %}
-      {% for anno in resource.annotations(::K8S::GroupVersionKind) %}
-        {%
-          value = "{\"\",#{anno[:version]},#{anno[:kind]}}"
-          if anno[:group] != "" && !others[value]
+
+        if anno[:group] == ""
+          value = %<{"core",#{anno[:version]},#{anno[:kind]}}>
+          if !others[value]
             others[value] = resource
           end
-          value1 = "{\"core\",#{anno[:version]},#{anno[:kind]}}"
-          if !others[value1] && anno[:group] == ""
-            others[value1] = resource
-          end
-        %}
+        end
+      %}
       {% end %}
     {% end %}
   {% end %}
   {% for mapping in K8S::Kubernetes::Resource::MAPPINGS %}
     {%
-      value = %<{"",#{mapping[0]},#{mapping[1].split("::").last}}>
-      if !others[value]
-        others[value] = mapping[2].resolve
-      end
       split = mapping[0].split('/')
       if split.size == 2
-        value1 = "{#{split.first},#{split.last},#{mapping[1].split("::").last}}"
-        if !others[value1]
-          others[value1] = mapping[2].resolve
+        value = "{#{split.first},#{split.last},#{mapping[1].split("::").last}}"
+        if !others[value]
+          others[value] = mapping[2].resolve
+        end
+      else
+        value = %<{"",#{mapping[0]},#{mapping[1].split("::").last}}>
+        if !others[value]
+          others[value] = mapping[2].resolve
         end
       end
     %}
@@ -89,37 +81,29 @@ macro k8s_resource_class(group, ver, kind)
         if !others[value]
           others[value] = resource
         end
-      %}
-      {% end %}
-    {% end %}
-  {% end %}
-  {% for resource in K8S::Kubernetes::Resource.all_subclasses %}
-    {% if !resource.abstract? && resource.annotation(::K8S::GroupVersionKind) %}
-      {% for anno in resource.annotations(::K8S::GroupVersionKind) %}
-        {%
-          value = "{\"\",#{anno[:version]},#{anno[:kind]}}"
-          if anno[:group] != "" && !others[value]
+
+        if anno[:group] == ""
+          value = %<{"core",#{anno[:version]},#{anno[:kind]}}>
+          if !others[value]
             others[value] = resource
           end
-          value1 = "{\"core\",#{anno[:version]},#{anno[:kind]}}"
-          if !others[value1] && anno[:group] == ""
-            others[value1] = resource
-          end
-        %}
+        end
+      %}
       {% end %}
     {% end %}
   {% end %}
   {% for mapping in K8S::Kubernetes::Resource::MAPPINGS %}
     {%
-      value = %<{"",#{mapping[0]},#{mapping[1].split("::").last}}>
-      if !others[value]
-        others[value] = mapping[2].resolve
-      end
       split = mapping[0].split('/')
       if split.size == 2
-        value1 = "{#{split.first},#{split.last},#{mapping[1].split("::").last}}"
-        if !others[value1]
-          others[value1] = mapping[2].resolve
+        value = "{#{split.first},#{split.last},#{mapping[1].split("::").last}}"
+        if !others[value]
+          others[value] = mapping[2].resolve
+        end
+      else
+        value = %<{"",#{mapping[0]},#{mapping[1].split("::").last}}>
+        if !others[value]
+          others[value] = mapping[2].resolve
         end
       end
     %}
