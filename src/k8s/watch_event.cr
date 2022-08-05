@@ -8,10 +8,10 @@ struct ::K8S::Kubernetes::WatchEvent(T)
     @__event__ = event
 
     @object = {% if ::K8S::Kubernetes::VERSION_MINOR == 1 && ::K8S::Kubernetes::VERSION_MAJOR < 16 %}
-      T.from_json(event.object.raw)
-    {% else %}
-      T.new(event.object)
-    {% end %}
+                T.from_json(event.object.raw).as(T)
+              {% else %}
+                T.new(event.object).as(T)
+              {% end %}
   end
 
   macro method_missing(call)

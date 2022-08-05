@@ -76,7 +76,7 @@ class Generator
   end
 
   # Will return the alias if the api is an alias, otherwise nil
-  def default_allias?(class_name)
+  def default_alias?(class_name)
     case class_name
     when "Api::Core::V1::List"
       # TODO: Properly handle List alias

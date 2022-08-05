@@ -3,7 +3,7 @@ class Generator::Writer
   setter current_file : IO::FileDescriptor? = nil
   property definitions : Array(Definition) = Array(Definition).new
 
-  delegate schema, base, base_dir, base_class, default_allias?, definition_ref, to: @generator
+  delegate schema, base, base_dir, base_class, default_alias?, definition_ref, to: @generator
 
   def initialize(@generator : Generator); end
 
@@ -29,8 +29,8 @@ class Generator::Writer
     elsif class_name == "ApiextensionsApiserver::Apis::Apiextensions::V1::JsonSchemaProps"
       write_class(definition, properties)
       # write_alias(definition) if !definition.is_list? && definition.is_resource?
-    elsif default_allias?(class_name)
-      _alias = default_allias?(class_name)
+    elsif default_alias?(class_name)
+      _alias = default_alias?(class_name)
       file.puts %<alias #{base_class}::#{class_name} = #{_alias}> unless _alias == class_name
     else
       write_class(definition, properties)
@@ -50,12 +50,23 @@ class Generator::Writer
 
   private def write_depends(definition, properties)
     depends = Array(String).new
+
+    class_name = definition.class_name
+    _alias = default_alias?(class_name)
+    if _alias && _alias != class_name && _alias =~ /^::#{base_class}::/ && _alias !~ /Json/i
+      ref = definitions.find { |d| d.class_name == _alias.gsub(/^::#{base_class}::/, "") }
+      if ref
+        path = get_req_path(ref.filename, definition.filename)
+        depends << path if path
+      end
+    end
+
     if properties
       properties.each do |prop|
         kind = prop[:kind]
 
-        if default_allias?(kind)
-          kind = default_allias?(kind).not_nil!
+        if default_alias?(kind)
+          kind = default_alias?(kind).not_nil!
         end
 
         if kind =~ /::#{base_class}::(.+)\b/
