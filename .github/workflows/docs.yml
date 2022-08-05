@@ -2,8 +2,9 @@
 # More configuration options are available at https://crystal-lang.github.io/install-crystal/configurator.html
 
 on:
-  push:
-    branches: [master]
+  release:
+    types:
+      - published
 jobs:
   docs:
     runs-on: ubuntu-latest
