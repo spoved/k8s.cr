@@ -10,19 +10,20 @@ docs: ## Generate docs
 	crystal ./bin/gen_docs.cr
 
 spec: ## Run spec
-	@crystal spec -Dk8s_v1.11 --error-trace
-	@crystal spec -Dk8s_v1.12 --error-trace
-	@crystal spec -Dk8s_v1.13 --error-trace
-	@crystal spec -Dk8s_v1.14 --error-trace
-	@crystal spec -Dk8s_v1.15 --error-trace
-	@crystal spec -Dk8s_v1.16 --error-trace
-	@crystal spec -Dk8s_v1.17 --error-trace
-	@crystal spec -Dk8s_v1.18 --error-trace
-	@crystal spec -Dk8s_v1.19 --error-trace
-	@crystal spec -Dk8s_v1.20 --error-trace
-	@crystal spec -Dk8s_v1.21 --error-trace
-	@crystal spec -Dk8s_v1.22 --error-trace
-	@crystal spec -Dk8s_v1.23 --error-trace
+	@crystal spec --exclude-warnings /usr/local/Cellar/crystal -Dk8s_v1.11 --error-trace
+	@crystal spec --exclude-warnings /usr/local/Cellar/crystal -Dk8s_v1.12 --error-trace
+	@crystal spec --exclude-warnings /usr/local/Cellar/crystal -Dk8s_v1.13 --error-trace
+	@crystal spec --exclude-warnings /usr/local/Cellar/crystal -Dk8s_v1.14 --error-trace
+	@crystal spec --exclude-warnings /usr/local/Cellar/crystal -Dk8s_v1.15 --error-trace
+	@crystal spec --exclude-warnings /usr/local/Cellar/crystal -Dk8s_v1.16 --error-trace
+	@crystal spec --exclude-warnings /usr/local/Cellar/crystal -Dk8s_v1.17 --error-trace
+	@crystal spec --exclude-warnings /usr/local/Cellar/crystal -Dk8s_v1.18 --error-trace
+	@crystal spec --exclude-warnings /usr/local/Cellar/crystal -Dk8s_v1.19 --error-trace
+	@crystal spec --exclude-warnings /usr/local/Cellar/crystal -Dk8s_v1.20 --error-trace
+	@crystal spec --exclude-warnings /usr/local/Cellar/crystal -Dk8s_v1.21 --error-trace
+	@crystal spec --exclude-warnings /usr/local/Cellar/crystal -Dk8s_v1.22 --error-trace
+	@crystal spec --exclude-warnings /usr/local/Cellar/crystal -Dk8s_v1.23 --error-trace
+	@crystal spec --exclude-warnings /usr/local/Cellar/crystal -Dk8s_v1.24 --error-trace
 
 sentry: ## Compile sentry
 	@crystal build --release -o ./bin/sentry ./lib/sentry/src/sentry_cli.cr
