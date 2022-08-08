@@ -34,6 +34,24 @@ macro k8s_cast_type(value, *typs)
     {% else %}
       {{value}}.as({{kind.id}})
     {% end %}
+    {% if kind >= Number %}
+  when Int
+      {% if kind >= Int32 %}
+        {{value}}.to_i32
+      {% elsif kind >= Int64 %}
+        {{value}}.to_i64
+      {% else %}
+        {{value}}.to_i
+      {% end %}
+  when Float
+      {% if kind >= Float32 %}
+        {{value}}.to_f32
+      {% elsif kind >= Float64 %}
+        {{value}}.to_f64
+      {% else %}
+        {{value}}.to_f
+      {% end %}
+    {% end %}
   {% end %}
 
   {% atyps = typs.uniq.select(&.resolve.<=(Array)) %}
@@ -75,6 +93,7 @@ macro k8s_cast_type(value, *typs)
       raise K8S::Kubernetes::Resource::Error::CastError.new({{value}}, [{{*gtyps.uniq}}])
     {% end %}
   {% end %}
+
 
   else
     Log.warn &.emit %<Unknown type: "#{{{value}}}">
