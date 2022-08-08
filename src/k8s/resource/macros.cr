@@ -34,19 +34,21 @@ macro k8s_cast_type(value, *typs)
     {% else %}
       {{value}}.as({{kind.id}})
     {% end %}
-    {% if kind >= Number %}
+    {% if kind <= Int %}
   when Int
-      {% if kind >= Int32 %}
+      {% if kind <= Int32 %}
         {{value}}.to_i32
-      {% elsif kind >= Int64 %}
+      {% elsif kind <= Int64 %}
         {{value}}.to_i64
       {% else %}
         {{value}}.to_i
       {% end %}
+    {% end %}
+    {% if kind <= Float %}
   when Float
-      {% if kind >= Float32 %}
+      {% if kind <= Float32 %}
         {{value}}.to_f32
-      {% elsif kind >= Float64 %}
+      {% elsif kind <= Float64 %}
         {{value}}.to_f64
       {% else %}
         {{value}}.to_f
