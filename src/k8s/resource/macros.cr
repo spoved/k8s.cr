@@ -54,6 +54,10 @@ macro k8s_cast_type(value, *typs)
         {{value}}.to_f
       {% end %}
     {% end %}
+    {% if kind <= Time %}
+  when String
+    K8S::TimeFormat.parse({{value}})
+    {% end %}
   {% end %}
 
   {% atyps = typs.uniq.select(&.resolve.<=(Array)) %}
