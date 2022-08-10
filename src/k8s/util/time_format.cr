@@ -1,13 +1,17 @@
 struct K8S::TimeFormat
   # @@rfc3339_format = ::Time::Format.new("%Y-%m-%dT%TZ")
 
-  def parse(string, loc)
+  def self.parse(string, loc = nil)
     if string =~ /\.\d+Z/
       ::Time.parse_rfc3339(string)
     else
       ::Time.parse_rfc3339(string)
       # @@rfc3339_format.parse(string, ::Time::Location::UTC)
     end
+  end
+
+  def parse(string, loc = nil)
+    K8S::TimeFormat.parse(string, loc)
   end
 
   def format(value)
