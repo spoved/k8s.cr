@@ -33,15 +33,8 @@ jobs:
           - macos-latest
         crystal:
           - latest
-          - 1.2
           - 1.3
           - 1.4
-        # include:
-        #   - os: ubuntu-latest
-        #     crystal: latest
-        #   - os: ubuntu-latest
-        #     crystal: latest
-        #   - os: macos-latest
     runs-on: ${{ matrix.os }}
     steps:
       - name: Download source
