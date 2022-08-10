@@ -30,8 +30,7 @@ jobs:
           - "v1.24"
         include:
           - os: ubuntu-latest
-          - os: ubuntu-latest
-            crystal: 1.2.2
+            crystal: latest
           - os: macos-latest
     runs-on: ${{ matrix.os }}
     steps:
