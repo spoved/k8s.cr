@@ -9,7 +9,7 @@ require "./stateful_set_condition"
   namespace: "::K8S::Api::Apps::V1",
   properties: [
 
-    {name: "available_replicas", kind: Int32, key: "availableReplicas", nilable: false, read_only: false, description: "Total number of available pods (ready for at least minReadySeconds) targeted by this statefulset. This is a beta field and [enabled/disabled by StatefulSetMinReadySeconds feature gate.](enabled/disabled by StatefulSetMinReadySeconds feature gate.)"},
+    {name: "available_replicas", kind: Int32, key: "availableReplicas", nilable: true, read_only: false, description: "Total number of available pods (ready for at least minReadySeconds) targeted by this statefulset. This is a beta field and [enabled/disabled by StatefulSetMinReadySeconds feature gate.](enabled/disabled by StatefulSetMinReadySeconds feature gate.)"},
     {name: "collision_count", kind: Int32, key: "collisionCount", nilable: true, read_only: false, description: "collisionCount is the count of hash collisions for the StatefulSet. The StatefulSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision."},
     {name: "conditions", kind: ::Array(::K8S::Api::Apps::V1::StatefulSetCondition), key: "conditions", nilable: true, read_only: false, description: "Represents the latest available observations of a statefulset's current state."},
     {name: "current_replicas", kind: Int32, key: "currentReplicas", nilable: true, read_only: false, description: "currentReplicas is the number of Pods created by the StatefulSet controller from the StatefulSet version indicated by currentRevision."},

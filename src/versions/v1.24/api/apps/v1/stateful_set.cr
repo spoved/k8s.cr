@@ -15,6 +15,6 @@ require "./stateful_set_status"
     {name: "status", kind: ::K8S::Api::Apps::V1::StatefulSetStatus, key: "status", nilable: true, read_only: false, description: "Status is the current status of Pods in this StatefulSet. This data may be out of date by some window of time."},
 
   ],
-  description: "StatefulSet represents a set of pods with consistent identities. Identities are defined as:\n - Network: A single stable DNS and hostname.\n - Storage: As many VolumeClaims as requested.\nThe StatefulSet guarantees that a given network identity will always map to the same storage identity.",
+  description: "StatefulSet represents a set of pods with consistent identities. Identities are defined as:\n  - Network: A single stable DNS and hostname.\n  - Storage: As many VolumeClaims as requested.\n\nThe StatefulSet guarantees that a given network identity will always map to the same storage identity.",
   versions: [{group: "apps", kind: "StatefulSet", version: "v1"}],
 )
