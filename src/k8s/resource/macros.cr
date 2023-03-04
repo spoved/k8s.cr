@@ -19,92 +19,143 @@ macro k8s_cast_hash_typ(value, typ)
     .as({{typ.id}})
 end
 
-# :nodoc:
+# Macro for casting a value to one or more types, based on a list of types
 macro k8s_cast_type(value, *typs)
   case {{value}}
+  # Start a switch case statement for the given value
   {% for kind in typs.uniq %}
+  # Loop through unique types in the given list
   {% kind = kind.resolve %}
+  # Resolve the kind to get the final type
   when {{kind.id}}
-    {% if kind <= Array %}
-      k8s_cast_array_typ({{value}}, {{kind.id}})
-    {% elsif kind <= Hash %}
-      k8s_cast_hash_typ({{value}}, {{kind.id}})
-    {% elsif kind.union_types.size > 1 %}
-      k8s_cast_type({{value}}, {{*kind.union_types}})
-    {% else %}
-      {{value}}.as({{kind.id}})
-    {% end %}
-    {% if kind <= Int %}
-  when Int
-      {% if kind <= Int32 %}
-        {{value}}.to_i32
-      {% elsif kind <= Int64 %}
-        {{value}}.to_i64
-      {% else %}
-        {{value}}.to_i
-      {% end %}
-    {% end %}
-    {% if kind <= Float %}
-  when Float
-      {% if kind <= Float32 %}
-        {{value}}.to_f32
-      {% elsif kind <= Float64 %}
-        {{value}}.to_f64
-      {% else %}
-        {{value}}.to_f
-      {% end %}
-    {% end %}
-    {% if kind <= Time %}
-  when String
-    K8S::TimeFormat.parse({{value}})
-    {% end %}
+    k8s_cast_value({{value}}, {{kind.id}})
   {% end %}
 
+  # Cast the value to an array type, if necessary
   {% atyps = typs.uniq.select(&.resolve.<=(Array)) %}
   {% if atyps.size >= 1 %}
   when Array
-    {% if atyps.size == 1 %}
-      k8s_cast_array_typ({{value}}, {{atyps[0].id}})
-    {% else %}
-      k8s_cast_type({{value}}, {{*atyps}})
-    {% end %}
+    k8s_cast_array({{value}}, {{*atyps.union_types}})
   {% end %}
 
+  # Cast the value to a hash type, if necessary
   {% htyps = typs.uniq.select(&.resolve.<=(Hash)) %}
+
+  # Check if value is a Hash and has a possible type
   {% if htyps.size >= 1 %}
   when Hash
-    {% if htyps.size == 1 %}
-      k8s_cast_hash_typ({{value}}, {{htyps[0].id}})
-    {% else %}
-      k8s_cast_type({{value}}, {{*htyps}})
-    {% end %}
+    k8s_cast_hash({{value}}, {{*htyps.union_types}})
   {% end %}
 
   {% rtyps = typs.uniq.select(&.resolve.<=(K8S::Kubernetes::Resource)) %}
+
+  # Check if value is a Hash with keys of type String and values of type either K8S::Internals::Types::GenericObject::Value or ::K8S::Kubernetes::Resource::Field
   {% if rtyps.size >= 1 %}
   when Hash(String, K8S::Internals::Types::GenericObject::Value), Hash(String, ::K8S::Kubernetes::Resource::Field)
-    {% if rtyps.size == 1 %}
-      {{rtyps[0].id}}.new {{value}}
-    {% else %}
-      raise K8S::Kubernetes::Resource::Error::CastError.new({{value}}, [{{*rtyps.uniq}}])
-    {% end %}
+    k8s_create_resource_object({{value}}, {{*rtyps}})
   {% end %}
 
   {% gtyps = typs.uniq.select(&.resolve.<=(K8S::Kubernetes::Object)) %}
+
+  # Check if value is a Hash with keys of type String and values of type either K8S::Internals::Types::GenericObject::Value or ::K8S::Kubernetes::Resource::Field
+  # and no possible resource type was found
   {% if rtyps.size == 0 && gtyps.size >= 1 %}
   when Hash(String, K8S::Internals::Types::GenericObject::Value), Hash(String, ::K8S::Kubernetes::Resource::Field)
-    {% if gtyps.size == 1 %}
-      {{gtyps[0].id}}.new {{value}}
-    {% else %}
-      raise K8S::Kubernetes::Resource::Error::CastError.new({{value}}, [{{*gtyps.uniq}}])
-    {% end %}
+    k8s_create_resource_object({{value}}, {{*gtyps}})
   {% end %}
-
 
   else
     Log.warn &.emit %<Unknown type: "#{{{value}}}">
     raise K8S::Kubernetes::Resource::Error::CastError.new({{value}}, [{{*typs.uniq}}])
   end
+end
+
+# Macro for casting a value to a single type
+macro k8s_cast_value(value, kind)
+  {% kind = kind.resolve %}
+
+  {% if kind <= Array %}
+    # If the resolved type is an array, cast it using the k8s_cast_array_typ macro
+    k8s_cast_array_typ({{value}}, {{kind.id}})
+  {% elsif kind <= Hash %}
+    # If the resolved type is a hash, cast it using the k8s_cast_hash_typ macro
+    k8s_cast_hash_typ({{value}}, {{kind.id}})
+  {% elsif kind.union_types.size > 1 %}
+    # If the resolved type is a union type with more than one possible type, cast it using the k8s_cast_type macro
+    k8s_cast_type({{value}}, {{*kind.union_types}})
+  {% else %}
+    # Otherwise, cast the value using the 'as' method of the resolved type
+    {{value}}.as({{kind.id}})
+  {% end %}
+  {% if kind <= Int %}
+    # If the resolved type is an integer, cast it to the appropriate integer type
+    {% if kind <= Int32 %}
+      {{value}}.to_i32
+    {% elsif kind <= Int64 %}
+      {{value}}.to_i64
+    {% else %}
+      {{value}}.to_i
+    {% end %}
+  {% end %}
+  {% if kind <= Float %}
+    # If the resolved type is a float, cast it to the appropriate float type
+    {% if kind <= Float32 %}
+      {{value}}.to_f32
+    {% elsif kind <= Float64 %}
+      {{value}}.to_f64
+    {% else %}
+      {{value}}.to_f
+    {% end %}
+  {% end %}
+  {% if kind <= Time %}
+    # If the resolved type is a Time, parse the string value using K8S::TimeFormat
+    when String
+      K8S::TimeFormat.parse({{value}})
+  {% end %}
+end
+
+# Macro for casting a value to an array type
+macro k8s_cast_array(value, kinds)
+  {% atyps = kinds.uniq.select(&.resolve.<=(Array)) %}
+  {% if atyps.size == 1 %}
+    # If there is only one possible array type, cast the value using k8s_cast_array_typ macro
+    k8s_cast_array_typ({{value}}, {{atyps[0].id}})
+  {% elsif atyps.size > 1 %}
+    # If there are multiple possible array types, cast the value using k8s_cast_type macro
+    k8s_cast_type({{value}}, {{*atyps}})
+  {% end %}
+end
+
+# Macro for casting a value to a hash type
+macro k8s_cast_hash(value, kinds)
+  {% htyps = kinds.uniq.select(&.resolve.<=(Hash)) %}
+  {% if htyps.size == 1 %}
+    # If there is only one possible hash type, cast the value using k8s_cast_hash_typ macro
+    k8s_cast_hash_typ({{value}}, {{htyps[0].id}})
+  {% elsif htyps.size > 1 %}
+    # If there are multiple possible hash types, cast the value using k8s_cast_type macro
+    k8s_cast_type({{value}}, {{*htyps}})
+  {% end %}
+end
+
+macro k8s_create_resource_object(value, *kinds)
+  {% if kinds.size == 1 %}
+    # If there is only one possible resource type, create a new object of that type with the given value
+    {{kinds[0].id}}.new {{value}}
+  {% else %}
+    # If there are multiple possible resource types, raise a CastError with all possible types
+    raise K8S::Kubernetes::Resource::Error::CastError.new({{value}}, [{{*kinds.uniq}}])
+  {% end %}
+end
+
+macro k8s_create_generic_object(value, kinds)
+  {% if kinds.size == 1 %}
+    # If there is only one possible object type, create a new object of that type with the given value
+    {{kinds[0].id}}.new {{value}}
+  {% else %}
+    # If there are multiple possible object types, raise a CastError with all possible types
+    raise K8S::Kubernetes::Resource::Error::CastError.new({{value}}, [{{*kinds.uniq}}])
+  {% end %}
 end
 
 abstract struct K8S::Kubernetes::Resource
