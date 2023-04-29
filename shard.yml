@@ -4,7 +4,7 @@ authors:
   - Holden Omans <holden.omans@gmail.com>
 repository: "https://github.com/spoved/k8s.cr"
 
-version: 0.1.10
+version: 0.1.11
 crystal: ">= 1.3.0, < 2.0.0"
 
 targets:

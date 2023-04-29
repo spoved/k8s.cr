@@ -38,7 +38,14 @@ class K8S::Internals::HashObject(V)
   delegate :to_h, to: @__hash__
 
   # See `Hash#==`.
-  delegate :==, :===, to: @__hash__
+  def ==(value)
+    @__hash__.== value
+  end
+
+  # See `Hash#==`.
+  def ===(value)
+    @__hash__.=== value
+  end
 
   # See `Hash#each`.
   delegate :each, to: @__hash__
