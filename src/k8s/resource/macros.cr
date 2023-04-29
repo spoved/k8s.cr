@@ -35,7 +35,7 @@ macro k8s_cast_type(value, *typs)
   {% atyps = typs.uniq.select(&.resolve.<=(Array)) %}
   {% if atyps.size >= 1 %}
   when Array
-    k8s_cast_array({{value}}, {{*atyps.union_types}})
+    k8s_cast_array({{value}}, {{*atyps}})
   {% end %}
 
   # Cast the value to a hash type, if necessary
@@ -44,7 +44,7 @@ macro k8s_cast_type(value, *typs)
   # Check if value is a Hash and has a possible type
   {% if htyps.size >= 1 %}
   when Hash
-    k8s_cast_hash({{value}}, {{*htyps.union_types}})
+    k8s_cast_hash({{value}}, {{*htyps}})
   {% end %}
 
   {% rtyps = typs.uniq.select(&.resolve.<=(K8S::Kubernetes::Resource)) %}
@@ -115,7 +115,7 @@ macro k8s_cast_value(value, kind)
 end
 
 # Macro for casting a value to an array type
-macro k8s_cast_array(value, kinds)
+macro k8s_cast_array(value, *kinds)
   {% atyps = kinds.uniq.select(&.resolve.<=(Array)) %}
   {% if atyps.size == 1 %}
     # If there is only one possible array type, cast the value using k8s_cast_array_typ macro
@@ -127,7 +127,7 @@ macro k8s_cast_array(value, kinds)
 end
 
 # Macro for casting a value to a hash type
-macro k8s_cast_hash(value, kinds)
+macro k8s_cast_hash(value, *kinds)
   {% htyps = kinds.uniq.select(&.resolve.<=(Hash)) %}
   {% if htyps.size == 1 %}
     # If there is only one possible hash type, cast the value using k8s_cast_hash_typ macro

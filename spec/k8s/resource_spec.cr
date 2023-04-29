@@ -14,6 +14,20 @@ end
 
 struct TestServiceList < K8S::Kubernetes::Resource::List(TestService); end
 
+struct TestArrayProp < K8S::Kubernetes::Resource
+  define_prop(strings : Array(String), nilable: true, read_only: false, description: %<description>)
+  define_prop(ints : Array(Int32), nilable: false, read_only: false, description: %<description>)
+  define_prop(bools : Array(Bool) = [true], nilable: false, read_only: false, description: %<description>)
+  define_prop(mixed : Array(String | Int32), nilable: false, read_only: false, description: %<description>)
+end
+
+struct TestHashProp < K8S::Kubernetes::Resource
+  define_prop(strings : Hash(String, String), nilable: true, read_only: false, description: %<description>)
+  define_prop(ints : Hash(String, Int32), nilable: false, read_only: false, description: %<description>)
+  define_prop(bools : Hash(String, Bool) = {"val" => false}, nilable: false, read_only: false, description: %<description>)
+  define_prop(mixed : Hash(String, String | Int32 | Bool), nilable: false, read_only: false, description: %<description>)
+end
+
 ::K8S::Kubernetes::Resource.define_resource("k3s.cattle.io", "v1", "Addon")
 ::K8S::Kubernetes::Resource.define_resource("helmcharts.helm.cattle.io", "v1", "HelmChart")
 ::K8S::Kubernetes::Resource.define_resource("apps", "v1", "DaemonSetTest",
@@ -172,6 +186,34 @@ Spectator.describe K8S::Kubernetes::Resource do
       value3: true,
     })) }
 
+    let(new_array_resource) { TestArrayProp.new({
+      apiVersion: "v1",
+      kind:       "TestArrayProp",
+      metadata:   {
+        namespace: "default",
+        name:      "whoami",
+        labels:    {app: "whoami"},
+      },
+      strings: ["foo", "bar"],
+      ints:    [1, 2, 3],
+      bools:   [true, false],
+      mixed:   ["foo", 1, "bar", 2],
+    }) }
+
+    let(new_hash_resource) { TestHashProp.new({
+      apiVersion: "v1",
+      kind:       "TestHashProp",
+      metadata:   {
+        namespace: "default",
+        name:      "whoami",
+        labels:    {app: "whoami"},
+      },
+      strings: {"foo" => "bar"},
+      ints:    {"foo" => 1},
+      bools:   {"foo" => true},
+      mixed:   {"foo" => "bar", "bar" => 1, "baz" => true},
+    }) }
+
     it "creates a getter and setter for the given field" do
       resource = new_resource
       expect(resource.value1).to eq("whoami")
@@ -226,6 +268,22 @@ Spectator.describe K8S::Kubernetes::Resource do
       svc1.value1 = "myapp"
       expect(svc1.value1).to eq("myapp")
       expect(svc2.value1).to eq("myapp")
+    end
+
+    it "handles arrays" do
+      obj = new_array_resource
+      expect(obj.strings).to eq ["foo", "bar"]
+      expect(obj.ints).to eq [1, 2, 3]
+      expect(obj.bools).to eq [true, false]
+      expect(obj.mixed).to eq ["foo", 1, "bar", 2]
+    end
+
+    it "handles hashes" do
+      obj = new_hash_resource
+      expect(obj.strings).to eq({"foo" => "bar"})
+      expect(obj.ints).to eq({"foo" => 1})
+      expect(obj.bools).to eq({"foo" => true})
+      expect(obj.mixed).to eq({"foo" => "bar", "bar" => 1, "baz" => true})
     end
   end
 
@@ -451,8 +509,5 @@ Spectator.describe K8S::Kubernetes::Resource do
         end
       end
     end
-  end
-
-  context ".from_files" do
   end
 end
