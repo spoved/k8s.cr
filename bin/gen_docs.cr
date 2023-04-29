@@ -78,7 +78,6 @@ end
 
 def generate_release_docs
   generate_release_docs_for
-  `git checkout master`
 end
 
 def generate_release_docs_for
