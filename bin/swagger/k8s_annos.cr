@@ -55,5 +55,4 @@ macro include_k8s_annos
   # x-kubernetes-preserve-unknown-fields stops the API server decoding step from pruning fields which are not specified in the validation schema. This affects fields recursively, but switches back to normal pruning behaviour if nested properties or additionalProperties are specified in the schema. This can either be true or undefined. False is forbidden.
   @[::JSON::Field(key: "x-kubernetes-preserve-unknown-fields", emit_null: false)]
   property x_kubernetes_preserve_unknown_fields : Bool | Nil
-
 end
