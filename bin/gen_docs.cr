@@ -34,9 +34,8 @@ end
 
 def generate_docs_for(prefix, version)
   puts "Generating docs for: #{prefix} : #{version}"
-
   rel_ver = get_release_version
-  docs_dir = File.join(".", DOCS_DIR, rel_ver, prefix)
+  docs_dir = File.join(".", DOCS_DIR, prefix)
   version_file = File.join(".", VERSIONS_DIR, "#{prefix}.cr")
   return unless File.exists?(version_file)
   FileUtils.rm_rf File.join(docs_dir) if Dir.exists?(docs_dir)
@@ -78,29 +77,18 @@ def gen_css(version)
 end
 
 def generate_release_docs
-  `git fetch --all --tags`
-  # Generate for master
-  generate_release_docs_for("master", git_commit)
-  docs = ["master"]
-
-  get_git_tags.each do |tag|
-    versions = generate_release_docs_for(tag[0].lchop('v'), tag[1])
-    docs << tag[0].lchop('v') unless versions.empty?
-  end
-
+  generate_release_docs_for
   `git checkout master`
-  generate_version_list(File.join(".", DOCS_DIR), docs, "K8S Releases")
 end
 
-def generate_release_docs_for(tag, commit)
-  `git checkout #{commit}`
-  `shards install`
+def generate_release_docs_for
   versions = [] of String
-  for_each_version do |prefix, _, version|
+  for_each_version(1, 11) do |prefix, _, version|
     generate_docs_for(prefix, version)
     versions << prefix
   end
-  docs_dir = File.join(".", DOCS_DIR, tag)
+
+  docs_dir = File.join(".", DOCS_DIR)
   generate_version_list(docs_dir, versions, "Kubernetes APIs") unless versions.empty?
   versions
 end
