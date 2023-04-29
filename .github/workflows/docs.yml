@@ -10,7 +10,7 @@ permissions:
 jobs:
   docs:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 60
     steps:
       - name: Download source
         uses: actions/checkout@v2
