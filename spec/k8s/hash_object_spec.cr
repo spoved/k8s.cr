@@ -19,7 +19,7 @@ Spectator.describe ::K8S::Internals::HashObject do
 
   context ".deep_cast_value" do
     it "raises TypeCastError when passed invalid type" do
-      expect_raises(TypeCastError, /cast from Int32 to .*/) do
+      expect_raises(TypeCastError, /cast from Int32 to .*/i) do
         ::K8S::Internals::HashObject(Bool).deep_cast_value 1337.as(Int32 | Bool)
       end
     end
@@ -44,11 +44,11 @@ Spectator.describe ::K8S::Internals::HashObject do
     let(valid_values) { {nil, 1, 2_i64, 13.37, true, :foo, "bar", Time.utc} }
 
     it "raises TypeCastError when passed invalid type" do
-      expect_raises TypeCastError, /cast from Char to .*/ do
+      expect_raises TypeCastError, /cast from Char to .*/i do
         K8S::Internals::GenericObject.deep_cast_value 'a'.as(Char | String)
       end
 
-      expect_raises TypeCastError, /cast from Slice\(UInt8\) to .*/ do
+      expect_raises TypeCastError, /cast from Slice\(UInt8\) to .*/i do
         K8S::Internals::GenericObject.deep_cast_value Bytes.empty.as(Bytes | Int64)
       end
     end
@@ -92,10 +92,10 @@ Spectator.describe ::K8S::Internals::HashObject do
 
   context "#initialize" do
     it "raises TypeCastError when passed invalid type" do
-      expect_raises TypeCastError, /cast from Slice\(UInt8\) to .*?/ do
+      expect_raises TypeCastError, /cast from Slice\(UInt8\) to .*?/i do
         K8S::Internals::GenericObject.new({invalid: Bytes.empty.as(Bytes | Int64)})
       end
-      expect_raises TypeCastError, /cast from Char to .*?/ do
+      expect_raises TypeCastError, /cast from Char to .*?/i do
         K8S::Internals::GenericObject.new({why_oh_why_i_did_not_call_to_s: 'a'.as(Char | String)})
       end
     end
@@ -258,10 +258,10 @@ Spectator.describe ::K8S::Internals::HashObject do
       end
     end
     it "raises if intermediate value is not a Hash" do
-      expect_raises TypeCastError, /cast from String to Hash\(.*?\) failed/ do
+      expect_raises TypeCastError, /cast from String to Hash\(.*?\) failed/i do
         hash.dig(:foo, :jazz, :blues)
       end
-      expect_raises TypeCastError, /cast from Bool to Hash\(.*?\) failed/ do
+      expect_raises TypeCastError, /cast from Bool to Hash\(.*?\) failed/i do
         hash.dig(:oof, :foo)
       end
     end

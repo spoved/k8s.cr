@@ -26,6 +26,8 @@ spec: ## Run spec
 	@crystal spec ${SPEC_ARGS} -Dk8s_v1.24
 	@crystal spec ${SPEC_ARGS} -Dk8s_v1.25
 	@crystal spec ${SPEC_ARGS} -Dk8s_v1.26
+	@crystal spec ${SPEC_ARGS} -Dk8s_v1.27
+	@crystal spec ${SPEC_ARGS} -Dk8s_v1.28
 
 sentry: ## Compile sentry
 	@crystal build --release -o ./bin/sentry ./lib/sentry/src/sentry_cli.cr
