@@ -4,7 +4,7 @@ require "./schema"
 class Swagger::Path::Parameter
   include JSON::Serializable
 
-  property name : String
+  property name : String?
   property in : String?
   property description : String?
   property uniqueItems : Bool?
