@@ -27,6 +27,7 @@ jobs:
           - "v1.25"
           - "v1.26"
           - "v1.27"
+          - "v1.28"
         os:
           - ubuntu-latest
           - macos-latest
@@ -38,6 +39,7 @@ jobs:
           - 1.6
           - 1.7
           - 1.8
+          - 1.9
     runs-on: ${{ matrix.os }}
     steps:
       - name: Download source

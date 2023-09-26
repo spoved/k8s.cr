@@ -30,6 +30,7 @@ jobs:
           - "v1.25"
           - "v1.26"
           - "v1.27"
+          - "v1.28"
     runs-on: ubuntu-latest
     steps:
       - name: Download source
